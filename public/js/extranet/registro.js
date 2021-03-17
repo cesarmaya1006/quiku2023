@@ -1,16 +1,12 @@
 $(document).ready(function() {
     // ===========================================================================
-    $('#pais_residencia').on('change', function(event) {
+    $('#pais').on('change', function(event) {
         const id = $(this).val();
-
-        if (id == 'COLOMBIA') {
-            $('#departamento_residencia').prop('disabled', false);
-            $('#municipio_residencia').prop('disabled', false);
+        console.log(id);
+        if (id != 44) {
+            $('#caja_departamento').addClass('d-none');
         } else {
-            $("#departamento_residencia").val($("#target option:first").val());
-            $("#municipio_residencia").val($("#target option:first").val());
-            $('#departamento_residencia').prop('disabled', 'disabled');
-            $('#municipio_residencia').prop('disabled', 'disabled');
+            $('#caja_departamento').removeClass('d-none');
         }
     });
     //==========================================================================
@@ -40,4 +36,17 @@ $(document).ready(function() {
 
     });
     //==========================================================================
+
+    $('input[type=radio][name=discapasidad]').on('change', function() {
+        switch ($(this).val()) {
+            case 'si':
+                $('#tipodiscapacidadcaja').removeClass('d-none');
+                break;
+            case 'no':
+                $('#tipodiscapacidadcaja').addClass('d-none');
+                break;
+        }
+    });
+
+
 });

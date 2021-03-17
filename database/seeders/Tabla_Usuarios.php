@@ -17,7 +17,7 @@ class Tabla_Usuarios extends Seeder
     {
         //------------------------------------------------------
         DB::table('usuarios')->insert([
-            'docutipos_id' => 1,
+            'usuario' => 'cesarmaya',
             'identificacion' => '79984883',
             'nombres' => 'Cesar Eduardo',
             'apellidos' => 'Maya Toloza',
@@ -33,6 +33,5 @@ class Tabla_Usuarios extends Seeder
             'estado' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
-
     }
 }

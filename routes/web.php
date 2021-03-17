@@ -34,6 +34,16 @@ Route::get('/registro_ini', [ExtranetPageController::class, 'registro_ini'])->na
 Route::post('/registro_ini-guardar', [ExtranetPageController::class, 'registro_ini_guardar'])->name('registro_ini-guardar');
 Route::get('/registro_ext/{id}/{cc}/{tipo}', [ExtranetPageController::class, 'registro_ext'])->name('registro_ext');
 Route::get('/registro_conf', [ExtranetPageController::class, 'registro_conf'])->name('registro_conf');
+Route::get('/parametros', [ExtranetPageController::class, 'parametros'])->name('parametros');
+Route::post('/parametros-guardar', [ExtranetPageController::class, 'parametros_guardar'])->name('parametros-guardar');
+Route::post('/registropj-guardar', [ExtranetPageController::class, 'registropj_guardar'])->name('registropj-guardar');
+Route::post('/registrorep-guardar', [ExtranetPageController::class, 'registrorep_guardar'])->name('registrorep-guardar');
+Route::post('/registropn-guardar', [ExtranetPageController::class, 'registropn_guardar'])->name('registropn-guardar');
+Route::get('/registro_pj', [ExtranetPageController::class, 'registro_pj'])->name('registro_pj');
+Route::get('/registro_rep', [ExtranetPageController::class, 'registro_rep'])->name('registro_rep');
+Route::get('/registro_pn', [ExtranetPageController::class, 'registro_pn'])->name('registro_pn');
+Route::get('/cargar_municipios', [ExtranetPageController::class, 'cargar_municipios'])->name('cargar_municipios');
+
 
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin'], function () {

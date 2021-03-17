@@ -85,3 +85,8 @@
 .bg-legal5 {
     background-color: #F2D8D8;
 }
+
+label.requerido:after {
+    content: ' *';
+    color: red;
+}

@@ -15,13 +15,7 @@ class CrearTablaUsuarios extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->unsignedBigInteger('docutipos_id');
-            $table->foreign('docutipos_id', 'fk_usuario_docutipos')->references('id')->on('docutipos')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('identificacion', 100)->unique();
-            $table->string('nombres', 100);
-            $table->string('apellidos', 100)->nullable();
-            $table->string('email')->unique();
-            $table->string('telefono', 30);
+            $table->string('usuario', 100);
             $table->string('password', 100);
             $table->text('two_factor_secret')->nullable();
             $table->text('two_factor_recovery_codes')->nullable();

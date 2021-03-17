@@ -5,7 +5,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/vnd.microsoft.icon" href="{{ asset('imagenes/sistema/icono_sistema.png') }}" sizes="64x64">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="{{ asset('imagenes/sistema/icono_sistema.png') }}"
+        sizes="64x64">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -14,9 +15,60 @@
     <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
     <title>LegalProceedings</title>
     @yield('css_pagina')
+    <style>
+        body {
+            background-image: linear-gradient(to right, {{ $parametro->fondo1 }}, {{ $parametro->fondo2 }});
+
+        }
+
+        .header h2 a {
+            color: {{ $parametro->color_titulo }};
+            text-decoration: none;
+        }
+
+        .card {
+            box-shadow: 0px 0px 20px -5px var(--color-black);
+            background-color: {{ $parametro->bg_caja . 'BB' }};
+        }
+
+        .card-title {
+            color: {{ $parametro->color_titulos }};
+        }
+
+        .card-text {
+            color: {{ $parametro->color_texto }};
+        }
+
+        .btn-primary,
+        .btn-primary:hover,
+        .btn-primary:active,
+        .btn-primary:focus {
+            background-color: {{ $parametro->bg_botones }};
+            border-color: {{ $parametro->bg_botones }};
+        }
+
+        .btn-primary:hover,
+        .btn-primary:active,
+        .btn-primary:focus {
+            box-shadow: 0 0 0 0.25rem {{ $parametro->bg_botones . '88' }};
+        }
+
+        .header {
+            background-color: {{ $parametro->bg_titulo }};
+
+        }
+
+    </style>
 </head>
 
 <body>
+    <div class="header container-fluid d-flex justify-content-center">
+        <h2 class="container"><img class="img-fluid mr-3" src="{{ asset('imagenes/sistema/' . $parametro->logo) }}"
+                alt="" style="max-width: 100px; height: auto;"><a href="/index.html">Sistema de Registro de Peticiones,
+                Quejas
+                y
+                Reclamos</a></h2>
+    </div>
     @yield('cuerpo_pagina')
     <!-- Optional JavaScript; choose one of the two! -->
 

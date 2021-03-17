@@ -4,79 +4,70 @@
     <link rel="stylesheet" href="{{ asset('css/extranet/login.css') }}">
 @endsection
 @section('cuerpo_pagina')
-    <div class="header container-fluid">
-        <h2 class="container"><a href="/index.html">Acme.</a></h2>
-    </div class="header container-fluid">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-10 mt-5">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Registro</h5>
-                        <h5 class="card-title">Datos Persona Natural</h5>
+                        <h5 class="card-title">DATOS REPRESENTANTE LEGAL</h5>
                         <div class="card-text mt-5">
-                            <form action="{{ route('registropn-guardar') }}" method="POST" autocomplete="off">
-                                @csrf
-                                @method('post')
+                            <form>
                                 <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
                                         <label for="tipodocumento">Tipo documento</label>
-                                        <select class="form-control" name="docutipos_id" id="docutipos_id" required
-                                            readonly="true">
-                                            <option value="">--Seleccione un tipo--</option>
-                                            @foreach ($tipos_docu as $tipodocu)
-                                                <option value="{{ $tipodocu->id }}"
-                                                    {{ $tipodocu->id == $docutipos_id ? 'selected' : '' }}>
-                                                    {{ $tipodocu->abreb_id }}</option>
-                                            @endforeach
+                                        <select class="form-control" name="tipodocumento" id="tipodocumento" required>
+                                            <option value="">--Seleccione--</option>
+                                            <option value="1">CC</option>
+                                            <option value="2">CE</option>
+                                            <option value="3">Pasaporte</option>
                                         </select>
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
                                         <label for="numerodocumento">Número de documento</label>
                                         <input type="text" class="form-control" id="numerodocumento"
-                                            placeholder="Número documento" value="{{ $identificacion }}" required
-                                            readonly="true">
+                                            placeholder="Número documento" required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="primernombre">Primer Nombre</label>
+                                        <label for="primernombre">Primer Nombre</label>
                                         <input type="text" class="form-control" id="primernombre"
                                             placeholder="Primer Nombre" name="primernombre" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="segundonombre">Segundo Nombre</label>
                                         <input type="text" class="form-control" id="segundonombre"
-                                            placeholder="Segundo Nombre" name="segundonombre">
+                                            placeholder="Segundo Nombre" name="segundonombre" required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="primerapellido">Primer Apellido</label>
+                                        <label for="primerapellido">Primer Apellido</label>
                                         <input type="text" class="form-control" id="primerapellido"
                                             placeholder="Primer Apellido" name="primerapellido" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="segundoapelldio">Segundo Apellido</label>
                                         <input type="text" class="form-control" id="segundoapelldio"
-                                            placeholder="Segundo Apellido" name="segundoapelldio">
+                                            placeholder="Segundo Apellido" name="segundoapelldio" required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
                                         <label for="telefonofijo">Teléfono fijo</label>
                                         <input type="text" class="form-control" id="telefonofijo"
-                                            placeholder="Teléfono fijo" name="telefonofijo">
+                                            placeholder="Teléfono fijo" name="telefonofijo" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="telefonocelular">Teléfono Celular</label>
+                                        <label for="telefonocelular">Teléfono Celular</label>
                                         <input type="text" class="form-control" id="telefonocelular"
                                             placeholder="Teléfono Celular" name="telefonocelular" required>
                                     </div>
                                 </div>
                                 <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
-                                        <label class="requerido" for="direccion">Dirección</label>
+                                        <label for="direccion">Dirección</label>
                                         <input type="text" class="form-control" id="direccion" placeholder="Dirección"
                                             name="direccion" required>
                                     </div>
@@ -84,31 +75,29 @@
                                         <label for="pais">País</label>
                                         <select class="form-control" name="pais" id="pais" required>
                                             <option value="">--Seleccione--</option>
-                                            @foreach ($paises as $pais)
-                                                <option value="{{ $pais->id }}"
-                                                    {{ $pais->pais == 'Colombia' ? 'selected' : '' }}>{{ $pais->pais }}
-                                                </option>
-                                            @endforeach
+                                            <option value="1">Colombia</option>
+                                            <option value="2">Venezuela</option>
+                                            <option value="3">Ecuador</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-row row" id="caja_departamento">
+                                <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
                                         <label for="departamento">Departamento</label>
-                                        <select class="form-control departamentos" id="departamento"
-                                            data_url="{{ route('cargar_municipios') }}" required>
+                                        <select class="form-control" name="departamento" id="departamento" required>
                                             <option value="">--Seleccione--</option>
-                                            @foreach ($departamentos as $departamento)
-                                                <option value="{{ $departamento->id }}">
-                                                    {{ $departamento->departamento }}
-                                                </option>
-                                            @endforeach
+                                            <option value="1">Cundinamarca</option>
+                                            <option value="2">Antioquia</option>
+                                            <option value="3">Amazonas</option>
                                         </select>
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
-                                        <label for="municipio_id">Ciudad</label>
-                                        <select class="form-control" name="municipio_id" id="municipio_id" required>
+                                        <label for="ciudad">Ciudad</label>
+                                        <select class="form-control" name="ciudad" id="ciudad" required>
                                             <option value="">--Seleccione--</option>
+                                            <option value="1">Bogotá</option>
+                                            <option value="2">Medellín</option>
+                                            <option value="3">Leticia</option>
                                         </select>
                                     </div>
                                 </div>
@@ -149,23 +138,17 @@
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="discapacidad">Es usted persona en condición de discapacidad?</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="discapasidad"
-                                                id="discapacidad1" value="si">
-                                            <label class="form-check-label" for="discapacidad1">
-                                                Sí
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="discapasidad"
-                                                id="discapacidad2" value="no" checked>
-                                            <label class="form-check-label" for="discapacidad2">
-                                                No
-                                            </label>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="discapacidad1" name="discapacidad"
+                                                class="custom-control-input">
+                                            <label class="custom-control-label" for="discapacidad1">Si</label>
+                                            <input type="radio" id="discapacidad2" name="discapacidad"
+                                                class="custom-control-input">
+                                            <label class="custom-control-label" for="discapacidad2">No</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group mt-3 d-none" id="tipodiscapacidadcaja">
+                                <div class="form-group mt-3">
                                     <label for="tipodiscapacidad">Tipo discapacidad?</label>
                                     <select class="form-control" name="tipodiscapacidad" id="tipodiscapacidad" required>
                                         <option value="">--Seleccione--</option>
@@ -174,7 +157,7 @@
                                 <div class="form-group mt-3">
                                     <label for="email">Correo electrónico</label>
                                     <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
-                                        value="{{ $email }}" required>
+                                        required>
                                     <p>Al diligenciar su correo electrónico, está aceptando que las respuestas y
                                         comunicaciones sobre sus peticiones, quejas y reclamos, sean enviadas a esta
                                         dirección.</p>
@@ -189,5 +172,5 @@
     </div>
 @endsection
 @section('script_pagina')
-    <script src="{{ asset('js/extranet/registro.js') }}"></script>
+
 @endsection
