@@ -30,6 +30,7 @@ Route::get('/clear-cache', function () {
 });
 Route::get('/', [ExtranetPageController::class, 'index'])->name('index');
 Route::get('/index', [ExtranetPageController::class, 'index'])->name('index_2');
+Route::get('/index3', [ExtranetPageController::class, 'index_3'])->name('index_3');
 Route::get('/registro_ini', [ExtranetPageController::class, 'registro_ini'])->name('registro_ini');
 Route::post('/registro_ini-guardar', [ExtranetPageController::class, 'registro_ini_guardar'])->name('registro_ini-guardar');
 Route::get('/registro_ext/{id}/{cc}/{tipo}', [ExtranetPageController::class, 'registro_ext'])->name('registro_ext');

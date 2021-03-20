@@ -30,6 +30,10 @@ class AppServiceProvider extends ServiceProvider
             $parametro = Parametro::findOrFail(1);
             $view->with('parametro', $parametro);
         });
+        View::composer("extranet.plantilla2", function ($view) {
+            $parametro = Parametro::findOrFail(1);
+            $view->with('parametro', $parametro);
+        });
 
         View::composer("theme.back.menu_lat", function ($view) {
             $menus = Menu::getMenu(true);

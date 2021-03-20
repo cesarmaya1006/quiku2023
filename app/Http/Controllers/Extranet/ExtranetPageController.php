@@ -26,7 +26,12 @@ class ExtranetPageController extends Controller
     {
         return view('extranet.acceso');
     }
-
+    public function index_3()
+    {
+        $tipos_docu = Tipo_Docu::get();
+        $parametro = Parametro::findOrFail(1);
+        return view('extranet.acceso2', compact('parametro', 'tipos_docu'));
+    }
     /**
      * Show the form for creating a new resource.
      *
