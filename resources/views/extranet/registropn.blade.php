@@ -20,7 +20,7 @@
                                 @method('post')
                                 <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
-                                        <label for="tipodocumento">Tipo documento</label>
+                                        <label class="requerido" for="tipodocumento">Tipo documento</label>
                                         <select class="form-control" name="docutipos_id" id="docutipos_id" required
                                             readonly="true">
                                             <option value="">--Seleccione un tipo--</option>
@@ -145,6 +145,12 @@
                                         <label for="grupoetnico">Grupo Étnico</label>
                                         <select class="form-control" name="grupoetnico" id="grupoetnico" required>
                                             <option value="">--Seleccione--</option>
+                                            <option value="1">Sin pertenencia étnica</option>
+                                            <option value="2">Negro, mulato, afrodescendiente, afrocolombiano</option>
+                                            <option value="3">Indígena</option>
+                                            <option value="4">Raizal</option>
+                                            <option value="5">Palenquero</option>
+                                            <option value="6">Gitano</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
@@ -169,6 +175,10 @@
                                     <label for="tipodiscapacidad">Tipo discapacidad?</label>
                                     <select class="form-control" name="tipodiscapacidad" id="tipodiscapacidad" required>
                                         <option value="">--Seleccione--</option>
+                                        <option value="1">Incapacidad Permanente Parcial</option>
+                                        <option value="2">Incapacidad Permanente Total</option>
+                                        <option value="3">Incapacidad Permanente Total Cualificada</option>
+                                        <option value="4">Incapacidad Permanente Absoluta</option>
                                     </select>
                                 </div>
                                 <div class="form-group mt-3">

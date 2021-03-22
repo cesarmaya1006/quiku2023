@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Extranet;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidarRegistroIni;
 use App\Mail\RegistroInicial;
 use App\Models\Admin\Departamento;
 use App\Models\Admin\Municipio;
@@ -47,7 +48,7 @@ class ExtranetPageController extends Controller
         $tipos_docu = Tipo_Docu::get();
         return view('extranet.registro_ini', compact('tipos_docu'));
     }
-    public function registro_ini_guardar(Request $request)
+    public function registro_ini_guardar(ValidarRegistroIni $request)
     {
         $usuarioTemp = UsuarioTemp::create($request->all());
         $id = $usuarioTemp->id;
@@ -141,6 +142,10 @@ class ExtranetPageController extends Controller
     public function registro_pn()
     {
         return view('extranet.registropn');
+    }
+    public function registropn_guardar(Request $request)
+    {
+        $personaNatural = $request->all();
     }
 
 
