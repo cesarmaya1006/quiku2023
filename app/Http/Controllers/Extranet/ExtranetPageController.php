@@ -145,7 +145,7 @@ class ExtranetPageController extends Controller
     }
     public function registropn_guardar(Request $request)
     {
-        $personaNatural = $request->all();
+        dd($request->all());
     }
 
 

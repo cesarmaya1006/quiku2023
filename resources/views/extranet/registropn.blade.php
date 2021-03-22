@@ -11,13 +11,12 @@
         <div class="row justify-content-center">
             <div class="col-10 mt-5">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Registro</h5>
-                        <h5 class="card-title">Datos Persona Natural</h5>
-                        <div class="card-text mt-5">
-                            <form action="{{ route('registropn-guardar') }}" method="POST" autocomplete="off">
-                                @csrf
-                                @method('post')
+                    <form action="{{ route('registropn-guardar') }}" method="POST" autocomplete="off">
+                        @csrf
+                        @method('post')
+                        <div class="card-body" id="registro_ini">
+                            <h5 class="card-title">Registro Datos Persona Natural</h5>
+                            <div class="card-text mt-5">
                                 <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
                                         <label class="requerido" for="tipodocumento">Tipo documento</label>
@@ -81,7 +80,7 @@
                                             name="direccion" required>
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
-                                        <label for="pais">País</label>
+                                        <label class="requerido" for="pais">País</label>
                                         <select class="form-control" name="pais" id="pais" required>
                                             <option value="">--Seleccione--</option>
                                             @foreach ($paises as $pais)
@@ -122,6 +121,12 @@
                                         <label for="grado">Último grado de educación obtenido</label>
                                         <select class="form-control" name="grado" id="grado" required>
                                             <option value="">--Seleccione--</option>
+                                            <option value="Basica Primaria">Basica Primaria</option>
+                                            <option value="Bachiller">Bachiller</option>
+                                            <option value="Tecnico">Tecnico</option>
+                                            <option value="Tecnologo">Tecnologo</option>
+                                            <option value="Superior">Superior</option>
+                                            <option value="Post Grado">Post Grado</option>
                                         </select>
                                     </div>
                                 </div>
@@ -137,6 +142,8 @@
                                     <div class="col-md-6 mb-3">
                                         <label for="fechanacimiento">Fecha nacimiento</label>
                                         <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento"
+                                            max="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
+                                            value="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
                                             required>
                                     </div>
                                 </div>
@@ -173,7 +180,7 @@
                                 </div>
                                 <div class="form-group mt-3 d-none" id="tipodiscapacidadcaja">
                                     <label for="tipodiscapacidad">Tipo discapacidad?</label>
-                                    <select class="form-control" name="tipodiscapacidad" id="tipodiscapacidad" required>
+                                    <select class="form-control" name="tipodiscapacidad" id="tipodiscapacidad">
                                         <option value="">--Seleccione--</option>
                                         <option value="1">Incapacidad Permanente Parcial</option>
                                         <option value="2">Incapacidad Permanente Total</option>
@@ -189,10 +196,97 @@
                                         comunicaciones sobre sus peticiones, quejas y reclamos, sean enviadas a esta
                                         dirección.</p>
                                 </div>
-                                <button class="mt-3 btn btn-primary" type="submit">Continuar</button>
-                            </form>
+                                <button class="mt-3 btn btn-primary" id="boton_continuar">Continuar</button>
+                            </div>
                         </div>
-                    </div>
+                        <div class="card-body d-none" id="registro_fin">
+                            <h5 class="card-title">Registro</h5>
+                            <h5 class="card-title">Usuario y clave de acceso</h5>
+                            <div class="card-text mt-5">
+                                <div class="form-row row mt-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="usuario">Nombre de usuario</label>
+                                        <input type="text" class="form-control" id="usuario" placeholder="Nombre de usuario"
+                                            name="usuario" required>
+                                    </div>
+                                </div>
+                                <div class="form-row row mt-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="password">Clave o Contraseña</label>
+                                        <input type="password" class="form-control" id="password"
+                                            placeholder="Clave o Contraseña" name="password" required>
+                                    </div>
+                                </div>
+                                <div class="form-row row mt-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="verificacionpassword">Repetir clave o contraseña</label>
+                                        <input type="password" class="form-control" id="verificacionpassword"
+                                            placeholder="Repetir clave o contraseña" name="verificacionpassword" required>
+                                    </div>
+                                </div>
+                                <div class="form-row row mt-3">
+                                    <div class="col-md-12 mb-3">
+                                        <label>Términos y condiciones de uso</label>
+
+                                        <p class="bg-white p-5">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                            Veritatis alias nesciunt, enim voluptatibus, provident esse accusamus quisquam
+                                            corporis optio earum aut error dolore architecto qui illo quaerat placeat
+                                            aperiam velit, facilis est excepturi doloremque officia ipsam temporibus! Odio
+                                            dolore ipsa officiis accusamus a fugit, magni dicta eius necessitatibus qui
+                                            culpa provident voluptatibus perferendis quasi facilis, quae recusandae
+                                            doloribus atque rem expedita, molestias assumenda! Itaque vitae ex nihil omnis
+                                            nostrum delectus consequatur quaerat minima error commodi eum eos non minus
+                                            quasi corporis modi, fuga corrupti, et distinctio iure. Deleniti voluptate
+                                            molestias unde vel suscipit quia eum quisquam saepe, qui dolore atque ex! Quo
+                                            quia veniam repellendus minima rerum ad explicabo architecto laborum adipisci ea
+                                            facere voluptatibus, numquam hic quisquam. Tempore in eveniet rem excepturi
+                                            officiis beatae quia fuga cupiditate quae dignissimos. Non ducimus dignissimos
+                                            harum recusandae nemo accusamus, nostrum labore! Non consectetur, beatae quam at
+                                            distinctio ipsa libero praesentium repudiandae id necessitatibus amet aspernatur
+                                            perferendis voluptatem dicta incidunt quo sint vel! Harum explicabo nulla culpa
+                                            voluptatum atque officia commodi, minus, mollitia laborum, perferendis fuga
+                                            quibusdam? Placeat in amet rem inventore odit nostrum aperiam, eum blanditiis
+                                            quasi iure voluptatum, cupiditate quae sit provident autem et! Ducimus dolorem
+                                            sed eum commodi vel quidem optio animi neque quia, autem dolor earum totam, odio
+                                            iusto ex sequi veritatis harum quae, voluptates cumque doloribus ad expedita. Ad
+                                            ex illo minus quam doloremque minima quod, qui cumque nihil dicta odio laborum
+                                            eum reprehenderit sequi non ullam voluptatum aut in suscipit possimus? Minima
+                                            unde nam quasi, facere blanditiis, dicta quod ullam qui labore nulla laboriosam
+                                            dolorem, mollitia corporis placeat provident optio possimus asperiores inventore
+                                            suscipit perferendis eum. Asperiores quaerat ullam non odit autem quasi fugit,
+                                            necessitatibus est quis beatae unde qui nulla soluta perspiciatis. Accusantium
+                                            nulla nobis eius nam! Laboriosam molestias iusto autem aliquid dolor. Earum
+                                            asperiores consequatur itaque in commodi ex, nisi ab architecto provident sequi
+                                            enim qui suscipit cum eveniet quidem accusantium distinctio sit corporis dicta!
+                                            Quidem ipsam numquam, cumque ea obcaecati voluptas officia. Voluptate corrupti,
+                                            mollitia, quibusdam blanditiis illum consectetur doloribus ratione
+                                            exercitationem quae maiores nobis quam consequuntur harum vel perferendis
+                                            pariatur ipsam! Maiores distinctio magnam voluptatum et eum labore porro eveniet
+                                            eius, necessitatibus rerum, molestiae reiciendis. Magnam optio praesentium error
+                                            dolorem eum saepe quam cupiditate doloribus sit rerum est tempora mollitia
+                                            asperiores incidunt minima, perferendis iure esse animi rem. Nemo aliquam
+                                            veritatis ea facere ex quo sed eos aut totam, nihil, culpa vitae autem excepturi
+                                            eum officiis mollitia maiores explicabo! Tempora, unde impedit molestias,
+                                            architecto accusamus adipisci possimus vel eum eveniet officia, temporibus
+                                            excepturi mollitia exercitationem earum sequi quod laboriosam sunt ad
+                                            aspernatur? Perspiciatis saepe incidunt labore impedit illum eaque autem dolorum
+                                            amet sed repudiandae repellendus repellat ducimus, maiores eveniet odit ab!
+                                            Possimus dignissimos deserunt ipsam pariatur iste quae, dolorem in? Ea eum
+                                            tempora architecto sunt, corrupti illum voluptate impedit labore culpa quaerat.
+                                            Dolor, placeat architecto quidem consequuntur, eos harum enim similique nobis
+                                            rerum a ipsam, pariatur natus? Veniam temporibus odit enim consequatur modi
+                                            recusandae quam, sunt dolores nemo distinctio nam sequi laborum iusto.</p>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                        <label class="custom-control-label" for="customCheck1">Acepto los términos y
+                                            condiciones.</label>
+                                    </div>
+                                </div>
+                                <button class="mt-3 btn btn-primary" type="submit">Enviar</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

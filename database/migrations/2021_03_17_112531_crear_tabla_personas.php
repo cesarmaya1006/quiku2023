@@ -15,6 +15,7 @@ class CrearTablaPersonas extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
+            $table->foreign('id')->references('id')->on('usuarios')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('docutipos_id');
             $table->foreign('docutipos_id', 'fk_persona_docutipos')->references('id')->on('docutipos')->onDelete('restrict')->onUpdate('restrict');
             $table->string('identificacion', 100)->unique();

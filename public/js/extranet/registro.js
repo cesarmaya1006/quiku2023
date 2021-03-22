@@ -47,6 +47,9 @@ $(document).ready(function() {
                 break;
         }
     });
-
-
+    //==========================================================================
+    $("#boton_continuar").on('click', function() {
+        $('#registro_ini').addClass('d-none');
+        $('#registro_fin').removeClass('d-none');
+    });
 });

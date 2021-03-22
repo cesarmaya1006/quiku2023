@@ -44,6 +44,7 @@ Route::get('/registro_pj', [ExtranetPageController::class, 'registro_pj'])->name
 Route::get('/registro_rep', [ExtranetPageController::class, 'registro_rep'])->name('registro_rep');
 Route::get('/registro_pn', [ExtranetPageController::class, 'registro_pn'])->name('registro_pn');
 Route::get('/cargar_municipios', [ExtranetPageController::class, 'cargar_municipios'])->name('cargar_municipios');
+Route::get('/registro_final_pn', [ExtranetPageController::class, 'registro_final_pn'])->name('registro_final_pn');
 
 
 Route::group(['middleware' => 'auth'], function () {
