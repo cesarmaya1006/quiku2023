@@ -14,18 +14,20 @@ body {
     height: 100vh;
 }
 
-
 /* Index */
 
 .header {
-    /* color: var(--color-while); */
     padding: 1%;
 }
 
 .header h2 {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 700;
     text-transform: uppercase;
+    font-style: italic;
+}
+.header h2 img {
+    max-width: 65px;
 }
 
 .header h2 a {
@@ -42,6 +44,13 @@ body {
     min-height: 450px;
     padding: 1%;
     margin-bottom: 5%;
+    box-shadow: 0px 0px 20px -5px var(--color-black);
+    background-color: rgba(255, 255, 255, .9);
+    border-radius: 1.5rem;
+}
+.index .card:hover {
+    margin-top: -3%;
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .card-body {
@@ -50,8 +59,13 @@ body {
 
 .card-title {
     color: var(--color-one);
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-size: 1.3rem;
+    font-weight: 700;
     text-transform: uppercase;
+    text-align: center;
+    float: none;
+}
+
+.centrar-items {
     text-align: center;
 }

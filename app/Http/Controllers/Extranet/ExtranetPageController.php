@@ -54,7 +54,7 @@ class ExtranetPageController extends Controller
         $id = $usuarioTemp->id;
         $tipopersona = $usuarioTemp->tipo_persona;
         $cedula = $usuarioTemp->identificacion;
-        Mail::to('cesarmaya99@hotmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
+        Mail::to('ruizwilson01@gmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
         return redirect('/registro_conf');
     }
     public function registro_conf()

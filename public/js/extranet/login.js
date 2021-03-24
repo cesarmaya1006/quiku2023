@@ -12,10 +12,4 @@ $(document).ready(function() {
             $(this).parents('.form-peice').removeClass('switched').siblings('.form-peice').addClass('switched');
         }
     });
-
-
-
-
-
-
 });

@@ -4,17 +4,15 @@
     <link rel="stylesheet" href="{{ asset('css/extranet/login.css') }}">
 @endsection
 @section('cuerpo_pagina')
-    <div class="header container-fluid">
-        <h2 class="container"><a href="/index.html">Acme.</a></h2>
-    </div class="header container-fluid">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-10 mt-5">
+            <div class="col-11 col-sm-10 col-md-8 mt-5">
                 <div class="card">
                     <form action="{{ route('registropn-guardar') }}" method="POST" autocomplete="off">
                         @csrf
                         @method('post')
                         <div class="card-body" id="registro_ini">
+                            <p class="m-0 text-right"><strong>1/2</strong></p>
                             <h5 class="card-title">Registro Datos Persona Natural</h5>
                             <div class="card-text mt-5">
                                 <div class="form-row row">
@@ -31,7 +29,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
-                                        <label for="numerodocumento">Número de documento</label>
+                                        <label class="requerido" for="numerodocumento">Número de documento</label>
                                         <input type="text" class="form-control" id="numerodocumento"
                                             placeholder="Número documento" value="{{ $identificacion }}" required
                                             readonly="true">
@@ -93,9 +91,9 @@
                                 </div>
                                 <div class="form-row row" id="caja_departamento">
                                     <div class="form-group mt-3 col-md-6">
-                                        <label for="departamento">Departamento</label>
+                                        <label class="requerido" for="departamento">Departamento</label>
                                         <select class="form-control departamentos" id="departamento"
-                                            data_url="{{ route('cargar_municipios') }}" required>
+                                            data_url="{{ route('cargar_municipios') }}">
                                             <option value="">--Seleccione--</option>
                                             @foreach ($departamentos as $departamento)
                                                 <option value="{{ $departamento->id }}">
@@ -105,20 +103,20 @@
                                         </select>
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
-                                        <label for="municipio_id">Ciudad</label>
-                                        <select class="form-control" name="municipio_id" id="municipio_id" required>
+                                        <label class="requerido" for="municipio_id">Ciudad</label>
+                                        <select class="form-control" name="municipio_id" id="municipio_id">
                                             <option value="">--Seleccione--</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="nacionalidad">Nacionalidad</label>
+                                        <label class="requerido" for="nacionalidad">Nacionalidad</label>
                                         <input type="text" class="form-control" id="nacionalidad" placeholder="Nacionalidad"
                                             name="nacionalidad" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="grado">Último grado de educación obtenido</label>
+                                        <label class="requerido" for="grado">Último grado de educación obtenido</label>
                                         <select class="form-control" name="grado" id="grado" required>
                                             <option value="">--Seleccione--</option>
                                             <option value="Basica Primaria">Basica Primaria</option>
@@ -132,15 +130,15 @@
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="grado">Elija su Genero</label>
-                                        <select class="form-control" name="grado" id="grado" required>
+                                        <label class="requerido" for="genero">Elija su Genero</label>
+                                        <select class="form-control" name="genero" id="genero" required>
                                             <option value="">--Seleccione--</option>
                                             <option value="">Femenino</option>
-                                            <option value="">Masculino</option>
+                                            <option value="">Masculino</option> 
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="fechanacimiento">Fecha nacimiento</label>
+                                        <label class="requerido" for="fechanacimiento">Fecha nacimiento</label>
                                         <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento"
                                             max="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
                                             value="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
@@ -149,7 +147,7 @@
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="grupoetnico">Grupo Étnico</label>
+                                        <label class="requerido" for="grupoetnico">Grupo Étnico</label>
                                         <select class="form-control" name="grupoetnico" id="grupoetnico" required>
                                             <option value="">--Seleccione--</option>
                                             <option value="1">Sin pertenencia étnica</option>
@@ -161,7 +159,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="discapacidad">Es usted persona en condición de discapacidad?</label>
+                                        <label class="requerido" for="discapacidad">Es usted persona en condición de discapacidad?</label>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="discapasidad"
                                                 id="discapacidad1" value="si">
@@ -189,7 +187,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label for="email">Correo electrónico</label>
+                                    <label class="requerido" for="email">Correo electrónico</label>
                                     <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
                                         value="{{ $email }}" required>
                                     <p>Al diligenciar su correo electrónico, está aceptando que las respuestas y
@@ -200,26 +198,25 @@
                             </div>
                         </div>
                         <div class="card-body d-none" id="registro_fin">
+                            <p class="m-0 text-right"><strong>2/2</strong></p>
                             <h5 class="card-title">Registro</h5>
                             <h5 class="card-title">Usuario y clave de acceso</h5>
                             <div class="card-text mt-5">
                                 <div class="form-row row mt-3">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="usuario">Nombre de usuario</label>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="requerido" for="usuario">Nombre de usuario</label>
                                         <input type="text" class="form-control" id="usuario" placeholder="Nombre de usuario"
                                             name="usuario" required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="password">Clave o Contraseña</label>
+                                        <label class="requerido" for="password">Clave o Contraseña</label>
                                         <input type="password" class="form-control" id="password"
                                             placeholder="Clave o Contraseña" name="password" required>
                                     </div>
-                                </div>
-                                <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="verificacionpassword">Repetir clave o contraseña</label>
+                                        <label class="requerido" for="verificacionpassword">Repetir clave o contraseña</label>
                                         <input type="password" class="form-control" id="verificacionpassword"
                                             placeholder="Repetir clave o contraseña" name="verificacionpassword" required>
                                     </div>

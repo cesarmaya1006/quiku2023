@@ -17,19 +17,19 @@
     @yield('css_pagina')
     <style>
         body {
-            background-image: linear-gradient(to right, {{ $parametro->fondo1 }}, {{ $parametro->fondo2 }});
-
+            /* background-image: linear-gradient(to right, {{ $parametro->fondo1 }}, {{ $parametro->fondo2 }}); */
+            background-image: url({{ asset('imagenes/img-inicio/img-principal-inicio4.jpg') }});
+            background-size: cover;
         }
 
         .header h2 a {
             color: {{ $parametro->color_titulo }};
-            text-decoration: none;
         }
 
-        .card {
+        /* .card {
             box-shadow: 0px 0px 20px -5px var(--color-black);
             background-color: {{ $parametro->bg_caja . 'BB' }};
-        }
+        } */
 
         .card-title {
             color: {{ $parametro->color_titulos }};
@@ -53,10 +53,10 @@
             box-shadow: 0 0 0 0.25rem {{ $parametro->bg_botones . '88' }};
         }
 
-        .header {
+        /* .header {
             background-color: {{ $parametro->bg_titulo }};
 
-        }
+        } */
 
     </style>
 </head>
@@ -64,7 +64,7 @@
 <body>
     <div class="header container-fluid d-flex justify-content-center">
         <h2 class="container"><img class="img-fluid mr-3" src="{{ asset('imagenes/sistema/' . $parametro->logo) }}"
-                alt="" style="max-width: 100px; height: auto;"><a href="/index.html">Sistema de Registro de Peticiones,
+                alt=""><a href="/index">Sistema de Registro de Peticiones,
                 Quejas
                 y
                 Reclamos</a></h2>
