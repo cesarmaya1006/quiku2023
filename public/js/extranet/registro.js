@@ -52,4 +52,23 @@ $(document).ready(function() {
         $('#registro_ini').addClass('d-none');
         $('#registro_fin').removeClass('d-none');
     });
+    //==========================================================================
+    $(".lcapital").keyup(function(evt) {
+
+
+        var palabra = $(this).val();
+        //Si el valor es nulo o undefined salimos
+        if (!$(this).val()) return;
+        // almacenamos la mayuscula
+        var mayuscula = palabra.substring(0, 1).toUpperCase();
+        //si la palabra tiene más de una letra almacenamos las minúsculas
+        if (palabra.length > 0) {
+            var minuscula = palabra.substring(1).toLowerCase();
+        }
+        //escribimos la palabra con la primera letra mayuscula
+        $(this).val(mayuscula.concat(minuscula));
+    });
+
+
+
 });

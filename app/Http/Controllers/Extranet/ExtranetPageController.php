@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Extranet;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidarPersonaNat;
 use App\Http\Requests\ValidarRegistroIni;
 use App\Mail\RegistroInicial;
 use App\Models\Admin\Departamento;
@@ -10,7 +11,9 @@ use App\Models\Admin\Municipio;
 use App\Models\Admin\Pais;
 use App\Models\Admin\Parametro;
 use App\Models\Admin\Tipo_Docu;
+use App\Models\Admin\Usuario;
 use App\Models\Admin\UsuarioTemp;
+use App\Models\Personas\Persona;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
@@ -54,7 +57,7 @@ class ExtranetPageController extends Controller
         $id = $usuarioTemp->id;
         $tipopersona = $usuarioTemp->tipo_persona;
         $cedula = $usuarioTemp->identificacion;
-        Mail::to('ruizwilson01@gmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
+        Mail::to('cesarmaya99@hotmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
         return redirect('/registro_conf');
     }
     public function registro_conf()
@@ -143,9 +146,33 @@ class ExtranetPageController extends Controller
     {
         return view('extranet.registropn');
     }
-    public function registropn_guardar(Request $request)
+    public function registropn_guardar(ValidarPersonaNat $request)
     {
         dd($request->all());
+        $nuevoUsuario['usuario'] = $request['usuario'];
+        $nuevoUsuario['password'] = bcrypt(utf8_encode($request['password']));
+        $usuario = Usuario::create($nuevoUsuario);
+        $nuevaPersona['id'] = $usuario->id;
+        $nuevaPersona['docutipos_id'] = $request['docutipos_id'];
+        $nuevaPersona['identificacion'] = $request['identificacion'];
+        $nuevaPersona['nombre1'] = $request['primernombre'];
+        $nuevaPersona['nombre2'] = $request['segundonombre'];
+        $nuevaPersona['apellido1'] = $request['primerapellido'];
+        $nuevaPersona['apellido2'] = $request['segundoapelldio'];
+        $nuevaPersona['telefono_fijo'] = $request['telefonofijo'];
+        $nuevaPersona['telefono_celu'] = $request['telefonocelular'];
+        $nuevaPersona['direccion'] = $request['direccion'];
+        $nuevaPersona['pais_id'] = $request['pais'];
+        $nuevaPersona['municipio_id'] = $request['municipio_id'];
+        $nuevaPersona['nacionalidad'] = $request['nacionalidad'];
+        $nuevaPersona['grado_educacion'] = $request['grado'];
+        $nuevaPersona['genero'] = $request['genero'];
+        $nuevaPersona['fecha_nacimiento'] = $request['fechanacimiento'];
+        $nuevaPersona['grupo_etnico'] = $request['grupoetnico'];
+        $nuevaPersona['discapacidad'] = $request['discapasidad'];
+        $nuevaPersona['tipo_discapacidad'] = $request['tipodiscapacidad'];
+        $nuevaPersona['email'] = $request['email'];
+        Persona::create($nuevaPersona);
     }
 
 

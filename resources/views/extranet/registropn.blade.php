@@ -6,6 +6,10 @@
 @section('cuerpo_pagina')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-10">
+                @include('includes.error-form')
+                @include('includes.mensaje')
+            </div>
             <div class="col-11 col-sm-10 col-md-8 mt-5">
                 <div class="card">
                     <form action="{{ route('registropn-guardar') }}" method="POST" autocomplete="off">
@@ -30,7 +34,7 @@
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
                                         <label class="requerido" for="numerodocumento">Número de documento</label>
-                                        <input type="text" class="form-control" id="numerodocumento"
+                                        <input type="text" class="form-control" id="numerodocumento" name="identificacion"
                                             placeholder="Número documento" value="{{ $identificacion }}" required
                                             readonly="true">
                                     </div>
@@ -38,44 +42,52 @@
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="primernombre">Primer Nombre</label>
-                                        <input type="text" class="form-control" id="primernombre"
-                                            placeholder="Primer Nombre" name="primernombre" required>
+                                        <input type="text" class="form-control lcapital" id="primernombre"
+                                            placeholder="Primer Nombre" name="primernombre"
+                                            value="{{ old('primernombre') }}" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="segundonombre">Segundo Nombre</label>
-                                        <input type="text" class="form-control" id="segundonombre"
-                                            placeholder="Segundo Nombre" name="segundonombre">
+                                        <input type="text" class="form-control lcapital" id="segundonombre"
+                                            placeholder="Segundo Nombre" name="segundonombre"
+                                            value="{{ old('segundonombre') }}">
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="primerapellido">Primer Apellido</label>
-                                        <input type="text" class="form-control" id="primerapellido"
-                                            placeholder="Primer Apellido" name="primerapellido" required>
+                                        <input type="text" class="form-control lcapital" id="primerapellido"
+                                            placeholder="Primer Apellido" name="primerapellido"
+                                            value="{{ old('primerapellido') }}" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="segundoapelldio">Segundo Apellido</label>
-                                        <input type="text" class="form-control" id="segundoapelldio"
-                                            placeholder="Segundo Apellido" name="segundoapelldio">
+                                        <input type="text" class="form-control lcapital" id="segundoapelldio"
+                                            placeholder="Segundo Apellido" name="segundoapelldio"
+                                            {{ old('segundoapelldio') }}>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
                                         <label for="telefonofijo">Teléfono fijo</label>
-                                        <input type="text" class="form-control" id="telefonofijo"
-                                            placeholder="Teléfono fijo" name="telefonofijo">
+                                        <input type="tel" class="form-control" id="telefonofijo" placeholder="Teléfono fijo"
+                                            name="telefonofijo"
+                                            onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"
+                                            value="{{ old('telefonofijo') }}">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="telefonocelular">Teléfono Celular</label>
-                                        <input type="text" class="form-control" id="telefonocelular"
-                                            placeholder="Teléfono Celular" name="telefonocelular" required>
+                                        <input type="tel" class="form-control" id="telefonocelular"
+                                            placeholder="Teléfono Celular" name="telefonocelular"
+                                            onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"
+                                            value="{{ old('telefonocelular') }}" required>
                                     </div>
                                 </div>
                                 <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
                                         <label class="requerido" for="direccion">Dirección</label>
                                         <input type="text" class="form-control" id="direccion" placeholder="Dirección"
-                                            name="direccion" required>
+                                            name="direccion" required value="{{ old('direccion') }}">
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
                                         <label class="requerido" for="pais">País</label>
@@ -83,7 +95,8 @@
                                             <option value="">--Seleccione--</option>
                                             @foreach ($paises as $pais)
                                                 <option value="{{ $pais->id }}"
-                                                    {{ $pais->pais == 'Colombia' ? 'selected' : '' }}>{{ $pais->pais }}
+                                                    {{ $pais->pais == 'Colombia' ? 'selected' : '' }}>
+                                                    {{ $pais->pais }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -134,7 +147,7 @@
                                         <select class="form-control" name="genero" id="genero" required>
                                             <option value="">--Seleccione--</option>
                                             <option value="">Femenino</option>
-                                            <option value="">Masculino</option> 
+                                            <option value="">Masculino</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
@@ -159,7 +172,8 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="discapacidad">Es usted persona en condición de discapacidad?</label>
+                                        <label class="requerido" for="discapacidad">Es usted persona en condición de
+                                            discapacidad?</label>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="discapasidad"
                                                 id="discapacidad1" value="si">
@@ -188,8 +202,8 @@
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
-                                        value="{{ $email }}" required>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Correo electrónico" value="{{ $email }}" required>
                                     <p>Al diligenciar su correo electrónico, está aceptando que las respuestas y
                                         comunicaciones sobre sus peticiones, quejas y reclamos, sean enviadas a esta
                                         dirección.</p>
@@ -216,7 +230,8 @@
                                             placeholder="Clave o Contraseña" name="password" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="verificacionpassword">Repetir clave o contraseña</label>
+                                        <label class="requerido" for="verificacionpassword">Repetir clave o
+                                            contraseña</label>
                                         <input type="password" class="form-control" id="verificacionpassword"
                                             placeholder="Repetir clave o contraseña" name="verificacionpassword" required>
                                     </div>
@@ -275,7 +290,8 @@
                                             recusandae quam, sunt dolores nemo distinctio nam sequi laborum iusto.</p>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
+                                            name="condiciones" required>
                                         <label class="custom-control-label" for="customCheck1">Acepto los términos y
                                             condiciones.</label>
                                     </div>
