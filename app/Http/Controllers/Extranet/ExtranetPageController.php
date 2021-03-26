@@ -148,10 +148,12 @@ class ExtranetPageController extends Controller
     }
     public function registropn_guardar(ValidarPersonaNat $request)
     {
-        dd($request->all());
+
         $nuevoUsuario['usuario'] = $request['usuario'];
         $nuevoUsuario['password'] = bcrypt(utf8_encode($request['password']));
+
         $usuario = Usuario::create($nuevoUsuario);
+
         $nuevaPersona['id'] = $usuario->id;
         $nuevaPersona['docutipos_id'] = $request['docutipos_id'];
         $nuevaPersona['identificacion'] = $request['identificacion'];
@@ -169,10 +171,17 @@ class ExtranetPageController extends Controller
         $nuevaPersona['genero'] = $request['genero'];
         $nuevaPersona['fecha_nacimiento'] = $request['fechanacimiento'];
         $nuevaPersona['grupo_etnico'] = $request['grupoetnico'];
-        $nuevaPersona['discapacidad'] = $request['discapasidad'];
+        if ($request['discapasidad'] == 'no') {
+            $nuevaPersona['discapacidad'] = 0;
+        } else {
+            $nuevaPersona['discapacidad'] = 1;
+        }
         $nuevaPersona['tipo_discapacidad'] = $request['tipodiscapacidad'];
         $nuevaPersona['email'] = $request['email'];
+
         Persona::create($nuevaPersona);
+
+        return redirect('/index')->with('mensaje', 'Registro exitoso lo invitamos a ingresar a nuestra plataforma');
     }
 
 

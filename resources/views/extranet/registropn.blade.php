@@ -146,8 +146,8 @@
                                         <label class="requerido" for="genero">Elija su Genero</label>
                                         <select class="form-control" name="genero" id="genero" required>
                                             <option value="">--Seleccione--</option>
-                                            <option value="">Femenino</option>
-                                            <option value="">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                            <option value="Masculino">Masculino</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">

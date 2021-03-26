@@ -16,12 +16,13 @@
                                     <div class="form-row">
                                         <div class="col-md-12 mb-3">
                                             <label class="requerido" for="validationDefault01">Usuario</label>
-                                            <input type="text" class="form-control" id="usuario" placeholder="usuario" required>
+                                            <input type="text" class="form-control" id="usuario" placeholder="usuario"
+                                                required>
                                         </div>
                                         <div class="col-md-12 mb-3">
                                             <label class="requerido" for="validationDefault02">Contraseña</label>
-                                            <input type="password" class="form-control" id="pasaporte" placeholder="Contraseña"
-                                                required>
+                                            <input type="password" class="form-control" id="pasaporte"
+                                                placeholder="Contraseña" required>
                                         </div>
                                     </div>
                                     <div class="centrar-items">
@@ -37,7 +38,8 @@
                         <div class="card-body">
                             <h5 class="card-title">registro</h5>
                             <p class="card-text mt-5">
-                                t is a long established fact that a reader will be distracted by the readable content of a page
+                                t is a long established fact that a reader will be distracted by the readable content of a
+                                page
                                 when looking at its layout. The point of using Lorem Ipsum
                             </p>
                             <div class="centrar-items">
@@ -51,8 +53,10 @@
                         <div class="card-body">
                             <h5 class="card-title">preguntas frecuentes</h5>
                             <p class="card-text mt-4">
-                                There are many variations of passages of Lorem Ipsum available, but the majority have suffered
-                                alteration in some form, by injected humour, or randomised words which don't look even slightly
+                                There are many variations of passages of Lorem Ipsum available, but the majority have
+                                suffered
+                                alteration in some form, by injected humour, or randomised words which don't look even
+                                slightly
                                 believable.
                             </p>
                             <div class="centrar-items">
@@ -60,6 +64,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-3">
+                <div class="col-11 col-md-6">
+                    @include('includes.error-form')
+                    @include('includes.mensaje')
                 </div>
             </div>
         </div>
