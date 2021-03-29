@@ -15,6 +15,8 @@ class CrearTablaEmpresas extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
+            $table->unsignedBigInteger('representante_id');
+            $table->foreign('representante_id', 'fk_representante_empresa')->references('id')->on('representantes')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('docutipos_id');
             $table->foreign('docutipos_id', 'fk_empresa_docutipos')->references('id')->on('docutipos')->onDelete('restrict')->onUpdate('restrict');
             $table->string('identificacion', 100)->unique();

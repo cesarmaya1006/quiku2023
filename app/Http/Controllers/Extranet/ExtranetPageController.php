@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Extranet;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidarPersonaJur;
 use App\Http\Requests\ValidarPersonaNat;
 use App\Http\Requests\ValidarRegistroIni;
 use App\Mail\RegistroInicial;
@@ -77,14 +78,14 @@ class ExtranetPageController extends Controller
             if ($usuarioTemp->tipo_persona == 1) {
                 $usuacambio['estado'] = 1;
                 UsuarioTemp::findOrFail($id)->update($usuacambio);
-                return view('extranet.registropj', compact('tipos_docu'));
+                return view('extranet.registropj', compact('tipos_docu', 'docutipos_id', 'identificacion', 'email', 'paises', 'departamentos'));
             } else {
                 $usuacambio['estado'] = 2;
                 UsuarioTemp::findOrFail($id)->update($usuacambio);
                 return view('extranet.registropn', compact('tipos_docu', 'docutipos_id', 'identificacion', 'email', 'paises', 'departamentos'));
             }
         } elseif ($usuarioTemp->estado == 1) {
-            return view('extranet.registropj');
+            return view('extranet.registropj', compact('tipos_docu', 'docutipos_id', 'identificacion', 'email', 'paises', 'departamentos'));
         } else {
             return view('extranet.registropn', compact('tipos_docu', 'docutipos_id', 'identificacion', 'email', 'paises', 'departamentos'));
         }
@@ -135,6 +136,10 @@ class ExtranetPageController extends Controller
         return view('extranet.registropj');
     }
 
+    public function registropj_guardar(ValidarPersonaJur $request)
+    {
+        dd($request->all());
+    }
 
     public function registro_rep()
     {
