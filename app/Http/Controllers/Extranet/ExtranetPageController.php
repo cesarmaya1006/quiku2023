@@ -16,6 +16,7 @@ use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Usuario;
 use App\Models\Admin\UsuarioTemp;
 use App\Models\Empresas\Empresa;
+use App\Models\Empresas\Representante;
 use App\Models\Personas\Persona;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -142,7 +143,7 @@ class ExtranetPageController extends Controller
     {
         $empresa = Empresa::create($request->all());
 
-        return redirect('/registro_rl/ ' . $empresa->id);
+        return redirect('/registro_rep/' . $empresa->id);
     }
 
     public function registro_rep($id)
@@ -154,7 +155,41 @@ class ExtranetPageController extends Controller
     }
     public function registrorep_guardar(ValidarRepresentanteLegal $request)
     {
-        dd($request->all());
+        $nuevoUsuario['usuario'] = $request['usuario'];
+        $nuevoUsuario['password'] = bcrypt(utf8_encode($request['password']));
+
+        $usuario = Usuario::create($nuevoUsuario);
+
+        $nuevaPersona['id'] = $usuario->id;
+        $nuevaPersona['docutipos_id'] = $request['docutipos_id'];
+        $nuevaPersona['identificacion'] = $request['identificacion'];
+        $nuevaPersona['nombre1'] = $request['nombre1'];
+        $nuevaPersona['nombre2'] = $request['nombre2'];
+        $nuevaPersona['apellido1'] = $request['apellido1'];
+        $nuevaPersona['apellido2'] = $request['apellido2'];
+        $nuevaPersona['telefono_fijo'] = $request['telefono_fijo'];
+        $nuevaPersona['telefono_celu'] = $request['telefono_celu'];
+        $nuevaPersona['direccion'] = $request['direccion'];
+        $nuevaPersona['pais_id'] = $request['pais'];
+        $nuevaPersona['municipio_id'] = $request['municipio_id'];
+        $nuevaPersona['nacionalidad'] = $request['nacionalidad'];
+        $nuevaPersona['grado'] = $request['grado'];
+        $nuevaPersona['genero'] = $request['genero'];
+        $nuevaPersona['fecha_nacimiento'] = $request['fecha_nacimiento'];
+        $nuevaPersona['grupo_etnico'] = $request['grupo_etnico'];
+        if ($request['discapasidad'] == 'no') {
+            $nuevaPersona['discapacidad'] = 0;
+        } else {
+            $nuevaPersona['discapacidad'] = 1;
+        }
+        $nuevaPersona['tipo_discapacidad'] = $request['tipo_discapacidad'];
+        $nuevaPersona['email'] = $request['email'];
+
+        $representante = Representante::create($nuevaPersona);
+        $empresaUpdate['representante_id'] = $representante->id;
+        Empresa::findOrFail($request['representante_id'])->update($empresaUpdate);
+
+        return redirect('/index')->with('mensaje', 'Registro exitoso lo invitamos a ingresar a nuestra plataforma');
     }
 
     public function registro_pn()

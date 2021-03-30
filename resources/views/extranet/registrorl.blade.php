@@ -17,16 +17,15 @@
                         @method('post')
                         <div class="card-body" id="registro_ini">
                             <h5 class="card-title">Registro Datos Representante Legal</h5>
+                            <input type="hidden" name="representante_id" value="{{ $id }}">
                             <div class="card-text mt-5">
                                 <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
                                         <label class="requerido" for="tipodocumento">Tipo documento</label>
-                                        <select class="form-control" name="docutipos_id" id="docutipos_id" required
-                                            readonly="true">
+                                        <select class="form-control" name="docutipos_id" id="docutipos_id" required>
                                             <option value="">--Seleccione un tipo--</option>
                                             @foreach ($tipos_docu as $tipodocu)
-                                                <option value="{{ $tipodocu->id }}">
-                                                    {{ $tipodocu->abreb_id }}</option>
+                                                <option value="{{ $tipodocu->id }}">{{ $tipodocu->abreb_id }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -117,8 +116,8 @@
                                             name="nacionalidad" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="grado_educacion">Último grado de educación obtenido</label>
-                                        <select class="form-control" name="grado_educacion" id="grado_educacion" required>
+                                        <label class="requerido" for="grado">Último grado de educación obtenido</label>
+                                        <select class="form-control" name="grado" id="grado" required>
                                             <option value="">--Seleccione--</option>
                                             <option value="Basica Primaria">Basica Primaria</option>
                                             <option value="Bachiller">Bachiller</option>
@@ -134,8 +133,8 @@
                                         <label for="genero">Elija su Genero</label>
                                         <select class="form-control" name="genero" id="genero" required>
                                             <option value="">--Seleccione--</option>
-                                            <option value="">Femenino</option>
-                                            <option value="">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                            <option value="Masculino">Masculino</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
@@ -278,7 +277,8 @@
                                             recusandae quam, sunt dolores nemo distinctio nam sequi laborum iusto.</p>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1"
+                                            name="condiciones" required>
                                         <label class="custom-control-label" for="customCheck1">Acepto los términos y
                                             condiciones.</label>
                                     </div>

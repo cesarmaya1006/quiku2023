@@ -19,7 +19,8 @@ class CrearTablaEmpresas extends Migration
             $table->foreign('representante_id', 'fk_representante_empresa')->references('id')->on('representantes')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('docutipos_id');
             $table->foreign('docutipos_id', 'fk_empresa_docutipos')->references('id')->on('docutipos')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('identificacion', 100)->unique();
+            $table->string('identificacion', 100);
+            $table->string('dv', 2);
             $table->string('razon_social', 255);
             $table->string('direccion', 255);
             $table->unsignedBigInteger('pais_id');

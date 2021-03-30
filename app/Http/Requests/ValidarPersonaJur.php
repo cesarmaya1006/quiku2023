@@ -24,7 +24,7 @@ class ValidarPersonaJur extends FormRequest
     public function rules()
     {
         return [
-            'identificacion' => 'required|max:100|unique:empresas,identificacion,docutipos_id' . $this->route('id'),
+            'identificacion' => 'required|max:100|unique:empresas,identificacion,docutipos_id', 'dv' . $this->route('id'),
         ];
     }
 }
