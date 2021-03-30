@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidarPersonaJur;
 use App\Http\Requests\ValidarPersonaNat;
 use App\Http\Requests\ValidarRegistroIni;
+use App\Http\Requests\ValidarRepresentanteLegal;
 use App\Mail\RegistroInicial;
 use App\Models\Admin\Departamento;
 use App\Models\Admin\Municipio;
@@ -14,6 +15,7 @@ use App\Models\Admin\Parametro;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Usuario;
 use App\Models\Admin\UsuarioTemp;
+use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -138,14 +140,22 @@ class ExtranetPageController extends Controller
 
     public function registropj_guardar(ValidarPersonaJur $request)
     {
+        $empresa = Empresa::create($request->all());
+
+        return redirect('/registro_rl/ ' . $empresa->id);
+    }
+
+    public function registro_rep($id)
+    {
+        $tipos_docu = Tipo_Docu::get();
+        $paises = Pais::get();
+        $departamentos = Departamento::get();
+        return view('extranet.registrorl', compact('tipos_docu', 'paises', 'departamentos', 'id'));
+    }
+    public function registrorep_guardar(ValidarRepresentanteLegal $request)
+    {
         dd($request->all());
     }
-
-    public function registro_rep()
-    {
-        return view('extranet.registrorl');
-    }
-
 
     public function registro_pn()
     {

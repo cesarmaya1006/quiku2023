@@ -6,6 +6,10 @@
 @section('cuerpo_pagina')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-10">
+                @include('includes.error-form')
+                @include('includes.mensaje')
+            </div>
             <div class="col-10 mt-5">
                 <div class="card">
                     <div class="card-body">
@@ -17,8 +21,8 @@
                                 @method('post')
                                 <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
-                                        <label class="requerido" for="tipodocumento">Tipo documento</label>
-                                        <select class="form-control" name="tipodocumento" id="tipodocumento" required>
+                                        <label class="requerido" for="docutipos_id">Tipo documento</label>
+                                        <select class="form-control" name="docutipos_id" id="docutipos_id" required>
                                             <option value="">--Seleccione un tipo--</option>
                                             @foreach ($tipos_docu as $tipodocu)
                                                 <option value="{{ $tipodocu->id }}"
@@ -28,17 +32,17 @@
                                         </select>
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
-                                        <label class="requerido" for="numerodocumento">Número de documento</label>
-                                        <input type="text" class="form-control" id="numerodocumento"
+                                        <label class="requerido" for="identificacion">Número de documento</label>
+                                        <input type="text" class="form-control" id="identificacion" name="identificacion"
                                             placeholder="Número documento" value="{{ $identificacion }}" required
                                             readonly="true">
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-12 mb-3">
-                                        <label class="requerido" for="primernombre">Razón Social</label>
-                                        <input type="text" class="form-control" id="primernombre"
-                                            placeholder="Primer Nombre" name="primernombre" required>
+                                        <label class="requerido" for="razon_social">Razón Social</label>
+                                        <input type="text" class="form-control" id="razon_social"
+                                            placeholder="Primer Nombre" name="razon_social" required>
                                     </div>
                                 </div>
                                 <div class="form-row row">
@@ -48,8 +52,8 @@
                                             name="direccion" required value="{{ old('direccion') }}">
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
-                                        <label class="requerido" for="pais">País</label>
-                                        <select class="form-control" name="pais" id="pais" required>
+                                        <label class="requerido" for="pais_id">País</label>
+                                        <select class="form-control" name="pais_id" id="pais_id" required>
                                             <option value="">--Seleccione--</option>
                                             @foreach ($paises as $pais)
                                                 <option value="{{ $pais->id }}"
@@ -82,20 +86,20 @@
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="telefonofijo">Teléfono fijo</label>
-                                        <input type="text" class="form-control" id="telefonofijo"
-                                            placeholder="Teléfono fijo" name="telefonofijo">
+                                        <label for="telefono_fijo">Teléfono fijo</label>
+                                        <input type="text" class="form-control" id="telefono_fijo"
+                                            placeholder="Teléfono fijo" name="telefono_fijo">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="telefonocelular">Teléfono Celular</label>
-                                        <input type="text" class="form-control" id="telefonocelular"
-                                            placeholder="Teléfono Celular" name="telefonocelular" required>
+                                        <label class="requerido" for="telefono_celu">Teléfono Celular</label>
+                                        <input type="text" class="form-control" id="telefono_celu"
+                                            placeholder="Teléfono Celular" name="telefono_celu" required>
                                     </div>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
-                                        value="{{ $email }}" required>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Correo electrónico" value="{{ $email }}" required>
                                     <p>Al diligenciar su correo electrónico, está aceptando que las respuestas y
                                         comunicaciones sobre sus peticiones, quejas y reclamos, sean enviadas a esta
                                         dirección.</p>
