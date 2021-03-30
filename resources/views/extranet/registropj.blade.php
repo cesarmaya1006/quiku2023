@@ -21,15 +21,9 @@
                                 @csrf
                                 @method('post')
                                 <div class="form-row row">
-<<<<<<< HEAD
                                     <div class="form-group mt-3 col-md-5">
                                         <label class="requerido" for="tipodocumento">Tipo documento</label>
                                         <select class="form-control" name="tipodocumento" id="tipodocumento" required readonly="true">
-=======
-                                    <div class="form-group mt-3 col-md-6">
-                                        <label class="requerido" for="docutipos_id">Tipo documento</label>
-                                        <select class="form-control" name="docutipos_id" id="docutipos_id" required>
->>>>>>> f1f45d636b2c602428308ddcaa212664e50cbc35
                                             <option value="">--Seleccione un tipo--</option>
                                             @foreach ($tipos_docu as $tipodocu)
                                                 <option value="{{ $tipodocu->id }}"
@@ -38,15 +32,9 @@
                                             @endforeach
                                         </select>
                                     </div>
-<<<<<<< HEAD
                                     <div class="form-group mt-3 col-md-5">
                                         <label class="requerido" for="numerodocumento">Número de documento</label>
                                         <input type="text" class="form-control" id="numerodocumento"
-=======
-                                    <div class="form-group mt-3 col-md-6">
-                                        <label class="requerido" for="identificacion">Número de documento</label>
-                                        <input type="text" class="form-control" id="identificacion" name="identificacion"
->>>>>>> f1f45d636b2c602428308ddcaa212664e50cbc35
                                             placeholder="Número documento" value="{{ $identificacion }}" required
                                             readonly="true">
                                     </div>
@@ -116,13 +104,8 @@
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
-<<<<<<< HEAD
                                     <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
                                         value="{{ $email }}" required readonly="true">
-=======
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="Correo electrónico" value="{{ $email }}" required>
->>>>>>> f1f45d636b2c602428308ddcaa212664e50cbc35
                                     <p>Al diligenciar su correo electrónico, está aceptando que las respuestas y
                                         comunicaciones sobre sus peticiones, quejas y reclamos, sean enviadas a esta
                                         dirección.</p>
