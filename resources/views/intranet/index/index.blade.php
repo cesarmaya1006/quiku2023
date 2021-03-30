@@ -10,12 +10,18 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Sistema de informaci&oacute;n jurídico MGL Y ASOCIADOS
+    Sistema de informaci&oacute;n PQR LEGAL PROCEEDINGS
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
     <div class="container-fluid">
-        Hola
+        @if (session('rol_id') == 6)
+            @include('intranet.index.index_usuarios')
+        @endif
+        @if (session('rol_id') == 5)
+            @include('intranet.index.index_funcionarios')
+        @endif
+
     </div>
 @endsection
 <!-- ************************************************************* -->

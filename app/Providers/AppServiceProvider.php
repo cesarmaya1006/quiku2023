@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Admin\Menu;
 use App\Models\Admin\Parametro;
+use App\Models\Admin\Usuario;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -36,8 +37,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer("theme.back.menu_lat", function ($view) {
+            $usuario = Usuario::findOrFail(session('id_usuario'));
             $menus = Menu::getMenu(true);
-            $view->with('menusComposer', $menus);
+            $view->with('menusComposer', $menus)->with('usuario', $usuario);
         });
     }
 }

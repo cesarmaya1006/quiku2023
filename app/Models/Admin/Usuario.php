@@ -2,9 +2,11 @@
 
 namespace App\Models\Admin;
 
+use App\Models\Empresas\Representante;
 use App\Models\Empresas\Solicitud;
 use App\Models\Mgl\Apoderado;
 use App\Models\Mgl\Asistente;
+use App\Models\Personas\Persona;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -37,11 +39,21 @@ class Usuario extends Authenticatable
         return $this->belongsTo(Tipo_Docu::class, 'docutipos_id', 'id');
     }
     //==================================================================================
+    public function persona()
+    {
+        return $this->belongsTo(Persona::class, 'id');
+    }
+    //==================================================================================
+    public function representante()
+    {
+        return $this->belongsTo(Representante::class, 'id');
+    }
+    //==================================================================================
     public function setSession($roles)
     {
         Session::put([
             'id_usuario' => $this->id,
-            'usuario' => $this->usuario,
+            'usuario' => $this->usuario
 
         ]);
         if (count($roles) == 1) {
