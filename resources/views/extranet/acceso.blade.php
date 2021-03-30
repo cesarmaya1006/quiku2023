@@ -12,16 +12,18 @@
                         <div class="card-body">
                             <h5 class="card-title">Iniciar sesión</h5>
                             <div class="card-text mt-5">
-                                <form>
+                                <form action="{{ route('login') }}" method="post" autocomplete="off">
+                                    @method('post')
+                                    @csrf
                                     <div class="form-row">
                                         <div class="col-md-12 mb-3">
                                             <label class="requerido" for="validationDefault01">Usuario</label>
-                                            <input type="text" class="form-control" id="usuario" placeholder="usuario"
-                                                required>
+                                            <input type="text" class="form-control" id="usuario" name="usuario"
+                                                placeholder="usuario" required>
                                         </div>
                                         <div class="col-md-12 mb-3">
                                             <label class="requerido" for="validationDefault02">Contraseña</label>
-                                            <input type="password" class="form-control" id="pasaporte"
+                                            <input type="password" class="form-control" id="pasaporte" name="password"
                                                 placeholder="Contraseña" required>
                                         </div>
                                     </div>

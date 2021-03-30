@@ -159,6 +159,8 @@ class ExtranetPageController extends Controller
         $nuevoUsuario['password'] = bcrypt(utf8_encode($request['password']));
 
         $usuario = Usuario::create($nuevoUsuario);
+        $roles['rol_id'] = 6;
+        $usuario->roles()->sync($roles);
 
         $nuevaPersona['id'] = $usuario->id;
         $nuevaPersona['docutipos_id'] = $request['docutipos_id'];
@@ -203,6 +205,8 @@ class ExtranetPageController extends Controller
         $nuevoUsuario['password'] = bcrypt(utf8_encode($request['password']));
 
         $usuario = Usuario::create($nuevoUsuario);
+        $roles['rol_id'] = 6;
+        $usuario->roles()->sync($roles);
 
         $nuevaPersona['id'] = $usuario->id;
         $nuevaPersona['docutipos_id'] = $request['docutipos_id'];
@@ -230,6 +234,7 @@ class ExtranetPageController extends Controller
         $nuevaPersona['email'] = $request['email'];
 
         Persona::create($nuevaPersona);
+
 
         return redirect('/index')->with('mensaje', 'Registro exitoso lo invitamos a ingresar a nuestra plataforma');
     }

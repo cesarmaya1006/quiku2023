@@ -39,7 +39,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         RateLimiter::for('login', function (Request $request) {
-            return Limit::perMinute(5)->by($request->email . $request->ip());
+            return Limit::perMinute(5)->by($request->usuario . $request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {
@@ -48,9 +48,10 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(fn () => view('extranet.acceso'));
 
         Fortify::authenticateUsing(function (Request $request) {
-            $user = Usuario::where('email', $request->email)->first();
-            if ($user && Hash::check($request->password, $user->password)) {
 
+            $user = Usuario::where('usuario', $request->usuario)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
                 $roles = $user->roles()->get();
                 if ($roles->isNotEmpty()) {
                     $user->setSession($roles->toArray());
