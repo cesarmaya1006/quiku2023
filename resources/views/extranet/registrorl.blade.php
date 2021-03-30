@@ -6,13 +6,17 @@
 @section('cuerpo_pagina')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-10">
+                @include('includes.error-form')
+                @include('includes.mensaje')
+            </div>
             <div class="col-10 mt-5">
                 <div class="card">
-                    <form action="{{ route('registropn-guardar') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('registrorep-guardar') }}" method="POST" autocomplete="off">
                         @csrf
                         @method('post')
                         <div class="card-body" id="registro_ini">
-                            <h5 class="card-title">Registro Datos Persona Natural</h5>
+                            <h5 class="card-title">Registro Datos Representante Legal</h5>
                             <div class="card-text mt-5">
                                 <div class="form-row row">
                                     <div class="form-group mt-3 col-md-6">
@@ -21,53 +25,51 @@
                                             readonly="true">
                                             <option value="">--Seleccione un tipo--</option>
                                             @foreach ($tipos_docu as $tipodocu)
-                                                <option value="{{ $tipodocu->id }}"
-                                                    {{ $tipodocu->id == $docutipos_id ? 'selected' : '' }}>
+                                                <option value="{{ $tipodocu->id }}">
                                                     {{ $tipodocu->abreb_id }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
                                         <label for="numerodocumento">Número de documento</label>
-                                        <input type="text" class="form-control" id="numerodocumento"
-                                            placeholder="Número documento" value="{{ $identificacion }}" required
-                                            readonly="true">
+                                        <input type="text" class="form-control" id="identificacion" name="identificacion"
+                                            placeholder="Número documento" required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="primernombre">Primer Nombre</label>
-                                        <input type="text" class="form-control" id="primernombre"
-                                            placeholder="Primer Nombre" name="primernombre" required>
+                                        <label class="requerido" for="nombre1">Primer Nombre</label>
+                                        <input type="text" class="form-control lcapital" id="nombre1"
+                                            placeholder="Primer Nombre" name="nombre1" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="segundonombre">Segundo Nombre</label>
-                                        <input type="text" class="form-control" id="segundonombre"
-                                            placeholder="Segundo Nombre" name="segundonombre">
-                                    </div>
-                                </div>
-                                <div class="form-row row mt-3">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="primerapellido">Primer Apellido</label>
-                                        <input type="text" class="form-control" id="primerapellido"
-                                            placeholder="Primer Apellido" name="primerapellido" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="segundoapelldio">Segundo Apellido</label>
-                                        <input type="text" class="form-control" id="segundoapelldio"
-                                            placeholder="Segundo Apellido" name="segundoapelldio">
+                                        <label for="nombre2">Segundo Nombre</label>
+                                        <input type="text" class="form-control lcapital" id="nombre2"
+                                            placeholder="Segundo Nombre" name="nombre2">
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="telefonofijo">Teléfono fijo</label>
-                                        <input type="text" class="form-control" id="telefonofijo"
-                                            placeholder="Teléfono fijo" name="telefonofijo">
+                                        <label class="requerido" for="apellido1">Primer Apellido</label>
+                                        <input type="text" class="form-control lcapital" id="apellido1"
+                                            placeholder="Primer Apellido" name="apellido1" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="requerido" for="telefonocelular">Teléfono Celular</label>
-                                        <input type="text" class="form-control" id="telefonocelular"
-                                            placeholder="Teléfono Celular" name="telefonocelular" required>
+                                        <label for="apellido2">Segundo Apellido</label>
+                                        <input type="text" class="form-control lcapital" id="apellido2"
+                                            placeholder="Segundo Apellido" name="apellido2">
+                                    </div>
+                                </div>
+                                <div class="form-row row mt-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="telefono_fijo">Teléfono fijo</label>
+                                        <input type="text" class="form-control" id="telefono_fijo"
+                                            placeholder="Teléfono fijo" name="telefono_fijo">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="requerido" for="telefono_celu">Teléfono Celular</label>
+                                        <input type="text" class="form-control" id="telefono_celu"
+                                            placeholder="Teléfono Celular" name="telefono_celu" required>
                                     </div>
                                 </div>
                                 <div class="form-row row">
@@ -115,8 +117,8 @@
                                             name="nacionalidad" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="grado">Último grado de educación obtenido</label>
-                                        <select class="form-control" name="grado" id="grado" required>
+                                        <label for="grado_educacion">Último grado de educación obtenido</label>
+                                        <select class="form-control" name="grado_educacion" id="grado_educacion" required>
                                             <option value="">--Seleccione--</option>
                                             <option value="Basica Primaria">Basica Primaria</option>
                                             <option value="Bachiller">Bachiller</option>
@@ -129,16 +131,17 @@
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="grado">Elija su Genero</label>
-                                        <select class="form-control" name="grado" id="grado" required>
+                                        <label for="genero">Elija su Genero</label>
+                                        <select class="form-control" name="genero" id="genero" required>
                                             <option value="">--Seleccione--</option>
                                             <option value="">Femenino</option>
                                             <option value="">Masculino</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="fechanacimiento">Fecha nacimiento</label>
-                                        <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento"
+                                        <label for="fecha_nacimiento">Fecha nacimiento</label>
+                                        <input type="date" class="form-control" id="fecha_nacimiento"
+                                            name="fecha_nacimiento"
                                             max="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
                                             value="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
                                             required>
@@ -146,8 +149,8 @@
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
-                                        <label for="grupoetnico">Grupo Étnico</label>
-                                        <select class="form-control" name="grupoetnico" id="grupoetnico" required>
+                                        <label for="grupo_etnico">Grupo Étnico</label>
+                                        <select class="form-control" name="grupo_etnico" id="grupo_etnico" required>
                                             <option value="">--Seleccione--</option>
                                             <option value="1">Sin pertenencia étnica</option>
                                             <option value="2">Negro, mulato, afrodescendiente, afrocolombiano</option>
@@ -176,8 +179,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group mt-3 d-none" id="tipodiscapacidadcaja">
-                                    <label for="tipodiscapacidad">Tipo discapacidad?</label>
-                                    <select class="form-control" name="tipodiscapacidad" id="tipodiscapacidad">
+                                    <label for="tipo_discapacidad">Tipo discapacidad?</label>
+                                    <select class="form-control" name="tipo_discapacidad" id="tipo_discapacidad">
                                         <option value="">--Seleccione--</option>
                                         <option value="1">Incapacidad Permanente Parcial</option>
                                         <option value="2">Incapacidad Permanente Total</option>
@@ -187,8 +190,8 @@
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="email">Correo electrónico</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
-                                        value="{{ $email }}" required>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Correo electrónico" required>
                                     <p>Al diligenciar su correo electrónico, está aceptando que las respuestas y
                                         comunicaciones sobre sus peticiones, quejas y reclamos, sean enviadas a esta
                                         dirección.</p>
@@ -290,5 +293,5 @@
     </div>
 @endsection
 @section('script_pagina')
-
+    <script src="{{ asset('js/extranet/registro.js') }}"></script>
 @endsection

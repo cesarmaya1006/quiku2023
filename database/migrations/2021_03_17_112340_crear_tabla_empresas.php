@@ -15,7 +15,7 @@ class CrearTablaEmpresas extends Migration
     {
         Schema::create('empresas', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->unsignedBigInteger('representante_id');
+            $table->unsignedBigInteger('representante_id')->nullable();
             $table->foreign('representante_id', 'fk_representante_empresa')->references('id')->on('representantes')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('docutipos_id');
             $table->foreign('docutipos_id', 'fk_empresa_docutipos')->references('id')->on('docutipos')->onDelete('restrict')->onUpdate('restrict');
@@ -26,7 +26,7 @@ class CrearTablaEmpresas extends Migration
             $table->foreign('pais_id', 'fk_pais_empresa')->references('id')->on('pais')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('municipio_id')->nullable();
             $table->foreign('municipio_id', 'fk_municipio_empresa')->references('id')->on('municipio')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('telefono_fijo', 30);
+            $table->string('telefono_fijo', 30)->nullable();
             $table->string('telefono_celu', 30);
             $table->string('email')->unique();
             $table->timestamps();

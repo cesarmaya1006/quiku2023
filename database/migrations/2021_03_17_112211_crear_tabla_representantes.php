@@ -30,8 +30,7 @@ class CrearTablaRepresentantes extends Migration
             $table->foreign('pais_id', 'fk_pais_representante')->references('id')->on('pais')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('municipio_id')->nullable();
             $table->foreign('municipio_id', 'fk_municipio_representante')->references('id')->on('municipio')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('nacionalidad_id');
-            $table->foreign('nacionalidad_id', 'fk_nacionalidad_representante')->references('id')->on('pais')->onDelete('restrict')->onUpdate('restrict');
+            $table->string('nacionalidad', 100);
             $table->string('grado_educacion', 100);
             $table->string('genero', 20);
             $table->date('fecha_nacimiento');
