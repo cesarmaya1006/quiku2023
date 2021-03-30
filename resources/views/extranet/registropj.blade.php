@@ -9,16 +9,17 @@
             <div class="col-10 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Registro</h5>
+                        <p class="m-0 text-right"><strong>1/3</strong></p>
+                        <h5 class="card-title">REGISTRO</h5>
                         <h5 class="card-title">DATOS PERSONA JURÍDICA</h5>
                         <div class="card-text mt-5">
                             <form action="{{ route('registropj-guardar') }}" method="POST" autocomplete="off">
                                 @csrf
                                 @method('post')
                                 <div class="form-row row">
-                                    <div class="form-group mt-3 col-md-6">
+                                    <div class="form-group mt-3 col-md-5">
                                         <label class="requerido" for="tipodocumento">Tipo documento</label>
-                                        <select class="form-control" name="tipodocumento" id="tipodocumento" required>
+                                        <select class="form-control" name="tipodocumento" id="tipodocumento" required readonly="true">
                                             <option value="">--Seleccione un tipo--</option>
                                             @foreach ($tipos_docu as $tipodocu)
                                                 <option value="{{ $tipodocu->id }}"
@@ -27,11 +28,16 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group mt-3 col-md-6">
+                                    <div class="form-group mt-3 col-md-5">
                                         <label class="requerido" for="numerodocumento">Número de documento</label>
                                         <input type="text" class="form-control" id="numerodocumento"
                                             placeholder="Número documento" value="{{ $identificacion }}" required
                                             readonly="true">
+                                    </div>
+                                    <div class="form-group mt-3 col-md-2">
+                                        <label class="requerido" for="digitoverificacion">DV</label>
+                                        <input type="text" class="form-control" id="digitoverificacion"
+                                            placeholder="" value="" required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
@@ -95,7 +101,7 @@
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
                                     <input type="email" class="form-control" id="email" placeholder="Correo electrónico"
-                                        value="{{ $email }}" required>
+                                        value="{{ $email }}" required readonly="true">
                                     <p>Al diligenciar su correo electrónico, está aceptando que las respuestas y
                                         comunicaciones sobre sus peticiones, quejas y reclamos, sean enviadas a esta
                                         dirección.</p>
