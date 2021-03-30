@@ -30,6 +30,9 @@
                                     <div class="centrar-items">
                                         <button class="mt-3 btn btn-primary" type="submit">Iniciar sesión</button>
                                     </div>
+                                    <div class="centrar-items mt-3">
+                                        <p><a class="card-text"href="">¿Olvidé mi nombre de usuario o contraseña?</a></p>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -39,13 +42,9 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">registro</h5>
-                            <p class="card-text mt-5">
-                                t is a long established fact that a reader will be distracted by the readable content of a
-                                page
-                                when looking at its layout. The point of using Lorem Ipsum
-                            </p>
+                            <p class="card-text mt-5">¿Ya tiene una cuenta? Para acceder a nuestro sistema de registro de peticiones, quejas y reclamos debe estar registrado</p>
                             <div class="centrar-items">
-                                <a href="{{ route('registro_ini') }}" class="mt-3 btn btn-primary">Regístrese</a>
+                                <a href="{{ route('registro_ini') }}" class="mt-3 btn btn-primary">Registrarse</a>
                             </div>
                         </div>
                     </div>
@@ -54,13 +53,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">preguntas frecuentes</h5>
-                            <p class="card-text mt-4">
-                                There are many variations of passages of Lorem Ipsum available, but the majority have
-                                suffered
-                                alteration in some form, by injected humour, or randomised words which don't look even
-                                slightly
-                                believable.
-                            </p>
+                            <p class="card-text mt-4">Tienes dudas? Ingresa y conoce las respuestas a las preguntas más frecuentes que nos realizan nuestros usuarios.</p>
                             <div class="centrar-items">
                                 <a href="preguntas.html" class="mt-3 btn btn-primary">Ir al sitio</a>
                             </div>
