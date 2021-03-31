@@ -28,7 +28,7 @@
                                             @foreach ($tipos_docu as $tipodocu)
                                                 <option value="{{ $tipodocu->id }}"
                                                     {{ $tipodocu->id == $docutipos_id ? 'selected' : '' }}>
-                                                    {{ $tipodocu->abreb_id }}</option>
+                                                    {{ $tipodocu->tipo_id }}</option>
                                             @endforeach
                                         </select>
                                     </div>

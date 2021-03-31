@@ -71,7 +71,15 @@
     </div>
     @yield('cuerpo_pagina')
     <!-- Optional JavaScript; choose one of the two! -->
-
+    <div class="row fixed-bottom p-3" style="background-color: rgba(26, 26, 26, 0.4)">
+        <div class="col-12 text-center text-white">
+            <strong>Copyright &copy; 2021 <a href="http://www.mglasociados.com/" style="color: white">MGL</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0.0
+            </div>
+        </div>
+    </div>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
