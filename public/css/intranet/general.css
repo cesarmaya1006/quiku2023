@@ -15,14 +15,13 @@ label.requerido:after {
     color: red;
 }
 
-.card-primary {
+.card {
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 30px;
-    border-top: 8px solid rgba(20, 217, 231, 0.507);
     border-radius: 5px;
 }
 
