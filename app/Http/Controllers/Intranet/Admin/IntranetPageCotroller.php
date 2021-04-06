@@ -9,6 +9,7 @@ use App\Models\Juzgados\Etapa_Proceso;
 use App\Models\Juzgados\Procesos;
 use App\Models\Juzgados\Riesgo_Perdida;
 use App\Models\Juzgados\Tipo_Proceso;
+use App\Models\PQR\PQR;
 use Illuminate\Http\Request;
 
 class IntranetPageCotroller extends Controller
@@ -20,7 +21,10 @@ class IntranetPageCotroller extends Controller
      */
     public function index()
     {
-        return view('intranet.index.index');
+        if (session('rol_id') == 6) {
+            $pqr_S = PQR::where('persona_id', session('id_usuario'));
+        }
+        return view('intranet.index.index', compact('pqr_S'));
     }
 
     /**

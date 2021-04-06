@@ -29,12 +29,15 @@ class Tabla_Menu extends Seeder
             ['nombre' => 'Permisos -Rol', 'menu_id' => '2', 'url' => 'admin/_permiso-rol', 'orden' => '5', 'icono' => 'fas fa-user-lock'],
             ['nombre' => 'Usuarios', 'menu_id' => '2', 'url' => '#', 'orden' => '5', 'icono' => 'fas fa-user-friends'],
             // Menus padre
-            ['nombre' => 'Gestionar PQR', 'menu_id' => '0', 'url' => '#', 'orden' => '3', 'icono' => 'fas fa-chalkboard-teacher'],
+            ['nombre' => 'Gestionar', 'menu_id' => '0', 'url' => '#', 'orden' => '3', 'icono' => 'fas fa-chalkboard-teacher'],
+            //----------------------------------------------------------------------------------------------------------------------
+            // Menus padre
+            ['nombre' => 'Gestionar PQR', 'menu_id' => '9', 'url' => '#', 'orden' => '1', 'icono' => 'fas fa-chalkboard-teacher'],
             //----------------------------------------------------------------------------------------------------------------------
             // Menus hijos
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Listado PQR', 'menu_id' => '9',  'url' => 'admin/pqr-listado', 'orden' => '1',  'icono' => 'far fa-list-alt'],
-            ['nombre' => 'Generar PQR', 'menu_id' => '9',  'url' => 'admin/pqr-generar', 'orden' => '2',  'icono' => 'fas fa-plus-square'],
+            ['nombre' => 'Listado PQR', 'menu_id' => '10',  'url' => 'usuario/index', 'orden' => '1',  'icono' => 'far fa-list-alt'],
+            ['nombre' => 'Generar PQR', 'menu_id' => '10',  'url' => 'usuario/generar', 'orden' => '2',  'icono' => 'fas fa-plus-square'],
 
         ];
 

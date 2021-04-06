@@ -17,4 +17,9 @@ class Municipio extends Model
         return $this->belongsTo(Departamento::class, 'departamento_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function pqrs()
+    {
+        return $this->hasMany(PQR::class, 'municipio_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }

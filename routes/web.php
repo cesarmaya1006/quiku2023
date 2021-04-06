@@ -8,6 +8,7 @@ use App\Http\Controllers\Intranet\Admin\PermisoController;
 use App\Http\Controllers\Intranet\Admin\PermisoRolController;
 use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\UsuarioController;
+use App\Http\Controllers\Intranet\Usuarios\ClienteController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,7 @@ Route::get('/clear-cache', function () {
     echo Artisan::call('cache:clear');
     echo Artisan::call('route:clear');
 });
+//---------------------------------------------------------------------------------
 Route::get('/', [ExtranetPageController::class, 'index'])->name('index');
 Route::get('/index', [ExtranetPageController::class, 'index'])->name('index_2');
 Route::get('/index3', [ExtranetPageController::class, 'index_3'])->name('index_3');
@@ -45,10 +47,11 @@ Route::get('/registro_rep/{id}', [ExtranetPageController::class, 'registro_rep']
 Route::get('/registro_pn', [ExtranetPageController::class, 'registro_pn'])->name('registro_pn');
 Route::get('/cargar_municipios', [ExtranetPageController::class, 'cargar_municipios'])->name('cargar_municipios');
 Route::get('/registro_final_pn', [ExtranetPageController::class, 'registro_final_pn'])->name('registro_final_pn');
-
-
+//---------------------------------------------------------------------------------
 Route::group(['middleware' => 'auth'], function () {
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Route::group(['prefix' => 'admin'], function () {
+
         Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
         // Rutas Index
         // ------------------------------------------------------------------------------------
@@ -104,17 +107,17 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('empresa/{id}', [EmpresaController::class, 'actualizar'])->name('admin-empresa-actualizar');
             Route::delete('empresa/{id}', [EmpresaController::class, 'eliminar'])->name('admin-empresa-eliminar');
             // ------------------------------------------------------------------------------------
-            // ------------------------------------------------------------------------------------
-
-
         });
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'administrador'], function () {
             // Rutas Administrador
-
         });
-        //========================================================================================================================
-
-
     });
+    //==================================================================================================================
+
+    Route::group(['prefix' => 'usuario'], function () {
+        Route::get('index', [ClienteController::class, 'index'])->name('usuario-index');
+        Route::get('generar', [ClienteController::class, 'generar'])->name('usuario-generar');
+    });
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 });

@@ -2,6 +2,7 @@
 
 namespace App\Models\Empresas;
 
+use App\Models\PQR\PQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -15,6 +16,11 @@ class Empresa extends Model
     public function representante()
     {
         return $this->belongsTo(Representante::class, 'empresa_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function pqrs()
+    {
+        return $this->hasMany(PQR::class, 'empresa_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }
