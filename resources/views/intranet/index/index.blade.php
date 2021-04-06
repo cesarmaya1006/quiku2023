@@ -15,6 +15,12 @@
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
     <div class="container-fluid">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-8">
+                @include('includes.error-form')
+                @include('includes.mensaje')
+            </div>
+        </div>
         @if (session('rol_id') == 6)
             @include('intranet.index.index_usuarios')
         @endif
