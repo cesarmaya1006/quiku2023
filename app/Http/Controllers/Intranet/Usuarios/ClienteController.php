@@ -84,4 +84,29 @@ class ClienteController extends Controller
     {
         //
     }
+
+    public function generarConsulta()
+    {
+        return view('intranet.usuarios.crearConsulta');
+    }
+
+    public function generarFelicitaciones()
+    {
+        return view('intranet.usuarios.crearFelicitaciones');
+    }
+
+    public function generarReporteIrregularidad()
+    {
+        return view('intranet.usuarios.crearReporteIrregularidad');
+    }
+
+    public function generarSolicitudDatos()
+    {
+        return view('intranet.usuarios.crearSolicutudDatos');
+    }
+
+    public function generarSugerecias()
+    {
+        return view('intranet.usuarios.crearSugerecias');
+    }
 }

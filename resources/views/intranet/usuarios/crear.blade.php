@@ -2,224 +2,222 @@
 <!-- ************************************************************* -->
 <!-- Funciones php -->
 @section('funciones_php')
-    @include('includes.funciones_php')
+@include('includes.funciones_php')
 @endsection
 <!-- Pagina CSS -->
 @section('estilosHojas')
-    <link rel="stylesheet" href="{{ asset('css/intranet/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/intranet/index.css') }}">
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Sistema de informaci&oacute;n PQR LEGAL PROCEEDINGS
+{{-- Sistema de informaci&oacute;n PQR LEGAL PROCEEDINGS --}}
+Sistema de informaci&oacute;n
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
-    <div class="container-fluid">
-        <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-10">
-                <h4>Nueva PQR</h4>
-            </div>
-            <div class="col-12 col-md-10">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">Quick Example</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                    placeholder="Password">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputFile">File input</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                    </div>
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">Upload</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center">
+        {{-- PQR --}}
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Crear PQR</h3>
                 </div>
-            </div>
-            <div class="co12 col-md-10">
-                <div class="card card-warning">
-                    <div class="card-header">
-                        <h3 class="card-title">General Elements</h3>
-                    </div>
-                    <!-- /.card-header -->
+                <form>
                     <div class="card-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Text</label>
-                                        <input type="text" class="form-control" placeholder="Enter ...">
-                                    </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Tipo de PQR</label>
+                                    <select name="" id="" class="custom-select rounded-0">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="">Petición</option>
+                                        <option value="">Queja</option>
+                                        <option value="">Reclamo</option>
+                                    </select>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Text Disabled</label>
-                                        <input type="text" class="form-control" placeholder="Enter ..." disabled="">
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Motivo de la PQR</label>
+                                    <select name="" id="" class="custom-select rounded-0">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="">Petición</option>
+                                        <option value="">Retracto</option>
+                                        <option value="">Queja por mal trato de un funcionario</option>
+                                        <option value="">Queja por mal funcionamiento de página web o APP</option>
+                                        <option value="">Queja por mal servicio</option>
+                                        <option value="">Reclamo de garantía de un bien o servicio</option>
+                                        <option value="">Reclamo por publicidad engañosa</option>
+                                        <option value="">Reclamo por demora en entrega o prestación de un servicio
+                                        </option>
+                                        <option value="">Reclamo por haber recibido un producto o servicio incorrecto
+                                        </option>
+                                        <option value="">Reclamo por facturación y pago</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Lugar de adquisición del producto o servicio:</label>
+                            <select name="" id="" class="custom-select rounded-0">
+                                <option value="">--Seleccione--</option>
+                                <option value="">Sede física</option>
+                                <option value="">Página web</option>
+                                <option value="">APP</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Departamento:</label>
+                                    <select name="" id="" class="custom-select rounded-0">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="">Bogotá</option>
+                                        <option value="">Cundinamarca</option>
+                                        <option value="">Antioquia</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Municipio:</label>
+                                    <select name="" id="" class="custom-select rounded-0">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="">Mosquera</option>
+                                        <option value="">Medellín</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Sede:</label>
+                            <select name="" id="" class="custom-select rounded-0">
+                                <option value="">--Seleccione--</option>
+                                <option value="">Ninguna</option>
+                                <option value="">Ninguna</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">¿Su PQR es sobre un producto o servicio?</label>
+                            <select name="" id="" class="custom-select rounded-0">
+                                <option value="">--Seleccione--</option>
+                                <option value="">Producto</option>
+                                <option value="">Servicio</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Categoria del producto</label>
+                                    <select name="" id="" class="custom-select rounded-0">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="">Celulares y Smartphones</option>
+                                        <option value="">Tecnología</option>
+                                        <option value="">Electrodomésticos</option>
+                                        <option value="">Muebles</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Producto</label>
+                                    <select name="" id="" class="custom-select rounded-0">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="">Nunguno</option>
+                                        <option value="">Nunguno</option>
+                                        <option value="">Nunguno</option>
+                                        <option value="">Nunguno</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Marca:</label>
+                                    <select name="" id="" class="custom-select rounded-0">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="">LG</option>
+                                        <option value="">Samsung</option>
+                                        <option value="">Sony</option>
+                                        <option value="">Mabe</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">Referencia:</label>
+                                    <select name="" id="" class="custom-select rounded-0">
+                                        <option value="">--Seleccione--</option>
+                                        <option value="">Ninguna</option>
+                                        <option value="">Ninguna</option>
+                                        <option value="">Ninguna</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="">No. Factura:</label>
+                                    <input class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Fecha de factura:</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime"
+                                            data-inputmask-inputformat="dd/mm/yyyy" data-mask="" inputmode="numeric">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- textarea -->
-                                    <div class="form-group">
-                                        <label>Textarea</label>
-                                        <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Textarea Disabled</label>
-                                        <textarea class="form-control" rows="3" placeholder="Enter ..."
-                                            disabled=""></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- input states -->
+                        </div>
+                        <div class="form-group">
+                            <label for="">Tipo de servicio:</label>
+                            <select name="" id="" class="custom-select rounded-0">
+                                <option value="">--Seleccione--</option>
+                                <option value="">Ninguna</option>
+                                <option value="">Ninguna</option>
+                                <option value="">Ninguna</option>
+                            </select>
+                        </div>
+                        <div class="list-group-item">
                             <div class="form-group">
-                                <label class="col-form-label" for="inputSuccess"><i class="fas fa-check"></i> Input with
-                                    success</label>
-                                <input type="text" class="form-control is-valid" id="inputSuccess" placeholder="Enter ...">
+                                <label for="">Petición / Queja / Reclamo</label>
+                                <select name="" id="" class="custom-select rounded-0">
+                                    <option value="">--Seleccione--</option>
+                                    <option value="">Ninguna</option>
+                                    <option value="">Ninguna</option>
+                                    <option value="">Ninguna</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label" for="inputWarning"><i class="far fa-bell"></i> Input with
-                                    warning</label>
-                                <input type="text" class="form-control is-warning" id="inputWarning"
-                                    placeholder="Enter ...">
+                                <label for="">Hechos</label>
+                                <input class="form-control" type="text">
                             </div>
                             <div class="form-group">
-                                <label class="col-form-label" for="inputError"><i class="far fa-times-circle"></i> Input
-                                    with
-                                    error</label>
-                                <input type="text" class="form-control is-invalid" id="inputError" placeholder="Enter ...">
+                                <label for="">Justificaciones</label>
+                                <input class="form-control" type="text">
                             </div>
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- checkbox -->
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox">
-                                            <label class="form-check-label">Checkbox</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" checked="">
-                                            <label class="form-check-label">Checkbox checked</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" disabled="">
-                                            <label class="form-check-label">Checkbox disabled</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <!-- radio -->
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radio1">
-                                            <label class="form-check-label">Radio</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="radio1" checked="">
-                                            <label class="form-check-label">Radio checked</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" disabled="">
-                                            <label class="form-check-label">Radio disabled</label>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label for="">Anexos o Pruebas</label>
+                                <input class="form-control" type="file">
                             </div>
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- select -->
-                                    <div class="form-group">
-                                        <label>Select</label>
-                                        <select class="form-control">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Select Disabled</label>
-                                        <select class="form-control" disabled="">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <!-- Select multiple-->
-                                    <div class="form-group">
-                                        <label>Select Multiple</label>
-                                        <select multiple="" class="form-control">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Select Multiple Disabled</label>
-                                        <select multiple="" class="form-control" disabled="">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
+                        <div class="card-footer d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary px-4">Crear</button>
+                        </div>
                     </div>
-                    <!-- /.card-body -->
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 @endsection
 <!-- ************************************************************* -->
 <!-- script hoja -->
