@@ -84,6 +84,10 @@ class ClienteController extends Controller
     {
         //
     }
+    public function generarPQR()
+    {
+        return view('intranet.usuarios.crearPQR');
+    }
 
     public function generarConsulta()
     {

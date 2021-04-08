@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'usuario'], function () {
         Route::get('index', [ClienteController::class, 'index'])->name('usuario-index');
         Route::get('generar', [ClienteController::class, 'generar'])->name('usuario-generar');
+        Route::get('generarPQR', [ClienteController::class, 'generarPQR'])->name('usuario-generarPQR');
         Route::get('generarConsulta', [ClienteController::class, 'generarConsulta'])->name('usuario-generarConsulta');
         Route::get('generarFelicitacion', [ClienteController::class, 'generarFelicitacion'])->name('usuario-generarFelicitacion');
         Route::get('ReporteIrregularidad', [ClienteController::class, 'ReporteIrregularidad'])->name('usuario-ReporteIrregularidad');
