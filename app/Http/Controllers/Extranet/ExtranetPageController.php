@@ -19,6 +19,7 @@ use App\Models\Empresas\Empresa;
 use App\Models\Empresas\Representante;
 use App\Models\Personas\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Transport\MailgunTransport;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image as InterventionImage;

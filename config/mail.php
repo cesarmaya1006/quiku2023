@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'smtp'),
+    'default' => env('MAIL_MAILER', 'mailgun'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,6 +51,9 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
+            'domain' => 'mayamoya.co',
+            'secret' => 'a5dba30d81ee083f29d37a775eac0c25-a09d6718-addb8ed3',
+            'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net/v3/mayamoya.co'),
         ],
 
         'postmark' => [
