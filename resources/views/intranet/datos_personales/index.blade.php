@@ -21,9 +21,8 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Datos Personales</h3>
+                        <h3 class="card-title">Actualizar datos</h3>
                     </div>
-                    <div class="card-body">
                         @if ($usuario->persona)
                             @include('intranet.datos_personales.persona')
                         @endif
@@ -33,7 +32,6 @@
                         @if ($usuario->empleado)
                             @include('intranet.datos_personales.empleado')
                         @endif
-                    </div>
                 </div>
             </div>
         </div>

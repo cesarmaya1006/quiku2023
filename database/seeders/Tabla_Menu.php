@@ -36,7 +36,18 @@ class Tabla_Menu extends Seeder
             ['nombre' => 'Listado PQR', 'menu_id' => '9',  'url' => 'usuario/index', 'orden' => '1',  'icono' => 'far fa-list-alt'],
             ['nombre' => 'Generar PQR', 'menu_id' => '9',  'url' => 'usuario/generar', 'orden' => '2',  'icono' => 'fas fa-plus-square'],
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Actualizar Datos', 'menu_id' => '0', 'url' => 'usuario/actualizar-datos', 'orden' => '4', 'icono' => 'fas fa-edit'],
+            // Menus  padre
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Actualizar datos', 'menu_id' => '0', 'url' => 'usuario/actualizar-datos', 'orden' => '4', 'icono' => 'fas fa-edit'],
+            // Menus  padre
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Cambiar contraseña', 'menu_id' => '0', 'url' => 'usuario/cambiar-password', 'orden' => '5', 'icono' => 'fas fa-key'],
+            // Menus  padre
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Crear usuario asistido', 'menu_id' => '0', 'url' => 'usuario/crear-usuario', 'orden' => '6', 'icono' => 'fas fa-user-plus'],
+            // Menus  padre
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Consulte nuestas políticas de datos y ayuda', 'menu_id' => '0', 'url' => 'usuario/consulta-politicas', 'orden' => '7', 'icono' => 'fas fa-question-circle'],
 
         ];
 

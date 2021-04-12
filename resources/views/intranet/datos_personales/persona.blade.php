@@ -1,20 +1,18 @@
-<div class="row">
+{{-- <div class="row">
     <div class="col-12">
         {{ $usuario->persona->nombre1 . ' ' . $usuario->persona->nombre2 . ' ' . $usuario->persona->apellido1 . ' ' . $usuario->persona->apellido2 }}
     </div>
-</div>
+</div> --}}
 
 <form action="{{ route('registropn-guardar') }}" method="POST" autocomplete="off">
     @csrf
     @method('post')
     <div class="card-body" id="registro_ini">
-        <p class="m-0 text-right"><strong>1/2</strong></p>
-        <h5 class="card-title">Registro Datos Persona Natural</h5>
-        <div class="card-text mt-5">
+        <div class="card-text">
             <div class="form-row row">
                 <div class="form-group mt-3 col-md-6">
                     <label class="requerido" for="tipodocumento">Tipo documento</label>
-                    <select class="form-control" name="docutipos_id" id="docutipos_id" required readonly="true">
+                    <select class="form-control" name="docutipos_id" id="docutipos_id" required>
                         <option value="">--Seleccione un tipo--</option>
                         @foreach ($tipos_docu as $tipodocu)
                             <option value="{{ $tipodocu->id }}"
@@ -26,8 +24,7 @@
                 <div class="form-group mt-3 col-md-6">
                     <label class="requerido" for="numerodocumento">Número de documento</label>
                     <input type="text" class="form-control" id="numerodocumento" name="identificacion"
-                        placeholder="Número documento" value="{{ $usuario->persona->identificacion }}" required
-                        readonly="true">
+                        placeholder="Número documento" value="{{ $usuario->persona->identificacion }}" required>
                 </div>
             </div>
             <div class="form-row row mt-3">
@@ -56,28 +53,28 @@
             </div>
             <div class="form-row row mt-3">
                 <div class="col-md-6 mb-3">
-                    <label for="telefonofijo">Teléfono fijo</label>
-                    <input type="tel" class="form-control" id="telefonofijo" placeholder="Teléfono fijo"
-                        name="telefonofijo" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"
-                        value="{{ old('telefonofijo') }}">
+                    <label for="telefono_fijo">Teléfono fijo</label>
+                    <input type="tel" class="form-control" id="telefono_fijo" placeholder="Teléfono fijo"
+                        name="telefono_fijo" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"
+                        value="{{ $usuario->persona->telefono_fijo }}">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label class="requerido" for="telefonocelular">Teléfono Celular</label>
-                    <input type="tel" class="form-control" id="telefonocelular" placeholder="Teléfono Celular"
-                        name="telefonocelular"
+                    <label class="requerido" for="telefono_celu">Teléfono Celular</label>
+                    <input type="tel" class="form-control" id="telefono_celu" placeholder="Teléfono Celular"
+                        name="telefono_celu"
                         onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"
-                        value="{{ old('telefonocelular') }}" required>
+                        value="{{ $usuario->persona->telefono_celu }}" required>
                 </div>
             </div>
             <div class="form-row row">
                 <div class="form-group mt-3 col-md-6">
                     <label class="requerido" for="direccion">Dirección</label>
                     <input type="text" class="form-control" id="direccion" placeholder="Dirección" name="direccion"
-                        required value="{{ old('direccion') }}">
+                        required value="{{ $usuario->persona->direccion }}">
                 </div>
                 <div class="form-group mt-3 col-md-6">
-                    <label class="requerido" for="pais">País</label>
-                    <select class="form-control" name="pais" id="pais" required>
+                    <label class="requerido" for="pais_id">País</label>
+                    <select class="form-control" name="pais_id" id="pais_id" required>
                         <option value="">--Seleccione--</option>
                         @foreach ($paises as $pais)
                             <option value="{{ $pais->id }}" {{ $pais->pais == 'Colombia' ? 'selected' : '' }}>
@@ -117,7 +114,7 @@
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="nacionalidad">Nacionalidad</label>
                     <input type="text" class="form-control" id="nacionalidad" placeholder="Nacionalidad"
-                        name="nacionalidad" required>
+                        name="nacionalidad"  value="{{ $usuario->persona->nacionalidad }}"  required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="grado">Último grado de educación obtenido</label>

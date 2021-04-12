@@ -23,7 +23,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3">
                                             <label class="requerido" for="validationDefault02">Contraseña</label>
-                                            <input type="password" class="form-control" id="pasaporte" name="password"
+                                            <input type="password" class="form-control" id="password" name="password"
                                                 placeholder="Contraseña" required>
                                         </div>
                                     </div>
@@ -31,7 +31,7 @@
                                         <button class="mt-3 btn btn-primary" type="submit">Iniciar sesión</button>
                                     </div>
                                     <div class="centrar-items mt-3">
-                                        <p><a class="card-text"href="">¿Olvidé mi nombre de usuario o contraseña?</a></p>
+                                        <p><a class="card-text" href="{{ route('solicitar_password') }}">¿Olvidé mi nombre de usuario o contraseña?</a></p>
                                     </div>
                                 </form>
                             </div>
@@ -55,7 +55,7 @@
                             <h5 class="card-title">preguntas frecuentes</h5>
                             <p class="card-text mt-4">Tienes dudas? Ingresa y conoce las respuestas a las preguntas más frecuentes que nos realizan nuestros usuarios.</p>
                             <div class="centrar-items">
-                                <a href="preguntas.html" class="mt-3 btn btn-primary">Ir al sitio</a>
+                                <a href="{{ route('preguntas_frecuentes') }}" class="mt-3 btn btn-primary">Ir al sitio</a>
                             </div>
                         </div>
                     </div>

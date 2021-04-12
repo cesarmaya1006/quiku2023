@@ -10,29 +10,28 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
+    {{-- Sistema de informaci&oacute;n PQR LEGAL PROCEEDINGS --}}
     Sistema de informaci&oacute;n
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
     <div class="container-fluid">
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-8">
-                @include('includes.error-form')
-                @include('includes.mensaje')
+            <div class="col-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Consulte nuestras pol&iacute;ticas de datos y ayuda</h3>
+                    </div>
+                    <div class="card-body">
+                    </div>
+                </div>
             </div>
         </div>
-        @if (session('rol_id') == 6)
-            @include('intranet.index.index_usuarios')
-        @endif
-        @if (session('rol_id') == 5)
-            @include('intranet.index.index_funcionarios')
-        @endif
-
     </div>
 @endsection
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-
+    <script src="{{ asset('js/extranet/registro.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->
