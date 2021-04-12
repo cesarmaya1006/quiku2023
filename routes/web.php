@@ -32,6 +32,9 @@ Route::get('/clear-cache', function () {
 //---------------------------------------------------------------------------------
 Route::get('/', [ExtranetPageController::class, 'index'])->name('index');
 Route::get('/index', [ExtranetPageController::class, 'index'])->name('index_2');
+Route::get('/solicitar_password', [ExtranetPageController::class, 'solicitar_password'])->name('solicitar_password');
+Route::get('/cambiar_password', [ExtranetPageController::class, 'cambiar_password'])->name('cambiar_password');
+Route::get('/preguntas_frecuentes', [ExtranetPageController::class, 'preguntas_frecuentes'])->name('preguntas_frecuentes');
 Route::get('/index3', [ExtranetPageController::class, 'index_3'])->name('index_3');
 Route::get('/registro_ini', [ExtranetPageController::class, 'registro_ini'])->name('registro_ini');
 Route::post('/registro_ini-guardar', [ExtranetPageController::class, 'registro_ini_guardar'])->name('registro_ini-guardar');
@@ -123,7 +126,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('generarPQR', [ClienteController::class, 'generarPQR'])->name('usuario-generarPQR');
         Route::get('generarConsulta', [ClienteController::class, 'generarConsulta'])->name('usuario-generarConsulta');
         Route::get('generarFelicitacion', [ClienteController::class, 'generarFelicitacion'])->name('usuario-generarFelicitacion');
-        Route::get('ReporteIrregularidad', [ClienteController::class, 'ReporteIrregularidad'])->name('usuario-ReporteIrregularidad');
+        Route::get('ReporteIrregularidad', [ClienteController::class, 'reporteIrregularidad'])->name('usuario-reporteIrregularidad');
         Route::get('generarSolicitudDatos', [ClienteController::class, 'generarSolicitudDatos'])->name('usuario-generarSolicitudDatos');
         Route::get('generarSolicitudDocumentos', [ClienteController::class, 'generarSolicitudDocumentos'])->name('usuario-generarSolicitudDocumentos');
         Route::get('generarSugerencia', [ClienteController::class, 'generarSugerencia'])->name('usuario-generarSugerencia');
@@ -133,6 +136,17 @@ Route::group(['middleware' => 'auth'], function () {
         //----------------------------------------------------------------------------------------------------------------------------------------------
         //Actualizar datos
         Route::get('actualizar-datos', [ClienteController::class, 'actualizar_datos'])->name('usuario-actualizar_datos');
+
+        //Cambiar password
+        Route::get('cambiar-password', [ClienteController::class, 'cambiar_password'])->name('usuario_cambiar_password');
+        
+        //Crear usuario asistido
+        Route::get('crear-usuario', [ClienteController::class, 'crear_usuario'])->name('usuario_crear_usuario');
+
+        //Consultar politicas
+        Route::get('consulta-politicas', [ClienteController::class, 'consulta_politicas'])->name('usuario_consulta_politicas');
+
+
     });
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 });

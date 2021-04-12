@@ -10,14 +10,14 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Sistema de informaci&oacute;n PQR LEGAL PROCEEDINGS
+    Sistema de informaci&oacute;n
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
     <div class="container-fluid">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-10">
-                <h4>Listado de PQR´s</h4>
+                {{-- <h4>Listado de PQR´s</h4> --}}
             </div>
             <div class="col-12 col-md-10 table-responsive">
                 <table class="table table-striped table-hover table-sm display">

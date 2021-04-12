@@ -34,6 +34,22 @@ class ExtranetPageController extends Controller
     {
         return view('extranet.acceso');
     }
+
+    public function solicitar_password()
+    {
+        return view('extranet.solicitar_password');
+    }
+
+    public function cambiar_password()
+    {
+        return view('extranet.cambiar_password');
+    }
+
+    public function preguntas_frecuentes()
+    {
+        return view('extranet.preguntas_frecuentes');
+    }
+
     public function index_3()
     {
         $tipos_docu = Tipo_Docu::get();
@@ -61,7 +77,7 @@ class ExtranetPageController extends Controller
         $id = $usuarioTemp->id;
         $tipopersona = $usuarioTemp->tipo_persona;
         $cedula = $usuarioTemp->identificacion;
-        Mail::to('cesarmaya99@hotmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
+        Mail::to('ruizwilson01@gmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
         return redirect('/registro_conf');
     }
     public function registro_conf()

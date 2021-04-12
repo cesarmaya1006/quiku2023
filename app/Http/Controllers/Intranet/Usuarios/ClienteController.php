@@ -94,9 +94,29 @@ class ClienteController extends Controller
             case 'peticion':
                 return redirect('/usuario/generarPQR');
                 break;
-
-            default:
-                # code...
+            case 'queja':
+                return redirect('/usuario/generarPQR');
+                break;
+            case 'reclamo':
+                return redirect('/usuario/generarPQR');
+                break;
+            case 'consulta':
+                return redirect('/usuario/generarConsulta');
+                break;
+            case 'solicitud_datos':
+                return redirect('/usuario/generarFelicitacion');
+                break;
+            case 'reporte':
+                return redirect('/usuario/reporteIrregularidad');
+                break;
+            case 'felicitacion':
+                return redirect('/usuario/generarSolicitudDatos');
+                break;
+            case 'solicitud_doc':
+                return redirect('/usuario/generarSolicitudDocumentos');
+                break;
+            case 'sugerencia':
+                return redirect('/usuario/generarSugerencia');
                 break;
         }
     }
@@ -138,4 +158,25 @@ class ClienteController extends Controller
         $usuario = Usuario::findorFail(session('id_usuario'));
         return view('intranet/datos_personales.index', compact('usuario', 'tipos_docu', 'paises', 'departamentos'));
     }
+
+    public function cambiar_password()
+    {
+        return view('intranet/password.index');
+    }
+
+    public function crear_usuario()
+    {
+        $tipos_docu = Tipo_Docu::get();
+        $paises = Pais::get();
+        $departamentos = Departamento::get();
+        $usuario = Usuario::findorFail(session('id_usuario'));
+        return view('intranet/crear_usuario_asistido.index', compact('usuario', 'tipos_docu', 'paises', 'departamentos'));
+    }
+
+    public function consulta_politicas()
+    {
+        return view('intranet/consulta_politicas.index');
+    }
+
+
 }

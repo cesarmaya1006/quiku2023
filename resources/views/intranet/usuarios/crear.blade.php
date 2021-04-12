@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="row d-flex">
                                 <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" name="radio1" value="peticion" checked="">
+                                    <input class="form-check-input" type="radio"  value="peticion" name="radio1" checked="">
                                     <label class="form-check-label">Petición</label>
                                 </div>
                                 <div class="form-check col-md-4 col-6">

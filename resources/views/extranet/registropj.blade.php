@@ -2,6 +2,7 @@
 <!-- ************************************************************* -->
 @section('css_pagina')
     <link rel="stylesheet" href="{{ asset('css/extranet/login.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
 @endsection
 @section('cuerpo_pagina')
     <div class="container">
@@ -16,7 +17,44 @@
                         <p class="m-0 text-right"><strong>1/3</strong></p>
                         <h5 class="card-title">REGISTRO</h5>
                         <h5 class="card-title">DATOS PERSONA JURÍDICA</h5>
-                        <div class="card-text mt-5">
+                        <div class="row">
+                            <div id="stepper1" class="bs-stepper linear">
+                                <div class="bs-stepper-header" role="tablist">
+                                    <div class="step" data-target="#test-l-1">
+                                        <button type="button" class="step-trigger" role="tab" id="stepper1trigger1"
+                                            aria-controls="test-l-1" aria-selected="false" disabled="disabled" >
+                                            <span class="bs-stepper-circle">1</span>
+                                            {{-- <span class="bs-stepper-label">Email</span> --}}
+                                        </button>
+                                    </div>
+                                    <div class="bs-stepper-line"></div>
+                                    <div class="step active" data-target="#test-l-2">
+                                        <button type="button" class="step-trigger" role="tab" id="stepper1trigger2"
+                                            aria-controls="test-l-2" aria-selected="true">
+                                            <span class="bs-stepper-circle">2</span>
+                                            {{-- <span class="bs-stepper-label">Password</span> --}}
+                                        </button>
+                                    </div>
+                                    <div class="bs-stepper-line"></div>
+                                    <div class="step" data-target="#test-l-3">
+                                        <button type="button" class="step-trigger" role="tab" id="stepper1trigger3"
+                                            aria-controls="test-l-3" aria-selected="false" disabled="disabled">
+                                            <span class="bs-stepper-circle">3</span>
+                                            {{-- <span class="bs-stepper-label">Validate</span> --}}
+                                        </button>
+                                    </div>
+                                    <div class="bs-stepper-line bs-stepper-line-4 "></div>
+                                    <div class="step" data-target="#test-l-4">
+                                        <button type="button" class="step-trigger" role="tab" id="stepper1trigger4"
+                                            aria-controls="test-l-4" aria-selected="false" disabled="disabled">
+                                            <span class="bs-stepper-circle">4</span>
+                                            {{-- <span class="bs-stepper-label">Validate</span> --}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-text mt-2">
                             <form action="{{ route('registropj-guardar') }}" method="POST" autocomplete="off">
                                 @csrf
                                 @method('post')
@@ -123,4 +161,5 @@
 @endsection
 @section('script_pagina')
     <script src="{{ asset('js/extranet/registro.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 @endsection
