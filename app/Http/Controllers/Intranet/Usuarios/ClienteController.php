@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Intranet\Usuarios;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Departamento;
+use App\Models\Admin\Pais;
+use App\Models\Admin\Tipo_Docu;
+use App\Models\Admin\Usuario;
 use App\Models\PQR\PQR;
 use Illuminate\Http\Request;
 
@@ -84,6 +88,18 @@ class ClienteController extends Controller
     {
         //
     }
+    public function direccion(Request $request)
+    {
+        switch ($request['radio1']) {
+            case 'peticion':
+                return redirect('/usuario/generarPQR');
+                break;
+
+            default:
+                # code...
+                break;
+        }
+    }
     public function generarPQR()
     {
         return view('intranet.usuarios.crearPQR');
@@ -112,5 +128,14 @@ class ClienteController extends Controller
     public function generarSugerecias()
     {
         return view('intranet.usuarios.crearSugerecias');
+    }
+    public function actualizar_datos()
+    {
+
+        $tipos_docu = Tipo_Docu::get();
+        $paises = Pais::get();
+        $departamentos = Departamento::get();
+        $usuario = Usuario::findorFail(session('id_usuario'));
+        return view('intranet/datos_personales.index', compact('usuario', 'tipos_docu', 'paises', 'departamentos'));
     }
 }

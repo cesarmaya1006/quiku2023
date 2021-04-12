@@ -118,6 +118,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'usuario'], function () {
         Route::get('index', [ClienteController::class, 'index'])->name('usuario-index');
         Route::get('generar', [ClienteController::class, 'generar'])->name('usuario-generar');
+        Route::post('generar', [ClienteController::class, 'direccion'])->name('usuario-generar_direccion');
+
         Route::get('generarPQR', [ClienteController::class, 'generarPQR'])->name('usuario-generarPQR');
         Route::get('generarConsulta', [ClienteController::class, 'generarConsulta'])->name('usuario-generarConsulta');
         Route::get('generarFelicitacion', [ClienteController::class, 'generarFelicitacion'])->name('usuario-generarFelicitacion');
@@ -125,6 +127,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('generarSolicitudDatos', [ClienteController::class, 'generarSolicitudDatos'])->name('usuario-generarSolicitudDatos');
         Route::get('generarSolicitudDocumentos', [ClienteController::class, 'generarSolicitudDocumentos'])->name('usuario-generarSolicitudDocumentos');
         Route::get('generarSugerencia', [ClienteController::class, 'generarSugerencia'])->name('usuario-generarSugerencia');
+        //----------------------------------------------------------------------------------------------------------------------------------------------
+        //Crear PQR
+
+        //----------------------------------------------------------------------------------------------------------------------------------------------
+        //Actualizar datos
+        Route::get('actualizar-datos', [ClienteController::class, 'actualizar_datos'])->name('usuario-actualizar_datos');
     });
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 });

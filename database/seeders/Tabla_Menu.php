@@ -31,13 +31,12 @@ class Tabla_Menu extends Seeder
             // Menus padre
             ['nombre' => 'Gestionar', 'menu_id' => '0', 'url' => '#', 'orden' => '3', 'icono' => 'fas fa-chalkboard-teacher'],
             //----------------------------------------------------------------------------------------------------------------------
-            // Menus padre
-            ['nombre' => 'Gestionar PQR', 'menu_id' => '9', 'url' => '#', 'orden' => '1', 'icono' => 'fas fa-chalkboard-teacher'],
-            //----------------------------------------------------------------------------------------------------------------------
             // Menus hijos
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Listado PQR', 'menu_id' => '10',  'url' => 'usuario/index', 'orden' => '1',  'icono' => 'far fa-list-alt'],
-            ['nombre' => 'Generar PQR', 'menu_id' => '10',  'url' => 'usuario/generar', 'orden' => '2',  'icono' => 'fas fa-plus-square'],
+            ['nombre' => 'Listado PQR', 'menu_id' => '9',  'url' => 'usuario/index', 'orden' => '1',  'icono' => 'far fa-list-alt'],
+            ['nombre' => 'Generar PQR', 'menu_id' => '9',  'url' => 'usuario/generar', 'orden' => '2',  'icono' => 'fas fa-plus-square'],
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Actualizar Datos', 'menu_id' => '0', 'url' => 'usuario/actualizar-datos', 'orden' => '4', 'icono' => 'fas fa-edit'],
 
         ];
 

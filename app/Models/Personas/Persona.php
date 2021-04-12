@@ -2,6 +2,7 @@
 
 namespace App\Models\Personas;
 
+use App\Models\Admin\Municipio;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\PQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,4 +25,9 @@ class Persona extends Model
         return $this->hasMany(PQR::class, 'persona_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function municipio()
+    {
+        return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
+    }
 }

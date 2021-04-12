@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\Empleados\Empleado;
 use App\Models\Empresas\Representante;
 use App\Models\Empresas\Solicitud;
 use App\Models\Mgl\Apoderado;
@@ -37,6 +38,11 @@ class Usuario extends Authenticatable
     public function tipos_docu()
     {
         return $this->belongsTo(Tipo_Docu::class, 'docutipos_id', 'id');
+    }
+    //==================================================================================
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id');
     }
     //==================================================================================
     public function persona()
