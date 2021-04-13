@@ -91,45 +91,6 @@ class ClienteController extends Controller
     {
         //
     }
-    public function direccion(Request $request)
-    {
-        $usuario = Usuario::findOrFail(session('id_usuario'));
-        switch ($request['radio1']) {
-            case '1':
-                $tipo_pqr = tipoPQR::findOrFail($request['radio1']);
-                $departamentos = Departamento::get();
-                return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
-                break;
-            case '2':
-                $tipo_pqr = tipoPQR::findOrFail($request['radio1']);
-                $departamentos = Departamento::get();
-                return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
-                break;
-            case '3':
-                $tipo_pqr = tipoPQR::findOrFail($request['radio1']);
-                $departamentos = Departamento::get();
-                return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
-                break;
-            case '4':
-                return view('intranet.usuarios.crearConsulta', compact('usuario'));
-                break;
-            case '5':
-                return view('intranet.usuarios.crearFelicitaciones', compact('usuario'));
-                break;
-            case '6':
-                return view('intranet.usuarios.crearReporteIrregularidad', compact('usuario'));
-                break;
-            case '7':
-                return view('intranet.usuarios.crearSolicutudDatos', compact('usuario'));
-                break;
-            case '8':
-                return view('intranet.usuarios.generarSolicitudDocumentos', compact('usuario'));
-                break;
-            case '9':
-                return view('intranet.usuarios.crearSugerecias', compact('usuario'));
-                break;
-        }
-    }
     public function generarPQR($id)
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
@@ -140,7 +101,8 @@ class ClienteController extends Controller
 
     public function generarConsulta()
     {
-        return view('intranet.usuarios.crearConsulta');
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        return view('intranet.usuarios.crearConsulta', compact('usuario'));
     }
 
     public function generarFelicitacion()
