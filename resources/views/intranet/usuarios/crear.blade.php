@@ -23,53 +23,38 @@
                     <div class="card-header">
                         <h3 class="card-title">Generar PQR</h3>
                     </div>
-                    <form action="{{ route('usuario-generar_direccion') }}" method="POST" autocomplete="off">
-                        @csrf
-                        @method('post')
-                        <div class="card-body">
-                            <div class="row d-flex">
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio"  value="peticion" name="radio1" checked="">
-                                    <label class="form-check-label">Petición</label>
+                    <div class="card-body">
+                        <div class="row d-flex">
+                            @foreach ($tipoPQR as $tipo)
+                                <div class="col-12 col-md-4">
+                                    <div class="card card-Light collapsed-card" style="box-shadow: 0px 0px 0px 0px ;">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                @if ($tipo->id < 4)
+                                                    <a
+                                                        href="{{ route($tipo->url, ['id' => $tipo->id]) }}">{{ $tipo->tipo }}</a>
+                                                @else
+                                                    <a href="{{ route($tipo->url) }}"
+                                                        style="text-decoration: none;">{{ $tipo->tipo }}</a>
+                                                @endif
+                                            </h3>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                        class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <!-- /.card-tools -->
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body" style="display: none;">
+                                            {{ $tipo->descripcion }}
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
                                 </div>
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" value="queja" name="radio1">
-                                    <label class="form-check-label">Queja</label>
-                                </div>
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" value="reclamo" name="radio1">
-                                    <label class="form-check-label">Reclamo</label>
-                                </div>
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" value="consulta" name="radio1">
-                                    <label class="form-check-label">Consulta</label>
-                                </div>
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" value="solicitud_datos" name="radio1">
-                                    <label class="form-check-label">Solicitud sobre mis datos personales</label>
-                                </div>
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" value="reporte" name="radio1">
-                                    <label class="form-check-label">Reporte irregularidad</label>
-                                </div>
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" value="felicitacion" name="radio1">
-                                    <label class="form-check-label">Felicitación</label>
-                                </div>
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" value="solicitud_doc" name="radio1">
-                                    <label class="form-check-label">Solicitud documentos o información</label>
-                                </div>
-                                <div class="form-check col-md-4 col-6">
-                                    <input class="form-check-input" type="radio" value="sugerencia" name="radio1">
-                                    <label class="form-check-label">Sugerencia</label>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-                        <div class="card-footer d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary px-4">Crear</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

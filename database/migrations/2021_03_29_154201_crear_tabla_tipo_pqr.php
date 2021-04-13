@@ -16,6 +16,8 @@ class CrearTablaTipoPqr extends Migration
         Schema::create('tipo_pqr', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
             $table->string('tipo', 255);
+            $table->longText('descripcion');
+            $table->string('url', 255);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

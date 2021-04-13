@@ -24,7 +24,8 @@
                 <div class="form-group mt-3 col-md-6">
                     <label class="requerido" for="numerodocumento">Número de documento</label>
                     <input type="text" class="form-control" id="numerodocumento" name="identificacion"
-                        placeholder="Número documento" value="{{ $usuario->persona->identificacion }}" required>
+                        placeholder="Número documento" value="{{ $usuario->persona->identificacion }}" readonly
+                        required>
                 </div>
             </div>
             <div class="form-row row mt-3">
@@ -55,7 +56,8 @@
                 <div class="col-md-6 mb-3">
                     <label for="telefono_fijo">Teléfono fijo</label>
                     <input type="tel" class="form-control" id="telefono_fijo" placeholder="Teléfono fijo"
-                        name="telefono_fijo" onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"
+                        name="telefono_fijo"
+                        onkeypress="if ( isNaN( String.fromCharCode(event.keyCode) )) return false;"
                         value="{{ $usuario->persona->telefono_fijo }}">
                 </div>
                 <div class="col-md-6 mb-3">
@@ -114,7 +116,7 @@
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="nacionalidad">Nacionalidad</label>
                     <input type="text" class="form-control" id="nacionalidad" placeholder="Nacionalidad"
-                        name="nacionalidad"  value="{{ $usuario->persona->nacionalidad }}"  required>
+                        name="nacionalidad" value="{{ $usuario->persona->nacionalidad }}" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="grado">Último grado de educación obtenido</label>

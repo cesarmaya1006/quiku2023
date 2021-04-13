@@ -8,6 +8,8 @@ use App\Models\Admin\Pais;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\PQR;
+use App\Models\PQR\SubMotivo;
+use App\Models\PQR\tipoPQR;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -30,7 +32,8 @@ class ClienteController extends Controller
      */
     public function generar()
     {
-        return view('intranet.usuarios.crear');
+        $tipoPQR = tipoPQR::all();
+        return view('intranet.usuarios.crear', compact('tipoPQR'));
     }
 
     /**
@@ -90,39 +93,49 @@ class ClienteController extends Controller
     }
     public function direccion(Request $request)
     {
+        $usuario = Usuario::findOrFail(session('id_usuario'));
         switch ($request['radio1']) {
-            case 'peticion':
-                return redirect('/usuario/generarPQR');
+            case '1':
+                $tipo_pqr = tipoPQR::findOrFail($request['radio1']);
+                $departamentos = Departamento::get();
+                return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
                 break;
-            case 'queja':
-                return redirect('/usuario/generarPQR');
+            case '2':
+                $tipo_pqr = tipoPQR::findOrFail($request['radio1']);
+                $departamentos = Departamento::get();
+                return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
                 break;
-            case 'reclamo':
-                return redirect('/usuario/generarPQR');
+            case '3':
+                $tipo_pqr = tipoPQR::findOrFail($request['radio1']);
+                $departamentos = Departamento::get();
+                return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
                 break;
-            case 'consulta':
-                return redirect('/usuario/generarConsulta');
+            case '4':
+                return view('intranet.usuarios.crearConsulta', compact('usuario'));
                 break;
-            case 'solicitud_datos':
-                return redirect('/usuario/generarFelicitacion');
+            case '5':
+                return view('intranet.usuarios.crearFelicitaciones', compact('usuario'));
                 break;
-            case 'reporte':
-                return redirect('/usuario/reporteIrregularidad');
+            case '6':
+                return view('intranet.usuarios.crearReporteIrregularidad', compact('usuario'));
                 break;
-            case 'felicitacion':
-                return redirect('/usuario/generarSolicitudDatos');
+            case '7':
+                return view('intranet.usuarios.crearSolicutudDatos', compact('usuario'));
                 break;
-            case 'solicitud_doc':
-                return redirect('/usuario/generarSolicitudDocumentos');
+            case '8':
+                return view('intranet.usuarios.generarSolicitudDocumentos', compact('usuario'));
                 break;
-            case 'sugerencia':
-                return redirect('/usuario/generarSugerencia');
+            case '9':
+                return view('intranet.usuarios.crearSugerecias', compact('usuario'));
                 break;
         }
     }
-    public function generarPQR()
+    public function generarPQR($id)
     {
-        return view('intranet.usuarios.crearPQR');
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        $tipo_pqr = tipoPQR::findOrFail($id);
+        $departamentos = Departamento::get();
+        return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
     }
 
     public function generarConsulta()
@@ -130,24 +143,28 @@ class ClienteController extends Controller
         return view('intranet.usuarios.crearConsulta');
     }
 
-    public function generarFelicitaciones()
+    public function generarFelicitacion()
     {
-        return view('intranet.usuarios.crearFelicitaciones');
+        return view('intranet.usuarios.crearFeclicitaciones');
     }
 
-    public function generarReporteIrregularidad()
+    public function reporteIrregularidad()
     {
         return view('intranet.usuarios.crearReporteIrregularidad');
     }
 
     public function generarSolicitudDatos()
     {
-        return view('intranet.usuarios.crearSolicutudDatos');
+        return view('intranet.usuarios.crearSolicitudDatos');
+    }
+    public function generarSolicitudDocumentos()
+    {
+        return view('intranet.usuarios.crearSolicitudDocumentos');
     }
 
-    public function generarSugerecias()
+    public function generarSugerencia()
     {
-        return view('intranet.usuarios.crearSugerecias');
+        return view('intranet.usuarios.crearSugerencia');
     }
     public function actualizar_datos()
     {
@@ -178,5 +195,11 @@ class ClienteController extends Controller
         return view('intranet/consulta_politicas.index');
     }
 
-
+    public function cargar_submotivos(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return SubMotivo::where('motivo_id', $id)->get();
+        }
+    }
 }

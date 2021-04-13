@@ -3,7 +3,7 @@
         <!-- small box -->
         <div class="small-box bg-info">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{ $pqr_S->where('tipo', 'peticion')->count() }}</h3>
                 <p>Peticiones</p>
             </div>
             <div class="icon">
@@ -16,7 +16,7 @@
         <!-- small box -->
         <div class="small-box bg-orange">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{ $pqr_S->where('tipo', 'queja')->count() }}</h3>
                 <p>Quejas</p>
             </div>
             <div class="icon">
@@ -29,7 +29,7 @@
         <!-- small box -->
         <div class="small-box bg-teal">
             <div class="inner">
-                <h3>150</h3>
+                <h3>{{ $pqr_S->where('tipo', 'reclamo')->count() }}</h3>
                 <p>Reclamos</p>
             </div>
             <div class="icon">

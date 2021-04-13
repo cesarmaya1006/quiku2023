@@ -19,7 +19,6 @@ use App\Models\Empresas\Empresa;
 use App\Models\Empresas\Representante;
 use App\Models\Personas\Persona;
 use Illuminate\Http\Request;
-use Illuminate\Mail\Transport\MailgunTransport;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image as InterventionImage;
@@ -78,7 +77,18 @@ class ExtranetPageController extends Controller
         $id = $usuarioTemp->id;
         $tipopersona = $usuarioTemp->tipo_persona;
         $cedula = $usuarioTemp->identificacion;
-        Mail::to('ruizwilson01@gmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
+        // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+        //produccion Pruebas
+        //$headers =  'MIME-Version: 1.0' . "\r\n";
+        //$headers .= 'From: Your name <info@address.com>' . "\r\n";
+        //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        //$mensaje = $this->mensajeRegistroinicial($id, $tipopersona, $cedula);
+        //$para = 'jgmedina73@gmail.com';
+        //$titulo = 'Registro plataforma Quiku';
+        //mail($para, $titulo, $mensaje, $headers);
+        // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+        // Desarrollo
+        Mail::to('cesarmaya99@hotmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
         return redirect('/registro_conf');
     }
     public function registro_conf()
@@ -314,5 +324,31 @@ class ExtranetPageController extends Controller
             $id = $_GET['id'];
             return Municipio::where('departamento_id', $id)->orderBy('municipio')->get();
         }
+    }
+    public function mensajeRegistroinicial($id, $cedula, $tipopersona)
+    {
+        $mensaje = '<html lang="es">' . "\r\n";
+        $mensaje .= '<head>' . "\r\n";
+        $mensaje .= '<meta charset="utf-8">' . "\r\n";
+        $mensaje .= '<meta name="viewport" content="width=device-width, initial-scale=1">' . "\r\n";
+        $mensaje .= '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">' . "\r\n";
+        $mensaje .= '<title>LegalProceedings</title>' . "\r\n";
+        $mensaje .= '</head>' . "\r\n";
+        $mensaje .= '<body>' . "\r\n";
+        $mensaje .= '<div class="row">' . "\r\n";
+        $mensaje .= '<div class="col-12">' . "\r\n";
+        $mensaje .= '<h1>Bienvenido al sistema de PQR</h1>' . "\r\n";
+        $mensaje .= '<br>' . "\r\n";
+        $mensaje .= '<p>Estimado Usuario. Ha solicitado registrarse a nuestro aplicativo para presentar Peticiones, Quejas o Reclamos, para continuar con su registro por favor dar clic sobre el enlace o c&oacute;pielo y p&eacute;guelo en su explorador web para continuar con el registro.</p>' . "\r\n";
+        $mensaje .= '<br>' . "\r\n";
+        $mensaje .= '<a href="' . route('registro_ext', ['id' => $id, 'cc' => $cedula, 'tipo' => $tipopersona]) . '" target="_blank" rel="noopener noreferrer">' . route('registro_ext', ['id' => $id, 'cc' => $cedula, 'tipo' => $tipopersona]) . '</a>' . "\r\n";
+        $mensaje .= '</div>' . "\r\n";
+        $mensaje .= '</div>' . "\r\n";
+        $mensaje .= '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>' . "\r\n";
+
+        $mensaje .= '</body>' . "\r\n";
+        $mensaje .= '</html>' . "\r\n";
+
+        return $mensaje;
     }
 }

@@ -59,7 +59,7 @@
                                     <select class="form-control" name="tipo_persona" id="tipo_persona" required>
                                         <option value="">--Seleccione un tipo--</option>
                                         <option value="1">Persona Jurídica</option>
-                                        <option value="2">Persona natural</option>
+                                        <option value="2" selected>Persona natural</option>
                                     </select>
                                 </div>
                                 <div class="form-group mt-3">
@@ -67,19 +67,19 @@
                                     <select class="form-control" name="docutipos_id" id="docutipos_id" required>
                                         <option value="">--Seleccione un tipo--</option>
                                         @foreach ($tipos_docu as $tipodocu)
-                                            <option value="{{ $tipodocu->id }}">{{ $tipodocu->abreb_id }}</option>
+                                            <option value="{{ $tipodocu->id }}" {{$tipodocu->id==1?'selected':''}}>{{ $tipodocu->abreb_id }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="identificacion">Número de documento</label>
                                     <input type="text" class="form-control" id="identificacion" name="identificacion"
-                                        placeholder="Número documento" required>
+                                        placeholder="Número documento" value="123456789" required>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
                                     <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="Correo electrónico" required>
+                                        placeholder="Correo electrónico" value="algo@gmail.com" required>
                                 </div>
                                 <button class="mt-3 btn btn-primary" type="submit">Siguiente</button>
                             </form>

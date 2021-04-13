@@ -8,6 +8,7 @@ use App\Http\Controllers\Intranet\Admin\PermisoController;
 use App\Http\Controllers\Intranet\Admin\PermisoRolController;
 use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\UsuarioController;
+use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
 use App\Http\Controllers\Intranet\Usuarios\ClienteController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -119,13 +120,18 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
     //==================================================================================================================
+    Route::group(['prefix' => 'funcionario'], function () {
+        Route::get('listado', [FuncionarioController::class, 'index'])->name('funcionario-index');
+    });
+    //==================================================================================================================
 
     Route::group(['prefix' => 'usuario'], function () {
         Route::get('index', [ClienteController::class, 'index'])->name('usuario-index');
         Route::get('generar', [ClienteController::class, 'generar'])->name('usuario-generar');
         Route::post('generar', [ClienteController::class, 'direccion'])->name('usuario-generar_direccion');
 
-        Route::get('generarPQR', [ClienteController::class, 'generarPQR'])->name('usuario-generarPQR');
+        Route::get('generarPQR/{id}', [ClienteController::class, 'generarPQR'])->name('usuario-generarPQR');
+        Route::get('cargar_submotivos', [ClienteController::class, 'cargar_submotivos'])->name('cargar_submotivos');
         Route::get('generarConsulta', [ClienteController::class, 'generarConsulta'])->name('usuario-generarConsulta');
         Route::get('generarFelicitacion', [ClienteController::class, 'generarFelicitacion'])->name('usuario-generarFelicitacion');
         Route::get('ReporteIrregularidad', [ClienteController::class, 'reporteIrregularidad'])->name('usuario-reporteIrregularidad');
@@ -141,14 +147,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Cambiar password
         Route::get('cambiar-password', [ClienteController::class, 'cambiar_password'])->name('usuario_cambiar_password');
-        
+
         //Crear usuario asistido
         Route::get('crear-usuario', [ClienteController::class, 'crear_usuario'])->name('usuario_crear_usuario');
 
         //Consultar politicas
         Route::get('consulta-politicas', [ClienteController::class, 'consulta_politicas'])->name('usuario_consulta_politicas');
-
-
     });
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 });
