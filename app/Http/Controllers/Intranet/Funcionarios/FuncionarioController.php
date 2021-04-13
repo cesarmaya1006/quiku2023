@@ -16,7 +16,14 @@ class FuncionarioController extends Controller
     {
         return view('intranet.funcionarios.listado_pqr');
     }
-
+    public function crear_usuario()
+    {
+        return view('intranet.funcionarios.crear_usuario');
+    }
+    public function cambiar_password()
+    {
+        return view('intranet.funcionarios.cambiar_password');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -55,9 +62,9 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editar()
     {
-        //
+        return view('intranet.funcionarios.editar');
     }
 
     /**

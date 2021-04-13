@@ -38,16 +38,26 @@ class Tabla_Menu extends Seeder
             //----------------------------------------------------------------------------------------------------------------------
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Actualizar datos', 'menu_id' => '0', 'url' => 'usuario/actualizar-datos', 'orden' => '4', 'icono' => 'fas fa-edit'],
+            ['nombre' => 'Consulte nuestas políticas de datos', 'menu_id' => '0', 'url' => 'usuario/consulta-politicas', 'orden' => '4', 'icono' => 'fas fa-question-circle'],
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Ayuda', 'menu_id' => '0', 'url' => 'usuario/consulta-politicas', 'orden' => '5', 'icono' => 'fas fa-question-circle'],
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Actualizar datos', 'menu_id' => '0', 'url' => 'usuario/actualizar-datos', 'orden' => '6', 'icono' => 'fas fa-edit'],
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Cambiar contraseña', 'menu_id' => '0', 'url' => 'usuario/cambiar-password', 'orden' => '5', 'icono' => 'fas fa-key'],
+            ['nombre' => 'Cambiar contraseña', 'menu_id' => '0', 'url' => 'usuario/cambiar-password', 'orden' => '7', 'icono' => 'fas fa-key'],
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Crear usuario asistido', 'menu_id' => '0', 'url' => 'usuario/crear-usuario', 'orden' => '6', 'icono' => 'fas fa-user-plus'],
+            //----------------------------------------------------------------------------------------------------------------------
+            //Menus funcionario
+            ['nombre' => 'Listado PQR', 'menu_id' => '0', 'url' => 'funcionario/listado', 'orden' => '8', 'icono' => 'fas fa-question-circle'],
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Crear usuario asistido', 'menu_id' => '0', 'url' => 'funcionario/crear-usuario', 'orden' => '9', 'icono' => 'fas fa-user-plus'],
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Actualizar datos', 'menu_id' => '0', 'url' => 'funcionario/actualizar-datos', 'orden' => '10', 'icono' => 'fas fa-edit'],
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Consulte nuestas políticas de datos y ayuda', 'menu_id' => '0', 'url' => 'usuario/consulta-politicas', 'orden' => '7', 'icono' => 'fas fa-question-circle'],
+            ['nombre' => 'Cambiar contraseña', 'menu_id' => '0', 'url' => 'funcionario/cambiar-password', 'orden' => '11', 'icono' => 'fas fa-key'],
 
         ];
 

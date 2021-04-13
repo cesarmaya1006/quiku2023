@@ -58,5 +58,34 @@ class Tabla_Usuarios extends Seeder
             'email' => 'usuario1@gmail.com',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+        //------------------------------------------------------
+        DB::table('usuarios')->insert([
+            'usuario' => 'empleado1',
+            'password' => bcrypt('clave'),
+            'camb_password' => '0',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('usuario_rol')->insert([
+            'rol_id' => 5,
+            'usuario_id' => 2,
+            'estado' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('empleados')->insert([
+            'docutipos_id' => 1,
+            'identificacion' => '90000001',
+            'nombre1' => 'Juan',
+            'nombre2' => 'Carlos',
+            'apellido1' => 'Rojas',
+            'telefono_celu' => '3501112233',
+            'direccion' => 'Calle de prueba 13',
+            'genero' => 'Masculino',
+            'fecha_nacimiento' => '1990-11-05',
+            'email' => 'empleado11@gmail.com',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        //------------------------------------------------------
+
     }
 }
