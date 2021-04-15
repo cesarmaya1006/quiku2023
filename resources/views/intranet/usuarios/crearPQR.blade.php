@@ -32,16 +32,6 @@
                         @endif
                         <div class="card-body">
                             <div class="row d-flex">
-                                <div class="col-12 col-md-6 form-group">
-                                    <label for="">Categoría Motivo</label>
-                                    <select name="motivo_pqr" id="motivo_pqr" data_url="{{ route('cargar_submotivos') }}"
-                                        class="custom-select rounded-0">
-                                        <option value="">--Seleccione--</option>
-                                        @foreach ($tipo_pqr->motivos as $motivo)
-                                            <option value="{{ $motivo->id }}">{{ $motivo->motivo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                 <div class="col-12 col-md-6 form-group"><label for="adquisicion">Lugar de adquisición del
                                         producto o servicio:</label>
                                     <select name="adquisicion" id="adquisicion" class="custom-select rounded-0">
@@ -149,7 +139,16 @@
                                         categoría motivo</button>
                                 </div>
                                 <div class="row p-3" id="p1" style="border: 1px solid black; border-radius: 5px;">
-
+                                    <div class="col-12 col-md-6 form-group">
+                                        <label for="">Categoría Motivo</label>
+                                        <select name="motivo_pqr" id="motivo_pqr"
+                                            data_url="{{ route('cargar_submotivos') }}" class="custom-select rounded-0">
+                                            <option value="">--Seleccione--</option>
+                                            @foreach ($tipo_pqr->motivos as $motivo)
+                                                <option value="{{ $motivo->id }}">{{ $motivo->motivo }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="col-12 col-md-6 form-group">
                                         <label for="motivo_sub_id">Sub - Categoría Motivo</label>
                                         <select name="motivo_sub_id" id="motivo_sub_id" class="custom-select rounded-0">

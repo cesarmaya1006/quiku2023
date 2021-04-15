@@ -11,6 +11,7 @@ use App\Models\PQR\PQR;
 use App\Models\PQR\SubMotivo;
 use App\Models\PQR\tipoPQR;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class ClienteController extends Controller
 {
@@ -103,6 +104,35 @@ class ClienteController extends Controller
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
         return view('intranet.usuarios.crearConsulta', compact('usuario'));
+    }
+    public function generarConsulta_guardar(Request $request)
+    {
+
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        if ($usuario->persona) {
+            $nuevaConsulta['persona_id'] = $request['persona_id'];
+        } else {
+            $nuevaConsulta['empresa_id'] = $request['empresa_id'];
+        }
+        $nuevaConsulta['consulta'] = $request['consulta'];
+        $nuevaConsulta['justificacion'] = $request['justificacion'];
+        $nuevaConsulta['fecha_generacion'] = $request['fecha_generacion'];
+        $nuevaConsulta['fecha_radicado'] = $request['fecha_radicado'];
+        if ($request->hasFile('documentos')) {
+            $ruta = Config::get('constantes.folder_doc_consultas');
+            $ruta = trim($ruta);
+            foreach ($request['documentos'] as $documento) {
+                dd($documento);
+                $doc_subido = $documento;
+                $tamaño = $documento->getSize();
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['documento'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+            }
+            dd($tamaño);
+        } else {
+            dd('no');
+        }
     }
 
     public function generarFelicitacion()

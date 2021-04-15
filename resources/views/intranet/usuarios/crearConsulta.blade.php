@@ -23,14 +23,15 @@
                     <div class="card-header">
                         <h3 class="card-title">Crear Consulta</h3>
                     </div>
-                    <form action="" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <form action="{{ route('usuario-generarConsulta-guardar') }}" method="POST" autocomplete="off"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         @if ($usuario->persona)
-                            <input type="hidden" name="persona_id " value="{{ $usuario->persona->id }}">
+                            <input type="hidden" name="persona_id" value="{{ $usuario->persona->id }}">
                         @endif
                         @if ($usuario->representante)
-                            <input type="hidden" name="empresa_id  " value="{{ $usuario->representante->empresa->id }}">
+                            <input type="hidden" name="empresa_id" value="{{ $usuario->representante->empresa->id }}">
                         @endif
                         <input type="hidden" name="fecha_generacion" value="{{ date('Y-m-d') }}">
                         <input type="hidden" name="fecha_radicado"
@@ -47,7 +48,8 @@
                             </div>
                             <div class="col-12 col-md-6 form-group">
                                 <label for="">Anexos o Pruebas</label>
-                                <input class="form-control form-control-sm" type="file">
+                                <input class="form-control form-control-sm" type="file" id="documentos[]"
+                                    name="documentos[]" multiple="">
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-star pl-md-5">

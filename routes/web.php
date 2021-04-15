@@ -136,6 +136,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('generarPQR/{id}', [ClienteController::class, 'generarPQR'])->name('usuario-generarPQR');
         Route::get('cargar_submotivos', [ClienteController::class, 'cargar_submotivos'])->name('cargar_submotivos');
         Route::get('generarConsulta', [ClienteController::class, 'generarConsulta'])->name('usuario-generarConsulta');
+        Route::post('generarConsulta', [ClienteController::class, 'generarConsulta_guardar'])->name('usuario-generarConsulta-guardar');
         Route::get('generarFelicitacion', [ClienteController::class, 'generarFelicitacion'])->name('usuario-generarFelicitacion');
         Route::get('ReporteIrregularidad', [ClienteController::class, 'reporteIrregularidad'])->name('usuario-reporteIrregularidad');
         Route::get('generarSolicitudDatos', [ClienteController::class, 'generarSolicitudDatos'])->name('usuario-generarSolicitudDatos');
