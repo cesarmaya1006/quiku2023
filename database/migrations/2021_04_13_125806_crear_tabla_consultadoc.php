@@ -18,9 +18,9 @@ class CrearTablaConsultadoc extends Migration
             $table->unsignedBigInteger('consulta_id');
             $table->foreign('consulta_id', 'fk_consulta_doc')->references('id')->on('consultas')->onDelete('restrict')->onUpdate('restrict');
             $table->string('titulo', 255);
-            $table->longText('descripcion')->nullable();
-            $table->string('url', 255);
+            $table->string('descripcion', 255);
             $table->string('extension', 255);
+            $table->text('url');
             $table->double('peso');
             $table->timestamps();
             $table->charset = 'utf8';

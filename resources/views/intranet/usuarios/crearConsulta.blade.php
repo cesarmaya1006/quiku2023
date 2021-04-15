@@ -46,10 +46,20 @@
                                 <input class="form-control form-control-sm" name="justificacion" id="justificacion"
                                     type="text">
                             </div>
-                            <div class="col-12 col-md-6 form-group">
+                            <div class="col-12">
+                                <h6>Anexo o prueba</h6>
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <label for="">Titulo</label>
+                                <input type="text" class="form-control form-control-sm" name="titulo" id="titulo">
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
+                                <label for="">Descripción</label>
+                                <input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion">
+                            </div>
+                            <div class="col-12 col-md-4 form-group">
                                 <label for="">Anexos o Pruebas</label>
-                                <input class="form-control form-control-sm" type="file" id="documentos[]"
-                                    name="documentos[]" multiple="">
+                                <input class="form-control form-control-sm" type="file" id="documentos" name="documentos">
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-star pl-md-5">

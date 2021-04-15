@@ -7,6 +7,8 @@ use App\Models\Admin\Departamento;
 use App\Models\Admin\Pais;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Usuario;
+use App\Models\Consultas\Consulta;
+use App\Models\Consultas\ConsultaDoc;
 use App\Models\PQR\PQR;
 use App\Models\PQR\SubMotivo;
 use App\Models\PQR\tipoPQR;
@@ -23,7 +25,8 @@ class ClienteController extends Controller
     public function index()
     {
         $pqr_S = PQR::where('persona_id', session('id_usuario'));
-        return view('intranet.usuarios.listado', compact('pqr_S'));
+        $consultas = Consulta::where('persona_id', session('id_usuario'))->get();
+        return view('intranet.usuarios.listado', compact('pqr_S', 'consultas'));
     }
 
     /**
@@ -118,21 +121,29 @@ class ClienteController extends Controller
         $nuevaConsulta['justificacion'] = $request['justificacion'];
         $nuevaConsulta['fecha_generacion'] = $request['fecha_generacion'];
         $nuevaConsulta['fecha_radicado'] = $request['fecha_radicado'];
+        $consulta_nueva = Consulta::create($nuevaConsulta);
+        $tamaño_f = 0;
         if ($request->hasFile('documentos')) {
             $ruta = Config::get('constantes.folder_doc_consultas');
             $ruta = trim($ruta);
-            foreach ($request['documentos'] as $documento) {
-                dd($documento);
-                $doc_subido = $documento;
-                $tamaño = $documento->getSize();
-                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                $nuevo_documento['documento'] = $nombre_doc;
-                $doc_subido->move($ruta, $nombre_doc);
+            $ruta = trim($ruta);
+            $doc_subido = $request->documentos;
+            $tamaño = $doc_subido->getSize();
+            if ($tamaño > 0) {
+                $tamaño = $tamaño / 1000;
             }
-            dd($tamaño);
-        } else {
-            dd('no');
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $nuevo_documento['consulta_id'] = $consulta_nueva->id;
+            $nuevo_documento['titulo'] = $request['titulo'];
+            $nuevo_documento['descripcion'] = $request['descripcion'];
+            $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+            $nuevo_documento['peso'] = $tamaño;
+            $nuevo_documento['url'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+            $tamaño_f += $tamaño;
+            ConsultaDoc::create($nuevo_documento);
         }
+        return redirect('usuario/index')->with('mensaje', 'Se registro la consulta de manera correcta tamaño archivos:' . $tamaño_f);
     }
 
     public function generarFelicitacion()

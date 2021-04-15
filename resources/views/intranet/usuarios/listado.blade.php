@@ -17,7 +17,12 @@
     <div class="container-fluid">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-10">
-                {{-- <h4>Listado de PQR´s</h4> --}}
+                <div class="row d-flex justify-content-center mt-3">
+                    <div class="col-11 col-md-6">
+                        @include('includes.error-form')
+                        @include('includes.mensaje')
+                    </div>
+                </div>
             </div>
             <div class="col-12 col-md-10 table-responsive">
                 <table class="table table-striped table-hover table-sm display">
@@ -30,12 +35,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pqr_S as $pqr)
+                        @foreach ($consultas as $consulta)
                             <tr>
-                                <td scope="row">{{ $pqr->id }}</td>
-                                <td>{{ $pqr->fecha_radicado }}</td>
-                                <td>{{ $pqr->estado }}</td>
-                                <td></td>
+                                <td scope="row">{{ $consulta->id }}</td>
+                                <td>{{ $consulta->fecha_radicado }}</td>
+                                <td>{{ $consulta->estado }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-accion-tabla text-primary">
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
