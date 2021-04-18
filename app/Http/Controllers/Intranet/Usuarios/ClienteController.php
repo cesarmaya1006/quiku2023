@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers\Intranet\Usuarios;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin\Departamento;
-use App\Models\Admin\Pais;
-use App\Models\Admin\Tipo_Docu;
-use App\Models\Admin\Usuario;
-use App\Models\Consultas\Consulta;
-use App\Models\Consultas\ConsultaDoc;
 use App\Models\PQR\PQR;
-use App\Models\PQR\SubMotivo;
+use App\Models\Admin\Pais;
 use App\Models\PQR\tipoPQR;
 use Illuminate\Http\Request;
+use App\Models\Admin\Usuario;
+use App\Models\PQR\SubMotivo;
+use App\Models\Admin\Tipo_Docu;
+use App\Models\Admin\Departamento;
+use App\Models\Consultas\Consulta;
+use App\Http\Controllers\Controller;
+use App\Models\Consultas\ConsultaDoc;
+use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
+use App\Models\Sugerencias\SugerenciaDoc;
+use App\Models\Sugerencias\SugerenciaHecho;
 
 class ClienteController extends Controller
 {
@@ -169,6 +172,47 @@ class ClienteController extends Controller
     {
         return view('intranet.usuarios.crearSugerencia');
     }
+    public function generarSugerencia_guardar(Request $request){
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        if ($usuario->persona) {
+            $nuevaSugerencia['persona_id'] = $usuario->id;
+        } else {
+            $nuevaSugerencia['empresa_id'] = $usuario->id;
+        }
+        $nuevaSugerencia['sugerencia'] = $request['sugerencia'];
+        $nuevaSugerencia['fecha_generacion'] = date("Y-m-d") ;
+        $nuevaSugerencia['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
+        $sugerencia = Sugerencia::create($nuevaSugerencia);
+        $nuevosHechos['sugerencia_id'] = $sugerencia->id;
+        $cantidadHechos = (sizeof($request->all()) - 7);
+        for ($i=0; $i < $cantidadHechos + 1; $i++) { 
+            $nuevosHechos['hecho'] = $request['hecho'.$i];
+            SugerenciaHecho::create($nuevosHechos);
+        }
+
+
+        if ($request->hasFile('documentos')) {
+            $ruta = Config::get('constantes.folder_doc_sugerencias');
+            $ruta = trim($ruta);
+            $doc_subido = $request->documentos;
+            $tamaño = $doc_subido->getSize();
+            if ($tamaño > 0) {
+                $tamaño = $tamaño / 1000;
+            }
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $nuevo_documento['sugerencia_id'] = $sugerencia->id;
+            $nuevo_documento['titulo'] = $request['titulo'];
+            $nuevo_documento['descripcion'] = $request['descripcion'];
+            $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+            $nuevo_documento['peso'] = $tamaño;
+            $nuevo_documento['url'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+            SugerenciaDoc::create($nuevo_documento);
+        }
+    
+        return view('intranet.usuarios.crearSugerencia');
+    }
+
     public function actualizar_datos()
     {
 

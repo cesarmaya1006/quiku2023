@@ -5,6 +5,7 @@ namespace App\Models\Personas;
 use App\Models\Admin\Municipio;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\PQR;
+use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -25,9 +26,13 @@ class Persona extends Model
         return $this->hasMany(PQR::class, 'persona_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
     public function municipio()
     {
         return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function sugerencias()
+    {
+        return $this->hasMany(Sugerencia::class, 'persona_id', 'id');
     }
 }

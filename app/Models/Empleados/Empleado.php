@@ -30,4 +30,8 @@ class Empleado extends Model
         return $this->hasOne(Usuario::class, 'id');
     }
     //----------------------------------------------------------------------------------
+    public function sugerencias()
+    {
+        return $this->hasMany(Sugerencia::class, 'empleado_id', 'id');
+    }
 }

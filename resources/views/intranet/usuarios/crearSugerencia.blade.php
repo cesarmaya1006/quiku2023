@@ -19,27 +19,51 @@ Sistema de informaci&oacute;n
     <div class="row d-flex justify-content-center">
         {{-- Sugerencia --}}
         <div class="col-12">
-            <div class="card card-primary">
+            <div class="card card-primary sugerencia">
                 <div class="card-header">
                     <h3 class="card-title">Crear Sugerencia</h3>
                 </div>
-                <form>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="">Hechos</label>
-                            <input class="form-control" type="text">
+                <form action="{{ route('usuario-generarSugerencia-guardar') }}" method="POST" autocomplete="off"
+                enctype="multipart/form-data" id="fromSugerencia">
+                @csrf
+                @method('post')
+                    <div class="row d-flex card-body pl-md-5 pr-md-5">
+                        <div class="col-12 d-flex justify-content-end flex-row">
+                            <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2" id="crearHecho"><i
+                                class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
+                                otro hecho</button>
+                        </div>
+                        <div class="col-12" id="hechos">
+                            <div class="form-group sugerenciaHecho">
+                                <div class="title-sugerencias d-flex justify-content-between mt-2">
+                                    <label for="hecho">Hecho</label>
+                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho"><i class="fas fa-minus-circle"></i></button>
+                                </div>
+                                <input class="form-control mt-2" type="text" name="hecho">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="">Escriba su sugerencia:</label>
-                            <input class="form-control" type="text">
+                            <input class="form-control" type="text" name="sugerencia" id="sugerencia">
                         </div>
-                        <div class="form-group">
+                        <div class="col-12">
+                            <h6>Anexo o prueba</h6>
+                        </div>
+                        <div class="col-12 col-md-4 form-group">
+                            <label for="">Titulo</label>
+                            <input type="text" class="form-control form-control-sm" name="titulo" id="titulo">
+                        </div>
+                        <div class="col-12 col-md-4 form-group">
+                            <label for="">Descripción</label>
+                            <input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion">
+                        </div>
+                        <div class="col-12 col-md-4 form-group">
                             <label for="">Anexos o Pruebas</label>
-                            <input class="form-control" type="file">
+                            <input class="form-control form-control-sm" type="file" id="documentos" name="documentos">
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary px-4">Crear</button>
+                        <button type="submit" class="btn btn-primary px-4" >Crear</button>
                     </div>
                 </form>
             </div>
@@ -50,6 +74,6 @@ Sistema de informaci&oacute;n
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-
+<script src="{{ asset('js/intranet/sugerencia/sugerencia.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

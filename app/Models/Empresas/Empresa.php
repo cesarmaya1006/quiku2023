@@ -23,4 +23,8 @@ class Empresa extends Model
         return $this->hasMany(PQR::class, 'empresa_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function sugerencias()
+    {
+        return $this->hasMany(Sugerencia::class, 'empresa_id', 'id');
+    }
 }
