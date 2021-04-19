@@ -37,7 +37,9 @@ class ExtranetPageController extends Controller
 
     public function solicitar_password()
     {
-        return view('extranet.solicitar_password');
+        $tipos_docu = Tipo_Docu::get();
+        // dd($tipos_docu);
+        return view('extranet.solicitar_password', compact('tipos_docu'));
     }
 
     public function cambiar_password()

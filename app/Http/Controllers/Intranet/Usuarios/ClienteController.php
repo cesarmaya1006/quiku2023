@@ -242,6 +242,11 @@ class ClienteController extends Controller
         return view('intranet/consulta_politicas.index');
     }
 
+    public function ayuda()
+    {
+        return view('intranet/ayuda.index');
+    }
+
     public function cargar_submotivos(Request $request)
     {
         if ($request->ajax()) {

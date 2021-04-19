@@ -19,6 +19,22 @@
                                 <div class="form-group mt-3">
                                     <p>Ingresa el correo electrónico que tienes asociado a tu cuenta. Te enviaremos un correo electrónico desde el que prodrás cambiar tu Contraseña</p>
                                 </div>
+                                <div class="form-row row">
+                                    <div class="form-group mt-3 col-md-4">
+                                        <label class="requerido" for="tipodocumento">Tipo documento</label>
+                                        <select class="form-control" name="docutipos_id" id="docutipos_id" required>
+                                            <option value="">--Seleccione un tipo--</option>
+                                            @foreach ($tipos_docu as $tipodocu)
+                                                <option value="{{ $tipodocu->id }}" {{$tipodocu->id==1?'selected':''}}>{{ $tipodocu->abreb_id }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-3 col-md-8">
+                                        <label class="requerido" for="numerodocumento">Número de documento</label>
+                                        <input type="text" class="form-control" id="numerodocumento" name="identificacion"
+                                            placeholder="Número documento" required>
+                                    </div>
+                                </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
                                     <input type="email" class="form-control" id="email" name="email"

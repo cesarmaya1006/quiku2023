@@ -158,6 +158,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Consultar politicas
         Route::get('consulta-politicas', [ClienteController::class, 'consulta_politicas'])->name('usuario_consulta_politicas');
+        
+        //Consultar ayuda
+        Route::get('ayuda', [ClienteController::class, 'ayuda'])->name('usuario_ayuda');
     });
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 });

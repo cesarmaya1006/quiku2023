@@ -12,19 +12,19 @@
             <div class="form-row row">
                 <div class="form-group mt-3 col-md-6">
                     <label class="requerido" for="tipodocumento">Tipo documento</label>
-                    <select class="form-control" name="docutipos_id" id="docutipos_id" required>
-                        <option value="">--Seleccione un tipo--</option>
+                    <select class="form-control" name="docutipos_id" id="docutipos_id" required readonly="true">
+                        {{-- <option value="">--Seleccione un tipo--</option> --}}
                         @foreach ($tipos_docu as $tipodocu)
-                            <option value="{{ $tipodocu->id }}"
-                                {{ $tipodocu->id == $usuario->persona->docutipos_id ? 'selected' : '' }}>
-                                {{ $tipodocu->tipo_id }}</option>
+                            @if($tipodocu->id == $usuario->persona->docutipos_id)
+                                <option value="{{ $tipodocu->id }}"> {{ $tipodocu->tipo_id }}</option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group mt-3 col-md-6">
                     <label class="requerido" for="numerodocumento">Número de documento</label>
                     <input type="text" class="form-control" id="numerodocumento" name="identificacion"
-                        placeholder="Número documento" value="{{ $usuario->persona->identificacion }}" readonly
+                        placeholder="Número documento" value="{{ $usuario->persona->identificacion }}" readonly="true"
                         required>
                 </div>
             </div>
@@ -32,24 +32,24 @@
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="nombre1">Primer Nombre</label>
                     <input type="text" class="form-control lcapital" id="nombre1" placeholder="Primer Nombre"
-                        name="nombre1" value="{{ $usuario->persona->nombre1 }}" required>
+                        name="nombre1" value="{{ $usuario->persona->nombre1 }}" required  readonly="true">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nombre2">Segundo Nombre</label>
                     <input type="text" class="form-control lcapital" id="nombre2" placeholder="Segundo Nombre"
-                        name="nombre2" value="{{ $usuario->persona->nombre2 }}">
+                        name="nombre2" value="{{ $usuario->persona->nombre2 }}"  readonly="true">
                 </div>
             </div>
             <div class="form-row row mt-3">
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="apellido1">Primer Apellido</label>
                     <input type="text" class="form-control lcapital" id="apellido1" placeholder="Primer Apellido"
-                        name="apellido1" value="{{ $usuario->persona->apellido1 }}" required>
+                        name="apellido1" value="{{ $usuario->persona->apellido1 }}" required readonly="true">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="apellido2">Segundo Apellido</label>
                     <input type="text" class="form-control lcapital" id="apellido2" placeholder="Segundo Apellido"
-                        name="apellido2" value="{{ $usuario->persona->apellido2 }}">
+                        name="apellido2" value="{{ $usuario->persona->apellido2 }}" readonly="true">
                 </div>
             </div>
             <div class="form-row row mt-3">
@@ -116,7 +116,7 @@
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="nacionalidad">Nacionalidad</label>
                     <input type="text" class="form-control" id="nacionalidad" placeholder="Nacionalidad"
-                        name="nacionalidad" value="{{ $usuario->persona->nacionalidad }}" required>
+                        name="nacionalidad" value="{{ $usuario->persona->nacionalidad }}" required readonly="true">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="grado">Último grado de educación obtenido</label>
@@ -146,7 +146,7 @@
             <div class="form-row row mt-3">
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="genero">Elija su Genero</label>
-                    <select class="form-control" name="genero" id="genero" required>
+                    <select class="form-control" name="genero" id="genero" required readonly="true">
                         <option value="">--Seleccione--</option>
                         <option value="Femenino">Femenino</option>
                         <option value="Masculino">Masculino</option>
@@ -156,13 +156,13 @@
                     <label class="requerido" for="fechanacimiento">Fecha nacimiento</label>
                     <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento"
                         max="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
-                        value="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}" required>
+                        value="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}" required readonly="true">
                 </div>
             </div>
             <div class="form-row row mt-3">
                 <div class="col-md-6 mb-3">
                     <label class="requerido" for="grupoetnico">Grupo Étnico</label>
-                    <select class="form-control" name="grupoetnico" id="grupoetnico" required>
+                    <select class="form-control" name="grupoetnico" id="grupoetnico" required readonly="true">
                         <option value="">--Seleccione--</option>
                         <option value="1">Sin pertenencia étnica</option>
                         <option value="2">Negro, mulato, afrodescendiente, afrocolombiano</option>
@@ -192,7 +192,7 @@
             </div>
             <div class="form-group mt-3 d-none" id="tipodiscapacidadcaja">
                 <label for="tipodiscapacidad">Tipo discapacidad?</label>
-                <select class="form-control" name="tipodiscapacidad" id="tipodiscapacidad">
+                <select class="form-control" name="tipodiscapacidad" id="tipodiscapacidad" readonly="true">
                     <option value="">--Seleccione--</option>
                     <option value="1">Incapacidad Permanente Parcial</option>
                     <option value="2">Incapacidad Permanente Total</option>
@@ -203,7 +203,7 @@
             <div class="form-group mt-3">
                 <label class="requerido" for="email">Correo electrónico</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico"
-                    value="{{ $usuario->persona->email }}" required>
+                    value="{{ $usuario->persona->email }}" required readonly="true">
                 <p>Al diligenciar su correo electrónico, está aceptando que las respuestas y
                     comunicaciones sobre sus peticiones, quejas y reclamos, sean enviadas a esta
                     dirección.</p>

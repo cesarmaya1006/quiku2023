@@ -74,3 +74,7 @@ label.requerido:after {
 .btn-sombra {
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #ced4da!important;
+}

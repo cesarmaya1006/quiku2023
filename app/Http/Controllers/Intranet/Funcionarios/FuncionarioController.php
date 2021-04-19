@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
-use App\Http\Controllers\Controller;
+use App\Models\Admin\Pais;
 use Illuminate\Http\Request;
+use App\Models\Admin\Usuario;
+use App\Models\Admin\Tipo_Docu;
+use App\Models\Admin\Departamento;
+use App\Http\Controllers\Controller;
 
 class FuncionarioController extends Controller
 {
@@ -18,11 +22,15 @@ class FuncionarioController extends Controller
     }
     public function crear_usuario()
     {
-        return view('intranet.funcionarios.crear_usuario');
+        $tipos_docu = Tipo_Docu::get();
+        $paises = Pais::get();
+        $departamentos = Departamento::get();
+        $usuario = Usuario::findorFail(session('id_usuario'));
+        return view('intranet/crear_usuario_asistido.index', compact('usuario', 'tipos_docu', 'paises', 'departamentos'));
     }
     public function cambiar_password()
     {
-        return view('intranet.funcionarios.cambiar_password');
+        return view('intranet/password.index');
     }
     /**
      * Show the form for creating a new resource.
@@ -63,8 +71,14 @@ class FuncionarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function editar()
-    {
-        return view('intranet.funcionarios.editar');
+    {   
+        $tipos_docu = Tipo_Docu::get();
+        $paises = Pais::get();
+        $departamentos = Departamento::get();
+        $usuario = Usuario::findorFail(session('id_usuario'));
+        return view('intranet/datos_personales.index', compact('usuario', 'tipos_docu', 'paises', 'departamentos'));
+    
+        // return view('intranet.funcionarios.editar');
     }
 
     /**

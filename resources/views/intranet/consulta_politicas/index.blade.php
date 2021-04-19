@@ -23,6 +23,7 @@
                         <h3 class="card-title">Consulte nuestras pol&iacute;ticas de datos y ayuda</h3>
                     </div>
                     <div class="card-body">
+                        <embed src="{{ asset('documentos/Prueba.pdf') }}" type="application/pdf" width="100%" height="700px" />
                     </div>
                 </div>
             </div>

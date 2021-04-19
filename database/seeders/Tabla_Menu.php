@@ -40,7 +40,7 @@ class Tabla_Menu extends Seeder
             //----------------------------------------------------------------------------------------------------------------------
             ['nombre' => 'Consulte nuestas políticas de datos', 'menu_id' => '0', 'url' => 'usuario/consulta-politicas', 'orden' => '4', 'icono' => 'fas fa-question-circle'],
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Ayuda', 'menu_id' => '0', 'url' => 'usuario/consulta-politicas', 'orden' => '5', 'icono' => 'fas fa-question-circle'],
+            ['nombre' => 'Ayuda', 'menu_id' => '0', 'url' => 'usuario/ayuda', 'orden' => '5', 'icono' => 'fas fa-question-circle'],
             //----------------------------------------------------------------------------------------------------------------------
             ['nombre' => 'Actualizar datos', 'menu_id' => '0', 'url' => 'usuario/actualizar-datos', 'orden' => '6', 'icono' => 'fas fa-edit'],
             // Menus  padre
