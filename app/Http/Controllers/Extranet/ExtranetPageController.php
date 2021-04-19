@@ -15,6 +15,7 @@ use App\Models\Admin\Parametro;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Usuario;
 use App\Models\Admin\UsuarioTemp;
+use App\Models\Empleados\Empleado;
 use App\Models\Empresas\Empresa;
 use App\Models\Empresas\Representante;
 use App\Models\Personas\Persona;
@@ -42,9 +43,53 @@ class ExtranetPageController extends Controller
         return view('extranet.solicitar_password', compact('tipos_docu'));
     }
 
-    public function cambiar_password()
+    public function cambiar_password(Request $request)
     {
-        return view('extranet.cambiar_password');
+        //Carácteres para la contraseña
+        $str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+        $password = "";
+        //Reconstruimos la contraseña segun la longitud que se quiera
+        for ($i = 0; $i < 10; $i++) {
+            //obtenemos un caracter aleatorio escogido de la cadena de caracteres
+            $password .= substr($str, rand(0, 62), 1);
+        }
+        $usuario_camb['camb_password'] = 1;
+        $usuario_camb['password'] = bcrypt(utf8_encode($password));
+
+        $personas = Persona::where('docutipos_id', $request['docutipos_id'])
+            ->where('identificacion', $request['identificacion'])
+            ->where('email', $request['email'])->get();
+        $representantes = Representante::where('docutipos_id', $request['docutipos_id'])
+            ->where('identificacion', $request['identificacion'])
+            ->where('email', $request['email'])->get();
+        $empleados = Empleado::where('docutipos_id', $request['docutipos_id'])
+            ->where('identificacion', $request['identificacion'])
+            ->where('email', $request['email'])->get();
+        if ($personas->count() > 0) {
+            foreach ($personas as $persona) {
+                $id = $persona->id;
+            }
+        } elseif ($representantes->count() > 0) {
+            foreach ($representantes as $representante) {
+                $id = $representante->id;
+            }
+        } else {
+            foreach ($empleados as $empleado) {
+                $id = $empleado->id;
+            }
+        }
+
+        Usuario::findOrFail($id)->update($usuario_camb);
+        $usuario=Usuario::findOrFail($id);
+        //produccion Pruebas
+        $headers =  'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'From: Your name <info@quiku.com>' . "\r\n";
+        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        $mensaje = $this->mensajeRecuperarContraseña($usuario->usuario,$password);
+        $para = 'cesarmaya99@hotmail.com';
+        $titulo = 'Recuperar contraseña plataforma Quiku';
+        mail($para, $titulo, $mensaje, $headers);
+        return redirect('/index')->with('mensaje', 'Verifique su correo e ingrese a la plataforma nuevamente');
     }
 
     public function preguntas_frecuentes()
@@ -344,6 +389,35 @@ class ExtranetPageController extends Controller
         $mensaje .= '<p>Estimado Usuario. Ha solicitado registrarse a nuestro aplicativo para presentar Peticiones, Quejas o Reclamos, para continuar con su registro por favor dar clic sobre el enlace o c&oacute;pielo y p&eacute;guelo en su explorador web para continuar con el registro.</p>' . "\r\n";
         $mensaje .= '<br>' . "\r\n";
         $mensaje .= '<a href="' . route('registro_ext', ['id' => $id, 'cc' => $cedula, 'tipo' => $tipopersona]) . '" target="_blank" rel="noopener noreferrer">' . route('registro_ext', ['id' => $id, 'cc' => $cedula, 'tipo' => $tipopersona]) . '</a>' . "\r\n";
+        $mensaje .= '</div>' . "\r\n";
+        $mensaje .= '</div>' . "\r\n";
+        $mensaje .= '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>' . "\r\n";
+
+        $mensaje .= '</body>' . "\r\n";
+        $mensaje .= '</html>' . "\r\n";
+
+        return $mensaje;
+    }
+
+    public function mensajeRecuperarContraseña($usuario, $password)
+    {
+        $mensaje = '<html lang="es">' . "\r\n";
+        $mensaje .= '<head>' . "\r\n";
+        $mensaje .= '<meta charset="utf-8">' . "\r\n";
+        $mensaje .= '<meta name="viewport" content="width=device-width, initial-scale=1">' . "\r\n";
+        $mensaje .= '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">' . "\r\n";
+        $mensaje .= '<title>LegalProceedings</title>' . "\r\n";
+        $mensaje .= '</head>' . "\r\n";
+        $mensaje .= '<body>' . "\r\n";
+        $mensaje .= '<div class="row">' . "\r\n";
+        $mensaje .= '<div class="col-12">' . "\r\n";
+        $mensaje .= '<h1>Sistema PQR</h1>' . "\r\n";
+        $mensaje .= '<br>' . "\r\n";
+        $mensaje .= '<p>Estimado Usuario. Hemos rebicido una solicitud con este correo para generar una nueva contraseña o para recordar su usuario.</p>' . "\r\n";
+        $mensaje .= '<p>El sistema a generado una contraseña temporal ingrese con esta contraseña y cambie nuevamenete la contraseña por una de su eleccion.</p>' . "\r\n";
+        $mensaje .= '<br>' . "\r\n";
+        $mensaje .= '<p>Usuario: ' . $usuario . '</p>' . "\r\n";
+        $mensaje .= '<p>Contraseña temporal: ' . $password . '</p>' . "\r\n";
         $mensaje .= '</div>' . "\r\n";
         $mensaje .= '</div>' . "\r\n";
         $mensaje .= '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>' . "\r\n";

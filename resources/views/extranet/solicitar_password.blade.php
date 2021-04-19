@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Cambiar Contraseña</h5>
                         <div class="card-text mt-5 justify-content-center">
-                            <form action="{{ route('solicitar_password') }}" method="POST" autocomplete="off">
+                            <form action="{{ route('cambiar_password') }}" method="POST" autocomplete="off">
                                 @csrf
                                 @method('post')
                                 <div class="form-group mt-3">
@@ -30,8 +30,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group mt-3 col-md-8">
-                                        <label class="requerido" for="numerodocumento">Número de documento</label>
-                                        <input type="text" class="form-control" id="numerodocumento" name="identificacion"
+                                        <label class="requerido" for="identificacion">Número de documento</label>
+                                        <input type="text" class="form-control" id="identificacion" name="identificacion"
                                             placeholder="Número documento" required>
                                     </div>
                                 </div>
