@@ -184,32 +184,33 @@ class ClienteController extends Controller
         $nuevaSugerencia['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
         $sugerencia = Sugerencia::create($nuevaSugerencia);
         $nuevosHechos['sugerencia_id'] = $sugerencia->id;
-        $cantidadHechos = (sizeof($request->all()) - 7);
-        for ($i=0; $i < $cantidadHechos + 1; $i++) { 
+        $cantidadHechos = $request['cantidadHechos'];
+        for ($i=0; $i < $cantidadHechos; $i++) { 
             $nuevosHechos['hecho'] = $request['hecho'.$i];
             SugerenciaHecho::create($nuevosHechos);
         }
-
-
-        if ($request->hasFile('documentos')) {
-            $ruta = Config::get('constantes.folder_doc_sugerencias');
-            $ruta = trim($ruta);
-            $doc_subido = $request->documentos;
-            $tamaño = $doc_subido->getSize();
-            if ($tamaño > 0) {
-                $tamaño = $tamaño / 1000;
+        $cantidadAnexosHechos = $request['cantidadAnexosHechos'];
+        $documentos = $request->allFiles();
+        for ($i=0; $i < $cantidadAnexosHechos; $i++) { 
+            if ($request->hasFile("documentos$i")) {
+                $ruta = Config::get('constantes.folder_doc_sugerencias');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["documentos$i"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['sugerencia_id'] = $sugerencia->id;
+                $nuevo_documento['titulo'] = $request["titulo$i"];
+                $nuevo_documento['descripcion'] = $request["descripcion$i"];
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+                SugerenciaDoc::create($nuevo_documento);
             }
-            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-            $nuevo_documento['sugerencia_id'] = $sugerencia->id;
-            $nuevo_documento['titulo'] = $request['titulo'];
-            $nuevo_documento['descripcion'] = $request['descripcion'];
-            $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
-            $nuevo_documento['peso'] = $tamaño;
-            $nuevo_documento['url'] = $nombre_doc;
-            $doc_subido->move($ruta, $nombre_doc);
-            SugerenciaDoc::create($nuevo_documento);
         }
-    
         return view('intranet.usuarios.crearSugerencia');
     }
 
