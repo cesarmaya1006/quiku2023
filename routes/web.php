@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin'], function () {
 
         Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
+        Route::post('restablecer-password', [IntranetPageCotroller::class, 'restablecer_password'])->name('admin-restablecer_password');
         // Rutas Index
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'adminSistema'], function () {

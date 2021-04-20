@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Intranet\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidarPassword;
 use App\Models\Admin\Usuario;
 use App\Models\Empresas\Empleado;
 use App\Models\Juzgados\Etapa_Proceso;
@@ -21,12 +22,21 @@ class IntranetPageCotroller extends Controller
      */
     public function index()
     {
+        $usuario = Usuario::findOrFail(session('id_usuario'));
         if (session('rol_id') == 6) {
             $pqr_S = PQR::where('persona_id', session('id_usuario'));
         } elseif (session('rol_id') == 5) {
             $pqr_S = PQR::where('empleado_id', session('id_usuario'));
         }
-        return view('intranet.index.index', compact('pqr_S'));
+        return view('intranet.index.index', compact('pqr_S', 'usuario'));
+    }
+
+    public function restablecer_password(ValidarPassword $request)
+    {
+        $nuevoPassword['password'] = bcrypt(utf8_encode($request['password1']));
+        $nuevoPassword['camb_password'] = 0;
+        Usuario::findOrFail($request['id'])->update($nuevoPassword);
+        return redirect('admin/index')->with('mensaje', 'Se cambio la contraseña de manera exitosa en la plataforma');
     }
 
     /**

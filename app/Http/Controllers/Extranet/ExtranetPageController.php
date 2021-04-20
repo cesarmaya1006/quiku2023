@@ -7,6 +7,7 @@ use App\Http\Requests\ValidarPersonaJur;
 use App\Http\Requests\ValidarPersonaNat;
 use App\Http\Requests\ValidarRegistroIni;
 use App\Http\Requests\ValidarRepresentanteLegal;
+use App\Mail\RecuperarContraseña;
 use App\Mail\RegistroInicial;
 use App\Models\Admin\Departamento;
 use App\Models\Admin\Municipio;
@@ -80,15 +81,16 @@ class ExtranetPageController extends Controller
         }
 
         Usuario::findOrFail($id)->update($usuario_camb);
-        $usuario=Usuario::findOrFail($id);
+        $usuario = Usuario::findOrFail($id);
         //produccion Pruebas
-        $headers =  'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'From: Your name <info@quiku.com>' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        $mensaje = $this->mensajeRecuperarContraseña($usuario->usuario,$password);
-        $para = 'cesarmaya99@hotmail.com';
-        $titulo = 'Recuperar contraseña plataforma Quiku';
-        mail($para, $titulo, $mensaje, $headers);
+        //$headers =  'MIME-Version: 1.0' . "\r\n";
+        //$headers .= 'From: Your name <info@quiku.com>' . "\r\n";
+        //$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+        //$mensaje = $this->mensajeRecuperarContraseña($usuario->usuario,$password);
+        //$para = 'cesarmaya99@hotmail.com';
+        //$titulo = 'Recuperar contraseña plataforma Quiku';
+        //mail($para, $titulo, $mensaje, $headers);
+        Mail::to('cesarmaya99@hotmail.com')->send(new RecuperarContraseña($usuario->usuario, $password));
         return redirect('/index')->with('mensaje', 'Verifique su correo e ingrese a la plataforma nuevamente');
     }
 
