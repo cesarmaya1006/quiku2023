@@ -8,6 +8,7 @@ use App\Models\Admin\Usuario;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Departamento;
 use App\Http\Controllers\Controller;
+use App\Models\PQR\PQR;
 
 class FuncionarioController extends Controller
 {
@@ -18,7 +19,8 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        return view('intranet.funcionarios.listado_pqr');
+        $pqr_S = PQR::where('empleado_id', session('id_usuario'));
+        return view('intranet.funcionarios.listado_pqr', compact('pqr_S'));
     }
     public function crear_usuario()
     {
@@ -71,13 +73,13 @@ class FuncionarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function editar()
-    {   
+    {
         $tipos_docu = Tipo_Docu::get();
         $paises = Pais::get();
         $departamentos = Departamento::get();
         $usuario = Usuario::findorFail(session('id_usuario'));
         return view('intranet/datos_personales.index', compact('usuario', 'tipos_docu', 'paises', 'departamentos'));
-    
+
         // return view('intranet.funcionarios.editar');
     }
 

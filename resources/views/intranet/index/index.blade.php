@@ -14,21 +14,25 @@
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
-    <div class="container-fluid">
-        <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-8">
-                @include('includes.error-form')
-                @include('includes.mensaje')
+    @if ($usuario->camb_password == 0)
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12 col-md-8">
+                    @include('includes.error-form')
+                    @include('includes.mensaje')
+                </div>
             </div>
-        </div>
-        @if (session('rol_id') == 6)
-            @include('intranet.index.index_usuarios')
-        @endif
-        @if (session('rol_id') == 5)
-            @include('intranet.index.index_funcionarios')
-        @endif
+            @if (session('rol_id') == 6)
+                @include('intranet.index.index_usuarios')
+            @endif
+            @if (session('rol_id') == 5)
+                @include('intranet.index.index_funcionarios')
+            @endif
 
-    </div>
+        </div>
+    @else
+        @include('intranet.index.cambiopassword')
+    @endif
 @endsection
 <!-- ************************************************************* -->
 <!-- script hoja -->

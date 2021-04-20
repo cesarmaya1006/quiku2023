@@ -34,7 +34,7 @@ Route::get('/clear-cache', function () {
 Route::get('/', [ExtranetPageController::class, 'index'])->name('index');
 Route::get('/index', [ExtranetPageController::class, 'index'])->name('index_2');
 Route::get('/solicitar_password', [ExtranetPageController::class, 'solicitar_password'])->name('solicitar_password');
-Route::get('/cambiar_password', [ExtranetPageController::class, 'cambiar_password'])->name('cambiar_password');
+Route::post('/cambiar_password', [ExtranetPageController::class, 'cambiar_password'])->name('cambiar_password');
 Route::get('/preguntas_frecuentes', [ExtranetPageController::class, 'preguntas_frecuentes'])->name('preguntas_frecuentes');
 Route::get('/index3', [ExtranetPageController::class, 'index_3'])->name('index_3');
 Route::get('/registro_ini', [ExtranetPageController::class, 'registro_ini'])->name('registro_ini');
@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'admin'], function () {
 
         Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
+        Route::post('restablecer-password', [IntranetPageCotroller::class, 'restablecer_password'])->name('admin-restablecer_password');
         // Rutas Index
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'adminSistema'], function () {
@@ -159,7 +160,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         //Consultar politicas
         Route::get('consulta-politicas', [ClienteController::class, 'consulta_politicas'])->name('usuario_consulta_politicas');
-        
+
         //Consultar ayuda
         Route::get('ayuda', [ClienteController::class, 'ayuda'])->name('usuario_ayuda');
     });

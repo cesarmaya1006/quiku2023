@@ -21,8 +21,28 @@
                 @include('includes.mensaje')
             </div>
         </div>
-        Hola
-
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-11 table-responsive">
+                <table class="table table-striped table-hover table-sm display">
+                    <thead>
+                        <tr>
+                            <th>Tipo de PQR</th>
+                            <th>Estado</th>
+                            <th>Fecha de radicación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pqr_S as $pqr)
+                            <tr>
+                                <td>{{ $pqr->tipo }}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
 <!-- ************************************************************* -->
