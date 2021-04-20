@@ -5,6 +5,7 @@ namespace App\Models\Personas;
 use App\Models\Admin\Municipio;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\PQR;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,5 +35,10 @@ class Persona extends Model
     public function sugerencias()
     {
         return $this->hasMany(Sugerencia::class, 'persona_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function solicitudDocInfo()
+    {
+        return $this->hasMany(SolicitudDocInfo::class, 'persona_id', 'id');
     }
 }

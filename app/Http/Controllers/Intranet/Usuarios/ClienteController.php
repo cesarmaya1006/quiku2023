@@ -13,6 +13,8 @@ use App\Models\Admin\Departamento;
 use App\Models\Consultas\Consulta;
 use App\Http\Controllers\Controller;
 use App\Models\Consultas\ConsultaDoc;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
 use App\Models\Sugerencias\SugerenciaDoc;
@@ -113,7 +115,6 @@ class ClienteController extends Controller
     }
     public function generarConsulta_guardar(Request $request)
     {
-
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaConsulta['persona_id'] = $request['persona_id'];
@@ -167,7 +168,24 @@ class ClienteController extends Controller
     {
         return view('intranet.usuarios.crearSolicitudDocumentos');
     }
-
+    public function generarSolicitudDocumentos_guardar(Request $request)
+    {
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        if ($usuario->persona) {
+            $nuevaSolicitud['persona_id'] = $usuario->id;
+        } else {
+            $nuevaSolicitud['empresa_id'] = $usuario->id;
+        }
+        $nuevaSolicitud['fecha_generacion'] = date("Y-m-d") ;
+        $nuevaSolicitud['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
+        $solicitud = SolicitudDocInfo::create($nuevaSolicitud);
+        $nuevaSolicitudPeticion['solicitudDocInfo_id'] = $solicitud->id;
+        $nuevaSolicitudPeticion['peticion'] = $request['peticion'];
+        $nuevaSolicitudPeticion['indentifiqueDocInfo'] = $request['indentifiqueDocInfo'];
+        $nuevaSolicitudPeticion['justificacion'] = $request['justificacion'];
+        $solicitudPeticion = SolicitudDocInfoPeticion::create($nuevaSolicitudPeticion);
+        return view('intranet.usuarios.crearSolicitudDocumentos');
+    }
     public function generarSugerencia()
     {
         return view('intranet.usuarios.crearSugerencia');

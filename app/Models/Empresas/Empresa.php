@@ -3,9 +3,10 @@
 namespace App\Models\Empresas;
 
 use App\Models\PQR\PQR;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Empresa extends Model
 {
@@ -26,5 +27,10 @@ class Empresa extends Model
     public function sugerencias()
     {
         return $this->hasMany(Sugerencia::class, 'empresa_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function solicitudDocInfo()
+    {
+        return $this->hasMany(SolicitudDocInfo::class, 'persona_id', 'id');
     }
 }

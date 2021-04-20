@@ -90,6 +90,6 @@ Sistema de informaci&oacute;n
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-<script src="{{ asset('js/intranet/sugerencia/sugerencia.js') }}"></script>
+    <script src="{{ asset('js/intranet/sugerencia/sugerencia.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

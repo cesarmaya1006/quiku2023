@@ -34,4 +34,9 @@ class Empleado extends Model
     {
         return $this->hasMany(Sugerencia::class, 'empleado_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function solicitudDocInfo()
+    {
+        return $this->hasMany(SolicitudDocInfo::class, 'persona_id', 'id');
+    }
 }

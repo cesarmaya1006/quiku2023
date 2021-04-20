@@ -7,20 +7,11 @@ window.addEventListener('DOMContentLoaded', function () {
             alert('Sugerencia');
             return
         }
-        // console.log((document.querySelectorAll('.sugerencia .sugerenciaHecho').length))
-        // console.log((document.querySelectorAll('.sugerencia .anexoHecho').length))
-        console.log(document.querySelector('#cantidadHechos').value)
-        console.log(document.querySelector('#cantidadAnexosHechos').value)
         document.querySelector('#cantidadHechos').value = document.querySelectorAll('.sugerencia .sugerenciaHecho').length
         document.querySelector('#cantidadAnexosHechos').value = document.querySelectorAll('.sugerencia .anexoHecho').length
-        
-        console.log(document.querySelector('#cantidadHechos').value)
-        console.log(document.querySelector('#cantidadAnexosHechos').value)
-        // cantidadHechos
-        // cantidadAnexosHechos
         this.submit();
     })
-    // Incio Validacion envio de formulario
+    // Fin Validacion envio de formulario
     
     // Inicio Función para generar varios Hechos con validación.
     if(document.querySelectorAll('.sugerencia .sugerenciaHecho')){
