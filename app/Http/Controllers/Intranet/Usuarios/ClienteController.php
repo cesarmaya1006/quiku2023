@@ -11,10 +11,13 @@ use App\Models\PQR\SubMotivo;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Departamento;
 use App\Models\Consultas\Consulta;
+use App\Models\Denuncias\Denuncia;
 use App\Http\Controllers\Controller;
 use App\Models\Consultas\ConsultaDoc;
+use App\Models\Denuncias\DenunciaAnexo;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
+use App\Models\Denuncias\DenunciaHecho;
 use App\Models\Sugerencias\SugerenciaDoc;
 use App\Models\Felicitaciones\Felicitacion;
 use App\Models\Sugerencias\SugerenciaHecho;
@@ -184,6 +187,49 @@ class ClienteController extends Controller
     {
         return view('intranet.usuarios.crearDenuncia');
     }
+    public function gererarDenuncia_guardar(Request $request)
+    {
+        // dd($request->all());
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        if ($usuario->persona) {
+            $nuevaDenuncia['persona_id'] = $usuario->id;
+        } else {
+            $nuevaDenuncia['empresa_id'] = $usuario->id;
+        }
+        $nuevaDenuncia['solicitud'] = $request['solicitud'];
+        $nuevaDenuncia['fecha_generacion'] = date("Y-m-d") ;
+        $nuevaDenuncia['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
+        $denuncia = Denuncia::create($nuevaDenuncia);
+        $nuevosHechos['denuncia_id'] = $denuncia->id;
+        $cantidadHechos = $request['cantidadHechos'];
+        for ($i=0; $i < $cantidadHechos; $i++) { 
+            $nuevosHechos['hecho'] = $request['hecho'.$i];
+            DenunciaHecho::create($nuevosHechos);
+        }
+        $cantidadAnexosHechos = $request['cantidadAnexosHechos'];
+        $documentos = $request->allFiles();
+        for ($i=0; $i < $cantidadAnexosHechos; $i++) { 
+            if ($request->hasFile("documentos$i")) {
+                $ruta = Config::get('constantes.folder_doc_denuncias');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["documentos$i"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['denuncia_id'] = $denuncia->id;
+                $nuevo_documento['titulo'] = $request["titulo$i"];
+                $nuevo_documento['descripcion'] = $request["descripcion$i"];
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+                DenunciaAnexo::create($nuevo_documento);
+            }
+        }
+        return view('intranet.usuarios.crearDenuncia');
+    }
 
     public function generarSolicitudDatos()
     {
@@ -227,7 +273,7 @@ class ClienteController extends Controller
         $nuevaSugerencia['fecha_generacion'] = date("Y-m-d") ;
         $nuevaSugerencia['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
         $sugerencia = Sugerencia::create($nuevaSugerencia);
-        $nuevosHechos['sugerencia_id'] = $sugerencia->id;
+        $nuevosHechos['denuncia'] = $sugerencia->id;
         $cantidadHechos = $request['cantidadHechos'];
         for ($i=0; $i < $cantidadHechos; $i++) { 
             $nuevosHechos['hecho'] = $request['hecho'.$i];
