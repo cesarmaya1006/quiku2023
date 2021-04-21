@@ -4,13 +4,8 @@ namespace App\Models\Admin;
 
 use App\Models\Empleados\Empleado;
 use App\Models\Empresas\Representante;
-use App\Models\Empresas\Solicitud;
-use App\Models\Mgl\Apoderado;
-use App\Models\Mgl\Asistente;
 use App\Models\Personas\Persona;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Session;

@@ -38,6 +38,7 @@ class Tabla_Usuarios extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('personas')->insert([
+            'id' => 1,
             'docutipos_id' => 1,
             'identificacion' => '10000001',
             'nombre1' => 'Carlos',
@@ -73,6 +74,7 @@ class Tabla_Usuarios extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('empleados')->insert([
+            'id' => 2,
             'docutipos_id' => 1,
             'identificacion' => '90000001',
             'nombre1' => 'Juan',
