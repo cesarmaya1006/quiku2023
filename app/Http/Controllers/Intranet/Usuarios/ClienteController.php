@@ -13,12 +13,14 @@ use App\Models\Admin\Departamento;
 use App\Models\Consultas\Consulta;
 use App\Http\Controllers\Controller;
 use App\Models\Consultas\ConsultaDoc;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
 use App\Models\Sugerencias\SugerenciaDoc;
+use App\Models\Felicitaciones\Felicitacion;
 use App\Models\Sugerencias\SugerenciaHecho;
+use App\Models\Felicitaciones\FelicitacionHecho;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 
 class ClienteController extends Controller
 {
@@ -155,9 +157,32 @@ class ClienteController extends Controller
         return view('intranet.usuarios.crearFeclicitaciones');
     }
 
-    public function reporteIrregularidad()
+    public function generarFelicitacion_guardar(Request $request)
     {
-        return view('intranet.usuarios.crearReporteIrregularidad');
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        if ($usuario->persona) {
+            $nuevaFelicitacion['persona_id'] = $usuario->id;
+        } else {
+            $nuevaFelicitacion['empresa_id'] = $usuario->id;
+        }
+        $nuevaFelicitacion['nombre_funcionario'] = $request['nombre_funcionario'];
+        $nuevaFelicitacion['sede'] = $request['sede'];
+        $nuevaFelicitacion['felicitacion'] = $request['felicitacion'];
+        $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d") ;
+        $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
+        $felicitacion = Felicitacion::create($nuevaFelicitacion);
+        $nuevosHechos['felicitacion_id'] = $felicitacion->id;
+        $cantidadHechos = $request['cantidadHechos'];
+        for ($i=0; $i < $cantidadHechos; $i++) { 
+            $nuevosHechos['hecho'] = $request['hecho'.$i];
+            FelicitacionHecho::create($nuevosHechos);
+        }
+        return view('intranet.usuarios.crearFeclicitaciones');
+    }
+
+    public function gererarDenuncia()
+    {
+        return view('intranet.usuarios.crearDenuncia');
     }
 
     public function generarSolicitudDatos()
@@ -184,6 +209,7 @@ class ClienteController extends Controller
         $nuevaSolicitudPeticion['indentifiqueDocInfo'] = $request['indentifiqueDocInfo'];
         $nuevaSolicitudPeticion['justificacion'] = $request['justificacion'];
         $solicitudPeticion = SolicitudDocInfoPeticion::create($nuevaSolicitudPeticion);
+        dd($request->all());
         return view('intranet.usuarios.crearSolicitudDocumentos');
     }
     public function generarSugerencia()

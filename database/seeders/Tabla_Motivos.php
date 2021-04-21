@@ -16,7 +16,7 @@ class Tabla_Motivos extends Seeder
     public function run()
     {
         $motivos = [
-            ['tipo_pqr_id' => '1', 'motivo' => 'Peticion'],
+            ['tipo_pqr_id' => '1', 'motivo' => 'Petición o consulta'],
             ['tipo_pqr_id' => '1', 'motivo' => 'Retracto'],
             ['tipo_pqr_id' => '2', 'motivo' => 'Queja por mal trato de un funcionario'],
             ['tipo_pqr_id' => '2', 'motivo' => 'Queja por mal funcionamiento de página web o APP'],

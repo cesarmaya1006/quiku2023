@@ -17,11 +17,11 @@ Sistema de informaci&oacute;n
 @section('cuerpo_pagina')
 <div class="container-fluid">
     <div class="row d-flex justify-content-center">
-        {{-- Reporte de irregularidad --}}
+        {{-- Reporte de denuncia --}}
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Crear Reporte de irregularidad</h3>
+                    <h3 class="card-title">Crear Denuncia</h3>
                 </div>
                 <form>
                     <div class="card-body">
