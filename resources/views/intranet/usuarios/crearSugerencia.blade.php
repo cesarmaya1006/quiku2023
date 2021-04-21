@@ -34,7 +34,7 @@ Sistema de informaci&oacute;n
                                     <label for="hecho">Hecho</label>
                                     <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho"><i class="fas fa-minus-circle"></i></button>
                                 </div>
-                                <input class="form-control mt-2" type="text" name="hecho">
+                                <input class="form-control mt-2" type="text" name="hecho" id="hecho">
                             </div>
                         </div>
                         <div class="col-12 d-flex justify-content-end flex-row">
