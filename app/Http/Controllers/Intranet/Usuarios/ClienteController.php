@@ -22,6 +22,7 @@ use App\Models\Sugerencias\SugerenciaDoc;
 use App\Models\Felicitaciones\Felicitacion;
 use App\Models\Sugerencias\SugerenciaHecho;
 use App\Models\Felicitaciones\FelicitacionHecho;
+use App\Models\Personas\Persona;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 
@@ -171,13 +172,13 @@ class ClienteController extends Controller
         $nuevaFelicitacion['nombre_funcionario'] = $request['nombre_funcionario'];
         $nuevaFelicitacion['sede'] = $request['sede'];
         $nuevaFelicitacion['felicitacion'] = $request['felicitacion'];
-        $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d") ;
-        $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
+        $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d");
+        $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $felicitacion = Felicitacion::create($nuevaFelicitacion);
         $nuevosHechos['felicitacion_id'] = $felicitacion->id;
         $cantidadHechos = $request['cantidadHechos'];
-        for ($i=0; $i < $cantidadHechos; $i++) { 
-            $nuevosHechos['hecho'] = $request['hecho'.$i];
+        for ($i = 0; $i < $cantidadHechos; $i++) {
+            $nuevosHechos['hecho'] = $request['hecho' . $i];
             FelicitacionHecho::create($nuevosHechos);
         }
         return view('intranet.usuarios.crearFeclicitaciones');
@@ -197,18 +198,18 @@ class ClienteController extends Controller
             $nuevaDenuncia['empresa_id'] = $usuario->id;
         }
         $nuevaDenuncia['solicitud'] = $request['solicitud'];
-        $nuevaDenuncia['fecha_generacion'] = date("Y-m-d") ;
-        $nuevaDenuncia['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
+        $nuevaDenuncia['fecha_generacion'] = date("Y-m-d");
+        $nuevaDenuncia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $denuncia = Denuncia::create($nuevaDenuncia);
         $nuevosHechos['denuncia_id'] = $denuncia->id;
         $cantidadHechos = $request['cantidadHechos'];
-        for ($i=0; $i < $cantidadHechos; $i++) { 
-            $nuevosHechos['hecho'] = $request['hecho'.$i];
+        for ($i = 0; $i < $cantidadHechos; $i++) {
+            $nuevosHechos['hecho'] = $request['hecho' . $i];
             DenunciaHecho::create($nuevosHechos);
         }
         $cantidadAnexosHechos = $request['cantidadAnexosHechos'];
         $documentos = $request->allFiles();
-        for ($i=0; $i < $cantidadAnexosHechos; $i++) { 
+        for ($i = 0; $i < $cantidadAnexosHechos; $i++) {
             if ($request->hasFile("documentos$i")) {
                 $ruta = Config::get('constantes.folder_doc_denuncias');
                 $ruta = trim($ruta);
@@ -345,5 +346,24 @@ class ClienteController extends Controller
             $id = $_GET['id'];
             return SubMotivo::where('motivo_id', $id)->get();
         }
+    }
+    public function actualizar(Request $request)
+    {
+        $direccion = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $request['direccion']);
+        if ($request['direccion'] == 'no') {
+            $discapacidad = 0;
+        } else {
+            $discapacidad = 1;
+        }
+
+        $usuarioActualizar['telefono_fijo'] = $request['telefono_fijo'];
+        $usuarioActualizar['telefono_celu'] = $request['telefono_celu'];
+        $usuarioActualizar['direccion'] = $direccion;
+        $usuarioActualizar['pais_id'] = $request['pais_id'];
+        $usuarioActualizar['municipio_id'] = $request['municipio_id'];
+        $usuarioActualizar['grado_educacion'] = $request['grado'];
+        $usuarioActualizar['discapacidad'] = $discapacidad;
+        Persona::findOrFail(session('id_usuario'))->update($usuarioActualizar);
+        return redirect('admin/index')->with('mensaje', 'Se actualizaron los datos de manera exitosa en la plataforma');
     }
 }

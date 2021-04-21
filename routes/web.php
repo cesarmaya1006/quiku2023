@@ -156,6 +156,7 @@ Route::group(['middleware' => 'auth'], function () {
         //----------------------------------------------------------------------------------------------------------------------------------------------
         //Actualizar datos
         Route::get('actualizar-datos', [ClienteController::class, 'actualizar_datos'])->name('usuario-actualizar_datos');
+        Route::post('actualizar-datos', [ClienteController::class, 'actualizar'])->name('usuario-actualizar');
 
         //Cambiar password
         Route::get('cambiar-password', [ClienteController::class, 'cambiar_password'])->name('usuario_cambiar_password');
