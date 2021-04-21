@@ -8,7 +8,12 @@ use App\Models\Admin\Usuario;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Departamento;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidarRegistroAsistido;
+use App\Models\Consultas\Consulta;
+use App\Models\Empleados\Empleado;
+use App\Models\Personas\Persona;
 use App\Models\PQR\PQR;
+use App\Models\Sugerencias\Sugerencia;
 
 class FuncionarioController extends Controller
 {
@@ -20,7 +25,9 @@ class FuncionarioController extends Controller
     public function index()
     {
         $pqr_S = PQR::where('empleado_id', session('id_usuario'));
-        return view('intranet.funcionarios.listado_pqr', compact('pqr_S'));
+        $consultas = Consulta::where('empleado_id', session('id_usuario'));
+        $sugerecias = Sugerencia::where('empleado_id', session('id_usuario'));
+        return view('intranet.funcionarios.listado_pqr', compact('pqr_S', 'consultas', 'sugerecias'));
     }
     public function crear_usuario()
     {
@@ -39,20 +46,61 @@ class FuncionarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function registro_asistido(ValidarRegistroAsistido $request)
     {
-        //
+
+        $direccion = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $request['direccion']);
+        $nuevoUsuario['usuario'] = $request['usuario'];
+        $nuevoUsuario['password'] = bcrypt(utf8_encode($request['password']));
+        $usuario = Usuario::create($nuevoUsuario);
+        $roles['rol_id'] = 6;
+        $usuario->roles()->sync($roles);
+
+        $nuevaPersona['id'] = $usuario->id;
+        $nuevaPersona['docutipos_id'] = $request['docutipos_id'];
+        $nuevaPersona['identificacion'] = $request['identificacion'];
+        $nuevaPersona['nombre1'] = $request['primernombre'];
+        $nuevaPersona['nombre2'] = $request['segundonombre'];
+        $nuevaPersona['apellido1'] = $request['primerapellido'];
+        $nuevaPersona['apellido2'] = $request['segundoapelldio'];
+        $nuevaPersona['telefono_fijo'] = $request['telefonofijo'];
+        $nuevaPersona['telefono_celu'] = $request['telefonocelular'];
+        $nuevaPersona['direccion'] = $direccion;
+        $nuevaPersona['pais_id'] = $request['pais'];
+        $nuevaPersona['municipio_id'] = $request['municipio_id'];
+        $nuevaPersona['nacionalidad'] = $request['nacionalidad'];
+        $nuevaPersona['grado_educacion'] = $request['grado'];
+        $nuevaPersona['genero'] = $request['genero'];
+        $nuevaPersona['fecha_nacimiento'] = $request['fechanacimiento'];
+        $nuevaPersona['grupo_etnico'] = $request['grupoetnico'];
+        if ($request['discapasidad'] == 'no') {
+            $nuevaPersona['discapacidad'] = 0;
+        } else {
+            $nuevaPersona['discapacidad'] = 1;
+        }
+        $nuevaPersona['tipo_discapacidad'] = $request['tipodiscapacidad'];
+        $nuevaPersona['email'] = $request['email'];
+        $nuevaPersona['comunicaciones'] = 1;
+        $nuevaPersona['asistido'] = 1;
+        Persona::create($nuevaPersona);
+        return redirect('funcionario/crear-usuario-creado/' . $usuario->id)->with('mensaje', 'Usuario Creado con éxito');
     }
 
+    public function usuario_creado($id)
+    {
+        $persona = Persona::findOrFail($id);
+        return view('intranet.funcionarios.usuario_creado', compact('persona'));
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function actualizar(Request $request)
     {
-        //
+        Empleado::findOrFail(session('id_usuario'))->update($request->all());
+        return redirect('admin/index')->with('mensaje', 'Se actualizaron los datos de manera exitosa en la plataforma');
     }
 
     /**

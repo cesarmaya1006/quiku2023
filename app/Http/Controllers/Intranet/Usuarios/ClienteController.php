@@ -176,8 +176,8 @@ class ClienteController extends Controller
         } else {
             $nuevaSolicitud['empresa_id'] = $usuario->id;
         }
-        $nuevaSolicitud['fecha_generacion'] = date("Y-m-d") ;
-        $nuevaSolicitud['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
+        $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
+        $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $solicitud = SolicitudDocInfo::create($nuevaSolicitud);
         $nuevaSolicitudPeticion['solicitudDocInfo_id'] = $solicitud->id;
         $nuevaSolicitudPeticion['peticion'] = $request['peticion'];
@@ -190,7 +190,8 @@ class ClienteController extends Controller
     {
         return view('intranet.usuarios.crearSugerencia');
     }
-    public function generarSugerencia_guardar(Request $request){
+    public function generarSugerencia_guardar(Request $request)
+    {
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaSugerencia['persona_id'] = $usuario->id;
@@ -198,18 +199,18 @@ class ClienteController extends Controller
             $nuevaSugerencia['empresa_id'] = $usuario->id;
         }
         $nuevaSugerencia['sugerencia'] = $request['sugerencia'];
-        $nuevaSugerencia['fecha_generacion'] = date("Y-m-d") ;
-        $nuevaSugerencia['fecha_radicado'] = date("Y-m-d",strtotime(date("Y-m-d") . "+ 1 days")); ;
+        $nuevaSugerencia['fecha_generacion'] = date("Y-m-d");
+        $nuevaSugerencia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $sugerencia = Sugerencia::create($nuevaSugerencia);
         $nuevosHechos['sugerencia_id'] = $sugerencia->id;
         $cantidadHechos = $request['cantidadHechos'];
-        for ($i=0; $i < $cantidadHechos; $i++) { 
-            $nuevosHechos['hecho'] = $request['hecho'.$i];
+        for ($i = 0; $i < $cantidadHechos; $i++) {
+            $nuevosHechos['hecho'] = $request['hecho' . $i];
             SugerenciaHecho::create($nuevosHechos);
         }
         $cantidadAnexosHechos = $request['cantidadAnexosHechos'];
         $documentos = $request->allFiles();
-        for ($i=0; $i < $cantidadAnexosHechos; $i++) { 
+        for ($i = 0; $i < $cantidadAnexosHechos; $i++) {
             if ($request->hasFile("documentos$i")) {
                 $ruta = Config::get('constantes.folder_doc_sugerencias');
                 $ruta = trim($ruta);

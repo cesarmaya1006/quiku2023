@@ -17,6 +17,12 @@
 @section('cuerpo_pagina')
     <div class="container-fluid">
         <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-8">
+                @include('includes.error-form')
+                @include('includes.mensaje')
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
@@ -24,11 +30,12 @@
                     </div>
                     <div class="card-body">
                         <div class="card-text mt-2 justify-content-center">
-                            <form action="{{ route('solicitar_password') }}" method="POST" autocomplete="off">
+                            <form action="{{ route('admin-restablecer_password') }}" method="POST" autocomplete="off">
                                 @csrf
                                 @method('post')
                                 <div class="col-md-12 mb-3">
                                     <label class="requerido" for="password1">Contraseña nueva</label>
+                                    <input type="hidden" name="id" value="{{ session('id_usuario') }}">
                                     <input type="password" class="form-control" id="password1" name="password1"
                                         placeholder="Contraseña" required>
                                 </div>

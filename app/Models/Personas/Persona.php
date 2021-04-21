@@ -3,6 +3,8 @@
 namespace App\Models\Personas;
 
 use App\Models\Admin\Municipio;
+use App\Models\Admin\Pais;
+use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\PQR;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
@@ -16,6 +18,12 @@ class Persona extends Model
     use HasFactory, Notifiable;
     protected $table = 'personas';
     protected $guarded = [];
+
+    public function tipos_docu()
+    {
+        return $this->belongsTo(Tipo_Docu::class, 'docutipos_id', 'id');
+    }
+    //==================================================================================
     //----------------------------------------------------------------------------------
     public function usuario()
     {
@@ -25,6 +33,11 @@ class Persona extends Model
     public function pqrs()
     {
         return $this->hasMany(PQR::class, 'persona_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function pais()
+    {
+        return $this->belongsTo(Pais::class, 'pais_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function municipio()

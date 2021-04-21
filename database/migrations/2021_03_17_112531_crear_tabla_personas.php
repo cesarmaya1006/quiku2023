@@ -38,6 +38,8 @@ class CrearTablaPersonas extends Migration
             $table->boolean('discapacidad')->default(0);
             $table->string('tipo_discapacidad', 255)->nullable();
             $table->string('email')->nullable();
+            $table->boolean('comunicaciones')->default(0);
+            $table->boolean('asistido')->default(0);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

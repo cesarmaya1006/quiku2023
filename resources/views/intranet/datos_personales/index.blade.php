@@ -23,15 +23,15 @@
                     <div class="card-header">
                         <h3 class="card-title">Actualizar datos</h3>
                     </div>
-                        @if ($usuario->persona)
-                            @include('intranet.datos_personales.persona')
-                        @endif
-                        @if ($usuario->representante)
-                            @include('intranet.datos_personales.representante')
-                        @endif
-                        @if ($usuario->empleado)
-                            @include('intranet.datos_personales.empleado')
-                        @endif
+                    @if ($usuario->persona)
+                        @include('intranet.datos_personales.persona')
+                    @endif
+                    @if ($usuario->representante)
+                        @include('intranet.datos_personales.representante')
+                    @endif
+                    @if ($usuario->empleado)
+                        @include('intranet.datos_personales.empleado')
+                    @endif
                 </div>
             </div>
         </div>
@@ -41,5 +41,15 @@
 <!-- script hoja -->
 @section('scripts_pagina')
     <script src="{{ asset('js/extranet/registro.js') }}"></script>
+    <script>
+        $('.myPopover').popover({
+            html: true,
+            placement: 'top',
+            trigger: 'hover',
+            title: 'Campo Bloqueado',
+            content: '<p>Para hacer el cambio de alguno de estos datos, lo invitamos a utilizar la opción "Solicitud sobre mis datos personales"</p>'
+        });
+
+    </script>
 @endsection
 <!-- ************************************************************* -->

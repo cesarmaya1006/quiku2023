@@ -124,7 +124,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'funcionario'], function () {
         Route::get('listado', [FuncionarioController::class, 'index'])->name('funcionario-index');
         Route::get('crear-usuario', [FuncionarioController::class, 'crear_usuario'])->name('funcionario-crear_usuario');
+        Route::get('crear-usuario-creado/{id}', [FuncionarioController::class, 'usuario_creado'])->name('funcionario-usuario_creado');
+        Route::post('crear-usuario', [FuncionarioController::class, 'registro_asistido'])->name('funcionario-registro_asistido');
         Route::get('actualizar-datos', [FuncionarioController::class, 'editar'])->name('funcionario-editar');
+        Route::post('actualizar-datos', [FuncionarioController::class, 'actualizar'])->name('funcionario-actualizar');
         Route::get('cambiar-password', [FuncionarioController::class, 'cambiar_password'])->name('funcionario-cambiar-password');
     });
     //==================================================================================================================

@@ -26,6 +26,7 @@
                 <table class="table table-striped table-hover table-sm display">
                     <thead>
                         <tr>
+                            <th>Id Registro</th>
                             <th>Tipo de PQR</th>
                             <th>Estado</th>
                             <th>Fecha de radicación</th>
@@ -34,9 +35,26 @@
                     <tbody>
                         @foreach ($pqr_S as $pqr)
                             <tr>
+                                <td>{{ $pqr->id }}</td>
                                 <td>{{ $pqr->tipo }}</td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $pqr->estado }}</td>
+                                <td>{{ $pqr->fecha_radicado }}</td>
+                            </tr>
+                        @endforeach
+                        @foreach ($consultas as $consulta)
+                            <tr>
+                                <td>{{ $consulta->id }}</td>
+                                <td>{{ $consulta->tipo }}</td>
+                                <td>{{ $consulta->estado }}</td>
+                                <td>{{ $consulta->fecha_radicado }}</td>
+                            </tr>
+                        @endforeach
+                        @foreach ($sugerecias as $sugerecia)
+                            <tr>
+                                <td>{{ $sugerecia->id }}</td>
+                                <td>{{ $sugerecia->tipo }}</td>
+                                <td>{{ $sugerecia->estado }}</td>
+                                <td>{{ $sugerecia->fecha_radicado }}</td>
                             </tr>
                         @endforeach
                     </tbody>
