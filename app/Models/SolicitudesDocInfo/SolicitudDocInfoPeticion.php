@@ -11,16 +11,16 @@ use App\Models\SolicitudesDocInfo\SolicitudDocInfoAnexo;
 class SolicitudDocInfoPeticion extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'solicituddocinfopeticion';
+    protected $table = 'solicituddocinfopeticiones';
     protected $guarded = [];
     
     public function solicitud()
     {
-        return $this->belongsTo(SolicitudDocInfo::class, 'solicitudDocInfo_id', 'id');
+        return $this->belongsTo(SolicitudDocInfo::class, 'solicituddocinfo_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function documentos()
     {
-        return $this->hasMany(SolicitudDocInfoAnexo::class, 'solicitudDocInfoPeticion_id', 'id');
+        return $this->hasMany(SolicitudDocInfoAnexo::class, 'solicituddocinfopeticiones_id', 'id');
     }
 }

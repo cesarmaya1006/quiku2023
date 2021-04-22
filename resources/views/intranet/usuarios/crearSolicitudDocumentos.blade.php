@@ -28,26 +28,26 @@ Sistema de informaci&oacute;n
                     @csrf
                     @method('post')
                     <div class="card-body">
-                        <div class="col-12 d-flex justify-content-end flex-row">
-                            <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2" id="crearSolicitud"><i
-                                    class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
-                                otro solicitud</button>
-                        </div>
                         <div class="col-12  mt-2 pt-2" id="solicitudes">
                             <div class="col-12 solicitud rounded border mb-3">
-                                <div class="form-group col-12 mt-2">
-                                    <label for="">Petición</label>
+                                <div class="form-group col-12 mt-2 titulo-solicitud">
+                                    <div class="col-12 d-flex justify-content-between mb-2">
+                                        <label for="">Petición</label>
+                                        <button type="button"
+                                            class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPeticion"><i
+                                                class="fas fa-minus-circle"></i></button>
+                                    </div>
                                     <select name="peticion" id="peticion" class="custom-select rounded-0">
                                         <option value="">--Seleccione--</option>
                                         <option value="Que se me entregue un documento">Que se me entregue un documento</option>
                                         <option value="Que me entregue información">Que me entregue información</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 indentifiquedocinfo-solicitud">
                                     <label for="">Identifique el documento o información requerida</label>
-                                    <input class="form-control" type="text" name="indentifiqueDocInfo" id="indentifiqueDocInfo">
+                                    <input class="form-control" type="text" name="indentifiquedocinfo" id="indentifiquedocinfo">
                                 </div>
-                                <div class="form-group col-12">
+                                <div class="form-group col-12 justificacion-solicitud">
                                     <label for="">Justificaciones de su solicitud</label>
                                     <input class="form-control" type="text" name="justificacion" id="justificacion">
                                 </div>
@@ -78,18 +78,25 @@ Sistema de informaci&oacute;n
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 d-flex justify-content-end flex-row">
-                                    <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2" id="crearAnexo"><i
+                                <div class="col-12 d-flex justify-content-end flex-row mb-3">
+                                    <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo" id="crearAnexo"><i
                                             class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
                                         otro Anexo</button>
                                 </div>
-                                <input id="cantidadAnexosSolicitud" name="cantidadAnexosSolicitud" type="hidden" value="0">
+                                <input class="cantidadAnexosSolicitud" id="cantidadAnexosSolicitud" name="cantidadAnexosSolicitud" type="hidden" value="0">
                             </div>
+                        </div>
+                        <input class="cantidadPeticiones" id="cantidadPeticiones" name="cantidadPeticiones" type="hidden" value="0">
+                        <div class="col-12 d-flex justify-content-end flex-row">
+                            <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2" id="crearSolicitud"><i
+                                    class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
+                                otro solicitud</button>
                         </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary px-4">Crear</button>
                     </div>
+                    <input class="totalCantidadAnexosSolicitud" id="totalCantidadAnexosSolicitud" name="totalCantidadAnexosSolicitud" type="hidden" value="0">
                 </form>
             </div>
         </div>
@@ -99,6 +106,6 @@ Sistema de informaci&oacute;n
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-<script src="{{ asset('js/intranet/solicitud_doc_info/solicitud.js') }}"></script>
+    <script src="{{ asset('js/intranet/solicituddocinfo/solicitud.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

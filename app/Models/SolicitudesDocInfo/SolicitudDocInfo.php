@@ -14,7 +14,7 @@ use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 class SolicitudDocInfo extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'solicitudDocInfo';
+    protected $table = 'solicituddocinfo';
     protected $guarded = [];
 
     //----------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ class SolicitudDocInfo extends Model
     //----------------------------------------------------------------------------------
     public function peticiones()
     {
-        return $this->hasMany(SolicitudDocInfoPeticion::class, 'solicitudDocInfoPeticion_id', 'id');
+        return $this->hasMany(SolicitudDocInfoPeticion::class, 'solicituddocinfopeticiones_id', 'id');
     }
 
 }

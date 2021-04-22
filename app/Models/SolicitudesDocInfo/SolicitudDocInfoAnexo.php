@@ -10,11 +10,11 @@ use Illuminate\Notifications\Notifiable;
 class SolicitudDocInfoAnexo extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'solicitudDocInfoAnexo';
+    protected $table = 'solicituddocinfoanexo';
     protected $guarded = [];
     
     public function peticion()
     {
-        return $this->belongsTo(SolicitudDocInfoPeticion::class, 'solicitudDocInfoPeticion_id', 'id');
+        return $this->belongsTo(SolicitudDocInfoPeticion::class, 'solicituddocinfopeticiones_id', 'id');
     }
 }

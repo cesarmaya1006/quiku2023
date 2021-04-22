@@ -23,6 +23,7 @@ use App\Models\Felicitaciones\Felicitacion;
 use App\Models\Sugerencias\SugerenciaHecho;
 use App\Models\Felicitaciones\FelicitacionHecho;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfoAnexo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 
 class ClienteController extends Controller
@@ -250,12 +251,39 @@ class ClienteController extends Controller
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $solicitud = SolicitudDocInfo::create($nuevaSolicitud);
-        $nuevaSolicitudPeticion['solicitudDocInfo_id'] = $solicitud->id;
-        $nuevaSolicitudPeticion['peticion'] = $request['peticion'];
-        $nuevaSolicitudPeticion['indentifiqueDocInfo'] = $request['indentifiqueDocInfo'];
-        $nuevaSolicitudPeticion['justificacion'] = $request['justificacion'];
-        $solicitudPeticion = SolicitudDocInfoPeticion::create($nuevaSolicitudPeticion);
-        dd($request->all());
+        $nuevasPeticiones['solicituddocinfo_id'] = $solicitud->id;
+        $cantidadPeticiones = $request['cantidadPeticiones'];
+        $documentos = $request->allFiles();
+        $contadorAnexos = 0;
+        $iterador=0;
+        for ($i=0; $i < $cantidadPeticiones; $i++) { 
+            $nuevasPeticiones['peticion'] = $request['peticion'.$i];
+            $nuevasPeticiones['indentifiquedocinfo'] = $request['indentifiquedocinfo'.$i];
+            $nuevasPeticiones['justificacion'] = $request['justificacion'.$i];
+            $contadorAnexos += $request['cantidadAnexosSolicitud'.$i];
+            $peticion =SolicitudDocInfoPeticion::create($nuevasPeticiones);
+            for ($j=$iterador; $j < $contadorAnexos; $j++) { 
+                if ($request->hasFile("documentos$j")) {
+                    $ruta = Config::get('constantes.folder_doc_solicituddocinfo');
+                    $ruta = trim($ruta);
+                    $doc_subido = $documentos["documentos$j"];
+                    $tamaño = $doc_subido->getSize();
+                    if ($tamaño > 0) {
+                        $tamaño = $tamaño / 1000;
+                    }
+                    $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                    $nuevo_documento['solicituddocinfopeticion_id'] = $peticion->id;
+                    $nuevo_documento['titulo'] = $request["titulo$j"];
+                    $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                    $nuevo_documento['peso'] = $tamaño;
+                    $nuevo_documento['url'] = $nombre_doc;
+                    $doc_subido->move($ruta, $nombre_doc);
+                    SolicitudDocInfoAnexo::create($nuevo_documento);
+                }
+            }
+            $iterador += $request['cantidadAnexosSolicitud'.$i];
+        }
         return view('intranet.usuarios.crearSolicitudDocumentos');
     }
     public function generarSugerencia()
