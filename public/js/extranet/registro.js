@@ -68,7 +68,68 @@ $(document).ready(function() {
         //escribimos la palabra con la primera letra mayuscula
         $(this).val(mayuscula.concat(minuscula));
     });
+    //===================================================================================
 
+    $('.direccion_parte').on('change', function(event) {
+        var html_d = '';
+        html_d += $('#dir1').val();
+        if ($('#dir2').val() != null) {
+            html_d += ' ';
+            html_d += $('#dir2').val();
+        }
+
+        if ($('#dir3').val() != null) {
+            html_d += ' ';
+            html_d += $('#dir3').val();
+        }
+
+
+        if ($('#dir4').val() != null) {
+            html_d += ' ';
+            html_d += $('#dir4').val();
+        }
+
+        if ($('#dir5').val() != null) {
+            html_d += ' ';
+            html_d += $('#dir5').val();
+        }
+
+        if ($('#dir6').val() != null) {
+            html_d += ' ';
+            html_d += $('#dir6').val();
+        }
+
+        if ($('#dir7').val() != null) {
+            html_d += ' No. ';
+            html_d += $('#dir7').val();
+        }
+
+        if ($('#dir8').val() != null) {
+            html_d += ' ';
+            html_d += $('#dir8').val();
+        }
+
+        if ($('#dir9').val() != null) {
+            html_d += ' - ';
+            html_d += $('#dir9').val();
+        }
+
+        if ($('#dir10').val() != null) {
+            html_d += ' ';
+            html_d += $('#dir10').val();
+        }
+
+        $('#direccion_completa').html(html_d);
+
+    });
+
+    //==========================================================================
+    $("#agregar_dir_fomulario").on('click', function() {
+        var direccion_completa = $('#direccion_completa').html();
+        $('#direccion').val(direccion_completa);
+
+    });
+    //==========================================================================
 
 
 });
