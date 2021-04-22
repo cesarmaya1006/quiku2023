@@ -23,6 +23,9 @@ use App\Models\Felicitaciones\Felicitacion;
 use App\Models\Sugerencias\SugerenciaHecho;
 use App\Models\Felicitaciones\FelicitacionHecho;
 use App\Models\Personas\Persona;
+use App\Models\SolicitudDatos\SolicitudDatos;
+use App\Models\SolicitudDatos\SolicitudDatosAnexo;
+use App\Models\SolicitudDatos\SolicitudDatosSolicitud;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfoAnexo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
@@ -120,6 +123,7 @@ class ClienteController extends Controller
         $usuario = Usuario::findOrFail(session('id_usuario'));
         return view('intranet.usuarios.crearConsulta', compact('usuario'));
     }
+
     public function generarConsulta_guardar(Request $request)
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
@@ -189,6 +193,7 @@ class ClienteController extends Controller
     {
         return view('intranet.usuarios.crearDenuncia');
     }
+
     public function gererarDenuncia_guardar(Request $request)
     {
         // dd($request->all());
@@ -237,10 +242,59 @@ class ClienteController extends Controller
     {
         return view('intranet.usuarios.crearSolicitudDatos');
     }
+
+    public function generarSolicitudDatos_guardar(Request $request)
+    {
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        if ($usuario->persona) {
+            $nuevaSolicitud['persona_id'] = $usuario->id;
+        } else {
+            $nuevaSolicitud['empresa_id'] = $usuario->id;
+        }
+        $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
+        $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $solicitud = SolicitudDatos::create($nuevaSolicitud);
+        $nuevasSolicitudes['solicituddatos_id'] = $solicitud->id;
+        $cantidadSolicitudes = $request['cantidadSolicitudes'];
+        $documentos = $request->allFiles();
+        $contadorAnexos = 0;
+        $iterador=0;
+        for ($i=0; $i < $cantidadSolicitudes; $i++) { 
+            $nuevasSolicitudes['tiposolicitud'] = $request['tiposolicitud'.$i];
+            $nuevasSolicitudes['datossolicitud'] = $request['datossolicitud'.$i];
+            $nuevasSolicitudes['descripcionsolicitud'] = $request['descripcionsolicitud'.$i];
+            $contadorAnexos += $request['cantidadAnexosSolicitud'.$i];
+            $solicitud =SolicitudDatosSolicitud::create($nuevasSolicitudes);
+            for ($j=$iterador; $j < $contadorAnexos; $j++) { 
+                if ($request->hasFile("documentos$j")) {
+                    $ruta = Config::get('constantes.folder_doc_solicituddatos');
+                    $ruta = trim($ruta);
+                    $doc_subido = $documentos["documentos$j"];
+                    $tamaño = $doc_subido->getSize();
+                    if ($tamaño > 0) {
+                        $tamaño = $tamaño / 1000;
+                    }
+                    $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                    $nuevo_documento['solicituddatossolicitud_id'] = $solicitud->id;
+                    $nuevo_documento['titulo'] = $request["titulo$j"];
+                    $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                    $nuevo_documento['peso'] = $tamaño;
+                    $nuevo_documento['url'] = $nombre_doc;
+                    $doc_subido->move($ruta, $nombre_doc);
+                    SolicitudDatosAnexo::create($nuevo_documento);
+                }
+            }
+            $iterador += $request['cantidadAnexosSolicitud'.$i];
+        }
+        return view('intranet.usuarios.crearSolicitudDatos');
+    }
+
     public function generarSolicitudDocumentos()
     {
         return view('intranet.usuarios.crearSolicitudDocumentos');
     }
+
     public function generarSolicitudDocumentos_guardar(Request $request)
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
@@ -287,10 +341,12 @@ class ClienteController extends Controller
         }
         return view('intranet.usuarios.crearSolicitudDocumentos');
     }
+
     public function generarSugerencia()
     {
         return view('intranet.usuarios.crearSugerencia');
     }
+
     public function generarSugerencia_guardar(Request $request)
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
@@ -375,6 +431,7 @@ class ClienteController extends Controller
             return SubMotivo::where('motivo_id', $id)->get();
         }
     }
+
     public function actualizar(Request $request)
     {
         $direccion = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $request['direccion']);
