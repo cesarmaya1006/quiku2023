@@ -139,8 +139,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('generarPQR/{id}', [ClienteController::class, 'generarPQR'])->name('usuario-generarPQR');
         Route::get('cargar_submotivos', [ClienteController::class, 'cargar_submotivos'])->name('cargar_submotivos');
-        Route::get('generarConsulta', [ClienteController::class, 'generarConsulta'])->name('usuario-generarConsulta');
-        Route::post('generarConsulta', [ClienteController::class, 'generarConsulta_guardar'])->name('usuario-generarConsulta-guardar');
+        // Route::get('generarConsulta', [ClienteController::class, 'generarConsulta'])->name('usuario-generarConsulta');
+        // Route::post('generarConsulta', [ClienteController::class, 'generarConsulta_guardar'])->name('usuario-generarConsulta-guardar');
+        Route::get('generarConceptoUOpinion', [ClienteController::class, 'generarConceptoUOpinion'])->name('usuario-generarConceptoUOpinion');
+        Route::post('generarConceptoUOpinion', [ClienteController::class, 'generarConceptoUOpinion_guardar'])->name('usuario-generarConceptoUOpinion-guardar');
         Route::get('generarFelicitacion', [ClienteController::class, 'generarFelicitacion'])->name('usuario-generarFelicitacion');
         Route::post('generarFelicitacion', [ClienteController::class, 'generarFelicitacion_guardar'])->name('usuario-generarFelicitacion-guardar');
         Route::get('gererarDenuncia', [ClienteController::class, 'gererarDenuncia'])->name('usuario-gererarDenuncia');

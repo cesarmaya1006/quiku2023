@@ -2,6 +2,8 @@
 return [
     "folder_doc_consultas" => public_path() . '\documentos\consultas\ ',
     //--------------------------------------------------------------------------------
+    "folder_doc_conceptouopinion" => public_path() . '\documentos\conceptouopinion\ ',
+    //--------------------------------------------------------------------------------
     "folder_doc_sugerencias" => public_path() . '\documentos\sugerencias\ ',
     //--------------------------------------------------------------------------------
     "folder_doc_denuncias" => public_path() . '\documentos\denuncias\ ',
