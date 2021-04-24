@@ -30,6 +30,10 @@ Route::get('/clear-cache', function () {
     echo Artisan::call('cache:clear');
     echo Artisan::call('route:clear');
 });
+Route::get('/migrar-bd', function () {
+    echo Artisan::call('migrate:refresh');
+    echo Artisan::call('db:seed');
+});
 //---------------------------------------------------------------------------------
 Route::get('/', [ExtranetPageController::class, 'index'])->name('index');
 Route::get('/index', [ExtranetPageController::class, 'index'])->name('index_2');
