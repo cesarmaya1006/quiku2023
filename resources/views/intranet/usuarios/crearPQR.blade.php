@@ -39,12 +39,13 @@
                                         producto o servicio:</label>
                                     <select name="adquisicion" id="adquisicion" class="custom-select rounded-0">
                                         <option value="">--Seleccione--</option>
-                                        <option value="">Sede física</option>
-                                        <option value="">Página web</option>
-                                        <option value="">APP</option>
+                                        <option value="Sede física">Sede física</option>
+                                        <option value="Página web">Página web</option>
+                                        <option value="APP">APP</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-6 form-group"><label for="">Departamento:</label>
+                                <div class="col-12 col-md-6 form-group d-none" id="cajadepartamento"><label
+                                        for="">Departamento:</label>
                                     <select class="custom-select rounded-0 departamentos" id="departamento"
                                         data_url="{{ route('cargar_municipios') }}">
                                         <option value="">--Seleccione--</option>
@@ -55,14 +56,16 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-6 form-group"><label for="">Municipio:</label>
-                                    <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes')}}"  name="municipio_id" id="municipio_id">
+                                <div class="col-12 col-md-6 form-group d-none" id="cajamunicipio_id"><label
+                                        for="">Municipio:</label>
+                                    <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes') }}"
+                                        id="municipio_id">
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-6 form-group">
+                                <div class="col-12 col-md-6 form-group d-none" id="cajasede_id">
                                     <label for="">Sede:</label>
-                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0">
+                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0" required>
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>

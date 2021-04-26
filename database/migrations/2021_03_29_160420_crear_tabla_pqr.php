@@ -29,8 +29,8 @@ class CrearTablaPqr extends Migration
             $table->text('factura', 100)->nullable();
             $table->date('fecha_factura', 100)->nullable();
             $table->text('adquisicion', 100)->nullable();
-            $table->unsignedBigInteger('municipio_id')->nullable();
-            $table->foreign('municipio_id', 'fk_municipios_pqr')->references('id')->on('municipio')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('sede_id')->nullable();
+            $table->foreign('sede_id', 'fk_sede_pqr')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('prorroga')->default(0)->nullable();
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();
