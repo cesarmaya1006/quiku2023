@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\Empresas\Sede;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -22,4 +23,8 @@ class Municipio extends Model
         return $this->hasMany(PQR::class, 'municipio_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function sedes()
+    {
+        return $this->hasMany(Sede::class, 'municipio_id', 'id');
+    }
 }

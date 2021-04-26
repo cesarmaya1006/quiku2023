@@ -12,8 +12,4 @@ class Tipo_Docu extends Model
 
     protected $table = "docutipos";
     protected $guarded = ['id'];
-    public function usuarios()
-    {
-        return $this->hasMany(Usuario::class, 'docutipos_id', 'id');
-    }
 }
