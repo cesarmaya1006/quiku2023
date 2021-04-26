@@ -15,6 +15,42 @@ class Tabla_Usuarios extends Seeder
      */
     public function run()
     {
+        DB::table('usuarios')->insert([
+            'usuario' => 'adminsis',
+            'password' => bcrypt('adminsis'),
+            'camb_password' => '0',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('usuario_rol')->insert([
+            'rol_id' => 1,
+            'usuario_id' => 1,
+            'estado' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('usuarios')->insert([
+            'usuario' => 'superadmin',
+            'password' => bcrypt('superadmin'),
+            'camb_password' => '0',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('usuario_rol')->insert([
+            'rol_id' => 2,
+            'usuario_id' => 2,
+            'estado' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('usuarios')->insert([
+            'usuario' => 'admin',
+            'password' => bcrypt('admin'),
+            'camb_password' => '0',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('usuario_rol')->insert([
+            'rol_id' => 3,
+            'usuario_id' => 3,
+            'estado' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
         //------------------------------------------------------
         DB::table('usuarios')->insert([
             'usuario' => 'usuario1',
@@ -25,7 +61,7 @@ class Tabla_Usuarios extends Seeder
 
         DB::table('usuario_rol')->insert([
             'rol_id' => 6,
-            'usuario_id' => 1,
+            'usuario_id' => 4,
             'estado' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -39,7 +75,7 @@ class Tabla_Usuarios extends Seeder
         ]);
         DB::table('personas')->insert([
             'id' => 1,
-            'docutipos_id' => 1,
+            'docutipos_id' => 4,
             'identificacion' => '10000001',
             'nombre1' => 'Carlos',
             'nombre2' => 'Jose',
@@ -69,12 +105,12 @@ class Tabla_Usuarios extends Seeder
 
         DB::table('usuario_rol')->insert([
             'rol_id' => 5,
-            'usuario_id' => 2,
+            'usuario_id' => 5,
             'estado' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('empleados')->insert([
-            'id' => 2,
+            'id' => 5,
             'docutipos_id' => 1,
             'identificacion' => '90000001',
             'nombre1' => 'Juan',

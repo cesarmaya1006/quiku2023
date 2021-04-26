@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Extranet\ExtranetPageController;
+use App\Http\Controllers\Intranet\Admin\CategoriaController;
 use App\Http\Controllers\Intranet\Admin\IntranetPageCotroller;
 use App\Http\Controllers\Intranet\Admin\MenuController;
 use App\Http\Controllers\Intranet\Admin\MenuRolController;
@@ -123,6 +124,11 @@ Route::group(['middleware' => 'auth'], function () {
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'administrador'], function () {
             // Rutas Administrador
+            Route::get('categorias-index', [CategoriaController::class, 'index'])->name('admin-categoria-index');
+            Route::get('categorias-crear', [CategoriaController::class, 'crear'])->name('admin-categoria-crear');
+            Route::get('categorias-editar/{id}', [CategoriaController::class, 'editar'])->name('admin-categoria-editar');
+            Route::post('categorias-guardar', [CategoriaController::class, 'guardar'])->name('admin-categoria-guardar');
+            Route::put('categorias-actualizar/{id}', [CategoriaController::class, 'actualizar'])->name('admin-categoria-actualizar');
         });
     });
     //==================================================================================================================
