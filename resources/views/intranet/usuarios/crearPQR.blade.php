@@ -56,16 +56,14 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group"><label for="">Municipio:</label>
-                                    <select class="custom-select rounded-0" name="municipio_id" id="municipio_id">
+                                    <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes')}}"  name="municipio_id" id="municipio_id">
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group">
                                     <label for="">Sede:</label>
-                                    <select name="" id="" class="custom-select rounded-0">
+                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0">
                                         <option value="">--Seleccione--</option>
-                                        <option value="">Ninguna</option>
-                                        <option value="">Ninguna</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group">

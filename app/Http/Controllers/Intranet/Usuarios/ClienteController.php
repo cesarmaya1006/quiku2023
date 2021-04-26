@@ -17,7 +17,6 @@ use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
-use App\Models\Consultas\ConsultaDoc;
 use App\Models\Denuncias\DenunciaAnexo;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
@@ -44,7 +43,7 @@ class ClienteController extends Controller
     public function index()
     {
         $pqr_S = PQR::where('persona_id', session('id_usuario'));
-        $consultas = Consulta::where('persona_id', session('id_usuario'))->get();
+        $consultas = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();
         return view('intranet.usuarios.listado', compact('pqr_S', 'consultas'));
     }
 

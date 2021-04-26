@@ -36,6 +36,33 @@ $(document).ready(function() {
 
     });
     //========================================================================================
+    //==========================================================================
+    $('#municipio_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                console.log(respuesta);
+                respuesta_html = '';
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['nombre'] + '</option>';
+                });
+                $('#sede_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //========================================================================================
     $('#motivo_pqr').on('change', function(event) {
         const url_t = $(this).attr('data_url');
         const id = $(this).val();

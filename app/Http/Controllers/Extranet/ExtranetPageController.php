@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers\Extranet;
 
+use App\Models\Admin\Pais;
+use Illuminate\Http\Request;
+use App\Mail\RegistroInicial;
+use App\Models\Admin\Usuario;
+use App\Models\Empresas\Sede;
+use App\Models\Admin\Municipio;
+use App\Models\Admin\Parametro;
+use App\Models\Admin\Tipo_Docu;
+use App\Models\Empresas\Empresa;
+use App\Models\Personas\Persona;
+use App\Mail\RecuperarContraseña;
+use App\Models\Admin\UsuarioTemp;
+use App\Models\Admin\Departamento;
+use App\Models\Empleados\Empleado;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Empresas\Representante;
+use Illuminate\Support\Facades\Config;
 use App\Http\Requests\ValidarPersonaJur;
 use App\Http\Requests\ValidarPersonaNat;
 use App\Http\Requests\ValidarRegistroIni;
 use App\Http\Requests\ValidarRepresentanteLegal;
-use App\Mail\RecuperarContraseña;
-use App\Mail\RegistroInicial;
-use App\Models\Admin\Departamento;
-use App\Models\Admin\Municipio;
-use App\Models\Admin\Pais;
-use App\Models\Admin\Parametro;
-use App\Models\Admin\Tipo_Docu;
-use App\Models\Admin\Usuario;
-use App\Models\Admin\UsuarioTemp;
-use App\Models\Empleados\Empleado;
-use App\Models\Empresas\Empresa;
-use App\Models\Empresas\Representante;
-use App\Models\Personas\Persona;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image as InterventionImage;
 
 class ExtranetPageController extends Controller
@@ -374,6 +375,15 @@ class ExtranetPageController extends Controller
             return Municipio::where('departamento_id', $id)->orderBy('municipio')->get();
         }
     }
+
+    public function cargar_sedes(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return Sede::where('municipio_id', $id)->orderBy('nombre')->get();
+        }
+    }
+    
     public function mensajeRegistroinicial($id, $cedula, $tipopersona)
     {
         $mensaje = '<html lang="es">' . "\r\n";
