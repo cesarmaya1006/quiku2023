@@ -5,12 +5,8 @@ namespace App\Http\Controllers\Intranet\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidarPassword;
 use App\Models\Admin\Usuario;
+use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\Consultas\Consulta;
-use App\Models\Empresas\Empleado;
-use App\Models\Juzgados\Etapa_Proceso;
-use App\Models\Juzgados\Procesos;
-use App\Models\Juzgados\Riesgo_Perdida;
-use App\Models\Juzgados\Tipo_Proceso;
 use App\Models\PQR\PQR;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Http\Request;
@@ -28,7 +24,7 @@ class IntranetPageCotroller extends Controller
         if (session('rol_id') == 6) {
             if ($usuario->persona) {
                 $pqr_S = PQR::where('persona_id', session('id_usuario'));
-                $consultas = Consulta::where('persona_id', session('id_usuario'));
+                $consultas = ConceptoUOpinion::where('persona_id', session('id_usuario'));
                 $sugerecias = Sugerencia::where('persona_id', session('id_usuario'));
             } else {
                 foreach ($usuario->representante->empresas as $empresa) {
