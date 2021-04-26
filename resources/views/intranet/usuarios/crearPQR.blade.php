@@ -23,7 +23,10 @@
                     <div class="card-header">
                         <h3 class="card-title">Crear PQR - {{ $tipo_pqr->tipo }}</h3>
                     </div>
-                    <form>
+                    <form action="{{ route('usuario-generarPQR-guardar') }}" method="POST" autocomplete="off"
+                        enctype="multipart/form-data" id="fromPQR">
+                        @csrf
+                        @method('post')
                         @if ($usuario->persona)
                             <input type="hidden" name="persona_id " value="{{ $usuario->persona->id }}">
                         @endif

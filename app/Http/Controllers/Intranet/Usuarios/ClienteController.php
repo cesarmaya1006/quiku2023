@@ -122,48 +122,17 @@ class ClienteController extends Controller
         return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
     }
 
-    // public function generarConsulta()
-    // {
-    //     $usuario = Usuario::findOrFail(session('id_usuario'));
-    //     return view('intranet.usuarios.crearConsulta', compact('usuario'));
-    // }
-
-    // public function generarConsulta_guardar(Request $request)
-    // {
-    //     $usuario = Usuario::findOrFail(session('id_usuario'));
-    //     if ($usuario->persona) {
-    //         $nuevaConsulta['persona_id'] = $request['persona_id'];
-    //     } else {
-    //         $nuevaConsulta['empresa_id'] = $request['empresa_id'];
-    //     }
-    //     $nuevaConsulta['consulta'] = $request['consulta'];
-    //     $nuevaConsulta['justificacion'] = $request['justificacion'];
-    //     $nuevaConsulta['fecha_generacion'] = $request['fecha_generacion'];
-    //     $nuevaConsulta['fecha_radicado'] = $request['fecha_radicado'];
-    //     $consulta_nueva = Consulta::create($nuevaConsulta);
-    //     $tamaño_f = 0;
-    //     if ($request->hasFile('documentos')) {
-    //         $ruta = Config::get('constantes.folder_doc_consultas');
-    //         $ruta = trim($ruta);
-    //         $ruta = trim($ruta);
-    //         $doc_subido = $request->documentos;
-    //         $tamaño = $doc_subido->getSize();
-    //         if ($tamaño > 0) {
-    //             $tamaño = $tamaño / 1000;
-    //         }
-    //         $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-    //         $nuevo_documento['consulta_id'] = $consulta_nueva->id;
-    //         $nuevo_documento['titulo'] = $request['titulo'];
-    //         $nuevo_documento['descripcion'] = $request['descripcion'];
-    //         $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
-    //         $nuevo_documento['peso'] = $tamaño;
-    //         $nuevo_documento['url'] = $nombre_doc;
-    //         $doc_subido->move($ruta, $nombre_doc);
-    //         $tamaño_f += $tamaño;
-    //         ConsultaDoc::create($nuevo_documento);
-    //     }
-    //     return redirect('usuario/index')->with('mensaje', 'Se registro la consulta de manera correcta tamaño archivos:' . $tamaño_f);
-    // }
+    public function generarPQR_guardar(Request $request)
+    {
+        dd($request->all());
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        if ($usuario->persona) {
+            $nuevaConcepto['persona_id'] = $request['persona_id'];
+        } else {
+            $nuevaConcepto['empresa_id'] = $request['empresa_id'];
+        }
+        return view('intranet.usuarios.crearConceptoUOpinion', compact('usuario'));
+    }
 
     public function generarConceptoUOpinion()
     {
@@ -173,7 +142,6 @@ class ClienteController extends Controller
 
     public function generarConceptoUOpinion_guardar(Request $request)
     {
-        // dd($request->all());
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaConcepto['persona_id'] = $request['persona_id'];
@@ -223,9 +191,7 @@ class ClienteController extends Controller
             $iteradorAnexos += $request['cantidadAnexosConsulta'.$i];
             $iteradorHechos += $request['cantidadHechosConsulta'.$i];
         }
-        dd($request->all());
         return view('intranet.usuarios.crearConceptoUOpinion');
-        // return redirect('usuario/index')->with('mensaje', 'Se registro la consulta de manera correcta tamaño archivos:' . $tamaño_f);
     }
 
     public function generarFelicitacion()
@@ -263,7 +229,6 @@ class ClienteController extends Controller
 
     public function gererarDenuncia_guardar(Request $request)
     {
-        // dd($request->all());
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaDenuncia['persona_id'] = $usuario->id;

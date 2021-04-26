@@ -1,26 +1,46 @@
+// import swal from 'sweetalert';
 window.addEventListener('DOMContentLoaded', function () {
+    // Incio Validacion envio de formulario
     if (document.querySelectorAll('#fromConceptoUOpinion')) {
-
-        // Incio Validacion envio de formulario
         let btnSubmit = document.querySelector('#fromConceptoUOpinion')
         btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
-            // if(!document.querySelector('#sugerencia').value){
-            //     alert('Sugerencia');
-            //     return
-            // }
-            // document.querySelector('#cantidadAnexosSolicitud').value = document.querySelectorAll('.anexoconsulta').length
-            let anexos = document.querySelectorAll('input[type="file"]')
-            anexos.forEach(anexo =>{
-                if(anexo.value == ''){
-                    anexo.parentNode.parentNode.remove()
-                }
-            })
-            ajustarConsultas()
-            ajustarNameHecho(document.querySelectorAll('.hechoConsulta'))
-            ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
-            document.querySelector('.totalCantidadAnexosConsultas').value = document.querySelectorAll('.anexoconsulta').length
-            this.submit();
+            let contadorValidacion;
+            if(document.querySelectorAll('.titulo-consulta input')){
+                let validacionConsultas = document.querySelectorAll('.titulo-consulta input')
+                validacionConsultas.forEach(consulta =>{
+                    if (consulta.value == '') {
+                        swal({
+                            title: "Alerta",
+                            text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
+                            icon: "error",
+                            button: "Continuar",
+                          });
+                        contadorValidacion = 1
+                    }else {
+                        contadorValidacion = 0
+                    }
+                })
+            }
+            if (contadorValidacion == 0) {
+                let anexos = document.querySelectorAll('input[type="file"]')
+                anexos.forEach(anexo =>{
+                    if(anexo.value == ''){
+                        anexo.parentNode.parentNode.remove()
+                    }
+                })
+                let hechos = document.querySelectorAll('.hechoConsulta input')
+                hechos.forEach(hecho =>{
+                    if(hecho.value == ''){
+                        hecho.parentNode.remove()
+                    }
+                })
+                ajustarConsultas()
+                ajustarNameHecho(document.querySelectorAll('.hechoConsulta'))
+                ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
+                document.querySelector('.totalCantidadAnexosConsultas').value = document.querySelectorAll('.anexoconsulta').length
+                this.submit();
+            }
         })
         // Fin Validacion envio de formulario
 

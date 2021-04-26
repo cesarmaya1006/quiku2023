@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function () {
             // }
             // document.querySelector('#cantidadAnexosSolicitud').value = document.querySelectorAll('.anexosolicitud').length
             ajustarSolicitudes()
-            ajustarName(document.querySelectorAll('.anexosolicitud'))
+            ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
             document.querySelector('.totalCantidadAnexosSolicitud').value = document.querySelectorAll('.anexosolicitud').length
             this.submit();
         })
@@ -18,11 +18,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
         // ---------------------------------------------------------------------------------------------------------
         // Fin Función para generar varios anexos en una peticion con validación.
-        ajustarName(document.querySelectorAll('.anexosolicitud'))
+        ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
         let btncrearAnexo = document.querySelectorAll('.crearAnexo')
         btncrearAnexo.forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
         let btnEliminarAnexo = document.querySelector('.eliminaranexoSolicitud')
-        btnEliminarAnexo.addEventListener('click', agregarEliminar)
+        btnEliminarAnexo.addEventListener('click', agregarEliminarAnexo)
 
         function crearNuevoAnexo(e) {
             e.preventDefault()
@@ -32,11 +32,11 @@ window.addEventListener('DOMContentLoaded', function () {
             nuevoAnexoHecho.querySelector('.descripcion-anexoSolicitud input').value = ''
             nuevoAnexoHecho.querySelector('.doc-anexoSolicitud input').value = ''
             peticion.querySelector('#anexosSolicitud').appendChild(nuevoAnexoHecho)
-            ajustarName(document.querySelectorAll('.anexosolicitud'))
-            document.querySelectorAll('.eliminaranexoSolicitud').forEach(item => item.addEventListener('click', agregarEliminar))
+            ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
+            document.querySelectorAll('.eliminaranexoSolicitud').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
         }
 
-        function ajustarName(anexosSolicitud) {
+        function ajustarNameAnexo(anexosSolicitud) {
             for (let i = 0; i < anexosSolicitud.length; i++) {
                 const anexosolicitud = anexosSolicitud[i];
                 anexosolicitud.id = `anexosSolicitud${i}`
@@ -50,9 +50,14 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        function agregarEliminar(e) {
+        function agregarEliminarAnexo(e) {
             e.preventDefault()
-            let peticion = e.target.parentNode.parentNode.parentNode.parentNode
+            let peticion = e.target
+            if (peticion.tagName === 'I') {
+                peticion = peticion.parentNode.parentNode.parentNode.parentNode
+            }else {
+                peticion = peticion.parentNode.parentNode.parentNode
+            }
             if (peticion.querySelectorAll('.anexosolicitud').length >= 2) {
                 let idAnexo = e.target
                 if (idAnexo.tagName === 'I') {
@@ -61,7 +66,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     idAnexo = idAnexo.parentNode.parentNode
                 }
                 idAnexo.remove()
-                ajustarName(document.querySelectorAll('.anexosolicitud'))
+                ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
             }
         }
 
@@ -103,7 +108,7 @@ window.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.eliminarPeticion').forEach(item => item.addEventListener('click', eliminarPeticion))
             ajustarNamePeticion(document.querySelectorAll('.solicitud'))
             document.querySelectorAll('.crearAnexo').forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
-            document.querySelectorAll('.eliminaranexoSolicitud').forEach(item => item.addEventListener('click', agregarEliminar))
+            document.querySelectorAll('.eliminaranexoSolicitud').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
         }
 
         function eliminarPeticion(e) {
