@@ -123,8 +123,9 @@
                                                         data-bs-target="#staticBackdrop"></i></button>
                                             </div>
                                             <!-- /btn-group -->
-                                            <input type="text" class="form-control" id="direccion" placeholder="Dirección"
-                                                name="direccion" required value="{{ old('direccion') }}" readonly>
+                                            <input type="text" class="form-control readonly" id="direccion"
+                                                placeholder="Dirección" name="direccion" value="{{ old('direccion') }}"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="form-group mt-3 col-md-6">
