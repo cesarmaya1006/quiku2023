@@ -16,7 +16,7 @@ class Empresa extends Model
     //----------------------------------------------------------------------------------
     public function representante()
     {
-        return $this->belongsTo(Representante::class, 'empresa_id', 'id');
+        return $this->belongsTo(Representante::class, 'representante_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function pqrs()

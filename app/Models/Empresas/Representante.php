@@ -22,4 +22,8 @@ class Representante extends Model
     {
         return $this->belongsTo(Tipo_Docu::class, 'docutipos_id', 'id');
     }
+    public function empresas()
+    {
+        return $this->hasMany(Empresa::class, 'representante_id', 'id');
+    }
 }
