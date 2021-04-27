@@ -33,7 +33,7 @@
                         @if ($usuario->representante)
                             <input type="hidden" name="empresa_id  " value="{{ $usuario->representante->empresa->id }}">
                         @endif
-                        <div class="card-body">
+                        <div class="card-body m-2">
                             <div class="row d-flex">
                                 <div class="col-12 col-md-6 form-group"><label for="adquisicion">Lugar de adquisición del
                                         producto o servicio:</label>
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 form-group d-none" id="cajasede_id">
                                     <label for="">Sede:</label>
-                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0" required>
+                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0" >
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>
@@ -78,101 +78,55 @@
                                 </div>
                                 <div class="col-12 col-md-6 form-group grupo_producto">
                                     <label for="">Categoria del producto</label>
-                                    <select name="" id="" class="custom-select rounded-0">
+                                    <select name="categoria" id="categoria" class="custom-select rounded-0"  data_url="{{ route('cargar_productos') }}">
                                         <option value="">--Seleccione--</option>
-                                        <option value="">Celulares y Smartphones</option>
-                                        <option value="">Tecnología</option>
-                                        <option value="">Electrodomésticos</option>
-                                        <option value="">Muebles</option>
+                                        @foreach ($categorias as $categoria)
+                                            <option value="{{ $categoria->id }}">
+                                                {{ $categoria->categoria }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group grupo_producto">
                                     <label for="">Producto</label>
-                                    <select name="" id="" class="custom-select rounded-0">
+                                    <select name="producto" id="producto" class="custom-select rounded-0" data_url="{{ route('cargar_marcas') }}">
                                         <option value="">--Seleccione--</option>
-                                        <option value="">Nunguno</option>
-                                        <option value="">Nunguno</option>
-                                        <option value="">Nunguno</option>
-                                        <option value="">Nunguno</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group grupo_producto">
                                     <label for="">Marca:</label>
-                                    <select name="" id="" class="custom-select rounded-0">
+                                    <select name="marca" id="marca" class="custom-select rounded-0" data_url="{{ route('cargar_referencias') }}">
                                         <option value="">--Seleccione--</option>
-                                        <option value="">LG</option>
-                                        <option value="">Samsung</option>
-                                        <option value="">Sony</option>
-                                        <option value="">Mabe</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group grupo_producto">
                                     <label for="">Referencia:</label>
-                                    <select name="" id="" class="custom-select rounded-0">
+                                    <select name="referencia_id" id="referencia_id" class="custom-select rounded-0">
                                         <option value="">--Seleccione--</option>
-                                        <option value="">Ninguna</option>
-                                        <option value="">Ninguna</option>
-                                        <option value="">Ninguna</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group"><label for="">No. Factura:</label>
-                                    <input class="form-control" type="text">
+                                    <input class="form-control" type="text" name="factura" id="factura">
                                 </div>
                                 <div class="col-12 col-md-6 form-group">
                                     <label>Fecha de factura:</label>
                                     <div class="input-group">
-                                        <input type="date" max="{{ date('Y-m-d') }}" name="" id="" class="form-control">
+                                        <input type="date" max="{{ date('Y-m-d') }}" name="fecha_factura" id="fecha_factura" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 form-group d-none grupo_servicio">
                                     <label for="">Tipo de servicio:</label>
-                                    <select name="" id="" class="custom-select rounded-0">
+                                    <select name="servicio_id" id="servicio_id" class="custom-select rounded-0">
                                         <option value="">--Seleccione--</option>
-                                        <option value="">Ninguna</option>
-                                        <option value="">Ninguna</option>
-                                        <option value="">Ninguna</option>
+                                        @foreach ($servicios as $servicio)
+                                            <option value="{{ $servicio->id }}">
+                                                {{ $servicio->servicio }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <hr>
-                            <div id="peticiones" class="mt-5">
-                                <div class="col-12 mb-4 d-flex justify-content-between flex-row">
-                                    <h5><strong>Motivos- {{ $tipo_pqr->tipo }}</strong></h5>
-                                    <button class="btn btn-success btn-xs btn-sombra pl-4 pr-4"><i
-                                            class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
-                                        categoría motivo</button>
-                                </div>
-                                <div class="row p-3" id="p1" style="border: 1px solid black; border-radius: 5px;">
-                                    <div class="col-12 col-md-6 form-group">
-                                        <label for="">Categoría Motivo</label>
-                                        <select name="motivo_pqr" id="motivo_pqr"
-                                            data_url="{{ route('cargar_submotivos') }}" class="custom-select rounded-0">
-                                            <option value="">--Seleccione--</option>
-                                            @foreach ($tipo_pqr->motivos as $motivo)
-                                                <option value="{{ $motivo->id }}">{{ $motivo->motivo }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-md-6 form-group">
-                                        <label for="motivo_sub_id">Sub - Categoría Motivo</label>
-                                        <select name="motivo_sub_id" id="motivo_sub_id" class="custom-select rounded-0">
-                                            <option value="">--Seleccione--</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 form-group">
-                                        <label for="">Hechos</label>
-                                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
-                                    </div>
-                                    <div class="col-12 form-group">
-                                        <label for="">Justificación</label>
-                                        <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
-                                    </div>
-                                    <div class="col-12 col-md-6 form-group">
-                                        <label for="">Anexos o Pruebas</label>
-                                        <input class="form-control" type="file">
-                                    </div>
-                                </div>
-                            </div>
+                            <input id="tipo_pqr_id" name="tipo_pqr_id" type="hidden" value="{{ $tipo_pqr->id }}">
                             <div class="card-footer mt-5 mb-3 pl-4">
                                 <button type="submit" class="btn btn-primary pl-5 pr-5">Crear</button>
                             </div>
@@ -186,6 +140,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-    <script src="{{ asset('js/intranet/usuarios/crear_pqr.js') }}"></script>
+    <script src="{{ asset('js/intranet/pqr/assets_pqr.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

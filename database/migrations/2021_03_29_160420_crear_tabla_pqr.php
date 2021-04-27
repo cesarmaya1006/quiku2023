@@ -21,6 +21,11 @@ class CrearTablaPqr extends Migration
             $table->foreign('empresa_id', 'fk_empresa_pqr')->references('id')->on('empresas')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_pqr')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('tipo_pqr_id')->nullable();
+            $table->foreign('tipo_pqr_id', 'fk_tipoPQR_pqr')->references('id')->on('tipo_pqr')->onDelete('restrict')->onUpdate('restrict');
+            $table->text('adquisicion', 100)->nullable();
+            $table->unsignedBigInteger('sede_id')->nullable();
+            $table->foreign('sede_id', 'fk_sede_pqr')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->text('tipo', 100);
             $table->unsignedBigInteger('servicio_id')->nullable();
             $table->foreign('servicio_id', 'fk_servicio_pqr')->references('id')->on('servicios')->onDelete('restrict')->onUpdate('restrict');
@@ -28,10 +33,8 @@ class CrearTablaPqr extends Migration
             $table->foreign('referencia_id', 'fk_referencia_pqr')->references('id')->on('referencias')->onDelete('restrict')->onUpdate('restrict');
             $table->text('factura', 100)->nullable();
             $table->date('fecha_factura', 100)->nullable();
-            $table->text('adquisicion', 100)->nullable();
-            $table->unsignedBigInteger('sede_id')->nullable();
-            $table->foreign('sede_id', 'fk_sede_pqr')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('prorroga')->default(0)->nullable();
+            $table->date('fecha_generacion');
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();
             $table->string('estado')->default('Radicada, sin iniciar tramite');

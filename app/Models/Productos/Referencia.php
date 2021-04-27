@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 class Referencia extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'marcas';
+    protected $table = 'referencias';
     protected $guarded = [];
 
     //----------------------------------------------------------------------------------

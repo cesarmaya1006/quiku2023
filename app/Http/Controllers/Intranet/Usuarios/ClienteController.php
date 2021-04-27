@@ -9,29 +9,34 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\SubMotivo;
 use App\Models\Admin\Tipo_Docu;
+use App\Models\Productos\Marca;
+use App\Models\Personas\Persona;
 use App\Models\Admin\Departamento;
 use App\Models\Consultas\Consulta;
 use App\Models\Denuncias\Denuncia;
+use App\Models\Productos\Producto;
+use App\Models\Servicios\Servicio;
+use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
-use App\Models\Denuncias\DenunciaAnexo;
+use App\Models\Productos\Referencia;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
+use App\Models\Denuncias\DenunciaAnexo;
 use App\Models\Denuncias\DenunciaHecho;
 use App\Models\Sugerencias\SugerenciaDoc;
 use App\Models\Felicitaciones\Felicitacion;
 use App\Models\Sugerencias\SugerenciaHecho;
-use App\Models\Felicitaciones\FelicitacionHecho;
-use App\Models\Personas\Persona;
 use App\Models\SolicitudDatos\SolicitudDatos;
+use App\Models\Felicitaciones\FelicitacionHecho;
 use App\Models\SolicitudDatos\SolicitudDatosAnexo;
-use App\Models\SolicitudDatos\SolicitudDatosSolicitud;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
+use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
+use App\Models\SolicitudDatos\SolicitudDatosSolicitud;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfoAnexo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
+use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
+use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
+use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
 
 class ClienteController extends Controller
 {
@@ -118,19 +123,69 @@ class ClienteController extends Controller
         $usuario = Usuario::findOrFail(session('id_usuario'));
         $tipo_pqr = tipoPQR::findOrFail($id);
         $departamentos = Departamento::get();
-        return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos'));
+        $categorias = Categoria::get();
+        $servicios = Servicio::all();
+        return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos', 'categorias', 'servicios'));
     }
+
 
     public function generarPQR_guardar(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
-            $nuevaConcepto['persona_id'] = $request['persona_id'];
+            $nuevaPQR['persona_id'] = $request['persona_id'];
         } else {
-            $nuevaConcepto['empresa_id'] = $request['empresa_id'];
+            $nuevaPQR['empresa_id'] = $request['empresa_id'];
         }
-        return view('intranet.usuarios.crearConceptoUOpinion', compact('usuario'));
+        $nuevaPQR['tipo_pqr_id'] = $request['tipo_pqr_id'];
+        $nuevaPQR['adquisicion'] = $request['adquisicion'];
+        $nuevaPQR['sede_id'] = $request['sede_id'];
+        $nuevaPQR['tipo'] = $request['tipo'];
+        $nuevaPQR['referencia_id'] = $request['referencia_id'];
+        $nuevaPQR['factura'] = $request['factura'];
+        $nuevaPQR['fecha_factura'] = $request['fecha_factura'];
+        if(isset($request['servicio_id'])){
+            $nuevaPQR['servicio_id'] = $request['servicio_id'];
+        }
+        $nuevaPQR['fecha_generacion'] = date("Y-m-d");
+        $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $pqr = PQR::create($nuevaPQR);
+        $tipo_pqr =tipoPQR::find($pqr->tipo_pqr_id);
+        $id_pqr = $pqr->id;
+        return view('intranet.usuarios.crearPQRMotivos', compact('tipo_pqr', 'id_pqr'));
+    }
+
+    public function generarPQR_motivos()
+    {
+        return view('intranet.usuarios.crearPQRMotivos');
+    }
+
+    public function generarPQR_motivos_guardar(Request $request)
+    {
+        dd($request->all());
+        // $usuario = Usuario::findOrFail(session('id_usuario'));
+        // if ($usuario->persona) {
+        //     $nuevaPQR['persona_id'] = $request['persona_id'];
+        // } else {
+        //     $nuevaPQR['empresa_id'] = $request['empresa_id'];
+        // }
+        // $nuevaPQR['tipo_pqr_id'] = $request['tipo_pqr_id'];
+        // $nuevaPQR['adquisicion'] = $request['adquisicion'];
+        // $nuevaPQR['sede_id'] = $request['sede_id'];
+        // $nuevaPQR['tipo'] = $request['tipo'];
+        // $nuevaPQR['referencia_id'] = $request['referencia_id'];
+        // $nuevaPQR['factura'] = $request['factura'];
+        // $nuevaPQR['fecha_factura'] = $request['fecha_factura'];
+        // if(isset($request['servicio_id'])){
+        //     $nuevaPQR['servicio_id'] = $request['servicio_id'];
+        // }
+        // $nuevaPQR['fecha_generacion'] = date("Y-m-d");
+        // $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        // PQR::create($nuevaPQR);
+
+        // $tipoPQR = tipoPQR::all();
+        // return view('intranet.usuarios.crear', compact('tipoPQR'));
     }
 
     public function generarConceptoUOpinion()
@@ -460,6 +515,30 @@ class ClienteController extends Controller
         if ($request->ajax()) {
             $id = $_GET['id'];
             return SubMotivo::where('motivo_id', $id)->get();
+        }
+    }
+
+    public function cargar_productos(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return Producto::where('categoria_id', $id)->get();
+        }
+    }
+
+    public function cargar_marcas(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return Marca::where('producto_id', $id)->get();
+        }
+    }
+
+    public function cargar_referencias(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return Referencia::where('marca_id', $id)->get();
         }
     }
 
