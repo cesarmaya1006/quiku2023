@@ -21,7 +21,7 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Motivos- {{ $tipo_pqr->tipo }}</h3>
+                        {{-- <h3 class="card-title">Motivos- {{ $tipo_pqr->tipo }}</h3> --}}
                     </div>
                     <form action="{{ route('usuario-generarPQR_motivos-guardar') }}" method="POST" autocomplete="off"
                         enctype="multipart/form-data" id="fromPQRMotivos">
@@ -40,9 +40,9 @@
                                         </div>
                                         <select name="motivo_pqr" id="motivo_pqr" data_url="{{ route('cargar_submotivos') }}" class="custom-select rounded-0">
                                             <option value="">--Seleccione--</option>
-                                            @foreach ($tipo_pqr->motivos as $motivo)
+                                            {{-- @foreach ($tipo_pqr->motivos as $motivo)
                                                 <option value="{{ $motivo->id }}">{{ $motivo->motivo }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                     <div class="form-group col-12 col-md-6 indentifiquedocinfo-motivo">

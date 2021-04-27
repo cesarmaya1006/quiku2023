@@ -7,12 +7,12 @@ window.addEventListener('DOMContentLoaded', function () {
             e.preventDefault()
             let contadorValidacion;
             if(document.querySelectorAll('.titulo-motivo input')){
-                let validacionConsultas = document.querySelectorAll('.titulo-motivo option')
+                let validacionConsultas = document.querySelectorAll('.justificacion-motivo input')
                 validacionConsultas.forEach(motivo =>{
                     if (motivo.value == '') {
                         swal({
                             title: "Alerta",
-                            text: `Debe diligencias el campo ${motivo.parentNode.querySelector('label').textContent}`,
+                            text: `Debe diligencias el campo ${motivo.parentNode.parentNode.parentNode.querySelector('.titulo-principal-card').textContent}`,
                             icon: "error",
                             button: "Continuar",
                           });
@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 ajustarMotivos()
                 ajustarNameHecho(document.querySelectorAll('.hechoMotivo'))
                 ajustarNameAnexo(document.querySelectorAll('.anexomotivo'))
-                document.querySelector('.totalCantidadAnexosMotivos').value = document.querySelectorAll('.anexomotivo').length
+                document.querySelector('.totalCantidadAnexosmotivos').value = document.querySelectorAll('.anexomotivo').length
                 this.submit();
             }
         })
@@ -201,16 +201,16 @@ window.addEventListener('DOMContentLoaded', function () {
             e.preventDefault()
             let motivo = e.target
             if (motivo.tagName === 'I') {
-                motivo = motivo.parentNode.parentNode.parentNode.parentNode.parentNode
-            }else {
                 motivo = motivo.parentNode.parentNode.parentNode.parentNode
+            }else {
+                motivo = motivo.parentNode.parentNode.parentNode
             }
             if (motivo.querySelectorAll('.motivo').length >= 2) {
                 let idMotivo = e.target
                 if (idMotivo.tagName === 'I') {
-                    idMotivo = idMotivo.parentNode.parentNode.parentNode.parentNode
-                } else {
                     idMotivo = idMotivo.parentNode.parentNode.parentNode
+                } else {
+                    idMotivo = idMotivo.parentNode.parentNode
                 }
                 idMotivo.remove()
                 ajustarNameMotivo(document.querySelectorAll('.motivo'))

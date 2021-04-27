@@ -22,7 +22,6 @@ class IntranetPageCotroller extends Controller
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if (session('rol_id') == 6) {
-            dd($usuario);
             if ($usuario->persona->count() > 0) {
                 $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
                 $consultas = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();

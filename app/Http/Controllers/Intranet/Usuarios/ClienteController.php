@@ -151,25 +151,33 @@ class ClienteController extends Controller
         $nuevaPQR['fecha_generacion'] = date("Y-m-d");
         $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $pqr = PQR::create($nuevaPQR);
-        $tipo_pqr =tipoPQR::find($pqr->tipo_pqr_id);
-        $id_pqr = $pqr->id;
-        return view('intranet.usuarios.crearPQRMotivos', compact('tipo_pqr', 'id_pqr'));
+        // $tipo_pqr =tipoPQR::find($pqr->tipo_pqr_id);
+        // $id_pqr = $pqr->id;
+        return redirect('/usuario/generarPQR-motivos')->with('pqr');
+        // return view('intranet.usuarios.crearPQRMotivos', compact('tipo_pqr', 'id_pqr'));
     }
 
     public function generarPQR_motivos()
     {
+
+        $id_pqr = session('pqr');
+        // $id_pqr = (int)$id_pqr;
+        // Municipio::where('departamento_id', $id)->orderBy('municipio')->get()
+        // $pqr = PQR::where('id', $id_pqr)->get();
+        // $tipo_pqr =tipoPQR::find($id_pqr->tipo_pqr_id);
+        // dd($pqr->tipo_pqr);
         return view('intranet.usuarios.crearPQRMotivos');
     }
 
     public function generarPQR_motivos_guardar(Request $request)
     {
         dd($request->all());
-        // $usuario = Usuario::findOrFail(session('id_usuario'));
-        // if ($usuario->persona) {
-        //     $nuevaPQR['persona_id'] = $request['persona_id'];
-        // } else {
-        //     $nuevaPQR['empresa_id'] = $request['empresa_id'];
-        // }
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        if ($usuario->persona) {
+            $nuevaPQR['persona_id'] = $request['persona_id'];
+        } else {
+            $nuevaPQR['empresa_id'] = $request['empresa_id'];
+        }
         // $nuevaPQR['tipo_pqr_id'] = $request['tipo_pqr_id'];
         // $nuevaPQR['adquisicion'] = $request['adquisicion'];
         // $nuevaPQR['sede_id'] = $request['sede_id'];
