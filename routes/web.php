@@ -33,7 +33,6 @@ Route::get('/clear-cache', function () {
 });
 Route::get('/migrar-bd', function () {
     echo Artisan::call('migrate:refresh');
-    echo Artisan::call('db:seed');
 });
 //---------------------------------------------------------------------------------
 Route::get('/', [ExtranetPageController::class, 'index'])->name('index');

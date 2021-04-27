@@ -27,6 +27,7 @@ class Tabla_Usuarios extends Seeder
             'estado' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+
         DB::table('usuarios')->insert([
             'usuario' => 'superadmin',
             'password' => bcrypt('superadmin'),
@@ -39,6 +40,7 @@ class Tabla_Usuarios extends Seeder
             'estado' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
+
         DB::table('usuarios')->insert([
             'usuario' => 'admin',
             'password' => bcrypt('admin'),
@@ -74,8 +76,8 @@ class Tabla_Usuarios extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         DB::table('personas')->insert([
-            'id' => 1,
-            'docutipos_id' => 4,
+            'id' => 4,
+            'docutipos_id' => 1,
             'identificacion' => '10000001',
             'nombre1' => 'Carlos',
             'nombre2' => 'Jose',
