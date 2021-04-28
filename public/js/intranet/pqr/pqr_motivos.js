@@ -7,12 +7,12 @@ window.addEventListener('DOMContentLoaded', function () {
             e.preventDefault()
             let contadorValidacion;
             if(document.querySelectorAll('.titulo-motivo input')){
-                let validacionConsultas = document.querySelectorAll('.titulo-motivo option')
+                let validacionConsultas = document.querySelectorAll('.justificacion-motivo input')
                 validacionConsultas.forEach(motivo =>{
                     if (motivo.value == '') {
                         swal({
                             title: "Alerta",
-                            text: `Debe diligencias el campo ${motivo.parentNode.querySelector('label').textContent}`,
+                            text: `Debe diligencias el campo ${motivo.parentNode.parentNode.parentNode.querySelector('.titulo-principal-card').textContent}`,
                             icon: "error",
                             button: "Continuar",
                           });
@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 ajustarMotivos()
                 ajustarNameHecho(document.querySelectorAll('.hechoMotivo'))
                 ajustarNameAnexo(document.querySelectorAll('.anexomotivo'))
-                document.querySelector('.totalCantidadAnexosMotivos').value = document.querySelectorAll('.anexomotivo').length
+                document.querySelector('.totalCantidadAnexosmotivos').value = document.querySelectorAll('.anexomotivo').length
                 this.submit();
             }
         })
@@ -165,7 +165,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
         function crearNuevaMotivo() {
             let nuevaMotivo = document.querySelectorAll('.motivo')[0].cloneNode(true)
-            nuevaMotivo.querySelector('#descripcionmotivo').value = ''
+            nuevaMotivo.querySelector('.justificacion-motivo input').value = ''
+            nuevaMotivo.querySelector('.otro input').value = ''
             anexosTotal = nuevaMotivo.querySelectorAll('.anexomotivo')
             for (let i = 0; i < anexosTotal.length; i++) {
                 const anexo = anexosTotal[i];
@@ -201,16 +202,16 @@ window.addEventListener('DOMContentLoaded', function () {
             e.preventDefault()
             let motivo = e.target
             if (motivo.tagName === 'I') {
-                motivo = motivo.parentNode.parentNode.parentNode.parentNode.parentNode
-            }else {
                 motivo = motivo.parentNode.parentNode.parentNode.parentNode
+            }else {
+                motivo = motivo.parentNode.parentNode.parentNode
             }
             if (motivo.querySelectorAll('.motivo').length >= 2) {
                 let idMotivo = e.target
                 if (idMotivo.tagName === 'I') {
-                    idMotivo = idMotivo.parentNode.parentNode.parentNode.parentNode
-                } else {
                     idMotivo = idMotivo.parentNode.parentNode.parentNode
+                } else {
+                    idMotivo = idMotivo.parentNode.parentNode
                 }
                 idMotivo.remove()
                 ajustarNameMotivo(document.querySelectorAll('.motivo'))
@@ -222,6 +223,14 @@ window.addEventListener('DOMContentLoaded', function () {
                 const motivo = motivos[i]
                 motivo.id = `motivo${i}`
                 motivo.querySelector('.titulo-principal-card').innerHTML = `Motivo #${i + 1}`
+                motivo.querySelector('.motivo_pqr').id = `motivo_pqr${i}`
+                motivo.querySelector('.motivo_pqr').name = `motivo_pqr${i}`
+                motivo.querySelector('.motivo_sub_id').id = `motivo_sub_id${i}`
+                motivo.querySelector('.motivo_sub_id').name = `motivo_sub_id${i}`
+                motivo.querySelector('.otro input').id = `otro${i}`
+                motivo.querySelector('.otro input').name = `otro${i}`
+                motivo.querySelector('.justificacion-motivo input').id = `justificacion${i}`
+                motivo.querySelector('.justificacion-motivo input').name = `justificacion${i}`
                 motivo.querySelector('.cantidadAnexosMotivo').id = `cantidadAnexosMotivo${i}`
                 motivo.querySelector('.cantidadAnexosMotivo').name = `cantidadAnexosMotivo${i}`
                 motivo.querySelector('.cantidadHechosMotivo').id = `cantidadHechosMotivo${i}`

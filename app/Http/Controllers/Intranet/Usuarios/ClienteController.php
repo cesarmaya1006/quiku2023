@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Intranet\Usuarios;
 
 use App\Models\PQR\PQR;
+use App\Models\PQR\Anexo;
 use App\Models\Admin\Pais;
 use App\Models\PQR\tipoPQR;
+use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\SubMotivo;
@@ -37,6 +39,7 @@ use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
+use App\Models\PQR\Hecho;
 
 class ClienteController extends Controller
 {
@@ -134,9 +137,9 @@ class ClienteController extends Controller
         // dd($request->all());
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
-            $nuevaPQR['persona_id'] = $request['persona_id'];
+            $nuevaPQR['persona_id'] = $usuario->id;
         } else {
-            $nuevaPQR['empresa_id'] = $request['empresa_id'];
+            $nuevaPQR['empresa_id'] = $usuario->id;
         }
         $nuevaPQR['tipo_pqr_id'] = $request['tipo_pqr_id'];
         $nuevaPQR['adquisicion'] = $request['adquisicion'];
@@ -149,43 +152,67 @@ class ClienteController extends Controller
             $nuevaPQR['servicio_id'] = $request['servicio_id'];
         }
         $nuevaPQR['fecha_generacion'] = date("Y-m-d");
-        $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));
         $pqr = PQR::create($nuevaPQR);
-        $tipo_pqr =tipoPQR::find($pqr->tipo_pqr_id);
-        $id_pqr = $pqr->id;
-        return view('intranet.usuarios.crearPQRMotivos', compact('tipo_pqr', 'id_pqr'));
+        return redirect('/usuario/generarPQR-motivos/'.$pqr->id);
     }
 
-    public function generarPQR_motivos()
+    public function generarPQR_motivos($id)
     {
-        return view('intranet.usuarios.crearPQRMotivos');
+        $pqr = PQR::findOrFail($id);
+        return view('intranet.usuarios.crearPQRMotivos', compact('pqr'));
     }
 
     public function generarPQR_motivos_guardar(Request $request)
     {
-        dd($request->all());
-        // $usuario = Usuario::findOrFail(session('id_usuario'));
-        // if ($usuario->persona) {
-        //     $nuevaPQR['persona_id'] = $request['persona_id'];
-        // } else {
-        //     $nuevaPQR['empresa_id'] = $request['empresa_id'];
-        // }
-        // $nuevaPQR['tipo_pqr_id'] = $request['tipo_pqr_id'];
-        // $nuevaPQR['adquisicion'] = $request['adquisicion'];
-        // $nuevaPQR['sede_id'] = $request['sede_id'];
-        // $nuevaPQR['tipo'] = $request['tipo'];
-        // $nuevaPQR['referencia_id'] = $request['referencia_id'];
-        // $nuevaPQR['factura'] = $request['factura'];
-        // $nuevaPQR['fecha_factura'] = $request['fecha_factura'];
-        // if(isset($request['servicio_id'])){
-        //     $nuevaPQR['servicio_id'] = $request['servicio_id'];
-        // }
-        // $nuevaPQR['fecha_generacion'] = date("Y-m-d");
-        // $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
-        // PQR::create($nuevaPQR);
-
-        // $tipoPQR = tipoPQR::all();
-        // return view('intranet.usuarios.crear', compact('tipoPQR'));
+        // dd($request->all());
+        $cantidadPeticiones = $request['cantidadmotivos'];
+        $documentos = $request->allFiles();
+        $contadorAnexos = 0;
+        $contadorHechos = 0;
+        $iteradorAnexos=0;
+        $iteradorHechos=0;
+        // dd($cantidadPeticiones);
+        for ($i=0; $i < $cantidadPeticiones; $i++) { 
+            $nuevaPQRPeticion['pqr_id'] = $request['pqr_id'];
+            $nuevaPQRPeticion['motivo_sub_id'] = $request['motivo_sub_id'.$i];
+            $nuevaPQRPeticion['otro'] = $request['otro'.$i];
+            $nuevaPQRPeticion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+            $nuevaPQRPeticion['fecha_respuesta'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+            $nuevaPQRPeticion['justificacion'] = $request['justificacion'.$i];
+            $contadorAnexos += $request['cantidadAnexosMotivo'.$i];
+            $contadorHechos += $request['cantidadHechosMotivo'.$i];
+            $peticion =Peticion::create($nuevaPQRPeticion);
+            for ($j=$iteradorAnexos; $j < $contadorAnexos; $j++) { 
+                if ($request->hasFile("documentos$j")) {
+                    $ruta = Config::get('constantes.folder_doc_pqr');
+                    $ruta = trim($ruta);
+                    $doc_subido = $documentos["documentos$j"];
+                    $tamaño = $doc_subido->getSize();
+                    if ($tamaño > 0) {
+                        $tamaño = $tamaño / 1000;
+                    }
+                    $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                    $nuevo_documento['peticion_id'] = $peticion->id;
+                    $nuevo_documento['titulo'] = $request["titulo$j"];
+                    $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                    $nuevo_documento['peso'] = $tamaño;
+                    $nuevo_documento['url'] = $nombre_doc;
+                    $doc_subido->move($ruta, $nombre_doc);
+                    Anexo::create($nuevo_documento);
+                }
+            }
+            for ($k=$iteradorHechos; $k < $contadorHechos; $k++) { 
+                $nuevosHechos['peticion_id'] = $peticion->id;
+                $nuevosHechos['hecho'] = $request['hecho' . $k];
+                Hecho::create($nuevosHechos);
+            }
+            $iteradorAnexos += $request['cantidadAnexosMotivo'.$i];
+            $iteradorHechos += $request['cantidadHechosMotivo'.$i];
+        }
+        $tipoPQR = tipoPQR::all();
+        return view('intranet.usuarios.crear', compact('tipoPQR'));
     }
 
     public function generarConceptoUOpinion()
@@ -198,9 +225,9 @@ class ClienteController extends Controller
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
-            $nuevaConcepto['persona_id'] = $request['persona_id'];
+            $nuevaConcepto['persona_id'] = $usuario->id;
         } else {
-            $nuevaConcepto['empresa_id'] = $request['empresa_id'];
+            $nuevaConcepto['empresa_id'] = $usuario->id;
         }
         $nuevaConcepto['fecha_generacion'] = date("Y-m-d");
         $nuevaConcepto['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
@@ -550,7 +577,6 @@ class ClienteController extends Controller
         } else {
             $discapacidad = 1;
         }
-
         $usuarioActualizar['telefono_fijo'] = $request['telefono_fijo'];
         $usuarioActualizar['telefono_celu'] = $request['telefono_celu'];
         $usuarioActualizar['direccion'] = $direccion;

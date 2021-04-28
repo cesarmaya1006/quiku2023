@@ -21,10 +21,12 @@
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Motivos- {{ $tipo_pqr->tipo }}</h3>
+                        <h3 class="card-title">Motivos- {{ $pqr->tipoPqr->tipo }}</h3>
                     </div>
                     <form action="{{ route('usuario-generarPQR_motivos-guardar') }}" method="POST" autocomplete="off"
                         enctype="multipart/form-data" id="fromPQRMotivos">
+                        @csrf
+                        @method('post')
                         <div class="card-body">
                             <div class="col-12  mt-2 pt-2" id="motivos">
                                 <div class="motivo rounded border mb-3 row">
@@ -38,18 +40,21 @@
                                         <div class="col-12 d-flex justify-content-between">
                                             <label for="">Categoría Motivo</label>
                                         </div>
-                                        <select name="motivo_pqr" id="motivo_pqr" data_url="{{ route('cargar_submotivos') }}" class="custom-select rounded-0">
+                                        <select name="motivo_pqr" id="motivo_pqr" data_url="{{ route('cargar_submotivos') }}" class="custom-select rounded-0 motivo_pqr">
                                             <option value="">--Seleccione--</option>
-                                            @foreach ($tipo_pqr->motivos as $motivo)
+                                            @foreach ($pqr->tipoPqr->motivos as $motivo)
                                                 <option value="{{ $motivo->id }}">{{ $motivo->motivo }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group col-12 col-md-6 indentifiquedocinfo-motivo">
                                         <label for="motivo_sub_id">Sub - Categoría Motivo</label>
-                                        <select name="motivo_sub_id" id="motivo_sub_id" class="custom-select rounded-0">
+                                        <select name="motivo_sub_id" id="motivo_sub_id" class="custom-select rounded-0 motivo_sub_id">
                                             <option value="">--Seleccione--</option>
                                         </select>
+                                    </div>
+                                    <div class="form-group col-12 otro d-none">
+                                        <input class="form-control mt-2" type="text" name="otro" id="otro" placeholder="Otro">
                                     </div>
                                     <div class="col-12" id="hechos">
                                         <div class="form-group hechoMotivo">
@@ -67,7 +72,7 @@
                                     </div>
                                     <div class="form-group col-12 justificacion-motivo">
                                         <label for="">Justificación</label>
-                                        <input class="form-control" type="text" name="descripcionmotivo" id="descripcionmotivo">
+                                        <input class="form-control" type="text" name="justificacion" id="justificacion">
                                     </div>
                                     <div class="form-group col-12 mt-4">
                                         <h6>Anexo o prueba</h6>
@@ -116,6 +121,7 @@
                             <button type="submit" class="btn btn-primary px-4">Crear</button>
                         </div>
                         <input class="totalCantidadAnexosmotivos" id="totalCantidadAnexosmotivos" name="totalCantidadAnexosmotivos" type="hidden" value="0">
+                        <input class="pqr_id" id="pqr_id" name="pqr_id" type="hidden" value="{{ $pqr->id }}">
                     </form>
                 </div>
             </div>
