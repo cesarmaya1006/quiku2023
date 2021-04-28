@@ -19,7 +19,7 @@ class CrearTablaPeticiones extends Migration
             $table->foreign('pqr_id', 'fk_pqr_peticiones')->references('id')->on('pqr')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('motivo_sub_id');
             $table->foreign('motivo_sub_id', 'fk_motivo_peticiones')->references('id')->on('motivo_sub')->onDelete('restrict')->onUpdate('restrict');
-            $table->text('factura', 100);
+            $table->longText('otro')->nullable();
             $table->boolean('prorroga')->default(0);
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta');
@@ -28,7 +28,7 @@ class CrearTablaPeticiones extends Migration
             $table->date('fecha_max_recurso')->nullable();
             $table->date('fecha_not_recurso')->nullable();
             $table->longText('justificacion');
-            $table->string('estado', 100);
+            $table->string('estado')->default('Radicada, sin iniciar tramite');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

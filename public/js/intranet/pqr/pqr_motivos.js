@@ -165,7 +165,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
         function crearNuevaMotivo() {
             let nuevaMotivo = document.querySelectorAll('.motivo')[0].cloneNode(true)
-            nuevaMotivo.querySelector('#descripcionmotivo').value = ''
+            nuevaMotivo.querySelector('.justificacion-motivo input').value = ''
+            nuevaMotivo.querySelector('.otro input').value = ''
             anexosTotal = nuevaMotivo.querySelectorAll('.anexomotivo')
             for (let i = 0; i < anexosTotal.length; i++) {
                 const anexo = anexosTotal[i];
@@ -222,6 +223,14 @@ window.addEventListener('DOMContentLoaded', function () {
                 const motivo = motivos[i]
                 motivo.id = `motivo${i}`
                 motivo.querySelector('.titulo-principal-card').innerHTML = `Motivo #${i + 1}`
+                motivo.querySelector('.motivo_pqr').id = `motivo_pqr${i}`
+                motivo.querySelector('.motivo_pqr').name = `motivo_pqr${i}`
+                motivo.querySelector('.motivo_sub_id').id = `motivo_sub_id${i}`
+                motivo.querySelector('.motivo_sub_id').name = `motivo_sub_id${i}`
+                motivo.querySelector('.otro input').id = `otro${i}`
+                motivo.querySelector('.otro input').name = `otro${i}`
+                motivo.querySelector('.justificacion-motivo input').id = `justificacion${i}`
+                motivo.querySelector('.justificacion-motivo input').name = `justificacion${i}`
                 motivo.querySelector('.cantidadAnexosMotivo').id = `cantidadAnexosMotivo${i}`
                 motivo.querySelector('.cantidadAnexosMotivo').name = `cantidadAnexosMotivo${i}`
                 motivo.querySelector('.cantidadHechosMotivo').id = `cantidadHechosMotivo${i}`

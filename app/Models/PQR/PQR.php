@@ -2,15 +2,17 @@
 
 namespace App\Models\PQR;
 
+use App\Models\PQR\tipoPQR;
+use App\Models\PQR\Peticion;
 use App\Models\Admin\Municipio;
-use App\Models\Empleados\Empleado;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
-use App\Models\Productos\Referencia;
+use App\Models\Empleados\Empleado;
 use App\Models\Servicios\Servicio;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Productos\Referencia;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PQR extends Model
 {
@@ -55,6 +57,6 @@ class PQR extends Model
     //----------------------------------------------------------------------------------
     public function tipoPqr()
     {
-        return $this->belongsTo(Persona::class, 'tipo_pqr_id', 'id');
+        return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
     }
 }
