@@ -55,6 +55,6 @@ class PQR extends Model
     //----------------------------------------------------------------------------------
     public function tipoPqr()
     {
-        return $this->belongsTo(Persona::class, 'tipo_pqr_id', 'id');
+        return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
     }
 }
