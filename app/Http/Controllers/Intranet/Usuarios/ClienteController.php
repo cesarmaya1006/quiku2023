@@ -165,14 +165,12 @@ class ClienteController extends Controller
 
     public function generarPQR_motivos_guardar(Request $request)
     {
-        // dd($request->all());
         $cantidadPeticiones = $request['cantidadmotivos'];
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
         $contadorHechos = 0;
         $iteradorAnexos=0;
         $iteradorHechos=0;
-        // dd($cantidadPeticiones);
         for ($i=0; $i < $cantidadPeticiones; $i++) { 
             $nuevaPQRPeticion['pqr_id'] = $request['pqr_id'];
             $nuevaPQRPeticion['motivo_sub_id'] = $request['motivo_sub_id'.$i];
@@ -211,14 +209,17 @@ class ClienteController extends Controller
             $iteradorAnexos += $request['cantidadAnexosMotivo'.$i];
             $iteradorHechos += $request['cantidadHechosMotivo'.$i];
         }
-        $tipoPQR = tipoPQR::all();
-        return view('intranet.usuarios.crear', compact('tipoPQR'));
+        // $tipoPQR = tipoPQR::all();
+        // return view('intranet.usuarios.crear', compact('tipoPQR'));
+        $idPQR =  $request['pqr_id'];
+        return redirect('/usuario/generar')->with('id_radicado', "$idPQR");
     }
 
     public function generarConceptoUOpinion()
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
-        return view('intranet.usuarios.crearConceptoUOpinion', compact('usuario'));
+        $departamentos = Departamento::get();
+        return view('intranet.usuarios.crearConceptoUOpinion', compact('usuario', 'departamentos'));
     }
 
     public function generarConceptoUOpinion_guardar(Request $request)
@@ -229,6 +230,7 @@ class ClienteController extends Controller
         } else {
             $nuevaConcepto['empresa_id'] = $usuario->id;
         }
+        $nuevaConcepto['sede_id'] = $request['sede_id'];
         $nuevaConcepto['fecha_generacion'] = date("Y-m-d");
         $nuevaConcepto['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $concepto = ConceptoUOpinion::create($nuevaConcepto);
@@ -272,12 +274,14 @@ class ClienteController extends Controller
             $iteradorAnexos += $request['cantidadAnexosConsulta'.$i];
             $iteradorHechos += $request['cantidadHechosConsulta'.$i];
         }
-        return view('intranet.usuarios.crearConceptoUOpinion');
+        
+        return redirect('/usuario/generar')->with('id_radicado', "$concepto->id");
     }
 
     public function generarFelicitacion()
     {
-        return view('intranet.usuarios.crearFeclicitaciones');
+        $departamentos = Departamento::get();
+        return view('intranet.usuarios.crearFeclicitaciones', compact('departamentos'));
     }
 
     public function generarFelicitacion_guardar(Request $request)
@@ -289,7 +293,7 @@ class ClienteController extends Controller
             $nuevaFelicitacion['empresa_id'] = $usuario->id;
         }
         $nuevaFelicitacion['nombre_funcionario'] = $request['nombre_funcionario'];
-        $nuevaFelicitacion['sede'] = $request['sede'];
+        $nuevaFelicitacion['sede_id'] = $request['sede_id'];
         $nuevaFelicitacion['felicitacion'] = $request['felicitacion'];
         $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d");
         $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
@@ -300,12 +304,13 @@ class ClienteController extends Controller
             $nuevosHechos['hecho'] = $request['hecho' . $i];
             FelicitacionHecho::create($nuevosHechos);
         }
-        return view('intranet.usuarios.crearFeclicitaciones');
+        return redirect('/usuario/generarFelicitacion');
     }
 
     public function gererarDenuncia()
     {
-        return view('intranet.usuarios.crearDenuncia');
+        $departamentos = Departamento::get();
+        return view('intranet.usuarios.crearDenuncia', compact('departamentos'));
     }
 
     public function gererarDenuncia_guardar(Request $request)
@@ -316,19 +321,20 @@ class ClienteController extends Controller
         } else {
             $nuevaDenuncia['empresa_id'] = $usuario->id;
         }
+        $nuevaDenuncia['sede_id'] = $request['sede_id'];
         $nuevaDenuncia['solicitud'] = $request['solicitud'];
         $nuevaDenuncia['fecha_generacion'] = date("Y-m-d");
         $nuevaDenuncia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $denuncia = Denuncia::create($nuevaDenuncia);
         $nuevosHechos['denuncia_id'] = $denuncia->id;
-        $cantidadHechos = $request['cantidadHechos'];
+        $cantidadHechos = $request['cantidadHechosDenuncia'];
         for ($i = 0; $i < $cantidadHechos; $i++) {
             $nuevosHechos['hecho'] = $request['hecho' . $i];
             DenunciaHecho::create($nuevosHechos);
         }
-        $cantidadAnexosHechos = $request['cantidadAnexosHechos'];
+        $cantidadAnexosDenuncia = $request['cantidadAnexosDenuncia'];
         $documentos = $request->allFiles();
-        for ($i = 0; $i < $cantidadAnexosHechos; $i++) {
+        for ($i = 0; $i < $cantidadAnexosDenuncia; $i++) {
             if ($request->hasFile("documentos$i")) {
                 $ruta = Config::get('constantes.folder_doc_denuncias');
                 $ruta = trim($ruta);
@@ -348,12 +354,13 @@ class ClienteController extends Controller
                 DenunciaAnexo::create($nuevo_documento);
             }
         }
-        return view('intranet.usuarios.crearDenuncia');
+        return redirect('/usuario/generar')->with('id_radicado', "$denuncia->id");
     }
 
     public function generarSolicitudDatos()
     {
-        return view('intranet.usuarios.crearSolicitudDatos');
+        $departamentos = Departamento::get();
+        return view('intranet.usuarios.crearSolicitudDatos', compact('departamentos'));
     }
 
     public function generarSolicitudDatos_guardar(Request $request)
@@ -364,6 +371,7 @@ class ClienteController extends Controller
         } else {
             $nuevaSolicitud['empresa_id'] = $usuario->id;
         }
+        $nuevaSolicitud['sede_id'] = $request['sede_id'];
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $solicitud = SolicitudDatos::create($nuevaSolicitud);
@@ -400,12 +408,14 @@ class ClienteController extends Controller
             }
             $iterador += $request['cantidadAnexosSolicitud'.$i];
         }
-        return view('intranet.usuarios.crearSolicitudDatos');
+        return redirect('/usuario/generar')->with('id_radicado', "$solicitud->id");
+        
     }
 
     public function generarSolicitudDocumentos()
     {
-        return view('intranet.usuarios.crearSolicitudDocumentos');
+        $departamentos = Departamento::get();
+        return view('intranet.usuarios.crearSolicitudDocumentos', compact('departamentos'));
     }
 
     public function generarSolicitudDocumentos_guardar(Request $request)
@@ -416,6 +426,7 @@ class ClienteController extends Controller
         } else {
             $nuevaSolicitud['empresa_id'] = $usuario->id;
         }
+        $nuevaSolicitud['sede_id'] = $request['sede_id'];
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $solicitud = SolicitudDocInfo::create($nuevaSolicitud);
@@ -452,12 +463,13 @@ class ClienteController extends Controller
             }
             $iterador += $request['cantidadAnexosSolicitud'.$i];
         }
-        return view('intranet.usuarios.crearSolicitudDocumentos');
+        return redirect('/usuario/generar')->with('id_radicado', "$solicitud->id");
     }
 
     public function generarSugerencia()
     {
-        return view('intranet.usuarios.crearSugerencia');
+        $departamentos = Departamento::get();
+        return view('intranet.usuarios.crearSugerencia', compact('departamentos'));
     }
 
     public function generarSugerencia_guardar(Request $request)
@@ -468,11 +480,12 @@ class ClienteController extends Controller
         } else {
             $nuevaSugerencia['empresa_id'] = $usuario->id;
         }
+        $nuevaSugerencia['sede_id'] = $request['sede_id'];
         $nuevaSugerencia['sugerencia'] = $request['sugerencia'];
         $nuevaSugerencia['fecha_generacion'] = date("Y-m-d");
         $nuevaSugerencia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $sugerencia = Sugerencia::create($nuevaSugerencia);
-        $nuevosHechos['denuncia'] = $sugerencia->id;
+        $nuevosHechos['sugerencia_id'] = $sugerencia->id;
         $cantidadHechos = $request['cantidadHechos'];
         for ($i = 0; $i < $cantidadHechos; $i++) {
             $nuevosHechos['hecho'] = $request['hecho' . $i];
@@ -500,7 +513,7 @@ class ClienteController extends Controller
                 SugerenciaDoc::create($nuevo_documento);
             }
         }
-        return view('intranet.usuarios.crearSugerencia');
+        return redirect('/usuario/generarSugerencia');
     }
 
     public function actualizar_datos()

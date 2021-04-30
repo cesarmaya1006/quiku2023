@@ -10,19 +10,19 @@ window.addEventListener('DOMContentLoaded', function () {
             // }
             // document.querySelector('#cantidadAnexosSolicitud').value = document.querySelectorAll('.anexosolicitud').length
             ajustarSolicitudes()
-            ajustarName(document.querySelectorAll('.anexosolicitud'))
+            ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
             document.querySelector('.totalCantidadAnexosSolicitud').value = document.querySelectorAll('.anexosolicitud').length
             this.submit();
         })
         // Fin Validacion envio de formulario
 
         // ---------------------------------------------------------------------------------------------------------
-        // Fin Función para generar varios anexos en una peticion con validación.
-        ajustarName(document.querySelectorAll('.anexosolicitud'))
+        // Inicio Función para generar varios anexos en una peticion con validación.
+        ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
         let btncrearAnexo = document.querySelectorAll('.crearAnexo')
         btncrearAnexo.forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
         let btnEliminarAnexo = document.querySelector('.eliminaranexoSolicitud')
-        btnEliminarAnexo.addEventListener('click', agregarEliminar)
+        btnEliminarAnexo.addEventListener('click', agregarEliminarAnexo)
 
         function crearNuevoAnexo(e) {
             e.preventDefault()
@@ -32,11 +32,11 @@ window.addEventListener('DOMContentLoaded', function () {
             nuevoAnexoHecho.querySelector('.descripcion-anexoSolicitud input').value = ''
             nuevoAnexoHecho.querySelector('.doc-anexoSolicitud input').value = ''
             peticion.querySelector('#anexosSolicitud').appendChild(nuevoAnexoHecho)
-            ajustarName(document.querySelectorAll('.anexosolicitud'))
-            document.querySelectorAll('.eliminaranexoSolicitud').forEach(item => item.addEventListener('click', agregarEliminar))
+            ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
+            document.querySelectorAll('.eliminaranexoSolicitud').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
         }
 
-        function ajustarName(anexosSolicitud) {
+        function ajustarNameAnexo(anexosSolicitud) {
             for (let i = 0; i < anexosSolicitud.length; i++) {
                 const anexosolicitud = anexosSolicitud[i];
                 anexosolicitud.id = `anexosSolicitud${i}`
@@ -50,10 +50,15 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        function agregarEliminar(e) {
+        function agregarEliminarAnexo(e) {
             e.preventDefault()
-            let peticion = e.target.parentNode.parentNode.parentNode.parentNode
-            if (peticion.querySelectorAll('.anexosolicitud').length >= 2) {
+            let consulta = e.target
+            if (consulta.tagName === 'I') {
+                consulta = consulta.parentNode.parentNode.parentNode.parentNode
+            }else {
+                consulta = consulta.parentNode.parentNode.parentNode
+            }
+            if (consulta.querySelectorAll('.anexoconsulta').length >= 2) {
                 let idAnexo = e.target
                 if (idAnexo.tagName === 'I') {
                     idAnexo = idAnexo.parentNode.parentNode.parentNode
@@ -61,12 +66,12 @@ window.addEventListener('DOMContentLoaded', function () {
                     idAnexo = idAnexo.parentNode.parentNode
                 }
                 idAnexo.remove()
-                ajustarName(document.querySelectorAll('.anexosolicitud'))
+                ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
             }
         }
-
+        // Fin Función para generar varios anexos en una peticion con validación.       
         // ---------------------------------------------------------------------------------------------------------
-        // Fin Función para generar varias peticiones con validación.
+        // Incio Función para generar varias peticiones con validación.
         ajustarNamePeticion(document.querySelectorAll('.solicitud'))
         let btncrearSolicitud = document.querySelector('#crearSolicitud')
         btncrearSolicitud.addEventListener('click', function (e) {
@@ -103,12 +108,18 @@ window.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.eliminarPeticion').forEach(item => item.addEventListener('click', eliminarPeticion))
             ajustarNamePeticion(document.querySelectorAll('.solicitud'))
             document.querySelectorAll('.crearAnexo').forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
-            document.querySelectorAll('.eliminaranexoSolicitud').forEach(item => item.addEventListener('click', agregarEliminar))
+            document.querySelectorAll('.eliminaranexoSolicitud').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
         }
 
         function eliminarPeticion(e) {
             e.preventDefault()
-            if (document.querySelectorAll('.solicitud').length >= 2) {
+            let solicitud = e.target
+            if (solicitud.tagName === 'I') {
+                solicitud = solicitud.parentNode.parentNode.parentNode.parentNode.parentNode
+            }else {
+                solicitud = solicitud.parentNode.parentNode.parentNode.parentNode
+            }
+            if (solicitud.querySelectorAll('.solicitud').length >= 2) {
                 let idPeticion = e.target
                 if (idPeticion.tagName === 'I') {
                     idPeticion = idPeticion.parentNode.parentNode.parentNode.parentNode

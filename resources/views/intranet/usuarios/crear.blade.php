@@ -54,6 +54,9 @@
                                 </div>
                             @endforeach
                         </div>
+                        @if (session("id_radicado"))
+                            <input class="" id="id_radicado" name="id_radicado" type="hidden" value="{{ utf8_encode(utf8_decode(session("id_radicado"))) }}">
+                        @endif
                     </div>
                 </div>
             </div>
@@ -63,6 +66,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-
+    <script src="{{ asset('js/intranet/generar_pqr/index.js') }}"></script> 
 @endsection
 <!-- ************************************************************* -->

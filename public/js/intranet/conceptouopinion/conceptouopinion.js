@@ -1,4 +1,3 @@
-// import swal from 'sweetalert';
 window.addEventListener('DOMContentLoaded', function () {
     // Incio Validacion envio de formulario
     if (document.querySelectorAll('#fromConceptoUOpinion')) {
@@ -43,9 +42,8 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         })
         // Fin Validacion envio de formulario
-
         // ---------------------------------------------------------------------------------------------------------
-        // Fin Función para generar varios anexos en una consulta con validación.
+        // Inicio Función para generar varios anexos en una consulta con validación.
         ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
         let btncrearAnexo = document.querySelectorAll('.crearAnexo')
         btncrearAnexo.forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
@@ -97,6 +95,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
             }
         }
+        // Fin Función para generar varios anexos en una consulta con validación.
         // --------------------------------------------------------------------------------------------------------------------
         // Inicio Función para generar varios Hechos con validación.
         ajustarNameHecho(document.querySelectorAll('.hechoConsulta'))
@@ -144,7 +143,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
         // Fin Función para generar varios Hechos con validación.
         // ---------------------------------------------------------------------------------------------------------
-        // Fin Función para generar varias consultas con validación.
+        // Incio Función para generar varias consultas con validación.
         ajustarNameConsulta(document.querySelectorAll('.consulta'))
         let btncrearConsulta = document.querySelector('#crearConsulta')
         btncrearConsulta.addEventListener('click', function (e) {
@@ -221,7 +220,7 @@ window.addEventListener('DOMContentLoaded', function () {
             for (let i = 0; i < consultas.length; i++) {
                 const consulta = consultas[i]
                 consulta.id = `consulta${i}`
-                consulta.querySelector('.titulo-consulta label').innerHTML = `Consulta #${i + 1}`
+                consulta.querySelector('.titulo-consulta label').innerHTML = `Concepto u opinión #${i + 1}`
                 consulta.querySelector('.titulo-consulta input').id = `consulta${i}`
                 consulta.querySelector('.titulo-consulta input').name = `consulta${i}`
                 consulta.querySelector('.cantidadAnexosConsulta').id = `cantidadAnexosConsulta${i}`
@@ -231,6 +230,8 @@ window.addEventListener('DOMContentLoaded', function () {
             }
             document.querySelector('#cantidadConsultas').value = document.querySelectorAll('.consulta').length
         }
-
+        // Fin Función para generar varias consultas con validación.
+        // ---------------------------------------------------------------------------------------------------------
+  
     }
 })
