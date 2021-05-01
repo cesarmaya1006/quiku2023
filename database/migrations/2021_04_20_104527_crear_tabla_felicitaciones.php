@@ -22,7 +22,8 @@ class CrearTablaFelicitaciones extends Migration
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_felicitaciones')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->text('nombre_funcionario');
-            $table->text('sede');
+            $table->unsignedBigInteger('sede_id')->nullable();
+            $table->foreign('sede_id', 'fk_sede_felicitaciones')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->text('felicitacion');
             $table->boolean('prorroga')->default(0)->nullable();
             $table->date('fecha_generacion');

@@ -28,6 +28,36 @@ Sistema de informaci&oacute;n
                     @csrf
                     @method('post')
                     <div class="card-body">
+                        <div class="col-12 mt-2">
+                            <div class="d-flex form-group grupo-sede rounded border p-2">
+                                <div class="col-12 col-md-3 form-group" id="cajadepartamento"><label
+                                    for="">Departamento:</label>
+                                    <select class="custom-select rounded-0 departamentos" id="departamento"
+                                        data_url="{{ route('cargar_municipios') }}">
+                                        <option value="">--Seleccione--</option>
+                                        @foreach ($departamentos as $departamento)
+                                            <option value="{{ $departamento->id }}">
+                                                {{ $departamento->departamento }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-3 form-group" id="cajamunicipio_id"><label
+                                        for="">Municipio:</label>
+                                    <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes') }}"
+                                        id="municipio_id">
+                                        <option value="">--Seleccione--</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-6 form-group cajasede_id" id="cajasede_id">
+                                    <label for="">Sede:</label>
+                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0" >
+                                        <option value="">--Seleccione--</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="col-12  mt-2 pt-2" id="solicitudes">
                             <div class="col-12 solicitud rounded border mb-3">
                                 <div class="form-group col-12 mt-2 titulo-solicitud">

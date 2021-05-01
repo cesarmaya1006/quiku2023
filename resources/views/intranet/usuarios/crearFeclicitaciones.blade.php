@@ -28,6 +28,35 @@ Sistema de informaci&oacute;n
                     @csrf
                     @method('post')
                     <div class="card-body">
+                        <div class="col-12 mt-2">
+                            <div class="d-flex form-group grupo-sede rounded border p-2">
+                                <div class="col-12 col-md-3 form-group" id="cajadepartamento"><label
+                                    for="">Departamento:</label>
+                                    <select class="custom-select rounded-0 departamentos" id="departamento"
+                                        data_url="{{ route('cargar_municipios') }}">
+                                        <option value="">--Seleccione--</option>
+                                        @foreach ($departamentos as $departamento)
+                                            <option value="{{ $departamento->id }}">
+                                                {{ $departamento->departamento }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-3 form-group" id="cajamunicipio_id"><label
+                                        for="">Municipio:</label>
+                                    <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes') }}"
+                                        id="municipio_id">
+                                        <option value="">--Seleccione--</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-6 form-group cajasede_id" id="cajasede_id">
+                                    <label for="">Sede:</label>
+                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0" >
+                                        <option value="">--Seleccione--</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-12" id="hechos">
                             <div class="form-group felicitacionHecho">
                                 <div class="title-felicitacion d-flex justify-content-between mt-2">
@@ -46,7 +75,7 @@ Sistema de informaci&oacute;n
                             <label for="">Nombre de funcionario</label>
                             <input class="form-control" type="text" name="nombre_funcionario" id="nombre_funcionario">
                         </div>
-                        <div class="form-group col-12">
+                        {{-- <div class="form-group col-12">
                             <label for="">Elija una sede que desea felicitar:</label>
                             <select name="sede" id="sede" class="custom-select rounded-0">
                                 <option value="">--Seleccione--</option>
@@ -54,7 +83,7 @@ Sistema de informaci&oacute;n
                                 <option value="sede2">Sede 2</option>
                                 <option value="sede3">Sede 3</option>
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="form-group col-12">
                             <label for="">Escriba sus felicitaciones</label>
                             <textarea class="form-control" rows="3" placeholder="" name="felicitacion" id="felicitacion"></textarea>

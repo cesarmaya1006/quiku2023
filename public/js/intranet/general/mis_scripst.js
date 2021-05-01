@@ -11,7 +11,6 @@ $(document).ready(function() {
             type: 'GET',
             data: data,
             success: function(respuesta) {
-                console.log(respuesta);
                 respuesta_html = '';
                 respuesta_html += '<option value="">--Seleccione--</option>';
                 $.each(respuesta, function(index, item) {
@@ -40,7 +39,6 @@ $(document).ready(function() {
             type: 'GET',
             data: data,
             success: function(respuesta) {
-                console.log(respuesta);
                 respuesta_html = '';
                 respuesta_html += '<option value="">--Seleccione--</option>';
                 $.each(respuesta, function(index, item) {

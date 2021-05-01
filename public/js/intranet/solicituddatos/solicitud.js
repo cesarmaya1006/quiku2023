@@ -113,7 +113,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
         function eliminarPeticion(e) {
             e.preventDefault()
-            if (document.querySelectorAll('.solicitud').length >= 2) {
+            let solicitud = e.target
+            if (solicitud.tagName === 'I') {
+                solicitud = solicitud.parentNode.parentNode.parentNode.parentNode.parentNode
+            }else {
+                solicitud = solicitud.parentNode.parentNode.parentNode.parentNode
+            }
+            if (solicitud.querySelectorAll('.solicitud').length >= 2) {
                 let idPeticion = e.target
                 if (idPeticion.tagName === 'I') {
                     idPeticion = idPeticion.parentNode.parentNode.parentNode.parentNode

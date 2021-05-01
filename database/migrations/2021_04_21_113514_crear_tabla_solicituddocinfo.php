@@ -22,6 +22,8 @@ class CrearTablaSolicituddocinfo extends Migration
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_solicituddocinfo')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('prorroga')->default(0)->nullable();
+            $table->unsignedBigInteger('sede_id')->nullable();
+            $table->foreign('sede_id', 'fk_sede_solicituddocinfo')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha_generacion');
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();

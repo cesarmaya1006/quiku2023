@@ -23,6 +23,8 @@ class CrearTablaSugerencias extends Migration
             $table->foreign('empleado_id', 'fk_empleado_sugerencias')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->text('sugerencia');
             $table->boolean('prorroga')->default(0)->nullable();
+            $table->unsignedBigInteger('sede_id')->nullable();
+            $table->foreign('sede_id', 'fk_sede_sugerencias')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha_generacion');
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();
