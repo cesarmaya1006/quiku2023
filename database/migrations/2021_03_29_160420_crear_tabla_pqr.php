@@ -19,8 +19,6 @@ class CrearTablaPqr extends Migration
             $table->foreign('persona_id', 'fk_persona_pqr')->references('id')->on('personas')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id', 'fk_empresa_pqr')->references('id')->on('empresas')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('empleado_id')->nullable();
-            $table->foreign('empleado_id', 'fk_empleado_pqr')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('tipo_pqr_id')->nullable();
             $table->foreign('tipo_pqr_id', 'fk_tipoPQR_pqr')->references('id')->on('tipo_pqr')->onDelete('restrict')->onUpdate('restrict');
             $table->text('adquisicion', 100)->nullable();

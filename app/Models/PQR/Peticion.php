@@ -2,6 +2,7 @@
 
 namespace App\Models\PQR;
 
+use App\Models\Empleados\Empleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -32,4 +33,10 @@ class Peticion extends Model
         return $this->hasMany(Anexo::class, 'peticion_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+
 }

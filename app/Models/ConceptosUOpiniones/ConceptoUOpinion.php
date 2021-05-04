@@ -27,11 +27,6 @@ class ConceptoUOpinion extends Model
         return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
     public function conceptos()
     {
         return $this->hasMany(ConceptoUOpinionConsulta::class, 'conceptouopinionconsultas_id', 'id');

@@ -17,6 +17,8 @@ class CrearTablaConceptouopinionconsultas extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('conceptouopinion_id');
             $table->foreign('conceptouopinion_id', 'fk_conceptouopinion_consulta')->references('id')->on('conceptouopinion')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->foreign('empleado_id', 'fk_empleado_consulta')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('consulta');
             $table->timestamps();
             $table->charset = 'utf8';

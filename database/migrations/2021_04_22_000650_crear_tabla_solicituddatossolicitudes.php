@@ -17,6 +17,8 @@ class CrearTablaSolicituddatossolicitudes extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('solicituddatos_id');
             $table->foreign('solicituddatos_id', 'fk_solicituddatos_solicitud')->references('id')->on('solicituddatos')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->foreign('empleado_id', 'fk_empleado_solicitud')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('tiposolicitud');
             $table->longText('datossolicitud');
             $table->longText('descripcionsolicitud');
