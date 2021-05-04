@@ -31,4 +31,9 @@ class ConceptoUOpinion extends Model
     {
         return $this->hasMany(ConceptoUOpinionConsulta::class, 'conceptouopinionconsultas_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function tipoPqr()
+    {
+        return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
+    }
 }

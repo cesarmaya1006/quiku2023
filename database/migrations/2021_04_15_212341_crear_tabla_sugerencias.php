@@ -15,6 +15,9 @@ class CrearTablaSugerencias extends Migration
     {
         Schema::create('sugerencias', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
+            $table->text('radicado', 255)->nullable();
+            $table->unsignedBigInteger('tipo_pqr_id')->default(9);
+            $table->foreign('tipo_pqr_id', 'fk_tipoPQR_sugerencias')->references('id')->on('tipo_pqr')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('persona_id')->nullable();
             $table->foreign('persona_id', 'fk_persona_sugerencias')->references('id')->on('personas')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empresa_id')->nullable();

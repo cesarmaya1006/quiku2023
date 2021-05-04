@@ -147,13 +147,18 @@ class ClienteController extends Controller
         $nuevaPQR['referencia_id'] = $request['referencia_id'];
         $nuevaPQR['factura'] = $request['factura'];
         $nuevaPQR['fecha_factura'] = $request['fecha_factura'];
-        if(isset($request['servicio_id'])){
+        if (isset($request['servicio_id'])) {
             $nuevaPQR['servicio_id'] = $request['servicio_id'];
         }
         $nuevaPQR['fecha_generacion'] = date("Y-m-d");
         $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));
         $pqr = PQR::create($nuevaPQR);
-        return redirect('/usuario/generarPQR-motivos/'.$pqr->id);
+        $tipo_pqr = tipoPQR::findOrFail($request['tipo_pqr_id']);
+        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $pqr->id;
+        PQR::findOrFail($pqr->id)->update($pqr_rad);
+        $pqr = PQR::findOrFail($pqr->id);
+
+        return redirect('/usuario/generarPQR-motivos/' . $pqr->id);
     }
 
     public function generarPQR_motivos($id)
@@ -168,19 +173,19 @@ class ClienteController extends Controller
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
         $contadorHechos = 0;
-        $iteradorAnexos=0;
-        $iteradorHechos=0;
-        for ($i=0; $i < $cantidadPeticiones; $i++) { 
+        $iteradorAnexos = 0;
+        $iteradorHechos = 0;
+        for ($i = 0; $i < $cantidadPeticiones; $i++) {
             $nuevaPQRPeticion['pqr_id'] = $request['pqr_id'];
-            $nuevaPQRPeticion['motivo_sub_id'] = $request['motivo_sub_id'.$i];
-            $nuevaPQRPeticion['otro'] = $request['otro'.$i];
+            $nuevaPQRPeticion['motivo_sub_id'] = $request['motivo_sub_id' . $i];
+            $nuevaPQRPeticion['otro'] = $request['otro' . $i];
             $nuevaPQRPeticion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
             $nuevaPQRPeticion['fecha_respuesta'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
-            $nuevaPQRPeticion['justificacion'] = $request['justificacion'.$i];
-            $contadorAnexos += $request['cantidadAnexosMotivo'.$i];
-            $contadorHechos += $request['cantidadHechosMotivo'.$i];
-            $peticion =Peticion::create($nuevaPQRPeticion);
-            for ($j=$iteradorAnexos; $j < $contadorAnexos; $j++) { 
+            $nuevaPQRPeticion['justificacion'] = $request['justificacion' . $i];
+            $contadorAnexos += $request['cantidadAnexosMotivo' . $i];
+            $contadorHechos += $request['cantidadHechosMotivo' . $i];
+            $peticion = Peticion::create($nuevaPQRPeticion);
+            for ($j = $iteradorAnexos; $j < $contadorAnexos; $j++) {
                 if ($request->hasFile("documentos$j")) {
                     $ruta = Config::get('constantes.folder_doc_pqr');
                     $ruta = trim($ruta);
@@ -192,9 +197,9 @@ class ClienteController extends Controller
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                     $nuevo_documento['peticion_id'] = $peticion->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
-                    if($request["descripcion$j"]){
+                    if ($request["descripcion$j"]) {
                         $nuevo_documento['descripcion'] = $request["descripcion$j"];
-                    }else {
+                    } else {
                         $nuevo_documento['descripcion'] = '';
                     }
                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
@@ -204,13 +209,13 @@ class ClienteController extends Controller
                     Anexo::create($nuevo_documento);
                 }
             }
-            for ($k=$iteradorHechos; $k < $contadorHechos; $k++) { 
+            for ($k = $iteradorHechos; $k < $contadorHechos; $k++) {
                 $nuevosHechos['peticion_id'] = $peticion->id;
                 $nuevosHechos['hecho'] = $request['hecho' . $k];
                 Hecho::create($nuevosHechos);
             }
-            $iteradorAnexos += $request['cantidadAnexosMotivo'.$i];
-            $iteradorHechos += $request['cantidadHechosMotivo'.$i];
+            $iteradorAnexos += $request['cantidadAnexosMotivo' . $i];
+            $iteradorHechos += $request['cantidadHechosMotivo' . $i];
         }
         $idPQR =  $request['pqr_id'];
         return redirect('/usuario/generar')->with('id_radicado', "$idPQR");
@@ -240,14 +245,14 @@ class ClienteController extends Controller
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
         $contadorHechos = 0;
-        $iteradorAnexos=0;
-        $iteradorHechos=0;
-        for ($i=0; $i < $cantidadConsultas; $i++) { 
-            $nuevasConsultas['consulta'] = $request['consulta'.$i];
-            $contadorAnexos += $request['cantidadAnexosConsulta'.$i];
-            $contadorHechos += $request['cantidadHechosConsulta'.$i];
-            $consulta =ConceptoUOpinionConsulta::create($nuevasConsultas);
-            for ($j=$iteradorAnexos; $j < $contadorAnexos; $j++) { 
+        $iteradorAnexos = 0;
+        $iteradorHechos = 0;
+        for ($i = 0; $i < $cantidadConsultas; $i++) {
+            $nuevasConsultas['consulta'] = $request['consulta' . $i];
+            $contadorAnexos += $request['cantidadAnexosConsulta' . $i];
+            $contadorHechos += $request['cantidadHechosConsulta' . $i];
+            $consulta = ConceptoUOpinionConsulta::create($nuevasConsultas);
+            for ($j = $iteradorAnexos; $j < $contadorAnexos; $j++) {
                 if ($request->hasFile("documentos$j")) {
                     $ruta = Config::get('constantes.folder_doc_conceptouopinion');
                     $ruta = trim($ruta);
@@ -259,9 +264,9 @@ class ClienteController extends Controller
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                     $nuevo_documento['conceptouopinionconsultas_id'] = $consulta->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
-                    if($request["descripcion$j"]){
+                    if ($request["descripcion$j"]) {
                         $nuevo_documento['descripcion'] = $request["descripcion$j"];
-                    }else {
+                    } else {
                         $nuevo_documento['descripcion'] = '';
                     }
                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
@@ -271,15 +276,15 @@ class ClienteController extends Controller
                     ConceptoUOpinionConsultaAnexo::create($nuevo_documento);
                 }
             }
-            for ($k=$iteradorHechos; $k < $contadorHechos; $k++) { 
+            for ($k = $iteradorHechos; $k < $contadorHechos; $k++) {
                 $nuevosHechos['conceptouopinionconsultas_id'] = $consulta->id;
                 $nuevosHechos['hecho'] = $request['hecho' . $k];
                 ConceptoUOpinionConsultaHecho::create($nuevosHechos);
             }
-            $iteradorAnexos += $request['cantidadAnexosConsulta'.$i];
-            $iteradorHechos += $request['cantidadHechosConsulta'.$i];
+            $iteradorAnexos += $request['cantidadAnexosConsulta' . $i];
+            $iteradorHechos += $request['cantidadHechosConsulta' . $i];
         }
-        
+
         return redirect('/usuario/generar')->with('id_radicado', "$concepto->id");
     }
 
@@ -351,9 +356,9 @@ class ClienteController extends Controller
                 $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                 $nuevo_documento['denuncia_id'] = $denuncia->id;
                 $nuevo_documento['titulo'] = $request["titulo$i"];
-                if($request["descripcion$i"]){
+                if ($request["descripcion$i"]) {
                     $nuevo_documento['descripcion'] = $request["descripcion$i"];
-                }else {
+                } else {
                     $nuevo_documento['descripcion'] = '';
                 }
                 $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
@@ -388,14 +393,14 @@ class ClienteController extends Controller
         $cantidadSolicitudes = $request['cantidadSolicitudes'];
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
-        $iterador=0;
-        for ($i=0; $i < $cantidadSolicitudes; $i++) { 
-            $nuevasSolicitudes['tiposolicitud'] = $request['tiposolicitud'.$i];
-            $nuevasSolicitudes['datossolicitud'] = $request['datossolicitud'.$i];
-            $nuevasSolicitudes['descripcionsolicitud'] = $request['descripcionsolicitud'.$i];
-            $contadorAnexos += $request['cantidadAnexosSolicitud'.$i];
-            $solicitud =SolicitudDatosSolicitud::create($nuevasSolicitudes);
-            for ($j=$iterador; $j < $contadorAnexos; $j++) { 
+        $iterador = 0;
+        for ($i = 0; $i < $cantidadSolicitudes; $i++) {
+            $nuevasSolicitudes['tiposolicitud'] = $request['tiposolicitud' . $i];
+            $nuevasSolicitudes['datossolicitud'] = $request['datossolicitud' . $i];
+            $nuevasSolicitudes['descripcionsolicitud'] = $request['descripcionsolicitud' . $i];
+            $contadorAnexos += $request['cantidadAnexosSolicitud' . $i];
+            $solicitud = SolicitudDatosSolicitud::create($nuevasSolicitudes);
+            for ($j = $iterador; $j < $contadorAnexos; $j++) {
                 if ($request->hasFile("documentos$j")) {
                     $ruta = Config::get('constantes.folder_doc_solicituddatos');
                     $ruta = trim($ruta);
@@ -407,9 +412,9 @@ class ClienteController extends Controller
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                     $nuevo_documento['solicituddatossolicitud_id'] = $solicitud->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
-                    if($request["descripcion$j"]){
+                    if ($request["descripcion$j"]) {
                         $nuevo_documento['descripcion'] = $request["descripcion$j"];
-                    }else {
+                    } else {
                         $nuevo_documento['descripcion'] = '';
                     }
                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
@@ -419,10 +424,9 @@ class ClienteController extends Controller
                     SolicitudDatosAnexo::create($nuevo_documento);
                 }
             }
-            $iterador += $request['cantidadAnexosSolicitud'.$i];
+            $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
         return redirect('/usuario/generar')->with('id_radicado', "$solicitud->id");
-        
     }
 
     public function generarSolicitudDocumentos()
@@ -447,14 +451,14 @@ class ClienteController extends Controller
         $cantidadPeticiones = $request['cantidadPeticiones'];
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
-        $iterador=0;
-        for ($i=0; $i < $cantidadPeticiones; $i++) { 
-            $nuevasPeticiones['peticion'] = $request['peticion'.$i];
-            $nuevasPeticiones['indentifiquedocinfo'] = $request['indentifiquedocinfo'.$i];
-            $nuevasPeticiones['justificacion'] = $request['justificacion'.$i];
-            $contadorAnexos += $request['cantidadAnexosSolicitud'.$i];
-            $peticion =SolicitudDocInfoPeticion::create($nuevasPeticiones);
-            for ($j=$iterador; $j < $contadorAnexos; $j++) { 
+        $iterador = 0;
+        for ($i = 0; $i < $cantidadPeticiones; $i++) {
+            $nuevasPeticiones['peticion'] = $request['peticion' . $i];
+            $nuevasPeticiones['indentifiquedocinfo'] = $request['indentifiquedocinfo' . $i];
+            $nuevasPeticiones['justificacion'] = $request['justificacion' . $i];
+            $contadorAnexos += $request['cantidadAnexosSolicitud' . $i];
+            $peticion = SolicitudDocInfoPeticion::create($nuevasPeticiones);
+            for ($j = $iterador; $j < $contadorAnexos; $j++) {
                 if ($request->hasFile("documentos$j")) {
                     $ruta = Config::get('constantes.folder_doc_solicituddocinfo');
                     $ruta = trim($ruta);
@@ -466,9 +470,9 @@ class ClienteController extends Controller
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                     $nuevo_documento['solicituddocinfopeticion_id'] = $peticion->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
-                    if($request["descripcion$j"]){
+                    if ($request["descripcion$j"]) {
                         $nuevo_documento['descripcion'] = $request["descripcion$j"];
-                    }else {
+                    } else {
                         $nuevo_documento['descripcion'] = '';
                     }
                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
@@ -478,7 +482,7 @@ class ClienteController extends Controller
                     SolicitudDocInfoAnexo::create($nuevo_documento);
                 }
             }
-            $iterador += $request['cantidadAnexosSolicitud'.$i];
+            $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
         return redirect('/usuario/generar')->with('id_radicado', "$solicitud->id");
     }
@@ -522,9 +526,9 @@ class ClienteController extends Controller
                 $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                 $nuevo_documento['sugerencia_id'] = $sugerencia->id;
                 $nuevo_documento['titulo'] = $request["titulo$i"];
-                if($request["descripcion$i"]){
+                if ($request["descripcion$i"]) {
                     $nuevo_documento['descripcion'] = $request["descripcion$i"];
-                }else {
+                } else {
                     $nuevo_documento['descripcion'] = '';
                 }
                 $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();

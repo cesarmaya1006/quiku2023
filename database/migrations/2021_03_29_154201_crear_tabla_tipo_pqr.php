@@ -18,6 +18,8 @@ class CrearTablaTipoPqr extends Migration
             $table->string('tipo', 255);
             $table->longText('descripcion');
             $table->string('url', 255);
+            $table->bigInteger('tiempos')->default(0);
+            $table->string('sigla', 3);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

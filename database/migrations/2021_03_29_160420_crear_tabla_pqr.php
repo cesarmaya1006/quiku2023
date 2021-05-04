@@ -15,6 +15,7 @@ class CrearTablaPqr extends Migration
     {
         Schema::create('pqr', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
+            $table->text('radicado', 255)->nullable();
             $table->unsignedBigInteger('persona_id')->nullable();
             $table->foreign('persona_id', 'fk_persona_pqr')->references('id')->on('personas')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empresa_id')->nullable();

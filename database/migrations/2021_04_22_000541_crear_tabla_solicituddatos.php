@@ -15,6 +15,9 @@ class CrearTablaSolicituddatos extends Migration
     {
         Schema::create('solicituddatos', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
+            $table->text('radicado', 255)->nullable();
+            $table->unsignedBigInteger('tipo_pqr_id')->default(5);
+            $table->foreign('tipo_pqr_id', 'fk_tipoPQR_solicituddatos')->references('id')->on('tipo_pqr')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('persona_id')->nullable();
             $table->foreign('persona_id', 'fk_persona_solicituddatos')->references('id')->on('personas')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empresa_id')->nullable();

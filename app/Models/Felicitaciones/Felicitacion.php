@@ -36,4 +36,9 @@ class Felicitacion extends Model
     {
         return $this->hasMany(FelicitacionHecho::class, 'felicitacion_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function tipoPqr()
+    {
+        return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
+    }
 }

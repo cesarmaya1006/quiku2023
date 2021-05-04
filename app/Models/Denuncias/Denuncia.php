@@ -42,4 +42,9 @@ class Denuncia extends Model
     {
         return $this->hasMany(DenunciaAnexo::class, 'denuncia_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function tipoPqr()
+    {
+        return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
+    }
 }

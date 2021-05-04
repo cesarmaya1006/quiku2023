@@ -40,4 +40,9 @@ class Sugerencia extends Model
     {
         return $this->hasMany(SugerenciaDoc::class, 'sugerencia_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function tipoPqr()
+    {
+        return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
+    }
 }
