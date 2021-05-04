@@ -240,6 +240,12 @@ class ClienteController extends Controller
         $nuevaConcepto['fecha_generacion'] = date("Y-m-d");
         $nuevaConcepto['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $concepto = ConceptoUOpinion::create($nuevaConcepto);
+
+        $tipo_pqr = tipoPQR::findOrFail(4);
+        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $concepto->id;
+        ConceptoUOpinion::findOrFail($concepto->id)->update($pqr_rad);
+        $concepto = ConceptoUOpinion::findOrFail($concepto->id);
+
         $nuevasConsultas['conceptouopinion_id'] = $concepto->id;
         $cantidadConsultas = $request['cantidadConsultas'];
         $documentos = $request->allFiles();
@@ -308,6 +314,12 @@ class ClienteController extends Controller
         $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d");
         $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $felicitacion = Felicitacion::create($nuevaFelicitacion);
+
+        $tipo_pqr = tipoPQR::findOrFail(7);
+        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $felicitacion->id;
+        Felicitacion::findOrFail($felicitacion->id)->update($pqr_rad);
+        $felicitacion = Felicitacion::findOrFail($felicitacion->id);
+
         $nuevosHechos['felicitacion_id'] = $felicitacion->id;
         $cantidadHechos = $request['cantidadHechos'];
         for ($i = 0; $i < $cantidadHechos; $i++) {
@@ -336,6 +348,12 @@ class ClienteController extends Controller
         $nuevaDenuncia['fecha_generacion'] = date("Y-m-d");
         $nuevaDenuncia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $denuncia = Denuncia::create($nuevaDenuncia);
+
+        $tipo_pqr = tipoPQR::findOrFail(6);
+        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $denuncia->id;
+        Denuncia::findOrFail($denuncia->id)->update($pqr_rad);
+        $denuncia = Denuncia::findOrFail($denuncia->id);
+
         $nuevosHechos['denuncia_id'] = $denuncia->id;
         $cantidadHechos = $request['cantidadHechosDenuncia'];
         for ($i = 0; $i < $cantidadHechos; $i++) {
@@ -389,6 +407,12 @@ class ClienteController extends Controller
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $solicitud = SolicitudDatos::create($nuevaSolicitud);
+
+        $tipo_pqr = tipoPQR::findOrFail(5);
+        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitud->id;
+        SolicitudDatos::findOrFail($solicitud->id)->update($pqr_rad);
+        $solicitud = SolicitudDatos::findOrFail($solicitud->id);
+
         $nuevasSolicitudes['solicituddatos_id'] = $solicitud->id;
         $cantidadSolicitudes = $request['cantidadSolicitudes'];
         $documentos = $request->allFiles();
@@ -447,6 +471,12 @@ class ClienteController extends Controller
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $solicitud = SolicitudDocInfo::create($nuevaSolicitud);
+
+        $tipo_pqr = tipoPQR::findOrFail(8);
+        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitud->id;
+        SolicitudDocInfo::findOrFail($solicitud->id)->update($pqr_rad);
+        $solicitud = SolicitudDocInfo::findOrFail($solicitud->id);
+
         $nuevasPeticiones['solicituddocinfo_id'] = $solicitud->id;
         $cantidadPeticiones = $request['cantidadPeticiones'];
         $documentos = $request->allFiles();
@@ -506,6 +536,12 @@ class ClienteController extends Controller
         $nuevaSugerencia['fecha_generacion'] = date("Y-m-d");
         $nuevaSugerencia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $sugerencia = Sugerencia::create($nuevaSugerencia);
+
+        $tipo_pqr = tipoPQR::findOrFail(9);
+        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $sugerencia->id;
+        Sugerencia::findOrFail($sugerencia->id)->update($pqr_rad);
+        $sugerencia = Sugerencia::findOrFail($sugerencia->id);
+
         $nuevosHechos['sugerencia_id'] = $sugerencia->id;
         $cantidadHechos = $request['cantidadHechos'];
         for ($i = 0; $i < $cantidadHechos; $i++) {
