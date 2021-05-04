@@ -188,4 +188,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('ayuda', [ClienteController::class, 'ayuda'])->name('usuario_ayuda');
     });
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //Consultar ayuda
+    Route::get('download/{id_tipo_pqr}/{id_pqr}', [ClienteController::class, 'download'])->name('download');
 });

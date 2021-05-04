@@ -40,6 +40,7 @@ use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
 use App\Models\PQR\Hecho;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ClienteController extends Controller
 {
@@ -659,5 +660,86 @@ class ClienteController extends Controller
         $usuarioActualizar['discapacidad'] = $discapacidad;
         Persona::findOrFail(session('id_usuario'))->update($usuarioActualizar);
         return redirect('admin/index')->with('mensaje', 'Se actualizaron los datos de manera exitosa en la plataforma');
+    }
+
+    public function download($id_tipo_pqr, $id_pqr)
+    {
+        $tipo_pqr = tipoPQR::findOrFail($id_tipo_pqr);
+        switch ($tipo_pqr->id) {
+            case 1:
+                $pqr = PQR::findOrFail($id_pqr);
+                break;
+
+            case 2:
+                $pqr = PQR::findOrFail($id_pqr);
+                break;
+
+            case 3:
+                $pqr = PQR::findOrFail($id_pqr);
+                break;
+
+            case 4:
+                $pqr = ConceptoUOpinion::findOrFail($id_pqr);
+                break;
+
+            case 5:
+                $pqr = SolicitudDatos::findOrFail($id_pqr);
+                break;
+
+            case 6:
+                $pqr = Denuncia::findOrFail($id_pqr);
+                break;
+
+            case 7:
+                $pqr = Felicitacion::findOrFail($id_pqr);
+                break;
+
+            case 8:
+                $pqr = SolicitudDocInfo::findOrFail($id_pqr);
+                break;
+
+            default:
+                $pqr = Sugerencia::findOrFail($id_pqr);
+                break;
+        }
+        $contenido = '';
+        $num = 0;
+        foreach ($pqr->peticiones as $peticion) {
+            $num++;
+            $contenido .= 'Peticion ' . $num . "\r\n";
+            $contenido .= "\r\n";
+            $contenido .= 'Motivo: ' . $peticion->motivo->sub_motivo . "\r\n";
+            $contenido .= "\r\n";
+            $contenido .= 'Justificación: ' . $peticion->justificacion . "\r\n";
+        }
+        if ($pqr->persona_id != null) {
+            $data = [
+                'nombre' => $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2,
+                'correo' => $pqr->persona->email,
+                'telefono' => $pqr->persona->telefono_celu,
+                'tipo_doc' => $pqr->persona->tipos_docu->tipo_id,
+                'identificacion' => $pqr->persona->identificacion,
+                'fecha' => $pqr->created_at,
+                'num_radicado' => $pqr->radicado,
+                'contenido' => $contenido,
+            ];
+        } else {
+            $data = [
+                'nombre' => $pqr->empresa->razon_social,
+                'correo' => $pqr->empresa->email,
+                'telefono' => $pqr->empresa->telefono_celu,
+                'tipo_doc' => $pqr->empresa->tipos_docu->tipo_id,
+                'identificacion' => $pqr->empresa->identificacion,
+                'fecha' => $pqr->created_at,
+                'num_radicado' => $pqr->radicado,
+                'contenido' => $contenido,
+            ];
+        }
+
+
+
+        $pdf = PDF::loadView('intranet.usuarios.formato_pdf', $data);
+
+        return $pdf->download('Registro de PQR.pdf');
     }
 }
