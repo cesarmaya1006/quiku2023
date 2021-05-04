@@ -1,109 +1,123 @@
 window.addEventListener('DOMContentLoaded', function () {
     // Incio Validacion envio de formulario
-    let btnSubmit = document.querySelector('#fromSugerencia')
-    btnSubmit.addEventListener('submit', function(e){
-        e.preventDefault()
-        if(!document.querySelector('#sugerencia').value){
-            alert('Sugerencia');
-            return
-        }
-        document.querySelector('#cantidadHechos').value = document.querySelectorAll('.sugerencia .sugerenciaHecho').length
-        document.querySelector('#cantidadAnexosHechos').value = document.querySelectorAll('.sugerencia .anexoHecho').length
-        this.submit();
-    })
-    // Fin Validacion envio de formulario
-    
-    // Inicio Función para generar varios Hechos con validación.
-    if(document.querySelectorAll('.sugerencia .sugerenciaHecho')){
-        ajustarName(document.querySelectorAll('.sugerenciaHecho'))
-        let btncrearHecho = document.querySelector('#crearHecho')
-        let btnEliminarHecho = document.querySelector('.eliminarHecho')
-        btnEliminarHecho.addEventListener('click', agregarEliminar)
-        btncrearHecho.addEventListener('click', function (e) {
+    if (document.querySelectorAll('#fromSugerencia')) {
+        let btnSubmit = document.querySelector('#fromSugerencia')
+        btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
-            crearNuevoHecho()
-        })
 
-        function crearNuevoHecho() {
-            let nuevoHecho = document.querySelectorAll('.sugerenciaHecho')[0].cloneNode(true)
-            document.querySelector('#hechos').appendChild(nuevoHecho)
-            ajustarName(document.querySelectorAll('.sugerenciaHecho'))
-            document.querySelectorAll('.eliminarHecho').forEach(item => item.addEventListener('click', agregarEliminar))
+            if (!document.querySelector('#sugerencia').value) {
+                swal({
+                    title: "Alerta",
+                    text: `Debe diligencias el campo Sugerencia`,
+                    icon: "error",
+                    button: "Continuar",
+                });
+                return
+            }
+            document.querySelector('#cantidadHechos').value = document.querySelectorAll('.hechoSugerencia').length
+            document.querySelector('#cantidadAnexos').value = document.querySelectorAll('.anexosugerencia').length
+            this.submit();
+        })
+        // Fin Validacion envio de formulario
+        // ---------------------------------------------------------------------------------------------------------
+        // Inicio Función para generar varios anexos en una consulta con validación.
+        ajustarNameAnexo(document.querySelectorAll('.anexosugerencia'))
+        let btncrearAnexo = document.querySelectorAll('.crearAnexo')
+        btncrearAnexo.forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
+        let btnEliminarAnexo = document.querySelector('.eliminaranexoSugerencia')
+        btnEliminarAnexo.addEventListener('click', agregarEliminarAnexo)
+
+        function crearNuevoAnexo(e) {
+            e.preventDefault()
+            let consulta = e.target.parentNode.parentNode
+            let nuevoAnexo = consulta.querySelectorAll('.anexosugerencia')[0].cloneNode(true)
+            nuevoAnexo.querySelector('.titulo-anexoSugerencia input').value = ''
+            nuevoAnexo.querySelector('.descripcion-anexoSugerencia input').value = ''
+            nuevoAnexo.querySelector('.doc-anexoSugerencia input').value = ''
+            consulta.querySelector('#anexosSugerencia').appendChild(nuevoAnexo)
+            ajustarNameAnexo(document.querySelectorAll('.anexosugerencia'))
+            document.querySelectorAll('.eliminaranexoSugerencia').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
         }
-    
-        function ajustarName(sugerenciaHechos){
-            for (let i = 0; i < sugerenciaHechos.length; i++) {
-                const hecho = sugerenciaHechos[i];
+
+        function ajustarNameAnexo(anexosSugerencia) {
+            for (let i = 0; i < anexosSugerencia.length; i++) {
+                const anexosugerencia = anexosSugerencia[i];
+                anexosugerencia.id = `anexosSugerencia${i}`
+                anexosugerencia.querySelector('.titulo-anexoSugerencia input').id = `titulo${i}`
+                anexosugerencia.querySelector('.titulo-anexoSugerencia input').name = `titulo${i}`
+                anexosugerencia.querySelector('.descripcion-anexoSugerencia input').id = `descripcion${i}`
+                anexosugerencia.querySelector('.descripcion-anexoSugerencia input').name = `descripcion${i}`
+                anexosugerencia.querySelector('.doc-anexoSugerencia input').id = `documentos${i}`
+                anexosugerencia.querySelector('.doc-anexoSugerencia input').name = `documentos${i}`
+
+            }
+        }
+
+        function agregarEliminarAnexo(e) {
+            e.preventDefault()
+            let consulta = e.target
+            if (consulta.tagName === 'I') {
+                consulta = consulta.parentNode.parentNode.parentNode.parentNode
+            } else {
+                consulta = consulta.parentNode.parentNode.parentNode
+            }
+            if (consulta.querySelectorAll('.anexosugerencia').length >= 2) {
+                let idAnexo = e.target
+                if (idAnexo.tagName === 'I') {
+                    idAnexo = idAnexo.parentNode.parentNode.parentNode
+                } else {
+                    idAnexo = idAnexo.parentNode.parentNode
+                }
+                idAnexo.remove()
+                ajustarNameAnexo(document.querySelectorAll('.anexosugerencia'))
+            }
+        }
+        // Fin Función para generar varios anexos en una consulta con validación.
+        // --------------------------------------------------------------------------------------------------------------------
+        // Inicio Función para generar varios Hechos con validación.
+        ajustarNameHecho(document.querySelectorAll('.hechoSugerencia'))
+        let btncrearHecho = document.querySelector('.crearHecho')
+        btncrearHecho.addEventListener('click', crearNuevoHecho)
+        let btnEliminarHecho = document.querySelector('.eliminarHecho')
+        btnEliminarHecho.addEventListener('click', agregarEliminarHecho)
+
+        function crearNuevoHecho(e) {
+            e.preventDefault()
+            let consulta = e.target.parentNode.parentNode
+            nuevoHecho = consulta.querySelectorAll('.hechoSugerencia')[0].cloneNode(true)
+            nuevoHecho.querySelector('.hechoSugerencia input').value = ''
+            consulta.querySelector('#hechos').appendChild(nuevoHecho)
+            ajustarNameHecho(document.querySelectorAll('.hechoSugerencia'))
+            document.querySelectorAll('.eliminarHecho').forEach(item => item.addEventListener('click', agregarEliminarHecho))
+        }
+
+        function ajustarNameHecho(consultaHechos) {
+            for (let i = 0; i < consultaHechos.length; i++) {
+                const hecho = consultaHechos[i];
                 hecho.id = `hecho${i}`
-                hecho.querySelector('.title-sugerencias label').setAttribute('for',`hecho${i}`) 
                 hecho.querySelector('input').id = `hecho${i}`
                 hecho.querySelector('input').name = `hecho${i}`
-                hecho.querySelector('.title-sugerencias label').innerHTML= `Hecho #${i + 1}`
             }
         }
-
-        function agregarEliminar(e) {
+        function agregarEliminarHecho(e) {
             e.preventDefault()
-            if(document.querySelectorAll('.sugerenciaHecho').length >= 2){
+            let consulta = e.target
+            if (consulta.tagName === 'I') {
+                consulta = consulta.parentNode.parentNode.parentNode.parentNode
+            } else {
+                consulta = consulta.parentNode.parentNode.parentNode
+            }
+            if (consulta.querySelectorAll('.hechoSugerencia').length >= 2) {
                 let idHecho = e.target
                 if (idHecho.tagName === 'I') {
                     idHecho = idHecho.parentNode.parentNode.parentNode
-                }else {
+                } else {
                     idHecho = idHecho.parentNode.parentNode
                 }
                 idHecho.remove()
-                ajustarName(document.querySelectorAll('.sugerenciaHecho'))
+                ajustarNameHecho(document.querySelectorAll('.hechoSugerencia'))
             }
         }
+        // Fin Función para generar varios Hechos con validación.
     }
-    // Fin Función para generar varios Hechos con validación.
-
-    // Inicio Función para generar varios Anexos con validación.
-    if(document.querySelectorAll('.sugerencia .anexoHecho')){
-        ajustarName(document.querySelectorAll('.anexoHecho'))
-        let btncrearAnexo = document.querySelector('#crearAnexo')
-        let btnEliminarAnexoHecho = document.querySelector('.eliminaranexoHecho')
-        btnEliminarAnexoHecho.addEventListener('click', agregarEliminar)
-        btncrearAnexo.addEventListener('click', function (e) {
-            e.preventDefault()
-            crearNuevoAnexoHecho()
-        })
-
-        function crearNuevoAnexoHecho() {
-            let nuevoAnexoHecho = document.querySelectorAll('.anexoHecho')[0].cloneNode(true)
-            document.querySelector('#anexosHechos').appendChild(nuevoAnexoHecho)
-            ajustarName(document.querySelectorAll('.anexoHecho'))
-            document.querySelectorAll('.eliminaranexoHecho').forEach(item => item.addEventListener('click', agregarEliminar))
-        }
-    
-        function ajustarName(anexosHechos){
-            for (let i = 0; i < anexosHechos.length; i++) {
-                const anexohecho = anexosHechos[i];
-                anexohecho.id = `anexoHecho${i}`
-                anexohecho.querySelector('.titulo-anexoSugerencias label').setAttribute('for',`titulo${i}`) 
-                anexohecho.querySelector('.titulo-anexoSugerencias input').id = `titulo${i}`
-                anexohecho.querySelector('.titulo-anexoSugerencias input').name = `titulo${i}`
-                anexohecho.querySelector('.descripcion-anexoSugerencias input').id = `descripcion${i}`
-                anexohecho.querySelector('.descripcion-anexoSugerencias input').name = `descripcion${i}`
-                anexohecho.querySelector('.doc-anexoSugerencias input').id = `documentos${i}`
-                anexohecho.querySelector('.doc-anexoSugerencias input').name = `documentos${i}`
-                anexohecho.querySelector('.titulo-anexo h6').innerHTML= `Anexo #${i + 1}`
-            }
-        }
-
-        function agregarEliminar(e) {
-            e.preventDefault()
-            if(document.querySelectorAll('.anexoHecho').length >= 2){
-                let idHecho = e.target
-                if (idHecho.tagName === 'I') {
-                    idHecho = idHecho.parentNode.parentNode.parentNode
-                }else {
-                    idHecho = idHecho.parentNode.parentNode
-                }
-                idHecho.remove()
-                ajustarName(document.querySelectorAll('.anexoHecho'))
-            }
-        }
-    }
-    // Fin Función para generar varios Anexos con validación.
 })

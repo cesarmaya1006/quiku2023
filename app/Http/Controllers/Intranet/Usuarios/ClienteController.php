@@ -134,7 +134,6 @@ class ClienteController extends Controller
 
     public function generarPQR_guardar(Request $request)
     {
-        // dd($request->all());
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaPQR['persona_id'] = $usuario->id;
@@ -193,7 +192,11 @@ class ClienteController extends Controller
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                     $nuevo_documento['peticion_id'] = $peticion->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
-                    $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    if($request["descripcion$j"]){
+                        $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    }else {
+                        $nuevo_documento['descripcion'] = '';
+                    }
                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
                     $nuevo_documento['peso'] = $tamaño;
                     $nuevo_documento['url'] = $nombre_doc;
@@ -209,8 +212,6 @@ class ClienteController extends Controller
             $iteradorAnexos += $request['cantidadAnexosMotivo'.$i];
             $iteradorHechos += $request['cantidadHechosMotivo'.$i];
         }
-        // $tipoPQR = tipoPQR::all();
-        // return view('intranet.usuarios.crear', compact('tipoPQR'));
         $idPQR =  $request['pqr_id'];
         return redirect('/usuario/generar')->with('id_radicado', "$idPQR");
     }
@@ -258,7 +259,11 @@ class ClienteController extends Controller
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                     $nuevo_documento['conceptouopinionconsultas_id'] = $consulta->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
-                    $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    if($request["descripcion$j"]){
+                        $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    }else {
+                        $nuevo_documento['descripcion'] = '';
+                    }
                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
                     $nuevo_documento['peso'] = $tamaño;
                     $nuevo_documento['url'] = $nombre_doc;
@@ -304,7 +309,7 @@ class ClienteController extends Controller
             $nuevosHechos['hecho'] = $request['hecho' . $i];
             FelicitacionHecho::create($nuevosHechos);
         }
-        return redirect('/usuario/generarFelicitacion');
+        return redirect('/usuario/generar')->with('id_radicado', "$felicitacion->id");
     }
 
     public function gererarDenuncia()
@@ -346,7 +351,11 @@ class ClienteController extends Controller
                 $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                 $nuevo_documento['denuncia_id'] = $denuncia->id;
                 $nuevo_documento['titulo'] = $request["titulo$i"];
-                $nuevo_documento['descripcion'] = $request["descripcion$i"];
+                if($request["descripcion$i"]){
+                    $nuevo_documento['descripcion'] = $request["descripcion$i"];
+                }else {
+                    $nuevo_documento['descripcion'] = '';
+                }
                 $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
                 $nuevo_documento['peso'] = $tamaño;
                 $nuevo_documento['url'] = $nombre_doc;
@@ -398,7 +407,11 @@ class ClienteController extends Controller
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                     $nuevo_documento['solicituddatossolicitud_id'] = $solicitud->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
-                    $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    if($request["descripcion$j"]){
+                        $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    }else {
+                        $nuevo_documento['descripcion'] = '';
+                    }
                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
                     $nuevo_documento['peso'] = $tamaño;
                     $nuevo_documento['url'] = $nombre_doc;
@@ -453,7 +466,11 @@ class ClienteController extends Controller
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                     $nuevo_documento['solicituddocinfopeticion_id'] = $peticion->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
-                    $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    if($request["descripcion$j"]){
+                        $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    }else {
+                        $nuevo_documento['descripcion'] = '';
+                    }
                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
                     $nuevo_documento['peso'] = $tamaño;
                     $nuevo_documento['url'] = $nombre_doc;
@@ -491,9 +508,9 @@ class ClienteController extends Controller
             $nuevosHechos['hecho'] = $request['hecho' . $i];
             SugerenciaHecho::create($nuevosHechos);
         }
-        $cantidadAnexosHechos = $request['cantidadAnexosHechos'];
+        $cantidadAnexos = $request['cantidadAnexos'];
         $documentos = $request->allFiles();
-        for ($i = 0; $i < $cantidadAnexosHechos; $i++) {
+        for ($i = 0; $i < $cantidadAnexos; $i++) {
             if ($request->hasFile("documentos$i")) {
                 $ruta = Config::get('constantes.folder_doc_sugerencias');
                 $ruta = trim($ruta);
@@ -505,7 +522,11 @@ class ClienteController extends Controller
                 $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                 $nuevo_documento['sugerencia_id'] = $sugerencia->id;
                 $nuevo_documento['titulo'] = $request["titulo$i"];
-                $nuevo_documento['descripcion'] = $request["descripcion$i"];
+                if($request["descripcion$i"]){
+                    $nuevo_documento['descripcion'] = $request["descripcion$i"];
+                }else {
+                    $nuevo_documento['descripcion'] = '';
+                }
                 $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
                 $nuevo_documento['peso'] = $tamaño;
                 $nuevo_documento['url'] = $nombre_doc;
@@ -513,12 +534,11 @@ class ClienteController extends Controller
                 SugerenciaDoc::create($nuevo_documento);
             }
         }
-        return redirect('/usuario/generarSugerencia');
+        return redirect('/usuario/generar')->with('id_radicado', "$sugerencia->id");
     }
 
     public function actualizar_datos()
     {
-
         $tipos_docu = Tipo_Docu::get();
         $paises = Pais::get();
         $departamentos = Departamento::get();

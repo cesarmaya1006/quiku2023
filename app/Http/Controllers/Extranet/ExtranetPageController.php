@@ -91,7 +91,7 @@ class ExtranetPageController extends Controller
         //$para = 'cesarmaya99@hotmail.com';
         //$titulo = 'Recuperar contraseña plataforma Quiku';
         //mail($para, $titulo, $mensaje, $headers);
-        Mail::to('cesarmaya99@hotmail.com')->send(new RecuperarContraseña($usuario->usuario, $password));
+        Mail::to('ruizwilson01@gmail.com')->send(new RecuperarContraseña($usuario->usuario, $password));
         return redirect('/index')->with('mensaje', 'Verifique su correo e ingrese a la plataforma nuevamente');
     }
 
@@ -138,7 +138,7 @@ class ExtranetPageController extends Controller
         //mail($para, $titulo, $mensaje, $headers);
         // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
         // Desarrollo
-        Mail::to('cesarmaya99@hotmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
+        Mail::to('ruizwilson01@gmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
         return redirect('/registro_conf');
     }
     public function registro_conf()
