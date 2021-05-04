@@ -383,7 +383,7 @@ class ExtranetPageController extends Controller
             return Sede::where('municipio_id', $id)->orderBy('nombre')->get();
         }
     }
-    
+
     public function mensajeRegistroinicial($id, $cedula, $tipopersona)
     {
         $mensaje = '<html lang="es">' . "\r\n";
