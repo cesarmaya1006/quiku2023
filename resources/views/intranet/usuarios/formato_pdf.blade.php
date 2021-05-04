@@ -15,11 +15,11 @@
             <div>Datos peticionarios</div>
             <div>
                 <ul>
-                    <li>Nombre:</li>
-                    <li>Correo:</li>
-                    <li>Tel&eacute;fono</li>
-                    <li>Tipo de Documento</li>
-                    <li>N&uacute;mero de Documento</li>
+                    <li>Nombre: {{ $nombre }}</li>
+                    <li>Correo: {{ $correo }}</li>
+                    <li>Tel&eacute;fono: {{ $telefono }}</li>
+                    <li>Tipo de Documento: {{ $tipo_doc }}</li>
+                    <li>N&uacute;mero de Documento: {{ $identificacion }}</li>
                 </ul>
             </div>
         </div>
@@ -28,16 +28,16 @@
             <div>Datos del formulario</div>
             <div>
                 <ul>
-                    <li>Fecha</li>
-                    <li>N&uacute;mero de radicado</li>
-                    <li>Contenido</li>
+                    <li>Fecha: {{ $fecha }}</li>
+                    <li>N&uacute;mero de radicado: {{ $num_radicado }}</li>
+                    <li>Contenido: {{ $contenido }}</li>
                 </ul>
             </div>
         </div>
         <hr>
         <div>
             <div>Texto de seguimiento: Para cualquier observación, seguimiento o tramite sobre su PQR utilice el número
-                de radicado 321654987</div>
+                de radicado {{ $num_radicado }}</div>
         </div>
     </div>
 </body>
