@@ -67,7 +67,7 @@ Sistema de informaci&oacute;n
                                             class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPeticion"><i
                                                 class="fas fa-minus-circle"></i></button>
                                     </div>
-                                    <select name="tiposolicitud" id="tiposolicitud" class="custom-select rounded-0">
+                                    <select name="tiposolicitud" id="tiposolicitud" class="custom-select rounded-0 tiposolicitud">
                                         <option value="">--Seleccione--</option> 
                                         <option value="Actualizar">Actualizar</option>
                                         <option value="Suprimir parcialmente mis datos">Suprimir parcialmente mis datos</option>
@@ -76,11 +76,11 @@ Sistema de informaci&oacute;n
                                 </div>
                                 <div class="form-group col-12 indentifiquedocinfo-solicitud">
                                     <label for="">Datos personales objeto de la solicitud</label>
-                                    <input class="form-control" type="text" name="datossolicitud" id="datossolicitud">
+                                    <input class="form-control datossolicitud" type="text" name="datossolicitud" id="datossolicitud">
                                 </div>
                                 <div class="form-group col-12 justificacion-solicitud">
                                     <label for="">Descripción de la solicitud</label>
-                                    <input class="form-control" type="text" name="descripcionsolicitud" id="descripcionsolicitud">
+                                    <input class="form-control descripcionsolicitud" type="text" name="descripcionsolicitud" id="descripcionsolicitud">
                                 </div>
                                 <div class="form-group col-12 mt-4">
                                     <h6>Anexo o prueba</h6>

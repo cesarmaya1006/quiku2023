@@ -13,8 +13,8 @@ class ConceptoUOpinionConsultaHecho extends Model
     protected $table = 'conceptouopinionconsultashechos';
     protected $guarded = [];
     
-    public function denuncia()
+    public function consulta()
     {
-        return $this->belongsTo(ConceptoUOpinionConsulta::class, 'conceptouopinionconsultashechos_id', 'id');
+        return $this->belongsTo(ConceptoUOpinionConsulta::class, 'conceptouopinionconsultas_id', 'id');
     }
 }

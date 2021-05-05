@@ -21,6 +21,22 @@ window.addEventListener('DOMContentLoaded', function () {
                     }
                 })
             }
+            if(document.querySelectorAll('.hecho')){
+                let validacionConsultas = document.querySelectorAll('.hecho')
+                validacionConsultas.forEach(consulta =>{
+                    if (consulta.value == '') {
+                        swal({
+                            title: "Alerta",
+                            text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
+                            icon: "error",
+                            button: "Continuar",
+                          });
+                        contadorValidacion = 1
+                    }else {
+                        contadorValidacion = 0
+                    }
+                })
+            }
             if (contadorValidacion == 0) {
                 let anexos = document.querySelectorAll('input[type="file"]')
                 anexos.forEach(anexo =>{

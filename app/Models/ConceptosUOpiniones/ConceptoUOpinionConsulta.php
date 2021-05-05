@@ -23,7 +23,7 @@ class ConceptoUOpinionConsulta extends Model
     //----------------------------------------------------------------------------------
     public function hechos()
     {
-        return $this->hasMany(ConceptoUOpinionConsultaHecho::class, 'conceptouopinionconsultashechos_id', 'id');
+        return $this->hasMany(ConceptoUOpinionConsultaHecho::class, 'conceptouopinionconsultas_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function empleado()
@@ -34,6 +34,6 @@ class ConceptoUOpinionConsulta extends Model
 
     public function documentos()
     {
-        return $this->hasMany(ConceptoUOpinionConsultaAnexo::class, 'conceptouopinionconsultasanexos_id', 'id');
+        return $this->hasMany(ConceptoUOpinionConsultaAnexo::class, 'conceptouopinionconsultas_id', 'id');
     }
 }

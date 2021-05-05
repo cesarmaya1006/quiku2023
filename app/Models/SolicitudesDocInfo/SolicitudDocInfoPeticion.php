@@ -15,7 +15,7 @@ class SolicitudDocInfoPeticion extends Model
     protected $table = 'solicituddocinfopeticiones';
     protected $guarded = [];
 
-    public function solicitud()
+    public function peticion()
     {
         return $this->belongsTo(SolicitudDocInfo::class, 'solicituddocinfo_id', 'id');
     }

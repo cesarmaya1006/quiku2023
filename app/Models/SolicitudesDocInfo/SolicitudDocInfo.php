@@ -30,7 +30,7 @@ class SolicitudDocInfo extends Model
     //----------------------------------------------------------------------------------
     public function peticiones()
     {
-        return $this->hasMany(SolicitudDocInfoPeticion::class, 'solicituddocinfopeticiones_id', 'id');
+        return $this->hasMany(SolicitudDocInfoPeticion::class, 'solicituddocinfo_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function tipoPqr()

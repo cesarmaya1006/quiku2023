@@ -29,7 +29,7 @@ class ConceptoUOpinion extends Model
     //----------------------------------------------------------------------------------
     public function conceptos()
     {
-        return $this->hasMany(ConceptoUOpinionConsulta::class, 'conceptouopinionconsultas_id', 'id');
+        return $this->hasMany(ConceptoUOpinionConsulta::class, 'conceptouopinion_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function tipoPqr()
