@@ -7,7 +7,11 @@ use App\Http\Requests\ValidarPassword;
 use App\Models\Admin\Usuario;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\Consultas\Consulta;
+use App\Models\Denuncias\Denuncia;
+use App\Models\Felicitaciones\Felicitacion;
 use App\Models\PQR\PQR;
+use App\Models\SolicitudDatos\SolicitudDatos;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Http\Request;
 
@@ -34,15 +38,19 @@ class IntranetPageCotroller extends Controller
                 }
             }
         } elseif (session('rol_id') == 5) {
-            $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
-            $consultas = ConceptoUOpinion::where('empleado_id', session('id_usuario'))->get();
-            $sugerecias = Sugerencia::where('empleado_id', session('id_usuario'))->get();
+            $pqr_S = PQR::all();
+            $conceptos = ConceptoUOpinion::all();
+            $solicitudes_datos = SolicitudDatos::all();
+            $denuncias = Denuncia::all();
+            $felicitaciones = Felicitacion::all();
+            $solicitudes_doc = SolicitudDocInfo::all();
+            $sugerencias = Sugerencia::all();
         } elseif (session('rol_id') < 4) {
             $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
             $consultas = ConceptoUOpinion::where('empleado_id', session('id_usuario'))->get();
             $sugerecias = Sugerencia::where('empleado_id', session('id_usuario'))->get();
         }
-        return view('intranet.index.index', compact('pqr_S', 'consultas', 'sugerecias', 'usuario'));
+        return view('intranet.index.index', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias','usuario'));
     }
 
     public function restablecer_password(ValidarPassword $request)

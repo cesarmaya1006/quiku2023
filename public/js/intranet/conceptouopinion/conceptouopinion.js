@@ -9,13 +9,16 @@ window.addEventListener('DOMContentLoaded', function () {
                 let validacionConsultas = document.querySelectorAll('.titulo-consulta input')
                 validacionConsultas.forEach(consulta =>{
                     if (consulta.value == '') {
+                        console.log(consulta.value)
                         swal({
                             title: "Alerta",
                             text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
                             icon: "error",
                             button: "Continuar",
-                          });
+                        });
                         contadorValidacion = 1
+                        console.log(contadorValidacion)
+                        return
                     }else {
                         contadorValidacion = 0
                     }
