@@ -1,3 +1,14 @@
+<?php
+$prq_p_num = $pqr_S->where('tipo_pqr_id', 1)->count();
+$prq_q_num = $pqr_S->where('tipo_pqr_id', 2)->count();
+$prq_r_num = $pqr_S->where('tipo_pqr_id', 3)->count();
+$conceptos_num = $conceptos->count();
+$solicitudes_datos_num = $solicitudes_datos->count();
+$denuncias_num = $denuncias->count();
+$felicitacionesnum = $felicitaciones->count();
+$solicitudes_docnum = $solicitudes_doc->count();
+$sugerencias_num = $sugerencias->count();
+?>
 @extends("theme.back.plantilla")
 <!-- ************************************************************* -->
 <!-- Funciones php -->
@@ -37,6 +48,317 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
+    <script src="{{ asset('lte/plugins/chart.js/Chart.min.js') }}"></script>
+    @if ($prq_p_num > 0)
+        <script>
+            $(function() {
 
+                var dataTareas = {
+                    labels: [
+                        'Vigentes',
+                        'Por Vencer',
+                        'Vencidas',
+                    ],
+                    datasets: [{
+                        data: [ <?php echo $prq_num; ?> , 20, 15],
+                        backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
+                    }]
+                }
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = dataTareas;
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        </script>
+    @endif
+    @if ($prq_q_num > 0)
+        <script>
+            $(function() {
+
+                var dataTareas = {
+                    labels: [
+                        'Vigentes',
+                        'Por Vencer',
+                        'Vencidas',
+                    ],
+                    datasets: [{
+                        data: [ <?php echo $prq_q_num; ?> , 20, 15],
+                        backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
+                    }]
+                }
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = dataTareas;
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        </script>
+        @
+    @endif
+    @if ($prq_r_num > 0)
+        <script>
+            $(function() {
+
+                var dataTareas = {
+                    labels: [
+                        'Vigentes',
+                        'Por Vencer',
+                        'Vencidas',
+                    ],
+                    datasets: [{
+                        data: [ <?php echo $prq_r_num; ?> , 20, 15],
+                        backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
+                    }]
+                }
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = dataTareas;
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        </script>
+        @
+    @endif
+    @if ($conceptos_num > 0)
+        <script>
+            $(function() {
+
+                var dataTareas = {
+                    labels: [
+                        'Vigentes',
+                        'Por Vencer',
+                        'Vencidas',
+                    ],
+                    datasets: [{
+                        data: [ <?php echo $conceptos_num; ?> , 20, 15],
+                        backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
+                    }]
+                }
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = dataTareas;
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        </script>
+    @endif
+    @if ($denuncias_num > 0)
+        <script>
+            $(function() {
+
+                var dataTareas = {
+                    labels: [
+                        'Vigentes',
+                        'Por Vencer',
+                        'Vencidas',
+                    ],
+                    datasets: [{
+                        data: [ <?php echo $denuncias_num; ?> , 20, 15],
+                        backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
+                    }]
+                }
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = dataTareas;
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        </script>
+    @endif
+    @if ($felicitacionesnum > 0)
+        <script>
+            $(function() {
+
+                var dataTareas = {
+                    labels: [
+                        'Vigentes',
+                        'Por Vencer',
+                        'Vencidas',
+                    ],
+                    datasets: [{
+                        data: [ <?php echo $felicitacionesnum; ?> , 20,
+                            15
+                        ],
+                        backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
+                    }]
+                }
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = dataTareas;
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        </script>
+    @endif
+    @if ($solicitudes_docnum > 0)
+        <script>
+            $(function() {
+
+                var dataTareas = {
+                    labels: [
+                        'Vigentes',
+                        'Por Vencer',
+                        'Vencidas',
+                    ],
+                    datasets: [{
+                        data: [ <?php echo $solicitudes_docnum; ?> , 20,
+                            15
+                        ],
+                        backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
+                    }]
+                }
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = dataTareas;
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        </script>
+    @endif
+    @if ($sugerencias_num > 0)
+        <script>
+            $(function() {
+
+                var dataTareas = {
+                    labels: [
+                        'Vigentes',
+                        'Por Vencer',
+                        'Vencidas',
+                    ],
+                    datasets: [{
+                        data: [ <?php echo $sugerencias_num; ?> , 20,
+                            15],
+                        backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
+                    }]
+                }
+                //-------------
+                //- PIE CHART -
+                //-------------
+                // Get context with jQuery - using jQuery's .get() method.
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+                var pieData = dataTareas;
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                }
+                //Create pie or douhnut chart
+                // You can switch between pie and douhnut using the method below.
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                })
+
+
+            })
+
+        </script>
+    @endif
 @endsection
 <!-- ************************************************************* -->

@@ -55,7 +55,7 @@ class IntranetPageCotroller extends Controller
             $consultas = ConceptoUOpinion::where('empleado_id', session('id_usuario'))->get();
             $sugerencias = Sugerencia::where('empleado_id', session('id_usuario'))->get();
         }
-        return view('intranet.index.index', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias','usuario'));
+        return view('intranet.index.index', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario'));
     }
 
     public function restablecer_password(ValidarPassword $request)
