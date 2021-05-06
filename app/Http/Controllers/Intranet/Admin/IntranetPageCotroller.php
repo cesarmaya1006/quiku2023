@@ -37,9 +37,13 @@ class IntranetPageCotroller extends Controller
                 $sugerencias = Sugerencia::where('persona_id', session('id_usuario'))->get();
             } else {
                 foreach ($usuario->representante->empresas as $empresa) {
-                    $pqr_S = PQR::where('empresa_id', $empresa->id)->get();
-                    $consultas = ConceptoUOpinion::where('empresa_id', $empresa->id)->get();
-                    $sugerencias = Sugerencia::where('empresa_id', $empresa->id)->get();
+                    $pqr_S = PQR::where('empresa_id', session('id_usuario'))->get();
+                    $conceptos = ConceptoUOpinion::where('empresa_id', session('id_usuario'))->get();
+                    $solicitudes_datos = SolicitudDatos::where('empresa_id', session('id_usuario'))->get();
+                    $denuncias = Denuncia::where('empresa_id', session('id_usuario'))->get();
+                    $felicitaciones = Felicitacion::where('empresa_id', session('id_usuario'))->get();
+                    $solicitudes_doc = SolicitudDocInfo::where('empresa_id', session('id_usuario'))->get();
+                    $sugerencias = Sugerencia::where('empresa_id', session('id_usuario'))->get();
                 }
             }
         } elseif (session('rol_id') == 5) {
