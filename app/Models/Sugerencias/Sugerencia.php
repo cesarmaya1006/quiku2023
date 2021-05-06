@@ -5,6 +5,7 @@ namespace App\Models\Sugerencias;
 use App\Models\Empleados\Empleado;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
+use App\Models\PQR\tipoPQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;

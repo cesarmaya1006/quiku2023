@@ -20,6 +20,7 @@ class CrearTablaTipoPqr extends Migration
             $table->string('url', 255);
             $table->bigInteger('tiempos')->default(0);
             $table->string('sigla', 3);
+            $table->date('fecha_max_recurso')->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

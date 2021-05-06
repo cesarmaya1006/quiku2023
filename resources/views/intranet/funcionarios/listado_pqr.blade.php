@@ -26,35 +26,101 @@
                 <table class="table table-striped table-hover table-sm display">
                     <thead>
                         <tr>
-                            <th>Id Registro</th>
+                            <th>Num. Radicado</th>
                             <th>Tipo de PQR</th>
                             <th>Estado</th>
                             <th>Fecha de radicación</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($pqr_S as $pqr)
                             <tr>
-                                <td>{{ $pqr->id }}</td>
-                                <td>{{ $pqr->tipo }}</td>
+                                <td>{{ $pqr->radicado }}</td>
+                                <td>{{ $pqr->tipoPqr->tipo }}</td>
                                 <td>{{ $pqr->estado }}</td>
                                 <td>{{ $pqr->fecha_radicado }}</td>
+                                <td>
+                                    @if ($pqr->tipo_pqr_id == 1)
+                                        <a href="{{ route('funcionario-gestionar_pqr_p', ['id' => $pqr->id]) }}"
+                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                class="fa fa-edit text-info" aria-hidden="true"></a>
+                                    @elseif ($pqr->tipo_pqr_id == 2)
+                                        <a href="{{ route('funcionario-gestionar_pqr_q', ['id' => $pqr->id]) }}"
+                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                class="fa fa-edit text-info" aria-hidden="true"></a>
+                                    @else
+                                        <a href="{{ route('funcionario-gestionar_pqr_r', ['id' => $pqr->id]) }}"
+                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                class="fa fa-edit text-info" aria-hidden="true"></a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
-                        @foreach ($consultas as $consulta)
+                        @foreach ($conceptos as $concepto)
                             <tr>
-                                <td>{{ $consulta->id }}</td>
-                                <td>{{ $consulta->tipo }}</td>
-                                <td>{{ $consulta->estado }}</td>
-                                <td>{{ $consulta->fecha_radicado }}</td>
+                                <td>{{ $concepto->radicado }}</td>
+                                <td>{{ $concepto->tipoPqr->tipo }}</td>
+                                <td>{{ $concepto->estado }}</td>
+                                <td>{{ $concepto->fecha_radicado }}</td>
+                                <td><a href="{{ route('funcionario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
                             </tr>
                         @endforeach
-                        @foreach ($sugerecias as $sugerecia)
+                        @foreach ($solicitudes_datos as $solicitud_datos)
                             <tr>
-                                <td>{{ $sugerecia->id }}</td>
-                                <td>{{ $sugerecia->tipo }}</td>
-                                <td>{{ $sugerecia->estado }}</td>
-                                <td>{{ $sugerecia->fecha_radicado }}</td>
+                                <td>{{ $solicitud_datos->radicado }}</td>
+                                <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
+                                <td>{{ $solicitud_datos->estado }}</td>
+                                <td>{{ $solicitud_datos->fecha_radicado }}</td>
+                                <td><a href="{{ route('funcionario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                            </tr>
+                        @endforeach
+                        @foreach ($denuncias as $denuncia)
+                            <tr>
+                                <td>{{ $denuncia->radicado }}</td>
+                                <td>{{ $denuncia->tipoPqr->tipo }}</td>
+                                <td>{{ $denuncia->estado }}</td>
+                                <td>{{ $denuncia->fecha_radicado }}</td>
+                                <td><a href="{{ route('funcionario-gestionarDenuncia', ['id' => $denuncia->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                            </tr>
+                        @endforeach
+                        @foreach ($felicitaciones as $felicitacion)
+                            <tr>
+                                <td>{{ $felicitacion->radicado }}</td>
+                                <td>{{ $felicitacion->tipoPqr->tipo }}</td>
+                                <td>{{ $felicitacion->estado }}</td>
+                                <td>{{ $felicitacion->fecha_radicado }}</td>
+                                <td><a href="{{ route('funcionario-gestionarFelicitacion', ['id' => $felicitacion->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                            </tr>
+                        @endforeach
+                        @foreach ($solicitudes_doc as $solicitud_doc)
+                            <tr>
+                                <td>{{ $solicitud_doc->radicado }}</td>
+                                <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
+                                <td>{{ $solicitud_doc->estado }}</td>
+                                <td>{{ $solicitud_doc->fecha_radicado }}</td>
+                                <td><a href="{{ route('funcionario-gestionarSolicitudDocumentos', ['id' => $solicitud_doc->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                            </tr>
+                        @endforeach
+                        @foreach ($sugerencias as $sugerencia)
+                            <tr>
+                                <td>{{ $sugerencia->radicado }}</td>
+                                <td>{{ $sugerencia->tipoPqr->tipo }}</td>
+                                <td>{{ $sugerencia->estado }}</td>
+                                <td>{{ $sugerencia->fecha_radicado }}</td>
+                                <td><a href="{{ route('funcionario-gestionarSugerencia', ['id' => $sugerencia->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
                             </tr>
                         @endforeach
                     </tbody>

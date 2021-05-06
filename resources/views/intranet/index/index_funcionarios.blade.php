@@ -109,14 +109,70 @@
     </div>
     <hr>
     <div class="row d-flex justify-content-around">
-        @if ($prq_q_num > 0)
+        @if ($prq_p_num > 0)
             <div class="col-10 col-md-3 px-1">
                 <div class="card card-danger">
                     <div class="card-header">
-                        <h3 class="card-title">Pie Chart</h3>
+                        <h3 class="card-title">Peticiones</h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="pieChart"
+                        <canvas id="pieChart_1"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        @endif
+        @if ($prq_q_num > 0)
+            <div class="col-10 col-md-3 px-1">
+                <div class="card card-purple">
+                    <div class="card-header">
+                        <h3 class="card-title">Quejas</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart_2"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        @endif
+        @if ($prq_r_num > 0)
+            <div class="col-10 col-md-3 px-1">
+                <div class="card card-cyan">
+                    <div class="card-header">
+                        <h3 class="card-title">Reclamos</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart_3"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        @endif
+        @if ($conceptos_num > 0)
+            <div class="col-10 col-md-3 px-1">
+                <div class="card card-indigo">
+                    <div class="card-header">
+                        <h3 class="card-title">Concepto u Opinion</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart_4"
+                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        @endif
+        @if ($solicitudes_datos_num > 0)
+            <div class="col-10 col-md-3 px-1">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">Solicitud de datos personales</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="pieChart_5"
                             style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                     <!-- /.card-body -->

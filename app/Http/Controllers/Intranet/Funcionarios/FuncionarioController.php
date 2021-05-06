@@ -9,10 +9,15 @@ use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Departamento;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidarRegistroAsistido;
+use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\Consultas\Consulta;
+use App\Models\Denuncias\Denuncia;
 use App\Models\Empleados\Empleado;
+use App\Models\Felicitaciones\Felicitacion;
 use App\Models\Personas\Persona;
 use App\Models\PQR\PQR;
+use App\Models\SolicitudDatos\SolicitudDatos;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\Sugerencias\Sugerencia;
 
 class FuncionarioController extends Controller
@@ -24,10 +29,15 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        $pqr_S = PQR::where('empleado_id', session('id_usuario'));
-        $consultas = Consulta::where('empleado_id', session('id_usuario'));
-        $sugerecias = Sugerencia::where('empleado_id', session('id_usuario'));
-        return view('intranet.funcionarios.listado_pqr', compact('pqr_S', 'consultas', 'sugerecias'));
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        $pqr_S = PQR::all();
+        $conceptos = ConceptoUOpinion::all();
+        $solicitudes_datos = SolicitudDatos::all();
+        $denuncias = Denuncia::all();
+        $felicitaciones = Felicitacion::all();
+        $solicitudes_doc = SolicitudDocInfo::all();
+        $sugerencias = Sugerencia::all();
+        return view('intranet.funcionarios.listado_pqr', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario'));
     }
     public function crear_usuario()
     {

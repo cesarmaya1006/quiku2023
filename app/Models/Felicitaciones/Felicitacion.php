@@ -8,6 +8,7 @@ use App\Models\Empleados\Empleado;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Felicitaciones\FelicitacionHecho;
+use App\Models\PQR\tipoPQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Felicitacion extends Model

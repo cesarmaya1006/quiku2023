@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
+use App\Models\PQR\tipoPQR;
 
 class ConceptoUOpinion extends Model
 {

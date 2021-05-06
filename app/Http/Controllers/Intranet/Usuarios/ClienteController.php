@@ -180,8 +180,6 @@ class ClienteController extends Controller
             $nuevaPQRPeticion['pqr_id'] = $request['pqr_id'];
             $nuevaPQRPeticion['motivo_sub_id'] = $request['motivo_sub_id' . $i];
             $nuevaPQRPeticion['otro'] = $request['otro' . $i];
-            $nuevaPQRPeticion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
-            $nuevaPQRPeticion['fecha_respuesta'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
             $nuevaPQRPeticion['justificacion'] = $request['justificacion' . $i];
             $contadorAnexos += $request['cantidadAnexosMotivo' . $i];
             $contadorHechos += $request['cantidadHechosMotivo' . $i];
@@ -672,16 +670,16 @@ class ClienteController extends Controller
         switch ($tipo_pqr->id) {
             case 1:
                 $pqr = PQR::findOrFail($id_pqr);
-                    $contenido .= '<h4>Peticion</h4>';
-                    $contenido .= '<p>Lugar de adquisición del producto o servicio: ' . $pqr->adquisicion . '<p>';
-                    $contenido .= '<p>¿Su PQR es sobre un producto o servicio?: ' . $pqr->tipo . '<p>';
-                    $contenido .= '<p>Referencia: ' . $pqr->referencia_id . '<p>';
-                    $contenido .= '<p>No. Factura: ' . $pqr->factura . '<p>';
-                    $contenido .= '<p>Fecha de factura: ' . $pqr->fecha_factura . '<p>';
-                    $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
+                $contenido .= '<h4>Peticion</h4>';
+                $contenido .= '<p>Lugar de adquisición del producto o servicio: ' . $pqr->adquisicion . '<p>';
+                $contenido .= '<p>¿Su PQR es sobre un producto o servicio?: ' . $pqr->tipo . '<p>';
+                $contenido .= '<p>Referencia: ' . $pqr->referencia_id . '<p>';
+                $contenido .= '<p>No. Factura: ' . $pqr->factura . '<p>';
+                $contenido .= '<p>Fecha de factura: ' . $pqr->fecha_factura . '<p>';
+                $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
                 foreach ($pqr->peticiones as $peticion) {
                     $num++;
-                    $contenido .= '<h4>Motivo #'. $num .'</h4>';
+                    $contenido .= '<h4>Motivo #' . $num . '</h4>';
                     $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo_sub_id . '<p>';
                     foreach ($peticion->hechos as $hecho) {
                         $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
@@ -698,15 +696,15 @@ class ClienteController extends Controller
                 $contenido .= '<p>No. Factura: ' . $pqr->factura . '<p>';
                 $contenido .= '<p>Fecha de factura: ' . $pqr->fecha_factura . '<p>';
                 $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
-            foreach ($pqr->peticiones as $peticion) {
-                $num++;
-                $contenido .= '<h4>Motivo #'. $num .'</h4>';
-                $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo_sub_id . '<p>';
-                foreach ($peticion->hechos as $hecho) {
-                    $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
+                foreach ($pqr->peticiones as $peticion) {
+                    $num++;
+                    $contenido .= '<h4>Motivo #' . $num . '</h4>';
+                    $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo_sub_id . '<p>';
+                    foreach ($peticion->hechos as $hecho) {
+                        $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
+                    }
+                    $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
                 }
-                $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
-            }
                 break;
             case 3:
                 $pqr = PQR::findOrFail($id_pqr);
@@ -717,21 +715,21 @@ class ClienteController extends Controller
                 $contenido .= '<p>No. Factura: ' . $pqr->factura . '<p>';
                 $contenido .= '<p>Fecha de factura: ' . $pqr->fecha_factura . '<p>';
                 $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
-            foreach ($pqr->peticiones as $peticion) {
-                $num++;
-                $contenido .= '<h4>Motivo #'. $num .'</h4>';
-                $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo_sub_id . '<p>';
-                foreach ($peticion->hechos as $hecho) {
-                    $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
+                foreach ($pqr->peticiones as $peticion) {
+                    $num++;
+                    $contenido .= '<h4>Motivo #' . $num . '</h4>';
+                    $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo_sub_id . '<p>';
+                    foreach ($peticion->hechos as $hecho) {
+                        $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
+                    }
+                    $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
                 }
-                $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
-            }
                 break;
             case 4:
                 $pqr = ConceptoUOpinion::findOrFail($id_pqr);
                 foreach ($pqr->conceptos as $concepto) {
                     $num++;
-                    $contenido .= '<h4>Concepto u opinion #'. $num .'</h4>';
+                    $contenido .= '<h4>Concepto u opinion #' . $num . '</h4>';
                     $contenido .= '<p>Consulta:' . $concepto->consulta . '<p>';
                     foreach ($concepto->hechos as $hecho) {
                         $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
@@ -742,7 +740,7 @@ class ClienteController extends Controller
                 $pqr = SolicitudDatos::findOrFail($id_pqr);
                 foreach ($pqr->solicitudes as $solicitud) {
                     $num++;
-                    $contenido .= '<h4>Solicitud #'. $num .'</h4>';
+                    $contenido .= '<h4>Solicitud #' . $num . '</h4>';
                     $contenido .= '<p>Tipo de solicitud: ' . $solicitud->tiposolicitud . '<p>';
                     $contenido .= '<p>Datos personales objeto de la solicitud: ' . $solicitud->datossolicitud . '<p>';
                     $contenido .= '<p>Descripción de la solicitud: ' . $solicitud->descripcionsolicitud . '<p>';
@@ -752,7 +750,7 @@ class ClienteController extends Controller
             case 6:
                 $pqr = Denuncia::findOrFail($id_pqr);
                 $contenido .= '<h4>Denuncia</h4>';
-                $contenido .= '<p>Tipo de solicitud: '. $pqr->solicitud .'</p>';
+                $contenido .= '<p>Tipo de solicitud: ' . $pqr->solicitud . '</p>';
                 foreach ($pqr->hechos as $hecho) {
                     $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                 }
@@ -763,18 +761,18 @@ class ClienteController extends Controller
                 foreach ($pqr->hechos as $hecho) {
                     $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                 }
-                if($pqr->sede_id){
-                    $contenido .= '<p>Sede: '. $pqr->sede_id .'</p>';
+                if ($pqr->sede_id) {
+                    $contenido .= '<p>Sede: ' . $pqr->sede_id . '</p>';
                 }
-                $contenido .= '<p>Nombre de funcionario: '. $pqr->nombre_funcionario .'</p>';
-                $contenido .= '<p>Escriba sus felicitaciones: '. $pqr->felicitacion .'</p>';
+                $contenido .= '<p>Nombre de funcionario: ' . $pqr->nombre_funcionario . '</p>';
+                $contenido .= '<p>Escriba sus felicitaciones: ' . $pqr->felicitacion . '</p>';
                 break;
 
             case 8:
                 $pqr = SolicitudDocInfo::findOrFail($id_pqr);
                 foreach ($pqr->peticiones as $peticion) {
                     $num++;
-                    $contenido .= '<h4>Petición #'. $num .'</h4>';
+                    $contenido .= '<h4>Petición #' . $num . '</h4>';
                     $contenido .= '<p>Tipo de petición: ' . $peticion->peticion . '<p>';
                     $contenido .= '<p>Identifique el documento o información requerida: ' . $peticion->indentifiquedocinfo . '<p>';
                     $contenido .= '<p>Justificaciones de su solicitud: ' . $peticion->justificacion . '<p>';
@@ -787,7 +785,7 @@ class ClienteController extends Controller
                 foreach ($pqr->hechos as $hecho) {
                     $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                 }
-                $contenido .= '<p>Escriba su sugerencia: '. $pqr->sugerencia .'</p>';
+                $contenido .= '<p>Escriba su sugerencia: ' . $pqr->sugerencia . '</p>';
                 break;
         }
         if ($pqr->persona_id != null) {

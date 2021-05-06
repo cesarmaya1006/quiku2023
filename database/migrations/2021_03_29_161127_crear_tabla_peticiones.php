@@ -22,15 +22,7 @@ class CrearTablaPeticiones extends Migration
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_peticiones')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('otro')->nullable();
-            $table->boolean('prorroga')->default(0);
-            $table->date('fecha_radicado');
-            $table->date('fecha_respuesta');
-            $table->boolean('recurso')->default(0);
-            $table->integer('dias_max_recurso')->nullable();
-            $table->date('fecha_max_recurso')->nullable();
-            $table->date('fecha_not_recurso')->nullable();
             $table->longText('justificacion');
-            $table->string('estado')->default('Radicada, sin iniciar tramite');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
