@@ -22,6 +22,10 @@ class CrearTablaPeticiones extends Migration
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_peticiones')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('otro')->nullable();
+            $table->boolean('recurso')->default(0)->nullable();
+            $table->boolean('usuario_recurso')->default(0)->nullable();
+            $table->bigInteger('recurso_dias')->default(0);
+            $table->date('fecha_notificacion')->nullable();
             $table->longText('justificacion');
             $table->timestamps();
             $table->charset = 'utf8';

@@ -83,14 +83,14 @@
                                 Fecha de factura: <strong>{{ $pqr->fecha_factura }}</strong>
                             </div>
                             <div class="col-12 col-md-6">
-                                Días de prorroga: <strong>{{ $pqr->prorroga }}</strong>
+                                Días de prorroga: <strong>{{ $pqr->prorroga_dias }}</strong>
                             </div>
                             <div class="col-12 col-md-6">
                                 Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
                             </div>
                             <div class="col-12 col-md-6">
                                 Fecha estimada de respuesta:
-                                <strong>{{ date('Y-m-d', strtotime($pqr->fecha_radicado . '+ ' . $pqr->tipoPqr->tiempos . ' days')) }}</strong>
+                                <strong>{{ date('Y-m-d', strtotime($pqr->fecha_radicado . '+ ' . ($pqr->tipoPqr->tiempos + $pqr->prorroga_dias) . ' days')) }}</strong>
                             </div>
                             <div class="col-12 col-md-6">
                                 Estado: <strong>{{ $pqr->estado }}</strong>
@@ -98,37 +98,58 @@
                         </div>
                         <hr>
                         <div class="row">
+                            <div class="col-12 col-md-6">
+                                <h6>Prorroga</h6>
+                            </div>
+                            <div class="col-12 col-md-6 d-flex flex-row">
+                                <div class="form-check mb-3 mr-4">
+                                    <input id="" name="cherck_prorroga" type="radio" class="form-check-input" value="1"
+                                        {{ $pqr->prorroga == 1 ? 'checked' : '' }} />
+                                    <label id="_label" class="form-check-label" for="">SI</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input id="" name="cherck_prorroga" type="radio" class="form-check-input" value="0"
+                                        {{ $pqr->prorroga == 0 ? 'checked' : '' }} />
+                                    <label id="_label" class="form-check-label" for="">NO</label>
+                                </div>
+                            </div>
                             <div class="col-12">
-                                <div class="row" action="" method="post">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                @foreach ($pqr->peticiones as $peticion)
+                                <a href="#" target="_blank" rel="noopener noreferrer">SOPORTE DE PRORROGA</a>
+                            </div>
+                        </div>
+                        @foreach ($pqr->peticiones as $peticion)
+                            <hr style="border-top: solid 4px black">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row" action="" method="post">
+                                        <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6">
                                                     <div class="row">
-                                                        <div class="col-12">Petición:</div>
+                                                        <div class="col-12">
+                                                            <h5>Petición</h5>
+                                                        </div>
                                                         <div class="col-12">{{ $peticion->motivo->sub_motivo }}</div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-12">Justificacion:</div>
                                                         <div class="col-12">{{ $peticion->justificacion }}</div>
                                                     </div>
-                                                @endforeach
+                                                </div>
+                                                <div class="col-12 col-md-6"></div>
                                             </div>
-                                            <div class="col-12 col-md-6"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12">
-                                <h6>Anexos</h6>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-light">
-                                    <tbody>
-                                        @foreach ($pqr->peticiones as $peticion)
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6>Anexos</h6>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-light">
+                                        <tbody>
                                             @foreach ($peticion->anexos as $anexo)
                                                 <tr>
                                                     <td>{{ $anexo->titulo }}</td>
@@ -138,42 +159,84 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12">
-                                <h6>Hechos</h6>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-light">
-                                    <tbody>
-                                        @foreach ($pqr->peticiones as $peticion)
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6>Hechos</h6>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-light">
+                                        <tbody>
                                             @foreach ($peticion->hechos as $hecho)
                                                 <tr>
                                                     <td>{{ $hecho->hecho }}</td>
                                                 </tr>
                                             @endforeach
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12">
-                                <h6>Aclaraciones</h6>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <h6>Aclaraciones</h6>
+                                </div>
+                                <div class="col-12 col-md-6"><button class="btn btn-success float-end" type="button"><i
+                                            class="fa fa-plus-circle" aria-hidden="true"></i> Solicitar aclaracion</button>
+                                </div>
+                                <div class="col-12">
+                                    <form class="row" action="" method="post">
 
+                                    </form>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <form class="row" action="" method="post">
-
-                                </form>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <h6>Respuesta</h6>
+                                </div>
+                                <div class="col-12 col-md-6"><button class="btn btn-success float-end" type="button"><i
+                                            class="fa fa-plus-circle" aria-hidden="true"></i> Añadir respuesta</button>
+                                </div>
+                                <div class="col-12">
+                                    <form class="row" action="" method="post">
+                                        <input type="file" name="" id="">
+                                    </form>
+                                </div>
                             </div>
-                        </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <h6>Recurso</h6>
+                                </div>
+                                <div class="col-12 col-md-6 d-flex flex-row">
+                                    <div class="form-check mb-3 mr-4">
+                                        <input id="" name="cherck_prorroga" type="radio" class="form-check-input" value="1"
+                                            {{ $pqr->recurso == 1 ? 'checked' : '' }} />
+                                        <label id="_label" class="form-check-label" for="">SI</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input id="" name="cherck_prorroga" type="radio" class="form-check-input" value="0"
+                                            {{ $pqr->recurso == 0 ? 'checked' : '' }} />
+                                        <label id="_label" class="form-check-label" for="">NO</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <form class="row" action="" method="post">
+                                        <input type="number" name="" id="">
+                                        <input type="date" name="" id="">
+                                        <span>Fecha Max Notificacion:
+                                            {{ date('Y-m-d', strtotime($peticion->fecha_notificacion . '+ ' . ($peticion->recurso_dias + 1) . ' days')) }}
+                                        </span>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                     <!-- /.card-body -->
                 </div>

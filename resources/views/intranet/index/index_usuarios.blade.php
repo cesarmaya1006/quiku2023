@@ -121,18 +121,19 @@
                 </thead>
                 <tbody>
                     @foreach ($pqr_S as $pqr)
-                    @if ($pqr_S->where('estado',!=,'cerrada'))
-                    <?php $$fec_radicado =date("d-m-Y",strtotime($pqr->."+ 1 days")); ?>
-                    <tr>
-                        <td>{{$pqr->radicado}}</td>
-                        <td>{{$pqr->tipoPqr->tipo}}</td>
-                        <td>{{$pqr->fecha_radicado}}</td>
-                        <td>{{$pqr->radicado}}</td>
-                        <td>{{$pqr->radicado}}</td>
-                    </tr>
-                    @endif
+                        @if ($pqr_S->whereNotIn('estado', ['cerrada']))
+                            <?php $fec_radicado = date('Y-m-d', strtotime($pqr->fecha_generacion .
+                            '+1days')); ?>
+                            <tr>
+                                <td>{{ $pqr->radicado }}</td>
+                                <td>{{ $pqr->tipoPqr->tipo }}</td>
+                                <td>{{ $pqr->fecha_radicado }}</td>
+                                <td>{{ $pqr->radicado }}</td>
+                                <td>{{ $pqr->radicado }}</td>
+                            </tr>
+                        @endif
                     @endforeach
-                    
+
                 </tbody>
             </table>
         </div>
