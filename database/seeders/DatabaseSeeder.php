@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             'docutipos', 'roles', 'menu', 'menu_rol', 'icono', 'pais', 'departamento', 'municipio',
             'sedes', 'parametros',
             'usuarios', 'personas', 'tipo_pqr', 'motivos', 'motivo_sub', 'categorias', 'productos', 'marcas',
-            'referencias',
+            'referencias', 'servicios',
 
         ]);
         // --------------------------------------------------------------------------------------------------
@@ -40,7 +40,9 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_Productos::class);
         $this->call(Tabla_Marcas::class);
         $this->call(Tabla_Referencias::class);
+        $this->call(Tabla_Servicios::class);
     }
+
     protected function truncateTablas(array $tablas)
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
