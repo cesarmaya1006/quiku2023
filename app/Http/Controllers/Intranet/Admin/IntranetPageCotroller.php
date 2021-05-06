@@ -11,6 +11,7 @@ use App\Models\Denuncias\Denuncia;
 use App\Models\Felicitaciones\Felicitacion;
 use App\Models\PQR\PQR;
 use App\Models\SolicitudDatos\SolicitudDatos;
+use App\Models\SolicitudDatos\SolicitudDatosAnexo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Http\Request;
@@ -28,13 +29,17 @@ class IntranetPageCotroller extends Controller
         if (session('rol_id') == 6) {
             if ($usuario->persona->count() > 0) {
                 $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
-                $consultas = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();
-                $sugerecias = Sugerencia::where('persona_id', session('id_usuario'))->get();
+                $conceptos = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();
+                $solicitudes_datos = SolicitudDatos::where('persona_id', session('id_usuario'))->get();
+                $denuncias = Denuncia::where('persona_id', session('id_usuario'))->get();
+                $felicitaciones = Felicitacion::where('persona_id', session('id_usuario'))->get();
+                $solicitudes_doc = SolicitudDocInfo::where('persona_id', session('id_usuario'))->get();
+                $sugerencias = Sugerencia::where('persona_id', session('id_usuario'))->get();
             } else {
                 foreach ($usuario->representante->empresas as $empresa) {
                     $pqr_S = PQR::where('empresa_id', $empresa->id)->get();
                     $consultas = ConceptoUOpinion::where('empresa_id', $empresa->id)->get();
-                    $sugerecias = Sugerencia::where('empresa_id', $empresa->id)->get();
+                    $sugerencias = Sugerencia::where('empresa_id', $empresa->id)->get();
                 }
             }
         } elseif (session('rol_id') == 5) {
@@ -48,7 +53,7 @@ class IntranetPageCotroller extends Controller
         } elseif (session('rol_id') < 4) {
             $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
             $consultas = ConceptoUOpinion::where('empleado_id', session('id_usuario'))->get();
-            $sugerecias = Sugerencia::where('empleado_id', session('id_usuario'))->get();
+            $sugerencias = Sugerencia::where('empleado_id', session('id_usuario'))->get();
         }
         return view('intranet.index.index', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias','usuario'));
     }
