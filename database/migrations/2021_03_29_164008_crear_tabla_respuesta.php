@@ -19,7 +19,6 @@ class CrearTablaRespuesta extends Migration
             $table->foreign('peticion_id', 'fk_peticion_respuesta')->references('id')->on('peticiones')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha');
             $table->longText('respuesta')->nullable();
-            $table->text('anexo', 255)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

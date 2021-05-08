@@ -107,36 +107,5 @@
         </div>
         <!-- ./col -->
     </div>
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-sm table-hover display">
-                <thead>
-                    <tr>
-                        <th>Num Radicado</th>
-                        <th>Tipo de PQR</th>
-                        <th>Fecha de Radicado</th>
-                        <th>Estado</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($pqr_S as $pqr)
-                        @if ($pqr_S->whereNotIn('estado', ['cerrada']))
-                            <?php $fec_radicado = date('Y-m-d', strtotime($pqr->fecha_generacion .
-                            '+1days')); ?>
-                            <tr>
-                                <td>{{ $pqr->radicado }}</td>
-                                <td>{{ $pqr->tipoPqr->tipo }}</td>
-                                <td>{{ $pqr->fecha_radicado }}</td>
-                                <td>{{ $pqr->radicado }}</td>
-                                <td>{{ $pqr->radicado }}</td>
-                            </tr>
-                        @endif
-                    @endforeach
-
-                </tbody>
-            </table>
-        </div>
-    </div>
 
 </div>

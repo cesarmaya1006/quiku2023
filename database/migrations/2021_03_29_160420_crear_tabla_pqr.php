@@ -35,6 +35,8 @@ class CrearTablaPqr extends Migration
             $table->boolean('prorroga')->default(0)->nullable();
             $table->bigInteger('prorroga_dias')->default(0)->nullable();
             $table->string('prorroga_pdf')->nullable();
+            $table->string('extension', 255);
+            $table->double('peso');
             $table->date('fecha_generacion');
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();

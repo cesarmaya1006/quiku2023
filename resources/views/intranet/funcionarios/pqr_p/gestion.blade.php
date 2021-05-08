@@ -185,8 +185,17 @@
                                 <div class="col-12 col-md-6">
                                     <h6>Aclaraciones</h6>
                                 </div>
-                                <div class="col-12 col-md-6"><button class="btn btn-success float-end" type="button"><i
-                                            class="fa fa-plus-circle" aria-hidden="true"></i> Solicitar aclaracion</button>
+                                <div class="col-12 col-md-6 d-flex flex-row">
+                                    <div class="form-check mb-3 mr-4">
+                                        <input id="" name="check_aclaracion" type="radio" class="form-check-input" value="1"
+                                            {{ $peticion->aclaracion == 1 ? 'checked' : '' }} {{ $peticion->aclaracion == 1 ? 'disabled' : '' }} />
+                                        <label id="_label" class="form-check-label" for="">SI</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input id="" name="check_aclaracion" type="radio" class="form-check-input" value="0"
+                                            {{ $peticion->aclaracion == 0 ? 'checked' : '' }} {{ $peticion->aclaracion == 1 ? 'disabled' : '' }}/>
+                                        <label id="_label" class="form-check-label" for="">NO</label>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <form class="row" action="" method="post">
@@ -200,7 +209,12 @@
                                     <h6>Respuesta</h6>
                                 </div>
                                 <div class="col-12 col-md-6"><button class="btn btn-success float-end" type="button"><i
-                                            class="fa fa-plus-circle" aria-hidden="true"></i> Añadir respuesta</button>
+                                            class="fa fa-plus-circle" aria-hidden="true"></i> Añadir archivo</button>
+                                </div>
+                                <div class="col-12">
+                                    <form class="row" action="" method="post">
+                                        <input type="text" name="" id="">
+                                    </form>
                                 </div>
                                 <div class="col-12">
                                     <form class="row" action="" method="post">
@@ -211,7 +225,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-12 col-md-6">
-                                    <h6>Recurso</h6>
+                                    <h6>¿A la petición le procede recurso?</h6>
                                 </div>
                                 <div class="col-12 col-md-6 d-flex flex-row">
                                     <div class="form-check mb-3 mr-4">
@@ -227,7 +241,6 @@
                                 </div>
                                 <div class="col-12">
                                     <form class="row" action="" method="post">
-                                        <input type="number" name="" id="">
                                         <input type="date" name="" id="">
                                         <span>Fecha Max Notificacion:
                                             {{ date('Y-m-d', strtotime($peticion->fecha_notificacion . '+ ' . ($peticion->recurso_dias + 1) . ' days')) }}

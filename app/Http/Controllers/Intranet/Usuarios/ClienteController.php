@@ -51,9 +51,16 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $pqr_S = PQR::where('persona_id', session('id_usuario'));
-        $consultas = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();
-        return view('intranet.usuarios.listado', compact('pqr_S', 'consultas'));
+
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
+        $conceptos = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();
+        $solicitudes_datos = SolicitudDatos::where('persona_id', session('id_usuario'))->get();
+        $denuncias = Denuncia::where('persona_id', session('id_usuario'))->get();
+        $felicitaciones = Felicitacion::where('persona_id', session('id_usuario'))->get();
+        $solicitudes_doc = SolicitudDocInfo::where('persona_id', session('id_usuario'))->get();
+        $sugerencias = Sugerencia::where('persona_id', session('id_usuario'))->get();
+        return view('intranet.usuarios.listado', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario'));
     }
 
     /**

@@ -19,6 +19,11 @@ class CrearTablaAclaracion extends Migration
             $table->foreign('peticion_id', 'fk_peticion_aclaracion')->references('id')->on('peticiones')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha');
             $table->longText('aclaracion');
+            $table->longText('respuesta')->nullable();
+            $table->string('pdf')->nullable();
+            $table->string('extension', 255)->nullable();
+            $table->double('peso')->nullable();
+            $table->date('fecha_respuesta')->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
