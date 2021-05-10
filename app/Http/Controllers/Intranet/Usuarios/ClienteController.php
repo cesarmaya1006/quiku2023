@@ -734,7 +734,7 @@ class ClienteController extends Controller
                 break;
             case 4:
                 $pqr = ConceptoUOpinion::findOrFail($id_pqr);
-                foreach ($pqr->conceptos as $concepto) {
+                foreach ($pqr->consultas as $concepto) {
                     $num++;
                     $contenido .= '<h4>Concepto u opinion #' . $num . '</h4>';
                     $contenido .= '<p>Consulta:' . $concepto->consulta . '<p>';

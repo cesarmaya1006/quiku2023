@@ -32,7 +32,7 @@ Sistema de informaci&oacute;n
                             <div class="d-flex form-group grupo-sede rounded border p-2">
                                 <div class="col-12 col-md-3 form-group" id="cajadepartamento"><label
                                         for="">Departamento:</label>
-                                    <select class="custom-select rounded-0 departamentos" id="departamento"
+                                    <select class="custom-select rounded-0 departamentos" id="departamento" required
                                         data_url="{{ route('cargar_municipios') }}">
                                         <option value="">--Seleccione--</option>
                                         @foreach ($departamentos as $departamento)
@@ -44,14 +44,14 @@ Sistema de informaci&oacute;n
                                 </div>
                                 <div class="col-12 col-md-3 form-group" id="cajamunicipio_id"><label
                                         for="">Municipio:</label>
-                                    <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes') }}"
+                                    <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes') }}" required
                                         id="municipio_id">
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group cajasede_id" id="cajasede_id">
                                     <label for="">Sede:</label>
-                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0">
+                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0" required>
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>
@@ -61,7 +61,7 @@ Sistema de informaci&oacute;n
                             <div class="col-12 consulta rounded border mb-3">
                                 <div class="form-group col-12 mt-2">
                                     <label for="">Tipo de solicitud</label>
-                                    <select name="solicitud" id="solicitud" class="custom-select rounded-0">
+                                    <select name="solicitud" id="solicitud" class="custom-select rounded-0" required>
                                         <option value="">--Seleccione--</option>
                                         <option value="solicitud 1">solicitud 1</option>
                                         <option value="solicitud 2">solicitud 2</option>
@@ -76,7 +76,7 @@ Sistema de informaci&oacute;n
                                                 class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho"><i
                                                     class="fas fa-minus-circle"></i></button>
                                         </div>
-                                        <input class="form-control mt-2" type="text" name="hecho" id="hecho">
+                                        <input class="form-control mt-2" type="text" name="hecho" id="hecho" required>
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end flex-row">

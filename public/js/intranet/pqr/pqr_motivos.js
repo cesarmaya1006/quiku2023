@@ -5,24 +5,24 @@ window.addEventListener('DOMContentLoaded', function () {
         let btnSubmit = document.querySelector('#fromPQRMotivos')
         btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
-            let contadorValidacion;
-            if(document.querySelectorAll('.titulo-motivo input')){
-                let validacionConsultas = document.querySelectorAll('.justificacion-motivo input')
-                validacionConsultas.forEach(motivo =>{
-                    if (motivo.value == '') {
-                        swal({
-                            title: "Alerta",
-                            text: `Debe diligencias el campo ${motivo.parentNode.parentNode.parentNode.querySelector('.titulo-principal-card').textContent}`,
-                            icon: "error",
-                            button: "Continuar",
-                          });
-                        contadorValidacion = 1
-                    }else {
-                        contadorValidacion = 0
-                    }
-                })
-            }
-            if (contadorValidacion == 0) {
+            // let contadorValidacion;
+            // if(document.querySelectorAll('.titulo-motivo input')){
+            //     let validacionConsultas = document.querySelectorAll('.justificacion-motivo input')
+            //     validacionConsultas.forEach(motivo =>{
+            //         if (motivo.value == '') {
+            //             // swal({
+            //             //     title: "Alerta",
+            //             //     text: `Debe diligencias el campo ${motivo.parentNode.parentNode.parentNode.querySelector('.titulo-principal-card').textContent}`,
+            //             //     icon: "error",
+            //             //     button: "Continuar",
+            //             //   });
+            //             contadorValidacion = 1
+            //         }else {
+            //             contadorValidacion = 0
+            //         }
+            //     })
+            // }
+            // if (contadorValidacion == 0) {
                 let anexos = document.querySelectorAll('input[type="file"]')
                 anexos.forEach(anexo =>{
                     if(anexo.value == ''){
@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 ajustarNameAnexo(document.querySelectorAll('.anexomotivo'))
                 document.querySelector('.totalCantidadAnexosmotivos').value = document.querySelectorAll('.anexomotivo').length
                 this.submit();
-            }
+            // }
         })
         // Fin Validacion envio de formulario
 
@@ -167,6 +167,9 @@ window.addEventListener('DOMContentLoaded', function () {
             let nuevaMotivo = document.querySelectorAll('.motivo')[0].cloneNode(true)
             nuevaMotivo.querySelector('.justificacion-motivo input').value = ''
             nuevaMotivo.querySelector('.otro input').value = ''
+            if(!nuevaMotivo.querySelector('.otro').classList.contains('d-none')){
+                nuevaMotivo.querySelector('.otro').classList.add('d-none') 
+            }
             anexosTotal = nuevaMotivo.querySelectorAll('.anexomotivo')
             for (let i = 0; i < anexosTotal.length; i++) {
                 const anexo = anexosTotal[i];
@@ -196,6 +199,7 @@ window.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.eliminarHecho').forEach(item => item.addEventListener('click', agregarEliminarHecho))
             ajustarNameHecho(document.querySelectorAll('.hechoMotivo'))
             ajustarNameAnexo(document.querySelectorAll('.anexomotivo'))
+            ajustarOtro()
         }
 
         function eliminarMotivo(e) {
@@ -239,5 +243,22 @@ window.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#cantidadmotivos').value = document.querySelectorAll('.motivo').length
         }
 
+        function ajustarOtro(){
+            $('.motivo_sub_id').on('change', function(event) {
+                // console.log(event.target.value)
+                if (event.target.value == '2') {
+                    let padreHTML = event.target.parentNode.parentNode
+                    let otro = padreHTML.querySelector('.otro')
+                    otro.classList.toggle('d-none')
+                }else{
+                    let padreHTML = event.target.parentNode.parentNode
+                    let otro = padreHTML.querySelector('.otro')
+                    if (!otro.classList.contains('d-none')) {
+                        otro.classList.toggle('d-none')
+                    }
+                }
+            });
+        }
+        ajustarOtro()
     }
 })

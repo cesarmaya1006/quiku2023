@@ -5,15 +5,15 @@ window.addEventListener('DOMContentLoaded', function () {
         btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
 
-            if (!document.querySelector('#sugerencia').value) {
-                swal({
-                    title: "Alerta",
-                    text: `Debe diligencias el campo Sugerencia`,
-                    icon: "error",
-                    button: "Continuar",
-                });
-                return
-            }
+            // if (!document.querySelector('#sugerencia').value) {
+            //     swal({
+            //         title: "Alerta",
+            //         text: `Debe diligencias el campo Sugerencia`,
+            //         icon: "error",
+            //         button: "Continuar",
+            //     });
+            //     return
+            // }
             document.querySelector('#cantidadHechos').value = document.querySelectorAll('.hechoSugerencia').length
             document.querySelector('#cantidadAnexos').value = document.querySelectorAll('.anexosugerencia').length
             this.submit();

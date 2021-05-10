@@ -4,56 +4,56 @@ window.addEventListener('DOMContentLoaded', function () {
         let btnSubmit = document.querySelector('#fromSolicitudDatos')
         btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
-            let contadorValidacion;
-            if(document.querySelectorAll('.tiposolicitud')){
-                let validacionSolicitud = document.querySelectorAll('.tiposolicitud')
-                validacionSolicitud.forEach(consulta =>{
-                    if (consulta.value == '') {
-                        swal({
-                            title: "Alerta",
-                            text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
-                            icon: "error",
-                            button: "Continuar",
-                          });
-                        contadorValidacion = 1
-                    }else {
-                        contadorValidacion = 0
-                    }
-                })
-            }
-            if(document.querySelectorAll('.datossolicitud')){
-                let validacionSolicitud = document.querySelectorAll('.datossolicitud')
-                validacionSolicitud.forEach(consulta =>{
-                    if (consulta.value == '') {
-                        swal({
-                            title: "Alerta",
-                            text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
-                            icon: "error",
-                            button: "Continuar",
-                          });
-                        contadorValidacion = 1
-                    }else {
-                        contadorValidacion = 0
-                    }
-                })
-            }
-            if(document.querySelectorAll('.descripcionsolicitud')){
-                let validacionSolicitud = document.querySelectorAll('.descripcionsolicitud')
-                validacionSolicitud.forEach(consulta =>{
-                    if (consulta.value == '') {
-                        swal({
-                            title: "Alerta",
-                            text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
-                            icon: "error",
-                            button: "Continuar",
-                          });
-                        contadorValidacion = 1
-                    }else {
-                        contadorValidacion = 0
-                    }
-                })
-            }
-            if (contadorValidacion == 0) {
+            // let contadorValidacion;
+            // if(document.querySelectorAll('.tiposolicitud')){
+            //     let validacionSolicitud = document.querySelectorAll('.tiposolicitud')
+            //     validacionSolicitud.forEach(consulta =>{
+            //         if (consulta.value == '') {
+            //             swal({
+            //                 title: "Alerta",
+            //                 text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
+            //                 icon: "error",
+            //                 button: "Continuar",
+            //               });
+            //             contadorValidacion = 1
+            //         }else {
+            //             contadorValidacion = 0
+            //         }
+            //     })
+            // }
+            // if(document.querySelectorAll('.datossolicitud')){
+            //     let validacionSolicitud = document.querySelectorAll('.datossolicitud')
+            //     validacionSolicitud.forEach(consulta =>{
+            //         if (consulta.value == '') {
+            //             swal({
+            //                 title: "Alerta",
+            //                 text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
+            //                 icon: "error",
+            //                 button: "Continuar",
+            //               });
+            //             contadorValidacion = 1
+            //         }else {
+            //             contadorValidacion = 0
+            //         }
+            //     })
+            // }
+            // if(document.querySelectorAll('.descripcionsolicitud')){
+            //     let validacionSolicitud = document.querySelectorAll('.descripcionsolicitud')
+            //     validacionSolicitud.forEach(consulta =>{
+            //         if (consulta.value == '') {
+            //             swal({
+            //                 title: "Alerta",
+            //                 text: `Debe diligencias el campo ${consulta.parentNode.querySelector('label').textContent}`,
+            //                 icon: "error",
+            //                 button: "Continuar",
+            //               });
+            //             contadorValidacion = 1
+            //         }else {
+            //             contadorValidacion = 0
+            //         }
+            //     })
+            // }
+            // if (contadorValidacion == 0) {
                 let anexos = document.querySelectorAll('input[type="file"]')
                 anexos.forEach(anexo =>{
                     if(anexo.value == ''){
@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
                 document.querySelector('.totalCantidadAnexosSolicitud').value = document.querySelectorAll('.anexosolicitud').length
                 this.submit();
-            }
+            // }
         })
         // Fin Validacion envio de formulario
         // ---------------------------------------------------------------------------------------------------------

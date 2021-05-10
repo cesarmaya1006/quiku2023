@@ -16,7 +16,7 @@ class ConceptoUOpinionConsulta extends Model
     protected $table = 'conceptouopinionconsultas';
     protected $guarded = [];
 
-    public function concepto()
+    public function consulta()
     {
         return $this->belongsTo(ConceptoUOpinion::class, 'conceptouopinion_id', 'id');
     }

@@ -44,15 +44,15 @@
                                     @if ($pqr->tipo_pqr_id == 1)
                                         <a href="{{ route('funcionario-gestionar_pqr_p', ['id' => $pqr->id]) }}"
                                             class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                class="fa fa-edit text-info" aria-hidden="true"></a>
+                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                     @elseif ($pqr->tipo_pqr_id == 2)
                                         <a href="{{ route('funcionario-gestionar_pqr_q', ['id' => $pqr->id]) }}"
                                             class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                class="fa fa-edit text-info" aria-hidden="true"></a>
+                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                     @else
                                         <a href="{{ route('funcionario-gestionar_pqr_r', ['id' => $pqr->id]) }}"
                                             class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                class="fa fa-edit text-info" aria-hidden="true"></a>
+                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                     @endif
                                 </td>
                             </tr>
@@ -65,7 +65,7 @@
                                 <td>{{ $concepto->fecha_radicado }}</td>
                                 <td><a href="{{ route('funcionario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
                             </tr>
                         @endforeach
                         @foreach ($solicitudes_datos as $solicitud_datos)
@@ -76,7 +76,7 @@
                                 <td>{{ $solicitud_datos->fecha_radicado }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
                             </tr>
                         @endforeach
                         @foreach ($denuncias as $denuncia)
@@ -87,7 +87,7 @@
                                 <td>{{ $denuncia->fecha_radicado }}</td>
                                 <td><a href="{{ route('funcionario-gestionarDenuncia', ['id' => $denuncia->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
                             </tr>
                         @endforeach
                         @foreach ($felicitaciones as $felicitacion)
@@ -98,7 +98,7 @@
                                 <td>{{ $felicitacion->fecha_radicado }}</td>
                                 <td><a href="{{ route('funcionario-gestionarFelicitacion', ['id' => $felicitacion->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
                             </tr>
                         @endforeach
                         @foreach ($solicitudes_doc as $solicitud_doc)
@@ -109,7 +109,7 @@
                                 <td>{{ $solicitud_doc->fecha_radicado }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSolicitudDocumentos', ['id' => $solicitud_doc->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
                             </tr>
                         @endforeach
                         @foreach ($sugerencias as $sugerencia)
@@ -120,7 +120,7 @@
                                 <td>{{ $sugerencia->fecha_radicado }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSugerencia', ['id' => $sugerencia->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                            class="fa fa-edit text-info" aria-hidden="true"></a></td>
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -132,6 +132,13 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-
+    <script>
+        let btnsTabla = document.querySelectorAll('.btn-editar')
+        btnsTabla.forEach(btn =>{
+            if(btn.parentNode.tagName != 'A'){
+                btn.remove()
+            }
+        })
+    </script>
 @endsection
 <!-- ************************************************************* -->

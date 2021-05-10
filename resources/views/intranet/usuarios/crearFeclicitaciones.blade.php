@@ -36,7 +36,7 @@ Sistema de informaci&oacute;n
                                             <label for="hecho">Hecho</label>
                                             <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho"><i class="fas fa-minus-circle"></i></button>
                                         </div>
-                                        <input class="form-control mt-2 hecho" type="text" name="hecho" id="hecho">
+                                        <input class="form-control mt-2 hecho" type="text" name="hecho" id="hecho" required>
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end flex-row">
@@ -94,7 +94,7 @@ Sistema de informaci&oacute;n
                                     </div>
                                 <div class="form-group col-12">
                                     <label for="">Escriba sus felicitaciones</label>
-                                    <textarea class="form-control" rows="3" placeholder="" name="felicitacion" id="felicitacion"></textarea>
+                                    <textarea class="form-control" rows="3" placeholder="" name="felicitacion" id="felicitacion" required></textarea>
                                 </div>
                                 <input id="cantidadHechos" name="cantidadHechos" type="hidden" value="0">
                                 <div class="card-footer d-flex justify-content-end">

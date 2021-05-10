@@ -37,7 +37,7 @@
                             <div class="row d-flex">
                                 <div class="col-12 col-md-6 form-group"><label for="adquisicion">Lugar de adquisición del
                                         producto o servicio:</label>
-                                    <select name="adquisicion" id="adquisicion" class="custom-select rounded-0">
+                                    <select name="adquisicion" id="adquisicion" class="custom-select rounded-0" required>
                                         <option value="">--Seleccione--</option>
                                         <option value="Sede física">Sede física</option>
                                         <option value="Página web">Página web</option>
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 form-group">
                                     <label for="tipo">¿Su PQR es sobre un producto o servicio?</label>
-                                    <select name="tipo" id="tipo" class="custom-select rounded-0">
+                                    <select name="tipo" id="tipo" class="custom-select rounded-0" required>
                                         <option value="Producto">Producto</option>
                                         <option value="Servicio">Servicio</option>
                                     </select>
@@ -106,12 +106,12 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group"><label for="">No. Factura:</label>
-                                    <input class="form-control" type="text" name="factura" id="factura">
+                                    <input class="form-control" type="text" name="factura" id="factura" required>
                                 </div>
                                 <div class="col-12 col-md-6 form-group">
                                     <label>Fecha de factura:</label>
                                     <div class="input-group">
-                                        <input type="date" max="{{ date('Y-m-d') }}" name="fecha_factura" id="fecha_factura" class="form-control">
+                                        <input type="date" max="{{ date('Y-m-d') }}" name="fecha_factura" id="fecha_factura" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 form-group d-none grupo_servicio">

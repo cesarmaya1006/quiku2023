@@ -4,10 +4,10 @@ window.addEventListener('DOMContentLoaded', function () {
         let btnSubmit = document.querySelector('#fromFelicitacion')
         btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
-            if (!document.querySelector('#felicitacion').value) {
-                alert('felicitacion');
-                return
-            }
+            // if (!document.querySelector('#felicitacion').value) {
+            //     alert('felicitacion');
+            //     return
+            // }
             document.querySelector('#cantidadHechos').value = document.querySelectorAll('.hechoFelicitacion').length
             this.submit();
         })

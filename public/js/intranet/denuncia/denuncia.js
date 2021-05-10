@@ -4,10 +4,10 @@ window.addEventListener('DOMContentLoaded', function () {
         let btnSubmit = document.querySelector('#fromDenuncia')
         btnSubmit.addEventListener('submit', function(e){
             e.preventDefault()
-            if(!document.querySelector('#solicitud').value){
-                alert('solicitud');
-                return
-            }
+            // if(!document.querySelector('#solicitud').value){
+            //     alert('solicitud');
+            //     return
+            // }
             document.querySelector('.cantidadHechosDenuncia').value = document.querySelectorAll('.hechoDenuncia').length
             document.querySelector('.cantidadAnexosDenuncia').value = document.querySelectorAll('.anexodenuncia').length
             this.submit();
