@@ -151,6 +151,7 @@ Route::group(['middleware' => 'auth'], function () {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         Route::get('listado/gestionar_pqr_p/{id}', [PQR_P_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_p');
+        Route::post('listado/gestionar_pqr_p', [PQR_P_Controller::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_p_guardar');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         Route::get('listado/gestionar_pqr_q/{id}', [PQR_Q_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_q');

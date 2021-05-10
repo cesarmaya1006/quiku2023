@@ -20,6 +20,13 @@ class PQR_P_Controller extends Controller
         return view('intranet.funcionarios.pqr_p.gestion', compact('pqr'));
     }
 
+    public function gestionar_guardar(Request $request)
+    {
+        dd($request->all());
+
+        // return view('intranet.funcionarios.pqr_p.gestion', compact('pqr'));
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
