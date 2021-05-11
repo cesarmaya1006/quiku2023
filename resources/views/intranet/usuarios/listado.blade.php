@@ -44,9 +44,16 @@
                                 <td>{{ $pqr->estado }}</td>
                                 <td>{{ $pqr->fecha_radicado }}</td>
                                 <td>
-                                    <a href="{{ route('usuario-gestionarPQR', ['id' => $pqr->id]) }}"
-                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
+                                    @if ($pqr->peticiones->count() > 0)
+                                        <a href="{{ route('usuario-gestionarPQR', ['id' => $pqr->id]) }}"
+                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
+                                    @else
+                                        <a href="{{ route('usuario-generarPQR_motivos', ['id' => $pqr->id]) }}"
+                                            class="btn-accion-tabla eliminar tooltipsC" title="Terminar de Registrar"><i
+                                                class="fas fa-wrench text-danger btn-editar" aria-hidden="true"></a>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach
@@ -127,11 +134,12 @@
 @section('scripts_pagina')
     <script>
         let btnsTabla = document.querySelectorAll('.btn-editar')
-        btnsTabla.forEach(btn =>{
-            if(btn.parentNode.tagName != 'A'){
+        btnsTabla.forEach(btn => {
+            if (btn.parentNode.tagName != 'A') {
                 btn.remove()
             }
         })
+
     </script>
 @endsection
 <!-- ************************************************************* -->

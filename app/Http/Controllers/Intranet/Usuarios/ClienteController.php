@@ -61,6 +61,19 @@ class ClienteController extends Controller
         $felicitaciones = Felicitacion::where('persona_id', session('id_usuario'))->get();
         $solicitudes_doc = SolicitudDocInfo::where('persona_id', session('id_usuario'))->get();
         $sugerencias = Sugerencia::where('persona_id', session('id_usuario'))->get();
+
+        if ($pqr_S->count() > 0) {
+            foreach ($pqr_S as $pqr) {
+                if ($pqr->peticiones->count() == 0) {
+                    $pqr_update['estado'] = 'Sin radicar';
+                    PQR::findOrFail($pqr->id)->update($pqr_update);
+                } elseif ($pqr->estado == 'Sin radicar') {
+                    $pqr_update['estado'] = 'Radicada, sin iniciar tramite';
+                    PQR::findOrFail($pqr->id)->update($pqr_update);
+                }
+            }
+        }
+        $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
         return view('intranet.usuarios.listado', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario'));
     }
 

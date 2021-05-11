@@ -38,5 +38,14 @@ class Peticion extends Model
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
-
+    public function aclaraciones()
+    {
+        return $this->hasMany(Aclaracion::class, 'peticion_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function respuestas()
+    {
+        return $this->hasMany(Respuesta::class, 'peticion_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }
