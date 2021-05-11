@@ -18,7 +18,7 @@
                                 <div class="bs-stepper-header" role="tablist">
                                     <div class="step active" data-target="#test-l-1">
                                         <button type="button" class="step-trigger" role="tab" id="stepper1trigger1"
-                                            aria-controls="test-l-1" aria-selected="true" >
+                                            aria-controls="test-l-1" aria-selected="true">
                                             <span class="bs-stepper-circle">1</span>
                                             {{-- <span class="bs-stepper-label">Email</span> --}}
                                         </button>
@@ -67,19 +67,21 @@
                                     <select class="form-control" name="docutipos_id" id="docutipos_id" required>
                                         <option value="">--Seleccione un tipo--</option>
                                         @foreach ($tipos_docu as $tipodocu)
-                                            <option value="{{ $tipodocu->id }}" {{$tipodocu->id==1?'selected':''}}>{{ $tipodocu->abreb_id }}</option>
+                                            <option value="{{ $tipodocu->id }}"
+                                                {{ $tipodocu->id == 1 ? 'selected' : '' }}>
+                                                {{ $tipodocu->abreb_id }} ({{ $tipodocu->tipo_id }})</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="identificacion">Número de documento</label>
                                     <input type="text" class="form-control" id="identificacion" name="identificacion"
-                                        placeholder="Número documento" value="123456789" required>
+                                        placeholder="Número documento" required>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
                                     <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="Correo electrónico" value="algo@gmail.com" required>
+                                        placeholder="Correo electrónico" required>
                                 </div>
                                 <button class="mt-3 btn btn-primary" type="submit">Siguiente</button>
                             </form>
@@ -91,5 +93,5 @@
     </div>
 @endsection
 @section('script_pagina')
-<script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 @endsection

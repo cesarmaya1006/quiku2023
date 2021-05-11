@@ -164,8 +164,14 @@
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="nacionalidad">Nacionalidad</label>
-                                        <input type="text" class="form-control" id="nacionalidad" placeholder="Nacionalidad"
-                                            name="nacionalidad" required>
+                                        <select class="form-control" name="nacionalidad" id="nacionalidad" required>
+                                            @foreach ($paises as $pais)
+                                                <option value="{{ $pais->nacionalidad }}"
+                                                    {{ $pais->nacionalidad == 'Colombiano' ? 'selected' : '' }}>
+                                                    {{ $pais->nacionalidad }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="grado">Último grado de educación obtenido</label>
@@ -201,7 +207,6 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="grupoetnico">Grupo Étnico</label>
                                         <select class="form-control" name="grupoetnico" id="grupoetnico" required>
-                                            <option value="">--Seleccione--</option>
                                             <option value="1">Sin pertenencia étnica</option>
                                             <option value="2">Negro, mulato, afrodescendiente, afrocolombiano</option>
                                             <option value="3">Indígena</option>
