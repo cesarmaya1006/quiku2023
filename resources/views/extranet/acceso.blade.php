@@ -6,6 +6,12 @@
 @section('cuerpo_pagina')
     <div class="container index">
         <div class="container mt-3">
+            <div class="row d-flex justify-content-center mt-3">
+                <div class="col-11 col-md-6">
+                    @include('includes.error-form')
+                    @include('includes.mensaje')
+                </div>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-10 col-sm-8 col-md-3 mt-5">
                     <div class="card">
@@ -31,7 +37,8 @@
                                         <button class="mt-3 btn btn-primary" type="submit">Iniciar sesión</button>
                                     </div>
                                     <div class="centrar-items mt-3">
-                                        <p><a class="card-text" href="{{ route('solicitar_password') }}">¿Olvidé mi nombre de usuario o contraseña?</a></p>
+                                        <p><a class="card-text" href="{{ route('solicitar_password') }}">¿Olvidé mi nombre
+                                                de usuario o contraseña?</a></p>
                                     </div>
                                 </form>
                             </div>
@@ -42,7 +49,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">registro</h5>
-                            <p class="card-text mt-5">¿Ya tiene una cuenta? Para acceder a nuestro sistema de registro de peticiones, quejas y reclamos debe estar registrado</p>
+                            <p class="card-text mt-5">¿Ya tiene una cuenta? Para acceder a nuestro sistema de registro de
+                                peticiones, quejas y reclamos debe estar registrado</p>
                             <div class="centrar-items">
                                 <a href="{{ route('registro_ini') }}" class="mt-3 btn btn-primary">Registrarse</a>
                             </div>
@@ -53,18 +61,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">preguntas frecuentes</h5>
-                            <p class="card-text mt-4">Tienes dudas? Ingresa y conoce las respuestas a las preguntas más frecuentes que nos realizan nuestros usuarios.</p>
+                            <p class="card-text mt-4">Tienes dudas? Ingresa y conoce las respuestas a las preguntas más
+                                frecuentes que nos realizan nuestros usuarios.</p>
                             <div class="centrar-items">
                                 <a href="{{ route('preguntas_frecuentes') }}" class="mt-3 btn btn-primary">Ir al sitio</a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row d-flex justify-content-center mt-3">
-                <div class="col-11 col-md-6">
-                    @include('includes.error-form')
-                    @include('includes.mensaje')
                 </div>
             </div>
         </div>

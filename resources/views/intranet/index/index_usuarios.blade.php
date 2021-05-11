@@ -5,7 +5,7 @@
             <div class="small-box bg-info">
                 <div class="inner">
                     <h3>{{ $pqr_S->count() }}</h3>
-                    <p>Peticiones,Quejas,Reclamos</p>
+                    <p style="font-size: 0.8em">Peticiones,Quejas,Reclamos</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -20,7 +20,7 @@
                 <div class="inner">
                     <h3>{{ $conceptos->count() }}</h3>
 
-                    <p>Consultas</p>
+                    <p style="font-size: 0.8em">Consultas</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -35,7 +35,7 @@
                 <div class="inner">
                     <h3>{{ $solicitudes_datos->count() }}</h3>
 
-                    <p>Solicitud de datos personales</p>
+                    <p style="font-size: 0.8em">Solicitud de datos personales</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -50,7 +50,7 @@
                 <div class="inner">
                     <h3>{{ $denuncias->count() }}</h3>
 
-                    <p>Denuncias</p>
+                    <p style="font-size: 0.8em">Reporte de irregularidades</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
@@ -66,7 +66,7 @@
                 <div class="inner">
                     <h3>{{ $felicitaciones->count() }}</h3>
 
-                    <p>Felicitaciones</p>
+                    <p style="font-size: 0.8em">Felicitaciones</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
@@ -81,7 +81,7 @@
                 <div class="inner">
                     <h3>{{ $solicitudes_doc->count() }}</h3>
 
-                    <p>Solicitud de documentos o información</p>
+                    <p style="font-size: 0.8em">Solicitud de documentos o información</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-ingo"></i>
@@ -97,7 +97,7 @@
                 <div class="inner">
                     <h3>{{ $sugerencias->count() }}</h3>
 
-                    <p>Sugerencias</p>
+                    <p style="font-size: 0.8em">Sugerencias</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-pie-graph"></i>
