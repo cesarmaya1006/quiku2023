@@ -10,7 +10,7 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Sistema de informaci&oacute;n
+    Sistema de informaci&oacute;n PQR LEGAL PROCEEDINGS
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
@@ -91,6 +91,10 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         Días de prorroga: <strong>{{ $pqr->prorroga_dias }}</strong>
+                                        @if ($pqr->prorroga_dias > 0)
+                                            <a href="{{ asset('documentos/pqr/' . $pqr->prorroga_pdf) }}" target="_blank"
+                                                rel="noopener noreferrer">Documento Soporte</a>
+                                        @endif
                                     </div>
                                     <div class="col-12 col-md-6">
                                         Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
@@ -102,48 +106,6 @@
                                     <div class="col-12 col-md-6">
                                         Estado: <strong>{{ $pqr->estado }}</strong>
                                     </div>
-                                </div>
-                                <hr>
-                                <div class="row pb-3">
-                                    <div class="col-12 col-md-6 ">
-                                        <h6>Prorroga</h6>
-                                    </div>
-                                    <div class="col-12 col-md-6 d-flex flex-row">
-                                        <div class="form-check mb-3 mr-4">
-                                            <input id="" name="prorroga" type="radio" class="form-check-input" value="1"
-                                                {{ $pqr->prorroga == 1 ? 'checked' : '' }} />
-                                            <label id="_label" class="form-check-label" for="">SI</label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input id="" name="prorroga" type="radio" class="form-check-input" value="0"
-                                                {{ $pqr->prorroga == 0 ? 'checked' : '' }} />
-                                            <label id="_label" class="form-check-label" for="">NO</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 d-none" id="anexosProrroga">
-                                        <div class="col-12 d-flex row anexo">
-                                            <div class="col-12 col-md-5 form-group">
-                                                <label for="titulo">Título anexo</label>
-                                                <input type="text" class="form-control form-control-sm" name="titulo"
-                                                    id="titulo">
-                                            </div>
-                                            <div class="col-12 col-md-5 form-group">
-                                                <label for="documentos">Anexos o Pruebas</label>
-                                                <input class="form-control form-control-sm" type="file" name="documentos"
-                                                    id="documentos">
-                                            </div>
-                                            <div class="col-12 col-md-2 form-group">
-                                                <label for="plazo">Nuevo Plazo:</label>
-                                                <input type="number" class="form-control form-control-sm" name="plazo"
-                                                    id="plazo">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @if ($pqr->prorroga_pdf)
-                                        <div class="col-12">
-                                            <a href="#" target="_blank" rel="noopener noreferrer">SOPORTE DE PRORROGA</a>
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
                             @foreach ($pqr->peticiones as $peticion)
@@ -332,7 +294,8 @@
                                         </div>
                                     </div>
                                     <input class="id_peticion" id="id_peticion{{ $peticion->id }}"
-                                        name="id_peticion{{ $peticion->id }}" type="hidden" value="{{ $peticion->id }}">
+                                        name="id_peticion{{ $peticion->id }}" type="hidden"
+                                        value="{{ $peticion->id }}">
                                 </div>
                             @endforeach
                             <div class="card-footer d-flex justify-content-end">
@@ -350,6 +313,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-    <script src="{{ asset('js/intranet/generar_pqr/gestion.js') }}"></script>
+
 @endsection
 <!-- ************************************************************* -->

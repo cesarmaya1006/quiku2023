@@ -20,6 +20,7 @@ use App\Models\Productos\Producto;
 use App\Models\Servicios\Servicio;
 use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidarPqr;
 use App\Models\Productos\Referencia;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
@@ -140,7 +141,7 @@ class ClienteController extends Controller
     }
 
 
-    public function generarPQR_guardar(Request $request)
+    public function generarPQR_guardar(ValidarPqr $request)
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
@@ -669,6 +670,15 @@ class ClienteController extends Controller
         return redirect('admin/index')->with('mensaje', 'Se actualizaron los datos de manera exitosa en la plataforma');
     }
 
+
+    //=========================================================================================================================
+    public function gestionar_PQR($id)
+    {
+        $pqr = PQR::findOrFail($id);
+        return view('intranet.usuarios.gestion_pqr', compact('pqr'));
+    }
+    //=========================================================================================================================
+    //=========================================================================================================================
     public function download($id_tipo_pqr, $id_pqr)
     {
         $contenido = '';
