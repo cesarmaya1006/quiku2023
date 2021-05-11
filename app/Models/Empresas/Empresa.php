@@ -33,4 +33,9 @@ class Empresa extends Model
     {
         return $this->hasMany(SolicitudDocInfo::class, 'persona_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function empleado()
+    {
+        return $this->hasMany(Empleado::class, 'empresa_id', 'id');
+    }
 }

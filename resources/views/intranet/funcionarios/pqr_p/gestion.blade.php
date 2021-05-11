@@ -120,16 +120,12 @@
                                     </div>
                                     <div class="col-12 d-none" id="anexosProrroga">
                                         <div class="col-12 d-flex row anexo">
-                                            <div class="col-12 col-md-5 form-group">
-                                                <label for="titulo">Título anexo</label>
-                                                <input type="text" class="form-control form-control-sm" name="titulo_prorroga" id="titulo_prorroga">
-                                            </div>
-                                            <div class="col-12 col-md-5 form-group">
+                                            <div class="col-12 col-md-8 form-group">
                                                 <label for="documentos">Anexos o Pruebas</label>
                                                 <input class="form-control form-control-sm" type="file" name="documentos_prorroga"
                                                 id="documentos">
                                             </div>
-                                            <div class="col-12 col-md-2 form-group">
+                                            <div class="col-12 col-md-4 form-group">
                                                 <label for="plazo">Nuevo Plazo:</label>
                                                 <input type="number" class="form-control form-control-sm" name="plazo_prorroga" id="plazo_prorroga" min="1" max="{{$pqr->tipoPqr->tiempos}}">
                                             </div>
@@ -143,7 +139,6 @@
                                 </div>
                             </div>
                             @foreach ($pqr->peticiones as $peticion)
-
                                 <hr style="border-top: solid 4px black">
                                 <div class="col-12 solicitud rounded border mb-3 p-2"> 
                                     <div class="row">
@@ -214,12 +209,12 @@
                                         </div>
                                         <div class="col-12 col-md-6 d-flex flex-row">
                                             <div class="form-check mb-3 mr-4">
-                                                <input id="" name="aclaracion{{$peticion->id}}" type="radio" class="form-check-input aclaracion" value="1"
+                                                <input id="" name="aclaracion_check{{$peticion->id}}" type="radio" class="form-check-input aclaracion_check" value="1"
                                                     {{ $peticion->aclaracion == 1 ? 'checked' : '' }} {{ $peticion->aclaracion == 1 ? 'disabled' : '' }} />
                                                 <label id="_label" class="form-check-label" for="">SI</label>
                                             </div>
                                             <div class="form-check mb-3">
-                                                <input id="" name="aclaracion{{$peticion->id}}" type="radio" class="form-check-input aclaracion" value="0"
+                                                <input id="" name="aclaracion_check{{$peticion->id}}" type="radio" class="form-check-input aclaracion_check" value="0"
                                                     {{ $peticion->aclaracion == 0 ? 'checked' : '' }} {{ $peticion->aclaracion == 1 ? 'disabled' : '' }}/>
                                                 <label id="_label" class="form-check-label" for="">NO</label>
                                             </div>
@@ -234,29 +229,22 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            {{-- <form class="row" action="" method="post"> --}}
-                                                <div class="col-12 d-none aclaracion-form">
-                                                    <div class="col-12 col-md-12 form-group">
-                                                        <label for="solicitud">Aclaración</label>
-                                                        <input type="text" class="form-control form-control-sm" name="solicitud{{$peticion->id}}" id="solicitud{{$peticion->id}}">
+                                            <div class="col-12 d-none aclaracion-form">
+                                                <div class="col-12" id="aclaraciones">
+                                                    <div class="form-group block_aclaracion">
+                                                        <div class="title-aclaracion d-flex justify-content-between mt-2">
+                                                            <label for="aclaracion">Aclaración</label>
+                                                            <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarAclaracion"><i class="fas fa-minus-circle"></i></button>
+                                                        </div>
+                                                        <input class="form-control mt-2 aclaracion" type="text" name="aclaracion" id="aclaracion">
                                                     </div>
-                                                    {{-- <div class="col-12 d-flex row anexo">
-                                                        <div class="col-12 col-md-5 form-group">
-                                                            <label for="titulo">Título anexo</label>
-                                                            <input type="text" class="form-control form-control-sm" name="titulo{{$peticion->id}}" id="titulo{{$peticion->id}}">
-                                                        </div>
-                                                        <div class="col-12 col-md-5 form-group">
-                                                            <label for="documentos">Anexos o Pruebas</label>
-                                                            <input class="form-control form-control-sm" type="file" name="documentos{{$peticion->id}}"
-                                                            id="documentos">
-                                                        </div>
-                                                    </div> --}}
-                                                    {{-- <div class="col-12 col-md-12 form-group">
-                                                        <label for="respuesta">Respuesta</label>
-                                                        <input type="text" class="form-control form-control-sm" name="respuesta{{$peticion->id}}" id="respuesta{{$peticion->id}}">
-                                                    </div> --}}
                                                 </div>
-                                            {{-- </form> --}}
+                                                <div class="col-12 d-flex justify-content-end flex-row">
+                                                    <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAclaracion" id="crearAclaracion"><i
+                                                        class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
+                                                        otro Aclaración</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <hr>
@@ -319,7 +307,6 @@
                                             <span class="col-12 col-md-6 d-flex justify-content-center align-items-center">Fecha Max Notificacion:
                                                 {{ date('Y-m-d', strtotime($peticion->fecha_notificacion . '+ ' . ($peticion->recurso_dias + 1) . ' days')) }}
                                             </span>
-                                            {{-- <button type="submit" class="btn btn-primary">Guardar</button> --}}
                                         </div>
                                     </div>
                                     <input class="id_peticion" id="id_peticion{{$peticion->id}}" name="id_peticion{{$peticion->id}}" type="hidden" value="{{$peticion->id}}">
@@ -331,7 +318,6 @@
                             <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{$pqr->id}}">
                         </form>
                     </div>
-                    <!-- /.card-body -->
                 </div>
             </div>
         </div>

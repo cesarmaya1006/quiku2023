@@ -3,6 +3,7 @@
 namespace App\Models\Empleados;
 
 use App\Models\Admin\Tipo_Docu;
+use App\Models\Empresas\Empresa;
 use App\Models\PQR\PQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,6 @@ class Empleado extends Model
         return $this->hasMany(PQR::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
     public function usuario()
     {
         return $this->hasOne(Usuario::class, 'id');
@@ -38,5 +38,10 @@ class Empleado extends Model
     public function solicitudDocInfo()
     {
         return $this->hasMany(SolicitudDocInfo::class, 'persona_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
 }

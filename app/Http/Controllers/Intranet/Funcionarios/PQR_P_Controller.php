@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
-use App\Http\Controllers\Controller;
 use App\Models\PQR\PQR;
 use Illuminate\Http\Request;
+use App\Models\Admin\Usuario;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 
 class PQR_P_Controller extends Controller
 {
@@ -22,9 +24,28 @@ class PQR_P_Controller extends Controller
 
     public function gestionar_guardar(Request $request)
     {
-        dd($request->all());
-
-        // return view('intranet.funcionarios.pqr_p.gestion', compact('pqr'));
+        // $usuario = Usuario::findOrFail(session('id_usuario'));
+        // dd($usuario->empleado->id);
+        // $actualizarPqr['empresa_id'] = $usuario->empleado->id; 
+        $actualizarPqr['prorroga'] = $request['prorroga']; 
+        $actualizarPqr['prorroga_dias'] = $request['plazo_prorroga'];
+        $documentos = $request->allFiles();
+        if ($request->hasFile("documentos_prorroga")) {
+            $ruta = Config::get('constantes.folder_doc_pqr');
+            $ruta = trim($ruta);
+            $doc_subido = $documentos["documentos_prorroga"];
+            $tamaño = $doc_subido->getSize();
+            if ($tamaño > 0) {
+                $tamaño = $tamaño / 1000;
+            }
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $actualizarPqr['extension'] = $doc_subido->getClientOriginalExtension();
+            $actualizarPqr['peso'] = $tamaño;
+            $actualizarPqr['prorroga_pdf'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+        } 
+        PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);
+        return view('intranet.funcionario.listado');
     }
     
     /**
