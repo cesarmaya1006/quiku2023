@@ -54,14 +54,18 @@
                                     </div>
                                     @if ($pqr->adquisicion == 'Sede física')
                                         <div class="col-12 col-md-6">
+<<<<<<< HEAD
                                             Departatmento :
                                             <strong>{{ $pqr->municipio->departamento->departamento }}</strong>
+=======
+                                            Departatmento : <strong>{{ $pqr->sede->municipio->departamento->departamento }}</strong>
+>>>>>>> 18cb528a825021b7a47d7de14170d0251c5b4e36
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            Municipio : <strong>{{ $pqr->municipio->municipio }}</strong>
+                                            Municipio : <strong>{{ $pqr->sede->municipio->municipio }}</strong>
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            Sede : <strong>{{ $pqr->sede->sede }}</strong>
+                                            Sede : <strong>{{ $pqr->sede->nombre }}</strong>
                                         </div>
                                     @endif
                                     @if ($pqr->tipo == 'Producto')
@@ -124,6 +128,7 @@
                                         <div class="col-12 d-flex row anexo">
                                             <div class="col-12 col-md-5 form-group">
                                                 <label for="titulo">Título anexo</label>
+<<<<<<< HEAD
                                                 <input type="text" class="form-control form-control-sm" name="titulo"
                                                     id="titulo">
                                             </div>
@@ -136,10 +141,22 @@
                                                 <label for="plazo">Nuevo Plazo:</label>
                                                 <input type="number" class="form-control form-control-sm" name="plazo"
                                                     id="plazo">
+=======
+                                                <input type="text" class="form-control form-control-sm" name="titulo_prorroga" id="titulo_prorroga">
+                                            </div>
+                                            <div class="col-12 col-md-5 form-group">
+                                                <label for="documentos">Anexos o Pruebas</label>
+                                                <input class="form-control form-control-sm" type="file" name="documentos_prorroga"
+                                                id="documentos">
+                                            </div>
+                                            <div class="col-12 col-md-2 form-group">
+                                                <label for="plazo">Nuevo Plazo:</label>
+                                                <input type="number" class="form-control form-control-sm" name="plazo_prorroga" id="plazo_prorroga" min="1" max="{{$pqr->tipoPqr->tiempos}}">
+>>>>>>> 18cb528a825021b7a47d7de14170d0251c5b4e36
                                             </div>
                                         </div>
                                     </div>
-                                    @if ($pqr->prorroga_pdf)
+                                    @if ($pqr->prorroga)
                                         <div class="col-12">
                                             <a href="#" target="_blank" rel="noopener noreferrer">SOPORTE DE PRORROGA</a>
                                         </div>
@@ -234,7 +251,17 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
+                                            <div class="row">
+                                                <div class="col-12 table-responsive">
+                                                    <table>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
                                             {{-- <form class="row" action="" method="post"> --}}
+<<<<<<< HEAD
                                             <div class="col-12 d-none aclaracion-form">
                                                 <div class="col-12 col-md-12 form-group">
                                                     <label for="solicitud">Solicitud</label>
@@ -254,6 +281,28 @@
                                                         <input class="form-control form-control-sm" type="file"
                                                             name="documentos{{ $peticion->id }}" id="documentos">
                                                     </div>
+=======
+                                                <div class="col-12 d-none aclaracion-form">
+                                                    <div class="col-12 col-md-12 form-group">
+                                                        <label for="solicitud">Aclaración</label>
+                                                        <input type="text" class="form-control form-control-sm" name="solicitud{{$peticion->id}}" id="solicitud{{$peticion->id}}">
+                                                    </div>
+                                                    {{-- <div class="col-12 d-flex row anexo">
+                                                        <div class="col-12 col-md-5 form-group">
+                                                            <label for="titulo">Título anexo</label>
+                                                            <input type="text" class="form-control form-control-sm" name="titulo{{$peticion->id}}" id="titulo{{$peticion->id}}">
+                                                        </div>
+                                                        <div class="col-12 col-md-5 form-group">
+                                                            <label for="documentos">Anexos o Pruebas</label>
+                                                            <input class="form-control form-control-sm" type="file" name="documentos{{$peticion->id}}"
+                                                            id="documentos">
+                                                        </div>
+                                                    </div> --}}
+                                                    {{-- <div class="col-12 col-md-12 form-group">
+                                                        <label for="respuesta">Respuesta</label>
+                                                        <input type="text" class="form-control form-control-sm" name="respuesta{{$peticion->id}}" id="respuesta{{$peticion->id}}">
+                                                    </div> --}}
+>>>>>>> 18cb528a825021b7a47d7de14170d0251c5b4e36
                                                 </div>
                                                 <div class="col-12 col-md-12 form-group">
                                                     <label for="respuesta">Respuesta</label>
@@ -269,6 +318,9 @@
                                     <div class="row">
                                         <div class="col-12 col-md-6">
                                             <h6>Respuesta</h6>
+                                        </div>
+                                        <div class="col-12 form-group titulo-anexoConsulta">
+                                            <textarea type="text" class="form-control form-control-sm" name="respuesta{{$peticion->id}}" id="{{$peticion->id}}"></textarea>
                                         </div>
                                         <div class="col-12" id="anexosConsulta">
                                             <div class="col-12 d-flex row anexoconsulta">

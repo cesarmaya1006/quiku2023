@@ -46,4 +46,9 @@ class Sugerencia extends Model
     {
         return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id', 'id');
+    }
 }
