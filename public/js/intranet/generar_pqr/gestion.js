@@ -34,6 +34,10 @@ window.addEventListener('DOMContentLoaded', function(){
                 break;
         }
     });
+
+    $("#plazo_prorroga").keydown(function() {
+        return false
+      });
     // ---------------------------------------------------------------------------------------------------------
     // Inicio Función para generar varios anexos en una consulta con validación.
     ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))

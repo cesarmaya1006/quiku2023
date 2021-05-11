@@ -8,6 +8,7 @@ use App\Models\Admin\Municipio;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;
+use App\Models\Empresas\Sede;
 use App\Models\Servicios\Servicio;
 use App\Models\Productos\Referencia;
 use Illuminate\Database\Eloquent\Model;
@@ -54,5 +55,10 @@ class PQR extends Model
     public function tipoPqr()
     {
         return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id', 'id');
     }
 }
