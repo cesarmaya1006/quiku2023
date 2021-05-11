@@ -33,7 +33,7 @@ class Tabla_Menu extends Seeder
             //----------------------------------------------------------------------------------------------------------------------
             // Menus hijos
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Listado PQR', 'menu_id' => '9',  'url' => 'usuario/index', 'orden' => '1',  'icono' => 'far fa-list-alt'],
+            ['nombre' => 'Listado PQR', 'menu_id' => '9',  'url' => 'usuario/listado', 'orden' => '1',  'icono' => 'far fa-list-alt'],
             ['nombre' => 'Generar PQR', 'menu_id' => '9',  'url' => 'usuario/generar', 'orden' => '2',  'icono' => 'fas fa-plus-square'],
             //----------------------------------------------------------------------------------------------------------------------
             // Menus  padre

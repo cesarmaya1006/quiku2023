@@ -17,6 +17,12 @@
 @section('cuerpo_pagina')
     <div class="container-fluid">
         <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-8">
+                @include('includes.error-form')
+                @include('includes.mensaje')
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
             {{-- PQR --}}
             <div class="col-12">
                 <div class="card card-primary">
@@ -65,7 +71,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 form-group d-none" id="cajasede_id">
                                     <label for="">Sede:</label>
-                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0" >
+                                    <select name="sede_id" id="sede_id" class="custom-select rounded-0">
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>
@@ -78,7 +84,8 @@
                                 </div>
                                 <div class="col-12 col-md-6 form-group grupo_producto">
                                     <label for="">Categoria del producto</label>
-                                    <select name="categoria" id="categoria" class="custom-select rounded-0"  data_url="{{ route('cargar_productos') }}">
+                                    <select name="categoria" id="categoria" class="custom-select rounded-0"
+                                        data_url="{{ route('cargar_productos') }}">
                                         <option value="">--Seleccione--</option>
                                         @foreach ($categorias as $categoria)
                                             <option value="{{ $categoria->id }}">
@@ -89,13 +96,15 @@
                                 </div>
                                 <div class="col-12 col-md-6 form-group grupo_producto">
                                     <label for="">Producto</label>
-                                    <select name="producto" id="producto" class="custom-select rounded-0" data_url="{{ route('cargar_marcas') }}">
+                                    <select name="producto" id="producto" class="custom-select rounded-0"
+                                        data_url="{{ route('cargar_marcas') }}">
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group grupo_producto">
                                     <label for="">Marca:</label>
-                                    <select name="marca" id="marca" class="custom-select rounded-0" data_url="{{ route('cargar_referencias') }}">
+                                    <select name="marca" id="marca" class="custom-select rounded-0"
+                                        data_url="{{ route('cargar_referencias') }}">
                                         <option value="">--Seleccione--</option>
                                     </select>
                                 </div>
@@ -111,7 +120,8 @@
                                 <div class="col-12 col-md-6 form-group">
                                     <label>Fecha de factura:</label>
                                     <div class="input-group">
-                                        <input type="date" max="{{ date('Y-m-d') }}" name="fecha_factura" id="fecha_factura" class="form-control" required>
+                                        <input type="date" max="{{ date('Y-m-d') }}" name="fecha_factura"
+                                            id="fecha_factura" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 form-group d-none grupo_servicio">

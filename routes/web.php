@@ -182,7 +182,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Route::group(['prefix' => 'usuario'], function () {
-        Route::get('index', [ClienteController::class, 'index'])->name('usuario-index');
+        Route::get('listado', [ClienteController::class, 'index'])->name('usuario-index');
         Route::get('generar', [ClienteController::class, 'generar'])->name('usuario-generar');
         Route::post('generar', [ClienteController::class, 'direccion'])->name('usuario-generar_direccion');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -195,6 +195,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cargar_productos', [ClienteController::class, 'cargar_productos'])->name('cargar_productos');
         Route::get('cargar_marcas', [ClienteController::class, 'cargar_marcas'])->name('cargar_marcas');
         Route::get('cargar_referencias', [ClienteController::class, 'cargar_referencias'])->name('cargar_referencias');
+        //----------------------------------------------------------------------------------------------------------------
+        Route::get('listado/gestionarPQR/{id}', [ClienteController::class, 'gestionar_PQR'])->name('usuario-gestionarPQR');
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         Route::get('generarConceptoUOpinion', [ClienteController::class, 'generarConceptoUOpinion'])->name('usuario-generarConceptoUOpinion');

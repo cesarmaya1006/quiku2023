@@ -44,19 +44,9 @@
                                 <td>{{ $pqr->estado }}</td>
                                 <td>{{ $pqr->fecha_radicado }}</td>
                                 <td>
-                                    @if ($pqr->tipo_pqr_id == 1)
-                                        <a href="{{ route('funcionario-gestionar_pqr_p', ['id' => $pqr->id]) }}"
-                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                    @elseif ($pqr->tipo_pqr_id == 2)
-                                        <a href="{{ route('funcionario-gestionar_pqr_q', ['id' => $pqr->id]) }}"
-                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                    @else
-                                        <a href="{{ route('funcionario-gestionar_pqr_r', ['id' => $pqr->id]) }}"
-                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                    @endif
+                                    <a href="{{ route('usuario-gestionarPQR', ['id' => $pqr->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                 </td>
                             </tr>
                         @endforeach
