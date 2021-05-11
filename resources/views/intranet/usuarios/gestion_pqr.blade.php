@@ -212,6 +212,28 @@
                                             <div class="col-12">
                                                 <h6>Pendientes de aclaración o complementación</h6>
                                             </div>
+                                            <table class="table table-light" style="font-size: 0.8em;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Fecha Sol Aclaración</th>
+                                                        <th scope="col">Aclaracion</th>
+                                                        <th scope="col">Estado</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($peticion->aclaraciones as $aclaracion)
+                                                    @if ($aclaracion->respuesta == '')
+                                                            <tr>
+                                                                <td>{{ $aclaracion->fecha }}</td>
+                                                                <td>{{ $aclaracion->aclaracion }}</td>
+                                                                <td>Pendiente</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
                                             <form class="col-12" action="#" method="POST" autocomplete="off"
                                                 enctype="multipart/form-data">
                                                 @csrf

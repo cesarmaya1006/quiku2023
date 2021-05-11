@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->truncateTablas([
             'docutipos', 'roles', 'menu', 'menu_rol', 'icono', 'pais', 'departamento', 'municipio',
             'sedes', 'parametros',
-            'usuarios', 'personas', 'tipo_pqr', 'motivos', 'motivo_sub', 'categorias', 'productos', 'marcas',
+            'usuarios', 'personas', 'tipo_pqr', 'estadospqr', 'motivos', 'motivo_sub', 'categorias', 'productos', 'marcas',
             'referencias', 'servicios',
 
         ]);
@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_Parametros::class);
         $this->call(Tabla_Usuarios::class);
         $this->call(Tabla_TipoPQR::class);
+        $this->call(Tabla_EstadosPQR::class);
         $this->call(Tabla_Motivos::class);
         $this->call(Tabla_SubMotivos::class);
         $this->call(Tabla_Categorias::class);

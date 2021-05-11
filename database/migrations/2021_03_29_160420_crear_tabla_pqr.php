@@ -40,7 +40,8 @@ class CrearTablaPqr extends Migration
             $table->date('fecha_generacion');
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();
-            $table->string('estado')->default('Radicada, sin iniciar tramite');
+            $table->unsignedBigInteger('estadopqr_id')->nullable();
+            $table->foreign('estadopqr_id', 'fk_estadopqr_pqr')->references('id')->on('estadospqr')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
