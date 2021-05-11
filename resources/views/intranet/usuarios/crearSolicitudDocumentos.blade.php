@@ -104,7 +104,7 @@ Sistema de informaci&oacute;n
                                         <div class="col-12 col-md-4 form-group doc-anexoSolicitud">
                                             <label for="documentos">Anexos o Pruebas</label>
                                             <input class="form-control form-control-sm" type="file" name="documentos"
-                                                id="documentos">
+                                                id="documentos" accept="application/pdf">
                                         </div>
                                     </div>
                                 </div>

@@ -268,7 +268,7 @@
                                                                     name="pdf_aclaracion{{ $aclaracion->id }}"
                                                                     id="pdf_aclaracion{{ $aclaracion->id }}"
                                                                     class="form-control form-control-sm" placeholder=""
-                                                                    aria-describedby="helpId">
+                                                                    aria-describedby="helpId" accept="application/pdf">
                                                             </div>
                                                         </div>
                                                     @endif

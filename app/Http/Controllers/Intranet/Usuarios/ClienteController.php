@@ -709,8 +709,8 @@ class ClienteController extends Controller
                 $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
                 foreach ($pqr->peticiones as $peticion) {
                     $num++;
-                    $contenido .= '<h4>Motivo #' . $num . '</h4>';
-                    $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo_sub_id . '<p>';
+                    $contenido .= '<h4>Motivo: ' . $peticion->motivo->sub_motivo . '</h4>';
+                    // $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo->sub_motivo . '<p>';
                     foreach ($peticion->hechos as $hecho) {
                         $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                     }
@@ -728,8 +728,8 @@ class ClienteController extends Controller
                 $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
                 foreach ($pqr->peticiones as $peticion) {
                     $num++;
-                    $contenido .= '<h4>Motivo #' . $num . '</h4>';
-                    $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo_sub_id . '<p>';
+                    $contenido .= '<h4>Motivo: ' . $peticion->motivo->sub_motivo . '</h4>';
+                    // $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo->sub_motivo . '<p>';
                     foreach ($peticion->hechos as $hecho) {
                         $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                     }
@@ -747,8 +747,8 @@ class ClienteController extends Controller
                 $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
                 foreach ($pqr->peticiones as $peticion) {
                     $num++;
-                    $contenido .= '<h4>Motivo #' . $num . '</h4>';
-                    $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo_sub_id . '<p>';
+                    $contenido .= '<h4>Motivo: ' . $peticion->motivo->sub_motivo . '</h4>';
+                    // $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo->sub_motivo . '<p>';
                     foreach ($peticion->hechos as $hecho) {
                         $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                     }

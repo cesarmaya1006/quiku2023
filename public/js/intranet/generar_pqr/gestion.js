@@ -1,4 +1,5 @@
 window.addEventListener('DOMContentLoaded', function(){
+    ajustarNamePeticion()
     // ---------------------------------------------------------------------------------------------------------
     $('input[type=radio][name=prorroga]').on('change', function() {
         switch ($(this).val()) {
@@ -38,6 +39,53 @@ window.addEventListener('DOMContentLoaded', function(){
     $("#plazo_prorroga").keydown(function() {
         return false
       });
+
+    let btnSubmit = document.querySelector('#fromGestionPqr')
+    btnSubmit.addEventListener('submit', function (e) {
+        e.preventDefault()
+        ajustarPeticiones()
+        document.querySelector('.totalGeneralaclaraciones').value = document.querySelectorAll('.block_aclaracion').length
+        document.querySelector('.totalGeneralAnexos').value = document.querySelectorAll('.anexoconsulta').length
+        document.querySelector('.totalPeticiones').value = document.querySelectorAll('.peticion_general').length
+        this.submit();
+    })
+    // ---------------------------------------------------------------------------------------------------------
+    // Inicio Función para ajustar name y id de cada peticion.
+    function ajustarNamePeticion(){
+        let peticiones = document.querySelectorAll('.peticion_general')
+        for (let i = 0; i < peticiones.length; i++) {
+            const peticion = peticiones[i]
+            peticion.querySelectorAll('.aclaracion_check').forEach(check => {
+                check.name = `aclaracion_check${i}`
+                check.id = `aclaracion_check${i}`
+            })
+            peticion.querySelectorAll('.respuesta').forEach(respuesta => {
+                respuesta.name = `respuesta${i}`
+                respuesta.id = `respuesta${i}`
+            })
+            peticion.querySelectorAll('.id_peticion').forEach(id_peticion => {
+                id_peticion.name = `id_peticion${i}`
+                id_peticion.id = `id_peticion${i}`
+            })
+            peticion.querySelectorAll('.totalPeticionAclaraciones').forEach(totalPeticionAclaraciones => {
+                totalPeticionAclaraciones.name = `totalPeticionAclaraciones${i}`
+                totalPeticionAclaraciones.id = `totalPeticionAclaraciones${i}`
+            })
+            peticion.querySelectorAll('.totalPeticionAnexos').forEach(totalPeticionAnexos => {
+                totalPeticionAnexos.name = `totalPeticionAnexos${i}`
+                totalPeticionAnexos.id = `totalPeticionAnexos${i}`
+            })
+        }
+    }
+    
+    function ajustarPeticiones(){
+        let peticion = document.querySelectorAll('.peticion_general')
+        for (let i = 0; i < peticion.length; i++) {
+            peticion[i].querySelector('.totalPeticionAclaraciones').value = peticion[i].querySelectorAll('.block_aclaracion').length
+            peticion[i].querySelector('.totalPeticionAnexos').value = peticion[i].querySelectorAll('.anexoconsulta').length
+        }
+    }
+    // Fin Función para ajustar name y id de cada peticion.
     // ---------------------------------------------------------------------------------------------------------
     // Inicio Función para generar varios anexos en una consulta con validación.
     ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
@@ -68,7 +116,6 @@ window.addEventListener('DOMContentLoaded', function(){
             anexoconsulta.querySelector('.descripcion-anexoConsulta input').name = `descripcion${i}`
             anexoconsulta.querySelector('.doc-anexoConsulta input').id = `documentos${i}`
             anexoconsulta.querySelector('.doc-anexoConsulta input').name = `documentos${i}`
-
         }
     }
 
@@ -140,4 +187,6 @@ window.addEventListener('DOMContentLoaded', function(){
     }
     // Fin Función para generar varios Hechos con validación.
     // ---------------------------------------------------------------------------------------------------------
+
+
 })
