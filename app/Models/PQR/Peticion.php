@@ -43,9 +43,9 @@ class Peticion extends Model
         return $this->hasMany(Aclaracion::class, 'peticion_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    public function respuestas()
+    public function respuesta()
     {
-        return $this->hasMany(Respuesta::class, 'peticion_id', 'id');
+        return $this->hasOne(Respuesta::class, 'peticion_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

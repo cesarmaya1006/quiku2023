@@ -10,6 +10,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 },
               },
             text: `Número de radicado ${document.querySelector('#radicado').value}`,
+            // text: `Fecha de radicado ${document.querySelector('#fecha_radicado').value}`,
             icon: 'success',
             button: 'Cerrar',
           });

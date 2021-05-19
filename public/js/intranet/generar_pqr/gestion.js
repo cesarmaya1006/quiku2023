@@ -1,13 +1,41 @@
 window.addEventListener('DOMContentLoaded', function(){
     ajustarNamePeticion()
+    let verificacionRespuesta = document.querySelectorAll('.respuestaRespuesta')
+    verificacionRespuesta.forEach(item => {
+        if(item.value != ''){
+            item.parentElement.querySelector('.respuesta').setAttribute('disabled','')
+            item.parentElement.querySelector('#anexosConsulta').classList.add('d-none')
+            item.parentElement.querySelector('#crearAnexo').classList.add('d-none')
+        }
+    })
+    let verificacionProrroga = document.querySelector('.respuestaProrroga')
+    if(verificacionProrroga.value == 1){
+        verificacionProrroga.parentElement.querySelector('.prorroga_si').setAttribute('checked','')
+        verificacionProrroga.parentElement.querySelector('.prorroga_no').setAttribute('disabled','')
+        verificacionProrroga.parentElement.querySelector('.plazo_prorroga').parentElement.remove()
+        verificacionProrroga.parentElement.querySelector('.prorroga_pdf').setAttribute('disabled','')
+    }else {
+        verificacionProrroga.parentElement.querySelector('.prorroga_no').setAttribute('checked','')
+        verificacionProrroga.parentElement.querySelector('.contentProrroga').classList.add('d-none')
+    }
+    let verificacionAclaracion = document.querySelectorAll('.respuestaAclaracion')
+    verificacionAclaracion.forEach(item => {
+        if(item.value == 1){
+            item.parentElement.querySelector('.aclaracion_check_si').setAttribute('checked','')
+            item.parentElement.querySelector('.aclaracion_check_no').setAttribute('disabled','')
+        }else{
+            item.parentElement.querySelector('.aclaracion_check_no').setAttribute('checked','')
+            item.parentElement.querySelector('.aclaraciones').parentElement.classList.add('d-none')
+        }
+    })
     // ---------------------------------------------------------------------------------------------------------
     $('input[type=radio][name=prorroga]').on('change', function() {
         switch ($(this).val()) {
             case '1':
-                $('#anexosProrroga').removeClass('d-none');
+                $('.contentProrroga').removeClass('d-none');
                 break;
             case '0':
-                $('#anexosProrroga').addClass('d-none');
+                $('.contentProrroga').addClass('d-none');
                 break;
         }
     });
@@ -16,10 +44,10 @@ window.addEventListener('DOMContentLoaded', function(){
         let padre = e.target.parentNode.parentNode.parentNode
         switch (e.target.value) {
             case '1':
-                padre.querySelector('.aclaracion-form').classList.remove('d-none');
+                padre.querySelector('.aclaraciones').parentElement.classList.remove('d-none');
                 break;
             case '0':
-                padre.querySelector('.aclaracion-form').classList.add('d-none');
+                padre.querySelector('.aclaraciones').parentElement.classList.add('d-none');
                 break;
         }
     });
@@ -43,8 +71,15 @@ window.addEventListener('DOMContentLoaded', function(){
     let btnSubmit = document.querySelector('#fromGestionPqr')
     btnSubmit.addEventListener('submit', function (e) {
         e.preventDefault()
+        let anexos = document.querySelectorAll('input[type="file"]')
+        anexos.forEach(anexo =>{
+            if(anexo.value == ''){
+                anexo.parentNode.parentNode.remove()
+            }
+        })
+        ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
         ajustarPeticiones()
-        document.querySelector('.totalGeneralaclaraciones').value = document.querySelectorAll('.block_aclaracion').length
+        document.querySelector('.totalGeneralaclaraciones').value = document.querySelectorAll('.aclaracion').length
         document.querySelector('.totalGeneralAnexos').value = document.querySelectorAll('.anexoconsulta').length
         document.querySelector('.totalPeticiones').value = document.querySelectorAll('.peticion_general').length
         this.submit();
@@ -81,7 +116,7 @@ window.addEventListener('DOMContentLoaded', function(){
     function ajustarPeticiones(){
         let peticion = document.querySelectorAll('.peticion_general')
         for (let i = 0; i < peticion.length; i++) {
-            peticion[i].querySelector('.totalPeticionAclaraciones').value = peticion[i].querySelectorAll('.block_aclaracion').length
+            peticion[i].querySelector('.totalPeticionAclaraciones').value = peticion[i].querySelectorAll('.aclaracion').length
             peticion[i].querySelector('.totalPeticionAnexos').value = peticion[i].querySelectorAll('.anexoconsulta').length
         }
     }
@@ -141,7 +176,7 @@ window.addEventListener('DOMContentLoaded', function(){
     // Fin Función para generar varios anexos en una consulta con validación.
     // --------------------------------------------------------------------------------------------------------------------
     // Inicio Función para generar varios Hechos con validación.
-    ajustarNameAclaracion(document.querySelectorAll('.block_aclaracion'))
+    ajustarNameAclaracion(document.querySelectorAll('.aclaracion'))
     document.querySelectorAll('.crearAclaracion').forEach(e => {
         e.addEventListener('click', crearNuevoAclaracion)
     })
@@ -150,39 +185,43 @@ window.addEventListener('DOMContentLoaded', function(){
     })    
     function crearNuevoAclaracion(e) {
         e.preventDefault()
-        let consulta = e.target.parentNode.parentNode
-        nuevoAclaracion = consulta.querySelectorAll('.block_aclaracion')[0].cloneNode(true)
-        nuevoAclaracion.querySelector('.block_aclaracion input').value = ''
-        consulta.querySelector('#aclaraciones').appendChild(nuevoAclaracion)
-        ajustarNameAclaracion(document.querySelectorAll('.block_aclaracion'))
+        let aclaracion = e.target.parentNode.parentNode
+        nuevoAclaracion = aclaracion.querySelectorAll('.aclaracion')[0].cloneNode(true)
+        nuevoAclaracion.querySelector('.tipo_aclaracion option').value = ''
+        nuevoAclaracion.querySelector('.solicitud_aclaracion').value = ''
+        aclaracion.querySelector('.aclaraciones').appendChild(nuevoAclaracion)
+        ajustarNameAclaracion(document.querySelectorAll('.aclaracion'))
         document.querySelectorAll('.eliminarAclaracion').forEach(item => item.addEventListener('click', agregarEliminarAclaracion))
     }
 
     function ajustarNameAclaracion(consultaAclaracions){
         for (let i = 0; i < consultaAclaracions.length; i++) {
             const aclaracion = consultaAclaracions[i];
-            aclaracion.id = `aclaracion${i}`
-            aclaracion.querySelector('input').id = `aclaracion${i}`
-            aclaracion.querySelector('input').name = `aclaracion${i}`
+            tipo_aclaracion = aclaracion.querySelector('.tipo_aclaracion')
+            solicitud_aclaracion = aclaracion.querySelector('.solicitud_aclaracion')
+            tipo_aclaracion.id = `tipo_aclaracion${i}`
+            tipo_aclaracion.name = `tipo_aclaracion${i}`
+            solicitud_aclaracion.id = `solicitud_aclaracion${i}`
+            solicitud_aclaracion.name = `solicitud_aclaracion${i}`
         }
     }
     function agregarEliminarAclaracion(e) {
         e.preventDefault()
         let consulta = e.target
         if (consulta.tagName === 'I') {
-            consulta = consulta.parentNode.parentNode.parentNode.parentNode
+            consulta = consulta.parentNode.parentNode.parentNode.parentNode.parentNode
         }else {
-            consulta = consulta.parentNode.parentNode.parentNode
+            consulta = consulta.parentNode.parentNode.parentNode.parentNode
         }
-        if(consulta.querySelectorAll('.block_aclaracion').length >= 2){
+        if(consulta.querySelectorAll('.aclaracion').length >= 2){
             let idAclaracion = e.target
             if (idAclaracion.tagName === 'I') {
                 idAclaracion = idAclaracion.parentNode.parentNode.parentNode
             }else {
                 idAclaracion = idAclaracion.parentNode.parentNode
             }
-            idAclaracion.remove()
-            ajustarNameAclaracion(document.querySelectorAll('.block_aclaracion'))
+            idAclaracion.parentElement.remove()
+            ajustarNameAclaracion(document.querySelectorAll('.aclaracion'))
         }
     }
     // Fin Función para generar varios Hechos con validación.

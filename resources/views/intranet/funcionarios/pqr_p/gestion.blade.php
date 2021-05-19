@@ -88,7 +88,7 @@
                                         Fecha de factura: <strong>{{ $pqr->fecha_factura }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        Días de prorroga: <strong>{{ $pqr->prorroga_dias }}</strong>
+                                        Plazo de respuesta: <strong>{{ $pqr->prorroga_dias }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
@@ -103,54 +103,32 @@
                                 </div>
                                 <hr>
                                 <div class="row pb-3">
+                                    <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
                                     <div class="col-12 col-md-6 ">
                                         <h6>Prorroga</h6>
                                     </div>
-                                    @if (!$pqr->prorroga)
-                                        <div class="col-12 col-md-6 d-flex flex-row">
-                                            <div class="form-check mb-3 mr-4">
-                                                <input id="" name="prorroga" type="radio" class="form-check-input" value="1"
-                                                    {{ $pqr->prorroga == 1 ? 'checked' : '' }} />
-                                                <label id="_label" class="form-check-label" for="">SI</label>
-                                            </div>
-                                            <div class="form-check mb-3">
-                                                <input id="" name="prorroga" type="radio" class="form-check-input" value="0"
-                                                    {{ $pqr->prorroga == 0 ? 'checked' : '' }} />
-                                                <label id="_label" class="form-check-label" for="">NO</label>
-                                            </div>
+                                    <div class="col-12 col-md-6 d-flex flex-row">
+                                        <div class="form-check mb-3 mr-4">
+                                            <input id="" name="prorroga" type="radio" class="form-check-input prorroga_si" value="1"/>
+                                            <label id="_label" class="form-check-label" for="">SI</label>
                                         </div>
-                                    @else 
-                                        <div class="col-12 col-md-6 d-flex flex-row">
-                                            <div class="form-check mb-3 mr-4">
-                                                <input id="" name="prorroga" type="radio" class="form-check-input" value="1"
-                                                    {{ $pqr->prorroga == 1 ? 'checked' : '' }} disabled />
-                                                <label id="_label" class="form-check-label" for="">SI</label>
-                                            </div>
-                                            <div class="form-check mb-3">
-                                                <input id="" name="prorroga" type="radio" class="form-check-input" value="0"
-                                                    {{ $pqr->prorroga == 0 ? 'checked' : '' }} disabled/>
-                                                <label id="_label" class="form-check-label" for="">NO</label>
-                                            </div>
+                                        <div class="form-check mb-3">
+                                            <input id="" name="prorroga" type="radio" class="form-check-input prorroga_no" value="0"/>
+                                            <label id="_label" class="form-check-label" for="">NO</label>
                                         </div>
-                                    @endif
-                                    <div class="col-12 d-none" id="anexosProrroga">
+                                    </div>
+                                    <div class="col-12 contentProrroga" id="contentProrroga">
                                         <div class="col-12 d-flex row anexo">
-                                            <div class="col-12 col-md-8 form-group">
-                                                <label for="documentos">Anexos o Pruebas</label>
-                                                <input class="form-control form-control-sm" type="file" name="documentos_prorroga" accept="application/pdf"
-                                                id="documentos">
-                                            </div>
-                                            <div class="col-12 col-md-4 form-group">
+                                            <div class="col-12 col-md-1 form-group">
                                                 <label for="plazo">Nuevo Plazo:</label>
-                                                <input type="number" class="form-control form-control-sm" name="plazo_prorroga" id="plazo_prorroga" min="1" max="{{$pqr->tipoPqr->tiempos}}">
+                                                <input type="number" class="form-control form-control-sm plazo_prorroga" name="plazo_prorroga" id="plazo_prorroga" min="1" max="{{$pqr->tipoPqr->tiempos}}">
+                                            </div>
+                                            <div class="col-12 d-flex row">
+                                                <label for="prorroga_pdf">Justificacion de prorroga</label>
+                                                <textarea type="text" class="form-control form-control-sm prorroga_pdf" name="prorroga_pdf" id="prorroga_pdf" >{{$pqr->prorroga_pdf}}</textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    @if ($pqr->prorroga)
-                                        <div class="col-12">
-                                            <a href="#" target="_blank" rel="noopener noreferrer">SOPORTE DE PRORROGA</a>
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
                             @foreach ($pqr->peticiones as $peticion)
@@ -219,57 +197,88 @@
                                     </div>
                                     <hr>
                                     <div class="row">
+                                        <input class="respuestaAclaracion" type="hidden" value="{{$peticion->aclaracion}}">
                                         <div class="col-12 col-md-6">
                                             <h6>Aclaraciones</h6>
                                         </div>
                                         <div class="col-12 col-md-6 d-flex flex-row">
                                             <div class="form-check mb-3 mr-4">
-                                                <input id="" name="aclaracion_check" type="radio" class="form-check-input aclaracion_check" value="1"
-                                                    {{ $peticion->aclaracion == 1 ? 'checked' : '' }} {{ $peticion->aclaracion == 1 ? 'disabled' : '' }} />
-                                                <label id="_label" class="form-check-label" for="">SI</label>
+                                                <input id="" name="aclaracion_check" type="radio" class="form-check-input aclaracion_check aclaracion_check_si" value="1"/>
+                                                <label class="form-check-label" for="">SI</label>
                                             </div>
                                             <div class="form-check mb-3">
-                                                <input id="" name="aclaracion_check" type="radio" class="form-check-input aclaracion_check" value="0"
-                                                    {{ $peticion->aclaracion == 0 ? 'checked' : '' }} {{ $peticion->aclaracion == 1 ? 'disabled' : '' }}/>
-                                                <label id="_label" class="form-check-label" for="">NO</label>
+                                                <input id="" name="aclaracion_check" type="radio" class="form-check-input aclaracion_check aclaracion_check_no" value="0"/>
+                                                <label class="form-check-label" for="">NO</label>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="row">
-                                                <div class="col-12 table-responsive">
-                                                    <table>
-
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="col-12 d-none aclaracion-form">
-                                                <div class="col-12" id="aclaraciones">
-                                                    <div class="form-group block_aclaracion">
-                                                        <div class="title-aclaracion d-flex justify-content-between mt-2">
-                                                            <label for="aclaracion">Aclaración</label>
-                                                            <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarAclaracion"><i class="fas fa-minus-circle"></i></button>
-                                                        </div>
-                                                        <input class="form-control mt-2 aclaracion" type="text" name="aclaracion" id="aclaracion">
+                                        @if ($peticion->aclaracion == 1)
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-12 table-responsive">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <th scope="col">Fecha</th>
+                                                                <th scope="col">Aclaración</th>
+                                                                <th scope="col">Solicitud</th>
+                                                                <th scope="col">Respuesta</th>
+                                                                <th scope="col">Anexos Respuesta</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($peticion->aclaraciones as $aclaracion)
+                                                                    <tr>
+                                                                        <th scope="row">{{$aclaracion->fecha}}</th>
+                                                                        <td>{{$aclaracion->tipo_solicitud}}</td>
+                                                                        <td>{{$aclaracion->aclaracion}}</td>
+                                                                        <td>{{$aclaracion->respuesta}}</td>
+                                                                        <td>@mdo</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
-                                                <div class="col-12 d-flex justify-content-end flex-row">
-                                                    <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAclaracion" id="crearAclaracion"><i
-                                                        class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
-                                                        otro Aclaración</button>
+                                            </div>
+                                        @endif
+                                        <div class="col-12">
+                                            <div class="col-12  mt-2 pt-2 aclaraciones " id="aclaraciones">
+                                                <div class="col-12 aclaracion rounded border mb-3">
+                                                    <div class="form-group col-12 mt-2 titulo-aclaracion">
+                                                        <div class="col-12 d-flex justify-content-between mb-2">
+                                                            <label for="">Aclaración</label>
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarAclaracion"><i
+                                                                    class="fas fa-minus-circle"></i> Eliminar Aclaración</button>
+                                                        </div>
+                                                        <select name="tipo_aclaracion" id="tipo_aclaracion" class="custom-select rounded-0 tipo_aclaracion">
+                                                            <option value="">--Seleccione--</option>
+                                                            <option value="aclaracion">Aclaración</option>
+                                                            <option value="complementacion">Complementación</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-12">
+                                                        <label for="">Solicitud</label>
+                                                        <input class="form-control solicitud_aclaracion" type="text" name="solicitud_aclaracion" id="solicitud_aclaracion">
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-end flex-row">
+                                                <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAclaracion"><i
+                                                        class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
+                                                    otro aclaración</button>
                                             </div>
                                             <input class="totalPeticionAclaraciones" id="totalPeticionAclaraciones" name="totalPeticionAclaraciones" type="hidden" value="0">
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="row">
+                                        <input class="respuestaRespuesta" type="hidden" value="{{ isset($peticion->respuesta->id) ? $peticion->respuesta->id : '' }}">
                                         <div class="col-12 col-md-6">
                                             <h6>Respuesta</h6>
                                         </div>
                                         <div class="col-12 form-group">
-                                            <textarea type="text" class="form-control form-control-sm respuesta" name="respuesta" id=""></textarea>
+                                            <textarea type="text" class="form-control form-control-sm respuesta" name="respuesta" id="">{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
                                         </div>
                                         <div class="col-12" id="anexosConsulta">
                                             <div class="col-12 d-flex row anexoconsulta">
@@ -277,7 +286,7 @@
                                                     <h6>Anexo</h6>
                                                     <button type="button"
                                                         class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoConsulta"><i
-                                                            class="fas fa-minus-circle"></i></button>
+                                                            class="fas fa-minus-circle"></i> Eliminar anexo</button>
                                                 </div>
                                                 <div class="col-12 col-md-4 form-group titulo-anexoConsulta">
                                                     <label for="titulo">Título anexo</label>
@@ -300,10 +309,32 @@
                                                     class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
                                                 otro Anexo</button>
                                         </div>
+                                        @if (isset($peticion->respuesta->documentos))
+                                            <div class="row respuestaAnexos">
+                                                <div class="col-12">
+                                                    <div class="col-12">
+                                                        <h6>Anexos respuesta</h6>
+                                                    </div>
+                                                    <table class="table table-light">
+                                                        <tbody>
+                                                            @foreach ($peticion->respuesta->documentos as $anexo)
+                                                                <tr>
+                                                                    <td>{{ $anexo->titulo }}</td>
+                                                                    <td>{{ $anexo->descripcion }}</td>
+                                                                    <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
+                                                                            target="_blank" rel="noopener noreferrer">Descargar</a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        @endif
                                         <input class="totalPeticionAnexos" id="totalPeticionAnexos" name="totalPeticionAnexos" type="hidden" value="0">
                                     </div>
                                     <hr>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-12 col-md-6">
                                             <h6>¿A la petición le procede recurso?</h6>
                                         </div>
@@ -319,13 +350,13 @@
                                                 <label id="_label" class="form-check-label" for="">NO</label>
                                             </div>
                                         </div>
-                                        <div class="col-12 row px-3 peticion-form d-none">
+                                        <div class="col-12 row px-3 peticion-form ">
                                             <input type="date" class="form-control col-12 col-md-6" name="" id="">
                                             <span class="col-12 col-md-6 d-flex justify-content-center align-items-center">Fecha Max Notificacion:
                                                 {{ date('Y-m-d', strtotime($peticion->fecha_notificacion . '+ ' . ($peticion->recurso_dias + 1) . ' days')) }}
                                             </span>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <input class="id_peticion" id="id_peticion" name="id_peticion" type="hidden" value="{{$peticion->id}}">
                                 </div>
                             @endforeach
