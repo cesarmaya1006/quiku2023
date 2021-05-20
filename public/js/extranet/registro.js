@@ -119,6 +119,12 @@ $(document).ready(function() {
             html_d += $('#dir10').val();
         }
 
+        if ($('#complemento').val() != null) {
+            html_d += ' ';
+            html_d += $('#complemento').val();
+        }
+
+
         $('#direccion_completa').html(html_d);
 
     });

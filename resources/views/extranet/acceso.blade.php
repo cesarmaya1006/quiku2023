@@ -12,31 +12,31 @@
                     @include('includes.mensaje')
                 </div>
             </div>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" style="font-size: 0.8em;">
                 <div class="col-10 col-sm-8 col-md-3 mt-5">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Iniciar sesión</h5>
-                            <div class="card-text mt-5">
+                            <div class="card-text mt-3">
                                 <form action="{{ route('login') }}" method="post" autocomplete="off">
                                     @method('post')
                                     @csrf
                                     <div class="form-row">
-                                        <div class="col-md-12 mb-3">
+                                        <div class="col-md-12 mb-1">
                                             <label class="requerido" for="validationDefault01">Usuario</label>
-                                            <input type="text" class="form-control" id="usuario" name="usuario"
-                                                placeholder="usuario" required>
+                                            <input type="text" class="form-control form-control-sm" id="usuario"
+                                                name="usuario" placeholder="usuario" required>
                                         </div>
                                         <div class="col-md-12 mb-3">
                                             <label class="requerido" for="validationDefault02">Contraseña</label>
-                                            <input type="password" class="form-control" id="password" name="password"
-                                                placeholder="Contraseña" required>
+                                            <input type="password" class="form-control form-control-sm" id="password"
+                                                name="password" placeholder="Contraseña" required>
                                         </div>
                                     </div>
                                     <div class="centrar-items">
-                                        <button class="mt-3 btn btn-primary" type="submit">Iniciar sesión</button>
+                                        <button class="mt-2 btn btn-primary" type="submit">Iniciar sesión</button>
                                     </div>
-                                    <div class="centrar-items mt-3">
+                                    <div class="centrar-items mt-2">
                                         <p><a class="card-text" href="{{ route('solicitar_password') }}">¿Olvidé mi nombre
                                                 de usuario o contraseña?</a></p>
                                     </div>

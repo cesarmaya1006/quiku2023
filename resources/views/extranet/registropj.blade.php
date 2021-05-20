@@ -5,13 +5,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
 @endsection
 @section('cuerpo_pagina')
-    <div class="container">
-        <div class="row justify-content-center">
+    <div class="container pb-5">
+        <div class="row justify-content-center mb-5">
             <div class="col-10">
                 @include('includes.error-form')
                 @include('includes.mensaje')
             </div>
-            <div class="col-10 mt-5">
+            <div class="col-11 col-sm-10 col-md-8 mt-5 mb-4">
                 <div class="card">
                     <div class="card-body">
                         <p class="m-0 text-right"><strong>1/3</strong></p>

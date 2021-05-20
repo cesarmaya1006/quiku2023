@@ -5,13 +5,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
 @endsection
 @section('cuerpo_pagina')
-    <div class="container">
-        <div class="row justify-content-center">
+    <div class="container pb-5">
+        <div class="row justify-content-center mb-5">
             <div class="col-10">
                 @include('includes.error-form')
                 @include('includes.mensaje')
             </div>
-            <div class="col-11 col-sm-10 col-md-8 mt-5">
+            <div class="col-11 col-sm-10 col-md-8 mt-5 mb-4">
                 <div class="card">
 
                     <form action="{{ route('registropn-guardar') }}" method="POST" autocomplete="off">
@@ -576,6 +576,11 @@
                             <option value="SUR">SUR</option>
                             <option value="ESTE">ESTE</option>
                         </select>
+                    </div>
+                    <div class="col-12 form-group">
+                        <label for="">Complemento de direccion (bloque,apartamento, etc)</label>
+                        <input type="text" name="complemento" id="complemento"
+                            class="form-control form-control-sm direccion_parte" placeholder="" aria-describedby="helpId">
                     </div>
                     <div class="col-12 form-group">
                         <span class="form-control form-control-sm text-center" id="direccion_completa"></span>

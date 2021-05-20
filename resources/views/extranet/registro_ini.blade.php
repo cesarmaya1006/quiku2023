@@ -5,9 +5,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
 @endsection
 @section('cuerpo_pagina')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7 col-sm-10 col-11 mt-4">
+    <div class="container pt-5">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-7 col-sm-10 col-11 mt-4 mb-4">
                 <div class="card">
                     @include('includes.error-form')
                     @include('includes.mensaje')
@@ -56,7 +56,8 @@
                                 @method('post')
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="tipo_persona">Tipo persona</label>
-                                    <select class="form-control" name="tipo_persona" id="tipo_persona" required>
+                                    <select class="form-control form-control-sm" name="tipo_persona" id="tipo_persona"
+                                        required>
                                         <option value="">--Seleccione un tipo--</option>
                                         <option value="1">Persona Jurídica</option>
                                         <option value="2" selected>Persona natural</option>
@@ -64,7 +65,8 @@
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="docutipos_id">Tipo documento</label>
-                                    <select class="form-control" name="docutipos_id" id="docutipos_id" required>
+                                    <select class="form-control form-control-sm" name="docutipos_id" id="docutipos_id"
+                                        required>
                                         <option value="">--Seleccione un tipo--</option>
                                         @foreach ($tipos_docu as $tipodocu)
                                             <option value="{{ $tipodocu->id }}"
@@ -75,12 +77,12 @@
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="identificacion">Número de documento</label>
-                                    <input type="text" class="form-control" id="identificacion" name="identificacion"
-                                        placeholder="Número documento" required>
+                                    <input type="text" class="form-control form-control-sm" id="identificacion"
+                                        name="identificacion" placeholder="Número documento" required>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
-                                    <input type="email" class="form-control" id="email" name="email"
+                                    <input type="email" class="form-control form-control-sm" id="email" name="email"
                                         placeholder="Correo electrónico" required>
                                 </div>
                                 <button class="mt-3 btn btn-primary" type="submit">Siguiente</button>

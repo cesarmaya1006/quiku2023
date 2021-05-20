@@ -51,10 +51,10 @@
                                 @if ($pqr->adquisicion == 'Sede física')
                                     <div class="col-12 col-md-6">
                                         Departatmento :
-                                        <strong>{{ $pqr->municipio->departamento->departamento }}</strong>
+                                        <strong>{{ $pqr->sede->municipio->departamento->departamento }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        Municipio : <strong>{{ $pqr->municipio->municipio }}</strong>
+                                        Municipio : <strong>{{ $pqr->sede->municipio->municipio }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         Sede : <strong>{{ $pqr->sede->sede }}</strong>
@@ -223,7 +223,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($peticion->aclaraciones as $aclaracion)
-                                                    @if ($aclaracion->respuesta == '')
+                                                        @if ($aclaracion->respuesta == '')
                                                             <tr>
                                                                 <td>{{ $aclaracion->fecha }}</td>
                                                                 <td>{{ $aclaracion->aclaracion }}</td>
