@@ -153,7 +153,6 @@ class ClienteController extends Controller
         return view('intranet.usuarios.crearPQR', compact('usuario', 'tipo_pqr', 'departamentos', 'categorias', 'servicios'));
     }
 
-
     public function generarPQR_guardar(ValidarPqr $request)
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
@@ -239,7 +238,7 @@ class ClienteController extends Controller
         }
         $idPQR =  $request['pqr_id'];
         $pqr = PQR::findOrFail($idPQR);
-        return redirect('/usuario/generar')->with('id', $idPQR)->with('pqr_tipo', $pqr->tipo_pqr_id)->with('radicado', $pqr->radicado);
+        return redirect('/usuario/generar')->with('id', $idPQR)->with('pqr_tipo', $pqr->tipo_pqr_id)->with('radicado', $pqr->radicado)->with('fecha_radicado', $pqr->created_at);
     }
 
     public function generarConceptoUOpinion()
@@ -311,7 +310,7 @@ class ClienteController extends Controller
             $iteradorAnexos += $request['cantidadAnexosConsulta' . $i];
             $iteradorHechos += $request['cantidadHechosConsulta' . $i];
         }
-        return redirect('/usuario/generar')->with('id', $concepto->id)->with('pqr_tipo', $concepto->tipo_pqr_id)->with('radicado', $concepto->radicado);
+        return redirect('/usuario/generar')->with('id', $concepto->id)->with('pqr_tipo', $concepto->tipo_pqr_id)->with('radicado', $concepto->radicado)->with('fecha_radicado', $concepto->created_at);
     }
 
     public function generarFelicitacion()
@@ -346,7 +345,7 @@ class ClienteController extends Controller
             $nuevosHechos['hecho'] = $request['hecho' . $i];
             FelicitacionHecho::create($nuevosHechos);
         }
-        return redirect('/usuario/generar')->with('id', $felicitacion->id)->with('pqr_tipo', $felicitacion->tipo_pqr_id)->with('radicado', $felicitacion->radicado);
+        return redirect('/usuario/generar')->with('id', $felicitacion->id)->with('pqr_tipo', $felicitacion->tipo_pqr_id)->with('radicado', $felicitacion->radicado)->with('fecha_radicado', $felicitacion->created_at);
     }
 
     public function gererarDenuncia()
@@ -406,7 +405,7 @@ class ClienteController extends Controller
                 DenunciaAnexo::create($nuevo_documento);
             }
         }
-        return redirect('/usuario/generar')->with('id', $denuncia->id)->with('pqr_tipo', $denuncia->tipo_pqr_id)->with('radicado', $denuncia->radicado);
+        return redirect('/usuario/generar')->with('id', $denuncia->id)->with('pqr_tipo', $denuncia->tipo_pqr_id)->with('radicado', $denuncia->radicado)->with('fecha_radicado', $denuncia->created_at);
     }
 
     public function generarSolicitudDatos()
@@ -471,7 +470,7 @@ class ClienteController extends Controller
             $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
         $solicitud = SolicitudDatos::findOrFail($solicitud->id);
-        return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado);
+        return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado)->with('fecha_radicado', $solicitud->created_at);
     }
 
     public function generarSolicitudDocumentos()
@@ -536,7 +535,7 @@ class ClienteController extends Controller
             $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
         $solicitud = SolicitudDocInfo::findOrFail($solicitud->id);
-        return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado);
+        return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado)->with('fecha_radicado', $solicitud->created_at);
     }
 
     public function generarSugerencia()
@@ -596,7 +595,7 @@ class ClienteController extends Controller
                 SugerenciaDoc::create($nuevo_documento);
             }
         }
-        return redirect('/usuario/generar')->with('id', $sugerencia->id)->with('pqr_tipo', $sugerencia->tipo_pqr_id)->with('radicado', $sugerencia->radicado);
+        return redirect('/usuario/generar')->with('id', $sugerencia->id)->with('pqr_tipo', $sugerencia->tipo_pqr_id)->with('radicado', $sugerencia->radicado)->with('fecha_radicado', $sugerencia->created_at);
     }
 
     public function actualizar_datos()

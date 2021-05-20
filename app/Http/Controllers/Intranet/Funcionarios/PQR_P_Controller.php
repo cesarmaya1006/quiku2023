@@ -31,29 +31,15 @@ class PQR_P_Controller extends Controller
         // $usuario = Usuario::findOrFail(session('id_usuario'));
         // dd($usuario->empleado->id);
         // $actualizarPqr['empresa_id'] = $usuario->empleado->id;
-        // dd($request->all()); 
-        
+        $validacionProrroga = PQR::findOrFail($request['id_pqr']);
         if(isset($request['prorroga'])){
-            $actualizarPqr['prorroga'] = $request['prorroga']; 
-            $actualizarPqr['prorroga_dias'] = $request['plazo_prorroga'];
-            $documentos = $request->allFiles();
-            if ($request->hasFile("documentos_prorroga")) {
-                $ruta = Config::get('constantes.folder_doc_pqr');
-                $ruta = trim($ruta);
-                $doc_subido = $documentos["documentos_prorroga"];
-                $tamaño = $doc_subido->getSize();
-                if ($tamaño > 0) {
-                    $tamaño = $tamaño / 1000;
-                }
-                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                $actualizarPqr['extension'] = $doc_subido->getClientOriginalExtension();
-                $actualizarPqr['peso'] = $tamaño;
-                $actualizarPqr['prorroga_pdf'] = $nombre_doc;
-                $doc_subido->move($ruta, $nombre_doc);
+            if($validacionProrroga->prorroga == 0){
+                $actualizarPqr['prorroga'] = $request['prorroga']; 
+                $actualizarPqr['prorroga_dias'] = $request['plazo_prorroga'];
+                $actualizarPqr['prorroga_pdf'] = $request['prorroga_pdf'];
+                PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);    
             }
-            PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);    
         } 
-        // dd($request->all()); 
         $documentos = $request->allFiles();
         $totalPeticiones = $request['totalPeticiones'];
         $contadorAclaraciones = 0;
@@ -64,20 +50,22 @@ class PQR_P_Controller extends Controller
             $actualizarPeticion['aclaracion'] = $request["aclaracion_check$i"];
             Peticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
             $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];
-            $contadorAnexos += $request["totalPeticionAnexos$i"];
             for ($j = $iteradorAclaraciones; $j < $contadorAclaraciones; $j++) {
-                if($request["aclaracion$i"]){
+                if($request["solicitud_aclaracion$i"]){
                     $nuevaAclaracion['peticion_id'] = $request["id_peticion$i"];
-                    $nuevaAclaracion['aclaracion'] = $request["aclaracion$j"];
                     $nuevaAclaracion['fecha'] = date("Y-m-d");
+                    $nuevaAclaracion['tipo_solicitud'] = $request["tipo_aclaracion$j"];
+                    $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
                     Aclaracion::create($nuevaAclaracion);
                 }
             } 
+            $contadorAnexos += $request["totalPeticionAnexos$i"];
             if($request["respuesta$i"]){
                 $respuesta['peticion_id'] = $request["id_peticion$i"];
                 $respuesta['fecha'] = date("Y-m-d");
                 $respuesta['respuesta'] = $request["respuesta$i"];
                 $respuestaPQR = Respuesta::create($respuesta);  
+                
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
                         $ruta = Config::get('constantes.folder_doc_respuestas');
@@ -106,8 +94,6 @@ class PQR_P_Controller extends Controller
             $iteradorAclaraciones += $request["totalPeticionAclaraciones$i"];
             $iteradorAnexos += $request["totalPeticionAnexos$i"];
         }
-        // dd($totalPeticiones); 
-
         return redirect('/funcionario/listado');
     }
     

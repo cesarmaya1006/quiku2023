@@ -58,6 +58,7 @@
                             <input class="" id="id" type="hidden" value="{{ utf8_encode(utf8_decode(session("id"))) }}">
                             <input class="" id="pqr_tipo"  type="hidden" value="{{ utf8_encode(utf8_decode(session("pqr_tipo"))) }}">
                             <input class="" id="radicado"  type="hidden" value="{{ utf8_encode(utf8_decode(session("radicado"))) }}">
+                            <input class="" id="fecha_radicado"  type="hidden" value="{{ utf8_encode(utf8_decode(session("fecha_radicado"))) }}">
                         @endif
                     </div>
                 </div>
