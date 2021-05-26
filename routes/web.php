@@ -9,6 +9,9 @@ use App\Http\Controllers\Intranet\Admin\PermisoController;
 use App\Http\Controllers\Intranet\Admin\PermisoRolController;
 use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\UsuarioController;
+use App\Http\Controllers\Intranet\Empresas\AreaController;
+use App\Http\Controllers\Intranet\Empresas\CargoController;
+use App\Http\Controllers\Intranet\Empresas\NivelController;
 use App\Http\Controllers\Intranet\Funcionarios\ConceptoUOpinionController;
 use App\Http\Controllers\Intranet\Funcionarios\DenunciaController;
 use App\Http\Controllers\Intranet\Funcionarios\FelicitacionController;
@@ -138,6 +141,32 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('categorias-guardar', [CategoriaController::class, 'guardar'])->name('admin-categoria-guardar');
             Route::put('categorias-actualizar/{id}', [CategoriaController::class, 'actualizar'])->name('admin-categoria-actualizar');
         });
+        Route::group(['prefix' => 'funcionario'], function () {
+            // Rutas parametrizacion
+            // ------------------------------------------------------------------------------------
+            // Rutas areas
+            Route::get('areas-index', [AreaController::class, 'index'])->name('admin-funcionario-area-index');
+            Route::get('areas-crear', [AreaController::class, 'crear'])->name('admin-funcionario-areas-crear');
+            Route::get('areas-editar/{id}', [AreaController::class, 'editar'])->name('admin-funcionario-areas-editar');
+            Route::post('areas-guardar', [AreaController::class, 'guardar'])->name('admin-funcionario-areas-guardar');
+            Route::put('areas-actualizar/{id}', [AreaController::class, 'actualizar'])->name('admin-funcionario-areas-actualizar');
+            // ------------------------------------------------------------------------------------
+            // Rutas niveles
+            Route::get('niveles-index', [NivelController::class, 'index'])->name('admin-funcionario-nivel-index');
+            Route::get('niveles-crear', [NivelController::class, 'crear'])->name('admin-funcionario-niveles-crear');
+            Route::get('niveles-editar/{id}', [NivelController::class, 'editar'])->name('admin-funcionario-niveles-editar');
+            Route::post('niveles-guardar', [NivelController::class, 'guardar'])->name('admin-funcionario-niveles-guardar');
+            Route::put('niveles-actualizar/{id}', [NivelController::class, 'actualizar'])->name('admin-funcionario-niveles-actualizar');
+            // ------------------------------------------------------------------------------------
+            // Rutas cargos
+            Route::get('cargos-index', [CargoController::class, 'index'])->name('admin-funcionario-cargo-index');
+            Route::get('cargos-crear', [CargoController::class, 'crear'])->name('admin-funcionario-cargos-crear');
+            Route::get('cargos-editar/{id}', [CargoController::class, 'editar'])->name('admin-funcionario-cargos-editar');
+            Route::post('cargos-guardar', [CargoController::class, 'guardar'])->name('admin-funcionario-cargos-guardar');
+            Route::put('cargos-actualizar/{id}', [CargoController::class, 'actualizar'])->name('admin-funcionario-cargos-actualizar');
+            Route::get('cargar_niveles', [CargoController::class, 'cargar_niveles'])->name('cargar_niveles');
+            // ------------------------------------------------------------------------------------
+        });
     });
     //==================================================================================================================
     Route::group(['prefix' => 'funcionario'], function () {
@@ -175,8 +204,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('listado/gestionarSolicitudDocumentos/{id}', [SolicitudDocInfoController::class, 'gestionar'])->name('funcionario-gestionarSolicitudDocumentos');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('listado/gestionarSugerencia/{id}', [SugerenciaController::class, 'gestionar'])->name('funcionario-gestionarSugerencia');
-
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Route::get('listado/gestionarSolicitudDatos/{id}', [SolicitudDatosController::class, 'gestionar'])->name('funcionario-gestionarSolicitudDatos');
     });
     //==================================================================================================================
 

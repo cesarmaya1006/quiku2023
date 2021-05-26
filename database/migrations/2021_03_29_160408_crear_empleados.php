@@ -18,6 +18,9 @@ class CrearEmpleados extends Migration
             $table->foreign('id')->references('id')->on('usuarios')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('docutipos_id');
             $table->foreign('docutipos_id', 'fk_empleado_docutipos')->references('id')->on('docutipos')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('cargo_id');
+            $table->foreign('cargo_id', 'fk_empleado_cargos')->references('id')->on('cargos')->onDelete('restrict')->onUpdate('restrict');
+            $table->boolean('estado')->default(1);
             $table->string('identificacion', 100)->unique();
             $table->string('nombre1', 50);
             $table->string('nombre2', 50)->nullable();

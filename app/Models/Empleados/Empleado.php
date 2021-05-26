@@ -2,6 +2,7 @@
 
 namespace App\Models\Empleados;
 
+use App\Models\Admin\Cargo;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Empresas\Empresa;
 use App\Models\PQR\PQR;
@@ -18,6 +19,11 @@ class Empleado extends Model
     public function tipos_docu()
     {
         return $this->belongsTo(Tipo_Docu::class, 'docutipos_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function cargo()
+    {
+        return $this->belongsTo(Cargo::class, 'cargo_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function pqrs()

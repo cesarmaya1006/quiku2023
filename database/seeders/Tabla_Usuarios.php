@@ -114,6 +114,7 @@ class Tabla_Usuarios extends Seeder
         DB::table('empleados')->insert([
             'id' => 5,
             'docutipos_id' => 1,
+            'cargo_id' => 1,
             'identificacion' => '90000001',
             'nombre1' => 'Juan',
             'nombre2' => 'Carlos',

@@ -86,6 +86,12 @@ $sugerencias_num = $sugerencias->count();
             @if (session('rol_id') == 5)
                 @include('intranet.index.index_funcionarios')
             @endif
+            @if (session('rol_id') == 1)
+                @include('intranet.index.adminsistema')
+            @endif
+            @if (session('rol_id') == 3)
+                @include('intranet.index.indexadmin')
+            @endif
 
         </div>
     @else
