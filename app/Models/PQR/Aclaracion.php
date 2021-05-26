@@ -17,4 +17,9 @@ class Aclaracion extends Model
         return $this->belongsTo(Peticion::class, 'peticion_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function anexos()
+    {
+        return $this->hasMany(AclaracionAnexos::class, 'peticion_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }

@@ -197,7 +197,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cargar_referencias', [ClienteController::class, 'cargar_referencias'])->name('cargar_referencias');
         //----------------------------------------------------------------------------------------------------------------
         Route::get('listado/gestionarPQR/{id}', [ClienteController::class, 'gestionar_PQR'])->name('usuario-gestionarPQR');
-
+        Route::post('listado/gestionarPQR', [PQR_P_Controller::class, 'gestionar_guardar_usuario'])->name('usuario-gestionar_pqr_p_guardar');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         Route::get('generarConceptoUOpinion', [ClienteController::class, 'generarConceptoUOpinion'])->name('usuario-generarConceptoUOpinion');
