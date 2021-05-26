@@ -47,12 +47,14 @@ class PQR_P_Controller extends Controller
         $iteradorAclaraciones = 0;
         $contadorAnexos = 0;
         $iteradorAnexos = 0;
+        // dd($request->all());
         for ($i = 0; $i < $totalPeticiones; $i++) {
             $actualizarPeticion['aclaracion'] = $request["aclaracion_check$i"];
             Peticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
             $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];
             for ($j = $iteradorAclaraciones; $j < $contadorAclaraciones; $j++) {
-                if($request["solicitud_aclaracion$i"]){
+                if($request["solicitud_aclaracion$j"] != null){
+                    // dd($request->all());
                     $nuevaAclaracion['peticion_id'] = $request["id_peticion$i"];
                     $nuevaAclaracion['fecha'] = date("Y-m-d");
                     $nuevaAclaracion['tipo_solicitud'] = $request["tipo_aclaracion$j"];

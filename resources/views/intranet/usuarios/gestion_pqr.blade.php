@@ -195,10 +195,12 @@ Sistema de informaci&oacute;n
                                                 <td>Resuelta</td>
                                                 <td>{{ $aclaracion->fecha_respuesta }}</td>
                                                 <td>{{ $aclaracion->respuesta }}</td>
-                                                @if ($aclaracion->pdf != '')
-                                                <td><a href="{{ asset('documentos/pqr/' . $aclaracion->pdf) }}"
-                                                        target="_blank" rel="noopener noreferrer">Descargar</a>
-                                                </td>
+                                                @if ($aclaracion->anexos)
+                                                    <td>
+                                                        @foreach ($aclaracion->anexos as $anexo)
+                                                            <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer">{{$anexo->titulo}}</a>
+                                                        @endforeach
+                                                    </td>
                                                 @else
                                                 <td>---</td>
                                                 @endif
@@ -277,39 +279,35 @@ Sistema de informaci&oacute;n
                             @endif
                             <br>
                             @if ($peticion->respuesta)
-                                
-                            <div class="row">
-                                <div class="col-12">
-                                    <h6>Respuesta</h6>
-                                </div>
-                                <div class="col-12">
-                                    <table class="table table-light" style="font-size: 0.8em;">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Fecha</th>
-                                                <th scope="col">Respuesta</th>
-                                                <th scope="col">Documentos</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{-- @foreach ($peticion->respuestas as $respuesta)
-                                            <tr>
-                                                <td>{{ $anexo->fecha }}</td>
-                                                <td>{{ $anexo->respuesta }}</td>
-                                                <td>
-                                                    @foreach ($respuesta->documentos as $documento)
-                                                    <p>
-                                                        <a href="{{ asset('documentos/pqr/' . $documento->url) }}"
-                                                            target="_blank" rel="noopener noreferrer">{{
-                                                            $documento->titulo }}</a>
-                                                    </p>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6>Respuesta</h6>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <textarea type="text" class="form-control form-control-sm respuesta" rows="5" readonly>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
+                                    </div>
+                                    @if (isset($peticion->respuesta->documentos))
+                                    <div class="row respuestaAnexos">
+                                        <div class="col-12">
+                                            <div class="col-12">
+                                                <h6>Anexos respuesta</h6>
+                                            </div>
+                                            <table class="table table-light">
+                                                <tbody>
+                                                    @foreach ($peticion->respuesta->documentos as $anexo)
+                                                    <tr>
+                                                        <td>{{ $anexo->titulo }}</td>
+                                                        <td>{{ $anexo->descripcion }}</td>
+                                                        <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
+                                                                target="_blank" rel="noopener noreferrer">Descargar</a>
+                                                        </td>
+                                                    </tr>
                                                     @endforeach
-                                                </td>
-                                            </tr>
-                                            @endforeach --}}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                             @endif
                             <input class="totalPeticionAclaraciones" name="totalPeticionAclaraciones" type="hidden" value="">

@@ -19,7 +19,7 @@ class Aclaracion extends Model
     //----------------------------------------------------------------------------------
     public function anexos()
     {
-        return $this->hasMany(AclaracionAnexos::class, 'peticion_id', 'id');
+        return $this->hasMany(AclaracionAnexos::class, 'aclaracion_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

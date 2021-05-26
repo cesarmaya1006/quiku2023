@@ -233,6 +233,7 @@ Sistema de informaci&oacute;n
                                                         <th scope="col">Fecha</th>
                                                         <th scope="col">Aclaración</th>
                                                         <th scope="col">Solicitud</th>
+                                                        <th scope="col">Fecha Respuesta</th>
                                                         <th scope="col">Respuesta</th>
                                                         <th scope="col">Anexos Respuesta</th>
                                                     </tr>
@@ -243,8 +244,13 @@ Sistema de informaci&oacute;n
                                                         <th scope="row">{{$aclaracion->fecha}}</th>
                                                         <td>{{$aclaracion->tipo_solicitud}}</td>
                                                         <td>{{$aclaracion->aclaracion}}</td>
+                                                        <td>{{$aclaracion->fecha_respuesta}}</td>
                                                         <td>{{$aclaracion->respuesta}}</td>
-                                                        <td>@mdo</td>
+                                                        <td>
+                                                            @foreach($aclaracion->anexos as $anexo)
+                                                                <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer">{{$anexo->titulo}}</a>
+                                                            @endforeach
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
