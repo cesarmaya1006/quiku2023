@@ -42,7 +42,7 @@
                             <tr>
                                 <td>{{ $pqr->radicado }}</td>
                                 <td>{{ $pqr->tipoPqr->tipo }}</td>
-                                <td>{{ $pqr->estado }}</td>
+                                <td>{{ $pqr->estado->estado_usuario }}</td>
                                 <td>{{ $pqr->fecha_radicado }}</td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $pqr->tipo_pqr_id, 'id_pqr' => $pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
@@ -65,7 +65,7 @@
                             <tr>
                                 <td>{{ $concepto->radicado }}</td>
                                 <td>{{ $concepto->tipoPqr->tipo }}</td>
-                                <td>{{ $concepto->estado }}</td>
+                                <td>{{ $concepto->estado->estado_usuario }}</td>
                                 <td>{{ $concepto->fecha_radicado }}</td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $pqr->tipo_pqr_id, 'id_pqr' => $pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
@@ -80,7 +80,7 @@
                             <tr>
                                 <td>{{ $solicitud_datos->radicado }}</td>
                                 <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
-                                <td>{{ $solicitud_datos->estado }}</td>
+                                <td>{{ $solicitud_datos->estado->estado_usuario }}</td>
                                 <td>{{ $solicitud_datos->fecha_radicado }}</td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $pqr->tipo_pqr_id, 'id_pqr' => $pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
@@ -95,7 +95,7 @@
                             <tr>
                                 <td>{{ $denuncia->radicado }}</td>
                                 <td>{{ $denuncia->tipoPqr->tipo }}</td>
-                                <td>{{ $denuncia->estado }}</td>
+                                <td>{{ $denuncia->estado->estado_usuario }}</td>
                                 <td>{{ $denuncia->fecha_radicado }}</td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $pqr->tipo_pqr_id, 'id_pqr' => $pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
@@ -110,7 +110,7 @@
                             <tr>
                                 <td>{{ $felicitacion->radicado }}</td>
                                 <td>{{ $felicitacion->tipoPqr->tipo }}</td>
-                                <td>{{ $felicitacion->estado }}</td>
+                                <td>{{ $felicitacion->estado->estado_usuario }}</td>
                                 <td>{{ $felicitacion->fecha_radicado }}</td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $pqr->tipo_pqr_id, 'id_pqr' => $pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
@@ -125,7 +125,7 @@
                             <tr>
                                 <td>{{ $solicitud_doc->radicado }}</td>
                                 <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
-                                <td>{{ $solicitud_doc->estado }}</td>
+                                <td>{{ $solicitud_doc->estado->estado_usuario }}</td>
                                 <td>{{ $solicitud_doc->fecha_radicado }}</td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $pqr->tipo_pqr_id, 'id_pqr' => $pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
@@ -140,7 +140,7 @@
                             <tr>
                                 <td>{{ $sugerencia->radicado }}</td>
                                 <td>{{ $sugerencia->tipoPqr->tipo }}</td>
-                                <td>{{ $sugerencia->estado }}</td>
+                                <td>{{ $sugerencia->estado->estado_usuario }}</td>
                                 <td>{{ $sugerencia->fecha_radicado }}</td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $pqr->tipo_pqr_id, 'id_pqr' => $pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i

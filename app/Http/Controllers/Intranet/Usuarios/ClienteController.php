@@ -20,7 +20,9 @@ use App\Models\Productos\Producto;
 use App\Models\Servicios\Servicio;
 use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Fechas\FechasController;
 use App\Http\Requests\ValidarPqr;
+use App\Models\Admin\DiasFestivos;
 use App\Models\Productos\Referencia;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
@@ -40,6 +42,7 @@ use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
+use App\Models\PQR\Estado;
 use App\Models\PQR\Hecho;
 use Barryvdh\DomPDF\Facade as PDF;
 
@@ -155,6 +158,10 @@ class ClienteController extends Controller
 
     public function generarPQR_guardar(ValidarPqr $request)
     {
+        $tipo_pqr = tipoPQR::findOrFail($request['tipo_pqr_id']);
+        $diasLimite = $tipo_pqr['tiempos'];
+        $diaGeneracion = date("Y-m-d");
+        $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaPQR['persona_id'] = $usuario->id;
@@ -173,6 +180,9 @@ class ClienteController extends Controller
         }
         $nuevaPQR['fecha_generacion'] = date("Y-m-d");
         $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));
+        $estado = Estado::findOrFail(1);
+        $nuevaPQR['estadospqr_id'] = $estado['id'];
+        $nuevaPQR['tiempo_limite'] = $respuestaDias;
         $pqr = PQR::create($nuevaPQR);
         $tipo_pqr = tipoPQR::findOrFail($request['tipo_pqr_id']);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $pqr->id;

@@ -61,4 +61,9 @@ class PQR extends Model
     {
         return $this->belongsTo(Sede::class, 'sede_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estadospqr_id', 'id');
+    }
 }

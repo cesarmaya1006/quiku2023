@@ -99,11 +99,11 @@ Sistema de informaci&oacute;n
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha estimada de respuesta:
-                                    <strong>{{ date('Y-m-d', strtotime($pqr->fecha_radicado . '+ ' .
-                                        ($pqr->tipoPqr->tiempos + $pqr->prorroga_dias) . ' days')) }}</strong>
+                                    <strong>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' .
+                                        ($pqr->tiempo_limite + $pqr->prorroga_dias) . ' days')) }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    Estado: <strong>{{ $pqr->estado }}</strong>
+                                    Estado: <strong>{{ $pqr->estado->estado_funcionario }}</strong>
                                 </div>
                             </div>
                             <hr>
