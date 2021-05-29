@@ -37,8 +37,8 @@ class CrearTablaPqr extends Migration
             $table->string('prorroga_pdf')->nullable();
             $table->date('fecha_generacion');
             $table->date('fecha_radicado');
-            $table->bigInteger('tiempo_limite')->default(0);
             $table->date('fecha_respuesta')->nullable();
+            $table->bigInteger('tiempo_limite')->default(0);
             $table->unsignedBigInteger('estadospqr_id')->nullable();
             $table->foreign('estadospqr_id', 'fk_estadospqr_pqr')->references('id')->on('estadospqr')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();

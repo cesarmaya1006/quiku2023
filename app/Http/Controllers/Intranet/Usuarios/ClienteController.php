@@ -184,7 +184,6 @@ class ClienteController extends Controller
         $nuevaPQR['estadospqr_id'] = $estado['id'];
         $nuevaPQR['tiempo_limite'] = $respuestaDias;
         $pqr = PQR::create($nuevaPQR);
-        $tipo_pqr = tipoPQR::findOrFail($request['tipo_pqr_id']);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $pqr->id;
         PQR::findOrFail($pqr->id)->update($pqr_rad);
         $pqr = PQR::findOrFail($pqr->id);
@@ -260,6 +259,10 @@ class ClienteController extends Controller
 
     public function generarConceptoUOpinion_guardar(Request $request)
     {
+        $tipo_pqr = tipoPQR::findOrFail(4);
+        $diasLimite = $tipo_pqr['tiempos'];
+        $diaGeneracion = date("Y-m-d");
+        $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaConcepto['persona_id'] = $usuario->id;
@@ -269,9 +272,11 @@ class ClienteController extends Controller
         $nuevaConcepto['sede_id'] = $request['sede_id'];
         $nuevaConcepto['fecha_generacion'] = date("Y-m-d");
         $nuevaConcepto['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $estado = Estado::findOrFail(1);
+        $nuevaConcepto['estadospqr_id'] = $estado['id'];
+        $nuevaConcepto['tiempo_limite'] = $respuestaDias;
         $concepto = ConceptoUOpinion::create($nuevaConcepto);
 
-        $tipo_pqr = tipoPQR::findOrFail(4);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $concepto->id;
         ConceptoUOpinion::findOrFail($concepto->id)->update($pqr_rad);
         $concepto = ConceptoUOpinion::findOrFail($concepto->id);
@@ -331,6 +336,10 @@ class ClienteController extends Controller
 
     public function generarFelicitacion_guardar(Request $request)
     {
+        $tipo_pqr = tipoPQR::findOrFail(7);
+        $diasLimite = $tipo_pqr['tiempos'];
+        $diaGeneracion = date("Y-m-d");
+        $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaFelicitacion['persona_id'] = $usuario->id;
@@ -342,9 +351,11 @@ class ClienteController extends Controller
         $nuevaFelicitacion['felicitacion'] = $request['felicitacion'];
         $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d");
         $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $estado = Estado::findOrFail(1);
+        $nuevaFelicitacion['estadospqr_id'] = $estado['id'];
+        $nuevaFelicitacion['tiempo_limite'] = $respuestaDias;
         $felicitacion = Felicitacion::create($nuevaFelicitacion);
 
-        $tipo_pqr = tipoPQR::findOrFail(7);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $felicitacion->id;
         Felicitacion::findOrFail($felicitacion->id)->update($pqr_rad);
         $felicitacion = Felicitacion::findOrFail($felicitacion->id);
@@ -366,6 +377,14 @@ class ClienteController extends Controller
 
     public function gererarDenuncia_guardar(Request $request)
     {
+        // $tipo_pqr = tipoPQR::findOrFail(6);
+        // $diasLimite = $tipo_pqr['tiempos'];
+        // $diaGeneracion = date("Y-m-d");
+        // $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
+
+        // $estado = Estado::findOrFail(1);
+        // $nuevaSolicitud['estadospqr_id'] = $estado['id'];
+        // $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaDenuncia['persona_id'] = $usuario->id;
@@ -426,6 +445,10 @@ class ClienteController extends Controller
 
     public function generarSolicitudDatos_guardar(Request $request)
     {
+        $tipo_pqr = tipoPQR::findOrFail(5);
+        $diasLimite = $tipo_pqr['tiempos'];
+        $diaGeneracion = date("Y-m-d");
+        $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaSolicitud['persona_id'] = $usuario->id;
@@ -435,9 +458,11 @@ class ClienteController extends Controller
         $nuevaSolicitud['sede_id'] = $request['sede_id'];
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $estado = Estado::findOrFail(1);
+        $nuevaSolicitud['estadospqr_id'] = $estado['id'];
+        $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
         $solicitud = SolicitudDatos::create($nuevaSolicitud);
 
-        $tipo_pqr = tipoPQR::findOrFail(5);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitud->id;
         SolicitudDatos::findOrFail($solicitud->id)->update($pqr_rad);
         $solicitud = SolicitudDatos::findOrFail($solicitud->id);
@@ -491,6 +516,10 @@ class ClienteController extends Controller
 
     public function generarSolicitudDocumentos_guardar(Request $request)
     {
+        $tipo_pqr = tipoPQR::findOrFail(8);
+        $diasLimite = $tipo_pqr['tiempos'];
+        $diaGeneracion = date("Y-m-d");
+        $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaSolicitud['persona_id'] = $usuario->id;
@@ -500,9 +529,11 @@ class ClienteController extends Controller
         $nuevaSolicitud['sede_id'] = $request['sede_id'];
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $estado = Estado::findOrFail(1);
+        $nuevaSolicitud['estadospqr_id'] = $estado['id'];
+        $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
         $solicitud = SolicitudDocInfo::create($nuevaSolicitud);
 
-        $tipo_pqr = tipoPQR::findOrFail(8);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitud->id;
         SolicitudDocInfo::findOrFail($solicitud->id)->update($pqr_rad);
         $solicitud = SolicitudDocInfo::findOrFail($solicitud->id);
@@ -556,6 +587,11 @@ class ClienteController extends Controller
 
     public function generarSugerencia_guardar(Request $request)
     {
+        $tipo_pqr = tipoPQR::findOrFail(9);
+        $diasLimite = $tipo_pqr['tiempos'];
+        $diaGeneracion = date("Y-m-d");
+        $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
+
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaSugerencia['persona_id'] = $usuario->id;
@@ -566,9 +602,11 @@ class ClienteController extends Controller
         $nuevaSugerencia['sugerencia'] = $request['sugerencia'];
         $nuevaSugerencia['fecha_generacion'] = date("Y-m-d");
         $nuevaSugerencia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $estado = Estado::findOrFail(1);
+        $nuevaSugerencia['estadospqr_id'] = $estado['id'];
+        $nuevaSugerencia['tiempo_limite'] = $respuestaDias;
         $sugerencia = Sugerencia::create($nuevaSugerencia);
 
-        $tipo_pqr = tipoPQR::findOrFail(9);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $sugerencia->id;
         Sugerencia::findOrFail($sugerencia->id)->update($pqr_rad);
         $sugerencia = Sugerencia::findOrFail($sugerencia->id);

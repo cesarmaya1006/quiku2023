@@ -2,13 +2,14 @@
 
 namespace App\Models\PQR;
 
+use App\Models\PQR\Estado;
 use App\Models\PQR\tipoPQR;
 use App\Models\PQR\Peticion;
+use App\Models\Empresas\Sede;
 use App\Models\Admin\Municipio;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;
-use App\Models\Empresas\Sede;
 use App\Models\Servicios\Servicio;
 use App\Models\Productos\Referencia;
 use Illuminate\Database\Eloquent\Model;
@@ -66,4 +67,6 @@ class PQR extends Model
     {
         return $this->belongsTo(Estado::class, 'estadospqr_id', 'id');
     }
+
+    
 }

@@ -4,11 +4,6 @@ window.addEventListener('DOMContentLoaded', function () {
         let btnSubmit = document.querySelector('#fromSolicitudDocInfo')
         btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
-            // if(!document.querySelector('#sugerencia').value){
-            //     alert('Sugerencia');
-            //     return
-            // }
-            // document.querySelector('#cantidadAnexosSolicitud').value = document.querySelectorAll('.anexosolicitud').length
             ajustarSolicitudes()
             ajustarNameAnexo(document.querySelectorAll('.anexosolicitud'))
             document.querySelector('.totalCantidadAnexosSolicitud').value = document.querySelectorAll('.anexosolicitud').length

@@ -33,7 +33,7 @@ Sistema de informaci&oacute;n
                                 <div class="col-12" id="hechos">
                                     <div class="form-group hechoFelicitacion">
                                         <div class="title-hecho d-flex justify-content-between mt-2">
-                                            <label for="hecho">Hecho</label>
+                                            <label for="hecho" class="requerido">Hecho</label>
                                             <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho"><i class="fas fa-minus-circle"></i></button>
                                         </div>
                                         <input class="form-control mt-2 hecho" type="text" name="hecho" id="hecho" required>
@@ -49,7 +49,7 @@ Sistema de informaci&oacute;n
                                     <input class="form-control" type="text" name="nombre_funcionario" id="nombre_funcionario">
                                 </div>
                                 <div class="col-md-12 margin-bottom-0">
-                                    <label class="requerido" for="felicitarSede">Desea felicitar una sede:</label>
+                                    <label  for="felicitarSede">Desea felicitar una sede:</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="felicitarSede"
                                             id="felicitarSede1" value="si">
@@ -67,7 +67,7 @@ Sistema de informaci&oacute;n
                                 </div>
                                     <div class="p-2 d-none row group-sede">
                                         <div class="col-12 col-md-3 form-group" id="cajadepartamento"><label
-                                            for="">Departamento:</label>
+                                            for="" class="requerido">Departamento:</label>
                                             <select class="custom-select rounded-0 departamentos" id="departamento"
                                                 data_url="{{ route('cargar_municipios') }}">
                                                 <option value="">--Seleccione--</option>
@@ -79,21 +79,21 @@ Sistema de informaci&oacute;n
                                             </select>
                                         </div>
                                         <div class="col-12 col-md-3 form-group" id="cajamunicipio_id"><label
-                                                for="">Municipio:</label>
+                                                for="" class="requerido">Municipio:</label>
                                             <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes') }}"
                                                 id="municipio_id">
                                                 <option value="">--Seleccione--</option>
                                             </select>
                                         </div>
                                         <div class="col-12 col-md-6 form-group cajasede_id" id="cajasede_id">
-                                            <label for="">Sede:</label>
+                                            <label for="" class="requerido">Sede:</label>
                                             <select name="sede_id" id="sede_id" class="custom-select rounded-0" >
                                                 <option value="">--Seleccione--</option>
                                             </select>
                                         </div>
                                     </div>
                                 <div class="form-group col-12">
-                                    <label for="">Escriba sus felicitaciones</label>
+                                    <label for="" class="requerido">Escriba sus felicitaciones</label>
                                     <textarea class="form-control" rows="3" placeholder="" name="felicitacion" id="felicitacion" required></textarea>
                                 </div>
                                 <input id="cantidadHechos" name="cantidadHechos" type="hidden" value="0">

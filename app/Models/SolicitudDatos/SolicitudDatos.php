@@ -2,10 +2,13 @@
 
 namespace App\Models\SolicitudDatos;
 
+use App\Models\PQR\PQR;
+use App\Models\PQR\Estado;
+use App\Models\PQR\tipoPQR;
+use App\Models\Empresas\Sede;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;
-use App\Models\PQR\tipoPQR;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use App\Models\SolicitudDatos\SolicitudDatosSolicitud;
@@ -41,5 +44,10 @@ class SolicitudDatos extends Model
     public function sede()
     {
         return $this->belongsTo(Sede::class, 'sede_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estadospqr_id', 'id');
     }
 }

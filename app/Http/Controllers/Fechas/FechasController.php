@@ -23,9 +23,7 @@ class FechasController extends Controller
         while($validacion == 0){
             $diaComparar = date("Y-m-d", strtotime("$diaRadicacion + $totalDias days"));
             $festivo = 0;
-            if(date("l", strtotime("$diaComparar")) == "Saturday" || date("l", strtotime("$diaComparar")) == "Sunday" ){
-                // $diasFin[] = date("Y-m-d", strtotime("$diaComparar"));
-            }else{
+            if(!(date("l", strtotime("$diaComparar")) == "Saturday" || date("l", strtotime("$diaComparar")) == "Sunday" )){
                 for ($i=0; $i < sizeof($festivos); $i++) { 
                     if($festivos[$i]['fecha'] == $diaComparar){
                         $festivo = 1;

@@ -100,7 +100,7 @@ Sistema de informaci&oacute;n
                                 <div class="col-12 col-md-6">
                                     Fecha estimada de respuesta:
                                     <strong>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' .
-                                        ($pqr->tiempo_limite + $pqr->prorroga_dias) . ' days')) }}</strong>
+                                        ($pqr->tiempo_limite) . ' days')) }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Estado: <strong>{{ $pqr->estado->estado_funcionario }}</strong>

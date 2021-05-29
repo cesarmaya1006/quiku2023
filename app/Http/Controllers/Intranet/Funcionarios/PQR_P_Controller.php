@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\Respuesta;
 use App\Models\PQR\Aclaracion;
+use App\Models\PQR\DocRespuesta;
 use App\Http\Controllers\Controller;
 use App\Models\PQR\AclaracionAnexos;
-use App\Models\PQR\DocRespuesta;
 use Illuminate\Support\Facades\Config;
+use App\Http\Controllers\Fechas\FechasController;
 
 class PQR_P_Controller extends Controller
 {
@@ -29,15 +30,16 @@ class PQR_P_Controller extends Controller
 
     public function gestionar_guardar(Request $request)
     {
-        // $usuario = Usuario::findOrFail(session('id_usuario'));
-        // dd($usuario->empleado->id);
-        // $actualizarPqr['empresa_id'] = $usuario->empleado->id;
+        $pqr = PQR::findOrfail($request['id_pqr']);
         $validacionProrroga = PQR::findOrFail($request['id_pqr']);
         if(isset($request['prorroga'])){
             if($validacionProrroga->prorroga == 0 && $request['plazo_prorroga'] != null && $request['prorroga_pdf'] != null){
                 $actualizarPqr['prorroga'] = $request['prorroga']; 
                 $actualizarPqr['prorroga_dias'] = $request['plazo_prorroga'];
                 $actualizarPqr['prorroga_pdf'] = $request['prorroga_pdf'];
+                $nuevoLimite = $pqr->tipoPqr->tiempos + $request['plazo_prorroga'];
+                $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
+                $actualizarPqr['tiempo_limite'] = $respuestaDias;
                 PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);    
             }
         } 

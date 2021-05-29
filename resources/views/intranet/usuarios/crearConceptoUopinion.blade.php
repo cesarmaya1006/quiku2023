@@ -32,7 +32,7 @@
                                 <div class="d-flex form-group grupo-sede rounded border p-2">
                                     <div class="col-12 col-md-3 form-group" id="cajadepartamento"><label
                                         for="">Departamento:</label>
-                                        <select class="custom-select rounded-0 departamentos" id="departamento" required
+                                        <select class="custom-select rounded-0 departamentos" id="departamento"
                                             data_url="{{ route('cargar_municipios') }}">
                                             <option value="">--Seleccione--</option>
                                             @foreach ($departamentos as $departamento)
@@ -44,14 +44,14 @@
                                     </div>
                                     <div class="col-12 col-md-3 form-group" id="cajamunicipio_id"><label
                                             for="">Municipio:</label>
-                                        <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes') }}" required
+                                        <select class="custom-select rounded-0" data_url="{{ route('cargar_sedes') }}"
                                             id="municipio_id">
                                             <option value="">--Seleccione--</option>
                                         </select>
                                     </div>
                                     <div class="col-12 col-md-6 form-group cajasede_id" id="cajasede_id">
                                         <label for="">Sede:</label>
-                                        <select name="sede_id" id="sede_id" class="custom-select rounded-0" required>
+                                        <select name="sede_id" id="sede_id" class="custom-select rounded-0">
                                             <option value="">--Seleccione--</option>
                                         </select>
                                     </div>
@@ -61,7 +61,7 @@
                                 <div class="col-12 consulta rounded border mb-3">
                                     <div class="form-group col-12 mt-2 titulo-consulta">
                                         <div class="col-12 d-flex justify-content-between mb-2">
-                                            <label for="">Consulta</label>
+                                            <label for="" class="requerido">Concepto u opinión</label>
                                             <button type="button"
                                                 class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarConsulta"><i
                                                     class="fas fa-minus-circle"></i> Eliminar consulta</button>
@@ -74,7 +74,7 @@
                                                 <label for="hecho">Hecho</label>
                                                 <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho"><i class="fas fa-minus-circle"></i></button>
                                             </div>
-                                            <input class="form-control mt-2 hecho" type="text" name="hecho" id="hecho" required>
+                                            <input class="form-control mt-2 hecho" type="text" name="hecho" id="hecho">
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-end flex-row">

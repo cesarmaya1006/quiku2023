@@ -2,13 +2,18 @@
 
 namespace App\Models\Sugerencias;
 
-use App\Models\Empleados\Empleado;
+use App\Models\PQR\PQR;
+use App\Models\PQR\Estado;
+use App\Models\PQR\tipoPQR;
+use App\Models\Empresas\Sede;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
-use App\Models\PQR\tipoPQR;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Empleados\Empleado;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Sugerencias\SugerenciaDoc;
+use App\Models\Sugerencias\SugerenciaHecho;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Sugerencia extends Model
 {
@@ -50,5 +55,10 @@ class Sugerencia extends Model
     public function sede()
     {
         return $this->belongsTo(Sede::class, 'sede_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estadospqr_id', 'id');
     }
 }

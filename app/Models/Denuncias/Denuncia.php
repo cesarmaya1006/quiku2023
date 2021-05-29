@@ -2,12 +2,14 @@
 
 namespace App\Models\Denuncias;
 
+use App\Models\PQR\Estado;
+use App\Models\PQR\tipoPQR;
+use App\Models\Empresas\Sede;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;
 use App\Models\Denuncias\DenunciaAnexo;
 use App\Models\Denuncias\DenunciaHecho;
-use App\Models\PQR\tipoPQR;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,5 +49,15 @@ class Denuncia extends Model
     public function tipoPqr()
     {
         return $this->belongsTo(tipoPQR::class, 'tipo_pqr_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estadospqr_id', 'id');
     }
 }

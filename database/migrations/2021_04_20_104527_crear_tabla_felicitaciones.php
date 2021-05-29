@@ -32,7 +32,9 @@ class CrearTablaFelicitaciones extends Migration
             $table->date('fecha_generacion');
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();
-            $table->string('estado')->default('Radicada, sin iniciar tramite');
+            $table->bigInteger('tiempo_limite')->default(0);
+            $table->unsignedBigInteger('estadospqr_id')->nullable();
+            $table->foreign('estadospqr_id', 'fk_estadosfelicitaciones')->references('id')->on('estadospqr')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

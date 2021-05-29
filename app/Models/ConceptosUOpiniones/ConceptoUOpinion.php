@@ -2,6 +2,9 @@
 
 namespace App\Models\ConceptosUOpiniones;
 
+use App\Models\PQR\Estado;
+use App\Models\PQR\tipoPQR;
+use App\Models\Empresas\Sede;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;
@@ -9,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
-use App\Models\PQR\tipoPQR;
 
 class ConceptoUOpinion extends Model
 {
@@ -42,5 +44,9 @@ class ConceptoUOpinion extends Model
     {
         return $this->belongsTo(Sede::class, 'sede_id', 'id');
     }
-    
+    //----------------------------------------------------------------------------------
+    public function estado()
+    {
+        return $this->belongsTo(Estado::class, 'estadospqr_id', 'id');
+    }
 }
