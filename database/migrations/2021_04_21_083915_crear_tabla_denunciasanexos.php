@@ -15,8 +15,8 @@ class CrearTablaDenunciasanexos extends Migration
     {
         Schema::create('denunciasanexos', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->unsignedBigInteger('denuncia_id');
-            $table->foreign('denuncia_id', 'fk_denuncias_doc')->references('id')->on('denuncias')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('denunciairregularidades_id');
+            $table->foreign('denunciairregularidades_id', 'fk_denunciairregularidades_doc')->references('id')->on('denunciairregularidades')->onDelete('restrict')->onUpdate('restrict');
             $table->string('titulo', 255);
             $table->string('descripcion', 255);
             $table->string('extension', 255);

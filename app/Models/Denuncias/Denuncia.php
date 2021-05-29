@@ -31,19 +31,9 @@ class Denuncia extends Model
         return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    public function empleado()
+    public function irregularidades()
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function hechos()
-    {
-        return $this->hasMany(DenunciaHecho::class, 'denuncia_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function documentos()
-    {
-        return $this->hasMany(DenunciaAnexo::class, 'denuncia_id', 'id');
+        return $this->hasMany(irregularidades::class, 'denuncias_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function tipoPqr()

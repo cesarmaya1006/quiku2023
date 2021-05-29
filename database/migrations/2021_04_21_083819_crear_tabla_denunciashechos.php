@@ -15,8 +15,8 @@ class CrearTablaDenunciashechos extends Migration
     {
         Schema::create('denunciashechos', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->unsignedBigInteger('denuncia_id');
-            $table->foreign('denuncia_id', 'fk_denuncia_hechos')->references('id')->on('denuncias')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('denunciairregularidades_id');
+            $table->foreign('denunciairregularidades_id', 'fk_denunciairregularidades_hechos')->references('id')->on('denunciairregularidades')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('hecho');
             $table->timestamps();
             $table->charset = 'utf8';

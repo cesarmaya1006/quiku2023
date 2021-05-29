@@ -42,6 +42,7 @@ use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
+use App\Models\Denuncias\DenunciaIrregularidad;
 use App\Models\PQR\Estado;
 use App\Models\PQR\Hecho;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -67,13 +68,13 @@ class ClienteController extends Controller
 
         if ($pqr_S->count() > 0) {
             foreach ($pqr_S as $pqr) {
-                if ($pqr->peticiones->count() == 0) {
-                    $pqr_update['estado'] = 'Sin radicar';
-                    PQR::findOrFail($pqr->id)->update($pqr_update);
-                } elseif ($pqr->estado == 'Sin radicar') {
-                    $pqr_update['estado'] = 'Radicada, sin iniciar tramite';
-                    PQR::findOrFail($pqr->id)->update($pqr_update);
-                }
+                // if ($pqr->peticiones->count() == 0) {
+                //     $pqr_update['estado'] = 'Sin radicar';
+                //     PQR::findOrFail($pqr->id)->update($pqr_update);
+                // } elseif ($pqr->estado == 'Sin radicar') {
+                //     $pqr_update['estado'] = 'Radicada, sin iniciar tramite';
+                //     PQR::findOrFail($pqr->id)->update($pqr_update);
+                // }
             }
         }
         $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
@@ -377,14 +378,10 @@ class ClienteController extends Controller
 
     public function gererarDenuncia_guardar(Request $request)
     {
-        // $tipo_pqr = tipoPQR::findOrFail(6);
-        // $diasLimite = $tipo_pqr['tiempos'];
-        // $diaGeneracion = date("Y-m-d");
-        // $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
-
-        // $estado = Estado::findOrFail(1);
-        // $nuevaSolicitud['estadospqr_id'] = $estado['id'];
-        // $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
+        $tipo_pqr = tipoPQR::findOrFail(6);
+        $diasLimite = $tipo_pqr['tiempos'];
+        $diaGeneracion = date("Y-m-d");
+        $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaDenuncia['persona_id'] = $usuario->id;
@@ -392,48 +389,63 @@ class ClienteController extends Controller
             $nuevaDenuncia['empresa_id'] = $usuario->id;
         }
         $nuevaDenuncia['sede_id'] = $request['sede_id'];
-        $nuevaDenuncia['solicitud'] = $request['solicitud'];
         $nuevaDenuncia['fecha_generacion'] = date("Y-m-d");
         $nuevaDenuncia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
+        $estado = Estado::findOrFail(1);
+        $nuevaDenuncia['estadospqr_id'] = $estado['id'];
+        $nuevaDenuncia['tiempo_limite'] = $respuestaDias;
         $denuncia = Denuncia::create($nuevaDenuncia);
 
-        $tipo_pqr = tipoPQR::findOrFail(6);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $denuncia->id;
         Denuncia::findOrFail($denuncia->id)->update($pqr_rad);
         $denuncia = Denuncia::findOrFail($denuncia->id);
 
-        $nuevosHechos['denuncia_id'] = $denuncia->id;
-        $cantidadHechos = $request['cantidadHechosDenuncia'];
-        for ($i = 0; $i < $cantidadHechos; $i++) {
-            $nuevosHechos['hecho'] = $request['hecho' . $i];
-            DenunciaHecho::create($nuevosHechos);
-        }
-        $cantidadAnexosDenuncia = $request['cantidadAnexosDenuncia'];
+        $nuevasIrregularidades['denuncias_id'] = $denuncia->id;
+        $cantidadIrregularidades = $request['cantidadIrregularidades'];
         $documentos = $request->allFiles();
-        for ($i = 0; $i < $cantidadAnexosDenuncia; $i++) {
-            if ($request->hasFile("documentos$i")) {
-                $ruta = Config::get('constantes.folder_doc_denuncias');
-                $ruta = trim($ruta);
-                $doc_subido = $documentos["documentos$i"];
-                $tamaño = $doc_subido->getSize();
-                if ($tamaño > 0) {
-                    $tamaño = $tamaño / 1000;
+        $contadorAnexos = 0;
+        $contadorHechos = 0;
+        $iteradorAnexos = 0;
+        $iteradorHechos = 0;
+        for ($i = 0; $i < $cantidadIrregularidades; $i++) {
+            $nuevasIrregularidades['irregularidad'] = $request['tipo_irregularidad' . $i];
+            $nuevasIrregularidades['otro'] = $request['otro' . $i];
+            $contadorAnexos += $request['cantidadAnexosIrregularidad' . $i];
+            $contadorHechos += $request['cantidadHechosIrregularidad' . $i];
+            $irregularidad = DenunciaIrregularidad::create($nuevasIrregularidades);
+            for ($j = $iteradorAnexos; $j < $contadorAnexos; $j++) {
+                if ($request->hasFile("documentos$j")) {
+                    $ruta = Config::get('constantes.folder_doc_denuncias');
+                    $ruta = trim($ruta);
+                    $doc_subido = $documentos["documentos$j"];
+                    $tamaño = $doc_subido->getSize();
+                    if ($tamaño > 0) {
+                        $tamaño = $tamaño / 1000;
+                    }
+                    $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                    $nuevo_documento['denunciairregularidades_id'] = $irregularidad->id;
+                    $nuevo_documento['titulo'] = $request["titulo$j"];
+                    if ($request["descripcion$j"]) {
+                        $nuevo_documento['descripcion'] = $request["descripcion$j"];
+                    } else {
+                        $nuevo_documento['descripcion'] = '';
+                    }
+                    $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                    $nuevo_documento['peso'] = $tamaño;
+                    $nuevo_documento['url'] = $nombre_doc;
+                    $doc_subido->move($ruta, $nombre_doc);
+                    DenunciaAnexo::create($nuevo_documento);
                 }
-                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                $nuevo_documento['denuncia_id'] = $denuncia->id;
-                $nuevo_documento['titulo'] = $request["titulo$i"];
-                if ($request["descripcion$i"]) {
-                    $nuevo_documento['descripcion'] = $request["descripcion$i"];
-                } else {
-                    $nuevo_documento['descripcion'] = '';
-                }
-                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
-                $nuevo_documento['peso'] = $tamaño;
-                $nuevo_documento['url'] = $nombre_doc;
-                $doc_subido->move($ruta, $nombre_doc);
-                DenunciaAnexo::create($nuevo_documento);
             }
+            for ($k = $iteradorHechos; $k < $contadorHechos; $k++) {
+                $nuevosHechos['denunciairregularidades_id'] = $irregularidad->id;
+                $nuevosHechos['hecho'] = $request['hecho' . $k];
+                DenunciaHecho::create($nuevosHechos);
+            }
+            $iteradorAnexos += $request['cantidadAnexosIrregularidad' . $i];
+            $iteradorHechos += $request['cantidadHechosIrregularidad' . $i];
         }
+
         return redirect('/usuario/generar')->with('id', $denuncia->id)->with('pqr_tipo', $denuncia->tipo_pqr_id)->with('radicado', $denuncia->radicado)->with('fecha_radicado', $denuncia->created_at);
     }
 

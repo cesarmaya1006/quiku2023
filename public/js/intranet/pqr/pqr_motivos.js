@@ -5,24 +5,6 @@ window.addEventListener('DOMContentLoaded', function () {
         let btnSubmit = document.querySelector('#fromPQRMotivos')
         btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
-            // let contadorValidacion;
-            // if(document.querySelectorAll('.titulo-motivo input')){
-            //     let validacionConsultas = document.querySelectorAll('.justificacion-motivo input')
-            //     validacionConsultas.forEach(motivo =>{
-            //         if (motivo.value == '') {
-            //             // swal({
-            //             //     title: "Alerta",
-            //             //     text: `Debe diligencias el campo ${motivo.parentNode.parentNode.parentNode.querySelector('.titulo-principal-card').textContent}`,
-            //             //     icon: "error",
-            //             //     button: "Continuar",
-            //             //   });
-            //             contadorValidacion = 1
-            //         }else {
-            //             contadorValidacion = 0
-            //         }
-            //     })
-            // }
-            // if (contadorValidacion == 0) {
                 let anexos = document.querySelectorAll('input[type="file"]')
                 anexos.forEach(anexo =>{
                     if(anexo.value == ''){
@@ -40,7 +22,6 @@ window.addEventListener('DOMContentLoaded', function () {
                 ajustarNameAnexo(document.querySelectorAll('.anexomotivo'))
                 document.querySelector('.totalCantidadAnexosmotivos').value = document.querySelectorAll('.anexomotivo').length
                 this.submit();
-            // }
         })
         // Fin Validacion envio de formulario
 
@@ -245,7 +226,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
         function ajustarOtro(){
             $('.motivo_sub_id').on('change', function(event) {
-                // console.log(event.target.value)
                 if (event.target.value == '2') {
                     let padreHTML = event.target.parentNode.parentNode
                     let otro = padreHTML.querySelector('.otro')
@@ -253,6 +233,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 }else{
                     let padreHTML = event.target.parentNode.parentNode
                     let otro = padreHTML.querySelector('.otro')
+                    otro.querySelector('input').value = ''
                     if (!otro.classList.contains('d-none')) {
                         otro.classList.toggle('d-none')
                     }
