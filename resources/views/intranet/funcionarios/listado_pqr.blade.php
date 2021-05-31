@@ -73,9 +73,12 @@
                     <thead>
                         <tr>
                             <th>Num. Radicado</th>
-                            <th>Tipo de PQR</th>
-                            <th>Estado</th>
                             <th>Fecha de radicación</th>
+                            <th>Tipo de PQR</th>
+                            <th>Estado PQR</th>
+                            <th>Plazo de respuesta</th>
+                            <th>Dias de vencimiento</th>
+                            <th>Fecha estimada de respuesta</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -83,9 +86,12 @@
                         @foreach ($pqr_S as $pqr)
                             <tr>
                                 <td>{{ $pqr->radicado }}</td>
+                                <td>{{ $pqr->fecha_radicado }}</td>
                                 <td>{{ $pqr->tipoPqr->tipo }}</td>
                                 <td>{{ $pqr->estado->estado_funcionario }}</td>
-                                <td>{{ $pqr->fecha_radicado }}</td>
+                                <td>{{ $pqr->tipoPqr->tiempos }}</td>
+                                <td></td>
+                                <td>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . ($pqr->tiempo_limite) . ' days')) }}</td>
                                 <td>
                                     @if ($pqr->tipo_pqr_id == 1)
                                         <a href="{{ route('funcionario-gestionar_pqr_p', ['id' => $pqr->id]) }}"
@@ -106,9 +112,12 @@
                         @foreach ($conceptos as $concepto)
                             <tr>
                                 <td>{{ $concepto->radicado }}</td>
+                                <td>{{ $concepto->fecha_radicado }}</td>
                                 <td>{{ $concepto->tipoPqr->tipo }}</td>
                                 <td>{{ $concepto->estado->estado_funcionario }}</td>
-                                <td>{{ $concepto->fecha_radicado }}</td>
+                                <td>{{ $concepto->tipoPqr->tiempos }}</td>
+                                <td></td>
+                                <td>{{ date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . ($concepto->tiempo_limite) . ' days')) }}</td>
                                 <td><a href="{{ route('funcionario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
@@ -117,9 +126,12 @@
                         @foreach ($solicitudes_datos as $solicitud_datos)
                             <tr>
                                 <td>{{ $solicitud_datos->radicado }}</td>
+                                <td>{{ $solicitud_datos->fecha_radicado }}</td>
                                 <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
                                 <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
-                                <td>{{ $solicitud_datos->fecha_radicado }}</td>
+                                <td>{{ $solicitud_datos->tipoPqr->tiempos }}</td>
+                                <td></td>
+                                <td>{{ date('Y-m-d', strtotime($solicitud_datos->fecha_generacion . '+ ' . ($solicitud_datos->tiempo_limite) . ' days')) }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
@@ -128,9 +140,12 @@
                         @foreach ($denuncias as $denuncia)
                             <tr>
                                 <td>{{ $denuncia->radicado }}</td>
+                                <td>{{ $denuncia->fecha_radicado }}</td>
                                 <td>{{ $denuncia->tipoPqr->tipo }}</td>
                                 <td>{{ $denuncia->estado->estado_funcionario }}</td>
-                                <td>{{ $denuncia->fecha_radicado }}</td>
+                                <td>{{ $denuncia->tipoPqr->tiempos }}</td>
+                                <td></td>
+                                <td>{{ date('Y-m-d', strtotime($denuncia->fecha_generacion . '+ ' . ($denuncia->tiempo_limite) . ' days')) }}</td>
                                 <td><a href="{{ route('funcionario-gestionarDenuncia', ['id' => $denuncia->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
@@ -139,9 +154,12 @@
                         @foreach ($felicitaciones as $felicitacion)
                             <tr>
                                 <td>{{ $felicitacion->radicado }}</td>
+                                <td>{{ $felicitacion->fecha_radicado }}</td>
                                 <td>{{ $felicitacion->tipoPqr->tipo }}</td>
                                 <td>{{ $felicitacion->estado->estado_funcionario }}</td>
-                                <td>{{ $felicitacion->fecha_radicado }}</td>
+                                <td>{{ $felicitacion->tipoPqr->tiempos }}</td>
+                                <td></td>
+                                <td>{{ date('Y-m-d', strtotime($felicitacion->fecha_generacion . '+ ' . ($felicitacion->tiempo_limite) . ' days')) }}</td>
                                 <td><a href="{{ route('funcionario-gestionarFelicitacion', ['id' => $felicitacion->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
@@ -150,9 +168,12 @@
                         @foreach ($solicitudes_doc as $solicitud_doc)
                             <tr>
                                 <td>{{ $solicitud_doc->radicado }}</td>
+                                <td>{{ $solicitud_doc->fecha_radicado }}</td>
                                 <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
                                 <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
-                                <td>{{ $solicitud_doc->fecha_radicado }}</td>
+                                <td>{{ $solicitud_doc->tipoPqr->tiempos }}</td>
+                                <td></td>
+                                <td>{{ date('Y-m-d', strtotime($solicitud_doc->fecha_generacion . '+ ' . ($solicitud_doc->tiempo_limite) . ' days')) }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSolicitudDocumentos', ['id' => $solicitud_doc->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
@@ -161,9 +182,12 @@
                         @foreach ($sugerencias as $sugerencia)
                             <tr>
                                 <td>{{ $sugerencia->radicado }}</td>
+                                <td>{{ $sugerencia->fecha_radicado }}</td>
                                 <td>{{ $sugerencia->tipoPqr->tipo }}</td>
                                 <td>{{ $sugerencia->estado->estado_funcionario }}</td>
-                                <td>{{ $sugerencia->fecha_radicado }}</td>
+                                <td>{{ $sugerencia->tipoPqr->tiempos }}</td>
+                                <td></td>
+                                <td>{{ date('Y-m-d', strtotime($sugerencia->fecha_generacion . '+ ' . ($sugerencia->tiempo_limite) . ' days')) }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSugerencia', ['id' => $sugerencia->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>

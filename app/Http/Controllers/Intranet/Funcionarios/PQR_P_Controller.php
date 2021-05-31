@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Models\PQR\PQR;
+use App\Models\PQR\Estado;
 use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
 use App\Models\Admin\Usuario;
@@ -40,7 +41,7 @@ class PQR_P_Controller extends Controller
                 $nuevoLimite = $pqr->tipoPqr->tiempos + $request['plazo_prorroga'];
                 $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
                 $actualizarPqr['tiempo_limite'] = $respuestaDias;
-                PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);    
+                PQR::findOrFail($request['id_pqr'])->update($actualizarPqr); 
             }
         } 
         $documentos = $request->allFiles();
@@ -49,19 +50,20 @@ class PQR_P_Controller extends Controller
         $iteradorAclaraciones = 0;
         $contadorAnexos = 0;
         $iteradorAnexos = 0;
-        // dd($request->all());
+        $estadoAclaracion = Estado::findOrFail(5);
         for ($i = 0; $i < $totalPeticiones; $i++) {
             $actualizarPeticion['aclaracion'] = $request["aclaracion_check$i"];
             Peticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
             $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];
             for ($j = $iteradorAclaraciones; $j < $contadorAclaraciones; $j++) {
                 if($request["solicitud_aclaracion$j"] != null){
-                    // dd($request->all());
                     $nuevaAclaracion['peticion_id'] = $request["id_peticion$i"];
                     $nuevaAclaracion['fecha'] = date("Y-m-d");
                     $nuevaAclaracion['tipo_solicitud'] = $request["tipo_aclaracion$j"];
                     $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
                     Aclaracion::create($nuevaAclaracion);
+                    $pqrEstado['estadospqr_id'] = $estadoAclaracion['id'];
+                    PQR::findOrFail($request['id_pqr'])->update($pqrEstado);  
                 }
             } 
             $contadorAnexos += $request["totalPeticionAnexos$i"];
@@ -105,7 +107,6 @@ class PQR_P_Controller extends Controller
 
     public function gestionar_guardar_usuario (Request $request)
     {
-        // dd($request->all());
         $contadorAnexos = 0;
         $iteradorAnexos = 0;
         $documentos = $request->allFiles();
