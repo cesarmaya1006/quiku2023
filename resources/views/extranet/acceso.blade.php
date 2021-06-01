@@ -17,7 +17,7 @@
                     <div class="card">
                         <div class="card-body">
                             <img src="{{ asset('imagenes/sistema/img-logo.png') }}" class="rounded mx-auto d-block" alt="...">
-                            <h5 class="card-title">Iniciar sesión</h5>
+                            {{-- <h5 class="card-title">Iniciar sesión</h5> --}}
                             <div class="card-text mt-3">
                                 <form action="{{ route('login') }}" method="post" autocomplete="off">
                                     @method('post')
