@@ -41,7 +41,7 @@
         }
 
         .btn-primary {
-            background-color:white;
+            background-color: white;
             border-color: #3359fa;
             color: #3359fa;
             font-weight: bold;
@@ -73,9 +73,10 @@
     @yield('cuerpo_pagina')
     <!-- Optional JavaScript; choose one of the two! -->
     <a href="{{ route('preguntas_frecuentes') }}">
-        <img src="{{ asset('imagenes/sistema/preguntas_frecuentes.png') }}" class="rounded d-block preguntas-frecuentes" alt="...">
+        <img src="{{ asset('imagenes/sistema/preguntas_frecuentes.png') }}"
+            class="rounded d-block preguntas-frecuentes" alt="...">
     </a>
-    <div class="row fixed-bottom p-3" style="background-color: rgba(26, 26, 26, 0.4)">
+    <div class="row fixed-bottom p-3 mt-5" style="background-color: rgba(26, 26, 26, 0.4)">
         <div class="col-12 text-center text-white">
             <strong>Copyright &copy; 2021 <a href="http://www.mglasociados.com/" style="color: white">MGL</a>.</strong>
             All rights reserved.
