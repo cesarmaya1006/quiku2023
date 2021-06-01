@@ -270,4 +270,41 @@ class EmailController extends Controller
 
         return $mensaje;
     }
+    public function pqr_pdf_guardar($id)
+    {
+        $pqr_sel = PQR::findOrFail($id);
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $apreciado = 'Apreciado';
+        $representante = 'no';
+        $empresa = 'no';
+        if ($pqr_sel->persona_id != null) {
+            $nombre = $pqr_sel->persona->nombre1 . ' ' . $pqr_sel->persona->nombre2 . ' ' . $pqr_sel->persona->apellido1 . ' ' . $pqr_sel->persona->apellido2;
+            $email = $pqr_sel->persona->email;
+        } else {
+            $nombre = $pqr_sel->empresa->razon_social;
+            $empresa = $pqr_sel->empresa->razon_social;
+            $representante = $pqr_sel->empresa->representante->nombre1 . ' ' . $pqr_sel->empresa->representante->apellido1;
+            $email = $pqr_sel->empresa->email;
+        }
+        $tipo_doc = $pqr_sel->persona->tipos_docu->tipo_id;
+        $identificacion = $pqr_sel->empresa->identificacion;
+        $motivos = '';
+        foreach ($pqr_sel as $key => $value) {
+            $motivos .= '<li></li>';
+        }
+        $data = [
+            'imagen' => $imagen,
+            'nombre' => $nombre,
+            'imagen' => $imagen,
+            'tipo_doc' => $tipo_doc,
+            'identificacion' => $identificacion,
+            'empresa' => $empresa,
+            'representante' => $representante,
+            'email' => $email,
+        ];
+        $pdf_name = "vista_previa.pdf";
+        $path = public_path('\documentos\pqr\ ' . $pdf_name);
+        $path = trim($path);
+        $pdf = PDF::loadView('intranet.pdf.pdf_prorroga', $data)->save($path);
+    }
 }

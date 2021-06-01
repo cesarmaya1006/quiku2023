@@ -1,6 +1,5 @@
-<aside class="main-sidebar sidebar-dark-warning elevation-4"
-    style="background-image: url('{{ Storage::url('public/imagenes/sistema/fondo-menu-1.jpg') }}'); background-size:auto 100%;background-repeat:no-repeat;background-attachment:fixed;">
-    <div class="pantallaMenuLat" style="width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.6)">
+<aside class="main-sidebar sidebar-dark-warning elevation-4" style="background-color: white;">
+    <div class="pantallaMenuLat" style="width: 100%;height: 100%;background-color: rgba(255, 255, 255, 0.6)">
         <!-- Brand Logo -->
         <a href="index3.html" class="brand-link" style="background-color: rgba(120, 200, 245, 0.8);">
             <img src="{{ asset('imagenes/sistema/icono_sistema.png') }}" alt="Sistema Prueba"
@@ -34,7 +33,7 @@
                 </div>
             </div>
             <!-- Sidebar Menu -->
-            <nav class="mt-2" style="color: white;">
+            <nav class="mt-2" style="color: rgb(40, 94, 209);">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
@@ -42,9 +41,9 @@
                     <li class="nav-header">MEN&Uacute; PRINCIPAL</li>
                     @foreach ($menusComposer as $key => $item)
                         @if ($item['menu_id'] != 0)
-                            @break
-                        @endif
-                        @include("theme.back.menu-item", ["item" => $item])
+                        @break
+                    @endif
+                    @include("theme.back.menu-item", ["item" => $item])
                     @endforeach
                 </ul>
             </nav>
