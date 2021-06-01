@@ -28,6 +28,25 @@ window.addEventListener('DOMContentLoaded', function(){
             item.parentElement.querySelector('.aclaraciones').parentElement.classList.add('d-none')
         }
     })
+    // let verificacionRecurso = document.querySelectorAll('.respuestaRecurso')
+    // verificacionRecurso.forEach(item => {
+    //     if(item.value == 1){
+    //         item.parentElement.querySelector('.recurso_si').setAttribute('checked','')
+    //         item.parentElement.querySelector('.recurso_no').setAttribute('disabled','')
+    //     }else{
+    //         item.parentElement.querySelector('.recurso_no').setAttribute('checked','')
+    //         item.parentElement.querySelector('.recurso-form').classList.add('d-none')
+    //     }
+    // })
+    let verificacionRecurso = document.querySelector('.respuestaRecurso')
+    console.log(verificacionRecurso)
+    if(verificacionRecurso.value >= 1){
+        verificacionRecurso.parentElement.querySelector('.recurso_si').setAttribute('checked','')
+        verificacionRecurso.parentElement.querySelector('.recurso_no').setAttribute('disabled','')
+    }else{
+        verificacionRecurso.parentElement.querySelector('.recurso_no').setAttribute('checked','')
+        verificacionRecurso.parentElement.querySelector('.recurso-form').classList.add('d-none')
+    }
     // ---------------------------------------------------------------------------------------------------------
     $('input[type=radio][name=prorroga]').on('change', function() {
         switch ($(this).val()) {
@@ -48,6 +67,18 @@ window.addEventListener('DOMContentLoaded', function(){
                 break;
             case '0':
                 padre.querySelector('.aclaraciones').parentElement.classList.add('d-none');
+                break;
+        }
+    });
+
+    $('.recurso_check').on('change', function(e) {
+        let padre = e.target.parentNode.parentNode.parentNode
+        switch (e.target.value) {
+            case '1':
+                padre.querySelector('.recurso-form').classList.remove('d-none');
+                break;
+            case '0':
+                padre.querySelector('.recurso-form').classList.add('d-none');
                 break;
         }
     });
@@ -98,6 +129,18 @@ window.addEventListener('DOMContentLoaded', function(){
                 respuesta.name = `respuesta${i}`
                 respuesta.id = `respuesta${i}`
             })
+            // peticion.querySelectorAll('.recurso_check').forEach(check => {
+            //     check.name = `recurso${i}`
+            //     check.id = `recurso${i}`
+            // })
+            // peticion.querySelectorAll('.plazo_recurso').forEach(input => {
+            //     input.name = `plazo_recurso${i}`
+            //     input.id = `plazo_recurso${i}`
+            // })
+            // peticion.querySelectorAll('.fecha_notificacion').forEach(input => {
+            //     input.name = `fecha_notificacion${i}`
+            //     input.id = `fecha_notificacion${i}`
+            // })
             peticion.querySelectorAll('.id_peticion').forEach(id_peticion => {
                 id_peticion.name = `id_peticion${i}`
                 id_peticion.id = `id_peticion${i}`

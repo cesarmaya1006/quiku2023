@@ -53,6 +53,11 @@ class PQR_P_Controller extends Controller
         $estadoAclaracion = Estado::findOrFail(5);
         for ($i = 0; $i < $totalPeticiones; $i++) {
             $actualizarPeticion['aclaracion'] = $request["aclaracion_check$i"];
+            if($request["recurso"] == 1){
+                $actualizarPeticion['recurso'] = $request["recurso"];
+                $actualizarPeticion['recurso_dias'] = $request["plazo_recurso"];
+                $actualizarPeticion['fecha_notificacion'] = date('Y-m-d');
+            }
             Peticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
             $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];
             for ($j = $iteradorAclaraciones; $j < $contadorAclaraciones; $j++) {
@@ -103,8 +108,8 @@ class PQR_P_Controller extends Controller
         }
         return redirect('/funcionario/listado');
     }
-
-
+    
+    
     public function gestionar_guardar_usuario (Request $request)
     {
         $contadorAnexos = 0;

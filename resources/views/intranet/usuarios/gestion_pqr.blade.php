@@ -308,8 +308,49 @@ Sistema de informaci&oacute;n
                                         </div>
                                     </div>
                                 @endif
+                                
                             </div>
                             @endif
+                            @if ($peticion->recurso)
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6>Recurso</h6>
+                                </div>
+                                <div class="form-group col-12 col-md-6 titulo-motivo">
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <label for="">Tipo de recurso</label>
+                                    </div>
+                                    <select name="motivo_pqr" id="motivo_pqr" data_url="{{ route('cargar_submotivos') }}" class="custom-select rounded-0 motivo_pqr" required>
+                                        <option value="">--Seleccione--</option>
+                                        {{-- @foreach ($tipo->tipoPqr->motivos as $motivo)
+                                            <option value="{{ $motivo->id }}">{{ $motivo->motivo }}</option>
+                                        @endforeach --}}
+                                    </select>
+                                </div>
+                                {{-- @if (isset($peticion->respuesta->documentos))
+                                <div class="row respuestaAnexos">
+                                    <div class="col-12">
+                                        <div class="col-12">
+                                            <h6>Anexos respuesta</h6>
+                                        </div>
+                                        <table class="table table-light">
+                                            <tbody>
+                                                @foreach ($peticion->respuesta->documentos as $anexo)
+                                                <tr>
+                                                    <td>{{ $anexo->titulo }}</td>
+                                                    <td>{{ $anexo->descripcion }}</td>
+                                                    <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
+                                                            target="_blank" rel="noopener noreferrer">Descargar</a>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            @endif --}}
+                        </div>
+                        @endif
                             <input class="totalPeticionAclaraciones" name="totalPeticionAclaraciones" type="hidden" value="">
                             <input class="id_peticion" name="id_peticion" type="hidden" value="{{$peticion->id}}">
                         </div>

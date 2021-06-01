@@ -14,6 +14,10 @@ Sistema de informaci&oacute;n
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
+@php
+    $recurso = 0;
+    $plazoRecurso = 0;
+@endphp
 <div class="container-fluid">
     <div class="row d-flex justify-content-center">
         <div class="col-12 col-md-8">
@@ -140,6 +144,45 @@ Sistema de informaci&oacute;n
                                     </div>
                                 </div>
                             </div>
+                            <hr>
+                            @foreach ($pqr->peticiones as $peticion)
+                                @php
+                                $recurso += $peticion->recurso;
+                                if( $plazoRecurso != $peticion->recurso_dias){
+                                    $plazoRecurso += $peticion->recurso_dias;
+                                }
+                                @endphp
+                                @endforeach
+                                <div class="row">
+                                    <input class="respuestaRecurso" type="hidden" value="{{ $recurso }}">
+                                    <div class="col-12 col-md-6">
+                                        <h6>¿A las respuesta le procede recurso?</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex flex-row">
+                                        <div class="form-check mb-3 mr-4">
+                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_si" value="1"/>
+                                            <label id="_label" class="form-check-label" for="">SI</label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_no" value="0"/>
+                                            <label id="_label" class="form-check-label" for="">NO</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 row px-3 recurso-form">
+                                        @if ($plazoRecurso == 0)
+                                            <div class="col-12 col-md-2 form-group">
+                                                <label for="plazo">Plazo recurso:</label>
+                                                <input type="number" class="form-control form-control-sm plazo_recurso"
+                                                    name="plazo_recurso" id="plazo_recurso" min="1"
+                                                    max="{{$pqr->tipoPqr->tiempos}}">
+                                            </div>
+                                        @else
+                                            <div class="col-12 col-md-2 form-group">
+                                                <label for="plazo">Plazo recurso: {{ $plazoRecurso}}</label>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
                         </div>
                         @foreach ($pqr->peticiones as $peticion)
                         <hr style="border-top: solid 4px black">
@@ -361,31 +404,14 @@ Sistema de informaci&oacute;n
                                     type="hidden" value="0">
                             </div>
                             <hr>
-                            {{-- <div class="row">
-                                <div class="col-12 col-md-6">
-                                    <h6>¿A la petición le procede recurso?</h6>
-                                </div>
-                                <div class="col-12 col-md-6 d-flex flex-row">
-                                    <div class="form-check mb-3 mr-4">
-                                        <input id="" name="peticion" type="radio" class="form-check-input peticion"
-                                            value="1" {{ $pqr->recurso == 1 ? 'checked' : '' }} />
-                                        <label id="_label" class="form-check-label" for="">SI</label>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input id="" name="peticion" type="radio" class="form-check-input peticion"
-                                            value="0" {{ $pqr->recurso == 0 ? 'checked' : '' }} />
-                                        <label id="_label" class="form-check-label" for="">NO</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 row px-3 peticion-form ">
-                                    <input type="date" class="form-control col-12 col-md-6" name="" id="">
-                                    <span class="col-12 col-md-6 d-flex justify-content-center align-items-center">Fecha
-                                        Max Notificacion:
-                                        {{ date('Y-m-d', strtotime($peticion->fecha_notificacion . '+ ' .
-                                        ($peticion->recurso_dias + 1) . ' days')) }}
-                                    </span>
-                                </div>
-                            </div> --}}
+                            <div class="row">
+                                {{-- <input class="respuestaRecurso" type="hidden" value="{{$peticion->recurso}}"> --}}
+                                {{ $recurso }}
+                                @if ($recurso > 0))
+                                    respuesta recurso
+                                @endif
+
+                            </div>
                             <input class="id_peticion" id="id_peticion" name="id_peticion" type="hidden"
                                 value="{{$peticion->id}}">
                         </div>

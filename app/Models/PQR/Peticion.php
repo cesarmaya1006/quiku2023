@@ -48,4 +48,14 @@ class Peticion extends Model
         return $this->hasOne(Respuesta::class, 'peticion_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function recursos()
+    {
+        return $this->hasMany(Recurso::class, 'peticion_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    // public function tiposReposicion()
+    // {
+    //     return $this->belongsTo(SubMotivo::class, 'motivo_sub_id', 'id');
+    // }
+    //----------------------------------------------------------------------------------
 }
