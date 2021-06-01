@@ -78,3 +78,57 @@ label.requerido:after {
 .form-control:disabled, .form-control[readonly] {
     background-color: #ced4da!important;
 }
+
+.sidebar-dark-warning .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-warning .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #3359fa;
+    color: #ffffff;
+}
+
+.main-sidebar {
+    border: 2px solid #3359fa;
+}
+
+[class*=sidebar-dark-] .sidebar a {
+    color: #3359fa;
+}
+
+[class*=sidebar-dark-] .nav-sidebar>.nav-item>.nav-link:hover {
+    background-color: #5698fb;
+    color: #ffffff;
+}
+
+.nav-pills .nav-link {
+    color: #3359fa;
+    font-weight: 700;
+}
+
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link {
+    color: #3359fa;
+}
+
+[class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link {
+    /* color: #3359fa; */
+    background-color: #3359fa;
+}
+[class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link:hover {
+    color: #3359fa;
+    color: #ffffff;
+}
+
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active {
+    background-color: rgba(51, 89, 250, 0.7);
+    color: #ffffff;
+}
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
+    background-color: rgba(51, 89, 250, 0.7);
+    color: #ffffff;
+}
+
+[class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link:hover {
+    background-color: #5698fb;
+    color: #ffffff;
+}
+
+.card-primary:not(.card-outline)>.card-header {
+    background-color: #3359fa;
+}
