@@ -10,6 +10,7 @@ use App\Models\Consultas\Consulta;
 use App\Models\Denuncias\Denuncia;
 use App\Models\Felicitaciones\Felicitacion;
 use App\Models\PQR\PQR;
+use App\Models\PQR\tipoPQR;
 use App\Models\SolicitudDatos\SolicitudDatos;
 use App\Models\SolicitudDatos\SolicitudDatosAnexo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
@@ -25,6 +26,7 @@ class IntranetPageCotroller extends Controller
      */
     public function index()
     {
+        $tipoPQR = tipoPQR::all();
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if (session('rol_id') == 6) {
             if ($usuario->persona->count() > 0) {
@@ -76,7 +78,7 @@ class IntranetPageCotroller extends Controller
             $sugerencias = Sugerencia::get();
         }
 
-        return view('intranet.index.index', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario'));
+        return view('intranet.index.index', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario', 'tipoPQR'));
     }
 
     public function restablecer_password(ValidarPassword $request)

@@ -1,111 +1,53 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-                <div class="inner">
-                    <h3>{{ $pqr_S->count() }}</h3>
-                    <p style="font-size: 0.8em">Peticiones,Quejas,Reclamos</p>
+    <div class="row d-flex justify-content-center">
+        {{-- Generar PQR --}}
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Generar PQR</h3>
                 </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
+                <div class="card-body">
+                    <div class="row d-flex">
+                        @foreach ($tipoPQR as $tipo)
+                            <div class="col-12 col-md-4">
+                                <div class="card card-Light collapsed-card" style="box-shadow: 0px 0px 0px 0px ;">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            @if ($tipo->id < 4)
+                                                <a
+                                                    href="{{ route($tipo->url, ['id' => $tipo->id]) }}">{{ $tipo->tipo }}</a>
+                                            @else
+                                                <a href="{{ route($tipo->url) }}"
+                                                    style="text-decoration: none;">{{ $tipo->tipo }}</a>
+                                            @endif
+                                        </h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body" style="display: none;">
+                                        {{ $tipo->descripcion }}
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    @if (session('id'))
+                        <input class="" id="id" type="hidden" value="{{ utf8_encode(utf8_decode(session('id'))) }}">
+                        <input class="" id="pqr_tipo" type="hidden"
+                            value="{{ utf8_encode(utf8_decode(session('pqr_tipo'))) }}">
+                        <input class="" id="radicado" type="hidden"
+                            value="{{ utf8_encode(utf8_decode(session('radicado'))) }}">
+                        <input class="" id="fecha_radicado" type="hidden"
+                            value="{{ utf8_encode(utf8_decode(session('fecha_radicado'))) }}">
+                    @endif
                 </div>
-                <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-                <div class="inner">
-                    <h3>{{ $conceptos->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Consultas</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-                <div class="inner">
-                    <h3>{{ $solicitudes_datos->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Solicitud de datos personales</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-                <div class="inner">
-                    <h3>{{ $denuncias->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Reporte de irregularidades</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-pink">
-                <div class="inner">
-                    <h3>{{ $felicitaciones->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Felicitaciones</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-teal">
-                <div class="inner">
-                    <h3>{{ $solicitudes_doc->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Solicitud de documentos o información</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-ingo"></i>
-                </div>
-                <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-indigo">
-                <div class="inner">
-                    <h3>{{ $sugerencias->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Sugerencias</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
     </div>
-
 </div>
