@@ -9,6 +9,7 @@ use App\Http\Controllers\Intranet\Admin\PermisoController;
 use App\Http\Controllers\Intranet\Admin\PermisoRolController;
 use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\UsuarioController;
+use App\Http\Controllers\Intranet\Email\EmailController;
 use App\Http\Controllers\Intranet\Empresas\AreaController;
 use App\Http\Controllers\Intranet\Empresas\CargoController;
 use App\Http\Controllers\Intranet\Empresas\NivelController;
@@ -271,4 +272,9 @@ Route::group(['middleware' => 'auth'], function () {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //Consultar ayuda
     Route::get('download/{id_tipo_pqr}/{id_pqr}', [ClienteController::class, 'download'])->name('download');
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //Descarga de pdf
+    Route::get('pqr_radicada_download/{id}', [EmailController::class, 'Pqr_Radicada_pdf'])->name('pqr_radicada_download');
+    Route::get('Pqr_Radicada_pdf_email/{id}', [EmailController::class, 'Pqr_Radicada_pdf_email'])->name('Pqr_Radicada_pdf_email');
 });
