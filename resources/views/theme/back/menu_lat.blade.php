@@ -34,12 +34,12 @@
                 </div>
             </div>
             <!-- Sidebar Menu -->
-            <nav class="mt-2" style="color: rgb(16, 48, 116);">
+            <nav class="mt-2" style="color: #3359fa; font-weight: 500;">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                    <li class="nav-header" style="color: rgb(16, 48, 116);">MEN&Uacute; PRINCIPAL</li>
+                    <li class="nav-header" ><h6 style="color: #3359fa; font-weight: 700;">MEN&Uacute; PRINCIPAL</h6></li>
                     @foreach ($menusComposer as $key => $item)
                         @if ($item['menu_id'] != 0)
                         @break
