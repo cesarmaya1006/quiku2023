@@ -1,7 +1,8 @@
 <aside class="main-sidebar sidebar-dark-warning elevation-4" style="background-color: white;">
     <div class="pantallaMenuLat" style="width: 100%;height: 100%;background-color: rgba(255, 255, 255, 0.6)">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link" style=" background-image: linear-gradient(to bottom right, #f38782, #3359fa);">
+        <a href="index3.html" class="brand-link"
+            style=" background-image: linear-gradient(to bottom right, #f38782, #3359fa);">
             <img src="{{ asset('imagenes/sistema/icono_sistema.png') }}" alt="Sistema Prueba"
                 class="brand-image img-circle elevation-3" style="opacity: .9;max-width: 80px;">
             <div class="row">
@@ -33,12 +34,12 @@
                 </div>
             </div>
             <!-- Sidebar Menu -->
-            <nav class="mt-2" style="color: rgb(40, 94, 209);">
+            <nav class="mt-2" style="color: rgb(16, 48, 116);">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                    <li class="nav-header">MEN&Uacute; PRINCIPAL</li>
+                    <li class="nav-header" style="color: rgb(16, 48, 116);">MEN&Uacute; PRINCIPAL</li>
                     @foreach ($menusComposer as $key => $item)
                         @if ($item['menu_id'] != 0)
                         @break
