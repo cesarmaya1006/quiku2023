@@ -43,7 +43,7 @@ body {
 }
 
 .card {
-    min-height: 350px;
+    min-height: 400px;
     padding: 1%;
     margin-bottom: 1%;
     box-shadow: 0px 0px 20px -5px var(--color-black);
@@ -62,8 +62,8 @@ body {
 
 .card-title {
     color: var(--color-one);
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: 1.6rem;
+    font-weight: 900;
     text-transform: uppercase;
     text-align: center;
     float: none;
@@ -79,4 +79,16 @@ body {
 
 .margin-bottom-0 {
     margin-bottom: 0!important;
+}
+
+#password, #usuario {
+    border-radius: 50px;
+    border: 1px solid #3359fa;
+}
+.preguntas-frecuentes{
+    position: fixed;
+    right: 3%;
+    bottom: 10%;
+    /* left: 0; */
+    /* z-index: 1030; */
 }

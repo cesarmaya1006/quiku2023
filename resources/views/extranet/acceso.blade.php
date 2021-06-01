@@ -13,31 +13,37 @@
                 </div>
             </div>
             <div class="row justify-content-center" style="font-size: 0.8em;">
-                <div class="col-10 col-sm-8 col-md-3 mt-5">
+                <div class="col-10 col-sm-8 col-md-4 mt-5">
                     <div class="card">
                         <div class="card-body">
+                            <img src="{{ asset('imagenes/sistema/img-logo.png') }}" class="rounded mx-auto d-block" alt="...">
                             <h5 class="card-title">Iniciar sesión</h5>
                             <div class="card-text mt-3">
                                 <form action="{{ route('login') }}" method="post" autocomplete="off">
                                     @method('post')
                                     @csrf
                                     <div class="form-row">
-                                        <div class="col-md-12 mb-1">
-                                            <label class="requerido" for="validationDefault01">Usuario</label>
+                                        <div class="col-md-12 mb-3">
+                                            {{-- <label class="requerido" for="validationDefault01">Usuario</label> --}}
                                             <input type="text" class="form-control form-control-sm" id="usuario"
-                                                name="usuario" placeholder="usuario" required>
+                                                name="usuario" placeholder="usuario*" required>
                                         </div>
                                         <div class="col-md-12 mb-3">
-                                            <label class="requerido" for="validationDefault02">Contraseña</label>
+                                            {{-- <label class="requerido" for="validationDefault02">Contraseña</label> --}}
                                             <input type="password" class="form-control form-control-sm" id="password"
-                                                name="password" placeholder="Contraseña" required>
+                                                name="password" placeholder="Contraseña*" required>
                                         </div>
                                     </div>
-                                    <div class="centrar-items">
-                                        <button class="mt-2 btn btn-primary" type="submit">Iniciar sesión</button>
+                                    <div class="d-flex justify-content-around">
+                                        <div class="centrar-items">
+                                            <button class="mt-2 btn btn-primary" type="submit">Iniciar sesión</button>
+                                        </div>
+                                        <div class="centrar-items">
+                                            <a href="{{ route('registro_ini') }}" class="mt-2 btn btn-primary">Registrarse</a>
+                                        </div>
                                     </div>
-                                    <div class="centrar-items mt-2">
-                                        <p><a class="card-text" href="{{ route('solicitar_password') }}">¿Olvidé mi nombre
+                                    <div class="centrar-items mt-4">
+                                        <p><a class="card-text h6" href="{{ route('solicitar_password') }}">¿Olvidé mi nombre
                                                 de usuario o contraseña?</a></p>
                                     </div>
                                 </form>
@@ -45,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-10 col-sm-8 col-md-3 mt-5">
+                {{-- <div class="col-10 col-sm-8 col-md-3 mt-5">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">registro</h5>
@@ -56,8 +62,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-10 col-sm-8 col-md-3 mt-5">
+                </div> --}}
+                {{-- <div class="col-10 col-sm-8 col-md-3 mt-5">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">preguntas frecuentes</h5>
@@ -68,7 +74,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

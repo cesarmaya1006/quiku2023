@@ -19,7 +19,7 @@
     href="https://fonts.googleapis.com/css?family=Acme|Courgette|Dancing+Script|Fira+Sans+Condensed|Great+Vibes|Homemade+Apple|Poppins|Roboto+Condensed|Satisfy|Ubuntu&display=swap"
     rel="stylesheet">
 <!-- Titulo -->
-<title>LegalProceedings</title>
+<title>Quiku</title>
 <!-- Font Awesome -->
 <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
 <!-- Ionicons -->
