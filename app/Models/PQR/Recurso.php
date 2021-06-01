@@ -22,4 +22,9 @@ class Recurso extends Model
         return $this->hasMany(DocRecurso::class, 'respuesta_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function tiporeposicion()
+    {
+        return $this->hasMany(tiporeposicion::class, 'tipo_reposicion_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }

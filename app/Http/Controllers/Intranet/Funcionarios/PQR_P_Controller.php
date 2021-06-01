@@ -54,9 +54,11 @@ class PQR_P_Controller extends Controller
         for ($i = 0; $i < $totalPeticiones; $i++) {
             $actualizarPeticion['aclaracion'] = $request["aclaracion_check$i"];
             if($request["recurso"] == 1){
-                $actualizarPeticion['recurso'] = $request["recurso"];
-                $actualizarPeticion['recurso_dias'] = $request["plazo_recurso"];
-                $actualizarPeticion['fecha_notificacion'] = date('Y-m-d');
+                if($request["plazo_recurso"] != null){
+                    $actualizarPeticion['recurso'] = $request["recurso"];
+                    $actualizarPeticion['recurso_dias'] = $request["plazo_recurso"];
+                    $actualizarPeticion['fecha_notificacion'] = date('Y-m-d');
+                }
             }
             Peticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
             $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];

@@ -156,7 +156,7 @@ Sistema de informaci&oacute;n
                                 <div class="row">
                                     <input class="respuestaRecurso" type="hidden" value="{{ $recurso }}">
                                     <div class="col-12 col-md-6">
-                                        <h6>¿A las respuesta le procede recurso?</h6>
+                                        <h6>¿A las respuestas le procede recurso?</h6>
                                     </div>
                                     <div class="col-12 col-md-6 d-flex flex-row">
                                         <div class="form-check mb-3 mr-4">
@@ -406,8 +406,8 @@ Sistema de informaci&oacute;n
                             <hr>
                             <div class="row">
                                 {{-- <input class="respuestaRecurso" type="hidden" value="{{$peticion->recurso}}"> --}}
-                                {{ $recurso }}
-                                @if ($recurso > 0))
+                                {{-- {{ $recurso }} --}}
+                                @if ($recurso > 0)
                                     respuesta recurso
                                 @endif
 

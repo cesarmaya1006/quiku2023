@@ -311,46 +311,58 @@ Sistema de informaci&oacute;n
                                 
                             </div>
                             @endif
-                            @if ($peticion->recurso)
+                            @if ($peticion->recurso  == 1)
                             <div class="row">
                                 <div class="col-12">
                                     <h6>Recurso</h6>
                                 </div>
-                                <div class="form-group col-12 col-md-6 titulo-motivo">
-                                    <div class="col-12 d-flex justify-content-between">
-                                        <label for="">Tipo de recurso</label>
-                                    </div>
-                                    <select name="motivo_pqr" id="motivo_pqr" data_url="{{ route('cargar_submotivos') }}" class="custom-select rounded-0 motivo_pqr" required>
-                                        <option value="">--Seleccione--</option>
-                                        {{-- @foreach ($tipo->tipoPqr->motivos as $motivo)
-                                            <option value="{{ $motivo->id }}">{{ $motivo->motivo }}</option>
-                                        @endforeach --}}
-                                    </select>
-                                </div>
-                                {{-- @if (isset($peticion->respuesta->documentos))
-                                <div class="row respuestaAnexos">
-                                    <div class="col-12">
-                                        <div class="col-12">
-                                            <h6>Anexos respuesta</h6>
+                                <div class="row">
+                                    <div class="form-group col-12 col-md-12 titulo-recurso">
+                                        <div class="col-12 d-flex justify-content-between">
+                                            <label for="">Tipo de recurso</label>
                                         </div>
-                                        <table class="table table-light">
-                                            <tbody>
-                                                @foreach ($peticion->respuesta->documentos as $anexo)
-                                                <tr>
-                                                    <td>{{ $anexo->titulo }}</td>
-                                                    <td>{{ $anexo->descripcion }}</td>
-                                                    <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
-                                                            target="_blank" rel="noopener noreferrer">Descargar</a>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                        <select name="tipo_reposicion" id="tipo_reposicion" class="custom-select rounded-0 tipo_reposicion requerido">
+                                            <option value="">--Seleccione--</option>
+                                            <option value="1">Aclaración y/o corrección</option>
+                                            <option value="2">Reposición</option>
+                                            <option value="3">Apelación</option>
+                                            <option value="4">Reposición y apelación</option>
+                                        </select>
                                     </div>
+                                    <div class="col-12 col-md-6">
+                                        <h6>Respuesta</h6>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <textarea type="text" class="form-control form-control-sm respuesta" name="respuesta1" id="respuesta1"></textarea>
+                                    </div>
+                                    <div class="col-12" id="anexosConsulta">
+                                        <div class="col-12 d-flex row anexoconsulta" id="anexosConsulta1">
+                                            <div class="col-12 titulo-anexo d-flex justify-content-between">
+                                                <h6>Anexo</h6>
+                                                <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoConsulta"><i class="fas fa-minus-circle"></i> Eliminar anexo</button>
+                                            </div>
+                                            <div class="col-12 col-md-4 form-group titulo-anexoConsulta">
+                                                <label for="titulo">Título anexo</label>
+                                                <input type="text" class="form-control form-control-sm" name="titulo1" id="titulo1">
+                                            </div>
+                                            <div class="col-12 col-md-4 form-group descripcion-anexoConsulta">
+                                                <label for="descripcion">Descripción</label>
+                                                <input type="text" class="form-control form-control-sm" name="descripcion1" id="descripcion1">
+                                            </div>
+                                            <div class="col-12 col-md-4 form-group doc-anexoConsulta">
+                                                <label for="documentos">Anexos o Pruebas</label>
+                                                <input class="form-control form-control-sm" type="file" name="documentos1" id="documentos1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end flex-row mb-3">
+                                        <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo" id="crearAnexo"><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
+                                            otro Anexo</button>
+                                    </div>
+                                <input class="totalPeticionAnexos" id="totalPeticionAnexos1" name="totalPeticionAnexos1" type="hidden" value="0">
                                 </div>
-                            @endif --}}
-                        </div>
-                        @endif
+                            </div>
+                            @endif
                             <input class="totalPeticionAclaraciones" name="totalPeticionAclaraciones" type="hidden" value="">
                             <input class="id_peticion" name="id_peticion" type="hidden" value="{{$peticion->id}}">
                         </div>

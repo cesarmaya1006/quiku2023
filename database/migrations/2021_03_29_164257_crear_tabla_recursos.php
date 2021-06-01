@@ -17,6 +17,8 @@ class CrearTablaRecursos extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('peticion_id');
             $table->foreign('peticion_id', 'fk_peticion_recursos')->references('id')->on('peticiones')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('tipo_reposicion_id');
+            $table->foreign('tipo_reposicion_id', 'fk_tipo_reposicion_recursos')->references('id')->on('tipo_reposicion')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha_radicacion');
             $table->longText('recurso');
             $table->timestamps();
