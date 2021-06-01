@@ -2,28 +2,29 @@
     <div class="row">
         <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-info">
+            <div class="small-box bg-light" style="border: solid 1px blue;">
                 <div class="inner">
                     <h3>{{ $pqr_S->count() }}</h3>
                     <p style="font-size: 0.8em">Peticiones,Quejas,Reclamos</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-bag"></i>
+                    <i class="ion ion-bag text-primary"></i>
                 </div>
-                <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="#" class="small-box-footer text-primary" style="color: green;">Más info <i
+                        class="fas fa-arrow-circle-right text-white;"></i></a>
             </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-success">
+            <div class="small-box bg-light" style="border: solid 1px green;">
                 <div class="inner">
                     <h3>{{ $conceptos->count() }}</h3>
 
                     <p style="font-size: 0.8em">Consultas</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                    <i class="ion ion-stats-bars text-green"></i>
                 </div>
                 <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>

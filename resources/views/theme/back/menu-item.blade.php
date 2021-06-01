@@ -4,7 +4,8 @@
             <i class="nav-icon {{ $item['icono'] }}"></i>
             <p>
                 <font style="vertical-align: inherit;">
-                    <font style="vertical-align: inherit;">{{ utf8_decode(utf8_encode($item['nombre'])) }}</font>
+                    <font style="vertical-align: inherit;color: rgb(78, 201, 238);">
+                        {{ utf8_decode(utf8_encode($item['nombre'])) }}</font>
                 </font>
             </p>
         </a>
