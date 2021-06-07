@@ -16,6 +16,7 @@ class Tabla_SubMotivos extends Seeder
     public function run()
     {
         $sub_motivos = [
+            ['motivo_id' => '1', 'sub_motivo' => 'Peticion o consulta', 'dias_gestion' => 10],
             ['motivo_id' => '2', 'sub_motivo' => 'Que se me devuelva el dinero y yo devolver el producto o servicio', 'dias_gestion' => 10],
             ['motivo_id' => '2', 'sub_motivo' => 'Otra', 'dias_gestion' => 10],
             ['motivo_id' => '3', 'sub_motivo' => 'Que se tomen medidas correctivas', 'dias_gestion' => 10],
