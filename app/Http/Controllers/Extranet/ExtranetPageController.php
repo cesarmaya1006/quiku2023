@@ -83,6 +83,7 @@ class ExtranetPageController extends Controller
 
         Usuario::findOrFail($id)->update($usuario_camb);
         $usuario = Usuario::findOrFail($id);
+        dd($usuario);
         //produccion Pruebas
         //$headers =  'MIME-Version: 1.0' . "\r\n";
         //$headers .= 'From: Your name <info@quiku.com>' . "\r\n";
@@ -91,7 +92,7 @@ class ExtranetPageController extends Controller
         //$para = 'cesarmaya99@hotmail.com';
         //$titulo = 'Recuperar contraseña plataforma Quiku';
         //mail($para, $titulo, $mensaje, $headers);
-        Mail::to('ruizwilson01@gmail.com')->send(new RecuperarContraseña($usuario->usuario, $password));
+        Mail::to($request['email'])->send(new RecuperarContraseña($usuario->usuario, $password));
         return redirect('/index')->with('mensaje', 'Verifique su correo e ingrese a la plataforma nuevamente');
     }
 
@@ -127,6 +128,7 @@ class ExtranetPageController extends Controller
         $id = $usuarioTemp->id;
         $tipopersona = $usuarioTemp->tipo_persona;
         $cedula = $usuarioTemp->identificacion;
+        $email = $usuarioTemp->email;
         // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
         //produccion Pruebas
         //$headers =  'MIME-Version: 1.0' . "\r\n";
@@ -138,7 +140,7 @@ class ExtranetPageController extends Controller
         //mail($para, $titulo, $mensaje, $headers);
         // -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
         // Desarrollo
-        Mail::to('ruizwilson01@gmail.com')->send(new RegistroInicial($id, $tipopersona, $cedula));
+        Mail::to($email)->send(new RegistroInicial($id, $tipopersona, $cedula));
         return redirect('/registro_conf');
     }
     public function registro_conf()
