@@ -52,7 +52,7 @@ return [
         'mailgun' => [
             'transport' => 'mailgun',
             'domain' => env('sandbox4e3706d1072141549964d8d2bfc96b46.mailgun.org'),
-            'secret' => env('34939416444d65e2b218be35d53ae5d9-90ac0eb7-0738e9d0'),
+            'secret' => env('eba4966851ce6c7771bb31b3104ec128-90ac0eb7-6a921067'),
             'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
         ],
 
