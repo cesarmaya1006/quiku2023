@@ -17,19 +17,16 @@
                     <div class="card">
                         <div class="card-body">
                             <img src="{{ asset('imagenes/sistema/img-logo.png') }}" class="rounded mx-auto d-block" alt="...">
-                            {{-- <h5 class="card-title">Iniciar sesión</h5> --}}
                             <div class="card-text mt-3">
                                 <form action="{{ route('login') }}" method="post" autocomplete="off">
                                     @method('post')
                                     @csrf
                                     <div class="form-row">
                                         <div class="col-md-12 mb-3">
-                                            {{-- <label class="requerido" for="validationDefault01">Usuario</label> --}}
                                             <input type="text" class="form-control form-control-sm" id="usuario"
                                                 name="usuario" placeholder="usuario*" required>
                                         </div>
                                         <div class="col-md-12 mb-3">
-                                            {{-- <label class="requerido" for="validationDefault02">Contraseña</label> --}}
                                             <input type="password" class="form-control form-control-sm" id="password"
                                                 name="password" placeholder="Contraseña*" required>
                                         </div>

@@ -39,7 +39,6 @@ window.addEventListener('DOMContentLoaded', function(){
     //     }
     // })
     let verificacionRecurso = document.querySelector('.respuestaRecurso')
-    console.log(verificacionRecurso)
     if(verificacionRecurso.value >= 1){
         verificacionRecurso.parentElement.querySelector('.recurso_si').setAttribute('checked','')
         verificacionRecurso.parentElement.querySelector('.recurso_no').setAttribute('disabled','')
@@ -269,6 +268,99 @@ window.addEventListener('DOMContentLoaded', function(){
     }
     // Fin Función para generar varios Hechos con validación.
     // ---------------------------------------------------------------------------------------------------------
-
+    let guardarProrroga = document.querySelector('#guardarProrroga')
+    guardarProrroga.addEventListener('click', function(e){
+        e.preventDefault()
+        console.log(e.target.getAttribute('data_url'));
+        let url = e.target.getAttribute('data_url')
+        let token = e.target.getAttribute('data_token')
+        let plazo_prorroga = document.querySelector('#plazo_prorroga').value
+        let prorroga_pdf = document.querySelector('#prorroga_pdf').value
+        let idPqr = document.querySelector('#idPqr').value
+        if(plazo_prorroga != '' && prorroga_pdf != ''){
+            let data = {
+                prorroga : 1,
+                plazo_prorroga,
+                prorroga_pdf,
+                idPqr
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+                    console.log(respuesta);
+    
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        }
+    })
+    // ---------------------------------------------------------------------------------------------------------
+    let btnRecursosGuardar = document.querySelectorAll('.guardarRespuestaRecurso button')
+    btnRecursosGuardar.forEach(e => {
+        e.addEventListener('click', guardarRespuestaRecurso)
+    })
+    function guardarRespuestaRecurso(e){
+        e.preventDefault()
+        let contenedor = e.target.parentNode.parentNode
+        console.log(contenedor)
+        let url = e.target.getAttribute('data_url')
+        let token = e.target.getAttribute('data_token')
+        let idRecurso = contenedor.querySelector('.id_recurso').value
+        console.log(url, token)
+        let resprecursos_id = 0
+        let data = {
+            recurso_id : idRecurso,
+        }
+        $.ajax({
+            async:false,
+            url: url,
+            type: 'POST',
+            headers: { 'X-CSRF-TOKEN': token },
+            data: data,
+            success: function(respuesta) {
+                console.log(respuesta)
+                resprecursos_id = respuesta.data.id
+            },
+            error: function(error) {
+                console.log(error.responseJSON)
+            }
+        });
+        let anexosRecursos = contenedor.querySelectorAll('.anexoRespuestaRecurso')
+        anexosRecursos.forEach(anexo => {
+            let titulo = anexo.querySelector('.titulo-anexoRespuestaRecurso input').value
+            let descripcion = anexo.querySelector('.descripcion-anexoRespuestaRecurso input').value
+            let archivo = anexo.querySelector('.doc-anexoRespuestaRecurso input').files[0]
+            let dataAnexo = new FormData();
+            dataAnexo.append('resprecursos_id', resprecursos_id);
+            dataAnexo.append('titulo', titulo);
+            dataAnexo.append('descripcion', descripcion);
+            dataAnexo.append('archivo', archivo);
+            dataAnexo.append('_token', token);
+            let urlAnexo = anexo.parentNode.parentNode.parentNode
+            urlAnexo =  urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
+            $.ajax({
+                url: urlAnexo,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: dataAnexo,
+                processData: false, 
+                contentType: false,
+                success: function(respuesta) {
+                    // console.log(respuesta)
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        })
+        location.reload();
+    }
 
 })
+

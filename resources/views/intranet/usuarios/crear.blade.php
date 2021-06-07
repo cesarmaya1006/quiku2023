@@ -26,7 +26,7 @@
                     <div class="card-body">
                         <div class="row d-flex">
                             @foreach ($tipoPQR as $tipo)
-                            @if ($tipo->id == 1 || $tipo->id == 2 || $tipo->id == 3 || $tipo->id == 5 || $tipo->id == 7 || $tipo->id == 8 )
+                            {{-- @if ($tipo->id == 1 || $tipo->id == 2 || $tipo->id == 3 || $tipo->id == 5 || $tipo->id == 7 || $tipo->id == 8 ) --}}
                                 <div class="col-12 col-md-4">
                                     <div class="card card-Light collapsed-card" style="box-shadow: 0px 0px 0px 0px ;">
                                         <div class="card-header">
@@ -53,7 +53,7 @@
                                         <!-- /.card-body -->
                                     </div>
                                 </div>
-                            @endif
+                            {{-- @endif --}}
                             @endforeach
                             <div class="col-12 col-md-4">
                                 <div class="card card-Light collapsed-card" style="box-shadow: 0px 0px 0px 0px ;">

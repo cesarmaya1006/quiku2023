@@ -85,23 +85,33 @@
                             <th>Tipo de PQR</th>
                             <th>Estado PQR</th>
                             <th>Plazo de respuesta (Días hábiles)</th>
-                            <th>Dias de vencimiento</th>
+                            <th>Dias de vencimiento calendario</th>
                             <th>Fecha estimada de respuesta</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($pqr_S as $pqr)
+                                @php
+                                    $diasRecurso = 0;
+                                @endphp
+                            @foreach ($pqr->peticiones as $peticion)
+                                @php
+                                    if( $peticion->recurso_dias > 0){
+                                        $diasRecurso = $peticion->recurso_dias;
+                                    }
+                                @endphp
+                            @endforeach
                             <tr>
                                 <td>{{ $pqr->radicado }}</td>
                                 <td>{{ $pqr->fecha_radicado }}</td>
                                 <td>{{ $pqr->tipoPqr->tipo }}</td>
                                 <td>{{ $pqr->estado->estado_funcionario }}</td>
-                                <td>{{ $pqr->tipoPqr->tiempos }}</td>
+                                <td>{{ $pqr->tipoPqr->tiempos + $pqr->prorroga_dias + $diasRecurso }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . ($pqr->tiempo_limite) . ' days'));
                                 @endphp
-                                <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
+                                <td>{{ dias_restantes(date('Y-m-d'), $fechaFinal) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td>
                                     @if ($pqr->tipo_pqr_id == 1)

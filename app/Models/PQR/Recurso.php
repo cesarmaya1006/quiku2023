@@ -19,12 +19,17 @@ class Recurso extends Model
     //----------------------------------------------------------------------------------
     public function documentos()
     {
-        return $this->hasMany(DocRecurso::class, 'respuesta_id', 'id');
+        return $this->hasMany(DocRecurso::class, 'recurso_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function tiporeposicion()
     {
-        return $this->hasMany(tiporeposicion::class, 'tipo_reposicion_id', 'id');
+        return $this->belongsTo(tiporeposicion::class, 'tipo_reposicion_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function respuestarecurso()
+    {
+        return $this->hasOne(RespRecurso::class, 'recurso_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

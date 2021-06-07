@@ -34,6 +34,7 @@ Sistema de informaci&oacute;n
                     </h3>
                 </div>
                 <div class="card-body">
+                    <input class="idPqr" id="idPqr" type="hidden" value="{{ $pqr->id }}">
                     <form action="{{ route('funcionario-gestionar_pqr_p_guardar') }}" method="POST" autocomplete="off"
                         enctype="multipart/form-data" id="fromGestionPqr">
                         @csrf
@@ -111,7 +112,7 @@ Sistema de informaci&oacute;n
                                 </div>
                             </div>
                             <hr>
-                            <div class="row pb-3">
+                            <div class="row pb-3 form-respuestaProrroga">
                                 <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
                                 <div class="col-12 col-md-6 ">
                                     <h6>Prorroga</h6>
@@ -129,7 +130,7 @@ Sistema de informaci&oacute;n
                                     </div>
                                 </div>
                                 <div class="col-12 contentProrroga" id="contentProrroga">
-                                    <div class="col-12 d-flex row anexo">
+                                    <div class="col-12 d-flex row">
                                         <div class="col-12 col-md-1 form-group">
                                             <label for="plazo">Nuevo Plazo:</label>
                                             <input type="number" class="form-control form-control-sm plazo_prorroga"
@@ -142,6 +143,9 @@ Sistema de informaci&oacute;n
                                                 name="prorroga_pdf" id="prorroga_pdf">{{$pqr->prorroga_pdf}}</textarea>
                                         </div>
                                     </div>
+                                    <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
+                                        <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prorroga</button>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
@@ -152,7 +156,7 @@ Sistema de informaci&oacute;n
                                     $plazoRecurso += $peticion->recurso_dias;
                                 }
                                 @endphp
-                                @endforeach
+                            @endforeach
                                 <div class="row">
                                     <input class="respuestaRecurso" type="hidden" value="{{ $recurso }}">
                                     <div class="col-12 col-md-6">
@@ -405,12 +409,91 @@ Sistema de informaci&oacute;n
                             </div>
                             <hr>
                             <div class="row">
-                                {{-- <input class="respuestaRecurso" type="hidden" value="{{$peticion->recurso}}"> --}}
-                                {{-- {{ $recurso }} --}}
-                                @if ($recurso > 0)
-                                    respuesta recurso
+                                @if (sizeOf($peticion->recursos))
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6>Recursos</h6>
+                                    </div>
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-light" style="font-size: 0.8em;">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Fecha recurso</th>
+                                                    <th scope="col">Tipo de recurso</th>
+                                                    <th scope="col">Recurso</th>
+                                                    <th scope="col">Estado</th>
+                                                    <th scope="col">Documentos recurso</th>
+                                                    <th scope="col">Fecha respuesta recurso</th>
+                                                    <th scope="col">Documentos respuesta recurso</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($peticion->recursos as $recurso)
+                                                <tr>
+                                                    <td>{{ $recurso->fecha_radicacion }}</td>
+                                                    <td>{{ $recurso->tiporeposicion->tipo }}</td>
+                                                    <td>{{ $recurso->recurso }}</td>
+                                                    <td>Resuelta</td>
+                                                    @if ($recurso->documentos)
+                                                        <td>
+                                                            @foreach ($recurso->documentos as $anexo)
+                                                                <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer">{{$anexo->titulo}}</a>
+                                                            @endforeach
+                                                        </td>
+                                                    @else
+                                                    <td>---</td>
+                                                    @endif
+                                                    @if ($recurso->respuestarecurso)
+                                                        <td>{{ $recurso->respuestarecurso->fecha }}</td>
+                                                    @else
+                                                        <td>---</td>
+                                                    @endif
+                                                    <td>
+                                                        @if ($recurso->respuestarecurso)
+                                                            @foreach ($recurso->respuestarecurso->documentos as $anexoRespuesta)
+                                                            <a href="{{ asset('documentos/respuestas/' . $anexoRespuesta->url) }}" target="_blank" rel="noopener noreferrer">{{$anexoRespuesta->titulo}}</a>
+                                                            @endforeach
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <hr class="mt-5">
+                                    </div>
+                                    @foreach ($peticion->recursos as $recurso)
+                                    {{-- {{ $recurso }} --}}
+                                    <div class="row form-respuesta-recursos">
+                                        <input class="id_recurso" type="hidden" value="{{$recurso->id}}">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <h6>Respuesta Recurso</h6>
+                                            </div>
+                                            <div class="col-12" id="anexosRespuestaRecursos">
+                                                <div class="col-12 d-flex row anexoRespuestaRecurso" id="anexoRespuestaRecurso">
+                                                    <div class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
+                                                        <label for="titulo">Título anexo</label>
+                                                        <input type="text" class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
+                                                        <label for="descripcion">Descripción</label>
+                                                        <input type="text" class="form-control form-control-sm">
+                                                    </div>
+                                                    <div class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
+                                                        <label for="documentoRecurso">Anexos o Pruebas</label>
+                                                        <input class="form-control form-control-sm" type="file">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer d-flex justify-content-end guardarRespuestaRecurso">
+                                            <button type="" class="btn btn-primary px-4" data_url="{{ route('respuesta_recurso_guardar') }}" data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}" data_token="{{ csrf_token() }}">Guardar recurso</button>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                    <hr class="mt-5">
+                                </div>
                                 @endif
-
                             </div>
                             <input class="id_peticion" id="id_peticion" name="id_peticion" type="hidden"
                                 value="{{$peticion->id}}">
