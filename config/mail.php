@@ -51,8 +51,8 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
-            'domain' => env('mayamoya.co'),
-            'secret' => env('a5dba30d81ee083f29d37a775eac0c25-a09d6718-addb8ed3'),
+            'domain' => env('sandbox4e3706d1072141549964d8d2bfc96b46.mailgun.org'),
+            'secret' => env('34939416444d65e2b218be35d53ae5d9-90ac0eb7-0738e9d0'),
             'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
         ],
 
