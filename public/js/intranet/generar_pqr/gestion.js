@@ -271,7 +271,6 @@ window.addEventListener('DOMContentLoaded', function(){
     let guardarProrroga = document.querySelector('#guardarProrroga')
     guardarProrroga.addEventListener('click', function(e){
         e.preventDefault()
-        console.log(e.target.getAttribute('data_url'));
         let url = e.target.getAttribute('data_url')
         let token = e.target.getAttribute('data_token')
         let plazo_prorroga = document.querySelector('#plazo_prorroga').value
@@ -291,7 +290,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 data: data,
                 success: function(respuesta) {
                     location.reload();
-                    console.log(respuesta);
+                    // console.log(respuesta);
     
                 },
                 error: function(error) {
@@ -308,11 +307,9 @@ window.addEventListener('DOMContentLoaded', function(){
     function guardarRespuestaRecurso(e){
         e.preventDefault()
         let contenedor = e.target.parentNode.parentNode
-        console.log(contenedor)
         let url = e.target.getAttribute('data_url')
         let token = e.target.getAttribute('data_token')
         let idRecurso = contenedor.querySelector('.id_recurso').value
-        console.log(url, token)
         let resprecursos_id = 0
         let data = {
             recurso_id : idRecurso,
@@ -324,7 +321,7 @@ window.addEventListener('DOMContentLoaded', function(){
             headers: { 'X-CSRF-TOKEN': token },
             data: data,
             success: function(respuesta) {
-                console.log(respuesta)
+                // console.log(respuesta)
                 resprecursos_id = respuesta.data.id
             },
             error: function(error) {
