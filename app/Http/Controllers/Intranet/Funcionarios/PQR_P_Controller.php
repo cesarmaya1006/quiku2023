@@ -18,6 +18,7 @@ use App\Models\PQR\DocRecurso;
 use App\Models\PQR\DocRespRecurso;
 use App\Models\PQR\Recurso;
 use App\Models\PQR\RespRecurso;
+use Maatwebsite\Excel\Concerns\ToArray;
 
 class PQR_P_Controller extends Controller
 {
@@ -96,6 +97,18 @@ class PQR_P_Controller extends Controller
                     }
                 }    
             }  
+            $peticiones = Peticion::all()->where('pqr_id', $request["id_pqr"] );
+            $respuestas = [];
+            foreach ($peticiones as $key => $value) {
+                if($value->respuesta){
+                    $respuestas[] = $value->respuesta;
+                }
+            }
+            if(sizeOf($peticiones) == sizeOf($respuestas)){
+                $estado = Estado::findOrFail(6);
+                $pqrEstado['estadospqr_id'] = $estado['id'];
+                PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+            }
             $iteradorAclaraciones += $request["totalPeticionAclaraciones$i"];
             $iteradorAnexos += $request["totalPeticionAnexos$i"];
         }
