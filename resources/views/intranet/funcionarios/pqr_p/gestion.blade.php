@@ -462,36 +462,37 @@ Sistema de informaci&oacute;n
                                         <hr class="mt-5">
                                     </div>
                                     @foreach ($peticion->recursos as $recurso)
-                                    {{-- {{ $recurso }} --}}
-                                    <div class="row form-respuesta-recursos">
-                                        <input class="id_recurso" type="hidden" value="{{$recurso->id}}">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <h6>Respuesta Recurso</h6>
-                                            </div>
-                                            <div class="col-12" id="anexosRespuestaRecursos">
-                                                <div class="col-12 d-flex row anexoRespuestaRecurso" id="anexoRespuestaRecurso">
-                                                    <div class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
-                                                        <label for="titulo">Título anexo</label>
-                                                        <input type="text" class="form-control form-control-sm">
-                                                    </div>
-                                                    <div class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
-                                                        <label for="descripcion">Descripción</label>
-                                                        <input type="text" class="form-control form-control-sm">
-                                                    </div>
-                                                    <div class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
-                                                        <label for="documentoRecurso">Anexos o Pruebas</label>
-                                                        <input class="form-control form-control-sm" type="file">
+                                    @if(!$recurso->respuestaRecurso)
+                                        <div class="row form-respuesta-recursos">
+                                            <input class="id_recurso" type="hidden" value="{{$recurso->id}}">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6">
+                                                    <h6>Respuesta Recurso</h6>
+                                                </div> 
+                                                <textarea type="text" class="form-control form-control-sm" disabled>{{$recurso->recurso}}</textarea>
+                                                <div class="col-12" id="anexosRespuestaRecursos">
+                                                    <div class="col-12 d-flex row anexoRespuestaRecurso" id="anexoRespuestaRecurso">
+                                                        <div class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
+                                                            <label for="titulo">Título anexo</label>
+                                                            <input type="text" class="form-control form-control-sm">
+                                                        </div>
+                                                        <div class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
+                                                            <label for="descripcion">Descripción</label>
+                                                            <input type="text" class="form-control form-control-sm">
+                                                        </div>
+                                                        <div class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
+                                                            <label for="documentoRecurso">Anexos o Pruebas</label>
+                                                            <input class="form-control form-control-sm" type="file">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="card-footer d-flex justify-content-end guardarRespuestaRecurso">
+                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('respuesta_recurso_guardar') }}" data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}" data_token="{{ csrf_token() }}">Guardar recurso</button>
+                                            </div>
                                         </div>
-                                        <div class="card-footer d-flex justify-content-end guardarRespuestaRecurso">
-                                            <button type="" class="btn btn-primary px-4" data_url="{{ route('respuesta_recurso_guardar') }}" data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}" data_token="{{ csrf_token() }}">Guardar recurso</button>
-                                        </div>
-                                    </div>
+                                    @endif
                                     @endforeach
-                                    <hr class="mt-5">
                                 </div>
                                 @endif
                             </div>
