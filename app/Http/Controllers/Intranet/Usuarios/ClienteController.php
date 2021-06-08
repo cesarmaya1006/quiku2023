@@ -22,6 +22,7 @@ use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Fechas\FechasController;
 use App\Http\Requests\ValidarPqr;
+use App\Mail\PQR_Radicada;
 use App\Models\Admin\DiasFestivos;
 use App\Models\Productos\Referencia;
 use App\Models\Sugerencias\Sugerencia;
@@ -46,6 +47,7 @@ use App\Models\Denuncias\DenunciaIrregularidad;
 use App\Models\PQR\Estado;
 use App\Models\PQR\Hecho;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Mail;
 
 class ClienteController extends Controller
 {
@@ -248,6 +250,9 @@ class ClienteController extends Controller
         }
         $idPQR =  $request['pqr_id'];
         $pqr = PQR::findOrFail($idPQR);
+        $email = 'cesarmaya99@hotmail.com';
+        $id_pqr = $pqr->id;
+        Mail::to($email)->send(new PQR_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $idPQR)->with('pqr_tipo', $pqr->tipo_pqr_id)->with('radicado', $pqr->radicado)->with('fecha_radicado', $pqr->created_at);
     }
 

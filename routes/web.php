@@ -286,6 +286,6 @@ Route::group(['middleware' => 'auth'], function () {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //guardar pdf PQR
     Route::get('pqr_pdf_guardar', [EmailController::class, 'pqr_pdf_guardar'])->name('pqr_pdf_guardar');
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    Route::get('pqr_radicada_pdf/{id}', [EmailController::class, 'pqrRadicadaPdf'])->name('pqrRadicadaPdf');
 });
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Route::get('pqr_radicada_pdf/{id}', [EmailController::class, 'pqrRadicadaPdf'])->name('pqrRadicadaPdf');
