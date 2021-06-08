@@ -99,15 +99,26 @@ class PQR_P_Controller extends Controller
             }  
             $peticiones = Peticion::all()->where('pqr_id', $request["id_pqr"] );
             $respuestas = [];
+            $recurso = 0;
             foreach ($peticiones as $key => $value) {
                 if($value->respuesta){
                     $respuestas[] = $value->respuesta;
                 }
+                if($value->recurso != 0){
+                    $recurso = $value->recurso;
+                }
             }
-            if(sizeOf($peticiones) == sizeOf($respuestas)){
-                $estado = Estado::findOrFail(6);
-                $pqrEstado['estadospqr_id'] = $estado['id'];
-                PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+            if(sizeOf($peticiones) == sizeOf($respuestas) ){
+                if($recurso){
+                    $estado = Estado::findOrFail(7);
+                    $pqrEstado['estadospqr_id'] = $estado['id'];
+                    PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+
+                }else{
+                    $estado = Estado::findOrFail(6);
+                    $pqrEstado['estadospqr_id'] = $estado['id'];
+                    PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+                }
             }
             $iteradorAclaraciones += $request["totalPeticionAclaraciones$i"];
             $iteradorAnexos += $request["totalPeticionAnexos$i"];
