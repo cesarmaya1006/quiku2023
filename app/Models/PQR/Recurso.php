@@ -24,7 +24,7 @@ class Recurso extends Model
     //----------------------------------------------------------------------------------
     public function tiporeposicion()
     {
-        return $this->belongsTo(tiporeposicion::class, 'tipo_reposicion_id', 'id');
+        return $this->belongsTo(TipoReposicion::class, 'tipo_reposicion_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function respuestarecurso()
