@@ -408,7 +408,6 @@ class EmailController extends Controller
         $data = [
             'imagen' => $imagen,
             'nombre' => $nombre,
-            'imagen' => $imagen,
             'tipo_doc' => $tipo_doc,
             'identificacion' => $identificacion,
             'email' => $email,
@@ -418,7 +417,7 @@ class EmailController extends Controller
             'contenido' => $contenido,
 
         ];
-        $pdf = PDF::loadView('intranet.emails.pqr_radicada', $data);
+        $pdf = PDF::loadView('intranet.emails.pqr_radicada', compact('pqr_radicada', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'contenido', 'tipo_pqr_id'));
 
         return $pdf->download('PQR Radicada.pdf');
     }
