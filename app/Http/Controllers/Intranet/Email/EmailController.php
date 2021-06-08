@@ -307,4 +307,119 @@ class EmailController extends Controller
         $path = trim($path);
         $pdf = PDF::loadView('intranet.pdf.pdf_prorroga', $data)->save($path);
     }
+
+    public function pqrRadicadaPdf($id)
+    {
+        $pqr_radicada = PQR::findOrFail($id);
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $fecha = $pqr_radicada->fecha_radicado;
+        $num_radicado = $pqr_radicada->radicado;
+        $tipo_doc = $pqr_radicada->persona->tipos_docu->tipo_id;
+        if ($pqr_radicada->persona_id != null) {
+            $nombre = $pqr_radicada->persona->nombre1 . ' ' . $pqr_radicada->persona->nombre2 . ' ' . $pqr_radicada->persona->apellido1 . ' ' . $pqr_radicada->persona->apellido2;
+            $email = $pqr_radicada->persona->email;
+            $identificacion = $pqr_radicada->persona->identificacion;
+        } else {
+            $nombre = $pqr_radicada->empresa->razon_social;
+            $empresa = $pqr_radicada->empresa->razon_social;
+            $representante = $pqr_radicada->empresa->representante->nombre1 . ' ' . $pqr_radicada->empresa->representante->apellido1;
+            $email = $pqr_radicada->empresa->email;
+            $identificacion = $pqr_radicada->empresa->identificacion;
+        }
+
+        $anexos_li = '';
+        foreach ($pqr_radicada->peticiones as $peticion) {
+            if ($peticion->anexos->count() > 0) {
+                foreach ($peticion->anexos as $anexo) {
+                    $anexos_li .= '<li>';
+                    $anexos_li .= '<a href="' . asset('documentos/pqr/' . $anexo->url) . '" target="_blank"';
+                    $anexos_li .= 'rel="noopener noreferrer">';
+                    $anexos_li .= '<p>' . $anexo->titulo . ' </p>';
+                    $anexos_li .= '</a>';
+                    $anexos_li .= '</li>';
+                }
+            } else {
+                $anexos_li = '';
+            }
+        }
+
+        $tipo_pqr_id = $pqr_radicada->tipo_pqr_id;
+        $contenido = '';
+        $num = 0;
+        switch ($tipo_pqr_id) {
+            case 1:
+                $pqr = PQR::findOrFail($id);
+                $contenido .= '<h4>Peticion</h4>';
+                $contenido .= '<p>Lugar de adquisición del producto o servicio: ' . $pqr->adquisicion . '<p>';
+                $contenido .= '<p>¿Su PQR es sobre un producto o servicio?: ' . $pqr->tipo . '<p>';
+                $contenido .= '<p>Referencia: ' . $pqr->referencia_id . '<p>';
+                $contenido .= '<p>No. Factura: ' . $pqr->factura . '<p>';
+                $contenido .= '<p>Fecha de factura: ' . $pqr->fecha_factura . '<p>';
+                $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
+                foreach ($pqr->peticiones as $peticion) {
+                    $num++;
+                    $contenido .= '<h4>Motivo: ' . $peticion->motivo->sub_motivo . '</h4>';
+                    // $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo->sub_motivo . '<p>';
+                    foreach ($peticion->hechos as $hecho) {
+                        $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
+                    }
+                    $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
+                }
+                break;
+            case 2:
+                $pqr = PQR::findOrFail($id);
+                $contenido .= '<h4>Queja</h4>';
+                $contenido .= '<p>Lugar de adquisición del producto o servicio: ' . $pqr->adquisicion . '<p>';
+                $contenido .= '<p>¿Su PQR es sobre un producto o servicio?: ' . $pqr->tipo . '<p>';
+                $contenido .= '<p>Referencia: ' . $pqr->referencia_id . '<p>';
+                $contenido .= '<p>No. Factura: ' . $pqr->factura . '<p>';
+                $contenido .= '<p>Fecha de factura: ' . $pqr->fecha_factura . '<p>';
+                $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
+                foreach ($pqr->peticiones as $peticion) {
+                    $num++;
+                    $contenido .= '<h4>Motivo: ' . $peticion->motivo->sub_motivo . '</h4>';
+                    // $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo->sub_motivo . '<p>';
+                    foreach ($peticion->hechos as $hecho) {
+                        $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
+                    }
+                    $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
+                }
+                break;
+            default:
+                $pqr = PQR::findOrFail($id);
+                $contenido .= '<h4>Reclamo</h4>';
+                $contenido .= '<p>Lugar de adquisición del producto o servicio: ' . $pqr->adquisicion . '<p>';
+                $contenido .= '<p>¿Su PQR es sobre un producto o servicio?: ' . $pqr->tipo . '<p>';
+                $contenido .= '<p>Referencia: ' . $pqr->referencia_id . '<p>';
+                $contenido .= '<p>No. Factura: ' . $pqr->factura . '<p>';
+                $contenido .= '<p>Fecha de factura: ' . $pqr->fecha_factura . '<p>';
+                $contenido .= '<p>Tipo de servicio: ' . $pqr->servicio_id . '<p>';
+                foreach ($pqr->peticiones as $peticion) {
+                    $num++;
+                    $contenido .= '<h4>Motivo: ' . $peticion->motivo->sub_motivo . '</h4>';
+                    // $contenido .= '<p>Sub - Categoría Motivo: ' . $peticion->motivo->sub_motivo . '<p>';
+                    foreach ($peticion->hechos as $hecho) {
+                        $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
+                    }
+                    $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
+                }
+                break;
+        }
+        $data = [
+            'imagen' => $imagen,
+            'nombre' => $nombre,
+            'imagen' => $imagen,
+            'tipo_doc' => $tipo_doc,
+            'identificacion' => $identificacion,
+            'email' => $email,
+            'num_radicado' => $num_radicado,
+            'fecha' => $fecha,
+            'anexos_li' => $anexos_li,
+            'contenido' => $contenido,
+
+        ];
+        $pdf = PDF::loadView('intranet.emails.pqr_radicada', $data);
+
+        return $pdf->download('PQR Radicada.pdf');
+    }
 }

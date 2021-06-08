@@ -185,7 +185,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('prorroga', [PQR_P_Controller::class, 'prorroga_guardar'])->name('prorroga_guardar');
         Route::post('respuesta_recurso', [PQR_P_Controller::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
         Route::post('respuesta_recurso_anexos', [PQR_P_Controller::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');
-        
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         Route::get('listado/gestionar_pqr_q/{id}', [PQR_Q_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_q');
@@ -286,4 +286,6 @@ Route::group(['middleware' => 'auth'], function () {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //guardar pdf PQR
     Route::get('pqr_pdf_guardar', [EmailController::class, 'pqr_pdf_guardar'])->name('pqr_pdf_guardar');
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Route::get('pqr_radicada_pdf/{id}', [EmailController::class, 'pqrRadicadaPdf'])->name('pqrRadicadaPdf');
 });

@@ -41,7 +41,7 @@
             </td>
             <td style="width: 25%;margin-top: 135px;text-align: center;">
                 <div style="margin-top: 50px;">
-                    <p>{{ $fecha }}</p>
+                    <p>{{ date('Y-m-d') }}</p>
                 </div>
             </td>
         </tr>
@@ -76,7 +76,7 @@
                 <p>No. ID: {{ $identificacion }}</p>
             </td>
             <td colspan="2">
-                <p>E-mail:{{ $correo }}</p>
+                <p>E-mail:{{ $email }}</p>
             </td>
         </tr>
     </table>
@@ -86,7 +86,7 @@
     <table>
         <tr>
             <td>
-                <p>{{ $contenido }}</p>
+                {{ $contenido }}</p>
             </td>
         </tr>
     </table>
@@ -100,7 +100,7 @@
         <tr>
             <td>
                 <ul>
-                    {{ $anexos }}
+                    {{ $anexos_li }}
                 </ul>
             </td>
         </tr>

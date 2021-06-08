@@ -52,6 +52,7 @@ class Peticion extends Model
     {
         return $this->hasMany(Recurso::class, 'peticion_id', 'id');
     }
+
     //----------------------------------------------------------------------------------
     // public function tiposReposicion()
     // {
