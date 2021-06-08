@@ -250,7 +250,12 @@ class ClienteController extends Controller
         }
         $idPQR =  $request['pqr_id'];
         $pqr = PQR::findOrFail($idPQR);
-        $email = 'cesarmaya99@hotmail.com';
+        if ($pqr->persona_id != null) {
+            $email = $pqr->persona->email;
+        } else {
+            $email = $pqr->empresa->email;
+        }
+        //$email = 'cesarmaya99@hotmail.com';
         $id_pqr = $pqr->id;
         Mail::to($email)->send(new PQR_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $idPQR)->with('pqr_tipo', $pqr->tipo_pqr_id)->with('radicado', $pqr->radicado)->with('fecha_radicado', $pqr->created_at);
