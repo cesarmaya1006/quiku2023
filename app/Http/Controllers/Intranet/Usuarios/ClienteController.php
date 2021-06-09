@@ -22,7 +22,9 @@ use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Fechas\FechasController;
 use App\Http\Requests\ValidarPqr;
+use App\Mail\Felicitacion_Radicada;
 use App\Mail\PQR_Radicada;
+use App\Mail\SugerenciaRadicada;
 use App\Models\Admin\DiasFestivos;
 use App\Models\Productos\Referencia;
 use App\Models\Sugerencias\Sugerencia;
@@ -362,7 +364,7 @@ class ClienteController extends Controller
         $nuevaFelicitacion['felicitacion'] = $request['felicitacion'];
         $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d");
         $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
-        $estado = Estado::findOrFail(1);
+        $estado = Estado::findOrFail(6);
         $nuevaFelicitacion['estadospqr_id'] = $estado['id'];
         $nuevaFelicitacion['tiempo_limite'] = $respuestaDias;
         $felicitacion = Felicitacion::create($nuevaFelicitacion);
@@ -377,6 +379,15 @@ class ClienteController extends Controller
             $nuevosHechos['hecho'] = $request['hecho' . $i];
             FelicitacionHecho::create($nuevosHechos);
         }
+        if ($felicitacion->persona_id != null) {
+            $email = $felicitacion->persona->email;
+        } else {
+            $email = $felicitacion->empresa->email;
+        }
+        //$email = 'cesarmaya99@hotmail.com';
+        $id_felicitacion = $felicitacion->id;
+        Mail::to($email)->send(new Felicitacion_Radicada($id_felicitacion));
+
         return redirect('/usuario/generar')->with('id', $felicitacion->id)->with('pqr_tipo', $felicitacion->tipo_pqr_id)->with('radicado', $felicitacion->radicado)->with('fecha_radicado', $felicitacion->created_at);
     }
 
@@ -665,6 +676,16 @@ class ClienteController extends Controller
                 SugerenciaDoc::create($nuevo_documento);
             }
         }
+
+        if ($sugerencia->persona_id != null) {
+            $email = $sugerencia->persona->email;
+        } else {
+            $email = $sugerencia->empresa->email;
+        }
+        //$email = 'cesarmaya99@hotmail.com';
+        $id_sugerencia = $sugerencia->id;
+        Mail::to($email)->send(new SugerenciaRadicada($id_sugerencia));
+
         return redirect('/usuario/generar')->with('id', $sugerencia->id)->with('pqr_tipo', $sugerencia->tipo_pqr_id)->with('radicado', $sugerencia->radicado)->with('fecha_radicado', $sugerencia->created_at);
     }
 

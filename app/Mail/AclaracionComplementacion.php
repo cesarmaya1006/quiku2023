@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class Felicitacion_Radicada extends Mailable
+class AclaracionComplementacion extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,10 +16,10 @@ class Felicitacion_Radicada extends Mailable
      *
      * @return void
      */
-    public $id_felicitacion;
-    public function __construct($id_felicitacion)
+    public $id_aclaracion;
+    public function __construct($id_aclaracion)
     {
-        $this->id_felicitacion = $id_felicitacion;
+        $this->id_aclaracion = $id_aclaracion;
     }
 
     /**
@@ -29,6 +29,6 @@ class Felicitacion_Radicada extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@quiku.com')->view('intranet.emails.felicitacion_mail')->with(['id_felicitacion' => $this->id_felicitacion,]);
+        return $this->from('contacto@quiku.com')->view('intranet.emails.aclaracion_mail')->with(['id_aclaracion' => $this->id_aclaracion,]);
     }
 }
