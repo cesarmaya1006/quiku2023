@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded', function(){
     ajustarNameAclaracion()
+    let id_pqr = document.querySelector('.id_pqr').value
     let btnSubmit = document.querySelector('#fromGestionPqrUsuario')
     btnSubmit.addEventListener('submit', function (e) {
         e.preventDefault()
@@ -138,7 +139,6 @@ window.addEventListener('DOMContentLoaded', function(){
     function guardarRecurso(e){
         e.preventDefault()
         let contenedor = e.target.parentNode.parentNode
-        let id_pqr = document.querySelector('.idPqr')
         let url = e.target.getAttribute('data_url')
         let token = e.target.getAttribute('data_token')
         let tipo_reposicion = contenedor.querySelector('.tipo_reposicion').value
@@ -160,6 +160,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     headers: { 'X-CSRF-TOKEN': token },
                     data: data,
                     success: function(respuesta) {
+                        // console.log(respuesta)
                         recurso_id1 = respuesta.data.id
                     },
                     error: function(error) {
@@ -257,6 +258,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     recurso : respuestaRecurso,
                     id: id_pqr
                 }
+                console.log(data)
                 $.ajax({
                     async:false,
                     url: url,

@@ -226,7 +226,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
         function ajustarOtro(){
             $('.motivo_sub_id').on('change', function(event) {
-                if (event.target.value == '2') {
+                if (event.target.value == '3' || event.target.value == '6' || event.target.value == '9' || event.target.value == '12' || event.target.value == '16' || event.target.value == '19' || event.target.value == '22'|| event.target.value == '26') {
                     let padreHTML = event.target.parentNode.parentNode
                     let otro = padreHTML.querySelector('.otro')
                     otro.classList.toggle('d-none')

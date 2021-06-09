@@ -15,7 +15,7 @@ Sistema de informaci&oacute;n
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
 @php
-    $recurso = 0;
+    $recursoValidacion = 0;
     $plazoRecurso = 0;
 @endphp
 <div class="container-fluid">
@@ -34,7 +34,6 @@ Sistema de informaci&oacute;n
                     </h3>
                 </div>
                 <div class="card-body">
-                    <input class="idPqr" id="idPqr" type="hidden" value="{{ $pqr->id }}">
                     <form action="{{ route('funcionario-gestionar_pqr_p_guardar') }}" method="POST" autocomplete="off"
                         enctype="multipart/form-data" id="fromGestionPqr">
                         @csrf
@@ -97,7 +96,7 @@ Sistema de informaci&oacute;n
                                     Fecha de factura: <strong>{{ $pqr->fecha_factura }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    Plazo de respuesta: <strong>{{ $pqr->prorroga_dias }}</strong>
+                                    Plazo de respuesta prorroga días hábiles: <strong>{{ $pqr->prorroga_dias }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
@@ -132,7 +131,7 @@ Sistema de informaci&oacute;n
                                 <div class="col-12 contentProrroga" id="contentProrroga">
                                     <div class="col-12 d-flex row">
                                         <div class="col-12 col-md-1 form-group">
-                                            <label for="plazo">Nuevo Plazo:</label>
+                                            <label for="plazo">Plazo prorroga días hábiles:</label>
                                             <input type="number" class="form-control form-control-sm plazo_prorroga"
                                                 name="plazo_prorroga" id="plazo_prorroga" min="1"
                                                 max="{{$pqr->tipoPqr->tiempos}}">
@@ -148,45 +147,15 @@ Sistema de informaci&oacute;n
                                     </div>
                                 </div>
                             </div>
-                            <hr>
                             @foreach ($pqr->peticiones as $peticion)
                                 @php
-                                $recurso += $peticion->recurso;
+                                $recursoValidacion += $peticion->recurso;
                                 if( $plazoRecurso != $peticion->recurso_dias){
                                     $plazoRecurso += $peticion->recurso_dias;
                                 }
                                 @endphp
                             @endforeach
-                                <div class="row">
-                                    <input class="respuestaRecurso" type="hidden" value="{{ $recurso }}">
-                                    <div class="col-12 col-md-6">
-                                        <h6>¿A las respuestas le procede recurso?</h6>
-                                    </div>
-                                    <div class="col-12 col-md-6 d-flex flex-row">
-                                        <div class="form-check mb-3 mr-4">
-                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_si" value="1"/>
-                                            <label id="_label" class="form-check-label" for="">SI</label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_no" value="0"/>
-                                            <label id="_label" class="form-check-label" for="">NO</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 row px-3 recurso-form">
-                                        @if ($plazoRecurso == 0)
-                                            <div class="col-12 col-md-2 form-group">
-                                                <label for="plazo">Plazo recurso:</label>
-                                                <input type="number" class="form-control form-control-sm plazo_recurso"
-                                                    name="plazo_recurso" id="plazo_recurso" min="1"
-                                                    max="{{$pqr->tipoPqr->tiempos}}">
-                                            </div>
-                                        @else
-                                            <div class="col-12 col-md-2 form-group">
-                                                <label for="plazo">Plazo recurso: {{ $plazoRecurso}}</label>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
+        
                         </div>
                         @foreach ($pqr->peticiones as $peticion)
                         <hr style="border-top: solid 4px black">
@@ -345,7 +314,7 @@ Sistema de informaci&oacute;n
                                 <input class="respuestaRespuesta" type="hidden"
                                     value="{{ isset($peticion->respuesta->id) ? $peticion->respuesta->id : '' }}">
                                 <div class="col-12 col-md-6">
-                                    <h6>Respuesta</h6>
+                                    <h6>Respuesta petición</h6>
                                 </div>
                                 <div class="col-12 form-group">
                                     <textarea type="text" class="form-control form-control-sm respuesta"
@@ -386,7 +355,7 @@ Sistema de informaci&oacute;n
                                 <div class="row respuestaAnexos">
                                     <div class="col-12">
                                         <div class="col-12">
-                                            <h6>Anexos respuesta</h6>
+                                            <h6>Anexos respuesta petición</h6>
                                         </div>
                                         <table class="table table-light">
                                             <tbody>
@@ -412,7 +381,7 @@ Sistema de informaci&oacute;n
                                 @if (sizeOf($peticion->recursos))
                                 <div class="row">
                                     <div class="col-12">
-                                        <h6>Recursos</h6>
+                                        <h6>Historial de recursos</h6>
                                     </div>
                                     <div class="col-12 table-responsive">
                                         <table class="table table-light" style="font-size: 0.8em;">
@@ -467,7 +436,7 @@ Sistema de informaci&oacute;n
                                             <input class="id_recurso" type="hidden" value="{{$recurso->id}}">
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
-                                                    <h6>Respuesta Recurso</h6>
+                                                    <h6>Recurso de {{$recurso->tiporeposicion->tipo}} </h6>
                                                 </div> 
                                                 <textarea type="text" class="form-control form-control-sm" disabled>{{$recurso->recurso}}</textarea>
                                                 <div class="col-12" id="anexosRespuestaRecursos">
@@ -500,6 +469,38 @@ Sistema de informaci&oacute;n
                                 value="{{$peticion->id}}">
                         </div>
                         @endforeach
+                        <div class="row">
+                            <input class="respuestaRecurso" type="hidden" value="{{ $recursoValidacion }}">
+                            <div class="col-12 col-md-6">
+                                <h6>¿A las respuestas le procede recurso?</h6>
+                            </div>
+                            <div class="col-12 col-md-6 d-flex flex-row">
+                                <div class="form-check mb-3 mr-4">
+                                    <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_si" value="1"/>
+                                    <label id="_label" class="form-check-label" for="">SI</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_no" value="0"/>
+                                    <label id="_label" class="form-check-label" for="">NO</label>
+                                </div>
+                            </div>
+                            <div class="col-12 row px-3 recurso-form">
+                                @if ($plazoRecurso == 0)
+                                    <div class="col-12 col-md-2 form-group">
+                                        <label for="plazo">Plazo recurso días hábiles:</label>
+                                        <input type="number" class="form-control form-control-sm plazo_recurso"
+                                            name="plazo_recurso" id="plazo_recurso" min="1"
+                                            max="{{$pqr->tipoPqr->tiempos}}">
+                                    </div>
+                                @else
+                                    <div class="col-12 col-md-2 form-group">
+                                        <label for="plazo">Plazo recurso días hábiles: {{ $plazoRecurso}}</label>
+                                        <input class="plazoRecurso" type="hidden" value="{{ $plazoRecurso }}">
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        
                         <div class="card-footer d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary px-4">Guardar</button>
                         </div>

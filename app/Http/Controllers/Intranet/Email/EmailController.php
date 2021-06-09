@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\Denuncias\Denuncia;
 use App\Models\Felicitaciones\Felicitacion;
+use App\Models\PQR\Aclaracion;
 use App\Models\PQR\PQR;
 use App\Models\SolicitudDatos\SolicitudDatos;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
@@ -312,20 +313,21 @@ class EmailController extends Controller
     {
         $pqr_radicada = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        $imagen = asset('imagenes/sistema/icono_sistema.png');
+        //$imagen = asset('imagenes/sistema/icono_sistema.png');
         $fecha = $pqr_radicada->fecha_radicado;
         $num_radicado = $pqr_radicada->radicado;
-        $tipo_doc = $pqr_radicada->persona->tipos_docu->tipo_id;
         if ($pqr_radicada->persona_id != null) {
             $nombre = $pqr_radicada->persona->nombre1 . ' ' . $pqr_radicada->persona->nombre2 . ' ' . $pqr_radicada->persona->apellido1 . ' ' . $pqr_radicada->persona->apellido2;
             $email = $pqr_radicada->persona->email;
             $identificacion = $pqr_radicada->persona->identificacion;
+            $tipo_doc = $pqr_radicada->persona->tipos_docu->tipo_id;
         } else {
             $nombre = $pqr_radicada->empresa->razon_social;
             $empresa = $pqr_radicada->empresa->razon_social;
             $representante = $pqr_radicada->empresa->representante->nombre1 . ' ' . $pqr_radicada->empresa->representante->apellido1;
             $email = $pqr_radicada->empresa->email;
             $identificacion = $pqr_radicada->empresa->identificacion;
+            $tipo_doc = $pqr_radicada->empresa->tipos_docu->tipo_id;
         }
 
         $anexos_li = '';
@@ -421,5 +423,77 @@ class EmailController extends Controller
         $pdf = PDF::loadView('intranet.emails.pqr_radicada', compact('pqr_radicada', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'contenido', 'tipo_pqr_id'));
 
         return $pdf->download('PQR Radicada.pdf');
+    }
+
+    public function felicitacionRadicadaPdf($id)
+    {
+
+        $felicitacion = Felicitacion::findOrFail($id);
+        //$imagen = asset('imagenes/sistema/icono_sistema.png');
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $fecha = $felicitacion->fecha_radicado;
+        $num_radicado = $felicitacion->radicado;
+
+
+        if ($felicitacion->persona_id != null) {
+            $nombre = $felicitacion->persona->nombre1 . ' ' . $felicitacion->persona->nombre2 . ' ' . $felicitacion->persona->apellido1 . ' ' . $felicitacion->persona->apellido2;
+            $email = $felicitacion->persona->email;
+            $identificacion = $felicitacion->persona->identificacion;
+            $tipo_doc = $felicitacion->persona->tipos_docu->tipo_id;
+        } else {
+            $nombre = $felicitacion->empresa->razon_social;
+            $empresa = $felicitacion->empresa->razon_social;
+            $representante = $felicitacion->empresa->representante->nombre1 . ' ' . $felicitacion->empresa->representante->apellido1;
+            $email = $felicitacion->empresa->email;
+            $identificacion = $felicitacion->empresa->identificacion;
+            $tipo_doc = $felicitacion->empresa->tipos_docu->tipo_id;
+        }
+        $pdf = PDF::loadView('intranet.emails.felicitacion', compact('felicitacion', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha'));
+        return $pdf->download('Felicitacion Radicada.pdf');
+    }
+    public function sugerenciaRadicadaPdf($id)
+    {
+        $sugerencia = Sugerencia::findOrFail($id);
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $fecha = $sugerencia->fecha_radicado;
+        $num_radicado = $sugerencia->radicado;
+        if ($sugerencia->persona_id != null) {
+            $nombre = $sugerencia->persona->nombre1 . ' ' . $sugerencia->persona->nombre2 . ' ' . $sugerencia->persona->apellido1 . ' ' . $sugerencia->persona->apellido2;
+            $email = $sugerencia->persona->email;
+            $identificacion = $sugerencia->persona->identificacion;
+            $tipo_doc = $sugerencia->persona->tipos_docu->tipo_id;
+        } else {
+            $nombre = $sugerencia->empresa->razon_social;
+            $empresa = $sugerencia->empresa->razon_social;
+            $representante = $sugerencia->empresa->representante->nombre1 . ' ' . $sugerencia->empresa->representante->apellido1;
+            $email = $sugerencia->empresa->email;
+            $identificacion = $sugerencia->empresa->identificacion;
+            $tipo_doc = $sugerencia->empresa->tipos_docu->tipo_id;
+        }
+        $pdf = PDF::loadView('intranet.emails.sugerencia', compact('sugerencia', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha'));
+        return $pdf->download('Sugerencia Radicada.pdf');
+    }
+
+    public function aclaracionPdf($id)
+    {
+        $aclaracion = Aclaracion::findOrFail($id);
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $fecha = $aclaracion->fecha_radicado;
+        $num_radicado = $aclaracion->radicado;
+        if ($aclaracion->persona_id != null) {
+            $nombre = $aclaracion->persona->nombre1 . ' ' . $aclaracion->persona->nombre2 . ' ' . $aclaracion->persona->apellido1 . ' ' . $aclaracion->persona->apellido2;
+            $email = $aclaracion->persona->email;
+            $identificacion = $aclaracion->persona->identificacion;
+            $tipo_doc = $aclaracion->persona->tipos_docu->tipo_id;
+        } else {
+            $nombre = $aclaracion->empresa->razon_social;
+            $empresa = $aclaracion->empresa->razon_social;
+            $representante = $aclaracion->empresa->representante->nombre1 . ' ' . $aclaracion->empresa->representante->apellido1;
+            $email = $aclaracion->empresa->email;
+            $identificacion = $aclaracion->empresa->identificacion;
+            $tipo_doc = $aclaracion->empresa->tipos_docu->tipo_id;
+        }
+        $pdf = PDF::loadView('intranet.emails.aclaracion', compact('aclaracion', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha'));
+        return $pdf->download('Aclaracion Radicada.pdf');
     }
 }
