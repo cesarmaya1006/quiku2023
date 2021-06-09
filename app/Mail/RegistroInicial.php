@@ -19,7 +19,7 @@ class RegistroInicial extends Mailable
     public $id;
     public $tipopersona;
     public $cedula;
-    public function __construct($id,$tipopersona,$cedula)
+    public function __construct($id, $tipopersona, $cedula)
     {
         $this->id = $id;
         $this->tipopersona = $tipopersona;
@@ -33,6 +33,6 @@ class RegistroInicial extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@legalproseedings.com')->view('extranet.preregistroemail')->with(['id' => $this->id,'tipopersona' => $this->tipopersona, 'cedula' => $this->cedula]);
+        return $this->from('contacto@quiku.com')->view('extranet.preregistroemail')->with(['id' => $this->id, 'tipopersona' => $this->tipopersona, 'cedula' => $this->cedula]);
     }
 }

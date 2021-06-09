@@ -29,6 +29,6 @@ class PQR_Radicada extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@sistemaquiku.com')->view('intranet.emails.pqr_radicada_mail')->with(['id_pqr' => $this->id_pqr,]);
+        return $this->from('contacto@quiku.com')->view('intranet.emails.pqr_radicada_mail')->with(['id_pqr' => $this->id_pqr,]);
     }
 }

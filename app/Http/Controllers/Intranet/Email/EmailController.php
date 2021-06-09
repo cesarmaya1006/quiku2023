@@ -312,6 +312,7 @@ class EmailController extends Controller
     {
         $pqr_radicada = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $imagen = asset('imagenes/sistema/icono_sistema.png');
         $fecha = $pqr_radicada->fecha_radicado;
         $num_radicado = $pqr_radicada->radicado;
         $tipo_doc = $pqr_radicada->persona->tipos_docu->tipo_id;

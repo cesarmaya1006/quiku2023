@@ -34,6 +34,6 @@ class CambioSolicitud extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@mlgyasociados.com')->view('intranet.empresa.solicitud.cambioconsulta')->with(['id' => $this->datosId, 'titulo' => $this->datosTitulo, 'cambio' => $this->datosCambio,]);
+        return $this->from('contacto@quiku.com')->view('intranet.empresa.solicitud.cambioconsulta')->with(['id' => $this->datosId, 'titulo' => $this->datosTitulo, 'cambio' => $this->datosCambio,]);
     }
 }

@@ -10,7 +10,6 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Sistema de informaci&oacute;n
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
@@ -45,7 +44,8 @@
                                 <td>{{ $pqr->fecha_radicado }}</td>
                                 <td>{{ $pqr->tipoPqr->tipo }}</td>
                                 <td>{{ $pqr->estado->estado_usuario }}</td>
-                                <td>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . ($pqr->tiempo_limite) . ' days')) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}
+                                </td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $pqr->tipo_pqr_id, 'id_pqr' => $pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></a></td>
@@ -69,7 +69,8 @@
                                 <td>{{ $concepto->fecha_radicado }}</td>
                                 <td>{{ $concepto->tipoPqr->tipo }}</td>
                                 <td>{{ $concepto->estado->estado_usuario }}</td>
-                                <td>{{ date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . ($concepto->tiempo_limite) . ' days')) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . $concepto->tiempo_limite . ' days')) }}
+                                </td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $concepto->tipo_pqr_id, 'id_pqr' => $concepto->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
@@ -86,7 +87,8 @@
                                 <td>{{ $solicitud_datos->fecha_radicado }}</td>
                                 <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
                                 <td>{{ $solicitud_datos->estado->estado_usuario }}</td>
-                                <td>{{ date('Y-m-d', strtotime($solicitud_datos->fecha_generacion . '+ ' . ($solicitud_datos->tiempo_limite) . ' days')) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($solicitud_datos->fecha_generacion . '+ ' . $solicitud_datos->tiempo_limite . ' days')) }}
+                                </td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $solicitud_datos->tipo_pqr_id, 'id_pqr' => $solicitud_datos->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
@@ -103,7 +105,8 @@
                                 <td>{{ $denuncia->fecha_radicado }}</td>
                                 <td>{{ $denuncia->tipoPqr->tipo }}</td>
                                 <td>{{ $denuncia->estado->estado_usuario }}</td>
-                                <td>{{ date('Y-m-d', strtotime($denuncia->fecha_generacion . '+ ' . ($denuncia->tiempo_limite) . ' days')) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($denuncia->fecha_generacion . '+ ' . $denuncia->tiempo_limite . ' days')) }}
+                                </td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $denuncia->tipo_pqr_id, 'id_pqr' => $denuncia->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
@@ -120,7 +123,8 @@
                                 <td>{{ $felicitacion->fecha_radicado }}</td>
                                 <td>{{ $felicitacion->tipoPqr->tipo }}</td>
                                 <td>{{ $felicitacion->estado->estado_usuario }}</td>
-                                <td>{{ date('Y-m-d', strtotime($felicitacion->fecha_generacion . '+ ' . ($felicitacion->tiempo_limite) . ' days')) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($felicitacion->fecha_generacion . '+ ' . $felicitacion->tiempo_limite . ' days')) }}
+                                </td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $felicitacion->tipo_pqr_id, 'id_pqr' => $felicitacion->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
@@ -137,7 +141,8 @@
                                 <td>{{ $solicitud_doc->fecha_radicado }}</td>
                                 <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
                                 <td>{{ $solicitud_doc->estado->estado_usuario }}</td>
-                                <td>{{ date('Y-m-d', strtotime($solicitud_doc->fecha_generacion . '+ ' . ($solicitud_doc->tiempo_limite) . ' days')) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($solicitud_doc->fecha_generacion . '+ ' . $solicitud_doc->tiempo_limite . ' days')) }}
+                                </td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $solicitud_doc->tipo_pqr_id, 'id_pqr' => $solicitud_doc->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
@@ -154,7 +159,8 @@
                                 <td>{{ $sugerencia->fecha_radicado }}</td>
                                 <td>{{ $sugerencia->tipoPqr->tipo }}</td>
                                 <td>{{ $sugerencia->estado->estado_usuario }}</td>
-                                <td>{{ date('Y-m-d', strtotime($sugerencia->fecha_generacion . '+ ' . ($sugerencia->tiempo_limite) . ' days')) }}</td>
+                                <td>{{ date('Y-m-d', strtotime($sugerencia->fecha_generacion . '+ ' . $sugerencia->tiempo_limite . ' days')) }}
+                                </td>
                                 <td><a href="{{ route('download', ['id_tipo_pqr' => $sugerencias->tipo_pqr_id, 'id_pqr' => $sugerencias->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>

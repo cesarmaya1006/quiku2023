@@ -10,13 +10,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <title>LegalProceedings</title>
+    <title>Sistema Quiku</title>
 </head>
 
 <body>
     <div class="row">
         <div class="col-12">
-            <h1>Sistema de Quiku</h1>
+            <h1>Sistema Quiku</h1>
             <img class="img-fluid" src="{{ asset('imagenes/sistema/icono_sistema.png') }}" alt=""
                 style="max-width: 35px">
             <br>

@@ -31,6 +31,6 @@ class RecuperarContraseña extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@legalproseedings.com')->view('extranet.recuperarcontrasena')->with(['usuario' => $this->usuario, 'password' => $this->password]);
+        return $this->from('contacto@quiku.com')->view('extranet.recuperarcontrasena')->with(['usuario' => $this->usuario, 'password' => $this->password]);
     }
 }
