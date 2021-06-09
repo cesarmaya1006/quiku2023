@@ -1,11 +1,45 @@
 window.addEventListener('DOMContentLoaded', function(){
     if (document.querySelector('#id')) {
+        let tipoPqr = document.querySelector('#pqr_tipo').value
+        console.log(tipoPqr)
+        let urlDescargaRadicado = ''
+        
+        switch (Number(tipoPqr)) {
+          case 1 :
+            urlDescargaRadicado = 'pqr_radicada_pdf'
+            break
+          case 2 :
+            urlDescargaRadicado = 'pqr_radicada_pdf'
+            break
+          case 3 :
+            urlDescargaRadicado = 'pqr_radicada_pdf'
+            break
+          case 4 :
+            urlDescargaRadicado = ''
+            break
+          case 5 :
+            urlDescargaRadicado = ''
+            break
+          case 6 :
+            urlDescargaRadicado = ''
+            break
+          case 7 :
+            urlDescargaRadicado = 'felicitacion_radicada_pdf'
+            break
+          case 8 :
+            urlDescargaRadicado = ''
+            break
+          case 9 :
+            urlDescargaRadicado = 'sugerencia_radicada_pdf'
+            break
+        }
+        console.log(urlDescargaRadicado)
         swal({
             title: "Creada correctamente",
             content: {
                 element: "a",
                 attributes: {
-                  href: `/download/${document.querySelector('#pqr_tipo').value}/${document.querySelector('#id').value}`,
+                  href: `/${urlDescargaRadicado}/${document.querySelector('#id').value}`,
                   textContent: 'Descarga aquí'
                 },
               },
@@ -14,5 +48,15 @@ window.addEventListener('DOMContentLoaded', function(){
             icon: 'success',
             button: 'Cerrar',
           });
-    }   
+    }  
+    let otro = document.querySelector('.otros-btn')
+    otro.addEventListener('click', function(e){
+      e.preventDefault()
+      let cardOtros = document.querySelector('.card-otros') 
+      if(cardOtros.classList.contains('d-none')){
+        cardOtros.classList.remove('d-none')
+      }else{
+        cardOtros.classList.add('d-none')
+      }
+    }) 
 })

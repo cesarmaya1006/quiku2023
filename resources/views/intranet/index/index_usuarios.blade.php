@@ -42,55 +42,42 @@
                             <div class="card card-Light collapsed-card" style="box-shadow: 0px 0px 0px 0px ;">
                                 <div class="card-header">
                                     <h3 class="card-title">
-                                        <a href="" style="text-decoration: none;">Otros</a>
+                                        <a href="" style="text-decoration: none;" class="otros-btn">Otros</a>
                                     </h3>
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                                class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                    <!-- /.card-tools -->
                                 </div>
-                                <!-- /.card-header -->
-                                <div class="card-body" style="display: none;">
-                                    {{-- {{ $tipo->descripcion }} --}}
-                                    <div class="row">
-                                        @foreach ($tipoPQR as $tipo)
-                                            @if ($tipo->id == 4 || $tipo->id == 6 || $tipo->id == 9)
-                                                <div class="col-12 col-md-4">
-                                                    <div class="card card-Light collapsed-card"
-                                                        style="box-shadow: 0px 0px 0px 0px ;">
-                                                        <div class="card-header">
-                                                            <h3 class="card-title">
-                                                                @if ($tipo->id < 4)
-                                                                    <a
-                                                                        href="{{ route($tipo->url, ['id' => $tipo->id]) }}">{{ $tipo->tipo }}</a>
-                                                                @else
-                                                                    <a href="{{ route($tipo->url) }}"
-                                                                        style="text-decoration: none;">{{ $tipo->tipo }}</a>
-                                                                @endif
-                                                            </h3>
-                                                            <div class="card-tools">
-                                                                <button type="button" class="btn btn-tool"
-                                                                    data-card-widget="collapse"><i
-                                                                        class="fas fa-plus"></i>
-                                                                </button>
-                                                            </div>
-                                                            <!-- /.card-tools -->
-                                                        </div>
-                                                        <!-- /.card-header -->
-                                                        <div class="card-body" style="display: none;">
-                                                            {{ $tipo->descripcion }}
-                                                        </div>
-                                                        <!-- /.card-body -->
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
                             </div>
+                        </div>
+                        <div class="row card-otros d-none">
+                            @foreach ($tipoPQR as $tipo)
+                            @if ($tipo->id == 4 || $tipo->id == 6 || $tipo->id == 9)
+                                <div class="col-12 col-md-4">
+                                    <div class="card card-Light collapsed-card" style="box-shadow: 0px 0px 0px 0px ;">
+                                        <div class="card-header">
+                                            <h3 class="card-title">
+                                                @if ($tipo->id < 4)
+                                                    <a
+                                                        href="{{ route($tipo->url, ['id' => $tipo->id]) }}">{{ $tipo->tipo }}</a>
+                                                @else
+                                                    <a href="{{ route($tipo->url) }}"
+                                                        style="text-decoration: none;">{{ $tipo->tipo }}</a>
+                                                @endif
+                                            </h3>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool"
+                                                    data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <!-- /.card-tools -->
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body" style="display: none;">
+                                            {{ $tipo->descripcion }}
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                </div>
+                            @endif
+                            @endforeach
                         </div>
                     </div>
                     @if (session('id'))
@@ -107,3 +94,9 @@
         </div>
     </div>
 </div>
+<!-- ************************************************************* -->
+<!-- script hoja -->
+@section('scripts_pagina')
+    <script src="{{ asset('js/intranet/generar_pqr/index.js') }}"></script>
+@endsection
+<!-- ************************************************************* -->
