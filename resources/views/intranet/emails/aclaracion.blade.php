@@ -48,7 +48,7 @@
         }
 
     </style>
-    <title>PQR Radicada</title>
+    <title>Aclaración</title>
 </head>
 
 <body>
@@ -107,7 +107,7 @@
                     <p>No. ID: {{ $identificacion }}</p>
                 </td>
                 <td colspan="2">
-                    <p>E-mail:{{ $correo }}</p>
+                    <p>E-mail:{{ $email }}</p>
                 </td>
             </tr>
         </table>
@@ -198,30 +198,16 @@
         <table>
             <tr>
                 <td class="nombres">
-                    <img src="{{ $firma }}" alt="" style="width: 100%;max-width: 50px;">
+                    <img src="{{ $firma }}" alt="" style="width: 100%;max-width: 150px;">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <p>{{ $funcionario }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>{{ $cargo }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>{{ $razonsocial }}</p>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <table>
-            <tr>
-                <td style="font-size: 0.8em;">
-                    <p>Proyecto{{ $razonsocial }}</p>
+                    <p>{{ $aclaracion->peticion->empleado->nombre1 .' '.$aclaracion->peticion->empleado->apellido1 }}</p>
+                    <p>{{ $aclaracion->peticion->empleado->cargo->cargo }}</p>
+                    <p>Empresa 1</p>
+                    <br><br>
+                    <p><strong style="font-size: 0.8em;">Proyecto {{ $aclaracion->peticion->empleado->nombre1 .' '.$aclaracion->peticion->empleado->apellido1 }}</strong></p>
                 </td>
             </tr>
         </table>
