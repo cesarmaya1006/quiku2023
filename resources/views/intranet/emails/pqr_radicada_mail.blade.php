@@ -21,9 +21,8 @@
                 style="max-width: 35px">
             <br>
             <p>Estimado Usuario. Hemos rebicido una solicitud con este correo para radicar una nueva PQR.</p>
-            <p>Puede descargar el resumen en formato pdf en el siguiente link <a
-                    href="{{ route('pqrRadicadaPdf', ['id' => $id_pqr]) }}" target="_blank"
-                    rel="noopener noreferrer">Resumen</a> </p>
+            <p>Puede descargar el resumen en formato pdf pegando el siguiente link en el navegador </p>
+            <p>{{ route('pqrRadicadaPdf', ['id' => $id_pqr]) }}</p>
         </div>
         <div class="col-12">
             <p>Lo invitamos a ingresar a la plataforma Quiku y verificar el estado de sus Solicitudes en el siguiente
