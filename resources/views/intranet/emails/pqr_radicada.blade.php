@@ -97,6 +97,17 @@
             </tr>
         </table>
         <br>
+        <table>
+            <tr>
+                <td style="width: 75%;margin-top: 135px;">
+                    <div style="margin-top: 50px;">
+                        <p>Hemos recibido su solicitud y la atenderemos en el menor tiempo posible. A continuación podrá
+                            verificar los datos e información que han quedado resgistrados en nuestro sistema:</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
         <br>
         <table>
             <tr>
@@ -176,8 +187,10 @@
             <tr>
                 <td>
                     <ul>
+                        <?php $num_anexos = 0; ?>
                         @foreach ($pqr_radicada->peticiones as $peticion)
                             @if ($peticion->anexos->count() > 0)
+                                <?php $num_anexos = 1; ?>
                                 @foreach ($peticion->anexos as $anexo)
                                     <li>
                                         <a href="{{ asset('documentos/pqr/' . $anexo->url) }}" target="_blank"
@@ -189,17 +202,19 @@
                     </ul>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <p> <strong>Nota por defecto si hay anexos: (La relación de anexos anterior no implica que se ha
-                            verificado su contenido.)</strong></p>
-                </td>
-            </tr>
+            @if ($num_anexos == 1)
+                <tr>
+                    <td>
+                        <p> <strong>Nota : La relación de anexos anterior no implica que se ha verificado su
+                                contenido.</strong></p>
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td>
                     <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud a través de
                         la
-                        opción _____________________</p>
+                        opción {{ route('index') }}</p>
                 </td>
             </tr>
         </table>

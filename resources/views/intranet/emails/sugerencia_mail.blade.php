@@ -10,19 +10,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <title>Quiku</title>
+    <title>Sistema Quiku</title>
 </head>
 
 <body>
     <div class="row">
         <div class="col-12">
-            <h1>Sistema Quiku</h1>
+            <h1>Quiku</h1>
             <img class="img-fluid" src="{{ asset('imagenes/sistema/icono_sistema.png') }}" alt=""
                 style="max-width: 35px">
             <br>
-            <p>Estimado Usuario. Hemos rebicido una solicitud con este correo para radicar una nueva PQR.</p>
+            <p>Estimado Usuario. Hemos rebicido una solicitud con este correo para radicar una nueva sugerencia.</p>
             <p>Puede descargar el resumen en formato pdf pegando el siguiente link en el navegador </p>
-            <p>{{ route('pqrRadicadaPdf', ['id' => $id_pqr]) }}</p>
+            <p>{{ route('sugerenciaRadicadaPdf', ['id' => $id_sugerencia]) }}</p>
         </div>
         <div class="col-12">
             <p>Lo invitamos a ingresar a la plataforma Quiku y verificar el estado de sus Solicitudes en el siguiente

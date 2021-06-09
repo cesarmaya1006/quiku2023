@@ -17,7 +17,7 @@ class Felicitacion extends Model
 {
     use HasFactory, Notifiable;
     protected $table = 'felicitaciones';
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     //----------------------------------------------------------------------------------
     public function persona()

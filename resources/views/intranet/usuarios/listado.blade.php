@@ -161,7 +161,7 @@
                                 <td>{{ $sugerencia->estado->estado_usuario }}</td>
                                 <td>{{ date('Y-m-d', strtotime($sugerencia->fecha_generacion . '+ ' . $sugerencia->tiempo_limite . ' days')) }}
                                 </td>
-                                <td><a href="{{ route('download', ['id_tipo_pqr' => $sugerencias->tipo_pqr_id, 'id_pqr' => $sugerencias->id]) }}"
+                                <td><a href="{{ route('download', ['id_tipo_pqr' => $sugerencia->tipo_pqr_id, 'id_pqr' => $sugerencia->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                 </td>
