@@ -257,7 +257,6 @@ class ClienteController extends Controller
         } else {
             $email = $pqr->empresa->email;
         }
-        //$email = 'cesarmaya99@hotmail.com';
         $id_pqr = $pqr->id;
         Mail::to($email)->send(new PQR_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $idPQR)->with('pqr_tipo', $pqr->tipo_pqr_id)->with('radicado', $pqr->radicado)->with('fecha_radicado', $pqr->created_at);
@@ -384,7 +383,6 @@ class ClienteController extends Controller
         } else {
             $email = $felicitacion->empresa->email;
         }
-        //$email = 'cesarmaya99@hotmail.com';
         $id_felicitacion = $felicitacion->id;
         Mail::to($email)->send(new Felicitacion_Radicada($id_felicitacion));
 
@@ -635,7 +633,7 @@ class ClienteController extends Controller
         $nuevaSugerencia['sugerencia'] = $request['sugerencia'];
         $nuevaSugerencia['fecha_generacion'] = date("Y-m-d");
         $nuevaSugerencia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
-        $estado = Estado::findOrFail(1);
+        $estado = Estado::findOrFail(6);
         $nuevaSugerencia['estadospqr_id'] = $estado['id'];
         $nuevaSugerencia['tiempo_limite'] = $respuestaDias;
         $sugerencia = Sugerencia::create($nuevaSugerencia);
@@ -682,7 +680,6 @@ class ClienteController extends Controller
         } else {
             $email = $sugerencia->empresa->email;
         }
-        //$email = 'cesarmaya99@hotmail.com';
         $id_sugerencia = $sugerencia->id;
         Mail::to($email)->send(new SugerenciaRadicada($id_sugerencia));
 
