@@ -68,7 +68,7 @@ class PQR_P_Controller extends Controller
                 $respuesta['fecha'] = date("Y-m-d");
                 $respuesta['respuesta'] = $request["respuesta$i"];
                 $respuestaPQR = Respuesta::create($respuesta);  
-                
+
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
                         $ruta = Config::get('constantes.folder_doc_respuestas');
@@ -136,8 +136,8 @@ class PQR_P_Controller extends Controller
         }
         return redirect('/funcionario/listado');
     }
-    
-    
+
+
     public function gestionar_guardar_usuario (Request $request)
     {
         $contadorAnexos = 0;
@@ -203,7 +203,7 @@ class PQR_P_Controller extends Controller
         }
         return redirect('/usuario/listado');
     }
-    
+
     public function prorroga_guardar(Request $request)
     {
         if ($request->ajax()) {
