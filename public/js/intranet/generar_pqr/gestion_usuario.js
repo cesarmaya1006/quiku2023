@@ -138,6 +138,7 @@ window.addEventListener('DOMContentLoaded', function(){
     function guardarRecurso(e){
         e.preventDefault()
         let contenedor = e.target.parentNode.parentNode
+        let id_pqr = document.querySelector('.idPqr')
         let url = e.target.getAttribute('data_url')
         let token = e.target.getAttribute('data_token')
         let tipo_reposicion = contenedor.querySelector('.tipo_reposicion').value
@@ -149,7 +150,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 let data = {
                     peticion_id : idPeticionRecurso,
                     tipo_reposicion_id : 2,
-                    recurso : respuestaRecurso
+                    recurso : respuestaRecurso,
+                    id: id_pqr
                 }
                 $.ajax({
                     async:false,
@@ -199,7 +201,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 let data = {
                     peticion_id : idPeticionRecurso,
                     tipo_reposicion_id : 3,
-                    recurso : respuestaRecurso
+                    recurso : respuestaRecurso,
+                    id: id_pqr
                 }
                 $.ajax({
                     async:false,
@@ -251,7 +254,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 let data = {
                     peticion_id : idPeticionRecurso,
                     tipo_reposicion_id : tipo_reposicion,
-                    recurso : respuestaRecurso
+                    recurso : respuestaRecurso,
+                    id: id_pqr
                 }
                 $.ajax({
                     async:false,
