@@ -294,7 +294,7 @@
                                     @if ($peticion->respuesta)
                                         <div class="row">
                                             <div class="col-12">
-                                                <h6>Respuesta</h6>
+                                                <h6>Respuesta petición</h6>
                                             </div>
                                             <div class="col-12 form-group">
                                                 <textarea type="text" class="form-control form-control-sm respuesta"
@@ -305,7 +305,7 @@
                                                 <div class="row respuestaAnexos">
                                                     <div class="col-12">
                                                         <div class="col-12">
-                                                            <h6>Anexos respuesta</h6>
+                                                            <h6>Anexos respuesta petición</h6>
                                                         </div>
                                                         <table class="table table-light">
                                                             <tbody>
@@ -388,7 +388,7 @@
                                     @if ($peticion->recurso == 1 && $peticion->respuesta && !sizeOf($peticion->recursos))
                                         <input class="respuestaProcedeRecurso" type="hidden" value="1">
                                         <div class="col-12 col-md-6">
-                                            <h6>¿A la respuesta le procede recurso?</h6>
+                                            <h6>¿Desea interponer un recurso?</h6>
                                         </div>
                                         <div class="col-12 col-md-6 d-flex flex-row">
                                             <div class="form-check mb-3 mr-4">
@@ -469,20 +469,22 @@
                                     @endif
                                     @php
                                         $validacionRecurso2 = false;
+                                        $tipoRecursoValidacion = 0;
                                         $respuestaRecurso = $peticion->recursos;
                                         foreach ($respuestaRecurso as $key => $value) {
                                             if ($key == 0) {
                                                 if ($value->respuestaRecurso && $value->tipo_reposicion_id) {
+                                                    $tipoRecursoValidacion= $value->tipo_reposicion_id;
                                                     $validacionRecurso2 = true;
                                                 }
                                             }
                                         }
                                         $totalrecursos = sizeOf($respuestaRecurso);
                                     @endphp
-                                    @if ($peticion->recurso == 1 && $peticion->respuesta && (sizeOf($peticion->recursos) && $validacionRecurso2 && $totalrecursos <= 1))
+                                    @if ($peticion->recurso == 1 && $peticion->respuesta && (sizeOf($peticion->recursos) && $validacionRecurso2 && $totalrecursos <= 1) && $tipoRecursoValidacion == 1)
                                         <input class="respuestaProcedeRecurso" type="hidden" value="1">
                                         <div class="col-12 col-md-6">
-                                            <h6>¿A la respuesta le procede otro recurso?</h6>
+                                            <h6>¿Desea interponer otro recurso?</h6>
                                         </div>
                                         <div class="col-12 col-md-6 d-flex flex-row">
                                             <div class="form-check mb-3 mr-4">

@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded', function(){
     ajustarNamePeticion()
+    let id_pqr = document.querySelector('.id_pqr').value
     let verificacionRespuesta = document.querySelectorAll('.respuestaRespuesta')
     verificacionRespuesta.forEach(item => {
         if(item.value != ''){
@@ -28,24 +29,16 @@ window.addEventListener('DOMContentLoaded', function(){
             item.parentElement.querySelector('.aclaraciones').parentElement.classList.add('d-none')
         }
     })
-    // let verificacionRecurso = document.querySelectorAll('.respuestaRecurso')
-    // verificacionRecurso.forEach(item => {
-    //     if(item.value == 1){
-    //         item.parentElement.querySelector('.recurso_si').setAttribute('checked','')
-    //         item.parentElement.querySelector('.recurso_no').setAttribute('disabled','')
-    //     }else{
-    //         item.parentElement.querySelector('.recurso_no').setAttribute('checked','')
-    //         item.parentElement.querySelector('.recurso-form').classList.add('d-none')
-    //     }
-    // })
-    let verificacionRecurso = document.querySelector('.respuestaRecurso')
-    if(verificacionRecurso.value >= 1){
-        verificacionRecurso.parentElement.querySelector('.recurso_si').setAttribute('checked','')
-        verificacionRecurso.parentElement.querySelector('.recurso_no').setAttribute('disabled','')
-    }else{
-        verificacionRecurso.parentElement.querySelector('.recurso_no').setAttribute('checked','')
-        verificacionRecurso.parentElement.querySelector('.recurso-form').classList.add('d-none')
-    }
+    let verificacionRecurso = document.querySelectorAll('.respuestaRecurso')
+    verificacionRecurso.forEach(item => {
+        if(item.value == 1){
+            item.parentElement.querySelector('.recurso_si').setAttribute('checked','')
+            item.parentElement.querySelector('.recurso_no').setAttribute('disabled','')
+        }else{
+            item.parentElement.querySelector('.recurso_no').setAttribute('checked','')
+            item.parentElement.querySelector('.recurso-form').classList.add('d-none')
+        }
+    })
     // ---------------------------------------------------------------------------------------------------------
     $('input[type=radio][name=prorroga]').on('change', function() {
         switch ($(this).val()) {
@@ -128,18 +121,6 @@ window.addEventListener('DOMContentLoaded', function(){
                 respuesta.name = `respuesta${i}`
                 respuesta.id = `respuesta${i}`
             })
-            // peticion.querySelectorAll('.recurso_check').forEach(check => {
-            //     check.name = `recurso${i}`
-            //     check.id = `recurso${i}`
-            // })
-            // peticion.querySelectorAll('.plazo_recurso').forEach(input => {
-            //     input.name = `plazo_recurso${i}`
-            //     input.id = `plazo_recurso${i}`
-            // })
-            // peticion.querySelectorAll('.fecha_notificacion').forEach(input => {
-            //     input.name = `fecha_notificacion${i}`
-            //     input.id = `fecha_notificacion${i}`
-            // })
             peticion.querySelectorAll('.id_peticion').forEach(id_peticion => {
                 id_peticion.name = `id_peticion${i}`
                 id_peticion.id = `id_peticion${i}`
@@ -275,13 +256,18 @@ window.addEventListener('DOMContentLoaded', function(){
         let token = e.target.getAttribute('data_token')
         let plazo_prorroga = document.querySelector('#plazo_prorroga').value
         let prorroga_pdf = document.querySelector('#prorroga_pdf').value
-        let idPqr = document.querySelector('#idPqr').value
+        let plazoRecurso = 0
+        if(document.querySelector('.plazoRecurso')){
+            plazoRecurso = document.querySelector('.plazoRecurso').value
+        }
+
         if(plazo_prorroga != '' && prorroga_pdf != ''){
             let data = {
                 prorroga : 1,
                 plazo_prorroga,
                 prorroga_pdf,
-                idPqr
+                idPqr: id_pqr,
+                plazoRecurso
             }
             $.ajax({
                 url: url,
@@ -313,6 +299,7 @@ window.addEventListener('DOMContentLoaded', function(){
         let resprecursos_id = 0
         let data = {
             recurso_id : idRecurso,
+            id: id_pqr
         }
         $.ajax({
             async:false,
@@ -342,6 +329,7 @@ window.addEventListener('DOMContentLoaded', function(){
             let urlAnexo = anexo.parentNode.parentNode.parentNode
             urlAnexo =  urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
             $.ajax({
+                async:false,
                 url: urlAnexo,
                 type: 'POST',
                 headers: { 'X-CSRF-TOKEN': token },

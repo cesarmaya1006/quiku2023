@@ -117,6 +117,13 @@ class PQR_P_Controller extends Controller
                 }
             }
         }
+        if($request["plazo_recurso"] && $request["recurso"] == 1){
+            $pqrFechaLimiteRecurso = PQR::findOrFail($request['id_pqr']);
+            $nuevoLimite = $pqrFechaLimiteRecurso->prorroga_dias + $pqrFechaLimiteRecurso->tipoPqr->tiempos + $request["plazo_recurso"];
+            $respuestaDias = FechasController::festivos($nuevoLimite, $pqrFechaLimiteRecurso['fecha_generacion']);
+            $actualizarPqr['tiempo_limite'] = $respuestaDias;
+            PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);
+        }
 
         if(sizeOf($peticiones) == sizeOf($respuestasPeticiones) ){
             if($recurso){
@@ -214,7 +221,7 @@ class PQR_P_Controller extends Controller
                     $actualizarPqr['prorroga'] = $request['prorroga']; 
                     $actualizarPqr['prorroga_dias'] = $request['plazo_prorroga'];
                     $actualizarPqr['prorroga_pdf'] = $request['prorroga_pdf'];
-                    $nuevoLimite = $pqr->tipoPqr->tiempos + $request['plazo_prorroga'];
+                    $nuevoLimite = $pqr->tipoPqr->tiempos + $request['plazo_prorroga'] + $request['plazoRecurso'] ;
                     $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
                     $actualizarPqr['tiempo_limite'] = $respuestaDias;
                     $respuestaProrroga = PQR::findOrFail($request['idPqr'])->update($actualizarPqr); 
@@ -235,9 +242,9 @@ class PQR_P_Controller extends Controller
             $nuevoRecurso['fecha_radicacion'] = date("Y-m-d");
             $nuevoRecurso['recurso'] = $request['recurso'];
             $respuestaRecurso = Recurso::create($nuevoRecurso); 
-            // $estado = Estado::findOrFail(9);
-            // $pqrEstado['estadospqr_id'] = $estado['id'];
-            // PQR::findOrFail($request['id'])->update($pqrEstado);
+            $estado = Estado::findOrFail(8);
+            $pqrEstado['estadospqr_id'] = $estado['id'];
+            PQR::findOrFail($request['id'])->update($pqrEstado);
 
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso ]);
         } else {
@@ -285,7 +292,25 @@ class PQR_P_Controller extends Controller
             $nuevoRecurso['fecha'] = date("Y-m-d");
             $nuevoRecurso['respuesta'] = 'respuesta';
             $respuestaRecurso = RespRecurso::create($nuevoRecurso); 
-
+            $peticiones = Peticion::all()->where('pqr_id', $request["id_pqr"] );
+            $recursototal = 0;
+            $recursoRespuestaTotal = 0;
+            foreach ($peticiones as $key => $peticion) {
+                if($peticion->recurso != 0){
+                    foreach ($peticion->recursos as $key => $recurso) {
+                        $recursototal ++;
+                        if($recurso->respuestarecurso) {
+                            $recursoRespuestaTotal ++;
+                        }
+                    }
+                    $recurso = $peticion->recurso;
+                }
+            }
+            if($recursototal == $recursoRespuestaTotal){
+                $estado = Estado::findOrFail(9);
+                $pqrEstado['estadospqr_id'] = $estado['id'];
+                PQR::findOrFail($request['id'])->update($pqrEstado);
+            }
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso ]);
         } else {
             abort(404);
