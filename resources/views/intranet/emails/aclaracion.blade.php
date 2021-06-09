@@ -147,7 +147,9 @@
             </tr>
             <tr>
                 <td>
-                    <p>{{ $contenido }}</p>
+                    <h5>Aclaración</h5>
+                    <p>Tipo: {{ $aclaracion->tipo_solicitud }}</p>
+                    <p>{{ $aclaracion->aclaracion }}</p>
                 </td>
             </tr>
         </table>
@@ -157,7 +159,8 @@
             <tr>
                 <td>
                     <p>Para aclarar o complementar su solicitud, por favor cargue su respuesta en la opción
-                        _________________. Una vez lo haya hecho, se reactivará la gestión y el plazo de respuesta.</p>
+                        {{ route('index') }}. Una vez lo haya hecho, se reactivará la gestión y el plazo de
+                        respuesta.</p>
                 </td>
             </tr>
             <tr>
@@ -175,7 +178,7 @@
                 <td>
                     <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud a través de
                         la
-                        opción _____________________</p>
+                        opción {{ route('index') }}</p>
                 </td>
             </tr>
         </table>
