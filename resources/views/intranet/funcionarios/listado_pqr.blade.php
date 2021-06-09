@@ -83,6 +83,7 @@
                             <th>Num. Radicado</th>
                             <th>Fecha de radicación</th>
                             <th>Tipo de PQR</th>
+                            <th>Tramite PQR</th>
                             <th>Estado PQR</th>
                             <th>Plazo de respuesta (Días hábiles)</th>
                             <th>Dias de vencimiento calendario</th>
@@ -106,6 +107,7 @@
                                 <td>{{ $pqr->radicado }}</td>
                                 <td>{{ $pqr->fecha_radicado }}</td>
                                 <td>{{ $pqr->tipoPqr->tipo }}</td>
+                                <td>{{ $pqr->estado->estado_funcionario }}</td>
                                 <td>{{ $pqr->estado->estado_funcionario }}</td>
                                 <td>{{ $pqr->tipoPqr->tiempos + $pqr->prorroga_dias + $diasRecurso }}</td>
                                 @php
@@ -136,6 +138,7 @@
                                 <td>{{ $concepto->fecha_radicado }}</td>
                                 <td>{{ $concepto->tipoPqr->tipo }}</td>
                                 <td>{{ $concepto->estado->estado_funcionario }}</td>
+                                <td>{{ $concepto->estado->estado_funcionario }}</td>
                                 <td>{{ $concepto->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . ($concepto->tiempo_limite) . ' days'));
@@ -152,6 +155,7 @@
                                 <td>{{ $solicitud_datos->radicado }}</td>
                                 <td>{{ $solicitud_datos->fecha_radicado }}</td>
                                 <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
+                                <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
                                 <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
                                 <td>{{ $solicitud_datos->tipoPqr->tiempos }}</td>
                                 @php
@@ -170,6 +174,7 @@
                                 <td>{{ $denuncia->fecha_radicado }}</td>
                                 <td>{{ $denuncia->tipoPqr->tipo }}</td>
                                 <td>{{ $denuncia->estado->estado_funcionario }}</td>
+                                <td>{{ $denuncia->estado->estado_funcionario }}</td>
                                 <td>{{ $denuncia->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($denuncia->fecha_generacion . '+ ' . ($denuncia->tiempo_limite) . ' days'));
@@ -186,6 +191,7 @@
                                 <td>{{ $felicitacion->radicado }}</td>
                                 <td>{{ $felicitacion->fecha_radicado }}</td>
                                 <td>{{ $felicitacion->tipoPqr->tipo }}</td>
+                                <td>{{ $felicitacion->estado->estado_funcionario }}</td>
                                 <td>{{ $felicitacion->estado->estado_funcionario }}</td>
                                 <td>{{ $felicitacion->tipoPqr->tiempos }}</td>
                                 @php
@@ -204,6 +210,7 @@
                                 <td>{{ $solicitud_doc->fecha_radicado }}</td>
                                 <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
                                 <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
+                                <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
                                 <td>{{ $solicitud_doc->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($solicitud_doc->fecha_generacion . '+ ' . ($solicitud_doc->tiempo_limite) . ' days'));
@@ -220,6 +227,7 @@
                                 <td>{{ $sugerencia->radicado }}</td>
                                 <td>{{ $sugerencia->fecha_radicado }}</td>
                                 <td>{{ $sugerencia->tipoPqr->tipo }}</td>
+                                <td>{{ $sugerencia->estado->estado_funcionario }}</td>
                                 <td>{{ $sugerencia->estado->estado_funcionario }}</td>
                                 <td>{{ $sugerencia->tipoPqr->tiempos }}</td>
                                 @php
