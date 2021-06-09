@@ -28,6 +28,8 @@
                             @if ($usuario->representante)
                                 {{ $usuario->representante->nombre1 . ' ' . $usuario->representante->nombre2 }}<br>{{ ucwords($usuario->representante->apellido1 . ' ' . $usuario->representante->apellido2) }}
                             @endif
+                        @else
+                            {{ $usuario->empleado->nombre1 . ' ' . $usuario->empleado->nombre2 }}<br>{{ ucwords($usuario->empleado->apellido1 . ' ' . $usuario->empleado->apellido2) }}
                         @endif
                         <br>{{ session('rol_nombre') }}
                     </a>
@@ -39,7 +41,9 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                    <li class="nav-header" ><h6 style="color: #3359fa; font-weight: 700;">MEN&Uacute; PRINCIPAL</h6></li>
+                    <li class="nav-header">
+                        <h6 style="color: #3359fa; font-weight: 700;">MEN&Uacute; PRINCIPAL</h6>
+                    </li>
                     @foreach ($menusComposer as $key => $item)
                         @if ($item['menu_id'] != 0)
                         @break

@@ -10,7 +10,7 @@
                 <div class="icon">
                     <i class="ion ion-bag text-primary"></i>
                 </div>
-                <a href="#" class="small-box-footer text-primary" style="color: green;">Más info <i
+                <a href="{{route('funcionario-index')}}" class="small-box-footer text-primary" style="color: green;">Más info <i
                         class="fas fa-arrow-circle-right text-white;"></i></a>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 <div class="icon">
                     <i class="ion ion-stats-bars text-green"></i>
                 </div>
-                <a href="#" class="small-box-footer text-success">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('funcionario-index')}}" class="small-box-footer text-success">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -41,7 +41,7 @@
                 <div class="icon">
                     <i class="ion ion-person-add text-warning"></i>
                 </div>
-                <a href="#" class="small-box-footer text-warning">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('funcionario-index')}}" class="small-box-footer text-warning">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -56,7 +56,7 @@
                 <div class="icon">
                     <i class="ion ion-pie-graph text-danger"></i>
                 </div>
-                <a href="#" class="small-box-footer text-danger">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('funcionario-index')}}" class="small-box-footer text-danger">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -72,7 +72,7 @@
                 <div class="icon">
                     <i class="ion ion-pie-graph text-pink"></i>
                 </div>
-                <a href="#" class="small-box-footer text-pink">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('funcionario-index')}}" class="small-box-footer text-pink">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -87,7 +87,7 @@
                 <div class="icon">
                     <i class="ion ion-pie-graph text-teal"></i>
                 </div>
-                <a href="#" class="small-box-footer text-teal">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('funcionario-index')}}" class="small-box-footer text-teal">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -103,7 +103,7 @@
                 <div class="icon">
                     <i class="ion ion-pie-graph text-indigo"></i>
                 </div>
-                <a href="#" class="small-box-footer text-indigo">Más info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{route('funcionario-index')}}" class="small-box-footer text-indigo">Más info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
