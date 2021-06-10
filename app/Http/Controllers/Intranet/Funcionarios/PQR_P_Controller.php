@@ -17,6 +17,7 @@ use App\Mail\AclaracionComplementacion;
 use App\Mail\ConstanciaAclaracion;
 use App\Mail\Prorroga;
 use App\Mail\Recurso_mail;
+use App\Mail\RespuestaPQR;
 use App\Models\PQR\DocRecurso;
 use App\Models\PQR\DocRespRecurso;
 use App\Models\PQR\Recurso;
@@ -84,6 +85,15 @@ class PQR_P_Controller extends Controller
                 $respuesta['fecha'] = date("Y-m-d");
                 $respuesta['respuesta'] = $request["respuesta$i"];
                 $respuestaPQR = Respuesta::create($respuesta);
+                //----------------------------------------------------------------------
+                if ($respuestaPQR->peticion->pqr->persona_id != null) {
+                    $email = $respuestaPQR->peticion->pqr->persona->email;
+                } else {
+                    $email = $respuestaPQR->peticion->pqr->empresa->email;
+                }
+                $id_pqr = $respuestaPQR->peticion->pqr->id;
+                Mail::to($email)->send(new RespuestaPQR($id_pqr));
+                //----------------------------------------------------------------------
                 $estado = Estado::findOrFail(2);
                 $pqrEstado['estadospqr_id'] = $estado['id'];
                 PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
