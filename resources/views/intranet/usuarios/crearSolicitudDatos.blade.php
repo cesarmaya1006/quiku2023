@@ -126,7 +126,7 @@
                             <input class="cantidadSolicitudes" id="cantidadSolicitudes" name="cantidadSolicitudes"
                                 type="hidden" value="0">
                             <div class="col-12 d-flex justify-content-end flex-row">
-                                <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2" id="crearSolicitud"><i
+                                <button class="btn btn-info btn-xs btn-sombra pl-2 pr-2" id="crearSolicitud"><i
                                         class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
                                     otro solicitud</button>
                             </div>

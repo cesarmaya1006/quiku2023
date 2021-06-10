@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                             <input id="tipo_pqr_id" name="tipo_pqr_id" type="hidden" value="{{ $tipo_pqr->id }}">
-                            <div class="card-footer mt-5 mb-3 pl-4">
+                            <div class="card-footer mt-5 mb-3 pl-4 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary pl-5 pr-5">Crear</button>
                             </div>
                         </div>
