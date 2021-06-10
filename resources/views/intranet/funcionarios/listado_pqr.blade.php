@@ -110,6 +110,7 @@
                                     <th>Fecha de radicación</th>
                                     <th>Tipo de PQR</th>
                                     <th>Tramite PQR</th>
+                                    <th>Prioridad</th>
                                     <th>Estado PQR</th>
                                     <th>Plazo de respuesta (Días hábiles)</th>
                                     <th>Dias de vencimiento calendario</th>
@@ -137,6 +138,13 @@
                                         <td>{{ $pqr->created_at }}</td>
                                         <td>{{ $pqr->tipoPqr->tipo }}</td>
                                         <td>{{ $pqr->estado->estado_funcionario }}</td>
+                                        @if ($pqr->prioridad_id == 1)
+                                            <td class="bg-red">{{ $pqr->prioridad->prioridad}}</td>
+                                        @elseif($pqr->prioridad_id == 2)
+                                            <td class="bg-yellow">{{ $pqr->prioridad->prioridad}}</td>
+                                        @elseif($pqr->prioridad_id == 3)
+                                            <td class="bg-green">{{ $pqr->prioridad->prioridad}}</td>
+                                        @endif
                                         @php
                                             $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $pqr->estado->id);
                                         @endphp
@@ -186,8 +194,15 @@
                                         <td>{{ $concepto->created_at }}</td>
                                         <td>{{ $concepto->tipoPqr->tipo }}</td>
                                         <td>{{ $concepto->estado->estado_funcionario }}</td>
+                                        @if ($solicitud_datos->prioridad_id == 1)
+                                            <td class="bg-red">{{ $solicitud_datos->prioridad->prioridad}}</td>
+                                        @elseif($solicitud_datos->prioridad_id == 2)
+                                            <td class="bg-yellow">{{ $solicitud_datos->prioridad->prioridad}}</td>
+                                        @elseif($solicitud_datos->prioridad_id == 3)
+                                            <td class="bg-green">{{ $solicitud_datos->prioridad->prioridad}}</td>
+                                        @endif
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $concepto->estado->id);
+                                            $diasEstado = dias_estado($solicitud_datos->fecha_radicado, $fechaFinal, $concepto->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -223,6 +238,13 @@
                                         <td>{{ $solicitud_datos->created_at }}</td>
                                         <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
                                         <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
+                                        @if ($pqr->prioridad_id == 1)
+                                            <td class="bg-red">{{ $pqr->prioridad->prioridad}}</td>
+                                        @elseif($pqr->prioridad_id == 2)
+                                            <td class="bg-yellow">{{ $pqr->prioridad->prioridad}}</td>
+                                        @elseif($pqr->prioridad_id == 3)
+                                            <td class="bg-green">{{ $pqr->prioridad->prioridad}}</td>
+                                        @endif
                                         @php
                                             $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $solicitud_datos->estado->id);
                                         @endphp
@@ -260,8 +282,15 @@
                                         <td>{{ $denuncia->created_at }}</td>
                                         <td>{{ $denuncia->tipoPqr->tipo }}</td>
                                         <td>{{ $denuncia->estado->estado_funcionario }}</td>
+                                        @if ($denuncia->prioridad_id == 1)
+                                            <td class="bg-red">{{ $denuncia->prioridad->prioridad}}</td>
+                                        @elseif($denuncia->prioridad_id == 2)
+                                            <td class="bg-yellow">{{ $denuncia->prioridad->prioridad}}</td>
+                                        @elseif($denuncia->prioridad_id == 3)
+                                            <td class="bg-green">{{ $denuncia->prioridad->prioridad}}</td>
+                                        @endif
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $denuncia->estado->id);
+                                            $diasEstado = dias_estado($denuncia->fecha_radicado, $fechaFinal, $denuncia->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -297,6 +326,7 @@
                                         <td>{{ $felicitacion->created_at }}</td>
                                         <td>{{ $felicitacion->tipoPqr->tipo }}</td>
                                         <td>{{ $felicitacion->estado->estado_funcionario }}</td>
+                                        <td class="bg-green">Baja</td>
                                         <td class="bg-blue">Cerrado</td>
                                         <td>{{ $felicitacion->tipoPqr->tiempos }}</td>
                                         <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
@@ -315,8 +345,15 @@
                                         <td>{{ $solicitud_doc->created_at }}</td>
                                         <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
                                         <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
+                                        @if ($solicitud_doc->prioridad_id == 1)
+                                        <td class="bg-red">{{ $solicitud_doc->prioridad->prioridad}}</td>
+                                        @elseif($solicitud_doc->prioridad_id == 2)
+                                            <td class="bg-yellow">{{ $solicitud_doc->prioridad->prioridad}}</td>
+                                        @elseif($solicitud_doc->prioridad_id == 3)
+                                            <td class="bg-green">{{ $solicitud_doc->prioridad->prioridad}}</td>
+                                        @endif
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $solicitud_doc->estado->id);
+                                            $diasEstado = dias_estado($solicitud_doc->fecha_radicado, $fechaFinal, $solicitud_doc->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -352,6 +389,7 @@
                                         <td>{{ $sugerencia->created_at }}</td>
                                         <td>{{ $sugerencia->tipoPqr->tipo }}</td>
                                         <td>{{ $sugerencia->estado->estado_funcionario }}</td>
+                                        <td class="bg-green">Baja</td>
                                         <td class="bg-blue">Cerrado</td>
                                         <td>{{ $sugerencia->tipoPqr->tiempos }}</td>
                                         <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>

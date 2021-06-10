@@ -135,7 +135,7 @@
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
-                                            <td><a href="{{ route('funcionario-gestionarFelicitacion', ['id' => $felicitacion->id]) }}"
+                                            <td><a href="{{ route('usuario-gestionarFelicitacion', ['id' => $felicitacion->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                             </td>
@@ -171,7 +171,7 @@
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
-                                            <td><a href="{{ route('funcionario-gestionarSugerencia', ['id' => $sugerencia->id]) }}"
+                                            <td><a href="{{ route('usuario-gestionarsugerencia', ['id' => $sugerencia->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                             </td>

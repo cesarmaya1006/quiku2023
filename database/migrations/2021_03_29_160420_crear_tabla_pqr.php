@@ -30,6 +30,8 @@ class CrearTablaPqr extends Migration
             $table->foreign('servicio_id', 'fk_servicio_pqr')->references('id')->on('servicios')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('referencia_id')->nullable();
             $table->foreign('referencia_id', 'fk_referencia_pqr')->references('id')->on('referencias')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('prioridad_id')->default(2)->nullable();
+            $table->foreign('prioridad_id', 'fk_prioridades_pqr')->references('id')->on('prioridades')->onDelete('restrict')->onUpdate('restrict');
             $table->text('factura', 100)->nullable();
             $table->date('fecha_factura', 100)->nullable();
             $table->boolean('prorroga')->default(0)->nullable();

@@ -778,6 +778,17 @@ class ClienteController extends Controller
         return view('intranet.usuarios.gestion_pqr', compact('pqr'));
     }
     //=========================================================================================================================
+    public function gestionar_felicitaciones($id)
+    {
+        $felicitacion = Felicitacion::findOrFail($id);
+        return view('intranet.usuarios.gestion_felicitaciones', compact('felicitacion'));
+    }
+    //=========================================================================================================================
+    public function gestionar_sugerencia($id)
+    {
+        $sugerencia = Sugerencia::findOrFail($id);
+        return view('intranet.usuarios.gestion_sugerencias', compact('sugerencia'));
+    }
     //=========================================================================================================================
     public function download($id_tipo_pqr, $id_pqr)
     {
