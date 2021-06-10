@@ -22,34 +22,30 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
-            <div class="card card-info">
+            <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">Felicitaciones - Número de radicado:
                         <strong>{{ $felicitacion->radicado }}</strong>
                     </h3>
                 </div>
                 <div class="card-body">
-                        <div class="col-12 rounded border mb-3 p-2">
-                            <div class="row">
-                                <div class="col-12 col-md-6">
-                                    @if ($felicitacion->persona_id != null)
-                                    Persona que interpone la Petición:
-                                    <strong>{{ $felicitacion->persona->nombre1 . ' ' . $felicitacion->persona->nombre2 . ' ' .
-                                        $felicitacion->persona->apellido1 . ' ' . $felicitacion->persona->apellido2 }}</strong>
-                                    @else
-                                    Empresa que interpone la Petición:
-                                    <strong>{{ $felicitacion->empresa->razon_social . ' ' . $felicitacion->empresa->razon_social . ' ' .
-                                        $felicitacion->empresa->razon_social . ' ' . $felicitacion->empresa->razon_social }}</strong>
-                                    @endif
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    Lugar de adquisición del producto o servicio: <strong>{{ $felicitacion->adquisicion
-                                        }}</strong>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    Tipo petición: <strong>{{ $felicitacion->tipo }}</strong>
-                                </div>
-                                @if ($felicitacion->adquisicion == 'Sede física')
+                    <div class="col-12 rounded border mb-3 p-2">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                @if ($felicitacion->persona_id != null)
+                                Persona que interpone la Petición:
+                                <strong>{{ $felicitacion->persona->nombre1 . ' ' . $felicitacion->persona->nombre2 . ' ' .
+                                    $felicitacion->persona->apellido1 . ' ' . $felicitacion->persona->apellido2 }}</strong>
+                                @else
+                                Empresa que interpone la Petición:
+                                <strong>{{ $felicitacion->empresa->razon_social . ' ' . $felicitacion->empresa->razon_social . ' ' .
+                                    $felicitacion->empresa->razon_social . ' ' . $felicitacion->empresa->razon_social }}</strong>
+                                @endif
+                            </div>
+                            <div class="col-12 col-md-6">
+                                Tipo petición: <strong>{{ $felicitacion->tipoPQR->tipo }}</strong>
+                            </div>
+                            @if ($felicitacion->sede_id)
                                 <div class="col-12 col-md-6">
                                     Departatmento : <strong>{{ $felicitacion->sede->municipio->departamento->departamento
                                         }}</strong>
@@ -60,380 +56,87 @@
                                 <div class="col-12 col-md-6">
                                     Sede : <strong>{{ $felicitacion->sede->nombre }}</strong>
                                 </div>
-                                @endif
-                                <div class="col-12 col-md-6">
-                                    Número de factura: <strong>{{ $felicitacion->factura }}</strong>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    Fecha de factura: <strong>{{ $felicitacion->fecha_factura }}</strong>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    Plazo de respuesta prorroga días hábiles: <strong>{{ $felicitacion->prorroga_dias }}</strong>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    Fecha de radicado: <strong>{{ $felicitacion->fecha_radicado }}</strong>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    Fecha estimada de respuesta:
-                                    <strong>{{ date('Y-m-d', strtotime($felicitacion->fecha_generacion . '+ ' .
-                                        ($felicitacion->tiempo_limite) . ' days')) }}</strong>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    Estado: <strong>{{ $felicitacion->estado->estado_funcionario }}</strong>
-                                </div>
+                            @endif
+                            <div class="col-12 col-md-6">
+                                Fecha de radicado: <strong>{{ $felicitacion->fecha_radicado }}</strong>
                             </div>
-                            <hr>
+                            <div class="col-12 col-md-6">
+                                Fecha estimada de respuesta:
+                                <strong>{{ date('Y-m-d', strtotime($felicitacion->fecha_generacion . '+ ' .
+                                    ($felicitacion->tiempo_limite) . ' days')) }}</strong>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                Estado: <strong>{{ $felicitacion->estado->estado_funcionario }}</strong>
+                            </div>
                         </div>
-
-                        <hr style="border-top: solid 4px black">
-                        {{-- <div class="col-12 peticion_general rounded border mb-3 p-2">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <h5>Petición #{{$numerador}}</h5>
-                                                        </div>
-                                                        <div class="col-12">{{ $peticion->motivo->sub_motivo }}</div>
-                                                        @if($peticion->otro)
-                                                            <p>{{$peticion->otro}}</p>
-                                                         @endif
-                                                    </div>
-                                                    <div class="row mt-2">
-                                                        <h6>Justificacion:</h6>
-                                                        <div class="col-12">{{ $peticion->justificacion }}</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-12">
-                                    <h6>Anexos</h6>
-                                </div>
-                                <div class="col-12">
-                                    <table class="table table-light">
-                                        <tbody>
-                                            @foreach ($peticion->anexos as $anexo)
-                                            <tr>
-                                                <td>{{ $anexo->titulo }}</td>
-                                                <td>{{ $anexo->descripcion }}</td>
-                                                <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
-                                                        target="_blank" rel="noopener noreferrer">Descargar</a>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-12">
-                                    <h6>Hechos</h6>
-                                </div>
-                                <div class="col-12">
-                                    <table class="table table-light">
-                                        <tbody>
-                                            @foreach ($peticion->hechos as $hecho)
-                                            <tr>
-                                                <td>{{ $hecho->hecho }}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <input class="respuestaAclaracion" type="hidden" value="{{$peticion->aclaracion}}">
-                                <div class="col-12 col-md-6">
-                                    <h6>Aclaraciones</h6>
-                                </div>
-                                <div class="col-12 col-md-6 d-flex flex-row">
-                                    <div class="form-check mb-3 mr-4">
-                                        <input id="" name="aclaracion_check" type="radio"
-                                            class="form-check-input aclaracion_check aclaracion_check_si" value="1" />
-                                        <label class="form-check-label" for="">SI</label>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input id="" name="aclaracion_check" type="radio"
-                                            class="form-check-input aclaracion_check aclaracion_check_no" value="0" />
-                                        <label class="form-check-label" for="">NO</label>
-                                    </div>
-                                </div>
-                                @if ($peticion->aclaracion == 1)
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-12 table-responsive">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Fecha</th>
-                                                        <th scope="col">Aclaración</th>
-                                                        <th scope="col">Solicitud</th>
-                                                        <th scope="col">Fecha Respuesta</th>
-                                                        <th scope="col">Respuesta</th>
-                                                        <th scope="col">Anexos Respuesta</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($peticion->aclaraciones as $aclaracion)
-                                                    <tr>
-                                                        <th scope="row">{{$aclaracion->fecha}}</th>
-                                                        <td>{{$aclaracion->tipo_solicitud}}</td>
-                                                        <td>{{$aclaracion->aclaracion}}</td>
-                                                        <td>{{$aclaracion->fecha_respuesta}}</td>
-                                                        <td>{{$aclaracion->respuesta}}</td>
-                                                        <td>
-                                                            @foreach($aclaracion->anexos as $anexo)
-                                                                <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer">{{$anexo->titulo}}</a>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                <div class="col-12">
-                                    <div class="col-12  mt-2 pt-2 aclaraciones " id="aclaraciones">
-                                        <div class="col-12 aclaracion rounded border mb-3">
-                                            <div class="form-group col-12 mt-2 titulo-aclaracion">
-                                                <div class="col-12 d-flex justify-content-between mb-2">
-                                                    <label for="">Aclaración</label>
-                                                    <button type="button"
-                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarAclaracion"><i
-                                                            class="fas fa-minus-circle"></i> Eliminar
-                                                        Aclaración</button>
-                                                </div>
-                                                <select name="tipo_aclaracion" id="tipo_aclaracion"
-                                                    class="custom-select rounded-0 tipo_aclaracion">
-                                                    <option value="">--Seleccione--</option>
-                                                    <option value="aclaracion">Aclaración</option>
-                                                    <option value="complementacion">Complementación</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-12">
-                                                <label for="">Solicitud</label>
-                                                <input class="form-control solicitud_aclaracion" type="text"
-                                                    name="solicitud_aclaracion" id="solicitud_aclaracion">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 d-flex justify-content-end flex-row">
-                                        <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAclaracion"><i
-                                                class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
-                                            otro aclaración</button>
-                                    </div>
-                                    <input class="totalPeticionAclaraciones" id="totalPeticionAclaraciones"
-                                        name="totalPeticionAclaraciones" type="hidden" value="0">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <input class="respuestaRespuesta" type="hidden"
-                                    value="{{ isset($peticion->respuesta->id) ? $peticion->respuesta->id : '' }}">
-                                <div class="col-12 col-md-6">
-                                    <h6>Respuesta petición</h6>
-                                </div>
-                                <div class="col-12 form-group">
-                                    <textarea type="text" class="form-control form-control-sm respuesta"
-                                        name="respuesta"
-                                        id="">{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
-                                </div>
-                                <div class="col-12" id="anexosConsulta">
-                                    <div class="col-12 d-flex row anexoconsulta">
-                                        <div class="col-12 titulo-anexo d-flex justify-content-between">
-                                            <h6>Anexo</h6>
-                                            <button type="button"
-                                                class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoConsulta"><i
-                                                    class="fas fa-minus-circle"></i> Eliminar anexo</button>
-                                        </div>
-                                        <div class="col-12 col-md-4 form-group titulo-anexoConsulta">
-                                            <label for="titulo">Título anexo</label>
-                                            <input type="text" class="form-control form-control-sm" name="titulo"
-                                                id="titulo">
-                                        </div>
-                                        <div class="col-12 col-md-4 form-group descripcion-anexoConsulta">
-                                            <label for="descripcion">Descripción</label>
-                                            <input type="text" class="form-control form-control-sm" name="descripcion"
-                                                id="descripcion">
-                                        </div>
-                                        <div class="col-12 col-md-4 form-group doc-anexoConsulta">
-                                            <label for="documentos">Anexos o Pruebas</label>
-                                            <input class="form-control form-control-sm" type="file" name="documentos"
-                                                id="documentos">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 d-flex justify-content-end flex-row mb-3">
-                                    <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
-                                        id="crearAnexo"><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
-                                        otro Anexo</button>
-                                </div>
-                                @if (isset($peticion->respuesta->documentos))
-                                <div class="row respuestaAnexos">
-                                    <div class="col-12">
-                                        <div class="col-12">
-                                            <h6>Anexos respuesta petición</h6>
-                                        </div>
-                                        <table class="table table-light">
-                                            <tbody>
-                                                @foreach ($peticion->respuesta->documentos as $anexo)
-                                                <tr>
-                                                    <td>{{ $anexo->titulo }}</td>
-                                                    <td>{{ $anexo->descripcion }}</td>
-                                                    <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
-                                                            target="_blank" rel="noopener noreferrer">Descargar</a>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                @endif
-                                <input class="totalPeticionAnexos" id="totalPeticionAnexos" name="totalPeticionAnexos"
-                                    type="hidden" value="0">
-                            </div>
-                            <hr>
-                            <div class="row">
-                                @if (sizeOf($peticion->recursos))
+                    </div>
+                    <hr style="border-top: solid 4px black">
+                    <div class="col-12 peticion_general rounded border mb-3 p-2">
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h6>Historial de recursos</h6>
-                                    </div>
-                                    <div class="col-12 table-responsive">
-                                        <table class="table table-light" style="font-size: 0.8em;">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Fecha recurso</th>
-                                                    <th scope="col">Tipo de recurso</th>
-                                                    <th scope="col">Recurso</th>
-                                                    <th scope="col">Estado</th>
-                                                    <th scope="col">Documentos recurso</th>
-                                                    <th scope="col">Fecha respuesta recurso</th>
-                                                    <th scope="col">Documentos respuesta recurso</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($peticion->recursos as $recurso)
-                                                <tr>
-                                                    <td>{{ $recurso->fecha_radicacion }}</td>
-                                                    <td>{{ $recurso->tiporeposicion->tipo }}</td>
-                                                    <td>{{ $recurso->recurso }}</td>
-                                                    <td>Resuelta</td>
-                                                    @if ($recurso->documentos)
-                                                        <td>
-                                                            @foreach ($recurso->documentos as $anexo)
-                                                                <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer">{{$anexo->titulo}}</a>
-                                                            @endforeach
-                                                        </td>
-                                                    @else
-                                                    <td>---</td>
-                                                    @endif
-                                                    @if ($recurso->respuestarecurso)
-                                                        <td>{{ $recurso->respuestarecurso->fecha }}</td>
-                                                    @else
-                                                        <td>---</td>
-                                                    @endif
-                                                    <td>
-                                                        @if ($recurso->respuestarecurso)
-                                                            @foreach ($recurso->respuestarecurso->documentos as $anexoRespuesta)
-                                                            <a href="{{ asset('documentos/respuestas/' . $anexoRespuesta->url) }}" target="_blank" rel="noopener noreferrer">{{$anexoRespuesta->titulo}}</a>
-                                                            @endforeach
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <hr class="mt-5">
-                                    </div>
-                                    @foreach ($peticion->recursos as $recurso)
-                                    @if(!$recurso->respuestaRecurso)
-                                        <div class="row form-respuesta-recursos">
-                                            <input class="id_recurso" type="hidden" value="{{$recurso->id}}">
-                                            <div class="row">
-                                                <div class="col-12 col-md-6">
-                                                    <h6>Recurso de {{$recurso->tiporeposicion->tipo}} </h6>
-                                                </div> 
-                                                <textarea type="text" class="form-control form-control-sm" disabled>{{$recurso->recurso}}</textarea>
-                                                <div class="col-12" id="anexosRespuestaRecursos">
-                                                    <div class="col-12 d-flex row anexoRespuestaRecurso" id="anexoRespuestaRecurso">
-                                                        <div class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
-                                                            <label for="titulo">Título anexo</label>
-                                                            <input type="text" class="form-control form-control-sm">
-                                                        </div>
-                                                        <div class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
-                                                            <label for="descripcion">Descripción</label>
-                                                            <input type="text" class="form-control form-control-sm">
-                                                        </div>
-                                                        <div class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
-                                                            <label for="documentoRecurso">Anexos o Pruebas</label>
-                                                            <input class="form-control form-control-sm" type="file">
-                                                        </div>
-                                                    </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="col-12">
+                                                    <h5>Felicitaciones</h5>
                                                 </div>
                                             </div>
-                                            <div class="card-footer d-flex justify-content-end guardarRespuestaRecurso">
-                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('respuesta_recurso_guardar') }}" data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}" data_token="{{ csrf_token() }}">Guardar recurso</button>
-                                            </div>
                                         </div>
-                                    @endif
-                                    @endforeach
-                                </div>
-                                @endif
-                            </div>
-                            <input class="id_peticion" id="id_peticion" name="id_peticion" type="hidden"
-                                value="{{$peticion->id}}">
-                        </div> --}}
-                        {{-- @endforeach --}}
-                        {{-- <div class="row">
-                            <input class="respuestaRecurso" type="hidden" value="{{ $recursoValidacion }}">
-                            <div class="col-12 col-md-6">
-                                <h6>¿A las respuestas le procede recurso?</h6>
-                            </div>
-                            <div class="col-12 col-md-6 d-flex flex-row">
-                                <div class="form-check mb-3 mr-4">
-                                    <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_si" value="1"/>
-                                    <label id="_label" class="form-check-label" for="">SI</label>
-                                </div>
-                                <div class="form-check mb-3">
-                                    <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_no" value="0"/>
-                                    <label id="_label" class="form-check-label" for="">NO</label>
-                                </div>
-                            </div>
-                            <div class="col-12 row px-3 recurso-form">
-                                @if ($plazoRecurso == 0)
-                                    <div class="col-12 col-md-2 form-group">
-                                        <label for="plazo">Plazo recurso días hábiles:</label>
-                                        <input type="number" class="form-control form-control-sm plazo_recurso"
-                                            name="plazo_recurso" id="plazo_recurso" min="1"
-                                            max="{{$pqr->tipoPqr->tiempos}}">
                                     </div>
-                                @else
-                                    <div class="col-12 col-md-2 form-group">
-                                        <label for="plazo">Plazo recurso días hábiles: {{ $plazoRecurso}}</label>
-                                        <input class="plazoRecurso" type="hidden" value="{{ $plazoRecurso }}">
-                                    </div>
-                                @endif
+                                </div>
                             </div>
-                        </div> --}}
-                        
-                        <div class="card-footer d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary px-4">Guardar</button>
                         </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Hechos</h6>
+                            </div>
+                            <div class="col-12">
+                                <table class="table table-light">
+                                    <tbody>
+                                        @foreach ($felicitacion->hechos as $hecho)
+                                        <tr>
+                                            <td>{{ $hecho->hecho }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-12 col-md-12">
+                                <h6>Nombre de funcionario</h6>
+                            </div>
+                            <div class="col-12">
+                                <table class="table table-light">
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ $felicitacion->nombre_funcionario }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <div class="col-12 col-md-12">
+                                <h6>Escriba sus felicitaciones</h6>
+                            </div>
+                            <div class="col-12">
+                                <table class="table table-light">
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ $felicitacion->felicitacion }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary px-4">Salir</button>
+                    </div>
                 </div>
             </div>
         </div>
