@@ -204,13 +204,13 @@
             </tr>
             <tr>
                 <td>
-                    <p>{{ $aclaracion->peticion->pqr->empleado->nombre1 . ' ' . $aclaracion->peticion->pqr->empleado->apellido1 }}
+                    <p>{{ $aclaracion->peticion->empleado->nombre1 . ' ' . $aclaracion->peticion->empleado->apellido1 }}
                     </p>
-                    <p>{{ $aclaracion->peticion->pqr->empleado->cargo->cargo }}</p>
+                    <p>{{ $aclaracion->peticion->empleado->cargo->cargo }}</p>
                     <p>Empresa 1</p>
                     <br><br>
                     <p><strong style="font-size: 0.8em;">Proyecto
-                            {{ $aclaracion->peticion->pqr->empleado->nombre1 . ' ' . $aclaracion->peticion->pqr->empleado->apellido1 }}</strong>
+                            {{ $aclaracion->peticion->empleado->nombre1 . ' ' . $aclaracion->peticion->empleado->apellido1 }}</strong>
                     </p>
                 </td>
             </tr>
