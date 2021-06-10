@@ -93,19 +93,21 @@
         <br><br>
         <table>
             <tr>
-                <td>
+                <td colspan="2">
                     <div style="margin-top: 50px;">
                         <p>Apreciado/Apreciada: {{ $nombre }}</p>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td>
                     <p>Tipo ID: {{ $tipo_doc }}</p>
                 </td>
-                <td colspan="2">
+                <td>
                     <p>No. ID: {{ $identificacion }}</p>
                 </td>
+            </tr>
+            <tr>
                 <td colspan="2">
                     <p>E-mail:{{ $email }}</p>
                 </td>
