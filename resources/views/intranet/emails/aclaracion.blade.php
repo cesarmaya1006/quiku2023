@@ -158,8 +158,11 @@
         <table>
             <tr>
                 <td>
-                    <p>Para aclarar o complementar su solicitud, por favor cargue su respuesta en la opción
-                        {{ route('index') }}. Una vez lo haya hecho, se reactivará la gestión y el plazo de
+                    <p>Para aclarar o complementar su solicitud, por favor cargue su respuesta ingresando a
+                        nuestro sistema <a href="{{ route('index') }}" target="_blank"
+                            rel="noopener noreferrer">Quiku</a>
+                        opción listado PQR y seleccionando la PQR respectiva. Una vez lo haya hecho, se reactivará la
+                        gestión y el plazo de
                         respuesta.</p>
                 </td>
             </tr>
