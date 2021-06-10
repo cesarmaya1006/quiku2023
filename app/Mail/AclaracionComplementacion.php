@@ -29,6 +29,6 @@ class AclaracionComplementacion extends Mailable
      */
     public function build()
     {
-        return $this->from('contacto@quiku.com')->view('intranet.emails.aclaracion_mail')->with(['id_aclaracion' => $this->id_aclaracion,]);
+        return $this->from('contacto@quiku.com')->view('intranet.emails.aclaracion_email')->with(['id_aclaracion' => $this->id_aclaracion,]);
     }
 }
