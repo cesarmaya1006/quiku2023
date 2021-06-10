@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-end flex-row">
-                                        <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearHecho"
+                                        <button class="btn btn-secondary btn-xs btn-sombra pl-2 pr-2 crearHecho"
                                             id="crearHecho"><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
                                             otro hecho</button>
                                     </div>
