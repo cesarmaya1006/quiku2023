@@ -64,6 +64,9 @@ class PQR_P_Controller extends Controller
                     $nuevaAclaracion['tipo_solicitud'] = $request["tipo_aclaracion$j"];
                     $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
                     $aclaracionNew = Aclaracion::create($nuevaAclaracion);
+                    $estado = Estado::findOrFail(2);
+                    $pqrEstado['estadospqr_id'] = $estado['id'];
+                    PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
                     $peticion_act = Peticion::findOrfail($request["id_peticion$i"]);
                     if ($peticion_act->pqr->persona_id != null) {
                         $email = $peticion_act->pqr->persona->email;
@@ -81,7 +84,9 @@ class PQR_P_Controller extends Controller
                 $respuesta['fecha'] = date("Y-m-d");
                 $respuesta['respuesta'] = $request["respuesta$i"];
                 $respuestaPQR = Respuesta::create($respuesta);
-
+                $estado = Estado::findOrFail(2);
+                $pqrEstado['estadospqr_id'] = $estado['id'];
+                PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
                         $ruta = Config::get('constantes.folder_doc_respuestas');
