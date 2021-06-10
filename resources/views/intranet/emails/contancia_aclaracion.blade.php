@@ -88,7 +88,7 @@
                         <p>Apreciado/Apreciada: {{ $nombre }}</p>
                     </div>
                 </td>
-                <td style="align-items: right">{{date('Y-m-d')}}</td>
+                <td style="align-items: right">{{ date('Y-m-d') }}</td>
             </tr>
         </table>
         <br>
@@ -96,7 +96,7 @@
         <table>
             <tr>
                 <td>
-                    <p>Fecha de radicación: {{$aclaracion->peticion->pqr->fecha_radicado}}</p>
+                    <p>Fecha de radicación: {{ $aclaracion->peticion->pqr->fecha_radicado }}</p>
                     <p>No. de identificación de su solicitud: {{ $num_radicado }}</p>
                 </td>
             </tr>
@@ -143,11 +143,11 @@
                 <td>Respuesta</td>
             </tr>
             <tr>
-                <td>{{$aclaracion->fecha}}</td>
-                <td>{{$aclaracion->aclaracion}}</td>
-                <td>{{$aclaracion->tipo_solicitud}}</td>
-                <td>{{$aclaracion->fecha_respuesta}}</td>
-                <td>{{$aclaracion->respuesta}}</td>
+                <td>{{ $aclaracion->fecha }}</td>
+                <td>{{ $aclaracion->aclaracion }}</td>
+                <td>{{ $aclaracion->tipo_solicitud }}</td>
+                <td>{{ $aclaracion->fecha_respuesta }}</td>
+                <td>{{ $aclaracion->respuesta }}</td>
             </tr>
         </table>
         <br>
@@ -161,27 +161,28 @@
                 <td>
                     <ul>
                         @foreach ($aclaracion->anexos as $anexo)
-                        <li>
-                            <a href="{{ asset('documentos/pqr/' . $anexo->url) }}" target="_blank"
-                                rel="noopener noreferrer">{{ $anexo->titulo }}</a>
-                        </li>
+                            <li>
+                                <a href="{{ asset('documentos/pqr/' . $anexo->url) }}" target="_blank"
+                                    rel="noopener noreferrer">{{ $anexo->titulo }}</a>
+                            </li>
                         @endforeach
                     </ul>
                 </td>
             </tr>
-            @if ($aclaracion->anexos->count()>0)
+            @if ($aclaracion->anexos->count() > 0)
+                <tr>
+                    <td>
+                        <p> <strong>Nota : La relación de anexos anterior no implica que se ha verificado su
+                                contenido.</strong></p>
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td>
-                    <p> <strong>Nota : La relación de anexos anterior no implica que se ha verificado su
-                            contenido.</strong></p>
-                </td>
-            </tr>
-        @endif
-            <tr>
-                <td>
-                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud a través de
-                        la
-                        opción {{ route('index') }}</p>
+                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud ingresando a
+                        nuestro sistema <a href="{{ route('index') }}" target="_blank"
+                            rel="noopener noreferrer">Quiku</a>
+                        opción listado PQR</p>
                 </td>
             </tr>
         </table>

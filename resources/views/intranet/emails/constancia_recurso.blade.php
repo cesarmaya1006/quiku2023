@@ -136,7 +136,7 @@
                     <p>No. ID: {{ $identificacion }}</p>
                 </td>
                 <td colspan="2">
-                    <p>E-mail:{{ $correo }}</p>
+                    <p>E-mail:{{ $email }}</p>
                 </td>
             </tr>
         </table>
@@ -146,7 +146,16 @@
         <table>
             <tr>
                 <td>
-                    <p>{{ $contenido }}</p>
+                    <table>
+                        <tr>
+                            <td>Tipo de Recurso</td>
+                            <td>{{ $recurso->tiporeposicion->tipo }}</td>
+                        </tr>
+                        <tr>
+                            <td>Recurso</td>
+                            <td>{{ $recurso->recurso }}</td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
@@ -160,21 +169,29 @@
             <tr>
                 <td>
                     <ul>
-                        {{ $anexos }}
+                        @foreach ($recurso->documentos as $documento)
+                            <li>
+                                <a href="{{ asset('documentos/pqr/' . $documento->url) }}" target="_blank"
+                                    rel="noopener noreferrer">{{ $documento->titulo }}</a>
+                            </li>
+                        @endforeach
                     </ul>
                 </td>
             </tr>
+            @if ($recurso->documentos->count() > 0)
+                <tr>
+                    <td>
+                        <p> <strong>Nota : La relación de anexos anterior no implica que se ha verificado su
+                                contenido.</strong></p>
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td>
-                    <p> <strong>Nota : La relación de anexos anterior no implica que se ha verificado su
-                            contenido.</strong></p>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud a través de
-                        la
-                        opción _____________________</p>
+                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud ingresando a
+                        nuestro sistema <a href="{{ route('index') }}" target="_blank"
+                            rel="noopener noreferrer">Quiku</a>
+                        opción listado PQR</p>
                 </td>
             </tr>
         </table>

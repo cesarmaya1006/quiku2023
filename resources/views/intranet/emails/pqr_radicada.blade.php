@@ -101,13 +101,13 @@
             <tr>
                 <td style="width: 75%;margin-top: 135px;">
                     <div style="margin-top: 50px;">
-                        <p>Hemos recibido su solicitud y la atenderemos en el menor tiempo posible. A continuación podrá
-                            verificar los datos e información que han quedado resgistrados en nuestro sistema:</p>
+                        <p>Hemos recibido su solicitud y la atenderemos en el menor tiempo posible.</p>
+                        <p>A continuación podrá verificar los datos e información que han quedado resgistrados en
+                            nuestro sistema:</p>
                     </div>
                 </td>
             </tr>
         </table>
-        <br>
         <br>
         <table>
             <tr>
@@ -125,8 +125,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="3">
-                    <p>Nombres:{{ $nombre }}</p>
+                <td colspan="2">
+                    <p>Nombres: {{ $nombre }}</p>
                 </td>
             </tr>
             <tr>
@@ -136,8 +136,10 @@
                 <td colspan="2">
                     <p>No. ID: {{ $identificacion }}</p>
                 </td>
-                <td colspan="2">
-                    <p>E-mail:{{ $email }}</p>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <p>E-mail: {{ $email }}</p>
                 </td>
             </tr>
         </table>
@@ -169,10 +171,44 @@
                             @endforeach
                         @break
                         @case(2)
-
+                            <h4>Queja</h4>
+                            <p>Lugar de adquisición del producto o servicio: {{ $pqr_radicada->adquisicion }}</p>
+                            <p>¿Su PQR es sobre un producto o servicio?: {{ $pqr_radicada->tipo }}</p>
+                            @if ($pqr_radicada->tipo == 'Servicio')
+                                <p>Tipo de Servicio: {{ $pqr_radicada->servicio->servicio }}</p>
+                            @else
+                                <p>Referencia: {{ $pqr_radicada->referencia->referencia }}</p>
+                            @endif
+                            <p>No. Factura: {{ $pqr_radicada->factura }}</p>
+                            <p>Fecha de factura: {{ $pqr_radicada->fecha_factura }}</p>
+                            <p>Tipo de servicio: {{ $pqr_radicada->servicio_id }}</p>
+                            @foreach ($pqr_radicada->peticiones as $peticion)
+                                <h5>Motivo: {{ $peticion->motivo->sub_motivo }}</h5>
+                                @foreach ($peticion->hechos as $hecho)
+                                    <p>Hecho: {{ $hecho->hecho }}</p>
+                                @endforeach
+                                <p>Justificación: {{ $peticion->justificacion }}</p>
+                            @endforeach
                         @break
                         @default
-
+                            <h4>Reclamo</h4>
+                            <p>Lugar de adquisición del producto o servicio: {{ $pqr_radicada->adquisicion }}</p>
+                            <p>¿Su PQR es sobre un producto o servicio?: {{ $pqr_radicada->tipo }}</p>
+                            @if ($pqr_radicada->tipo == 'Servicio')
+                                <p>Tipo de Servicio: {{ $pqr_radicada->servicio->servicio }}</p>
+                            @else
+                                <p>Referencia: {{ $pqr_radicada->referencia->referencia }}</p>
+                            @endif
+                            <p>No. Factura: {{ $pqr_radicada->factura }}</p>
+                            <p>Fecha de factura: {{ $pqr_radicada->fecha_factura }}</p>
+                            <p>Tipo de servicio: {{ $pqr_radicada->servicio_id }}</p>
+                            @foreach ($pqr_radicada->peticiones as $peticion)
+                                <h5>Motivo: {{ $peticion->motivo->sub_motivo }}</h5>
+                                @foreach ($peticion->hechos as $hecho)
+                                    <p>Hecho: {{ $hecho->hecho }}</p>
+                                @endforeach
+                                <p>Justificación: {{ $peticion->justificacion }}</p>
+                            @endforeach
                     @endswitch
                 </td>
             </tr>
@@ -212,9 +248,10 @@
             @endif
             <tr>
                 <td>
-                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud a través de
-                        la
-                        opción {{ route('index') }}</p>
+                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud ingresando a
+                        nuestro sistema <a href="{{ route('index') }}" target="_blank"
+                            rel="noopener noreferrer">Quiku</a>
+                        opción listado PQR</p>
                 </td>
             </tr>
         </table>

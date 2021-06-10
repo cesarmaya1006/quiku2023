@@ -93,21 +93,23 @@
         <br><br>
         <table>
             <tr>
-                <td>
+                <td colspan="2">
                     <div style="margin-top: 50px;">
                         <p>Apreciado/Apreciada: {{ $nombre }}</p>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td>
                     <p>Tipo ID: {{ $tipo_doc }}</p>
                 </td>
-                <td colspan="2">
+                <td>
                     <p>No. ID: {{ $identificacion }}</p>
                 </td>
+            </tr>
+            <tr>
                 <td colspan="2">
-                    <p>E-mail:{{ $email }}</p>
+                    <p>E-mail: {{ $email }}</p>
                 </td>
             </tr>
         </table>
@@ -166,9 +168,10 @@
             </tr>
             <tr>
                 <td>
-                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud a través de
-                        la
-                        opción <a href="{{ route('index') }}" target="_blank" rel="noopener noreferrer">Quiku</a></p>
+                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud ingresando a
+                        nuestro sistema <a href="{{ route('index') }}" target="_blank"
+                            rel="noopener noreferrer">Quiku</a>
+                        opción listado PQR</p>
                 </td>
             </tr>
         </table>
