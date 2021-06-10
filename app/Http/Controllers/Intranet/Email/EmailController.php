@@ -518,8 +518,8 @@ class EmailController extends Controller
             $identificacion = $aclaracion->peticion->pqr->empresa->identificacion;
             $tipo_doc = $aclaracion->peticion->pqr->empresa->tipos_docu->tipo_id;
         }
-        $pdf = PDF::loadView('intranet.emails.aclaracion', compact('aclaracion', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha',));
-        return $pdf->download('Aclaracion Radicada.pdf');
+        $pdf = PDF::loadView('intranet.emails.contancia_aclaracion', compact('aclaracion', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha',));
+        return $pdf->download('Constancia de Aclaracion.pdf');
     }
     public function prorrogaPdf($id)
     {
