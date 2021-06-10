@@ -122,7 +122,7 @@
                     <p>No. ID: {{ $identificacion }}</p>
                 </td>
                 <td colspan="2">
-                    <p>E-mail:{{ $correo }}</p>
+                    <p>E-mail:{{ $email }}</p>
                 </td>
             </tr>
         </table>
