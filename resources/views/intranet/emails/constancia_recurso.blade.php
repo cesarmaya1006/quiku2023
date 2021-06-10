@@ -188,9 +188,10 @@
             @endif
             <tr>
                 <td>
-                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud a través de
-                        la
-                        opción {{ route('index') }}</p>
+                    <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud ingresando a
+                        nuestro sistema <a href="{{ route('index') }}" target="_blank"
+                            rel="noopener noreferrer">Quiku</a>
+                        opción listado PQR</p>
                 </td>
             </tr>
         </table>
