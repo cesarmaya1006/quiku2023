@@ -135,7 +135,7 @@
                         <hr>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary px-4">Salir</button>
+                        <a href="{{route('funcionario-index')}}" class="btn btn-primary px-5 ">Salir</i></a>
                     </div>
                 </div>
             </div>
