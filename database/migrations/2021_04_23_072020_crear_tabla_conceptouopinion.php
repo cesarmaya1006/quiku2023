@@ -25,6 +25,8 @@ class CrearTablaConceptouopinion extends Migration
             $table->boolean('prorroga')->default(0)->nullable();
             $table->unsignedBigInteger('sede_id')->nullable();
             $table->foreign('sede_id', 'fk_sede_conceptouopinion')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('prioridad_id')->default(2)->nullable();
+            $table->foreign('prioridad_id', 'fk_prioridades_conceptouopinion')->references('id')->on('prioridades')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha_generacion');
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();
