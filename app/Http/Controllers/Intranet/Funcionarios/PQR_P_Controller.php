@@ -6,7 +6,6 @@ use App\Models\PQR\PQR;
 use App\Models\PQR\Estado;
 use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
-use App\Models\Admin\Usuario;
 use App\Models\PQR\Respuesta;
 use App\Models\PQR\Aclaracion;
 use App\Models\PQR\DocRespuesta;
@@ -17,6 +16,7 @@ use App\Http\Controllers\Fechas\FechasController;
 use App\Mail\AclaracionComplementacion;
 use App\Mail\ConstanciaAclaracion;
 use App\Mail\Prorroga;
+use App\Mail\Recurso_mail;
 use App\Models\PQR\DocRecurso;
 use App\Models\PQR\DocRespRecurso;
 use App\Models\PQR\Recurso;
@@ -273,6 +273,16 @@ class PQR_P_Controller extends Controller
             $nuevoRecurso['fecha_radicacion'] = date("Y-m-d");
             $nuevoRecurso['recurso'] = $request['recurso'];
             $respuestaRecurso = Recurso::create($nuevoRecurso);
+            //---------------------------------------------------------------------------
+            if ($respuestaRecurso->peticion->pqr->persona_id != null) {
+                $email = $respuestaRecurso->peticion->pqr->persona->email;
+            } else {
+                $email = $respuestaRecurso->peticion->pqr->empresa->email;
+            }
+            //$email = 'cesarmaya99@hotmail.com';
+            $id_recurso = $respuestaRecurso->id;
+            Mail::to($email)->send(new Recurso_mail($id_recurso));
+            //---------------------------------------------------------------------------
             $estado = Estado::findOrFail(8);
             $pqrEstado['estadospqr_id'] = $estado['id'];
             PQR::findOrFail($request['id'])->update($pqrEstado);

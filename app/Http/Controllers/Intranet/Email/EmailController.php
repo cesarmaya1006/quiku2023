@@ -9,6 +9,7 @@ use App\Models\Empleados\Empleado;
 use App\Models\Felicitaciones\Felicitacion;
 use App\Models\PQR\Aclaracion;
 use App\Models\PQR\PQR;
+use App\Models\PQR\Recurso;
 use App\Models\SolicitudDatos\SolicitudDatos;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\Sugerencias\Sugerencia;
@@ -544,5 +545,27 @@ class EmailController extends Controller
         $empleado = Empleado::findOrFail('5');
         $pdf = PDF::loadView('intranet.emails.prorroga', compact('pqr', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'cant_dias', 'empleado', 'firma'));
         return $pdf->download('Prorroga.pdf');
+    }
+    public function recursoPdf($id)
+    {
+        $recurso = Recurso::findOrFail($id);
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $fecha = date('Y-m-d H:i:s');
+        $num_radicado = $recurso->peticion->pqr->radicado;
+        if ($recurso->peticion->pqr->persona_id != null) {
+            $nombre = $recurso->peticion->pqr->persona->nombre1 . ' ' . $recurso->peticion->pqr->persona->nombre2 . ' ' . $recurso->peticion->pqr->persona->apellido1 . ' ' . $recurso->peticion->pqr->persona->apellido2;
+            $email = $recurso->peticion->pqr->persona->email;
+            $identificacion = $recurso->peticion->pqr->persona->identificacion;
+            $tipo_doc = $recurso->peticion->pqr->persona->tipos_docu->tipo_id;
+        } else {
+            $nombre = $recurso->peticion->pqr->empresa->razon_social;
+            $empresa = $recurso->peticion->pqr->empresa->razon_social;
+            $representante = $recurso->peticion->pqr->empresa->representante->nombre1 . ' ' . $recurso->peticion->pqr->empresa->representante->apellido1;
+            $email = $recurso->peticion->pqr->empresa->email;
+            $identificacion = $recurso->peticion->pqr->empresa->identificacion;
+            $tipo_doc = $recurso->peticion->pqr->empresa->tipos_docu->tipo_id;
+        }
+        $pdf = PDF::loadView('intranet.emails.constancia_recurso', compact('recurso', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha'));
+        return $pdf->download('Constancia Recurso.pdf');
     }
 }
