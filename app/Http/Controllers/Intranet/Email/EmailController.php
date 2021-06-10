@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Intranet\Email;
 use App\Http\Controllers\Controller;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\Denuncias\Denuncia;
+use App\Models\Empleados\Empleado;
 use App\Models\Felicitaciones\Felicitacion;
 use App\Models\PQR\Aclaracion;
 use App\Models\PQR\PQR;
@@ -494,7 +495,7 @@ class EmailController extends Controller
             $identificacion = $aclaracion->peticion->pqr->empresa->identificacion;
             $tipo_doc = $aclaracion->peticion->pqr->empresa->tipos_docu->tipo_id;
         }
-        $pdf = PDF::loadView('intranet.emails.aclaracion', compact('aclaracion', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha','firma'));
+        $pdf = PDF::loadView('intranet.emails.aclaracion', compact('aclaracion', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'firma'));
         return $pdf->download('Aclaracion Radicada.pdf');
     }
     public function constancia_aclaracionPdf($id)
@@ -518,5 +519,30 @@ class EmailController extends Controller
         }
         $pdf = PDF::loadView('intranet.emails.aclaracion', compact('aclaracion', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha',));
         return $pdf->download('Aclaracion Radicada.pdf');
+    }
+    public function prorrogaPdf($id)
+    {
+        $pqr = PQR::findOrFail($id);
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $firma = public_path('imagenes\sistema\firma.png');
+        $fecha = date('Y-m-d H:i:s');
+        $num_radicado = $pqr->radicado;
+        $cant_dias = $pqr->prorroga_dias;
+        if ($pqr->persona_id != null) {
+            $nombre = $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2;
+            $email = $pqr->persona->email;
+            $identificacion = $pqr->persona->identificacion;
+            $tipo_doc = $pqr->persona->tipos_docu->tipo_id;
+        } else {
+            $nombre = $pqr->empresa->razon_social;
+            $empresa = $pqr->empresa->razon_social;
+            $representante = $pqr->empresa->representante->nombre1 . ' ' . $pqr->empresa->representante->apellido1;
+            $email = $pqr->empresa->email;
+            $identificacion = $pqr->empresa->identificacion;
+            $tipo_doc = $pqr->empresa->tipos_docu->tipo_id;
+        }
+        $empleado = Empleado::findOrFail('5');
+        $pdf = PDF::loadView('intranet.emails.prorroga', compact('pqr', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'cant_dias', 'empleado', 'firma'));
+        return $pdf->download('Prorroga.pdf');
     }
 }
