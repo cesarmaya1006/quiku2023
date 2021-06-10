@@ -10,7 +10,6 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-Sistema de informaci&oacute;n
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')

@@ -11,7 +11,6 @@
 <!-- ************************************************************* -->
 @section('tituloHoja')
     {{-- Sistema de informaci&oacute;n PQR LEGAL PROCEEDINGS --}}
-    Sistema de informaci&oacute;n
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
