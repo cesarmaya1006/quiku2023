@@ -21,6 +21,25 @@
         $dias = floor($dias);
         return $dias;
     }
+
+    function dias_estado($fecha_inicial,$fecha_final){
+        $totaldias = (strtotime($fecha_inicial)-strtotime($fecha_final))/86400;
+        $totaldias = abs($totaldias); 
+        $totaldias = floor($totaldias);
+        $contdias = (strtotime(date('Y-m-d') )-strtotime($fecha_final))/86400;
+        $contdias = abs($contdias); 
+        $contdias = floor($contdias - 1 );
+        $porcentaje = floor((($contdias) / $totaldias) * 100 );
+        $respuesta = 0 ;
+        if($porcentaje >= 30){
+            $respuesta = 1;
+        }elseif ($porcentaje > 0) {
+            $respuesta = 2;
+        }else {
+            $respuesta = 3;
+        }
+        return $respuesta;
+    }
 @endphp
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -104,15 +123,30 @@
                                 @endphp
                             @endforeach
                             <tr>
-                                <td>{{ $pqr->radicado }}</td>
-                                <td>{{ $pqr->fecha_radicado }}</td>
-                                <td>{{ $pqr->tipoPqr->tipo }}</td>
-                                <td>{{ $pqr->estado->estado_funcionario }}</td>
-                                <td>{{ $pqr->estado->estado_funcionario }}</td>
-                                <td>{{ $pqr->tipoPqr->tiempos + $pqr->prorroga_dias + $diasRecurso }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . ($pqr->tiempo_limite) . ' days'));
                                 @endphp
+                                <td>{{ $pqr->radicado }}</td>
+                                <td>{{ $pqr->created_at }}</td>
+                                <td>{{ $pqr->tipoPqr->tipo }}</td>
+                                <td>{{ $pqr->estado->estado_funcionario }}</td>
+                                @php
+                                    $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                @endphp
+                                   @if ($diasEstado == 1)
+                                    <td class="bg-green" >
+                                        En terminos
+                                    </td>
+                                   @elseif ($diasEstado == 2)
+                                    <td class="bg-yellow">
+                                        Proxima a vencer
+                                    </td>
+                                   @elseif($diasEstado == 3)
+                                    <td class="bg-red">
+                                        Vencida
+                                    </td>
+                                   @endif
+                                <td>{{ $pqr->tipoPqr->tiempos + $pqr->prorroga_dias + $diasRecurso }}</td>
                                 <td>{{ dias_restantes(date('Y-m-d'), $fechaFinal) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td>
@@ -134,15 +168,30 @@
                         @endforeach
                         @foreach ($conceptos as $concepto)
                             <tr>
-                                <td>{{ $concepto->radicado }}</td>
-                                <td>{{ $concepto->fecha_radicado }}</td>
-                                <td>{{ $concepto->tipoPqr->tipo }}</td>
-                                <td>{{ $concepto->estado->estado_funcionario }}</td>
-                                <td>{{ $concepto->estado->estado_funcionario }}</td>
-                                <td>{{ $concepto->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . ($concepto->tiempo_limite) . ' days'));
                                 @endphp
+                                <td>{{ $concepto->radicado }}</td>
+                                <td>{{ $concepto->created_at }}</td>
+                                <td>{{ $concepto->tipoPqr->tipo }}</td>
+                                <td>{{ $concepto->estado->estado_funcionario }}</td>
+                                @php
+                                    $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                @endphp
+                                   @if ($diasEstado == 1)
+                                    <td class="bg-green" >
+                                        En terminos
+                                    </td>
+                                   @elseif ($diasEstado == 2)
+                                    <td class="bg-yellow">
+                                        Proxima a vencer
+                                    </td>
+                                   @elseif($diasEstado == 3)
+                                    <td class="bg-red">
+                                        Vencida
+                                    </td>
+                                   @endif
+                                <td>{{ $concepto->tipoPqr->tiempos }}</td>
                                 <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td><a href="{{ route('funcionario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
@@ -152,15 +201,30 @@
                         @endforeach
                         @foreach ($solicitudes_datos as $solicitud_datos)
                             <tr>
-                                <td>{{ $solicitud_datos->radicado }}</td>
-                                <td>{{ $solicitud_datos->fecha_radicado }}</td>
-                                <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
-                                <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
-                                <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
-                                <td>{{ $solicitud_datos->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($solicitud_datos->fecha_generacion . '+ ' . ($solicitud_datos->tiempo_limite) . ' days'));
                                 @endphp
+                                <td>{{ $solicitud_datos->radicado }}</td>
+                                <td>{{ $solicitud_datos->created_at }}</td>
+                                <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
+                                <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
+                                @php
+                                    $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                @endphp
+                                   @if ($diasEstado == 1)
+                                    <td class="bg-green" >
+                                        En terminos
+                                    </td>
+                                   @elseif ($diasEstado == 2)
+                                    <td class="bg-yellow">
+                                        Proxima a vencer
+                                    </td>
+                                   @elseif($diasEstado == 3)
+                                    <td class="bg-red">
+                                        Vencida
+                                    </td>
+                                   @endif
+                                <td>{{ $solicitud_datos->tipoPqr->tiempos }}</td>
                                 <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
@@ -170,15 +234,30 @@
                         @endforeach
                         @foreach ($denuncias as $denuncia)
                             <tr>
-                                <td>{{ $denuncia->radicado }}</td>
-                                <td>{{ $denuncia->fecha_radicado }}</td>
-                                <td>{{ $denuncia->tipoPqr->tipo }}</td>
-                                <td>{{ $denuncia->estado->estado_funcionario }}</td>
-                                <td>{{ $denuncia->estado->estado_funcionario }}</td>
-                                <td>{{ $denuncia->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($denuncia->fecha_generacion . '+ ' . ($denuncia->tiempo_limite) . ' days'));
                                 @endphp
+                                <td>{{ $denuncia->radicado }}</td>
+                                <td>{{ $denuncia->created_at }}</td>
+                                <td>{{ $denuncia->tipoPqr->tipo }}</td>
+                                <td>{{ $denuncia->estado->estado_funcionario }}</td>
+                                @php
+                                    $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                @endphp
+                                   @if ($diasEstado == 1)
+                                    <td class="bg-green" >
+                                        En terminos
+                                    </td>
+                                   @elseif ($diasEstado == 2)
+                                    <td class="bg-yellow">
+                                        Proxima a vencer
+                                    </td>
+                                   @elseif($diasEstado == 3)
+                                    <td class="bg-red">
+                                        Vencida
+                                    </td>
+                                   @endif
+                                <td>{{ $denuncia->tipoPqr->tiempos }}</td>
                                 <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td><a href="{{ route('funcionario-gestionarDenuncia', ['id' => $denuncia->id]) }}"
@@ -188,15 +267,15 @@
                         @endforeach
                         @foreach ($felicitaciones as $felicitacion)
                             <tr>
-                                <td>{{ $felicitacion->radicado }}</td>
-                                <td>{{ $felicitacion->fecha_radicado }}</td>
-                                <td>{{ $felicitacion->tipoPqr->tipo }}</td>
-                                <td>{{ $felicitacion->estado->estado_funcionario }}</td>
-                                <td>{{ $felicitacion->estado->estado_funcionario }}</td>
-                                <td>{{ $felicitacion->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($felicitacion->fecha_generacion . '+ ' . ($felicitacion->tiempo_limite) . ' days'));
                                 @endphp
+                                <td>{{ $felicitacion->radicado }}</td>
+                                <td>{{ $felicitacion->created_at }}</td>
+                                <td>{{ $felicitacion->tipoPqr->tipo }}</td>
+                                <td>{{ $felicitacion->estado->estado_funcionario }}</td>
+                                <td class="bg-green">Cerrado</td>
+                                <td>{{ $felicitacion->tipoPqr->tiempos }}</td>
                                 <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td><a href="{{ route('funcionario-gestionarFelicitacion', ['id' => $felicitacion->id]) }}"
@@ -206,15 +285,30 @@
                         @endforeach
                         @foreach ($solicitudes_doc as $solicitud_doc)
                             <tr>
-                                <td>{{ $solicitud_doc->radicado }}</td>
-                                <td>{{ $solicitud_doc->fecha_radicado }}</td>
-                                <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
-                                <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
-                                <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
-                                <td>{{ $solicitud_doc->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($solicitud_doc->fecha_generacion . '+ ' . ($solicitud_doc->tiempo_limite) . ' days'));
                                 @endphp
+                                <td>{{ $solicitud_doc->radicado }}</td>
+                                <td>{{ $solicitud_doc->created_at }}</td>
+                                <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
+                                <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
+                                @php
+                                    $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                @endphp
+                                   @if ($diasEstado == 1)
+                                    <td class="bg-green" >
+                                        En terminos
+                                    </td>
+                                   @elseif ($diasEstado == 2)
+                                    <td class="bg-yellow">
+                                        Proxima a vencer
+                                    </td>
+                                   @elseif($diasEstado == 3)
+                                    <td class="bg-red">
+                                        Vencida
+                                    </td>
+                                   @endif
+                                <td>{{ $solicitud_doc->tipoPqr->tiempos }}</td>
                                 <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSolicitudDocumentos', ['id' => $solicitud_doc->id]) }}"
@@ -224,15 +318,15 @@
                         @endforeach
                         @foreach ($sugerencias as $sugerencia)
                             <tr>
-                                <td>{{ $sugerencia->radicado }}</td>
-                                <td>{{ $sugerencia->fecha_radicado }}</td>
-                                <td>{{ $sugerencia->tipoPqr->tipo }}</td>
-                                <td>{{ $sugerencia->estado->estado_funcionario }}</td>
-                                <td>{{ $sugerencia->estado->estado_funcionario }}</td>
-                                <td>{{ $sugerencia->tipoPqr->tiempos }}</td>
                                 @php
                                 $fechaFinal = date('Y-m-d', strtotime($sugerencia->fecha_generacion . '+ ' . ($sugerencia->tiempo_limite) . ' days'));
                                 @endphp
+                                <td>{{ $sugerencia->radicado }}</td>
+                                <td>{{ $sugerencia->created_at }}</td>
+                                <td>{{ $sugerencia->tipoPqr->tipo }}</td>
+                                <td>{{ $sugerencia->estado->estado_funcionario }}</td>
+                                <td class="bg-green">Cerrado</td>
+                                <td>{{ $sugerencia->tipoPqr->tiempos }}</td>
                                 <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td><a href="{{ route('funcionario-gestionarSugerencia', ['id' => $sugerencia->id]) }}"
