@@ -64,7 +64,7 @@ class PQR_P_Controller extends Controller
                     $nuevaAclaracion['tipo_solicitud'] = $request["tipo_aclaracion$j"];
                     $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
                     $aclaracionNew = Aclaracion::create($nuevaAclaracion);
-                    if ($aclaracionNew->peticion->persona_id != null) {
+                    if ($aclaracionNew->peticion->pqr->persona_id != null) {
                         $email = $aclaracionNew->peticion->pqr->persona->email;
                     } else {
                         $email = $aclaracionNew->peticion->pqr->empresa->email;
