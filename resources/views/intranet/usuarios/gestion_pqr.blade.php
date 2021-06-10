@@ -313,7 +313,7 @@
                                                                     <tr>
                                                                         <td>{{ $anexo->titulo }}</td>
                                                                         <td>{{ $anexo->descripcion }}</td>
-                                                                        <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
+                                                                        <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
                                                                                 target="_blank"
                                                                                 rel="noopener noreferrer">Descargar</a>
                                                                         </td>
