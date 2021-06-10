@@ -21,7 +21,7 @@
         return $dias;
     }
 
-    function dias_estado($fecha_inicial,$fecha_final){
+    function dias_estado($fecha_inicial,$fecha_final, $estadoPQR){
         $totaldias = (strtotime($fecha_inicial)-strtotime($fecha_final))/86400;
         $totaldias = abs($totaldias); 
         $totaldias = floor($totaldias);
@@ -36,6 +36,9 @@
             $respuesta = 2;
         }else {
             $respuesta = 3;
+        }
+        if($estadoPQR == 6 || $estadoPQR == 9 || $estadoPQR == 10){
+            $respuesta = 4;
         }
         return $respuesta;
     }
@@ -135,7 +138,7 @@
                                         <td>{{ $pqr->tipoPqr->tipo }}</td>
                                         <td>{{ $pqr->estado->estado_funcionario }}</td>
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $pqr->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -148,6 +151,10 @@
                                         @elseif($diasEstado == 3)
                                             <td class="bg-red">
                                                 Vencida
+                                            </td>
+                                        @elseif($diasEstado == 4)
+                                            <td class="bg-blue">
+                                                Cerrado 
                                             </td>
                                         @endif
                                         <td>{{ $pqr->tipoPqr->tiempos + $pqr->prorroga_dias + $diasRecurso }}</td>
@@ -180,7 +187,7 @@
                                         <td>{{ $concepto->tipoPqr->tipo }}</td>
                                         <td>{{ $concepto->estado->estado_funcionario }}</td>
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $concepto->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -193,6 +200,10 @@
                                         @elseif($diasEstado == 3)
                                             <td class="bg-red">
                                                 Vencida
+                                            </td>
+                                        @elseif($diasEstado == 4)
+                                            <td class="bg-blue">
+                                                Cerrado 
                                             </td>
                                         @endif
                                         <td>{{ $concepto->tipoPqr->tiempos }}</td>
@@ -213,7 +224,7 @@
                                         <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
                                         <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $solicitud_datos->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -226,6 +237,10 @@
                                         @elseif($diasEstado == 3)
                                             <td class="bg-red">
                                                 Vencida
+                                            </td>
+                                        @elseif($diasEstado == 4)
+                                            <td class="bg-blue">
+                                                Cerrado 
                                             </td>
                                         @endif
                                         <td>{{ $solicitud_datos->tipoPqr->tiempos }}</td>
@@ -246,7 +261,7 @@
                                         <td>{{ $denuncia->tipoPqr->tipo }}</td>
                                         <td>{{ $denuncia->estado->estado_funcionario }}</td>
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $denuncia->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -259,6 +274,10 @@
                                         @elseif($diasEstado == 3)
                                             <td class="bg-red">
                                                 Vencida
+                                            </td>
+                                        @elseif($diasEstado == 4)
+                                            <td class="bg-blue">
+                                                Cerrado 
                                             </td>
                                         @endif
                                         <td>{{ $denuncia->tipoPqr->tiempos }}</td>
@@ -278,7 +297,7 @@
                                         <td>{{ $felicitacion->created_at }}</td>
                                         <td>{{ $felicitacion->tipoPqr->tipo }}</td>
                                         <td>{{ $felicitacion->estado->estado_funcionario }}</td>
-                                        <td class="bg-green">Cerrado</td>
+                                        <td class="bg-blue">Cerrado</td>
                                         <td>{{ $felicitacion->tipoPqr->tiempos }}</td>
                                         <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                         <td>{{ $fechaFinal }}</td>
@@ -297,7 +316,7 @@
                                         <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
                                         <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal);
+                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $solicitud_doc->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -310,6 +329,10 @@
                                         @elseif($diasEstado == 3)
                                             <td class="bg-red">
                                                 Vencida
+                                            </td>
+                                        @elseif($diasEstado == 4)
+                                            <td class="bg-blue">
+                                                Cerrado 
                                             </td>
                                         @endif
                                         <td>{{ $solicitud_doc->tipoPqr->tiempos }}</td>
@@ -329,7 +352,7 @@
                                         <td>{{ $sugerencia->created_at }}</td>
                                         <td>{{ $sugerencia->tipoPqr->tipo }}</td>
                                         <td>{{ $sugerencia->estado->estado_funcionario }}</td>
-                                        <td class="bg-green">Cerrado</td>
+                                        <td class="bg-blue">Cerrado</td>
                                         <td>{{ $sugerencia->tipoPqr->tiempos }}</td>
                                         <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                         <td>{{ $fechaFinal }}</td>
