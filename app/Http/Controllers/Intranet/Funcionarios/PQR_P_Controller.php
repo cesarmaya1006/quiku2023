@@ -173,7 +173,6 @@ class PQR_P_Controller extends Controller
                 } else {
                     $email = $aclaracionNew->peticion->empresa->email;
                 }
-                //$email = 'cesarmaya99@hotmail.com';
                 $id_aclaracion = $aclaracionNew->id;
                 Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
                 //----------------------------------------------------------------------
