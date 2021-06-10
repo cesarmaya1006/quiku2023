@@ -16,6 +16,7 @@
 @php
     $recursoValidacion = 0;
     $plazoRecurso = 0;
+    $numerador = 0;
 @endphp
 <div class="container-fluid">
     <div class="row d-flex justify-content-center">
@@ -157,6 +158,9 @@
         
                         </div>
                         @foreach ($pqr->peticiones as $peticion)
+                        @php
+                            $numerador++;
+                        @endphp
                         <hr style="border-top: solid 4px black">
                         <div class="col-12 peticion_general rounded border mb-3 p-2">
                             <div class="row">
@@ -167,9 +171,12 @@
                                                 <div class="col-12">
                                                     <div class="row">
                                                         <div class="col-12">
-                                                            <h5>Petición</h5>
+                                                            <h5>Petición #{{$numerador}}</h5>
                                                         </div>
                                                         <div class="col-12">{{ $peticion->motivo->sub_motivo }}</div>
+                                                        @if($peticion->otro)
+                                                            <p>{{$peticion->otro}}</p>
+                                                        @endif
                                                     </div>
                                                     <div class="row mt-2">
                                                         <h6>Justificacion:</h6>

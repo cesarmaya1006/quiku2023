@@ -90,10 +90,6 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         Días de prorroga: <strong>{{ $pqr->prorroga_dias }} </strong>
-                                        @if ($pqr->prorroga_dias > 0)
-                                            <a href="{{ asset('documentos/pqr/' . $pqr->prorroga_pdf) }}" target="_blank"
-                                                rel="noopener noreferrer">Documento Soporte</a>
-                                        @endif
                                     </div>
                                     <div class="col-12 col-md-6">
                                         Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
@@ -120,6 +116,9 @@
                                         <div class="col-12">
                                             <p><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
                                         </div>
+                                        @if($peticion->otro)
+                                            <p>{{$peticion->otro}}</p>
+                                        @endif
                                     </div>
                                     <hr>
                                     <div class="row">
