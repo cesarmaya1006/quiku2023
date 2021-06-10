@@ -245,6 +245,8 @@ class PQR_P_Controller extends Controller
                     $nuevoLimite = $pqr->tipoPqr->tiempos + $request['plazo_prorroga'] + $request['plazoRecurso'];
                     $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
                     $actualizarPqr['tiempo_limite'] = $respuestaDias;
+                    $estado = Estado::findOrFail(2);
+                    $actualizarPqr['estadospqr_id'] = $estado['id'];
                     $respuestaProrroga = PQR::findOrFail($request['idPqr'])->update($actualizarPqr);
                     //---------------------------------------------------------------------------
                     if ($pqr->persona_id != null) {
