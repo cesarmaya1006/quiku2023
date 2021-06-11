@@ -110,43 +110,7 @@
                                     Estado: <strong>{{ $pqr->estado->estado_funcionario }}</strong>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row pb-3 form-respuestaProrroga">
-                                <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
-                                <div class="col-12 col-md-6 ">
-                                    <h6>Prorroga</h6>
-                                </div>
-                                <div class="col-12 col-md-6 d-flex flex-row">
-                                    <div class="form-check mb-3 mr-4">
-                                        <input id="" name="prorroga" type="radio" class="form-check-input prorroga_si"
-                                            value="1" />
-                                        <label id="_label" class="form-check-label" for="">SI</label>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input id="" name="prorroga" type="radio" class="form-check-input prorroga_no"
-                                            value="0" />
-                                        <label id="_label" class="form-check-label" for="">NO</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 contentProrroga" id="contentProrroga">
-                                    <div class="col-12 d-flex row">
-                                        <div class="col-12 col-md-1 form-group">
-                                            <label for="plazo">Plazo prorroga días hábiles:</label>
-                                            <input type="number" class="form-control form-control-sm plazo_prorroga"
-                                                name="plazo_prorroga" id="plazo_prorroga" min="1"
-                                                max="{{$pqr->tipoPqr->tiempos}}">
-                                        </div>
-                                        <div class="col-12 d-flex row">
-                                            <label for="prorroga_pdf">Justificacion de prorroga</label>
-                                            <textarea type="text" class="form-control form-control-sm prorroga_pdf"
-                                                name="prorroga_pdf" id="prorroga_pdf">{{$pqr->prorroga_pdf}}</textarea>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
-                                        <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prorroga</button>
-                                    </div>
-                                </div>
-                            </div>
+
                             @foreach ($pqr->peticiones as $peticion)
                                 @php
                                 $recursoValidacion += $peticion->recurso;
@@ -176,7 +140,7 @@
                                                         <div class="col-12">{{ $peticion->motivo->sub_motivo }}</div>
                                                         @if($peticion->otro)
                                                             <p>{{$peticion->otro}}</p>
-                                                        @endif
+                                                         @endif
                                                     </div>
                                                     <div class="row mt-2">
                                                         <h6>Justificacion:</h6>
@@ -233,18 +197,20 @@
                                 <div class="col-12 col-md-6">
                                     <h6>Aclaraciones</h6>
                                 </div>
-                                <div class="col-12 col-md-6 d-flex flex-row">
-                                    <div class="form-check mb-3 mr-4">
-                                        <input id="" name="aclaracion_check" type="radio"
-                                            class="form-check-input aclaracion_check aclaracion_check_si" value="1" />
-                                        <label class="form-check-label" for="">SI</label>
+                                @if($pqr->estadospqr_id < 6)
+                                    <div class="col-12 col-md-6 d-flex flex-row">
+                                        <div class="form-check mb-3 mr-4">
+                                            <input id="" name="aclaracion_check" type="radio"
+                                                class="form-check-input aclaracion_check aclaracion_check_si" value="1" />
+                                            <label class="form-check-label" for="">SI</label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input id="" name="aclaracion_check" type="radio"
+                                                class="form-check-input aclaracion_check aclaracion_check_no" value="0" />
+                                            <label class="form-check-label" for="">NO</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check mb-3">
-                                        <input id="" name="aclaracion_check" type="radio"
-                                            class="form-check-input aclaracion_check aclaracion_check_no" value="0" />
-                                        <label class="form-check-label" for="">NO</label>
-                                    </div>
-                                </div>
+                                @endif
                                 @if ($peticion->aclaracion == 1)
                                 <div class="col-12">
                                     <div class="row">
@@ -281,39 +247,41 @@
                                     </div>
                                 </div>
                                 @endif
-                                <div class="col-12">
-                                    <div class="col-12  mt-2 pt-2 aclaraciones " id="aclaraciones">
-                                        <div class="col-12 aclaracion rounded border mb-3">
-                                            <div class="form-group col-12 mt-2 titulo-aclaracion">
-                                                <div class="col-12 d-flex justify-content-between mb-2">
-                                                    <label for="">Aclaración</label>
-                                                    <button type="button"
-                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarAclaracion"><i
-                                                            class="fas fa-minus-circle"></i> Eliminar
-                                                        Aclaración</button>
+                                @if($pqr->estadospqr_id < 6)
+                                    <div class="col-12">
+                                        <div class="col-12  mt-2 pt-2 aclaraciones " id="aclaraciones">
+                                            <div class="col-12 aclaracion rounded border mb-3">
+                                                <div class="form-group col-12 mt-2 titulo-aclaracion">
+                                                    <div class="col-12 d-flex justify-content-between mb-2">
+                                                        <label for="">Aclaración</label>
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarAclaracion"><i
+                                                                class="fas fa-minus-circle"></i> Eliminar
+                                                            Aclaración</button>
+                                                    </div>
+                                                    <select name="tipo_aclaracion" id="tipo_aclaracion"
+                                                        class="custom-select rounded-0 tipo_aclaracion">
+                                                        <option value="">--Seleccione--</option>
+                                                        <option value="aclaracion">Aclaración</option>
+                                                        <option value="complementacion">Complementación</option>
+                                                    </select>
                                                 </div>
-                                                <select name="tipo_aclaracion" id="tipo_aclaracion"
-                                                    class="custom-select rounded-0 tipo_aclaracion">
-                                                    <option value="">--Seleccione--</option>
-                                                    <option value="aclaracion">Aclaración</option>
-                                                    <option value="complementacion">Complementación</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-12">
-                                                <label for="">Solicitud</label>
-                                                <input class="form-control solicitud_aclaracion" type="text"
-                                                    name="solicitud_aclaracion" id="solicitud_aclaracion">
+                                                <div class="form-group col-12">
+                                                    <label for="">Solicitud</label>
+                                                    <input class="form-control solicitud_aclaracion" type="text"
+                                                        name="solicitud_aclaracion" id="solicitud_aclaracion">
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="col-12 d-flex justify-content-end flex-row">
+                                            <button class="btn btn-info btn-xs btn-sombra pl-2 pr-2 crearAclaracion"><i
+                                                    class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
+                                                otro aclaración</button>
+                                        </div>
+                                        <input class="totalPeticionAclaraciones" id="totalPeticionAclaraciones"
+                                            name="totalPeticionAclaraciones" type="hidden" value="0">
                                     </div>
-                                    <div class="col-12 d-flex justify-content-end flex-row">
-                                        <button class="btn btn-info btn-xs btn-sombra pl-2 pr-2 crearAclaracion"><i
-                                                class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir
-                                            otro aclaración</button>
-                                    </div>
-                                    <input class="totalPeticionAclaraciones" id="totalPeticionAclaraciones"
-                                        name="totalPeticionAclaraciones" type="hidden" value="0">
-                                </div>
+                                @endif
                             </div>
                             <hr>
                             <div class="row">
@@ -476,36 +444,91 @@
                                 value="{{$peticion->id}}">
                         </div>
                         @endforeach
-                        <div class="row">
-                            <input class="respuestaRecurso" type="hidden" value="{{ $recursoValidacion }}">
-                            <div class="col-12 col-md-6">
-                                <h6>¿A las respuestas le procede recurso?</h6>
+                        <div class="col-12 rounded border mb-3 p-2 pt-3">
+                            <div class="form-group mt-3">
+                                <label class="" for="">Prioridad</label>
+                                <select class="form-control form-control-sm col-12 col-md-6" name="prioridad" required>
+                                    @foreach ($estadoPrioridad as $prioridad)
+                                        <option value="{{ $prioridad->id }}"
+                                            {{ $pqr->prioridad->id == $prioridad->id ? 'selected' : '' }}>
+                                            {{ $prioridad->prioridad }}</option>
+                                    @endforeach
+                                </select>
                             </div>
-                            <div class="col-12 col-md-6 d-flex flex-row">
-                                <div class="form-check mb-3 mr-4">
-                                    <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_si" value="1"/>
-                                    <label id="_label" class="form-check-label" for="">SI</label>
+                            <hr>
+                            <div class="row pb-3 form-respuestaProrroga">
+                                <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
+                                <div class="col-12 col-md-6 ">
+                                    <h6>Prorroga</h6>
                                 </div>
-                                <div class="form-check mb-3">
-                                    <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_no" value="0"/>
-                                    <label id="_label" class="form-check-label" for="">NO</label>
+                                <div class="col-12 col-md-6 d-flex flex-row">
+                                    <div class="form-check mb-3 mr-4">
+                                        <input id="" name="prorroga" type="radio" class="form-check-input prorroga_si"
+                                            value="1" />
+                                        <label id="_label" class="form-check-label" for="">SI</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input id="" name="prorroga" type="radio" class="form-check-input prorroga_no"
+                                            value="0" />
+                                        <label id="_label" class="form-check-label" for="">NO</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 contentProrroga" id="contentProrroga">
+                                    <div class="col-12 d-flex row">
+                                        <div class="col-12 col-md-12 form-group">
+                                            <label for="plazo" class="col-md-6">Plazo prorroga días hábiles:</label>
+                                            <input type="number" class="form-control form-control-sm plazo_prorroga col-md-6"
+                                                name="plazo_prorroga" id="plazo_prorroga" min="1"
+                                                max="{{$pqr->tipoPqr->tiempos}}">
+                                        </div>
+                                        <div class="col-12 d-flex row">
+                                            <label for="prorroga_pdf">Justificacion de prorroga</label>
+                                            <textarea type="text" class="form-control form-control-sm prorroga_pdf"
+                                                name="prorroga_pdf" id="prorroga_pdf">{{$pqr->prorroga_pdf}}</textarea>
+                                        </div>
+                                    </div>
+                                    @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
+                                        <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
+                                            <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prorroga</button>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="col-12 row px-3 recurso-form">
-                                @if ($plazoRecurso == 0)
-                                    <div class="col-12 col-md-2 form-group">
-                                        <label for="plazo">Plazo recurso días hábiles:</label>
-                                        <input type="number" class="form-control form-control-sm plazo_recurso"
-                                            name="plazo_recurso" id="plazo_recurso" min="1"
-                                            max="{{$pqr->tipoPqr->tiempos}}">
+                            <hr>
+                            
+                            @if($pqr->estadospqr_id < 6)
+                                <div class="row">
+                                    <input class="respuestaRecurso" type="hidden" value="{{ $recursoValidacion }}">
+                                    <div class="col-12 col-md-6">
+                                        <h6>¿A las respuestas le procede recurso?</h6>
                                     </div>
-                                @else
-                                    <div class="col-12 col-md-2 form-group">
-                                        <label for="plazo">Plazo recurso días hábiles: {{ $plazoRecurso}}</label>
-                                        <input class="plazoRecurso" type="hidden" value="{{ $plazoRecurso }}">
+                                    <div class="col-12 col-md-6 d-flex flex-row">
+                                        <div class="form-check mb-3 mr-4">
+                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_si" value="1"/>
+                                            <label id="_label" class="form-check-label" for="">SI</label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_no" value="0"/>
+                                            <label id="_label" class="form-check-label" for="">NO</label>
+                                        </div>
                                     </div>
-                                @endif
-                            </div>
+                                    <div class="col-12 row px-3 recurso-form">
+                                        @if ($plazoRecurso == 0)
+                                            <div class="col-12 col-md-6 form-group">
+                                                <label for="plazo">Plazo recurso días hábiles:</label>
+                                                <input type="number" class="form-control form-control-sm plazo_recurso"
+                                                    name="plazo_recurso" id="plazo_recurso" min="1"
+                                                    max="{{$pqr->tipoPqr->tiempos}}">
+                                            </div>
+                                        @else
+                                            <div class="col-12 col-md- form-group">
+                                                <label for="plazo">Plazo recurso días hábiles: {{ $plazoRecurso}}</label>
+                                                <input class="plazoRecurso" type="hidden" value="{{ $plazoRecurso }}">
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         
                         <div class="card-footer d-flex justify-content-end">

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
-use App\Http\Controllers\Controller;
 use App\Models\PQR\PQR;
 use Illuminate\Http\Request;
+use App\Models\PQR\Prioridad;
+use App\Http\Controllers\Controller;
 
 class PQR_R_Controller extends Controller
 {
@@ -16,7 +17,9 @@ class PQR_R_Controller extends Controller
     public function gestionar($id)
     {
         $pqr = PQR::findOrFail($id);
-        return view('intranet.funcionarios.pqr_r.gestion', compact('pqr'));
+        $estadoPrioridad = Prioridad::all();
+
+        return view('intranet.funcionarios.pqr_p.gestion', compact('pqr', 'estadoPrioridad'));
     }
 
 
