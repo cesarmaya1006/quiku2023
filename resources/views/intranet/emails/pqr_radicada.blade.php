@@ -108,7 +108,6 @@
                 </td>
             </tr>
         </table>
-        <br>
         <table>
             <tr>
                 <td style="width: 75%;margin-top: 135px;">
@@ -143,9 +142,7 @@
                 </td>
             </tr>
         </table>
-        <br>
         <hr>
-        <br>
         <table>
             <tr>
                 <td>
@@ -215,7 +212,6 @@
                 </td>
             </tr>
         </table>
-        <br>
         <table>
             <tr>
                 <td>
