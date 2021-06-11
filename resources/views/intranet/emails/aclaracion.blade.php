@@ -6,10 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        p {
-            font-size: 12pt;
-        }
-
         table {
             width: 90%;
             margin: auto;
@@ -22,6 +18,7 @@
 
         body {
             margin: 3cm 2cm 2cm;
+            font-size: 10pt;
         }
 
         header {
@@ -45,6 +42,9 @@
             text-align: center;
             line-height: 35px;
             padding-bottom: 5px;
+        }
+        p{
+            line-height: 15px;
         }
 
     </style>
@@ -70,7 +70,7 @@
         <table>
             <tr>
                 <td>
-                    <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 22pt;">
+                    <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 0.8em;">
                         <p>
                             <strong>Este documento se ha generado automáticamente a través de Quiku.</strong><img
                                 src="{{ $imagen }}" alt="" style="width: 100%;max-width: 30px;">
@@ -89,12 +89,9 @@
                     </div>
                 </td>
             </tr>
-        </table>
-        <br><br>
-        <table>
             <tr>
                 <td colspan="2">
-                    <div style="margin-top: 50px;">
+                    <div style="margin-top: 15px;">
                         <p>Apreciado/Apreciada: {{ $nombre }}</p>
                     </div>
                 </td>
@@ -113,33 +110,19 @@
                 </td>
             </tr>
         </table>
-        <br>
-        <br>
         <table>
             <tr>
                 <td>
                     <p>Asunto: Solicitud de aclaración o complementación</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     <p>Referencia: radicado PQR</p>
                     <p>No. de identificación de su solicitud: {{ $num_radicado }}</p>
                 </td>
             </tr>
-        </table>
-        <br>
-        <br>
-        <table>
             <tr>
                 <td>
                     <p>Reciba un cordial saludo, </p>
                 </td>
             </tr>
-        </table>
-        <br>
-        <br>
-        <table>
             <tr>
                 <td>
                     <p>Hemos recibido su solicitud identificada con el número de la referencia. De conformidad con el
@@ -149,15 +132,11 @@
             </tr>
             <tr>
                 <td>
-                    <h5>Aclaración</h5>
+                    <h4>Aclaración</h4>
                     <p>Tipo: {{ $aclaracion->tipo_solicitud }}</p>
                     <p>{{ $aclaracion->aclaracion }}</p>
                 </td>
             </tr>
-        </table>
-        <br>
-        <br>
-        <table>
             <tr>
                 <td>
                     <p>Para aclarar o complementar su solicitud, por favor cargue su respuesta ingresando a
@@ -166,10 +145,6 @@
                         opción listado PQR y seleccionando la PQR respectiva. Una vez lo haya hecho, se reactivará la
                         gestión y el plazo de
                         respuesta.</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     <p>La aclaración y/o complementación solicitada se hace necesaria para adoptar una decisión de
                         fondo. De
                         conformidad con lo previsto en la Ley 1755 de 2015, usted cuenta con un plazo máximo de un (1)
@@ -177,10 +152,6 @@
                         para responder a este requerimiento. De lo contrario, se entenderá que ha desistido de su
                         solicitud
                         y ésta se archivará.</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud ingresando a
                         nuestro sistema <a href="{{ route('index') }}" target="_blank"
                             rel="noopener noreferrer">Quiku</a>
@@ -188,9 +159,6 @@
                 </td>
             </tr>
         </table>
-        <br>
-        <br>
-        <br>
         <table>
             <tr>
                 <td class="nombres" id="nombre1" style="width: 75%;margin-top: 135px;">
@@ -199,12 +167,10 @@
             </tr>
         </table>
         <br>
-        <br>
-        <br>
         <table>
             <tr>
                 <td class="nombres">
-                    <img src="{{ $firma }}" alt="" style="width: 100%;max-width: 150px;">
+                    <img src="{{ $firma }}" alt="" style="width: 100%;max-width: 100px;">
                 </td>
             </tr>
             <tr>

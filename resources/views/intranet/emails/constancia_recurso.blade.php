@@ -6,10 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        p {
-            font-size: 12pt;
-        }
-
         table {
             width: 90%;
             margin: auto;
@@ -22,6 +18,7 @@
 
         body {
             margin: 3cm 2cm 2cm;
+            font-size: 10pt;
         }
 
         header {
@@ -45,6 +42,9 @@
             text-align: center;
             line-height: 35px;
             padding-bottom: 5px;
+        }
+        p{
+            line-height: 15px;
         }
 
     </style>
@@ -70,7 +70,7 @@
         <table>
             <tr>
                 <td>
-                    <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 22pt;">
+                    <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 0.8em;">
                         <p>
                             <strong>Este documento se ha generado automáticamente a través de Quiku.</strong><img
                                 src="{{ $imagen }}" alt="" style="width: 100%;max-width: 30px;">
@@ -84,65 +84,53 @@
         <table>
             <tr>
                 <td>
-                    <div style="margin-top: 50px;">
+                    <div>
                         <p>Apreciado/Apreciada: {{ $nombre }}</p>
                     </div>
                 </td>
                 <td>
-                    <div style="margin-top: 50px;">
+                    <div>
                         <p>Fecha de expedición: {{ Date('Y-m-d H:i:s') }}</p>
                     </div>
                 </td>
             </tr>
         </table>
-        <br>
-        <br>
         <table>
             <tr>
                 <td>
                     <p>Hemos recibido sus recursos y los atenderemos en el menor tiempo posible. A continuación podrá
                         verificar los datos e información que han quedado resgistrados en nuestro sistema:</p>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <br>
-        <table>
-            <tr>
-                <td>
                     <p>Fecha de radicación: {{ $recurso->fecha_radicacion }}</p>
                     <p>No. de identificación de su solicitud: {{ $num_radicado }}</p>
                 </td>
             </tr>
         </table>
-        <br>
-        <br>
         <table>
             <tr>
-                <td colspan="6" style="text-align: center;">
+                <td colspan="2" style="text-align: center;">
                     <h4>Datos del peticionario</h4>
                 </td>
             </tr>
             <tr>
-                <td colspan="3">
+                <td colspan="2">
                     <p>Nombres:{{ $nombre }}</p>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td>
                     <p>Tipo ID: {{ $tipo_doc }}</p>
                 </td>
-                <td colspan="2">
+                <td>
                     <p>No. ID: {{ $identificacion }}</p>
                 </td>
+            </tr>
+            <tr>
                 <td colspan="2">
                     <p>E-mail:{{ $email }}</p>
                 </td>
             </tr>
         </table>
-        <br>
         <hr>
-        <br>
         <table>
             <tr>
                 <td>
@@ -159,7 +147,6 @@
                 </td>
             </tr>
         </table>
-        <br>
         <table>
             <tr>
                 <td>
