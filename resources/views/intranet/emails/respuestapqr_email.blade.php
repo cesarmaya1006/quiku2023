@@ -21,9 +21,6 @@
                 style="max-width: 35px">
             <br>
             <p>Estimado Usuario. Le informamos que se ha dado respuesta a su pqr</p>
-            <p><a
-                    href="{{ route('prorrogaPdf', ['id' => $id_pqr]) }}">{{ route('prorrogaPdf', ['id' => $id_pqr]) }}</a>
-            </p>
         </div>
         <div class="col-12">
             <p>Lo invitamos a ingresar a la plataforma Quiku y consultar la respuesta de sus Solicitudes en el siguiente
