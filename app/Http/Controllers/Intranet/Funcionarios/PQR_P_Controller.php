@@ -135,7 +135,9 @@ class PQR_P_Controller extends Controller
             if ($peticion->recurso != 0) {
                 $recurso = $peticion->recurso; 
                 if(!empty($peticion->recursos)){
-                    $totalRecursos [] = $peticion->recursos; 
+                    if(sizeOf($peticion->recursos)){
+                        $totalRecursos [] = $peticion->recursos; 
+                    }
                 }
             }
             $aclaraciones = Aclaracion::all()->where('peticion_id', $peticion["id"]);
@@ -153,8 +155,9 @@ class PQR_P_Controller extends Controller
             $actualizarPqr['tiempo_limite'] = $respuestaDias;
             PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);
         }
+
         if (sizeOf($peticiones) == sizeOf($respuestasPeticiones)) {
-            if ($recurso && sizeOf($totalRecursos[0]) == 0) {
+            if ($recurso && sizeOf($totalRecursos) == 0) {
                 $estado = Estado::findOrFail(7);
                 $pqrEstado['estadospqr_id'] = $estado['id'];
                 PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
@@ -165,6 +168,10 @@ class PQR_P_Controller extends Controller
             } 
         } elseif (sizeOf($respuestaAclaraciones) != $totalAclaracionesRes && $recurso == 0) {
             $estado = Estado::findOrFail(5);
+            $pqrEstado['estadospqr_id'] = $estado['id'];
+            PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+        } elseif (sizeOf($respuestasPeticiones)) {
+            $estado = Estado::findOrFail(2);
             $pqrEstado['estadospqr_id'] = $estado['id'];
             PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
         }
