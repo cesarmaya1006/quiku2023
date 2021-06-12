@@ -258,7 +258,6 @@ window.addEventListener('DOMContentLoaded', function(){
                     recurso : respuestaRecurso,
                     id: id_pqr
                 }
-                console.log(data)
                 $.ajax({
                     async:false,
                     url: url,
@@ -318,7 +317,6 @@ window.addEventListener('DOMContentLoaded', function(){
     
     $('.recurso_procede_check').on('change', function(e) {
         let padre = e.target.parentNode.parentNode.parentNode
-        console.log(padre.querySelector('.form-recursos'))
         switch (e.target.value) {
             case '1':
                 padre.querySelector('.form-recursos').classList.remove('d-none');

@@ -408,7 +408,7 @@
                                     @if(!$recurso->respuestaRecurso)
                                         <div class="row form-respuesta-recursos">
                                             <input class="id_recurso" type="hidden" value="{{$recurso->id}}">
-                                            <input class="tipo_reposicion_id" type="hidden" value="{{$recurso->id}}">
+                                            <input class="tipo_reposicion_id" type="hidden" value="{{$recurso->tipo_reposicion_id}}">
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
                                                     <h6>Recurso de {{$recurso->tiporeposicion->tipo}} </h6>

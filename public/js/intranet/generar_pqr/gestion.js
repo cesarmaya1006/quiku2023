@@ -322,7 +322,7 @@ window.addEventListener('DOMContentLoaded', function(){
             headers: { 'X-CSRF-TOKEN': token },
             data: data,
             success: function(respuesta) {
-                console.log(respuesta)
+                // console.log(respuesta)
                 resprecursos_id = respuesta.data.id
             },
             error: function(error) {
@@ -351,7 +351,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 processData: false, 
                 contentType: false,
                 success: function(respuesta) {
-                    console.log(respuesta)
+                    // console.log(respuesta)
                 },
                 error: function(error) {
                     console.log(error)

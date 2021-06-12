@@ -311,7 +311,6 @@ class PQR_P_Controller extends Controller
             }
             $id_recurso = $respuestaRecurso->id;
             Mail::to($email)->send(new RespuestaReposicion($id_recurso));
-            //---------------------------------------------------------------------------
             $estado = Estado::findOrFail(8);
             $pqrEstado['estadospqr_id'] = $estado['id'];
             PQR::findOrFail($request['id'])->update($pqrEstado);
@@ -366,19 +365,32 @@ class PQR_P_Controller extends Controller
             $recursototal = 0;
             $recursoRespuestaTotal = 0;
             $contadorValidacion = sizeof($peticiones);
-            $validacionCierre = 1;
+            $validacionCierre = 0;
             foreach ($peticiones as $peticion) {
                 if ($peticion->recurso != 0) {
                     if($peticion->recursos){
-                        $cantRecursos = $peticion->recursos->count();
                         if($peticion->recursos->count() > 1){
+                            $recursosTotal = 0; 
+                            $recursosRespuestasTotal = 0; 
                             foreach ($peticion->recursos as $recurso) {
-                                if(!$recurso->respuestarecurso){
-                                    $validacionCierre = 0;
+                                $recursosTotal ++; 
+                                if($recurso->respuestarecurso){
+                                    $recursosRespuestasTotal ++; 
+                                }
+                            }
+                            if($recursosTotal == $recursosRespuestasTotal){
+                                $validacionCierre ++;
+                            }
+
+                        }elseif($peticion->recursos->count() == 1){
+                            foreach ($peticion->recursos as $recurso) {
+                                if($recurso->tipo_reposicion_id > 1 && $recurso->respuestarecurso ){
+                                    $validacionCierre ++;
                                 }
                             }
                         }
                     }
+
                     foreach ($peticion->recursos as $recurso) {  
                         $recursototal++;
                         if ($recurso->respuestarecurso) {
@@ -395,18 +407,23 @@ class PQR_P_Controller extends Controller
                     PQR::findOrFail($request['id'])->update($pqrEstado);
                 }
                 else{
+                    $validadorif[] = $request['tipo_reposicion_id'];
                     if($request['tipo_reposicion_id'] == 1){
                         $estado = Estado::findOrFail(9);
                         $pqrEstado['estadospqr_id'] = $estado['id'];
                         PQR::findOrFail($request['id'])->update($pqrEstado);
-                    }else{
+                    }elseif($recursototal == $recursoRespuestaTotal && $recursototal > 1){
                         $estado = Estado::findOrFail(10);
+                        $pqrEstado['estadospqr_id'] = $estado['id'];
+                        PQR::findOrFail($request['id'])->update($pqrEstado);
+                    }else{
+                        $estado = Estado::findOrFail(8);
                         $pqrEstado['estadospqr_id'] = $estado['id'];
                         PQR::findOrFail($request['id'])->update($pqrEstado);
                     }
                 }
             }else {
-                if($recursototal == $recursoRespuestaTotal && $validacionCierre){
+                if($recursototal == $recursoRespuestaTotal && $validacionCierre == $contadorValidacion){
                     $estado = Estado::findOrFail(10);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     PQR::findOrFail($request['id'])->update($pqrEstado);
