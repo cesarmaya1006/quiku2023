@@ -76,7 +76,7 @@ class PQR_P_Controller extends Controller
                         $email = $peticion_act->pqr->empresa->email;
                     }
                     $id_aclaracion = $aclaracionNew->id;
-                    Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+                    // Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
                 }
             }
             $contadorAnexos += $request["totalPeticionAnexos$i"];
@@ -92,7 +92,7 @@ class PQR_P_Controller extends Controller
                     $email = $respuestaPQR->peticion->pqr->empresa->email;
                 }
                 $id_pqr = $respuestaPQR->peticion->pqr->id;
-                Mail::to($email)->send(new RespuestaPQR($id_pqr));
+                // Mail::to($email)->send(new RespuestaPQR($id_pqr));
                 //----------------------------------------------------------------------
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
@@ -198,7 +198,7 @@ class PQR_P_Controller extends Controller
                     $email = $peticion_act->pqr->empresa->email;
                 }
                 $id_aclaracion = $aclaracionNew->id;
-                Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
+                // Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
                 //----------------------------------------------------------------------
                 $contadorAnexos += $request["totalanexos$i"];
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
@@ -283,7 +283,7 @@ class PQR_P_Controller extends Controller
                         $email = $pqr->empresa->email;
                     }
                     $id_pqr = $pqr->id;
-                    Mail::to($email)->send(new Prorroga($id_pqr));
+                    // Mail::to($email)->send(new Prorroga($id_pqr));
                     //---------------------------------------------------------------------------
                 }
             }
@@ -309,7 +309,7 @@ class PQR_P_Controller extends Controller
                 $email = $respuestaRecurso->peticion->pqr->empresa->email;
             }
             $id_recurso = $respuestaRecurso->id;
-            Mail::to($email)->send(new Recurso_mail($id_recurso));
+            // Mail::to($email)->send(new Recurso_mail($id_recurso));
             //---------------------------------------------------------------------------
             $estado = Estado::findOrFail(8);
             $pqrEstado['estadospqr_id'] = $estado['id'];
@@ -364,33 +364,53 @@ class PQR_P_Controller extends Controller
             $peticiones = Peticion::all()->where('pqr_id', $request['id']);
             $recursototal = 0;
             $recursoRespuestaTotal = 0;
-            $pecticionesvec = [];
-            $recursosvec = [];
-            foreach ($peticiones as $key => $peticion) {
-                $pecticionesvec[] = $peticion;
+            $contadorValidacion = sizeof($peticiones);
+            $validacionCierre = 1;
+            foreach ($peticiones as $peticion) {
                 if ($peticion->recurso != 0) {
-                    $recursosvec[] = $peticion->recurso;
-                    foreach ($peticion->recursos as $key => $recurso) {  
+                    if($peticion->recursos){
+                        $cantRecursos = $peticion->recursos->count();
+                        if($peticion->recursos->count() > 1){
+                            foreach ($peticion->recursos as $recurso) {
+                                if(!$recurso->respuestarecurso){
+                                    $validacionCierre = 0;
+                                }
+                            }
+                        }
+                    }
+                    foreach ($peticion->recursos as $recurso) {  
                         $recursototal++;
                         if ($recurso->respuestarecurso) {
                             $recursoRespuestaTotal++;
                         }
                     }
-                    $recurso = $peticion->recurso;
+
                 }
             }
-            if($recursototal > 1 && $recursototal == $recursoRespuestaTotal) {
-                $estado = Estado::findOrFail(10);
-                $pqrEstado['estadospqr_id'] = $estado['id'];
-                PQR::findOrFail($request['id'])->update($pqrEstado);
-            }
-            else{
-                if($request['tipo_reposicion_id'] == 1){
-                    $estado = Estado::findOrFail(9);
+            if($contadorValidacion == 1 ){
+                if($recursototal > 1 && $recursototal == $recursoRespuestaTotal) {
+                    $estado = Estado::findOrFail(10);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     PQR::findOrFail($request['id'])->update($pqrEstado);
-                }else{
+                }
+                else{
+                    if($request['tipo_reposicion_id'] == 1){
+                        $estado = Estado::findOrFail(9);
+                        $pqrEstado['estadospqr_id'] = $estado['id'];
+                        PQR::findOrFail($request['id'])->update($pqrEstado);
+                    }else{
+                        $estado = Estado::findOrFail(10);
+                        $pqrEstado['estadospqr_id'] = $estado['id'];
+                        PQR::findOrFail($request['id'])->update($pqrEstado);
+                    }
+                }
+            }else {
+                if($recursototal == $recursoRespuestaTotal && $validacionCierre){
                     $estado = Estado::findOrFail(10);
+                    $pqrEstado['estadospqr_id'] = $estado['id'];
+                    PQR::findOrFail($request['id'])->update($pqrEstado);
+                }elseif($recursototal == $recursoRespuestaTotal){
+                    $estado = Estado::findOrFail(9);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     PQR::findOrFail($request['id'])->update($pqrEstado);
                 }
