@@ -139,11 +139,11 @@
                                         <td>{{ $pqr->tipoPqr->tipo }}</td>
                                         <td>{{ $pqr->estado->estado_funcionario }}</td>
                                         @if ($pqr->prioridad_id == 1)
-                                            <td class="bg-red">{{ $pqr->prioridad->prioridad}}</td>
+                                            <td class="bg-green">{{ $pqr->prioridad->prioridad}}</td>
                                         @elseif($pqr->prioridad_id == 2)
                                             <td class="bg-yellow">{{ $pqr->prioridad->prioridad}}</td>
                                         @elseif($pqr->prioridad_id == 3)
-                                            <td class="bg-green">{{ $pqr->prioridad->prioridad}}</td>
+                                            <td class="bg-red">{{ $pqr->prioridad->prioridad}}</td>
                                         @endif
                                         @php
                                             $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $pqr->estado->id);
@@ -195,11 +195,11 @@
                                         <td>{{ $concepto->tipoPqr->tipo }}</td>
                                         <td>{{ $concepto->estado->estado_funcionario }}</td>
                                         @if ($solicitud_datos->prioridad_id == 1)
-                                            <td class="bg-red">{{ $solicitud_datos->prioridad->prioridad}}</td>
+                                            <td class="bg-green">{{ $solicitud_datos->prioridad->prioridad}}</td>
                                         @elseif($solicitud_datos->prioridad_id == 2)
                                             <td class="bg-yellow">{{ $solicitud_datos->prioridad->prioridad}}</td>
                                         @elseif($solicitud_datos->prioridad_id == 3)
-                                            <td class="bg-green">{{ $solicitud_datos->prioridad->prioridad}}</td>
+                                            <td class="bg-red">{{ $solicitud_datos->prioridad->prioridad}}</td>
                                         @endif
                                         @php
                                             $diasEstado = dias_estado($solicitud_datos->fecha_radicado, $fechaFinal, $concepto->estado->id);
@@ -239,11 +239,11 @@
                                         <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
                                         <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
                                         @if ($pqr->prioridad_id == 1)
-                                            <td class="bg-red">{{ $pqr->prioridad->prioridad}}</td>
+                                            <td class="bg-green">{{ $pqr->prioridad->prioridad}}</td>
                                         @elseif($pqr->prioridad_id == 2)
                                             <td class="bg-yellow">{{ $pqr->prioridad->prioridad}}</td>
                                         @elseif($pqr->prioridad_id == 3)
-                                            <td class="bg-green">{{ $pqr->prioridad->prioridad}}</td>
+                                            <td class="bg-red">{{ $pqr->prioridad->prioridad}}</td>
                                         @endif
                                         @php
                                             $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $solicitud_datos->estado->id);
@@ -283,11 +283,11 @@
                                         <td>{{ $denuncia->tipoPqr->tipo }}</td>
                                         <td>{{ $denuncia->estado->estado_funcionario }}</td>
                                         @if ($denuncia->prioridad_id == 1)
-                                            <td class="bg-red">{{ $denuncia->prioridad->prioridad}}</td>
+                                            <td class="bg-green">{{ $denuncia->prioridad->prioridad}}</td>
                                         @elseif($denuncia->prioridad_id == 2)
                                             <td class="bg-yellow">{{ $denuncia->prioridad->prioridad}}</td>
                                         @elseif($denuncia->prioridad_id == 3)
-                                            <td class="bg-green">{{ $denuncia->prioridad->prioridad}}</td>
+                                            <td class="bg-red">{{ $denuncia->prioridad->prioridad}}</td>
                                         @endif
                                         @php
                                             $diasEstado = dias_estado($denuncia->fecha_radicado, $fechaFinal, $denuncia->estado->id);
@@ -346,11 +346,11 @@
                                         <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
                                         <td>{{ $solicitud_doc->estado->estado_funcionario }}</td>
                                         @if ($solicitud_doc->prioridad_id == 1)
-                                        <td class="bg-red">{{ $solicitud_doc->prioridad->prioridad}}</td>
+                                            <td class="bg-green">{{ $solicitud_doc->prioridad->prioridad}}</td>
                                         @elseif($solicitud_doc->prioridad_id == 2)
                                             <td class="bg-yellow">{{ $solicitud_doc->prioridad->prioridad}}</td>
                                         @elseif($solicitud_doc->prioridad_id == 3)
-                                            <td class="bg-green">{{ $solicitud_doc->prioridad->prioridad}}</td>
+                                            <td class="bg-red">{{ $solicitud_doc->prioridad->prioridad}}</td>
                                         @endif
                                         @php
                                             $diasEstado = dias_estado($solicitud_doc->fecha_radicado, $fechaFinal, $solicitud_doc->estado->id);

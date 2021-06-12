@@ -391,13 +391,13 @@
                                         </div>
                                         <div class="col-12 col-md-6 d-flex flex-row">
                                             <div class="form-check mb-3 mr-4">
-                                                <input id="" name="check-recurso-procede-form" type="radio"
+                                                <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
                                                     class="form-check-input recurso_procede_check recurso_procede_si"
                                                     value="1" />
                                                 <label id="_label" class="form-check-label" for="">SI</label>
                                             </div>
                                             <div class="form-check mb-3">
-                                                <input id="" name="check-recurso-procede-form" type="radio"
+                                                <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
                                                     class="form-check-input recurso_procede_check recurso_procede_no"
                                                     value="0" checked />
                                                 <label id="_label" class="form-check-label" for="">NO</label>
@@ -487,13 +487,13 @@
                                         </div>
                                         <div class="col-12 col-md-6 d-flex flex-row">
                                             <div class="form-check mb-3 mr-4">
-                                                <input id="" name="check-recurso-procede-form" type="radio"
+                                                <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
                                                     class="form-check-input recurso_procede_check recurso_procede_si"
                                                     value="1" />
                                                 <label id="_label" class="form-check-label" for="">SI</label>
                                             </div>
                                             <div class="form-check mb-3">
-                                                <input id="" name="check-recurso-procede-form" type="radio"
+                                                <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
                                                     class="form-check-input recurso_procede_check recurso_procede_no"
                                                     value="0" checked />
                                                 <label id="_label" class="form-check-label" for="">NO</label>

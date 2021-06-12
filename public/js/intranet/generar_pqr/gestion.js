@@ -9,24 +9,30 @@ window.addEventListener('DOMContentLoaded', function(){
             item.parentElement.querySelector('#crearAnexo').classList.add('d-none')
         }
     })
-    let verificacionProrroga = document.querySelector('.respuestaProrroga')
-    if(verificacionProrroga.value == 1){
-        verificacionProrroga.parentElement.querySelector('.prorroga_si').setAttribute('checked','')
-        verificacionProrroga.parentElement.querySelector('.prorroga_no').setAttribute('disabled','')
-        verificacionProrroga.parentElement.querySelector('.plazo_prorroga').parentElement.remove()
-        verificacionProrroga.parentElement.querySelector('.prorroga_pdf').setAttribute('disabled','')
-    }else {
-        verificacionProrroga.parentElement.querySelector('.prorroga_no').setAttribute('checked','')
-        verificacionProrroga.parentElement.querySelector('.contentProrroga').classList.add('d-none')
+    if(document.querySelector('.respuestaProrroga')){
+        let verificacionProrroga = document.querySelector('.respuestaProrroga')
+        if(verificacionProrroga.value == 1){
+            verificacionProrroga.parentElement.querySelector('.prorroga_si').setAttribute('checked','')
+            verificacionProrroga.parentElement.querySelector('.prorroga_no').setAttribute('disabled','')
+            verificacionProrroga.parentElement.querySelector('.plazo_prorroga').parentElement.remove()
+            verificacionProrroga.parentElement.querySelector('.prorroga_pdf').setAttribute('disabled','')
+        }else {
+            verificacionProrroga.parentElement.querySelector('.prorroga_no').setAttribute('checked','')
+            verificacionProrroga.parentElement.querySelector('.contentProrroga').classList.add('d-none')
+        }
     }
     let verificacionAclaracion = document.querySelectorAll('.respuestaAclaracion')
     verificacionAclaracion.forEach(item => {
         if(item.value == 1){
-            item.parentElement.querySelector('.aclaracion_check_si').setAttribute('checked','')
-            item.parentElement.querySelector('.aclaracion_check_no').setAttribute('disabled','')
+            if(item.parentElement.querySelector('.aclaracion_check_si')){
+                item.parentElement.querySelector('.aclaracion_check_si').setAttribute('checked','')
+                item.parentElement.querySelector('.aclaracion_check_no').setAttribute('disabled','')
+            }
         }else{
-            item.parentElement.querySelector('.aclaracion_check_no').setAttribute('checked','')
-            item.parentElement.querySelector('.aclaraciones').parentElement.classList.add('d-none')
+            if(item.parentElement.querySelector('.aclaracion_check_no')){
+                item.parentElement.querySelector('.aclaracion_check_no').setAttribute('checked','')
+                item.parentElement.querySelector('.aclaraciones').parentElement.classList.add('d-none')
+            }
         }
     })
     let verificacionRecurso = document.querySelectorAll('.respuestaRecurso')
@@ -139,8 +145,12 @@ window.addEventListener('DOMContentLoaded', function(){
     function ajustarPeticiones(){
         let peticion = document.querySelectorAll('.peticion_general')
         for (let i = 0; i < peticion.length; i++) {
-            peticion[i].querySelector('.totalPeticionAclaraciones').value = peticion[i].querySelectorAll('.aclaracion').length
-            peticion[i].querySelector('.totalPeticionAnexos').value = peticion[i].querySelectorAll('.anexoconsulta').length
+            if(peticion[i].querySelectorAll('.aclaracion').length){
+                peticion[i].querySelector('.totalPeticionAclaraciones').value = peticion[i].querySelectorAll('.aclaracion').length
+            }
+            if (peticion[i].querySelectorAll('.anexoconsulta').length) {
+                peticion[i].querySelector('.totalPeticionAnexos').value = peticion[i].querySelectorAll('.anexoconsulta').length
+            }
         }
     }
     // Fin Función para ajustar name y id de cada peticion.
@@ -249,42 +259,44 @@ window.addEventListener('DOMContentLoaded', function(){
     }
     // Fin Función para generar varios Hechos con validación.
     // ---------------------------------------------------------------------------------------------------------
-    let guardarProrroga = document.querySelector('#guardarProrroga')
-    guardarProrroga.addEventListener('click', function(e){
-        e.preventDefault()
-        let url = e.target.getAttribute('data_url')
-        let token = e.target.getAttribute('data_token')
-        let plazo_prorroga = document.querySelector('#plazo_prorroga').value
-        let prorroga_pdf = document.querySelector('#prorroga_pdf').value
-        let plazoRecurso = 0
-        if(document.querySelector('.plazoRecurso')){
-            plazoRecurso = document.querySelector('.plazoRecurso').value
-        }
-
-        if(plazo_prorroga != '' && prorroga_pdf != ''){
-            let data = {
-                prorroga : 1,
-                plazo_prorroga,
-                prorroga_pdf,
-                idPqr: id_pqr,
-                plazoRecurso
+    if(document.querySelector('#guardarProrroga')){
+        let guardarProrroga = document.querySelector('#guardarProrroga')
+        guardarProrroga.addEventListener('click', function(e){
+            e.preventDefault()
+            let url = e.target.getAttribute('data_url')
+            let token = e.target.getAttribute('data_token')
+            let plazo_prorroga = document.querySelector('#plazo_prorroga').value
+            let prorroga_pdf = document.querySelector('#prorroga_pdf').value
+            let plazoRecurso = 0
+            if(document.querySelector('.plazoRecurso')){
+                plazoRecurso = document.querySelector('.plazoRecurso').value
             }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    location.reload();
-                    // console.log(respuesta);
     
-                },
-                error: function(error) {
-                    console.log(error)
+            if(plazo_prorroga != '' && prorroga_pdf != ''){
+                let data = {
+                    prorroga : 1,
+                    plazo_prorroga,
+                    prorroga_pdf,
+                    idPqr: id_pqr,
+                    plazoRecurso
                 }
-            });
-        }
-    })
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                        // console.log(respuesta);
+        
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+        })
+    }
     // ---------------------------------------------------------------------------------------------------------
     let btnRecursosGuardar = document.querySelectorAll('.guardarRespuestaRecurso button')
     btnRecursosGuardar.forEach(e => {
@@ -296,10 +308,12 @@ window.addEventListener('DOMContentLoaded', function(){
         let url = e.target.getAttribute('data_url')
         let token = e.target.getAttribute('data_token')
         let idRecurso = contenedor.querySelector('.id_recurso').value
+        let tipo_reposicion_id = contenedor.querySelector('.tipo_reposicion_id').value
         let resprecursos_id = 0
         let data = {
             recurso_id : idRecurso,
-            id: id_pqr
+            id: id_pqr,
+            tipo_reposicion_id
         }
         $.ajax({
             async:false,
@@ -308,7 +322,7 @@ window.addEventListener('DOMContentLoaded', function(){
             headers: { 'X-CSRF-TOKEN': token },
             data: data,
             success: function(respuesta) {
-                // console.log(respuesta)
+                console.log(respuesta)
                 resprecursos_id = respuesta.data.id
             },
             error: function(error) {
@@ -337,7 +351,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 processData: false, 
                 contentType: false,
                 success: function(respuesta) {
-                    // console.log(respuesta)
+                    console.log(respuesta)
                 },
                 error: function(error) {
                     console.log(error)
