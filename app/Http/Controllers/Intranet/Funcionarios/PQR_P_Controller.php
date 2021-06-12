@@ -77,7 +77,7 @@ class PQR_P_Controller extends Controller
                         $email = $peticion_act->pqr->empresa->email;
                     }
                     $id_aclaracion = $aclaracionNew->id;
-                    // Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+                    Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
                 }
             }
             $contadorAnexos += $request["totalPeticionAnexos$i"];
@@ -93,7 +93,7 @@ class PQR_P_Controller extends Controller
                     $email = $respuestaPQR->peticion->pqr->empresa->email;
                 }
                 $id_pqr = $respuestaPQR->peticion->pqr->id;
-                // Mail::to($email)->send(new RespuestaPQR($id_pqr));
+                Mail::to($email)->send(new RespuestaPQR($id_pqr));
                 //----------------------------------------------------------------------
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
@@ -199,7 +199,7 @@ class PQR_P_Controller extends Controller
                     $email = $peticion_act->pqr->empresa->email;
                 }
                 $id_aclaracion = $aclaracionNew->id;
-                // Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
+                Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
                 //----------------------------------------------------------------------
                 $contadorAnexos += $request["totalanexos$i"];
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
@@ -284,7 +284,7 @@ class PQR_P_Controller extends Controller
                         $email = $pqr->empresa->email;
                     }
                     $id_pqr = $pqr->id;
-                    // Mail::to($email)->send(new Prorroga($id_pqr));
+                    Mail::to($email)->send(new Prorroga($id_pqr));
                     //---------------------------------------------------------------------------
                 }
             }
@@ -310,7 +310,7 @@ class PQR_P_Controller extends Controller
                 $email = $respuestaRecurso->peticion->pqr->empresa->email;
             }
             $id_recurso = $respuestaRecurso->id;
-            //Mail::to($email)->send(new RespuestaReposicion($id_recurso));
+            Mail::to($email)->send(new RespuestaReposicion($id_recurso));
             //---------------------------------------------------------------------------
             $estado = Estado::findOrFail(8);
             $pqrEstado['estadospqr_id'] = $estado['id'];
@@ -369,7 +369,6 @@ class PQR_P_Controller extends Controller
             $validacionCierre = 1;
             foreach ($peticiones as $peticion) {
                 if ($peticion->recurso != 0) {
-<<<<<<< HEAD
                     if($peticion->recursos){
                         $cantRecursos = $peticion->recursos->count();
                         if($peticion->recursos->count() > 1){
@@ -381,10 +380,6 @@ class PQR_P_Controller extends Controller
                         }
                     }
                     foreach ($peticion->recursos as $recurso) {  
-=======
-                    $recursosvec[] = $peticion->recurso;
-                    foreach ($peticion->recursos as $key => $recurso) {
->>>>>>> 211535c4083e7de6039fe2d64616025e17639cef
                         $recursototal++;
                         if ($recurso->respuestarecurso) {
                             $recursoRespuestaTotal++;
