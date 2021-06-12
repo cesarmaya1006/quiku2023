@@ -18,6 +18,7 @@ use App\Mail\ConstanciaAclaracion;
 use App\Mail\Prorroga;
 use App\Mail\Recurso_mail;
 use App\Mail\RespuestaPQR;
+use App\Mail\RespuestaReposicion;
 use App\Models\PQR\DocRecurso;
 use App\Models\PQR\DocRespRecurso;
 use App\Models\PQR\Prioridad;
@@ -133,10 +134,10 @@ class PQR_P_Controller extends Controller
                 $respuestasPeticiones[] = $peticion->respuesta;
             }
             if ($peticion->recurso != 0) {
-                $recurso = $peticion->recurso; 
+                $recurso = $peticion->recurso;
                 if(!empty($peticion->recursos)){
                     if(sizeOf($peticion->recursos)){
-                        $totalRecursos [] = $peticion->recursos; 
+                        $totalRecursos [] = $peticion->recursos;
                     }
                 }
             }
@@ -165,7 +166,7 @@ class PQR_P_Controller extends Controller
                 $estado = Estado::findOrFail(6);
                 $pqrEstado['estadospqr_id'] = $estado['id'];
                 PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
-            } 
+            }
         } elseif (sizeOf($respuestaAclaraciones) != $totalAclaracionesRes && $recurso == 0) {
             $estado = Estado::findOrFail(5);
             $pqrEstado['estadospqr_id'] = $estado['id'];
@@ -238,7 +239,7 @@ class PQR_P_Controller extends Controller
             if($peticion->respuesta){
                 $totalPeticionesRes ++;
             }
-            $aclaraciones = Aclaracion::all()->where('peticion_id', $peticion["id"]);       
+            $aclaraciones = Aclaracion::all()->where('peticion_id', $peticion["id"]);
             $totalAclaracionesRes += sizeof($aclaraciones);
             foreach ($aclaraciones as $key => $aclaracion) {
                 if ($aclaracion->respuesta) {
@@ -246,7 +247,7 @@ class PQR_P_Controller extends Controller
                 }
             }
             if ($peticion->recurso != 0) {
-                $totalRecursos [] = $peticion->recursos; 
+                $totalRecursos [] = $peticion->recursos;
                 $recurso = $peticion->recurso;
             }
         }
@@ -309,7 +310,7 @@ class PQR_P_Controller extends Controller
                 $email = $respuestaRecurso->peticion->pqr->empresa->email;
             }
             $id_recurso = $respuestaRecurso->id;
-            // Mail::to($email)->send(new Recurso_mail($id_recurso));
+            //Mail::to($email)->send(new RespuestaReposicion($id_recurso));
             //---------------------------------------------------------------------------
             $estado = Estado::findOrFail(8);
             $pqrEstado['estadospqr_id'] = $estado['id'];
@@ -317,7 +318,7 @@ class PQR_P_Controller extends Controller
 
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
         } else {
-            abort(404); 
+            abort(404);
         }
     }
 
@@ -370,7 +371,7 @@ class PQR_P_Controller extends Controller
                 $pecticionesvec[] = $peticion;
                 if ($peticion->recurso != 0) {
                     $recursosvec[] = $peticion->recurso;
-                    foreach ($peticion->recursos as $key => $recurso) {  
+                    foreach ($peticion->recursos as $key => $recurso) {
                         $recursototal++;
                         if ($recurso->respuestarecurso) {
                             $recursoRespuestaTotal++;
