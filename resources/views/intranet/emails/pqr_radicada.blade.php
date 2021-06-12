@@ -161,8 +161,10 @@
                             <p>Tipo de servicio: {{ $pqr_radicada->servicio_id }}</p>
                             @foreach ($pqr_radicada->peticiones as $peticion)
                                 <h5>Motivo: {{ $peticion->motivo->sub_motivo }}</h5>
+                                <?php $num_hecho =0; ?>
                                 @foreach ($peticion->hechos as $hecho)
-                                    <p>Hecho: {{ $hecho->hecho }}</p>
+                                <?php $num_hecho ++; ?>
+                                    <p>Hecho{{$num_hecho}}: {{ $hecho->hecho }}</p>
                                 @endforeach
                                 <p>Justificación: {{ $peticion->justificacion }}</p>
                             @endforeach
@@ -181,8 +183,10 @@
                             <p>Tipo de servicio: {{ $pqr_radicada->servicio_id }}</p>
                             @foreach ($pqr_radicada->peticiones as $peticion)
                                 <h5>Motivo: {{ $peticion->motivo->sub_motivo }}</h5>
+                                <?php $num_hecho =0; ?>
                                 @foreach ($peticion->hechos as $hecho)
-                                    <p>Hecho: {{ $hecho->hecho }}</p>
+                                <?php $num_hecho ++; ?>
+                                    <p>Hecho{{$num_hecho}}: {{ $hecho->hecho }}</p>
                                 @endforeach
                                 <p>Justificación: {{ $peticion->justificacion }}</p>
                             @endforeach
@@ -202,9 +206,10 @@
                             @foreach ($pqr_radicada->peticiones as $peticion)
                                 <h5>Motivo: {{ $peticion->motivo->sub_motivo }}</h5>
                                 <?php $num_hecho = 0; ?>
+                                <?php $num_hecho =0; ?>
                                 @foreach ($peticion->hechos as $hecho)
-                                    <?php $num_hecho++; ?>
-                                    <p>Hecho {{ $num_hecho }}: {{ $hecho->hecho }}</p>
+                                <?php $num_hecho ++; ?>
+                                    <p>Hecho{{$num_hecho}}: {{ $hecho->hecho }}</p>
                                 @endforeach
                                 <p>Justificación: {{ $peticion->justificacion }}</p>
                             @endforeach
