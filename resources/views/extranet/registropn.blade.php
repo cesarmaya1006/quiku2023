@@ -148,7 +148,8 @@
                                             data_url="{{ route('cargar_municipios') }}">
                                             <option value="">--Seleccione--</option>
                                             @foreach ($departamentos as $departamento)
-                                                <option value="{{ $departamento->id }}">
+                                                <option value="{{ $departamento->id }}"
+                                                    {{ old('direccion') == $departamento->id ? 'selected' : '' }}>
                                                     {{ $departamento->departamento }}
                                                 </option>
                                             @endforeach
@@ -191,15 +192,18 @@
                                         <label class="requerido" for="genero">Elija su Genero</label>
                                         <select class="form-control" name="genero" id="genero" required>
                                             <option value="">--Seleccione--</option>
-                                            <option value="Femenino">Femenino</option>
-                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino" {{ old('genero') == 'Femenino' ? 'selected' : '' }}>
+                                                Femenino</option>
+                                            <option value="Masculino"
+                                                {{ old('genero') == 'Masculino' ? 'selected' : '' }}>
+                                                Masculino</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="fechanacimiento">Fecha nacimiento</label>
                                         <input type="date" class="form-control" id="fechanacimiento" name="fechanacimiento"
                                             max="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
-                                            value="{{ date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) }}"
+                                            value="{{ old('fechanacimiento', date('Y-m-d', strtotime(date('Y-m-d') . '- 18 years')) ?? '') }}"
                                             required>
                                     </div>
                                 </div>
@@ -292,20 +296,22 @@
                                     <div class="col-md-12 mb-3">
                                         <label class="requerido" for="usuario">Nombre de usuario</label>
                                         <input type="text" class="form-control" id="usuario" placeholder="Nombre de usuario"
-                                            name="usuario" required>
+                                            name="usuario" value="{{ old('usuario') }}" required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="password">Clave o Contraseña</label>
                                         <input type="password" class="form-control" id="password"
-                                            placeholder="Clave o Contraseña" name="password" required>
+                                            placeholder="Clave o Contraseña" value="{{ old('password') }}" name="password"
+                                            required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="verificacionpassword">Repetir clave o
                                             contraseña</label>
                                         <input type="password" class="form-control" id="verificacionpassword"
-                                            placeholder="Repetir clave o contraseña" name="verificacionpassword" required>
+                                            placeholder="Repetir clave o contraseña"
+                                            value="{{ old('verificacionpassword') }}" name="verificacionpassword" required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">

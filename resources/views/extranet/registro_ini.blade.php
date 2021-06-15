@@ -78,12 +78,13 @@
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="identificacion">Número de documento</label>
                                     <input type="text" class="form-control form-control-sm" id="identificacion"
-                                        name="identificacion" placeholder="Número documento" required>
+                                        name="identificacion" placeholder="Número documento"
+                                        value="{{ old('identificacion') }}" required>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label class="requerido" for="email">Correo electrónico</label>
                                     <input type="email" class="form-control form-control-sm" id="email" name="email"
-                                        placeholder="Correo electrónico" required>
+                                        placeholder="Correo electrónico" value="{{ old('email') }}" required>
                                 </div>
                                 <button class="mt-3 btn btn-primary" type="submit">Siguiente</button>
                             </form>
