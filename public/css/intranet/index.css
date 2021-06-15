@@ -1,0 +1,42 @@
+.card-step {
+    width: 20%;
+    margin: 1% 1%;
+}
+.card-step:hover {
+    width: 22%;
+    margin: -2px 1%;
+}
+.card-step.verificado {
+    box-shadow: 0px 0px 10px #198754;
+}
+
+.card-step.verificado span,
+.card-step.verificado h6 {
+    color: #198754;
+}
+
+.card-step.desativado {
+    box-shadow: 0px 0px 10px gray;
+}
+
+.card-step.desativado span,
+.card-step.desativado h6 {
+    color: gray;
+}
+
+.card-step.tramite {
+    box-shadow: 0px 0px 10px #3359fa;
+}
+
+.card-step.tramite span,
+.card-step.tramite h6 {
+    color: #3359fa;
+}
+
+.activo {
+    width: 23%;
+}
+.activo h6{
+    font-size: 20px;
+    font-weight: 700;
+}

@@ -326,4 +326,47 @@ window.addEventListener('DOMContentLoaded', function(){
                 break;
         }
     });
+    
+    let menuCardLink = document.querySelectorAll('.card-step')
+    menuCardLink.forEach(link => {
+        link.addEventListener('click', menuscards)
+    })
+
+    function menuscards (link) {
+        link.preventDefault()
+        let seleccion = link.target
+
+        switch (seleccion.tagName) {
+            case 'I':
+                seleccion = seleccion.parentNode.parentNode.parentNode
+                break;
+            case 'SPAN':
+                seleccion = seleccion.parentNode.parentNode
+                break;
+            case 'H6':
+                seleccion = seleccion.parentNode.parentNode
+                break;
+            case 'DIV':
+                seleccion = seleccion.parentNode
+                break;
+        }
+        let menuCardLink = document.querySelectorAll('.card-step')
+        menuCardLink.forEach(link => {
+            if(link.classList.contains('activo')){
+                link.classList.remove('activo')
+            }
+        })
+        seleccion.classList.add('activo')
+
+        let menuCard = document.querySelectorAll('.menu-card')
+        menuCard.forEach(content => {
+            if(!content.classList.contains('d-none')){
+                content.classList.add('d-none')
+            }
+        })
+        let contenedores = document.querySelectorAll(`.${seleccion.getAttribute('data-content')}`)
+        contenedores.forEach(contenedor => {
+            contenedor.classList.remove('d-none')
+        })
+    }
 })
