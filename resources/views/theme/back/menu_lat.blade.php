@@ -29,7 +29,9 @@
                                 {{ $usuario->representante->nombre1 . ' ' . $usuario->representante->nombre2 }}<br>{{ ucwords($usuario->representante->apellido1 . ' ' . $usuario->representante->apellido2) }}
                             @endif
                         @else
-                            {{ $usuario->empleado->nombre1 . ' ' . $usuario->empleado->nombre2 }}<br>{{ ucwords($usuario->empleado->apellido1 . ' ' . $usuario->empleado->apellido2) }}
+                            @if (session('rol_id') == 5)
+                                {{ $usuario->empleado->nombre1 . ' ' . $usuario->empleado->nombre2 }}<br>{{ ucwords($usuario->empleado->apellido1 . ' ' . $usuario->empleado->apellido2) }}
+                            @endif
                         @endif
                         <br>{{ session('rol_nombre') }}
                     </a>
