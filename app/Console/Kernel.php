@@ -28,8 +28,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
-            Mail::to('cesarmaya99@hotmail.com')->send(new PruebaCron());
-        })->everyMinute();
+            //=================================================================================
+            /*aca va el codigo
+            //=================================================================================
+
+        })->daily();
     }
 
     /**
