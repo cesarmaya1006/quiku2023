@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
             //=================================================================================
-            /*aca va el codigo
+            return 0;
             //=================================================================================
 
         })->daily();
