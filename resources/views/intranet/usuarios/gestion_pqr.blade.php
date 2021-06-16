@@ -13,6 +13,47 @@
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
+@php
+    $aclaracionesMenu= 0;
+    $aclaraciones = 0;
+    $aclaracionesRespuesta = 0; 
+    $peticiones = $pqr->peticiones->count();
+    $peticionesRespuesta = 0;
+    $recursosMenu = 0;
+    foreach ($pqr->peticiones as $peticion) {
+        if ($peticion->aclaraciones) {
+            foreach ($peticion->aclaraciones as $aclaracion) {
+                $aclaraciones ++;
+                if($aclaracion->respuesta != null){
+                    $aclaracionesRespuesta ++;
+                }
+            }
+        }
+        if($peticion->respuesta){
+            $peticionesRespuesta ++;
+        }
+        if ($peticion->recurso) {
+            $recursosMenu ++;
+        }
+    }
+    if($aclaraciones > 0 ){
+        if($aclaraciones == $aclaracionesRespuesta ){
+            $aclaracionesMenu = 1;
+        }else {
+            $aclaracionesMenu = 2;
+        }
+    }
+    if($peticiones == $peticionesRespuesta){
+        $respuestaMenu = 1;
+    }elseif($peticionesRespuesta > 0){
+        $respuestaMenu = 2;
+    }else{
+        $respuestaMenu = 0;
+    }
+
+
+
+@endphp
     <div class="container-fluid">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-8">
@@ -88,9 +129,7 @@
                                     <div class="col-12 col-md-6">
                                         Fecha de factura: <strong>{{ $pqr->fecha_factura }}</strong>
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        Días de prorroga: <strong>{{ $pqr->prorroga_dias }} </strong>
-                                    </div>
+
                                     <div class="col-12 col-md-6">
                                         Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
                                     </div>
@@ -104,68 +143,176 @@
                                 </div>
                             </div>
 
+                            <div class="col-12 d-flex flex-wrap rounded border justify-content-center m-2 p-2 ">
+                                <a href="" class="menu-radicado btn card-step verificado activo" data-content = 'menu-card-radicado'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="far fa-file-alt"></i>
+                                          </span>
+                                        <h6>Radicacion de la PQR</h6>
+                                    </div>
+                                </a>
+                                @if ($pqr->prorroga)
+                                    <a href="" class="menu-prorroga btn card-step verificado" data-content = 'menu-card-prorroga'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Prorroga</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($aclaracionesMenu == 1)
+                                <a href="" class="menu-aclaracion btn card-step verificado " data-content = 'menu-card-aclaraciones'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                        <h6>Aclaración y/o complementación</h6>
+                                    </div>
+                                </a>
+                                @elseif($aclaracionesMenu == 2)
+                                    <a href="" class="menu-aclaracion btn card-step tramite" data-content = 'menu-card-aclaraciones'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-hourglass-half"></i>
+                                            </span>
+                                            <h6>Aclaración y/o complementación</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($respuestaMenu == 1)
+                                    <a href="" class="menu-respuesta btn card-step verificado" data-content = 'menu-card-respuesta'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Respuesta PQR</h6>
+                                        </div>
+                                    </a>
+                                @elseif($respuestaMenu == 2)
+                                    <a href="" class="menu-respuesta btn card-step tramite" data-content = 'menu-card-respuesta'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-hourglass-half"></i>
+                                            </span>
+                                            <h6>Respuesta PQR</h6>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a href="" class="menu-respuesta btn card-step desativado" data-content = 'menu-card-respuesta'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-hourglass-half"></i>
+                                            </span>
+                                            <h6>Respuesta PQR</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if($pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 8 || $pqr->estadospqr_id == 9)
+                                    <a href="" class="menu-recurso btn card-step tramite" data-content = 'menu-card-recursos'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-hourglass-half"></i>
+                                            </span>
+                                            <h6>Recurso</h6>
+                                        </div>
+                                    </a>
+                                @elseif($pqr->estadospqr_id == 10)
+                                    <a href="" class="menu-recurso btn card-step verificado" data-content = 'menu-card-recursos'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Recurso</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10 )
+                                    <a href="" class="menu-cierre btn card-step verificado" data-content = 'menu-card-recursos'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Cierre del proceso de GESTION PQR</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                            </div>
                             <hr style="border-top: solid 4px black">
                             <?php $n_peticion = 0; ?>
+                            @if($pqr->prorroga_dias)
+                                <div class="menu-card-prorroga menu-card d-none rounded border mb-3 p-2 ">
+                                    <div class="col-12 col-md-6">
+                                        Días de prorroga: <strong>{{ $pqr->prorroga_dias }} </strong>
+                                    </div>
+                                </div>
+                            @endif
                             @foreach ($pqr->peticiones as $peticion)
                                 <?php $n_peticion++; ?>
                                 <div class="col-12 rounded border mb-3 p-2 peticion_general">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h5>Petición {{ $n_peticion }}</h5>
-                                        </div>
-                                        <div class="col-12">
-                                            <p><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
-                                        </div>
-                                        @if($peticion->otro)
-                                            <p>{{$peticion->otro}}</p>
-                                        @endif
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h6>Hechos</h6>
-                                        </div>
-                                        <div class="col-12">
-                                            <ul>
-                                                @foreach ($peticion->hechos as $hecho)
-                                                    <li>
-                                                        <p>{{ $hecho->hecho }}</p>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h6>Anexos</h6>
-                                        </div>
-                                        <div class="col-12">
-                                            <table class="table table-light" style="font-size: 0.8em;">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Titulo</th>
-                                                        <th scope="col">Descripción</th>
-                                                        <th scope="col">Descarga</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($peticion->anexos as $anexo)
-                                                        <tr>
-                                                            <td>{{ $anexo->titulo }}</td>
-                                                            <td>{{ $anexo->descripcion }}</td>
-                                                            <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
-                                                                    target="_blank" rel="noopener noreferrer">Descargar</a>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    @if ($peticion->aclaraciones->count() > 0)
+                                    <div class="menu-card-radicado menu-card">
                                         <div class="row">
+                                            <div class="col-12">
+                                                <h5>Petición {{ $n_peticion }}</h5>
+                                            </div>
+                                            <div class="col-12">
+                                                <p><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
+                                            </div>
+                                            @if($peticion->otro)
+                                                <p>{{$peticion->otro}}</p>
+                                            @endif
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h6>Hechos</h6>
+                                            </div>
+                                            <div class="col-12">
+                                                <ul>
+                                                    @foreach ($peticion->hechos as $hecho)
+                                                        <li>
+                                                            <p>{{ $hecho->hecho }}</p>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h6>Anexos</h6>
+                                            </div>
+                                            <div class="col-12">
+                                                <table class="table table-light" style="font-size: 0.8em;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Titulo</th>
+                                                            <th scope="col">Descripción</th>
+                                                            <th scope="col">Descarga</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($peticion->anexos as $anexo)
+                                                            <tr>
+                                                                <td>{{ $anexo->titulo }}</td>
+                                                                <td>{{ $anexo->descripcion }}</td>
+                                                                <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
+                                                                        target="_blank" rel="noopener noreferrer">Descargar</a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    @if ($peticion->aclaraciones->count() > 0)
+                                        <div class="row menu-card-aclaraciones menu-card d-none">
+                                            <div class="col-12">
+                                                <h5>Petición {{ $n_peticion }}</h5>
+                                            </div>
                                             <div class="col-12">
                                                 <h6>Aclaraciones</h6>
                                             </div>
@@ -291,7 +438,10 @@
                                     @endif
                                     <br>
                                     @if ($peticion->respuesta)
-                                        <div class="row">
+                                        <div class="row menu-card-respuesta menu-card d-none">
+                                            <div class="col-12">
+                                                <h5>Petición {{ $n_peticion }}</h5>
+                                            </div>
                                             <div class="col-12">
                                                 <h6>Respuesta petición</h6>
                                             </div>
@@ -325,243 +475,247 @@
                                             @endif
                                         </div>
                                     @endif
-                                    @if (sizeOf($peticion->recursos))
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h6>Recursos</h6>
-                                            </div>
-                                            <div class="col-12 table-responsive">
-                                                <table class="table table-light" style="font-size: 0.8em;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Fecha recurso</th>
-                                                            <th scope="col">Tipo de recurso</th>
-                                                            <th scope="col">Recurso</th>
-                                                            <th scope="col">Estado</th>
-                                                            <th scope="col">Documentos recurso</th>
-                                                            <th scope="col">Fecha respuesta recurso</th>
-                                                            <th scope="col">Documentos respuesta recurso</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($peticion->recursos as $recurso)
+                                    <div class="menu-card-recursos menu-card d-none">
+                                        <div class="col-12">
+                                            <h5>Petición {{ $n_peticion }}</h5>
+                                        </div>
+                                        @if (sizeOf($peticion->recursos))
+                                            <div class="row card-recursos">
+                                                <div class="col-12">
+                                                    <h6>Recursos</h6>
+                                                </div>
+                                                <div class="col-12 table-responsive">
+                                                    <table class="table table-light" style="font-size: 0.8em;">
+                                                        <thead>
                                                             <tr>
-                                                                <td>{{ $recurso->fecha_radicacion }}</td>
-                                                                <td>{{ $recurso->tiporeposicion->tipo }}</td>
-                                                                <td>{{ $recurso->recurso }}</td>
-                                                                <td>Resuelta</td>
-                                                                @if ($recurso->documentos)
-                                                                    <td>
-                                                                        @foreach ($recurso->documentos as $anexo)
-                                                                            <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
-                                                                                target="_blank"
-                                                                                rel="noopener noreferrer">{{ $anexo->titulo }}</a>
-                                                                        @endforeach
-                                                                    </td>
-                                                                @else
-                                                                    <td>---</td>
-                                                                @endif
-                                                                @if ($recurso->respuestarecurso)
-                                                                    <td>{{ $recurso->respuestarecurso->fecha }}</td>
-                                                                @else
-                                                                    <td>---</td>
-                                                                @endif
-                                                                <td>
-                                                                    @if ($recurso->respuestarecurso)
-                                                                        @foreach ($recurso->respuestarecurso->documentos as $anexoRespuesta)
-                                                                            <a href="{{ asset('documentos/respuestas/' . $anexoRespuesta->url) }}"
-                                                                                target="_blank"
-                                                                                rel="noopener noreferrer">{{ $anexoRespuesta->titulo }}</a>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </td>
+                                                                <th scope="col">Fecha recurso</th>
+                                                                <th scope="col">Tipo de recurso</th>
+                                                                <th scope="col">Recurso</th>
+                                                                <th scope="col">Estado</th>
+                                                                <th scope="col">Documentos recurso</th>
+                                                                <th scope="col">Fecha respuesta recurso</th>
+                                                                <th scope="col">Documentos respuesta recurso</th>
                                                             </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                <hr class="mt-5">
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($peticion->recursos as $recurso)
+                                                                <tr>
+                                                                    <td>{{ $recurso->fecha_radicacion }}</td>
+                                                                    <td>{{ $recurso->tiporeposicion->tipo }}</td>
+                                                                    <td>{{ $recurso->recurso }}</td>
+                                                                    <td>Resuelta</td>
+                                                                    @if ($recurso->documentos)
+                                                                        <td>
+                                                                            @foreach ($recurso->documentos as $anexo)
+                                                                                <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
+                                                                                    target="_blank"
+                                                                                    rel="noopener noreferrer">{{ $anexo->titulo }}</a>
+                                                                            @endforeach
+                                                                        </td>
+                                                                    @else
+                                                                        <td>---</td>
+                                                                    @endif
+                                                                    @if ($recurso->respuestarecurso)
+                                                                        <td>{{ $recurso->respuestarecurso->fecha }}</td>
+                                                                    @else
+                                                                        <td>---</td>
+                                                                    @endif
+                                                                    <td>
+                                                                        @if ($recurso->respuestarecurso)
+                                                                            @foreach ($recurso->respuestarecurso->documentos as $anexoRespuesta)
+                                                                                <a href="{{ asset('documentos/respuestas/' . $anexoRespuesta->url) }}"
+                                                                                    target="_blank"
+                                                                                    rel="noopener noreferrer">{{ $anexoRespuesta->titulo }}</a>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                    <hr class="mt-5">
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
-
-                                    @if ($peticion->recurso == 1 && $peticion->respuesta && !sizeOf($peticion->recursos))
-                                        <input class="respuestaProcedeRecurso" type="hidden" value="1">
-                                        <div class="col-12 col-md-6">
-                                            <h6>¿Desea interponer un recurso?</h6>
-                                        </div>
-                                        <div class="col-12 col-md-6 d-flex flex-row">
-                                            <div class="form-check mb-3 mr-4">
-                                                <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
-                                                    class="form-check-input recurso_procede_check recurso_procede_si"
-                                                    value="1" />
-                                                <label id="_label" class="form-check-label" for="">SI</label>
+                                        @endif
+    
+                                        @if ($peticion->recurso == 1 && $peticion->respuesta && !sizeOf($peticion->recursos))
+                                            <input class="respuestaProcedeRecurso" type="hidden" value="1">
+                                            <div class="col-12 col-md-6">
+                                                <h6>¿Desea interponer un recurso?</h6>
                                             </div>
-                                            <div class="form-check mb-3">
-                                                <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
-                                                    class="form-check-input recurso_procede_check recurso_procede_no"
-                                                    value="0" checked />
-                                                <label id="_label" class="form-check-label" for="">NO</label>
+                                            <div class="col-12 col-md-6 d-flex flex-row">
+                                                <div class="form-check mb-3 mr-4">
+                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
+                                                        class="form-check-input recurso_procede_check recurso_procede_si"
+                                                        value="1" />
+                                                    <label id="_label" class="form-check-label" for="">SI</label>
+                                                </div>
+                                                <div class="form-check mb-3">
+                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
+                                                        class="form-check-input recurso_procede_check recurso_procede_no"
+                                                        value="0" checked />
+                                                    <label id="_label" class="form-check-label" for="">NO</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row form-recursos">
-                                            <input class="id_peticionRecurso" type="hidden" value="{{ $peticion->id }}">
-                                            <div class="row">
-                                                <div class="form-group col-12 col-md-12 titulo-recurso">
-                                                    <div class="col-12 d-flex justify-content-between">
-                                                        <label for="">Tipo de recurso</label>
+                                            <div class="row form-recursos">
+                                                <input class="id_peticionRecurso" type="hidden" value="{{ $peticion->id }}">
+                                                <div class="row">
+                                                    <div class="form-group col-12 col-md-12 titulo-recurso">
+                                                        <div class="col-12 d-flex justify-content-between">
+                                                            <label for="">Tipo de recurso</label>
+                                                        </div>
+                                                        <select class="custom-select rounded-0 tipo_reposicion requerido">
+                                                            <option value="">--Seleccione--</option>
+                                                            <option value="1">Aclaración y/o corrección</option>
+                                                            <option value="2">Reposición</option>
+                                                            <option value="3">Apelación</option>
+                                                            <option value="4">Reposición y apelación</option>
+                                                        </select>
                                                     </div>
-                                                    <select class="custom-select rounded-0 tipo_reposicion requerido">
-                                                        <option value="">--Seleccione--</option>
-                                                        <option value="1">Aclaración y/o corrección</option>
-                                                        <option value="2">Reposición</option>
-                                                        <option value="3">Apelación</option>
-                                                        <option value="4">Reposición y apelación</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <h6>Recurso</h6>
-                                                </div>
-                                                <div class="col-12 form-group">
-                                                    <textarea type="text"
-                                                        class="form-control form-control-sm respuestaRecurso"></textarea>
-                                                </div>
-                                                <div class="col-12" id="anexosRecursos">
-                                                    <div class="col-12 d-flex row anexoRecurso" id="anexoRecurso">
-                                                        <div class="col-12 titulo-anexo d-flex justify-content-between">
-                                                            <h6>Anexo</h6>
-                                                            <button type="button"
-                                                                class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoRecurso"><i
-                                                                    class="fas fa-minus-circle"></i> Eliminar anexo</button>
-                                                        </div>
-                                                        <div class="col-12 col-md-4 form-group titulo-anexoRecurso">
-                                                            <label for="titulo">Título anexo</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                id="titulo">
-                                                        </div>
-                                                        <div class="col-12 col-md-4 form-group descripcion-anexoRecurso">
-                                                            <label for="descripcion">Descripción</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                id="descripcion">
-                                                        </div>
-                                                        <div class="col-12 col-md-4 form-group doc-anexoRecurso">
-                                                            <label for="documentoRecurso">Anexos o Pruebas</label>
-                                                            <input class="form-control form-control-sm" type="file"
-                                                                id="documentoRecurso">
+                                                    <div class="col-12 col-md-6">
+                                                        <h6>Recurso</h6>
+                                                    </div>
+                                                    <div class="col-12 form-group">
+                                                        <textarea type="text"
+                                                            class="form-control form-control-sm respuestaRecurso"></textarea>
+                                                    </div>
+                                                    <div class="col-12" id="anexosRecursos">
+                                                        <div class="col-12 d-flex row anexoRecurso" id="anexoRecurso">
+                                                            <div class="col-12 titulo-anexo d-flex justify-content-between">
+                                                                <h6>Anexo</h6>
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoRecurso"><i
+                                                                        class="fas fa-minus-circle"></i> Eliminar anexo</button>
+                                                            </div>
+                                                            <div class="col-12 col-md-4 form-group titulo-anexoRecurso">
+                                                                <label for="titulo">Título anexo</label>
+                                                                <input type="text" class="form-control form-control-sm"
+                                                                    id="titulo">
+                                                            </div>
+                                                            <div class="col-12 col-md-4 form-group descripcion-anexoRecurso">
+                                                                <label for="descripcion">Descripción</label>
+                                                                <input type="text" class="form-control form-control-sm"
+                                                                    id="descripcion">
+                                                            </div>
+                                                            <div class="col-12 col-md-4 form-group doc-anexoRecurso">
+                                                                <label for="documentoRecurso">Anexos o Pruebas</label>
+                                                                <input class="form-control form-control-sm" type="file"
+                                                                    id="documentoRecurso">
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-12 d-flex justify-content-end flex-row mb-3">
+                                                        <button
+                                                            class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexoRecurso"
+                                                            id="crearAnexoRecurso"><i class="fa fa-plus-circle mr-2"
+                                                                aria-hidden="true"></i> Añadir
+                                                            otro Anexo</button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-12 d-flex justify-content-end flex-row mb-3">
-                                                    <button
-                                                        class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexoRecurso"
-                                                        id="crearAnexoRecurso"><i class="fa fa-plus-circle mr-2"
-                                                            aria-hidden="true"></i> Añadir
-                                                        otro Anexo</button>
+                                                <div class="card-footer d-flex justify-content-end guardarRecurso">
+                                                    <button type="" class="btn btn-primary px-4"
+                                                        data_url="{{ route('recurso_guardar') }}"
+                                                        data_url_anexos="{{ route('recurso_anexos_guardar') }}"
+                                                        data_token="{{ csrf_token() }}">Guardar recurso</button>
                                                 </div>
                                             </div>
-                                            <div class="card-footer d-flex justify-content-end guardarRecurso">
-                                                <button type="" class="btn btn-primary px-4"
-                                                    data_url="{{ route('recurso_guardar') }}"
-                                                    data_url_anexos="{{ route('recurso_anexos_guardar') }}"
-                                                    data_token="{{ csrf_token() }}">Guardar recurso</button>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @php
-                                        $validacionRecurso2 = false;
-                                        $tipoRecursoValidacion = 0;
-                                        $respuestaRecurso = $peticion->recursos;
-                                        foreach ($respuestaRecurso as $key => $value) {
-                                            if ($key == 0) {
-                                                if ($value->respuestaRecurso && $value->tipo_reposicion_id) {
-                                                    $tipoRecursoValidacion= $value->tipo_reposicion_id;
-                                                    $validacionRecurso2 = true;
+                                        @endif
+                                        @php
+                                            $validacionRecurso2 = false;
+                                            $tipoRecursoValidacion = 0;
+                                            $respuestaRecurso = $peticion->recursos;
+                                            foreach ($respuestaRecurso as $key => $value) {
+                                                if ($key == 0) {
+                                                    if ($value->respuestaRecurso && $value->tipo_reposicion_id) {
+                                                        $tipoRecursoValidacion= $value->tipo_reposicion_id;
+                                                        $validacionRecurso2 = true;
+                                                    }
                                                 }
                                             }
-                                        }
-                                        $totalrecursos = sizeOf($respuestaRecurso);
-                                    @endphp
-                                    @if ($peticion->recurso == 1 && $peticion->respuesta && (sizeOf($peticion->recursos) && $validacionRecurso2 && $totalrecursos <= 1) && $tipoRecursoValidacion == 1)
-                                        <input class="respuestaProcedeRecurso" type="hidden" value="1">
-                                        <div class="col-12 col-md-6">
-                                            <h6>¿Desea interponer otro recurso?</h6>
-                                        </div>
-                                        <div class="col-12 col-md-6 d-flex flex-row">
-                                            <div class="form-check mb-3 mr-4">
-                                                <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
-                                                    class="form-check-input recurso_procede_check recurso_procede_si"
-                                                    value="1" />
-                                                <label id="_label" class="form-check-label" for="">SI</label>
+                                            $totalrecursos = sizeOf($respuestaRecurso);
+                                        @endphp
+                                        @if ($peticion->recurso == 1 && $peticion->respuesta && (sizeOf($peticion->recursos) && $validacionRecurso2 && $totalrecursos <= 1) && $tipoRecursoValidacion == 1)
+                                            <input class="respuestaProcedeRecurso" type="hidden" value="1">
+                                            <div class="col-12 col-md-6">
+                                                <h6>¿Desea interponer otro recurso?</h6>
                                             </div>
-                                            <div class="form-check mb-3">
-                                                <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
-                                                    class="form-check-input recurso_procede_check recurso_procede_no"
-                                                    value="0" checked />
-                                                <label id="_label" class="form-check-label" for="">NO</label>
+                                            <div class="col-12 col-md-6 d-flex flex-row">
+                                                <div class="form-check mb-3 mr-4">
+                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
+                                                        class="form-check-input recurso_procede_check recurso_procede_si"
+                                                        value="1" />
+                                                    <label id="_label" class="form-check-label" for="">SI</label>
+                                                </div>
+                                                <div class="form-check mb-3">
+                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
+                                                        class="form-check-input recurso_procede_check recurso_procede_no"
+                                                        value="0" checked />
+                                                    <label id="_label" class="form-check-label" for="">NO</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row form-recursos">
-                                            <input class="id_peticionRecurso" type="hidden" value="{{ $peticion->id }}">
-                                            <div class="row">
-                                                <div class="form-group col-12 col-md-12 titulo-recurso">
-                                                    <div class="col-12 d-flex justify-content-between">
-                                                        <label for="">Tipo de recurso</label>
+                                            <div class="row form-recursos">
+                                                <input class="id_peticionRecurso" type="hidden" value="{{ $peticion->id }}">
+                                                <div class="row">
+                                                    <div class="form-group col-12 col-md-12 titulo-recurso">
+                                                        <div class="col-12 d-flex justify-content-between">
+                                                            <label for="">Tipo de recurso</label>
+                                                        </div>
+                                                        <select class="custom-select rounded-0 tipo_reposicion requerido">
+                                                            <option value="">--Seleccione--</option>
+                                                            <option value="2">Reposición</option>
+                                                            <option value="3">Apelación</option>
+                                                            <option value="4">Reposición y apelación</option>
+                                                        </select>
                                                     </div>
-                                                    <select class="custom-select rounded-0 tipo_reposicion requerido">
-                                                        <option value="">--Seleccione--</option>
-                                                        <option value="2">Reposición</option>
-                                                        <option value="3">Apelación</option>
-                                                        <option value="4">Reposición y apelación</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <h6>Recurso</h6>
-                                                </div>
-                                                <div class="col-12 form-group">
-                                                    <textarea type="text"
-                                                        class="form-control form-control-sm respuestaRecurso"></textarea>
-                                                </div>
-                                                <div class="col-12" id="anexosRecursos">
-                                                    <div class="col-12 d-flex row anexoRecurso" id="anexoRecurso">
-                                                        <div class="col-12 titulo-anexo d-flex justify-content-between">
-                                                            <h6>Anexo</h6>
-                                                            <button type="button"
-                                                                class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoRecurso"><i
-                                                                    class="fas fa-minus-circle"></i> Eliminar anexo</button>
-                                                        </div>
-                                                        <div class="col-12 col-md-4 form-group titulo-anexoRecurso">
-                                                            <label for="titulo">Título anexo</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                id="titulo">
-                                                        </div>
-                                                        <div class="col-12 col-md-4 form-group descripcion-anexoRecurso">
-                                                            <label for="descripcion">Descripción</label>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                id="descripcion">
-                                                        </div>
-                                                        <div class="col-12 col-md-4 form-group doc-anexoRecurso">
-                                                            <label for="documentoRecurso">Anexos o Pruebas</label>
-                                                            <input class="form-control form-control-sm" type="file"
-                                                                id="documentoRecurso">
+                                                    <div class="col-12 col-md-6">
+                                                        <h6>Recurso</h6>
+                                                    </div>
+                                                    <div class="col-12 form-group">
+                                                        <textarea type="text"
+                                                            class="form-control form-control-sm respuestaRecurso"></textarea>
+                                                    </div>
+                                                    <div class="col-12" id="anexosRecursos">
+                                                        <div class="col-12 d-flex row anexoRecurso" id="anexoRecurso">
+                                                            <div class="col-12 titulo-anexo d-flex justify-content-between">
+                                                                <h6>Anexo</h6>
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoRecurso"><i
+                                                                        class="fas fa-minus-circle"></i> Eliminar anexo</button>
+                                                            </div>
+                                                            <div class="col-12 col-md-4 form-group titulo-anexoRecurso">
+                                                                <label for="titulo">Título anexo</label>
+                                                                <input type="text" class="form-control form-control-sm"
+                                                                    id="titulo">
+                                                            </div>
+                                                            <div class="col-12 col-md-4 form-group descripcion-anexoRecurso">
+                                                                <label for="descripcion">Descripción</label>
+                                                                <input type="text" class="form-control form-control-sm"
+                                                                    id="descripcion">
+                                                            </div>
+                                                            <div class="col-12 col-md-4 form-group doc-anexoRecurso">
+                                                                <label for="documentoRecurso">Anexos o Pruebas</label>
+                                                                <input class="form-control form-control-sm" type="file"
+                                                                    id="documentoRecurso">
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-12 d-flex justify-content-end flex-row mb-3">
+                                                        <button
+                                                            class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexoRecurso"
+                                                            id="crearAnexoRecurso"><i class="fa fa-plus-circle mr-2"
+                                                                aria-hidden="true"></i> Añadir
+                                                            otro Anexo</button>
+                                                    </div>
                                                 </div>
-                                                <div class="col-12 d-flex justify-content-end flex-row mb-3">
-                                                    <button
-                                                        class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexoRecurso"
-                                                        id="crearAnexoRecurso"><i class="fa fa-plus-circle mr-2"
-                                                            aria-hidden="true"></i> Añadir
-                                                        otro Anexo</button>
+                                                <div class="card-footer d-flex justify-content-end guardarRecurso">
+                                                    <button type="" class="btn btn-primary px-4"
+                                                        data_url="{{ route('recurso_guardar') }}"
+                                                        data_url_anexos="{{ route('recurso_anexos_guardar') }}"
+                                                        data_token="{{ csrf_token() }}">Guardar recurso</button>
                                                 </div>
                                             </div>
-                                            <div class="card-footer d-flex justify-content-end guardarRecurso">
-                                                <button type="" class="btn btn-primary px-4"
-                                                    data_url="{{ route('recurso_guardar') }}"
-                                                    data_url_anexos="{{ route('recurso_anexos_guardar') }}"
-                                                    data_token="{{ csrf_token() }}">Guardar recurso</button>
-                                            </div>
-                                        </div>
-                                    @endif
-
+                                        @endif
+                                    </div>
                                     <input class="totalPeticionAclaraciones" name="totalPeticionAclaraciones" type="hidden"
                                         value="">
                                     <input class="id_peticion" name="id_peticion" type="hidden"
@@ -569,13 +723,17 @@
                                 </div>
                                 <input class="totalAclaraciones" name="totalAclaraciones" type="hidden" value="">
                             @endforeach
+                            
                             <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                             <input class="totalGeneralAnexos" id="totalGeneralAnexos" name="totalGeneralAnexos"
                                 type="hidden" value="{{ $pqr->id }}">
                             <input class="totalGeneralaclaraciones" id="totalGeneralaclaraciones"
                                 name="totalGeneralaclaraciones" type="hidden" value="{{ $pqr->id }}">
                             <div class="card-footer d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                                <button href="{{ route('usuario-index') }}" class="btn btn-danger mx-2 px-4">Salir</button>
+                                @if (!($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10))
+                                    <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                                @endif
                             </div>
                         </form>
                     </div>

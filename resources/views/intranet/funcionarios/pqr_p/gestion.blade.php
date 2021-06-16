@@ -533,7 +533,10 @@
                         </div>
                         
                         <div class="card-footer d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                            <button href="{{ route('funcionario-index') }}" class="btn btn-danger mx-2 px-4">Salir</button>
+                            @if(!($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10))
+                                <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                            @endif
                         </div>
                         <input class="totalGeneralaclaraciones" id="totalGeneralaclaraciones"
                             name="totalGeneralaclaraciones" type="hidden" value="0">
