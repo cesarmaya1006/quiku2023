@@ -29,10 +29,15 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->call(function () {
             //=================================================================================
+            // $pqrs = PQR::all();
+            // foreach ($pqrs as $pqr) {
+            //     $pqr['estadospqr_id'] = 5;
+            //     PQR::findOrFail($pqr['id'])->update($pqr);
+            // }
             return 0;
             //=================================================================================
-
         })->daily();
+        // })->everyMinute();	
     }
 
     /**
