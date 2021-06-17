@@ -303,15 +303,18 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="password">Clave o Contraseña</label>
                                         <input type="password" class="form-control" id="password"
-                                            placeholder="Clave o Contraseña" value="{{ old('password') }}" name="password"
-                                            required>
+                                            placeholder="Clave o Contraseña" value="{{ old('password') }}"
+                                            name="password" required>
+                                        <small id="helpId" class="form-text text-muted">La contraseña debe contener al menos
+                                            5 caracteres</small>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="requerido" for="verificacionpassword">Repetir clave o
                                             contraseña</label>
                                         <input type="password" class="form-control" id="verificacionpassword"
                                             placeholder="Repetir clave o contraseña"
-                                            value="{{ old('verificacionpassword') }}" name="verificacionpassword" required>
+                                            value="{{ old('verificacionpassword') }}" name="verificacionpassword"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="form-row row mt-3">
