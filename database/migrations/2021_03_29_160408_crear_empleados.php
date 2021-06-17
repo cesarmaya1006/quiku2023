@@ -20,6 +20,8 @@ class CrearEmpleados extends Migration
             $table->foreign('docutipos_id', 'fk_empleado_docutipos')->references('id')->on('docutipos')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('cargo_id');
             $table->foreign('cargo_id', 'fk_empleado_cargos')->references('id')->on('cargos')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('sede_id');
+            $table->foreign('sede_id', 'fk_sedes_empleado')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('estado')->default(1);
             $table->string('identificacion', 100)->unique();
             $table->string('nombre1', 50);

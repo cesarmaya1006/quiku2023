@@ -13,47 +13,45 @@
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
-@php
-    $aclaracionesMenu= 0;
+    @php
+    $aclaracionesMenu = 0;
     $aclaraciones = 0;
-    $aclaracionesRespuesta = 0; 
+    $aclaracionesRespuesta = 0;
     $peticiones = $pqr->peticiones->count();
     $peticionesRespuesta = 0;
     $recursosMenu = 0;
     foreach ($pqr->peticiones as $peticion) {
         if ($peticion->aclaraciones) {
             foreach ($peticion->aclaraciones as $aclaracion) {
-                $aclaraciones ++;
-                if($aclaracion->respuesta != null){
-                    $aclaracionesRespuesta ++;
+                $aclaraciones++;
+                if ($aclaracion->respuesta != null) {
+                    $aclaracionesRespuesta++;
                 }
             }
         }
-        if($peticion->respuesta){
-            $peticionesRespuesta ++;
+        if ($peticion->respuesta) {
+            $peticionesRespuesta++;
         }
         if ($peticion->recurso) {
-            $recursosMenu ++;
+            $recursosMenu++;
         }
     }
-    if($aclaraciones > 0 ){
-        if($aclaraciones == $aclaracionesRespuesta ){
+    if ($aclaraciones > 0) {
+        if ($aclaraciones == $aclaracionesRespuesta) {
             $aclaracionesMenu = 1;
-        }else {
+        } else {
             $aclaracionesMenu = 2;
         }
     }
-    if($peticiones == $peticionesRespuesta){
+    if ($peticiones == $peticionesRespuesta) {
         $respuestaMenu = 1;
-    }elseif($peticionesRespuesta > 0){
+    } elseif ($peticionesRespuesta > 0) {
         $respuestaMenu = 2;
-    }else{
+    } else {
         $respuestaMenu = 0;
     }
 
-
-
-@endphp
+    @endphp
     <div class="container-fluid">
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-md-8">
@@ -140,20 +138,29 @@
                                     <div class="col-12 col-md-6">
                                         Estado: <strong>{{ $pqr->estado->estado_usuario }}</strong>
                                     </div>
+                                    <div class="col-12 col-md-6">
+                                        <strong><a href="{{ route('pqrRadicadaPdf', ['id' => $pqr->id]) }}"
+                                                target="_blank" rel="noopener noreferrer"><i class="fa fa-download"
+                                                    aria-hidden="true"></i>
+                                                Descargar
+                                                Radicado</a></strong>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="col-12 d-flex flex-wrap rounded border justify-content-center m-2 p-2 ">
-                                <a href="" class="menu-radicado btn card-step verificado activo" data-content = 'menu-card-radicado'>
+                                <a href="" class="menu-radicado btn card-step verificado activo"
+                                    data-content='menu-card-radicado'>
                                     <div class="">
                                         <span style="font-size: 2.5em;">
                                             <i class="far fa-file-alt"></i>
-                                          </span>
+                                        </span>
                                         <h6>Radicacion de la PQR</h6>
                                     </div>
                                 </a>
                                 @if ($pqr->prorroga)
-                                    <a href="" class="menu-prorroga btn card-step verificado" data-content = 'menu-card-prorroga'>
+                                    <a href="" class="menu-prorroga btn card-step verificado"
+                                        data-content='menu-card-prorroga'>
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-check"></i>
@@ -163,16 +170,18 @@
                                     </a>
                                 @endif
                                 @if ($aclaracionesMenu == 1)
-                                <a href="" class="menu-aclaracion btn card-step verificado " data-content = 'menu-card-aclaraciones'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <h6>Aclaración y/o complementación</h6>
-                                    </div>
-                                </a>
+                                    <a href="" class="menu-aclaracion btn card-step verificado "
+                                        data-content='menu-card-aclaraciones'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Aclaración y/o complementación</h6>
+                                        </div>
+                                    </a>
                                 @elseif($aclaracionesMenu == 2)
-                                    <a href="" class="menu-aclaracion btn card-step tramite" data-content = 'menu-card-aclaraciones'>
+                                    <a href="" class="menu-aclaracion btn card-step tramite"
+                                        data-content='menu-card-aclaraciones'>
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-hourglass-half"></i>
@@ -182,7 +191,8 @@
                                     </a>
                                 @endif
                                 @if ($respuestaMenu == 1)
-                                    <a href="" class="menu-respuesta btn card-step verificado" data-content = 'menu-card-respuesta'>
+                                    <a href="" class="menu-respuesta btn card-step verificado"
+                                        data-content='menu-card-respuesta'>
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-check"></i>
@@ -191,7 +201,8 @@
                                         </div>
                                     </a>
                                 @elseif($respuestaMenu == 2)
-                                    <a href="" class="menu-respuesta btn card-step tramite" data-content = 'menu-card-respuesta'>
+                                    <a href="" class="menu-respuesta btn card-step tramite"
+                                        data-content='menu-card-respuesta'>
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-hourglass-half"></i>
@@ -200,7 +211,8 @@
                                         </div>
                                     </a>
                                 @else
-                                    <a href="" class="menu-respuesta btn card-step desativado" data-content = 'menu-card-respuesta'>
+                                    <a href="" class="menu-respuesta btn card-step desativado"
+                                        data-content='menu-card-respuesta'>
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-hourglass-half"></i>
@@ -209,8 +221,8 @@
                                         </div>
                                     </a>
                                 @endif
-                                @if($pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 8 || $pqr->estadospqr_id == 9)
-                                    <a href="" class="menu-recurso btn card-step tramite" data-content = 'menu-card-recursos'>
+                                @if ($pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 8 || $pqr->estadospqr_id == 9)
+                                    <a href="" class="menu-recurso btn card-step tramite" data-content='menu-card-recursos'>
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-hourglass-half"></i>
@@ -219,7 +231,8 @@
                                         </div>
                                     </a>
                                 @elseif($pqr->estadospqr_id == 10)
-                                    <a href="" class="menu-recurso btn card-step verificado" data-content = 'menu-card-recursos'>
+                                    <a href="" class="menu-recurso btn card-step verificado"
+                                        data-content='menu-card-recursos'>
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-check"></i>
@@ -228,8 +241,9 @@
                                         </div>
                                     </a>
                                 @endif
-                                @if ($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10 )
-                                    <a href="" class="menu-cierre btn card-step verificado" data-content = 'menu-card-recursos'>
+                                @if ($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10)
+                                    <a href="" class="menu-cierre btn card-step verificado"
+                                        data-content='menu-card-recursos'>
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-check"></i>
@@ -241,10 +255,15 @@
                             </div>
                             <hr style="border-top: solid 4px black">
                             <?php $n_peticion = 0; ?>
-                            @if($pqr->prorroga_dias)
+                            @if ($pqr->prorroga_dias)
                                 <div class="menu-card-prorroga menu-card d-none rounded border mb-3 p-2 ">
                                     <div class="col-12 col-md-6">
                                         Días de prorroga: <strong>{{ $pqr->prorroga_dias }} </strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <strong><a href="{{ route('prorrogaPdf', ['id' => $pqr->id]) }}" target="_blank"
+                                                rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
+                                                Descargar Radicado Prorroga</a></strong>
                                     </div>
                                 </div>
                             @endif
@@ -259,8 +278,8 @@
                                             <div class="col-12">
                                                 <p><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
                                             </div>
-                                            @if($peticion->otro)
-                                                <p>{{$peticion->otro}}</p>
+                                            @if ($peticion->otro)
+                                                <p>{{ $peticion->otro }}</p>
                                             @endif
                                         </div>
                                         <hr>
@@ -298,7 +317,8 @@
                                                                 <td>{{ $anexo->titulo }}</td>
                                                                 <td>{{ $anexo->descripcion }}</td>
                                                                 <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
-                                                                        target="_blank" rel="noopener noreferrer">Descargar</a>
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer">Descargar</a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -375,6 +395,15 @@
                                                                         for="aclaracion{{ $aclaracion->id }}">Aclaración</label>
                                                                     <span
                                                                         class="text-break">{{ $aclaracion->aclaracion }}</span>
+                                                                </div>
+                                                                <div class="col-12 form-group">
+                                                                    <strong><a
+                                                                            href="{{ route('aclaracionPdf', ['id' => $aclaracion->id]) }}"
+                                                                            target="_blank" rel="noopener noreferrer"><i
+                                                                                class="fa fa-download"
+                                                                                aria-hidden="true"></i>
+                                                                            Descargar
+                                                                            Documento aclaración</a></strong>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
@@ -537,7 +566,7 @@
                                                 </div>
                                             </div>
                                         @endif
-    
+
                                         @if ($peticion->recurso == 1 && $peticion->respuesta && !sizeOf($peticion->recursos))
                                             <input class="respuestaProcedeRecurso" type="hidden" value="1">
                                             <div class="col-12 col-md-6">
@@ -545,20 +574,23 @@
                                             </div>
                                             <div class="col-12 col-md-6 d-flex flex-row">
                                                 <div class="form-check mb-3 mr-4">
-                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
+                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}"
+                                                        type="radio"
                                                         class="form-check-input recurso_procede_check recurso_procede_si"
                                                         value="1" />
                                                     <label id="_label" class="form-check-label" for="">SI</label>
                                                 </div>
                                                 <div class="form-check mb-3">
-                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
+                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}"
+                                                        type="radio"
                                                         class="form-check-input recurso_procede_check recurso_procede_no"
                                                         value="0" checked />
                                                     <label id="_label" class="form-check-label" for="">NO</label>
                                                 </div>
                                             </div>
                                             <div class="row form-recursos">
-                                                <input class="id_peticionRecurso" type="hidden" value="{{ $peticion->id }}">
+                                                <input class="id_peticionRecurso" type="hidden"
+                                                    value="{{ $peticion->id }}">
                                                 <div class="row">
                                                     <div class="form-group col-12 col-md-12 titulo-recurso">
                                                         <div class="col-12 d-flex justify-content-between">
@@ -585,14 +617,16 @@
                                                                 <h6>Anexo</h6>
                                                                 <button type="button"
                                                                     class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoRecurso"><i
-                                                                        class="fas fa-minus-circle"></i> Eliminar anexo</button>
+                                                                        class="fas fa-minus-circle"></i> Eliminar
+                                                                    anexo</button>
                                                             </div>
                                                             <div class="col-12 col-md-4 form-group titulo-anexoRecurso">
                                                                 <label for="titulo">Título anexo</label>
                                                                 <input type="text" class="form-control form-control-sm"
                                                                     id="titulo">
                                                             </div>
-                                                            <div class="col-12 col-md-4 form-group descripcion-anexoRecurso">
+                                                            <div
+                                                                class="col-12 col-md-4 form-group descripcion-anexoRecurso">
                                                                 <label for="descripcion">Descripción</label>
                                                                 <input type="text" class="form-control form-control-sm"
                                                                     id="descripcion">
@@ -627,7 +661,7 @@
                                             foreach ($respuestaRecurso as $key => $value) {
                                                 if ($key == 0) {
                                                     if ($value->respuestaRecurso && $value->tipo_reposicion_id) {
-                                                        $tipoRecursoValidacion= $value->tipo_reposicion_id;
+                                                        $tipoRecursoValidacion = $value->tipo_reposicion_id;
                                                         $validacionRecurso2 = true;
                                                     }
                                                 }
@@ -641,20 +675,23 @@
                                             </div>
                                             <div class="col-12 col-md-6 d-flex flex-row">
                                                 <div class="form-check mb-3 mr-4">
-                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
+                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}"
+                                                        type="radio"
                                                         class="form-check-input recurso_procede_check recurso_procede_si"
                                                         value="1" />
                                                     <label id="_label" class="form-check-label" for="">SI</label>
                                                 </div>
                                                 <div class="form-check mb-3">
-                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}" type="radio"
+                                                    <input id="" name="check-recurso-procede-form{{ $n_peticion }}"
+                                                        type="radio"
                                                         class="form-check-input recurso_procede_check recurso_procede_no"
                                                         value="0" checked />
                                                     <label id="_label" class="form-check-label" for="">NO</label>
                                                 </div>
                                             </div>
                                             <div class="row form-recursos">
-                                                <input class="id_peticionRecurso" type="hidden" value="{{ $peticion->id }}">
+                                                <input class="id_peticionRecurso" type="hidden"
+                                                    value="{{ $peticion->id }}">
                                                 <div class="row">
                                                     <div class="form-group col-12 col-md-12 titulo-recurso">
                                                         <div class="col-12 d-flex justify-content-between">
@@ -680,14 +717,16 @@
                                                                 <h6>Anexo</h6>
                                                                 <button type="button"
                                                                     class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoRecurso"><i
-                                                                        class="fas fa-minus-circle"></i> Eliminar anexo</button>
+                                                                        class="fas fa-minus-circle"></i> Eliminar
+                                                                    anexo</button>
                                                             </div>
                                                             <div class="col-12 col-md-4 form-group titulo-anexoRecurso">
                                                                 <label for="titulo">Título anexo</label>
                                                                 <input type="text" class="form-control form-control-sm"
                                                                     id="titulo">
                                                             </div>
-                                                            <div class="col-12 col-md-4 form-group descripcion-anexoRecurso">
+                                                            <div
+                                                                class="col-12 col-md-4 form-group descripcion-anexoRecurso">
                                                                 <label for="descripcion">Descripción</label>
                                                                 <input type="text" class="form-control form-control-sm"
                                                                     id="descripcion">
@@ -723,14 +762,15 @@
                                 </div>
                                 <input class="totalAclaraciones" name="totalAclaraciones" type="hidden" value="">
                             @endforeach
-                            
+
                             <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                             <input class="totalGeneralAnexos" id="totalGeneralAnexos" name="totalGeneralAnexos"
                                 type="hidden" value="{{ $pqr->id }}">
                             <input class="totalGeneralaclaraciones" id="totalGeneralaclaraciones"
                                 name="totalGeneralaclaraciones" type="hidden" value="{{ $pqr->id }}">
                             <div class="card-footer d-flex justify-content-end">
-                                <button href="{{ route('usuario-index') }}" class="btn btn-danger mx-2 px-4">Salir</button>
+                                <button href="{{ route('usuario-index') }}"
+                                    class="btn btn-danger mx-2 px-4">Salir</button>
                                 @if (!($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10))
                                     <button type="submit" class="btn btn-primary px-4">Guardar</button>
                                 @endif
