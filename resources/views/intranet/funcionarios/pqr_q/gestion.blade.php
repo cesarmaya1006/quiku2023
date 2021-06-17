@@ -408,7 +408,7 @@
                                     @if(!$recurso->respuestaRecurso)
                                         <div class="row form-respuesta-recursos">
                                             <input class="id_recurso" type="hidden" value="{{$recurso->id}}">
-                                            <input class="tipo_reposicion_id" type="hidden" value="{{$recurso->id}}">
+                                            <input class="tipo_reposicion_id" type="hidden" value="{{$recurso->tipo_reposicion_id}}">
                                             <div class="row">
                                                 <div class="col-12 col-md-6">
                                                     <h6>Recurso de {{$recurso->tiporeposicion->tipo}} </h6>
@@ -456,46 +456,47 @@
                                 </select>
                             </div>
                             <hr>
-                            <div class="row pb-3 form-respuestaProrroga">
-                                <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
-                                <div class="col-12 col-md-6 ">
-                                    <h6>Prorroga</h6>
-                                </div>
-                                <div class="col-12 col-md-6 d-flex flex-row">
-                                    <div class="form-check mb-3 mr-4">
-                                        <input id="" name="prorroga" type="radio" class="form-check-input prorroga_si"
-                                            value="1" />
-                                        <label id="_label" class="form-check-label" for="">SI</label>
+                            @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0 || $pqr->estadospqr_id > 6 && $pqr->prorroga == 1)
+                                <div class="row pb-3 form-respuestaProrroga">
+                                    <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
+                                    <div class="col-12 col-md-6 ">
+                                        <h6>Prorroga</h6>
                                     </div>
-                                    <div class="form-check mb-3">
-                                        <input id="" name="prorroga" type="radio" class="form-check-input prorroga_no"
-                                            value="0" />
-                                        <label id="_label" class="form-check-label" for="">NO</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 contentProrroga" id="contentProrroga">
-                                    <div class="col-12 d-flex row">
-                                        <div class="col-12 col-md-12 form-group">
-                                            <label for="plazo" class="col-md-6">Plazo prorroga días hábiles:</label>
-                                            <input type="number" class="form-control form-control-sm plazo_prorroga col-md-6"
-                                                name="plazo_prorroga" id="plazo_prorroga" min="1"
-                                                max="{{$pqr->tipoPqr->tiempos}}">
+                                    <div class="col-12 col-md-6 d-flex flex-row">
+                                        <div class="form-check mb-3 mr-4">
+                                            <input id="" name="prorroga" type="radio" class="form-check-input prorroga_si"
+                                                value="1" />
+                                            <label id="_label" class="form-check-label" for="">SI</label>
                                         </div>
+                                        <div class="form-check mb-3">
+                                            <input id="" name="prorroga" type="radio" class="form-check-input prorroga_no"
+                                                value="0" />
+                                            <label id="_label" class="form-check-label" for="">NO</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 contentProrroga" id="contentProrroga">
                                         <div class="col-12 d-flex row">
-                                            <label for="prorroga_pdf">Justificacion de prorroga</label>
-                                            <textarea type="text" class="form-control form-control-sm prorroga_pdf"
-                                                name="prorroga_pdf" id="prorroga_pdf">{{$pqr->prorroga_pdf}}</textarea>
+                                            <div class="col-12 form-group">
+                                                <label for="plazo" class="col-md-6">Plazo prorroga días hábiles:</label>
+                                                <input type="number" class="form-control form-control-sm plazo_prorroga col-md-3"
+                                                    name="plazo_prorroga" id="plazo_prorroga" min="1"
+                                                    max="{{$pqr->tipoPqr->tiempos}}">
+                                            </div>
+                                            <div class="col-12 d-flex row">
+                                                <label for="prorroga_pdf">Justificacion de prorroga</label>
+                                                <textarea type="text" class="form-control form-control-sm prorroga_pdf"
+                                                    name="prorroga_pdf" id="prorroga_pdf">{{$pqr->prorroga_pdf}}</textarea>
+                                            </div>
                                         </div>
+                                        @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
+                                            <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
+                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prorroga</button>
+                                            </div>
+                                        @endif
                                     </div>
-                                    @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
-                                        <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
-                                            <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prorroga</button>
-                                        </div>
-                                    @endif
                                 </div>
-                            </div>
-                            <hr>
-                            
+                                <hr>
+                            @endif
                             @if($pqr->estadospqr_id < 6)
                                 <div class="row">
                                     <input class="respuestaRecurso" type="hidden" value="{{ $recursoValidacion }}">
@@ -514,10 +515,10 @@
                                     </div>
                                     <div class="col-12 row px-3 recurso-form">
                                         @if ($plazoRecurso == 0)
-                                            <div class="col-12 col-md-6 form-group">
+                                            <div class="col-12 col-md-3 form-group">
                                                 <label for="plazo">Plazo recurso días hábiles:</label>
                                                 <input type="number" class="form-control form-control-sm plazo_recurso"
-                                                    name="plazo_recurso" id="plazo_recurso" min="1"
+                                                    name="plazo_recurso" id="plazo_recurso" min="0"
                                                     max="{{$pqr->tipoPqr->tiempos}}">
                                             </div>
                                         @else
@@ -532,7 +533,10 @@
                         </div>
                         
                         <div class="card-footer d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                            <a href="{{ route('funcionario-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                            @if(!($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10))
+                                <button type="submit" class="btn btn-primary px-4">Guardar</button>
+                            @endif
                         </div>
                         <input class="totalGeneralaclaraciones" id="totalGeneralaclaraciones"
                             name="totalGeneralaclaraciones" type="hidden" value="0">
@@ -541,6 +545,7 @@
                         <input class="totalPeticiones" id="totalPeticiones" name="totalPeticiones" type="hidden"
                             value="{{$pqr->id}}">
                         <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{$pqr->id}}">
+                        <input class="id_estado_pqr" id="id_estado_pqr" type="hidden" value="{{$pqr->estadospqr_id}}">
                     </form>
                 </div>
             </div>

@@ -357,7 +357,9 @@ window.addEventListener('DOMContentLoaded', function(){
             }
         })
         seleccion.classList.add('activo')
-
+        if(seleccion.getAttribute('data-content') == 'menu-salir-inicio'){
+            window.location = "/usuario/listado"
+        }
         let menuCard = document.querySelectorAll('.menu-card')
         menuCard.forEach(content => {
             if(!content.classList.contains('d-none')){

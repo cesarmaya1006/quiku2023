@@ -241,9 +241,14 @@
                                         </div>
                                     </a>
                                 @endif
+<<<<<<< HEAD
                                 @if ($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10)
                                     <a href="" class="menu-cierre btn card-step verificado"
                                         data-content='menu-card-recursos'>
+=======
+                                @if ($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10 )
+                                    <a  href="{{ route('usuario-index') }}" class="menu-cierre btn card-step verificado" data-content = 'menu-salir-inicio'>
+>>>>>>> e8947eb93065a402b783f21472cfb25a670f9c10
                                         <div class="">
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-check"></i>
@@ -769,8 +774,12 @@
                             <input class="totalGeneralaclaraciones" id="totalGeneralaclaraciones"
                                 name="totalGeneralaclaraciones" type="hidden" value="{{ $pqr->id }}">
                             <div class="card-footer d-flex justify-content-end">
+<<<<<<< HEAD
                                 <button href="{{ route('usuario-index') }}"
                                     class="btn btn-danger mx-2 px-4">Salir</button>
+=======
+                                <button href="{{ route('usuario-index') }}" class="btn btn-danger mx-2 px-4">Regresar</button>
+>>>>>>> e8947eb93065a402b783f21472cfb25a670f9c10
                                 @if (!($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10))
                                     <button type="submit" class="btn btn-primary px-4">Guardar</button>
                                 @endif
