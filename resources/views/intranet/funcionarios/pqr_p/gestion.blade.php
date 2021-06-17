@@ -476,9 +476,9 @@
                                     </div>
                                     <div class="col-12 contentProrroga" id="contentProrroga">
                                         <div class="col-12 d-flex row">
-                                            <div class="col-12 col-md-12 form-group">
+                                            <div class="col-12 form-group">
                                                 <label for="plazo" class="col-md-6">Plazo prorroga días hábiles:</label>
-                                                <input type="number" class="form-control form-control-sm plazo_prorroga col-md-6"
+                                                <input type="number" class="form-control form-control-sm plazo_prorroga col-md-3"
                                                     name="plazo_prorroga" id="plazo_prorroga" min="1"
                                                     max="{{$pqr->tipoPqr->tiempos}}">
                                             </div>
@@ -515,10 +515,10 @@
                                     </div>
                                     <div class="col-12 row px-3 recurso-form">
                                         @if ($plazoRecurso == 0)
-                                            <div class="col-12 col-md-6 form-group">
+                                            <div class="col-12 col-md-3 form-group">
                                                 <label for="plazo">Plazo recurso días hábiles:</label>
                                                 <input type="number" class="form-control form-control-sm plazo_recurso"
-                                                    name="plazo_recurso" id="plazo_recurso" min="1"
+                                                    name="plazo_recurso" id="plazo_recurso" min="0"
                                                     max="{{$pqr->tipoPqr->tiempos}}">
                                             </div>
                                         @else
@@ -533,7 +533,7 @@
                         </div>
                         
                         <div class="card-footer d-flex justify-content-end">
-                            <button href="{{ route('funcionario-index') }}" class="btn btn-danger mx-2 px-4">Salir</button>
+                            <a href="{{ route('funcionario-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                             @if(!($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10))
                                 <button type="submit" class="btn btn-primary px-4">Guardar</button>
                             @endif
@@ -545,6 +545,7 @@
                         <input class="totalPeticiones" id="totalPeticiones" name="totalPeticiones" type="hidden"
                             value="{{$pqr->id}}">
                         <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{$pqr->id}}">
+                        <input class="id_estado_pqr" id="id_estado_pqr" type="hidden" value="{{$pqr->estadospqr_id}}">
                     </form>
                 </div>
             </div>

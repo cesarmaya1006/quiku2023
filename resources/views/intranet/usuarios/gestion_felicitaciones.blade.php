@@ -135,7 +135,7 @@
                         <hr>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="{{route('usuario-index')}}" class="btn btn-danger px-5 ">Salir</i></a>
+                        <a href="{{route('usuario-index')}}" class="btn btn-danger px-5 ">Regresar</i></a>
                     </div>
                 </div>
             </div>

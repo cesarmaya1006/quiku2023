@@ -93,9 +93,9 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     });
 
-    $("#plazo_prorroga").keydown(function() {
-        return false
-      });
+    // $("#plazo_prorroga").keydown(function() {
+    //     return false
+    //   });
 
     let btnSubmit = document.querySelector('#fromGestionPqr')
     btnSubmit.addEventListener('submit', function (e) {
@@ -111,7 +111,49 @@ window.addEventListener('DOMContentLoaded', function(){
         document.querySelector('.totalGeneralaclaraciones').value = document.querySelectorAll('.aclaracion').length
         document.querySelector('.totalGeneralAnexos').value = document.querySelectorAll('.anexoconsulta').length
         document.querySelector('.totalPeticiones').value = document.querySelectorAll('.peticion_general').length
-        this.submit();
+        let respuestas = document.querySelectorAll('.respuesta')
+        let contadorRespuestas = 0;
+        respuestas.forEach(respuesta => {
+            if(respuesta.value) contadorRespuestas ++
+        })
+        let id_estado_pqr = document.querySelector('#id_estado_pqr').value
+        let recurso_check_validacion = 0
+        let recursos_check_validacion = document.querySelectorAll('.recurso_check')
+        recursos_check_validacion.forEach(radioBtn => {
+            if(radioBtn.checked){
+                recurso_check_validacion = radioBtn.value
+            }
+        })
+        recurso_check_validacion = Number(recurso_check_validacion)
+        if (contadorRespuestas == respuestas.length && id_estado_pqr < 6 && recurso_check_validacion ==0) {
+            swal({
+                title: "¿A las respuestas le procede recurso?",
+                icon: "info",
+                buttons: {
+                    cancel: {
+                      text: "Si",
+                      value: null,
+                      visible: true,
+                      className: "",
+                      closeModal: true,
+                    },
+                    confirm: {
+                      text: "No",
+                      value: true,
+                      visible: true,
+                      className: "",
+                      closeModal: true
+                    }
+                  },
+              })
+              .then((respuesta) => {
+                if (respuesta) {
+                    this.submit();
+                } 
+              });
+        }else{
+            this.submit();
+        }
     })
     // ---------------------------------------------------------------------------------------------------------
     // Inicio Función para ajustar name y id de cada peticion.
