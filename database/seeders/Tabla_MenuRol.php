@@ -26,13 +26,13 @@ class Tabla_MenuRol extends Seeder
                 'menu_id' => '1',
             ]);
         }
-        for ($i = 9; $i <= 15; $i++) {
+        for ($i = 9; $i <= 16; $i++) {
             DB::table('menu_rol')->insert([
                 'rol_id' => '6',
                 'menu_id' => $i,
             ]);
         }
-        for ($i = 16; $i <= 19; $i++) {
+        for ($i = 17; $i <= 20; $i++) {
             DB::table('menu_rol')->insert([
                 'rol_id' => '5',
                 'menu_id' => $i,

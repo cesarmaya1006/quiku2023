@@ -38,14 +38,16 @@ class Tabla_Menu extends Seeder
             //----------------------------------------------------------------------------------------------------------------------
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Consulte nuestas políticas de datos', 'menu_id' => '0', 'url' => 'usuario/consulta-politicas', 'orden' => '4', 'icono' => 'fas fa-question-circle'],
+            ['nombre' => 'Otras opciones', 'menu_id' => '0', 'url' => '#', 'orden' => '4', 'icono' => 'fas fa-question-circle'],
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Ayuda', 'menu_id' => '0', 'url' => 'usuario/ayuda', 'orden' => '5', 'icono' => 'fas fa-question-circle'],
+            ['nombre' => 'Consulte nuestas políticas de datos', 'menu_id' => '12', 'url' => 'usuario/consulta-politicas', 'orden' => '1', 'icono' => 'fas fa-question-circle'],
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Actualizar datos', 'menu_id' => '0', 'url' => 'usuario/actualizar-datos', 'orden' => '6', 'icono' => 'fas fa-edit'],
+            ['nombre' => 'Ayuda', 'menu_id' => '12', 'url' => 'usuario/ayuda', 'orden' => '2', 'icono' => 'fas fa-question-circle'],
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Actualizar datos', 'menu_id' => '12', 'url' => 'usuario/actualizar-datos', 'orden' => '3', 'icono' => 'fas fa-edit'],
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Cambiar contraseña', 'menu_id' => '0', 'url' => 'usuario/cambiar-password', 'orden' => '7', 'icono' => 'fas fa-key'],
+            ['nombre' => 'Cambiar contraseña', 'menu_id' => '12', 'url' => 'usuario/cambiar-password', 'orden' => '4', 'icono' => 'fas fa-key'],
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
             //----------------------------------------------------------------------------------------------------------------------
@@ -62,10 +64,10 @@ class Tabla_Menu extends Seeder
             //----------------------------------------------------------------------------------------------------------------------
             ['nombre' => 'Parametros', 'menu_id' => '0', 'url' => '#', 'orden' => '12', 'icono' => 'fas fa-cogs'],
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Categorias', 'menu_id' => '20',  'url' => 'admin/categorias-index', 'orden' => '1',  'icono' => 'fas fa-list-ul'],
-            ['nombre' => 'Productos', 'menu_id' => '20',  'url' => 'admin/productos-index', 'orden' => '2',  'icono' => 'fas fa-list-ul'],
-            ['nombre' => 'Marcas', 'menu_id' => '20',  'url' => 'admin/marcas-index', 'orden' => '3',  'icono' => 'fas fa-list-ul'],
-            ['nombre' => 'Referencias', 'menu_id' => '20',  'url' => 'admin/referencias-index', 'orden' => '4',  'icono' => 'fas fa-list-ul'],
+            ['nombre' => 'Categorias', 'menu_id' => '21',  'url' => 'admin/categorias-index', 'orden' => '1',  'icono' => 'fas fa-list-ul'],
+            ['nombre' => 'Productos', 'menu_id' => '21',  'url' => 'admin/productos-index', 'orden' => '2',  'icono' => 'fas fa-list-ul'],
+            ['nombre' => 'Marcas', 'menu_id' => '21',  'url' => 'admin/marcas-index', 'orden' => '3',  'icono' => 'fas fa-list-ul'],
+            ['nombre' => 'Referencias', 'menu_id' => '21',  'url' => 'admin/referencias-index', 'orden' => '4',  'icono' => 'fas fa-list-ul'],
 
         ];
 
