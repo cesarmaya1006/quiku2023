@@ -2,9 +2,19 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
-use App\Http\Controllers\Controller;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
+use App\Mail\RespuestaPQR;
+use App\Models\PQR\Estado;
+use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
+use App\Models\PQR\Respuesta;
+use App\Models\PQR\Aclaracion;
+use App\Models\PQR\DocRespuesta;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Config;
+use App\Mail\AclaracionComplementacion;
+use App\Http\Controllers\Fechas\FechasController;
+use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 
 class ConceptoUOpinionController extends Controller
 {
@@ -19,6 +29,144 @@ class ConceptoUOpinionController extends Controller
 
         return view('intranet.funcionarios.concepto_op.gestion', compact('concepto'));
     }
+
+    public function gestionar_guardar(Request $request)
+    {
+        $pqrEstadoPrioridad['prioridad_id'] = $request['prioridad'];
+        ConceptoUOpinion::findOrFail($request['id_pqr'])->update($pqrEstadoPrioridad);
+        $documentos = $request->allFiles();
+        $totalPeticiones = $request['totalPeticiones'];
+        $contadorAclaraciones = 0;
+        $iteradorAclaraciones = 0;
+        $contadorAnexos = 0;
+        $iteradorAnexos = 0;
+        for ($i = 0; $i < $totalPeticiones; $i++) {
+            $actualizarPeticion['aclaracion'] = $request["aclaracion_check$i"];
+            if ($request["recurso"] == 1) {
+                if ($request["plazo_recurso"] != null) {
+                    $actualizarPeticion['recurso'] = $request["recurso"];
+                    $actualizarPeticion['recurso_dias'] = $request["plazo_recurso"];
+                    $actualizarPeticion['fecha_notificacion'] = date('Y-m-d');
+                }
+            }
+            Peticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
+            $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];
+            for ($j = $iteradorAclaraciones; $j < $contadorAclaraciones; $j++) {
+                if ($request["solicitud_aclaracion$j"] != null) {
+                    $nuevaAclaracion['peticion_id'] = $request["id_peticion$i"];
+                    $nuevaAclaracion['fecha'] = date("Y-m-d");
+                    $nuevaAclaracion['tipo_solicitud'] = $request["tipo_aclaracion$j"];
+                    $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
+                    $aclaracionNew = Aclaracion::create($nuevaAclaracion);
+                    $peticion_act = Peticion::findOrfail($request["id_peticion$i"]);
+                    if ($peticion_act->pqr->persona_id != null) {
+                        $email = $peticion_act->pqr->persona->email;
+                    } else {
+                        $email = $peticion_act->pqr->empresa->email;
+                    }
+                    $id_aclaracion = $aclaracionNew->id;
+                    Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+                }
+            }
+            $contadorAnexos += $request["totalPeticionAnexos$i"];
+            if ($request["respuesta$i"]) {
+                $respuesta['peticion_id'] = $request["id_peticion$i"];
+                $respuesta['fecha'] = date("Y-m-d");
+                $respuesta['respuesta'] = $request["respuesta$i"];
+                $respuestaPQR = Respuesta::create($respuesta);
+                //----------------------------------------------------------------------
+                if ($respuestaPQR->peticion->pqr->persona_id != null) {
+                    $email = $respuestaPQR->peticion->pqr->persona->email;
+                } else {
+                    $email = $respuestaPQR->peticion->pqr->empresa->email;
+                }
+                $id_pqr = $respuestaPQR->peticion->pqr->id;
+                Mail::to($email)->send(new RespuestaPQR($id_pqr));
+                //----------------------------------------------------------------------
+                for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
+                    if ($request->hasFile("documentos$k")) {
+                        $ruta = Config::get('constantes.folder_doc_respuestas');
+                        $ruta = trim($ruta);
+                        $doc_subido = $documentos["documentos$k"];
+                        $tamaño = $doc_subido->getSize();
+                        if ($tamaño > 0) {
+                            $tamaño = $tamaño / 1000;
+                        }
+                        $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                        $nuevo_documento['respuesta_id'] = $respuestaPQR["id"];
+                        $nuevo_documento['titulo'] = $request["titulo$k"];
+                        if ($request["descripcion$k"]) {
+                            $nuevo_documento['descripcion'] = $request["descripcion$k"];
+                        } else {
+                            $nuevo_documento['descripcion'] = '';
+                        }
+                        $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                        $nuevo_documento['peso'] = $tamaño;
+                        $nuevo_documento['url'] = $nombre_doc;
+                        $doc_subido->move($ruta, $nombre_doc);
+                        $doc = DocRespuesta::create($nuevo_documento);
+                    }
+                }
+            }
+            $iteradorAclaraciones += $request["totalPeticionAclaraciones$i"];
+            $iteradorAnexos += $request["totalPeticionAnexos$i"];
+        }
+        $peticiones = Peticion::all()->where('pqr_id', $request["id_pqr"]);
+        $respuestasPeticiones = [];
+        $totalAclaracionesRes = 0;
+        $respuestaAclaraciones = [];
+        $recurso = 0;
+        $totalRecursos = [];
+        foreach ($peticiones as $key => $peticion) {
+            if ($peticion->respuesta) {
+                $respuestasPeticiones[] = $peticion->respuesta;
+            }
+            if ($peticion->recurso != 0) {
+                $recurso = $peticion->recurso;
+                if(!empty($peticion->recursos)){
+                    if(sizeOf($peticion->recursos)){
+                        $totalRecursos [] = $peticion->recursos;
+                    }
+                }
+            }
+            $aclaraciones = Aclaracion::all()->where('peticion_id', $peticion["id"]);
+            $totalAclaracionesRes += sizeof($aclaraciones);
+            foreach ($aclaraciones as $key => $aclaracion) {
+                if ($aclaracion->respuesta) {
+                    $respuestaAclaraciones[] = $aclaracion;
+                }
+            }
+        }
+        if ($request["plazo_recurso"] && $request["recurso"] == 1) {
+            $pqrFechaLimiteRecurso = ConceptoUOpinion::findOrFail($request['id_pqr']);
+            $nuevoLimite = $pqrFechaLimiteRecurso->prorroga_dias + $pqrFechaLimiteRecurso->tipoPqr->tiempos + $request["plazo_recurso"];
+            $respuestaDias = FechasController::festivos($nuevoLimite, $pqrFechaLimiteRecurso['fecha_generacion']);
+            $actualizarPqr['tiempo_limite'] = $respuestaDias;
+            ConceptoUOpinion::findOrFail($request['id_pqr'])->update($actualizarPqr);
+        }
+
+        if (sizeOf($peticiones) == sizeOf($respuestasPeticiones)) {
+            if ($recurso && sizeOf($totalRecursos) == 0) {
+                $estado = Estado::findOrFail(7);
+                $pqrEstado['estadospqr_id'] = $estado['id'];
+                ConceptoUOpinion::findOrFail($request['id_pqr'])->update($pqrEstado);
+            } elseif($recurso == 0) {
+                $estado = Estado::findOrFail(6);
+                $pqrEstado['estadospqr_id'] = $estado['id'];
+                ConceptoUOpinion::findOrFail($request['id_pqr'])->update($pqrEstado);
+            }
+        } elseif (sizeOf($respuestaAclaraciones) != $totalAclaracionesRes && $recurso == 0) {
+            $estado = Estado::findOrFail(5);
+            $pqrEstado['estadospqr_id'] = $estado['id'];
+            ConceptoUOpinion::findOrFail($request['id_pqr'])->update($pqrEstado);
+        } elseif (sizeOf($respuestasPeticiones)) {
+            $estado = Estado::findOrFail(2);
+            $pqrEstado['estadospqr_id'] = $estado['id'];
+            ConceptoUOpinion::findOrFail($request['id_pqr'])->update($pqrEstado);
+        }
+        return redirect('/funcionario/listado');
+    }
+
 
     /**
      * Show the form for creating a new resource.
