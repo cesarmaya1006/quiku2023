@@ -14,6 +14,7 @@
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
     @php
+    $plazoRecurso = 0;
     $aclaracionesMenu = 0;
     $aclaraciones = 0;
     $aclaracionesRespuesta = 0;
@@ -34,6 +35,9 @@
         }
         if ($peticion->recurso) {
             $recursosMenu++;
+        }
+        if( $plazoRecurso != $peticion->recurso_dias){
+            $plazoRecurso += $peticion->recurso_dias;
         }
     }
     if ($aclaraciones > 0) {
@@ -761,7 +765,7 @@
                                 </div>
                                 <input class="totalAclaraciones" name="totalAclaraciones" type="hidden" value="">
                             @endforeach
-
+                            <input class="plazoRecurso" name="plazoRecurso" type="hidden" value="{{ $plazoRecurso }}">
                             <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                             <input class="totalGeneralAnexos" id="totalGeneralAnexos" name="totalGeneralAnexos"
                                 type="hidden" value="{{ $pqr->id }}">

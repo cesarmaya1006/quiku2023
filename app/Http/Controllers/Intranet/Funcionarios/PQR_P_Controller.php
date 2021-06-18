@@ -252,8 +252,19 @@ class PQR_P_Controller extends Controller
             }
         }
         if (sizeOf($respuestaAclaraciones) == $totalAclaracionesRes && $totalAclaracionesRes > 0 && $recurso == 0 && $totalPeticionesRes != sizeOf($peticiones->toArray()) ) {
+            $modeloAclaracion = Aclaracion::with('peticion')->whereHas('peticion', function ($peticiones) {
+                        $peticiones->with('pqr')->where('id', request('id_pqr'));
+                    })->get();
+            $fechaIncial = $modeloAclaracion->min('fecha');
+            $fechaFinal = $modeloAclaracion->max('fecha_respuesta');
+            $diasAclaracion = (strtotime($fechaIncial)-strtotime($fechaFinal))/86400;
+            $diasAclaracion = abs($diasAclaracion);
+            $pqr = PQR::findOrfail($request['id_pqr']);
+            $nuevoLimite = $pqr->tipoPqr->tiempos + $request['plazo_prorroga'] + $request['plazoRecurso'] + $diasAclaracion;
+            $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
             $estado = Estado::findOrFail(2);
             $pqrEstado['estadospqr_id'] = $estado['id'];
+            $pqrEstado['tiempo_limite'] = $respuestaDias;
             PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
         }
         return redirect('/usuario/listado');
