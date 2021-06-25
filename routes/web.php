@@ -189,6 +189,11 @@ Route::group(['middleware' => 'auth'], function () {
             // .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
             Route::get('asignacion_particular-cargar_motivo', [AsignacionParticularController::class, 'cargar_motivo'])->name('admin-funcionario-asignacion_particular-cargar_motivo');
             Route::get('asignacion_particular-cargar_sub_motivo', [AsignacionParticularController::class, 'cargar_sub_motivo'])->name('admin-funcionario-asignacion_particular-cargar_sub_motivo');
+            Route::get('asignacion_particular-cargar_producto', [AsignacionParticularController::class, 'cargar_producto'])->name('admin-funcionario-asignacion_particular-cargar_producto');
+            Route::get('asignacion_particular-cargar_marca', [AsignacionParticularController::class, 'cargar_marca'])->name('admin-funcionario-asignacion_particular-cargar_marca');
+            Route::get('asignacion_particular-cargar_referencia', [AsignacionParticularController::class, 'cargar_referencia'])->name('admin-funcionario-asignacion_particular-cargar_referencia');
+            Route::get('asignacion_particular-cargar_municipio', [AsignacionParticularController::class, 'cargar_municipio'])->name('admin-funcionario-asignacion_particular-cargar_municipio');
+            Route::get('asignacion_particular-cargar_sede', [AsignacionParticularController::class, 'cargar_sede'])->name('admin-funcionario-asignacion_particular-cargar_sede');
             // ------------------------------------------------------------------------------------
 
         });
@@ -209,25 +214,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('prorroga', [PQR_P_Controller::class, 'prorroga_guardar'])->name('prorroga_guardar');
         Route::post('respuesta_recurso', [PQR_P_Controller::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
         Route::post('respuesta_recurso_anexos', [PQR_P_Controller::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');
-        
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        
+
         Route::get('listado/gestionar_pqr_q/{id}', [PQR_Q_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_q');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        
+
         Route::get('listado/gestionar_pqr_r/{id}', [PQR_R_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_r');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        
+
         Route::get('listado/gestionarConceptoUOpinion/{id}', [ConceptoUOpinionController::class, 'gestionar'])->name('funcionario-gestionarConceptoUOpinion');
         Route::post('listado/gestionar_conceptoUOpinion', [ConceptoUOpinionController::class, 'gestionar_guardar'])->name('funcionario-gestionar_conceptoUOpinion_guardar');
         Route::post('prorroga_cuo', [ConceptoUOpinionController::class, 'prorroga_guardar'])->name('prorroga_guardar_cuo');
         Route::post('respuesta_recurso_cuo', [ConceptoUOpinionController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar_cuo');
         Route::post('respuesta_recurso_anexos_cuo', [ConceptoUOpinionController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar_cuo');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        
+
         Route::get('listado/gestionarFelicitacion/{id}', [FelicitacionController::class, 'gestionar'])->name('funcionario-gestionarFelicitacion');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        
+
         Route::get('listado/gestionarDenuncia/{id}', [DenunciaController::class, 'gestionar'])->name('funcionario-gestionarDenuncia');
         Route::post('listado/gestionar_denuncia', [DenunciaController::class, 'gestionar_guardar'])->name('funcionario-gestionar_denuncia_guardar');
         Route::post('prorroga_d', [DenunciaController::class, 'prorroga_guardar'])->name('prorroga_guardar_d');
@@ -312,7 +317,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('generarSugerencia', [ClienteController::class, 'generarSugerencia'])->name('usuario-generarSugerencia');
         Route::post('generarSugerencia', [ClienteController::class, 'generarSugerencia_guardar'])->name('usuario-generarSugerencia-guardar');
         Route::get('listado/gestionarSugerencia/{id}', [ClienteController::class, 'gestionar_sugerencia'])->name('usuario-gestionarsugerencia');
-        
+
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //Actualizar datos
         Route::get('actualizar-datos', [ClienteController::class, 'actualizar_datos'])->name('usuario-actualizar_datos');

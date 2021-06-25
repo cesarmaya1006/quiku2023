@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    //Pintar y ocultar
+    //------------------------------------------------------------
     //Comprobacion de checks para saber asignaciones
     //------------------------------------------------------------
     $("#adquisicionCheck").click(function() {
@@ -143,7 +145,7 @@ $(document).ready(function() {
             type: 'GET',
             data: data,
             success: function(respuesta) {
-                console.log(respuesta);
+
                 respuesta_html = '<option value="">---Seleccione---</option>';
                 $.each(respuesta, function(index, item) {
                     respuesta_html += '<option value="' + item['id'] + '">' + item['motivo'] + '</option>';
@@ -169,12 +171,156 @@ $(document).ready(function() {
             type: 'GET',
             data: data,
             success: function(respuesta) {
-                console.log(respuesta);
                 respuesta_html = '<option value="">---Seleccione---</option>';
                 $.each(respuesta, function(index, item) {
                     respuesta_html += '<option value="' + item['id'] + '">' + item['sub_motivo'] + '</option>';
                 });
                 $('#motivo_sub_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#categoria_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Elija primero una categoria</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['producto'] + '</option>';
+                });
+                $('#producto_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#producto_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Elija primero un producto</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['marca'] + '</option>';
+                });
+                $('#marca_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#marca_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                console.log(respuesta);
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Elija primero una marca</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['referencia'] + '</option>';
+                });
+                $('#referencia_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#departamento_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                console.log(respuesta);
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Elija primero un departamento</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['municipio'] + '</option>';
+                });
+                $('#municipio_id').html(respuesta_html);
+                respuesta_html = '<option value="">Elija primero un municipio</option>';
+                $('#sede_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#municipio_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                console.log(respuesta);
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Elija primero un municipio</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['nombre'] + '</option>';
+                });
+                $('#sede_id').html(respuesta_html);
             },
             error: function() {
 
@@ -207,7 +353,7 @@ $(document).ready(function() {
             type: 'POST',
             data: form.serialize(),
             success: function(respuesta) {
-                console.log(respuesta);
+
                 if (respuesta.mensaje == "ok") {
                     form.parents('tr').remove();
                     Sistema.notificaciones('El registro fue eliminado correctamente', 'Sistema', 'success');

@@ -149,8 +149,8 @@
                         <div class="row d-none" id="servicios">
                             <hr>
                             <div class="form-group col-12 col-md-6">
-                                <label class="requerido" for="producto_id">Servicios</label>
-                                <select id="producto_id" class="form-control form-control-sm" name="producto_id" required>
+                                <label class="requerido" for="servicioo_id">Servicios</label>
+                                <select id="servicio_id" class="form-control form-control-sm" name="servicio_id" required>
                                     <option value="">---Seleccione un servcio---</option>
                                     @foreach ($servicios as $servicio)
                                         <option value="{{ $servicio->id }}">{{ $servicio->servicio }}</option>
@@ -162,7 +162,9 @@
                             <hr>
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="categoria_id">Categoría de producto</label>
-                                <select id="categoria_id" class="form-control form-control-sm" name="categoria_id" required>
+                                <select id="categoria_id" class="form-control form-control-sm"
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_producto') }}"
+                                    required>
                                     <option value="">---Seleccione---</option>
                                     @foreach ($categorias as $categoria)
                                         <option value="{{ $categoria->id }}">{{ $categoria->categoria }}</option>
@@ -174,7 +176,9 @@
                             <hr>
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="producto_id">Productos</label>
-                                <select id="producto_id" class="form-control form-control-sm" name="producto_id" required>
+                                <select id="producto_id" class="form-control form-control-sm" name="producto_id"
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}"
+                                    required>
                                     <option value="">---Seleccione una categoría---</option>
                                 </select>
                             </div>
@@ -183,7 +187,9 @@
                             <hr>
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="marca_id">Marcas</label>
-                                <select id="marca_id" class="form-control form-control-sm" name="marca_id" required>
+                                <select id="marca_id" class="form-control form-control-sm" name="marca_id"
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}"
+                                    required>
                                     <option value="">---Seleccione un producto---</option>
                                 </select>
                             </div>
@@ -223,6 +229,43 @@
                             <div class="form-group col-12 col-md-6">
                                 <label for="palabra5">Palabra Clave 5</label>
                                 <input type="text" class="form-control form-control-sm" name="palabra5" id="palabra5">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <hr style="border-top: solid 4px black">
+                            <div class="col-12">
+                                <h6>Datos de asignacion por cargo</h6>
+                            </div>
+                            <br>
+                            <div class="form-group col-12 col-md-3">
+                                <label class="requerido" for="departamento_id">Departamentos con sedes</label>
+                                <select id="departamento_id" class="form-control form-control-sm"
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_municipio') }}"
+                                    required>
+                                    <option value="">---Seleccione---</option>
+                                    @foreach ($departamentos as $departamento)
+                                        @foreach ($departamento->municipios as $municipio)
+                                            @if ($municipio->sedes->count() > 0)
+                                                <option value="{{ $departamento->id }}">
+                                                    {{ $departamento->departamento }}</option>
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-12 col-md-3">
+                                <label class="requerido" for="municipio_id">Municipios con sedes</label>
+                                <select id="municipio_id" class="form-control form-control-sm"
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sede') }}" required>
+                                    <option value="">---Seleccione un departamento---</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 col-md-3">
+                                <label class="requerido" for="sede_id">Sedes</label>
+                                <select id="sede_id" class="form-control form-control-sm" required>
+                                    <option value="">---Seleccione un municipio---</option>
+                                </select>
                             </div>
                         </div>
                     </form>
