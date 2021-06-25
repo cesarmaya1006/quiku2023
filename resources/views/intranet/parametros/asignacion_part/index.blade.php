@@ -10,44 +10,38 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Parametros - Categorías
+    Parametros - Asignación particular
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
+    @include('intranet.funcionarios.menu.menu')
+    <hr>
     <div class="card">
         @include('includes.error-form')
         @include('includes.mensaje')
         <div class="card-header">
             <div class="row mb-3">
                 <div class="col-12 col-md-6 col-lg-6 text-md-left text-lg-left pl-2">
-                    <h5>listado de Categorías</h5>
+                    <h5>listado de Asignación particular</h5>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 text-md-right text-lg-right pl-2 pr-md-5 pr-lg-5">
-                    <a href="{{ route('admin-categoria-crear') }}" class="btn btn-success btn-sm text-center pl-3 pr-3"
-                        style="font-size: 0.9em;"><i class="fas fa-plus-circle mr-2"></i> Nueva Categoría</a>
+                    <a href="{{ route('admin-funcionario-asignacion_particular-crear') }}"
+                        class="btn btn-success btn-sm text-center pl-3 pr-3" style="font-size: 0.9em;"><i
+                            class="fas fa-plus-circle mr-2"></i> Nueva Asignación</a>
                 </div>
             </div>
             <hr>
             <div class="row  d-flex justify-content-around">
                 <div class="col-10 col-md-7 table-responsive">
-                    <table class="table table-striped table-hover table-sm tabla-data display">
+                    <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>
-                                <th class="text-center">Categoría</th>
+                                <th class="text-center">Áreas</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categorias as $categoria)
-                                <tr>
-                                    <td class="text-center">{{ $categoria->categoria }}</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('admin-categoria-editar', ['id' => $categoria->id]) }}"
-                                            class="btn-accion-tabla tooltipsC text-info"> <i class="fa fa-edit"
-                                                aria-hidden="true"></i></a>
-                                    </td>
-                                </tr>
-                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -58,6 +52,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-
+    <script src="{{ asset('js/intranet/empresa/asignacion/asignacion_part.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

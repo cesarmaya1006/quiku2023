@@ -16,13 +16,36 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     Parametrización
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 0.8em;">
                                     <li><a class="dropdown-item"
-                                            href="{{ route('admin-funcionario-area-index') }}">Areas</a></li>
+                                            href="{{ route('admin-funcionario-area-index') }}">Areas</a>
+                                    </li>
                                     <li><a class="dropdown-item"
-                                            href="{{ route('admin-funcionario-nivel-index') }}">Niveles</a></li>
+                                            href="{{ route('admin-funcionario-nivel-index') }}">Niveles</a>
+                                    </li>
                                     <li><a class="dropdown-item"
-                                            href="{{ route('admin-funcionario-cargo-index') }}">Cargos</a></li>
+                                            href="{{ route('admin-funcionario-cargo-index') }}">Cargos</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('admin-funcionario-sedes-index') }}">Sedes</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('admin-funcionario-areas_influencia-index') }}">Areas
+                                            Influencia</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('admin-funcionario-asignacion_particular-index') }}">Asignación
+                                            Particular</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item">

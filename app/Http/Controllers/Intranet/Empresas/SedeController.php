@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Intranet\Empresas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Empresa\ValidacionSede;
+use App\Models\Admin\Departamento;
+use App\Models\Empresas\Sede;
 use Illuminate\Http\Request;
 
 class SedeController extends Controller
@@ -14,7 +17,8 @@ class SedeController extends Controller
      */
     public function index()
     {
-        //
+        $sedes = Sede::orderBy('municipio_id', 'ASC')->orderBy('nombre', 'ASC')->get();
+        return view('intranet.parametros.sedes.index', compact('sedes'));
     }
 
     /**
@@ -22,9 +26,10 @@ class SedeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function crear()
     {
-        //
+        $departamentos = Departamento::get();
+        return view('intranet.parametros.sedes.crear', compact('departamentos'));
     }
 
     /**
@@ -33,9 +38,10 @@ class SedeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function guardar(ValidacionSede $request)
     {
-        //
+        Sede::create($request->all());
+        return redirect('admin/funcionario/sedes-index')->with('mensaje', 'Sede creada con exito');
     }
 
     /**
@@ -55,9 +61,11 @@ class SedeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editar($id)
     {
-        //
+        $departamentos = Departamento::get();
+        $sede = Sede::findOrFail($id);
+        return view('intranet.parametros.sedes.editar', compact('sede', 'departamentos'));
     }
 
     /**
@@ -67,9 +75,10 @@ class SedeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function actualizar(ValidacionSede $request, $id)
     {
-        //
+        Sede::findOrFail($id)->update($request->all());
+        return redirect('admin/funcionario/sedes-index')->with('mensaje', 'Sede actualizada con exito');
     }
 
     /**
@@ -78,8 +87,21 @@ class SedeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function eliminar(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $sede = Sede::findOrFail($id);
+            if ($sede->departamentos->count() > 0) {
+                return response()->json(['mensaje' => 'ng']);
+            } else {
+                if (Sede::destroy($id)) {
+                    return response()->json(['mensaje' => 'ok']);
+                } else {
+                    return response()->json(['mensaje' => 'ng']);
+                }
+            }
+        } else {
+            abort(404);
+        }
     }
 }
