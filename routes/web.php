@@ -13,6 +13,9 @@ use App\Http\Controllers\Intranet\Email\EmailController;
 use App\Http\Controllers\Intranet\Empresas\AreaController;
 use App\Http\Controllers\Intranet\Empresas\CargoController;
 use App\Http\Controllers\Intranet\Empresas\NivelController;
+use App\Http\Controllers\Intranet\Empresas\SedeController;
+use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
+use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
 use App\Http\Controllers\Intranet\Funcionarios\ConceptoUOpinionController;
 use App\Http\Controllers\Intranet\Funcionarios\DenunciaController;
 use App\Http\Controllers\Intranet\Funcionarios\FelicitacionController;
@@ -167,7 +170,27 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('cargos-guardar', [CargoController::class, 'guardar'])->name('admin-funcionario-cargos-guardar');
             Route::put('cargos-actualizar/{id}', [CargoController::class, 'actualizar'])->name('admin-funcionario-cargos-actualizar');
             Route::get('cargar_niveles', [CargoController::class, 'cargar_niveles'])->name('cargar_niveles');
+            // ------------------------------------------------------------------------------------// ------------------------------------------------------------------------------------
+            // Rutas Sedes
+            Route::get('sedes-index', [SedeController::class, 'index'])->name('admin-funcionario-sedes-index');
+            Route::get('sedes-crear', [SedeController::class, 'crear'])->name('admin-funcionario-sedes-crear');
+            Route::get('sedes-editar/{id}', [SedeController::class, 'editar'])->name('admin-funcionario-sedes-editar');
+            Route::post('sedes-guardar', [SedeController::class, 'guardar'])->name('admin-funcionario-sedes-guardar');
+            Route::put('sedes-actualizar/{id}', [SedeController::class, 'actualizar'])->name('admin-funcionario-sedes-actualizar');
+            Route::delete('sedes/{id}', [SedeController::class, 'eliminar'])->name('admin-funcionario-sedes-eliminar');
+            // ------------------------------------------------------------------------------------// ------------------------------------------------------------------------------------
+            // Rutas Areas de influencia
+            Route::get('areas_influencia-index', [AreasInfluenciaController::class, 'index'])->name('admin-funcionario-areas_influencia-index');
+            Route::post('areas_influencia', [AreasInfluenciaController::class, 'guardar'])->name('admin-funcionario-areas_influencia-guardar');
             // ------------------------------------------------------------------------------------
+            // Rutas Asignacion particular
+            Route::get('asignacion_particular-index', [AsignacionParticularController::class, 'index'])->name('admin-funcionario-asignacion_particular-index');
+            Route::get('asignacion_particular-crear', [AsignacionParticularController::class, 'crear'])->name('admin-funcionario-asignacion_particular-crear');
+            // .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
+            Route::get('asignacion_particular-cargar_motivo', [AsignacionParticularController::class, 'cargar_motivo'])->name('admin-funcionario-asignacion_particular-cargar_motivo');
+            Route::get('asignacion_particular-cargar_sub_motivo', [AsignacionParticularController::class, 'cargar_sub_motivo'])->name('admin-funcionario-asignacion_particular-cargar_sub_motivo');
+            // ------------------------------------------------------------------------------------
+
         });
     });
     //==================================================================================================================

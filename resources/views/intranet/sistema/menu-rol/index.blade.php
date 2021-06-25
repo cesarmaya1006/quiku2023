@@ -37,63 +37,62 @@
                     <tbody>
                         @foreach ($menus as $key => $menu)
                             @if ($menu['menu_id'] != 0)
-                                @break
-                            @endif
+                            @break
+                        @endif
+                        <tr>
+                            <td class="font-weight-bold" style="width:1px;white-space:nowrap;"><i
+                                    class="fa fa-arrows-alt"></i>
+                                {{ utf8_encode(ucfirst(strtolower(utf8_decode($menu['nombre'])))) }}</td>
+                            @foreach ($rols as $id => $nombre)
+                                <td class="text-center">
+                                    <input type="checkbox" class="menu_rol" name="menu_rol[]"
+                                        data-menuid={{ $menu['id'] }} value="{{ $id }}"
+                                        {{ in_array($id, array_column($menusRols[$menu['id']], 'id')) ? 'checked' : '' }}>
+                                </td>
+                            @endforeach
+                        </tr>
+                        @foreach ($menu['submenu'] as $key => $hijo)
                             <tr>
-                                <td class="font-weight-bold" style="width:1px;white-space:nowrap;"><i
-                                        class="fa fa-arrows-alt"></i>
-                                    {{ utf8_encode(ucfirst(strtolower(utf8_decode($menu['nombre'])))) }}</td>
+                                <td class="pl-20" style="width:1px;white-space:nowrap;"><i class="fa fa-arrow-right"></i>
+                                    {{ utf8_encode(ucfirst(strtolower(utf8_decode($hijo['nombre'])))) }}</td>
                                 @foreach ($rols as $id => $nombre)
                                     <td class="text-center">
                                         <input type="checkbox" class="menu_rol" name="menu_rol[]"
-                                            data-menuid={{ $menu['id'] }} value="{{ $id }}"
-                                            {{ in_array($id, array_column($menusRols[$menu['id']], 'id')) ? 'checked' : '' }}>
+                                            data-menuid={{ $hijo['id'] }} value="{{ $id }}"
+                                            {{ in_array($id, array_column($menusRols[$hijo['id']], 'id')) ? 'checked' : '' }}>
                                     </td>
                                 @endforeach
                             </tr>
-                            @foreach ($menu['submenu'] as $key => $hijo)
+                            @foreach ($hijo['submenu'] as $key => $hijo2)
                                 <tr>
-                                    <td class="pl-20" style="width:1px;white-space:nowrap;"><i
+                                    <td class="pl-30" style="width:1px;white-space:nowrap;"><i
                                             class="fa fa-arrow-right"></i>
-                                        {{ utf8_encode(ucfirst(strtolower(utf8_decode($hijo['nombre'])))) }}</td>
+                                        {{ utf8_encode(ucfirst(strtolower(utf8_decode($hijo2['nombre'])))) }}</td>
                                     @foreach ($rols as $id => $nombre)
                                         <td class="text-center">
                                             <input type="checkbox" class="menu_rol" name="menu_rol[]"
-                                                data-menuid={{ $hijo['id'] }} value="{{ $id }}"
-                                                {{ in_array($id, array_column($menusRols[$hijo['id']], 'id')) ? 'checked' : '' }}>
+                                                data-menuid={{ $hijo2['id'] }} value="{{ $id }}"
+                                                {{ in_array($id, array_column($menusRols[$hijo2['id']], 'id')) ? 'checked' : '' }}>
                                         </td>
                                     @endforeach
                                 </tr>
-                                @foreach ($hijo['submenu'] as $key => $hijo2)
+                                @foreach ($hijo2['submenu'] as $key => $hijo3)
                                     <tr>
-                                        <td class="pl-30" style="width:1px;white-space:nowrap;"><i
+                                        <td class="pl-40" style="width:1px;white-space:nowrap;"><i
                                                 class="fa fa-arrow-right"></i>
-                                            {{ utf8_encode(ucfirst(strtolower(utf8_decode($hijo2['nombre'])))) }}</td>
+                                            {{ utf8_encode(ucfirst(strtolower(utf8_decode($hijo3['nombre'])))) }}
+                                        </td>
                                         @foreach ($rols as $id => $nombre)
                                             <td class="text-center">
                                                 <input type="checkbox" class="menu_rol" name="menu_rol[]"
-                                                    data-menuid={{ $hijo2['id'] }} value="{{ $id }}"
-                                                    {{ in_array($id, array_column($menusRols[$hijo2['id']], 'id')) ? 'checked' : '' }}>
+                                                    data-menuid={{ $hijo3['id'] }} value="{{ $id }}"
+                                                    {{ in_array($id, array_column($menusRols[$hijo3['id']], 'id')) ? 'checked' : '' }}>
                                             </td>
                                         @endforeach
                                     </tr>
-                                    @foreach ($hijo2['submenu'] as $key => $hijo3)
-                                        <tr>
-                                            <td class="pl-40" style="width:1px;white-space:nowrap;"><i
-                                                    class="fa fa-arrow-right"></i>
-                                                {{ utf8_encode(ucfirst(strtolower(utf8_decode($hijo3['nombre'])))) }}
-                                            </td>
-                                            @foreach ($rols as $id => $nombre)
-                                                <td class="text-center">
-                                                    <input type="checkbox" class="menu_rol" name="menu_rol[]"
-                                                        data-menuid={{ $hijo3['id'] }} value="{{ $id }}"
-                                                        {{ in_array($id, array_column($menusRols[$hijo3['id']], 'id')) ? 'checked' : '' }}>
-                                                </td>
-                                            @endforeach
-                                        </tr>
-                                    @endforeach
                                 @endforeach
                             @endforeach
+                        @endforeach
                         @endforeach
                     </tbody>
                 </table>
