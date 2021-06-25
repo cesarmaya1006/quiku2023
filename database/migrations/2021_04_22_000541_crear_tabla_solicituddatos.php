@@ -23,6 +23,8 @@ class CrearTablaSolicituddatos extends Migration
             $table->unsignedBigInteger('empresa_id')->nullable();
             $table->foreign('empresa_id', 'fk_empresa_solicituddatos')->references('id')->on('empresas')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('prorroga')->default(0)->nullable();
+            $table->bigInteger('prorroga_dias')->default(0)->nullable();
+            $table->string('prorroga_pdf')->nullable();
             $table->unsignedBigInteger('sede_id')->nullable();
             $table->foreign('sede_id', 'fk_sede_solicituddatos')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('prioridad_id')->default(2)->nullable();

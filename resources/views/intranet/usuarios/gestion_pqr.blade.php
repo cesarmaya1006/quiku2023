@@ -651,8 +651,8 @@
                                                 </div>
                                                 <div class="card-footer d-flex justify-content-end guardarRecurso">
                                                     <button type="" class="btn btn-primary px-4"
-                                                        data_url="{{ route('recurso_guardar') }}"
-                                                        data_url_anexos="{{ route('recurso_anexos_guardar') }}"
+                                                        data_url="{{ route('recurso_sd_guardar') }}"
+                                                        data_url_anexos="{{ route('recurso_sd_anexos_guardar') }}"
                                                         data_token="{{ csrf_token() }}">Guardar recurso</button>
                                                 </div>
                                             </div>
@@ -751,8 +751,8 @@
                                                 </div>
                                                 <div class="card-footer d-flex justify-content-end guardarRecurso">
                                                     <button type="" class="btn btn-primary px-4"
-                                                        data_url="{{ route('recurso_guardar') }}"
-                                                        data_url_anexos="{{ route('recurso_anexos_guardar') }}"
+                                                        data_url="{{ route('recurso_sd_guardar') }}"
+                                                        data_url_anexos="{{ route('recurso_sd_anexos_guardar') }}"
                                                         data_token="{{ csrf_token() }}">Guardar recurso</button>
                                                 </div>
                                             </div>

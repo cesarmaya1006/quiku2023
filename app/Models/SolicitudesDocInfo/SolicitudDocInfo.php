@@ -6,6 +6,7 @@ use App\Models\PQR\PQR;
 use App\Models\PQR\Estado;
 use App\Models\PQR\tipoPQR;
 use App\Models\Empresas\Sede;
+use App\Models\PQR\Prioridad;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;

@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', function(){
     if (document.querySelector('#id')) {
         let tipoPqr = document.querySelector('#pqr_tipo').value
-        console.log(tipoPqr)
         let urlDescargaRadicado = ''
         
         switch (Number(tipoPqr)) {
@@ -33,7 +32,6 @@ window.addEventListener('DOMContentLoaded', function(){
             urlDescargaRadicado = 'sugerencia_radicada_pdf'
             break
         }
-        console.log(urlDescargaRadicado)
         swal({
             title: "Creada correctamente",
             content: {

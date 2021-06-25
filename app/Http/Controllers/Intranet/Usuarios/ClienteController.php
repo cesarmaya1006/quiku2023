@@ -21,6 +21,7 @@ use App\Models\Servicios\Servicio;
 use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Fechas\FechasController;
+use App\Http\Controllers\Intranet\Funcionarios\ConceptoUOpinionController;
 use App\Http\Requests\ValidarPqr;
 use App\Mail\Felicitacion_Radicada;
 use App\Mail\PQR_Radicada;
@@ -492,13 +493,13 @@ class ClienteController extends Controller
         $estado = Estado::findOrFail(1);
         $nuevaSolicitud['estadospqr_id'] = $estado['id'];
         $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
-        $solicitud = SolicitudDatos::create($nuevaSolicitud);
+        $solicitudRad = SolicitudDatos::create($nuevaSolicitud);
 
-        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitud->id;
-        SolicitudDatos::findOrFail($solicitud->id)->update($pqr_rad);
-        $solicitud = SolicitudDatos::findOrFail($solicitud->id);
+        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitudRad->id;
+        SolicitudDatos::findOrFail($solicitudRad->id)->update($pqr_rad);
+        $solicitudId = SolicitudDatos::findOrFail($solicitudRad->id);
 
-        $nuevasSolicitudes['solicituddatos_id'] = $solicitud->id;
+        $nuevasSolicitudes['solicituddatos_id'] = $solicitudId->id;
         $cantidadSolicitudes = $request['cantidadSolicitudes'];
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
@@ -535,10 +536,9 @@ class ClienteController extends Controller
             }
             $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
-        $solicitud = SolicitudDatos::findOrFail($solicitud->id);
-        return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado)->with('fecha_radicado', $solicitud->created_at);
+        return redirect('/usuario/generar')->with('id', $solicitudId->id)->with('pqr_tipo', $solicitudId->tipo_pqr_id)->with('radicado', $solicitudId->radicado)->with('fecha_radicado', $solicitudId->created_at);
     }
-
+    
     public function generarSolicitudDocumentos()
     {
         $departamentos = Departamento::get();
@@ -788,6 +788,30 @@ class ClienteController extends Controller
     {
         $sugerencia = Sugerencia::findOrFail($id);
         return view('intranet.usuarios.gestion_sugerencias', compact('sugerencia'));
+    }
+    //=========================================================================================================================
+    public function gestionar_solicitudDatos($id)
+    {
+        $solicitudDatos = SolicitudDatos::findOrFail($id);
+        return view('intranet.usuarios.gestion_solicitud_datos', compact('solicitudDatos'));
+    }
+    //=========================================================================================================================
+    public function gestionar_solicitudDocInfo($id)
+    {
+        $solicitudDocInfo = SolicitudDocInfo::findOrFail($id);
+        return view('intranet.usuarios.gestion_solicitud_docinfo', compact('solicitudDocInfo'));
+    }
+    //=========================================================================================================================
+    public function gestionar_conceptoUOpinion($id)
+    {
+        $concepto = ConceptoUOpinion::findOrFail($id);
+        return view('intranet.usuarios.gestion_conceptouopinion', compact('concepto'));
+    }
+    //=========================================================================================================================
+    public function gestionar_reporteDeIrregularidad($id)
+    {
+        $reporte = Denuncia::findOrFail($id);
+        return view('intranet.usuarios.gestion_reportedeirregularidades', compact('reporte'));
     }
     //=========================================================================================================================
     public function download($id_tipo_pqr, $id_pqr)

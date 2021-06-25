@@ -77,11 +77,11 @@
                                             <td>{{ $concepto->estado->estado_usuario }}</td>
                                             <td>{{ date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . $concepto->tiempo_limite . ' days')) }}
                                             </td>
-                                            <td><a href="{{ route('pqrRadicadaPdf', ['id_tipo_pqr' => $concepto->tipo_pqr_id, 'id_pqr' => $concepto->id]) }}"
+                                            <td><a href="{{ route('download', ['id_tipo_pqr' => $concepto->tipo_pqr_id, 'id_pqr' => $concepto->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
-                                            <td><a href="{{ route('funcionario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
+                                            <td><a href="{{ route('usuario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                             </td>
@@ -99,7 +99,8 @@
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
-                                            <td><a href="{{ route('funcionario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
+                                            <td>
+                                                <a href="{{ route('usuario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                             </td>
@@ -117,7 +118,7 @@
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
-                                            <td><a href="{{ route('funcionario-gestionarDenuncia', ['id' => $denuncia->id]) }}"
+                                            <td><a href="{{ route('usuario-gestionarReporte', ['id' => $denuncia->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                             </td>
@@ -153,7 +154,7 @@
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
-                                            <td><a href="{{ route('funcionario-gestionarSolicitudDocumentos', ['id' => $solicitud_doc->id]) }}"
+                                            <td><a href="{{ route('usuario-gestionarSolicitudDocInfo', ['id' => $solicitud_doc->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                             </td>

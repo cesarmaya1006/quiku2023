@@ -25,6 +25,8 @@ class CrearTablaDenuncias extends Migration
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_denuncias')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('prorroga')->default(0)->nullable();
+            $table->bigInteger('prorroga_dias')->default(0)->nullable();
+            $table->string('prorroga_pdf')->nullable();
             $table->unsignedBigInteger('sede_id')->nullable();
             $table->foreign('sede_id', 'fk_sede_denuncias')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('prioridad_id')->default(2)->nullable();
