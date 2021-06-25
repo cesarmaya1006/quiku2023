@@ -22,6 +22,11 @@ class CrearTablaSolicituddatossolicitudes extends Migration
             $table->longText('tiposolicitud');
             $table->longText('datossolicitud');
             $table->longText('descripcionsolicitud');
+            $table->boolean('recurso')->default(0)->nullable();
+            $table->boolean('usuario_recurso')->default(0)->nullable();
+            $table->bigInteger('recurso_dias')->default(0);
+            $table->date('fecha_notificacion')->nullable();
+            $table->boolean('aclaracion')->default(0)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

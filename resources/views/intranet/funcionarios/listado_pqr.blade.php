@@ -186,6 +186,16 @@
                                     </tr>
                                 @endforeach
                                 @foreach ($conceptos as $concepto)
+                                    @php
+                                        $diasRecurso = 0;
+                                    @endphp
+                                    @foreach ($concepto->Consultas as $peticion)
+                                        @php
+                                            if( $peticion->recurso_dias > 0){
+                                                $diasRecurso = $peticion->recurso_dias;
+                                            }
+                                        @endphp
+                                    @endforeach
                                     <tr>
                                         @php
                                         $fechaFinal = date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . ($concepto->tiempo_limite) . ' days'));
@@ -194,15 +204,15 @@
                                         <td>{{ $concepto->created_at }}</td>
                                         <td>{{ $concepto->tipoPqr->tipo }}</td>
                                         <td>{{ $concepto->estado->estado_funcionario }}</td>
-                                        @if ($solicitud_datos->prioridad_id == 1)
-                                            <td class="bg-green">{{ $solicitud_datos->prioridad->prioridad}}</td>
-                                        @elseif($solicitud_datos->prioridad_id == 2)
-                                            <td class="bg-yellow">{{ $solicitud_datos->prioridad->prioridad}}</td>
-                                        @elseif($solicitud_datos->prioridad_id == 3)
-                                            <td class="bg-red">{{ $solicitud_datos->prioridad->prioridad}}</td>
+                                        @if ($concepto->prioridad_id == 1)
+                                            <td class="bg-green">{{ $concepto->prioridad->prioridad}}</td>
+                                        @elseif($concepto->prioridad_id == 2)
+                                            <td class="bg-yellow">{{ $concepto->prioridad->prioridad}}</td>
+                                        @elseif($concepto->prioridad_id == 3)
+                                            <td class="bg-red">{{ $concepto->prioridad->prioridad}}</td>
                                         @endif
                                         @php
-                                            $diasEstado = dias_estado($solicitud_datos->fecha_radicado, $fechaFinal, $concepto->estado->id);
+                                            $diasEstado = dias_estado($concepto->fecha_radicado, $fechaFinal, $concepto->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -221,7 +231,7 @@
                                                 Cerrado 
                                             </td>
                                         @endif
-                                        <td>{{ $concepto->tipoPqr->tiempos }}</td>
+                                        <td>{{ $concepto->tipoPqr->tiempos + $concepto->prorroga_dias + $diasRecurso }}</td>
                                         <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
@@ -230,6 +240,16 @@
                                     </tr>
                                 @endforeach
                                 @foreach ($solicitudes_datos as $solicitud_datos)
+                                    @php
+                                        $diasRecurso = 0;
+                                    @endphp
+                                    @foreach ($solicitud_datos->solicitudes as $peticion)
+                                        @php
+                                            if( $peticion->recurso_dias > 0){
+                                                $diasRecurso = $peticion->recurso_dias;
+                                            }
+                                        @endphp
+                                    @endforeach
                                     <tr>
                                         @php
                                         $fechaFinal = date('Y-m-d', strtotime($solicitud_datos->fecha_generacion . '+ ' . ($solicitud_datos->tiempo_limite) . ' days'));
@@ -238,15 +258,15 @@
                                         <td>{{ $solicitud_datos->created_at }}</td>
                                         <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
                                         <td>{{ $solicitud_datos->estado->estado_funcionario }}</td>
-                                        @if ($pqr->prioridad_id == 1)
-                                            <td class="bg-green">{{ $pqr->prioridad->prioridad}}</td>
-                                        @elseif($pqr->prioridad_id == 2)
-                                            <td class="bg-yellow">{{ $pqr->prioridad->prioridad}}</td>
-                                        @elseif($pqr->prioridad_id == 3)
-                                            <td class="bg-red">{{ $pqr->prioridad->prioridad}}</td>
+                                        @if ($solicitud_datos->prioridad_id == 1)
+                                            <td class="bg-green">{{ $solicitud_datos->prioridad->prioridad}}</td>
+                                        @elseif($solicitud_datos->prioridad_id == 2)
+                                            <td class="bg-yellow">{{ $solicitud_datos->prioridad->prioridad}}</td>
+                                        @elseif($solicitud_datos->prioridad_id == 3)
+                                            <td class="bg-red">{{ $solicitud_datos->prioridad->prioridad}}</td>
                                         @endif
                                         @php
-                                            $diasEstado = dias_estado($pqr->fecha_radicado, $fechaFinal, $solicitud_datos->estado->id);
+                                            $diasEstado = dias_estado($solicitud_datos->fecha_radicado, $fechaFinal, $solicitud_datos->estado->id);
                                         @endphp
                                         @if ($diasEstado == 1)
                                             <td class="bg-green" >
@@ -265,7 +285,7 @@
                                                 Cerrado 
                                             </td>
                                         @endif
-                                        <td>{{ $solicitud_datos->tipoPqr->tiempos }}</td>
+                                        <td>{{ $solicitud_datos->tipoPqr->tiempos + $solicitud_datos->prorroga_dias + $diasRecurso }}</td>
                                         <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
@@ -337,6 +357,16 @@
                                     </tr>
                                 @endforeach
                                 @foreach ($solicitudes_doc as $solicitud_doc)
+                                    @php
+                                        $diasRecurso = 0;
+                                    @endphp
+                                    @foreach ($solicitud_doc->peticiones as $peticion)
+                                        @php
+                                            if( $peticion->recurso_dias > 0){
+                                                $diasRecurso = $peticion->recurso_dias;
+                                            }
+                                        @endphp
+                                    @endforeach
                                     <tr>
                                         @php
                                         $fechaFinal = date('Y-m-d', strtotime($solicitud_doc->fecha_generacion . '+ ' . ($solicitud_doc->tiempo_limite) . ' days'));
@@ -372,7 +402,7 @@
                                                 Cerrado 
                                             </td>
                                         @endif
-                                        <td>{{ $solicitud_doc->tipoPqr->tiempos }}</td>
+                                        <td>{{ $solicitud_doc->tipoPqr->tiempos + $solicitud_doc->prorroga_dias + $diasRecurso }}</td>
                                         <td>{{ dias_restantes(date('Y-m-d'),$fechaFinal ) }}</td>
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarSolicitudDocumentos', ['id' => $solicitud_doc->id]) }}"

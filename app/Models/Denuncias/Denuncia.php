@@ -5,6 +5,7 @@ namespace App\Models\Denuncias;
 use App\Models\PQR\Estado;
 use App\Models\PQR\tipoPQR;
 use App\Models\Empresas\Sede;
+use App\Models\PQR\Prioridad;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;
@@ -12,6 +13,7 @@ use App\Models\Denuncias\DenunciaAnexo;
 use App\Models\Denuncias\DenunciaHecho;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Denuncias\DenunciaIrregularidad;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Denuncia extends Model
@@ -33,7 +35,7 @@ class Denuncia extends Model
     //----------------------------------------------------------------------------------
     public function irregularidades()
     {
-        return $this->hasMany(irregularidades::class, 'denuncias_id', 'id');
+        return $this->hasMany(DenunciaIrregularidad::class, 'denuncias_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function tipoPqr()
