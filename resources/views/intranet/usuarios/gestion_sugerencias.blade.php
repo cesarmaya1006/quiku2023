@@ -97,7 +97,7 @@
                                     <tbody>
                                         @foreach ($sugerencia->hechos as $hecho)
                                         <tr>
-                                            <td>{{ $hecho->hecho }}</td>
+                                            <td class="text-justify">{{ $hecho->hecho }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -113,7 +113,7 @@
                                 <table class="table table-light">
                                     <tbody>
                                         <tr>
-                                            <td>{{ $sugerencia->sugerencia }}</td>
+                                            <td class="text-justify">{{ $sugerencia->sugerencia }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -130,8 +130,8 @@
                                     <tbody>
                                         @foreach ($sugerencia->documentos as $anexo)
                                         <tr>
-                                            <td>{{ $anexo->titulo }}</td>
-                                            <td>{{ $anexo->descripcion }}</td>
+                                            <td class="text-justify">{{ $anexo->titulo }}</td>
+                                            <td class="text-justify">{{ $anexo->descripcion }}</td>
                                             <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
                                                     target="_blank" rel="noopener noreferrer">Descargar</a>
                                             </td>

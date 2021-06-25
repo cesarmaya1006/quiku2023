@@ -279,10 +279,10 @@
                                                 <h5>Petición {{ $n_peticion }}</h5>
                                             </div>
                                             <div class="col-12">
-                                                <p><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
+                                                <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
                                             </div>
                                             @if ($peticion->otro)
-                                                <p>{{ $peticion->otro }}</p>
+                                                <p class="text-justify">{{ $peticion->otro }}</p>
                                             @endif
                                         </div>
                                         <hr>
@@ -294,7 +294,7 @@
                                                 <ul>
                                                     @foreach ($peticion->hechos as $hecho)
                                                         <li>
-                                                            <p>{{ $hecho->hecho }}</p>
+                                                            <p class="text-justify">{{ $hecho->hecho }}</p>
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -317,8 +317,8 @@
                                                     <tbody>
                                                         @foreach ($peticion->anexos as $anexo)
                                                             <tr>
-                                                                <td>{{ $anexo->titulo }}</td>
-                                                                <td>{{ $anexo->descripcion }}</td>
+                                                                <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                                <td class="text-justify">{{ $anexo->descripcion }}</td>
                                                                 <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
                                                                         target="_blank"
                                                                         rel="noopener noreferrer">Descargar</a>
@@ -356,10 +356,10 @@
                                                             @if ($aclaracion->respuesta != '')
                                                                 <tr>
                                                                     <td>{{ $aclaracion->fecha }}</td>
-                                                                    <td>{{ $aclaracion->aclaracion }}</td>
+                                                                    <td class="text-justify">{{ $aclaracion->aclaracion }}</td>
                                                                     <td>Resuelta</td>
                                                                     <td>{{ $aclaracion->fecha_respuesta }}</td>
-                                                                    <td>{{ $aclaracion->respuesta }}</td>
+                                                                    <td class="text-justify">{{ $aclaracion->respuesta }}</td>
                                                                     @if ($aclaracion->anexos)
                                                                         <td>
                                                                             @foreach ($aclaracion->anexos as $anexo)
@@ -492,8 +492,8 @@
                                                             <tbody>
                                                                 @foreach ($peticion->respuesta->documentos as $anexo)
                                                                     <tr>
-                                                                        <td>{{ $anexo->titulo }}</td>
-                                                                        <td>{{ $anexo->descripcion }}</td>
+                                                                        <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                                        <td class="text-justify">{{ $anexo->descripcion }}</td>
                                                                         <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
                                                                                 target="_blank"
                                                                                 rel="noopener noreferrer">Descargar</a>
@@ -533,8 +533,8 @@
                                                             @foreach ($peticion->recursos as $recurso)
                                                                 <tr>
                                                                     <td>{{ $recurso->fecha_radicacion }}</td>
-                                                                    <td>{{ $recurso->tiporeposicion->tipo }}</td>
-                                                                    <td>{{ $recurso->recurso }}</td>
+                                                                    <td class="text-justify">{{ $recurso->tiporeposicion->tipo }}</td>
+                                                                    <td class="text-justify">{{ $recurso->recurso }}</td>
                                                                     <td>Resuelta</td>
                                                                     @if ($recurso->documentos)
                                                                         <td>

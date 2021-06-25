@@ -139,12 +139,12 @@
                                                         </div>
                                                         <div class="col-12">{{ $peticion->motivo->sub_motivo }}</div>
                                                         @if($peticion->otro)
-                                                            <p>{{$peticion->otro}}</p>
+                                                            <p class="text-justify">{{$peticion->otro}}</p>
                                                          @endif
                                                     </div>
                                                     <div class="row mt-2">
                                                         <h6>Justificacion:</h6>
-                                                        <div class="col-12">{{ $peticion->justificacion }}</div>
+                                                        <div class="col-12 text-justify">{{ $peticion->justificacion }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6"></div>
@@ -163,8 +163,8 @@
                                         <tbody>
                                             @foreach ($peticion->anexos as $anexo)
                                             <tr>
-                                                <td>{{ $anexo->titulo }}</td>
-                                                <td>{{ $anexo->descripcion }}</td>
+                                                <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                <td class="text-justify">{{ $anexo->descripcion }}</td>
                                                 <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
                                                         target="_blank" rel="noopener noreferrer">Descargar</a>
                                                 </td>
@@ -184,7 +184,7 @@
                                         <tbody>
                                             @foreach ($peticion->hechos as $hecho)
                                             <tr>
-                                                <td>{{ $hecho->hecho }}</td>
+                                                <td class="text-justify">{{ $hecho->hecho }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -230,10 +230,10 @@
                                                     @foreach ($peticion->aclaraciones as $aclaracion)
                                                     <tr>
                                                         <th scope="row">{{$aclaracion->fecha}}</th>
-                                                        <td>{{$aclaracion->tipo_solicitud}}</td>
-                                                        <td>{{$aclaracion->aclaracion}}</td>
+                                                        <td class="text-justify">{{$aclaracion->tipo_solicitud}}</td>
+                                                        <td class="text-justify">{{$aclaracion->aclaracion}}</td>
                                                         <td>{{$aclaracion->fecha_respuesta}}</td>
-                                                        <td>{{$aclaracion->respuesta}}</td>
+                                                        <td class="text-justify">{{$aclaracion->respuesta}}</td>
                                                         <td>
                                                             @foreach($aclaracion->anexos as $anexo)
                                                                 <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer">{{$anexo->titulo}}</a>
@@ -262,8 +262,8 @@
                                                     <select name="tipo_aclaracion" id="tipo_aclaracion"
                                                         class="custom-select rounded-0 tipo_aclaracion">
                                                         <option value="">--Seleccione--</option>
-                                                        <option value="aclaracion">Aclaración</option>
-                                                        <option value="complementacion">Complementación</option>
+                                                        <option value="Aclaración">Aclaración</option>
+                                                        <option value="Complementación">Complementación</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-12">
@@ -291,7 +291,7 @@
                                     <h6>Respuesta petición</h6>
                                 </div>
                                 <div class="col-12 form-group">
-                                    <textarea type="text" class="form-control form-control-sm respuesta"
+                                    <textarea type="text" class="form-control form-control-sm respuesta text-justify"
                                         name="respuesta"
                                         id="">{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
                                 </div>
@@ -335,8 +335,8 @@
                                             <tbody>
                                                 @foreach ($peticion->respuesta->documentos as $anexo)
                                                 <tr>
-                                                    <td>{{ $anexo->titulo }}</td>
-                                                    <td>{{ $anexo->descripcion }}</td>
+                                                    <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                    <td class="text-justify">{{ $anexo->descripcion }}</td>
                                                     <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
                                                             target="_blank" rel="noopener noreferrer">Descargar</a>
                                                     </td>
@@ -374,8 +374,8 @@
                                                 @foreach ($peticion->recursos as $recurso)
                                                 <tr>
                                                     <td>{{ $recurso->fecha_radicacion }}</td>
-                                                    <td>{{ $recurso->tiporeposicion->tipo }}</td>
-                                                    <td>{{ $recurso->recurso }}</td>
+                                                    <td class="text-justify">{{ $recurso->tiporeposicion->tipo }}</td>
+                                                    <td class="text-justify">{{ $recurso->recurso }}</td>
                                                     <td>Resuelta</td>
                                                     @if ($recurso->documentos)
                                                         <td>
@@ -413,7 +413,7 @@
                                                 <div class="col-12 col-md-6">
                                                     <h6>Recurso de {{$recurso->tiporeposicion->tipo}} </h6>
                                                 </div> 
-                                                <textarea type="text" class="form-control form-control-sm" disabled>{{$recurso->recurso}}</textarea>
+                                                <textarea type="text" class="form-control form-control-sm text-justify" disabled>{{$recurso->recurso}}</textarea>
                                                 <div class="col-12" id="anexosRespuestaRecursos">
                                                     <div class="col-12 d-flex row anexoRespuestaRecurso" id="anexoRespuestaRecurso">
                                                         <div class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">

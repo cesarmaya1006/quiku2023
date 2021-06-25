@@ -274,9 +274,9 @@
                                                     <tbody>
                                                         @foreach ($solicitud->documentos as $anexo)
                                                             <tr>
-                                                                <td>{{ $anexo->titulo }}</td>
-                                                                <td>{{ $anexo->descripcion }}</td>
-                                                                <td><a href="{{ asset('documentos/conceptouopinion/' . $anexo->url) }}"
+                                                                <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                                <td class="text-justify">{{ $anexo->descripcion }}</td>
+                                                                <td ><a href="{{ asset('documentos/conceptouopinion/' . $anexo->url) }}"
                                                                         target="_blank"
                                                                         rel="noopener noreferrer">Descargar</a>
                                                                 </td>
@@ -313,10 +313,10 @@
                                                             @if ($aclaracion->respuesta != '')
                                                                 <tr>
                                                                     <td>{{ $aclaracion->fecha }}</td>
-                                                                    <td>{{ $aclaracion->aclaracion }}</td>
+                                                                    <td class="text-justify">{{ $aclaracion->aclaracion }}</td>
                                                                     <td>Resuelta</td>
                                                                     <td>{{ $aclaracion->fecha_respuesta }}</td>
-                                                                    <td>{{ $aclaracion->respuesta }}</td>
+                                                                    <td class="text-justify">{{ $aclaracion->respuesta }}</td>
                                                                     @if ($aclaracion->anexos)
                                                                         <td>
                                                                             @foreach ($aclaracion->anexos as $anexo)
@@ -435,7 +435,7 @@
                                                 <h6>Respuesta petición</h6>
                                             </div>
                                             <div class="col-12 form-group">
-                                                <textarea type="text" class="form-control form-control-sm respuesta"
+                                                <textarea type="text" class="form-control form-control-sm respuesta text-justify"
                                                     rows="5"
                                                     readonly>{{ isset($solicitud->respuesta->respuesta) ? $solicitud->respuesta->respuesta : '' }}</textarea>
                                             </div>
@@ -490,8 +490,8 @@
                                                             @foreach ($solicitud->recursos as $recurso)
                                                                 <tr>
                                                                     <td>{{ $recurso->fecha_radicacion }}</td>
-                                                                    <td>{{ $recurso->tiporeposicion->tipo }}</td>
-                                                                    <td>{{ $recurso->recurso }}</td>
+                                                                    <td class="text-justify">{{ $recurso->tiporeposicion->tipo }}</td>
+                                                                    <td class="text-justify">{{ $recurso->recurso }}</td>
                                                                     <td>Resuelta</td>
                                                                     @if ($recurso->documentos)
                                                                         <td>
