@@ -127,7 +127,7 @@
                                             <span style="font-size: 2.5em;">
                                                 <i class="fas fa-check"></i>
                                             </span>
-                                            <h6>Prorroga</h6>
+                                            <h6>Prórroga</h6>
                                         </div>
                                     </a>
                                 @endif
@@ -219,12 +219,12 @@
                             @if ($concepto->prorroga_dias)
                                 <div class="menu-card-prorroga menu-card d-none rounded border mb-3 p-2 ">
                                     <div class="col-12 col-md-6">
-                                        Días de prorroga: <strong>{{ $concepto->prorroga_dias }} </strong>
+                                        Días de prórroga: <strong>{{ $concepto->prorroga_dias }} </strong>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <strong><a href="{{ route('prorrogaPdf', ['id' => $concepto->id]) }}" target="_blank"
                                                 rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
-                                                Descargar Radicado Prorroga</a></strong>
+                                                Descargar Radicado Prórroga</a></strong>
                                     </div>
                                 </div>
                             @endif

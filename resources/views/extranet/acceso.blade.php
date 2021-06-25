@@ -40,8 +40,8 @@
                                         </div>
                                     </div>
                                     <div class="centrar-items mt-4">
-                                        <p><a class="card-text h6" href="{{ route('solicitar_password') }}">¿Olvidé mi nombre
-                                                de usuario o contraseña?</a></p>
+                                        <p><a class="card-text h6" href="{{ route('solicitar_password') }}">Olvidé mi nombre
+                                                de usuario o contraseña</a></p>
                                     </div>
                                 </form>
                             </div>

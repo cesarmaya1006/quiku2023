@@ -67,7 +67,7 @@
                                 </div>
                                 @endif
                                 <div class="col-12 col-md-6">
-                                    Plazo de respuesta prorroga días hábiles: <strong>{{ $concepto->prorroga_dias }}</strong>
+                                    Plazo de respuesta prórroga días hábiles: <strong>{{ $concepto->prorroga_dias }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha de radicado: <strong>{{ $concepto->fecha_radicado }}</strong>
@@ -427,7 +427,7 @@
                                 <div class="row pb-3 form-respuestaProrroga">
                                     <input class="respuestaProrroga" type="hidden" value="{{$concepto->prorroga}}">
                                     <div class="col-12 col-md-6 ">
-                                        <h6>Prorroga</h6>
+                                        <h6>Prórroga</h6>
                                     </div>
                                     <div class="col-12 col-md-6 d-flex flex-row">
                                         <div class="form-check mb-3 mr-4">
@@ -444,20 +444,20 @@
                                     <div class="col-12 contentProrroga" id="contentProrroga">
                                         <div class="col-12 d-flex row">
                                             <div class="col-12 form-group">
-                                                <label for="plazo" class="col-md-6">Plazo prorroga días hábiles:</label>
+                                                <label for="plazo" class="col-md-6">Plazo prórroga días hábiles:</label>
                                                 <input type="number" class="form-control form-control-sm plazo_prorroga col-md-3"
                                                     name="plazo_prorroga" id="plazo_prorroga" min="1"
                                                     max="{{$concepto->tipoPqr->tiempos * 2}}">
                                             </div>
                                             <div class="col-12 d-flex row">
-                                                <label for="prorroga_pdf">Justificacion de prorroga</label>
+                                                <label for="prorroga_pdf">Justificacion de prórroga</label>
                                                 <textarea type="text" class="form-control form-control-sm prorroga_pdf"
                                                     name="prorroga_pdf" id="prorroga_pdf">{{$concepto->prorroga_pdf}}</textarea>
                                             </div>
                                         </div>
                                         @if($concepto->estadospqr_id < 6 && $concepto->prorroga == 0)
                                             <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
-                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar_cuo') }}" data_token="{{ csrf_token() }}">Guardar prorroga</button>
+                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar_cuo') }}" data_token="{{ csrf_token() }}">Guardar prórroga</button>
                                             </div>
                                         @endif
                                     </div>
