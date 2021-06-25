@@ -97,7 +97,7 @@
                                     <tbody>
                                         @foreach ($felicitacion->hechos as $hecho)
                                         <tr>
-                                            <td>{{ $hecho->hecho }}</td>
+                                            <td class="text-justify">{{ $hecho->hecho }}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -113,7 +113,7 @@
                                 <table class="table table-light">
                                     <tbody>
                                         <tr>
-                                            <td>{{ $felicitacion->nombre_funcionario }}</td>
+                                            <td class="text-justify">{{ $felicitacion->nombre_funcionario }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -126,7 +126,7 @@
                                 <table class="table table-light">
                                     <tbody>
                                         <tr>
-                                            <td>{{ $felicitacion->felicitacion }}</td>
+                                            <td class="text-justify">{{ $felicitacion->felicitacion }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -67,7 +67,7 @@
                                 </div>
                                 @endif
                                 <div class="col-12 col-md-6">
-                                    Plazo de respuesta prorroga días hábiles: <strong>{{ $concepto->prorroga_dias }}</strong>
+                                    Plazo de respuesta prórroga días hábiles: <strong>{{ $concepto->prorroga_dias }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha de radicado: <strong>{{ $concepto->fecha_radicado }}</strong>
@@ -111,7 +111,7 @@
                                                     </div>
                                                     <div class="row mt-2">
                                                         <h6>Concepto u opinión:</h6>
-                                                        <div class="col-12">{{ $solicitud->consulta }}</div>
+                                                        <div class="col-12 text-justify">{{ $solicitud->consulta }}</div>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-6"></div>
@@ -130,7 +130,7 @@
                                         <tbody>
                                             @foreach ($solicitud->hechos as $hecho)
                                             <tr>
-                                                <td>{{ $hecho->hecho }}</td>
+                                                <td class="text-justify">{{ $hecho->hecho }}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -147,8 +147,8 @@
                                         <tbody>
                                             @foreach ($solicitud->documentos as $anexo)
                                             <tr>
-                                                <td>{{ $anexo->titulo }}</td>
-                                                <td>{{ $anexo->descripcion }}</td>
+                                                <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                <td class="text-justify">{{ $anexo->descripcion }}</td>
                                                 <td><a href="{{ asset('documentos/conceptouopinion/' . $anexo->url) }}"
                                                         target="_blank" rel="noopener noreferrer">Descargar</a>
                                                 </td>
@@ -197,10 +197,10 @@
                                                     @foreach ($solicitud->aclaraciones as $aclaracion)
                                                     <tr>
                                                         <th scope="row">{{$aclaracion->fecha}}</th>
-                                                        <td>{{$aclaracion->tipo_solicitud}}</td>
-                                                        <td>{{$aclaracion->aclaracion}}</td>
+                                                        <td class="text-justify">{{$aclaracion->tipo_solicitud}}</td>
+                                                        <td class="text-justify">{{$aclaracion->aclaracion}}</td>
                                                         <td>{{$aclaracion->fecha_respuesta}}</td>
-                                                        <td>{{$aclaracion->respuesta}}</td>
+                                                        <td class="text-justify">{{$aclaracion->respuesta}}</td>
                                                         <td>
                                                             @foreach($aclaracion->anexos as $anexo)
                                                                 <a href="{{ asset('documentos/respuestas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer">{{$anexo->titulo}}</a>
@@ -229,8 +229,8 @@
                                                     <select name="tipo_aclaracion" id="tipo_aclaracion"
                                                         class="custom-select rounded-0 tipo_aclaracion">
                                                         <option value="">--Seleccione--</option>
-                                                        <option value="aclaracion">Aclaración</option>
-                                                        <option value="complementacion">Complementación</option>
+                                                        <option value="Aclaración">Aclaración</option>
+                                                        <option value="Complementación">Complementación</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group col-12">
@@ -302,8 +302,8 @@
                                             <tbody>
                                                 @foreach ($solicitud->respuesta->documentos as $anexo)
                                                 <tr>
-                                                    <td>{{ $anexo->titulo }}</td>
-                                                    <td>{{ $anexo->descripcion }}</td>
+                                                    <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                    <td class="text-justify">{{ $anexo->descripcion }}</td>
                                                     <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
                                                             target="_blank" rel="noopener noreferrer">Descargar</a>
                                                     </td>
@@ -341,8 +341,8 @@
                                                 @foreach ($solicitud->recursos as $recurso)
                                                 <tr>
                                                     <td>{{ $recurso->fecha_radicacion }}</td>
-                                                    <td>{{ $recurso->tiporeposicion->tipo }}</td>
-                                                    <td>{{ $recurso->recurso }}</td>
+                                                    <td class="text-justify">{{ $recurso->tiporeposicion->tipo }}</td>
+                                                    <td class="text-justify">{{ $recurso->recurso }}</td>
                                                     <td>Resuelta</td>
                                                     @if ($recurso->documentos)
                                                         <td>
@@ -380,7 +380,7 @@
                                                 <div class="col-12 col-md-6">
                                                     <h6>Recurso de {{$recurso->tiporeposicion->tipo}} </h6>
                                                 </div> 
-                                                <textarea type="text" class="form-control form-control-sm" disabled>{{$recurso->recurso}}</textarea>
+                                                <textarea type="text" class="form-control form-control-sm text-justify" disabled>{{$recurso->recurso}}</textarea>
                                                 <div class="col-12" id="anexosRespuestaRecursos">
                                                     <div class="col-12 d-flex row anexoRespuestaRecurso" id="anexoRespuestaRecurso">
                                                         <div class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
@@ -427,7 +427,7 @@
                                 <div class="row pb-3 form-respuestaProrroga">
                                     <input class="respuestaProrroga" type="hidden" value="{{$concepto->prorroga}}">
                                     <div class="col-12 col-md-6 ">
-                                        <h6>Prorroga</h6>
+                                        <h6>Prórroga</h6>
                                     </div>
                                     <div class="col-12 col-md-6 d-flex flex-row">
                                         <div class="form-check mb-3 mr-4">
@@ -444,20 +444,20 @@
                                     <div class="col-12 contentProrroga" id="contentProrroga">
                                         <div class="col-12 d-flex row">
                                             <div class="col-12 form-group">
-                                                <label for="plazo" class="col-md-6">Plazo prorroga días hábiles:</label>
+                                                <label for="plazo" class="col-md-6">Plazo prórroga días hábiles:</label>
                                                 <input type="number" class="form-control form-control-sm plazo_prorroga col-md-3"
                                                     name="plazo_prorroga" id="plazo_prorroga" min="1"
                                                     max="{{$concepto->tipoPqr->tiempos * 2}}">
                                             </div>
                                             <div class="col-12 d-flex row">
-                                                <label for="prorroga_pdf">Justificacion de prorroga</label>
+                                                <label for="prorroga_pdf">Justificacion de prórroga</label>
                                                 <textarea type="text" class="form-control form-control-sm prorroga_pdf"
                                                     name="prorroga_pdf" id="prorroga_pdf">{{$concepto->prorroga_pdf}}</textarea>
                                             </div>
                                         </div>
                                         @if($concepto->estadospqr_id < 6 && $concepto->prorroga == 0)
                                             <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
-                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar_cuo') }}" data_token="{{ csrf_token() }}">Guardar prorroga</button>
+                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar_cuo') }}" data_token="{{ csrf_token() }}">Guardar prórroga</button>
                                             </div>
                                         @endif
                                     </div>
