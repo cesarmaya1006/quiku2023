@@ -462,6 +462,7 @@
                                                             <input class="totalanexos" name="totalanexos" type="hidden"
                                                                 value="">
                                                             <hr>
+                                                            <p class="text-danger">Se recuerda que el tiempo maximo para dar respuesta a esta aclaracion es de 30 dias, despues de este tiempo la pqr se cerrara por vencimiento de terminos.</p>
                                                         </div>
                                                     @endif
                                                 @endforeach
@@ -651,8 +652,8 @@
                                                 </div>
                                                 <div class="card-footer d-flex justify-content-end guardarRecurso">
                                                     <button type="" class="btn btn-primary px-4"
-                                                        data_url="{{ route('recurso_sd_guardar') }}"
-                                                        data_url_anexos="{{ route('recurso_sd_anexos_guardar') }}"
+                                                        data_url="{{ route('recurso_guardar') }}"
+                                                        data_url_anexos="{{ route('recurso_anexos_guardar') }}"
                                                         data_token="{{ csrf_token() }}">Guardar recurso</button>
                                                 </div>
                                             </div>
@@ -751,8 +752,8 @@
                                                 </div>
                                                 <div class="card-footer d-flex justify-content-end guardarRecurso">
                                                     <button type="" class="btn btn-primary px-4"
-                                                        data_url="{{ route('recurso_sd_guardar') }}"
-                                                        data_url_anexos="{{ route('recurso_sd_anexos_guardar') }}"
+                                                        data_url="{{ route('recurso_guardar') }}"
+                                                        data_url_anexos="{{ route('recurso_anexos_guardar') }}"
                                                         data_token="{{ csrf_token() }}">Guardar recurso</button>
                                                 </div>
                                             </div>

@@ -408,6 +408,7 @@
                                                             <input class="totalanexos" name="totalanexos" type="hidden"
                                                                 value="">
                                                             <hr>
+                                                            <p class="text-danger">Se recuerda que el tiempo maximo para dar respuesta a esta aclaracion es de 30 dias, despues de este tiempo la pqr se cerrara por vencimiento de terminos.</p>
                                                         </div>
                                                     @endif
                                                 @endforeach
