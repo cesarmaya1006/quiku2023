@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Departamento;
+use App\Models\Admin\Municipio;
+use App\Models\Empresas\Sede;
 use App\Models\PQR\AsignacionParticular;
 use App\Models\PQR\Motivo;
 use App\Models\PQR\SubMotivo;
 use App\Models\PQR\tipoPQR;
 use App\Models\Productos\Categoria;
+use App\Models\Productos\Marca;
+use App\Models\Productos\Producto;
+use App\Models\Productos\Referencia;
 use App\Models\Servicios\Servicio;
 use Illuminate\Http\Request;
 
@@ -34,7 +40,8 @@ class AsignacionParticularController extends Controller
         $tipos_pqr = tipoPQR::get();
         $categorias = Categoria::get();
         $servicios = Servicio::get();
-        return view('intranet.parametros.asignacion_part.crear', compact('tipos_pqr', 'categorias', 'servicios'));
+        $departamentos = Departamento::get();
+        return view('intranet.parametros.asignacion_part.crear', compact('tipos_pqr', 'categorias', 'servicios', 'departamentos'));
     }
 
     /**
@@ -105,6 +112,46 @@ class AsignacionParticularController extends Controller
     {
         if ($request->ajax()) {
             return SubMotivo::where('motivo_id', $request['id'])->get();
+        } else {
+            abort(404);
+        }
+    }
+    public function cargar_producto(Request $request)
+    {
+        if ($request->ajax()) {
+            return Producto::where('categoria_id', $request['id'])->get();
+        } else {
+            abort(404);
+        }
+    }
+    public function cargar_marca(Request $request)
+    {
+        if ($request->ajax()) {
+            return Marca::where('producto_id', $request['id'])->get();
+        } else {
+            abort(404);
+        }
+    }
+    public function cargar_referencia(Request $request)
+    {
+        if ($request->ajax()) {
+            return Referencia::where('marca_id', $request['id'])->get();
+        } else {
+            abort(404);
+        }
+    }
+    public function cargar_municipio(Request $request)
+    {
+        if ($request->ajax()) {
+            return Municipio::where('departamento_id', $request['id'])->get();
+        } else {
+            abort(404);
+        }
+    }
+    public function cargar_sede(Request $request)
+    {
+        if ($request->ajax()) {
+            return Sede::where('municipio_id', $request['id'])->get();
         } else {
             abort(404);
         }
