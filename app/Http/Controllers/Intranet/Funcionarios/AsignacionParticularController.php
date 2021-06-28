@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Empresa\ValidacionAsignacionParticular;
+use App\Models\Admin\Cargo;
 use App\Models\Admin\Departamento;
 use App\Models\Admin\Municipio;
 use App\Models\Empresas\Sede;
@@ -26,8 +28,9 @@ class AsignacionParticularController extends Controller
      */
     public function index()
     {
-        $asignaciones = AsignacionParticular::get();
-        return view('intranet.parametros.asignacion_part.index', compact('asignaciones'));
+        $asignaciones_p = AsignacionParticular::where('tipo', 'Permanente')->get();
+        $asignaciones_t = AsignacionParticular::where('tipo', 'Temporal')->get();
+        return view('intranet.parametros.asignacion_part.index', compact('asignaciones_p', 'asignaciones_t'));
     }
 
     /**
@@ -50,9 +53,33 @@ class AsignacionParticularController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function guardar(ValidacionAsignacionParticular $request)
     {
-        //
+        if ($request['tipo'] == 'Temporal') {
+            $asignacionTemp = AsignacionParticular::where('tipo_pqr_id', $request['tipo_pqr_id'])
+                ->where('prod_serv', $request['prod_serv'])
+                ->where('adquisicion', $request['adquisicion'])
+                ->where('motivo_id', $request['motivo_id'])
+                ->where('motivo_sub_id', $request['motivo_sub_id'])
+                ->where('servicio_id', $request['servicio_id'])
+                ->where('producto_id', $request['producto_id'])
+                ->where('marca_id', $request['marca_id'])
+                ->where('referencia_id', $request['referencia_id'])
+                ->where('palabra1', $request['palabra1'])
+                ->where('palabra2', $request['palabra2'])
+                ->where('palabra3', $request['palabra3'])
+                ->where('palabra4', $request['palabra4'])
+                ->get();
+            if ($asignacionTemp->count() > 0) {
+                $request['cantidad'] = $asignacionTemp->cantidad + 1;
+            } else {
+                $request['cantidad'] = 1;
+            }
+        } else {
+            $request['cantidad'] = 1;
+        }
+        AsignacionParticular::create($request->all());
+        return redirect('admin/funcionario/asignacion_particular-index')->with('mensaje', 'Se guardo la asignacion particular de manera correcta');
     }
 
     /**
@@ -143,7 +170,7 @@ class AsignacionParticularController extends Controller
     public function cargar_municipio(Request $request)
     {
         if ($request->ajax()) {
-            return Municipio::where('departamento_id', $request['id'])->get();
+            return Municipio::where('departamento_id', $request['id'])->withCount('sedes')->having('sedes_count', '>', 0)->get();
         } else {
             abort(404);
         }
@@ -152,6 +179,17 @@ class AsignacionParticularController extends Controller
     {
         if ($request->ajax()) {
             return Sede::where('municipio_id', $request['id'])->get();
+        } else {
+            abort(404);
+        }
+    }
+    public function cargar_cargo(Request $request)
+    {
+        if ($request->ajax()) {
+            $sede_id = $request['id'];
+            return Cargo::with('sedes')->whereHas('sedes', function ($q) use ($sede_id) {
+                $q->where('sede_id', $sede_id);
+            })->get();
         } else {
             abort(404);
         }

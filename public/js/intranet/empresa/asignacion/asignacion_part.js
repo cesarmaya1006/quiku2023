@@ -2,23 +2,29 @@ $(document).ready(function() {
     //Pintar y ocultar
     //------------------------------------------------------------
     //Comprobacion de checks para saber asignaciones
+
     //------------------------------------------------------------
     $("#adquisicionCheck").click(function() {
         if ($(this).is(':checked')) {
             $('#adquisicion_p_s').removeClass('d-none');
+            $('#adquisicion').prop('required', true);
         } else {
             $('#adquisicion_p_s').addClass('d-none');
+            $('#adquisicion').prop('required', false);
         }
     });
     //------------------------------------------------------------
     $("#motivoCheck").click(function() {
         if ($(this).is(':checked')) {
             $('#motivo_pqr').removeClass('d-none');
+            $('#motivo_id').prop('required', true);
         } else {
             $('#motivo_pqr').addClass('d-none');
             $('#sub_motivo_pqr').removeClass('d-none');
             $('#sub_motivo_pqr').addClass('d-none');
             $('#subMotivoCheck').prop('checked', false);
+            $('#motivo_id').prop('required', false);
+            $('#motivo_sub_id').prop('required', false);
         }
     });
     //------------------------------------------------------------
@@ -27,8 +33,31 @@ $(document).ready(function() {
             $('#sub_motivo_pqr').removeClass('d-none');
             $('#motivo_pqr').removeClass('d-none');
             $('#motivoCheck').prop('checked', true);
+            $('#motivo_id').prop('required', true);
+            $('#motivo_sub_id').prop('required', true);
         } else {
             $('#sub_motivo_pqr').addClass('d-none');
+            $('#motivo_sub_id').prop('required', false);
+        }
+    });
+    //------------------------------------------------------------
+    $("#categoriasCheck").click(function() {
+        if ($(this).is(':checked')) {
+            $('#categorias').removeClass('d-none');
+            $('#categoria_id').prop('required', true);
+        } else {
+            $('#categorias').addClass('d-none');
+            $('#productos').addClass('d-none');
+            $('#marcas').addClass('d-none');
+            $('#referencias').addClass('d-none');
+            $('#servicios').addClass('d-none');
+            $('#productosCheck').prop('checked', false);
+            $('#marcasCheck').prop('checked', false);
+            $('#referenciasCheck').prop('checked', false);
+            $('#categoria_id').prop('required', false);
+            $('#producto_id').prop('required', false);
+            $('#marca_id').prop('required', false);
+            $('#referencia_id').prop('required', false);
         }
     });
     //------------------------------------------------------------
@@ -36,14 +65,17 @@ $(document).ready(function() {
         if ($(this).is(':checked')) {
             $('#categorias').removeClass('d-none');
             $('#productos').removeClass('d-none');
+            $('#categoriasCheck').prop('checked', true);
+            $('#categoria_id').prop('required', true);
+            $('#producto_id').prop('required', true);
         } else {
-            $('#categorias').addClass('d-none');
             $('#productos').addClass('d-none');
             $('#marcas').addClass('d-none');
             $('#referencias').addClass('d-none');
             $('#servicios').addClass('d-none');
             $('#marcasCheck').prop('checked', false);
             $('#referenciasCheck').prop('checked', false);
+            $('#producto_id').prop('required', false);
         }
     });
     //------------------------------------------------------------
@@ -52,12 +84,17 @@ $(document).ready(function() {
             $('#categorias').removeClass('d-none');
             $('#productos').removeClass('d-none');
             $('#marcas').removeClass('d-none');
+            $('#categoriasCheck').prop('checked', true);
             $('#productosCheck').prop('checked', true);
+            $('#categoria_id').prop('required', true);
+            $('#producto_id').prop('required', true);
+            $('#marca_id').prop('required', true);
         } else {
             $('#marcas').addClass('d-none');
             $('#referencias').addClass('d-none');
             $('#servicios').addClass('d-none');
             $('#referenciasCheck').prop('checked', false);
+            $('#marca_id').prop('required', false);
         }
     });
     //------------------------------------------------------------
@@ -68,18 +105,27 @@ $(document).ready(function() {
             $('#marcas').removeClass('d-none');
             $('#referencias').removeClass('d-none');
             $('#servicios').addClass('d-none');
+            $('#categoriasCheck').prop('checked', true);
             $('#productosCheck').prop('checked', true);
             $('#marcasCheck').prop('checked', true);
+            $('#categoria_id').prop('required', true);
+            $('#producto_id').prop('required', true);
+            $('#marca_id').prop('required', true);
+            $('#referencia_id').prop('required', true);
         } else {
             $('#referencias').addClass('d-none');
+            $('#referencia_id').prop('required', false);
         }
     });
     //------------------------------------------------------------
     $("#palabrasCheck").click(function() {
         if ($(this).is(':checked')) {
             $('#palabrasClave').removeClass('d-none');
+            $('#palabra1').prop('required', true);
+
         } else {
             $('#palabrasClave').addClass('d-none');
+            $('#palabra1').prop('required', false);
         }
     });
     //------------------------------------------------------------
@@ -90,18 +136,26 @@ $(document).ready(function() {
             $('#productos').addClass('d-none');
             $('#marcas').addClass('d-none');
             $('#referencias').addClass('d-none');
+            $('#categoriasCheck').prop('checked', false);
             $('#productosCheck').prop('checked', false);
             $('#marcasCheck').prop('checked', false);
             $('#marcasCheck').prop('checked', false);
             $('#referenciasCheck').prop('checked', false);
+            $('#categoria_id').prop('required', false);
+            $('#producto_id').prop('required', false);
+            $('#marca_id').prop('required', false);
+            $('#referencia_id').prop('required', false);
+            $('#servicio_id').prop('required', true);
         } else {
             $('#servicios').addClass('d-none');
+            $('#servicio_id').prop('required', false);
         }
     });
     //------------------------------------------------------------
-    $('#prod_serv').on('change', function(event) {
+    $('#prodserv').on('change', function(event) {
         if ($(this).val() == 'Servicio') {
             $('#cajaserviciosCheck').removeClass('d-none');
+            $('#cajacategoriasCheck').addClass('d-none');
             $('#cajaproductosCheck').addClass('d-none');
             $('#cajamarcasCheck').addClass('d-none');
             $('#cajareferenciasCheck').addClass('d-none');
@@ -110,22 +164,37 @@ $(document).ready(function() {
             $('#marcas').addClass('d-none');
             $('#referencias').addClass('d-none');
             $('#servicios').addClass('d-none');
+            $('#categoriasCheck').prop('checked', false);
             $('#productosCheck').prop('checked', false);
             $('#marcasCheck').prop('checked', false);
             $('#marcasCheck').prop('checked', false);
             $('#referenciasCheck').prop('checked', false);
             $('#serviciosCheck').prop('checked', false);
+            // - - - - - - - - - - - - - - - - -  - - - - - - -
+            $('#servicio_id').prop('required', false);
+            $('#categoria_id').prop('required', false);
+            $('#producto_id').prop('required', false);
+            $('#marca_id').prop('required', false);
+            $('#referencia_id').prop('required', false);
         } else {
             $('#cajaserviciosCheck').addClass('d-none');
+            $('#cajacategoriasCheck').removeClass('d-none');
             $('#cajaproductosCheck').removeClass('d-none');
             $('#cajamarcasCheck').removeClass('d-none');
             $('#cajareferenciasCheck').removeClass('d-none');
             $('#servicios').addClass('d-none');
             $('#serviciosCheck').prop('checked', false);
+            $('#categoriasCheck').prop('checked', false);
             $('#productosCheck').prop('checked', false);
             $('#marcasCheck').prop('checked', false);
             $('#marcasCheck').prop('checked', false);
             $('#referenciasCheck').prop('checked', false);
+            // - - - - - - - - - - - - - - - - -  - - - - - - -
+            $('#servicio_id').prop('required', false);
+            $('#categoria_id').prop('required', false);
+            $('#producto_id').prop('required', false);
+            $('#marca_id').prop('required', false);
+            $('#referencia_id').prop('required', false);
         }
     });
     //==========================================================================
@@ -251,7 +320,7 @@ $(document).ready(function() {
             type: 'GET',
             data: data,
             success: function(respuesta) {
-                console.log(respuesta);
+
                 if (respuesta != '') {
                     respuesta_html = '<option value="">---Seleccione---</option>';
                 } else {
@@ -311,16 +380,45 @@ $(document).ready(function() {
             type: 'GET',
             data: data,
             success: function(respuesta) {
-                console.log(respuesta);
+
                 if (respuesta != '') {
                     respuesta_html = '<option value="">---Seleccione---</option>';
                 } else {
-                    respuesta_html = '<option value="">Elija primero un municipio</option>';
+                    respuesta_html = '<option value="">Municipio sin sedes</option>';
                 }
                 $.each(respuesta, function(index, item) {
                     respuesta_html += '<option value="' + item['id'] + '">' + item['nombre'] + '</option>';
                 });
                 $('#sede_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#sede_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Sede sin funcionarios asignados</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['cargo'] + '</option>';
+                });
+                $('#cargo_id').html(respuesta_html);
             },
             error: function() {
 

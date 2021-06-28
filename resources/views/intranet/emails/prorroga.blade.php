@@ -43,8 +43,10 @@
             line-height: 35px;
             padding-bottom: 5px;
         }
-        p{
+
+        p {
             line-height: 15px;
+            text-align: justify;
         }
 
     </style>
@@ -84,68 +86,45 @@
         <table>
             <tr>
                 <td>
-                    <div style="margin-top: 50px;">
-                        <p>Bogota {{ date('Y-m-d') }}</p>
+                    <p style="float: right;"> Bogotá, {{ date('Y-m-d') }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-top: 15px;">
+                        <p>Apreciado/Apreciada:</p>
+                        <p><strong>{{ $nombre }}</strong></p>
+                        <p>Tipo ID: {{ $tipo_doc }} No. ID: {{ $identificacion }}</p>
+                        <p>E-mail: {{ $email }}</p>
                     </div>
                 </td>
             </tr>
         </table>
-        <br>
-        <table>
-            <tr>
-                <td colspan="2">
-                    <div style="margin-top: 50px;">
-                        <p>Apreciado/Apreciada: {{ $nombre }}</p>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Tipo ID: {{ $tipo_doc }}</p>
-                </td>
-                <td>
-                    <p>No. ID: {{ $identificacion }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <p>E-mail: {{ $email }}</p>
-                </td>
-            </tr>
-        </table>
         <table>
             <tr>
                 <td>
-                    <p>Asunto: Ampliación de plazo de respuesta.</p>
+                    <p style="float: right;">Asunto: Ampliación de plazo de respuesta.</p>
+                    <p style="float: right;">Referencia: {{ $num_radicado }}</p>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <p>Referencia: {{ $num_radicado }}</p>
-                </td>
-            </tr>
-        </table>
-        <table>
             <tr>
                 <td>
                     <p>Reciba un cordial saludo, </p>
                 </td>
             </tr>
-        </table>
-        <table>
             <tr>
                 <td>
                     <p>De conformidad con el parágrafo del artículo 14 de la Ley 1755 de 2015, y en aras de responder de
                         fondo y de manera completa a su solicitud, requerimos adicionar el plazo máximo de respuesta en
-                        {{ $cant_dias }} días hábiles. </p>
-                        <p>Esta ampliación del plazo de la respuesta se genera por los siguientes motivos:</p>
-                        <p>{{ $pqr->prorroga_pdf }}</p>
-                        <p>Agradecemos su comprensión y reiteramos nuestro compromiso de emitir una respuesta de fondo a su
-                            solicitud lo antes posible. </p>
-                        <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud ingresando a
-                                nuestro sistema <a href="{{ route('index') }}" target="_blank"
-                                    rel="noopener noreferrer">Quiku</a>
-                                opción listado PQR</p>
+                        {{ $cant_dias }} días hábiles. Esta ampliación del plazo de la respuesta se genera por los
+                        siguientes motivos:</p>
+                    <p>{{ $pqr->prorroga_pdf }}</p>
+                    <p>Agradecemos su comprensión y reiteramos nuestro compromiso de emitir una respuesta de fondo a su
+                        solicitud lo antes posible. En cualquier momento usted podrá consultar el estado y las
+                        respuestas a su solicitud ingresando a
+                        nuestro sistema <a href="{{ route('index') }}" target="_blank"
+                            rel="noopener noreferrer">Quiku</a>
+                        opción listado PQR</p>
                 </td>
             </tr>
         </table>

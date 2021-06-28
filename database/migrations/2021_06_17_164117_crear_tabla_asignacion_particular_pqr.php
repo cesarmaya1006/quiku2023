@@ -16,6 +16,7 @@ class CrearTablaAsignacionParticularPqr extends Migration
         Schema::create('asignacion_particular_pqr', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
             $table->string('tipo');
+            $table->string('prodserv');
             $table->bigInteger('cantidad');
             $table->unsignedBigInteger('tipo_pqr_id');
             $table->foreign('tipo_pqr_id', 'fk_tipoPQR_asignacion')->references('id')->on('tipo_pqr')->onDelete('restrict')->onUpdate('restrict');
@@ -42,7 +43,6 @@ class CrearTablaAsignacionParticularPqr extends Migration
             $table->string('palabra2', 255)->nullable();
             $table->string('palabra3', 255)->nullable();
             $table->string('palabra4', 255)->nullable();
-            $table->string('palabra5', 255)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

@@ -2,6 +2,7 @@
 
 namespace App\Models\Empresas;
 
+use App\Models\Admin\Cargo;
 use App\Models\Admin\Departamento;
 use App\Models\Admin\Municipio;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,5 +24,9 @@ class Sede extends Model
     public function departamentos()
     {
         return $this->belongsToMany(Departamento::class, 'area_influencia');
+    }
+    public function cargos()
+    {
+        return $this->belongsToMany(Cargo::class, 'empleados');
     }
 }

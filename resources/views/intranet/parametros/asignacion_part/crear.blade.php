@@ -31,16 +31,22 @@
             <hr>
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('admin-funcionario-areas-guardar') }}" class="form-horizontal" method="POST"
-                        autocomplete="off" enctype="multipart/form-data">
+                    <form action="{{ route('admin-funcionario-asignacion_particular-guardar') }}" class="form-horizontal"
+                        method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         <div class="row">
+                            <div class="col-12">
+                                <h6>Nivel de Asignación 1</h6>
+                            </div>
+                            <div class="col-12">
+                                <p>Reglas generales</p>
+                            </div>
                             <div class="form-group col-12 col-md-3">
                                 <label class="requerido" for="tipo">Tipo de asignación</label>
                                 <select id="tipo" class="form-control form-control-sm" name="tipo">
                                     <option value="Permanente">Permanente</option>
-                                    <option value="Particular">Particular</option>
+                                    <option value="Temporal">Temporal</option>
                                 </select>
                             </div>
                             <div class="form-group col-12 col-md-3">
@@ -55,8 +61,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-12 col-md-3">
-                                <label class="requerido" for="prod_serv">Tipo de Producto / Servicio</label>
-                                <select id="prod_serv" class="form-control form-control-sm" name="prod_serv">
+                                <label class="requerido" for="prodserv">Tipo de Producto / Servicio</label>
+                                <select id="prodserv" class="form-control form-control-sm" name="prodserv">
                                     <option value="Producto">Producto</option>
                                     <option value="Servicio">Servicio</option>
                                 </select>
@@ -65,7 +71,7 @@
                         <hr>
                         <div class="row d-none" id="ajustesAsignacion">
                             <div class="col-12 mb-3">
-                                <h6>Ajustes de parametro de asignación</h6>
+                                <h6>Nivel de asignación 2</h6>
                             </div>
                             <div class="col-12">
                                 <p>Seleccione los ajustes del parametro de asignación</p>
@@ -73,41 +79,48 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div class="form-check col-12 col-md-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="adquisicionCheck">
-                                        <label class="form-check-label" for="adquisicionCheck">
-                                            Adquisición
-                                        </label>
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="adquisicionCheck">
+                                        <label class="form-check-label" for="adquisicionCheck">Adquisición</label>
                                     </div>
                                     <div class="form-check col-12 col-md-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="motivoCheck">
-                                        <label class="form-check-label" for="motivoCheck">
-                                            Motivo PQR
-                                        </label>
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="motivoCheck">
+                                        <label class="form-check-label" for="motivoCheck">Motivo PQR</label>
                                     </div>
                                     <div class="form-check col-12 col-md-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="subMotivoCheck">
-                                        <label class="form-check-label" for="subMotivoCheck">
-                                            Sub-Motivo PQR
-                                        </label>
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="subMotivoCheck">
+                                        <label class="form-check-label" for="subMotivoCheck">Sub-Motivo PQR</label>
                                     </div>
                                     <div class="form-check col-12 col-md-2 d-none" id="cajaserviciosCheck">
-                                        <input class="form-check-input" type="checkbox" value="" id="serviciosCheck">
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="serviciosCheck">
                                         <label class="form-check-label" for="serviciosCheck">Servicios</label>
                                     </div>
+                                    <div class="form-check col-12 col-md-2" id="cajacategoriasCheck">
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="categoriasCheck">
+                                        <label class="form-check-label" for="categoriasCheck">Categorias</label>
+                                    </div>
                                     <div class="form-check col-12 col-md-2" id="cajaproductosCheck">
-                                        <input class="form-check-input" type="checkbox" value="" id="productosCheck">
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="productosCheck">
                                         <label class="form-check-label" for="productosCheck">Productos</label>
                                     </div>
                                     <div class="form-check col-12 col-md-2" id="cajamarcasCheck">
-                                        <input class="form-check-input" type="checkbox" value="" id="marcasCheck">
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="marcasCheck">
                                         <label class="form-check-label" for="marcasCheck">Marcas</label>
                                     </div>
                                     <div class="form-check col-12 col-md-2" id="cajareferenciasCheck">
-                                        <input class="form-check-input" type="checkbox" value="" id="referenciasCheck">
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="referenciasCheck">
                                         <label class="form-check-label" for="referenciasCheck">Referencias</label>
                                     </div>
                                     <div class="form-check col-12 col-md-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="palabrasCheck">
+                                        <input class="form-check-input check_clase" type="checkbox" value=""
+                                            id="palabrasCheck">
                                         <label class="form-check-label" for="palabrasCheck">Palabras Clave</label>
                                     </div>
                                 </div>
@@ -117,7 +130,7 @@
                             <hr>
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="adquisicion">Tipo de adquisición</label>
-                                <select name="adquisicion" id="adquisicion" class="custom-select rounded-0" required>
+                                <select name="adquisicion" id="adquisicion" class="custom-select rounded-0">
                                     <option value="">--Seleccione--</option>
                                     <option value="Sede física">Sede física</option>
                                     <option value="Página web">Página web</option>
@@ -130,8 +143,7 @@
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="motivo_id">Motivo de PQR</label>
                                 <select id="motivo_id" class="form-control form-control-sm" name="motivo_id"
-                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}"
-                                    required>
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}">
                                     <option value="">---Seleccione---</option>
                                 </select>
                             </div>
@@ -140,8 +152,7 @@
                             <hr>
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="motivo_sub_id">Sub-Motivo de PQR</label>
-                                <select id="motivo_sub_id" class="form-control form-control-sm" name="motivo_sub_id"
-                                    required>
+                                <select id="motivo_sub_id" class="form-control form-control-sm" name="motivo_sub_id">
                                     <option value="">---Seleccione---</option>
                                 </select>
                             </div>
@@ -149,8 +160,8 @@
                         <div class="row d-none" id="servicios">
                             <hr>
                             <div class="form-group col-12 col-md-6">
-                                <label class="requerido" for="servicioo_id">Servicios</label>
-                                <select id="servicio_id" class="form-control form-control-sm" name="servicio_id" required>
+                                <label class="requerido" for="servicio_id">Servicios</label>
+                                <select id="servicio_id" class="form-control form-control-sm" name="servicio_id">
                                     <option value="">---Seleccione un servcio---</option>
                                     @foreach ($servicios as $servicio)
                                         <option value="{{ $servicio->id }}">{{ $servicio->servicio }}</option>
@@ -164,7 +175,7 @@
                                 <label class="requerido" for="categoria_id">Categoría de producto</label>
                                 <select id="categoria_id" class="form-control form-control-sm"
                                     data_url="{{ route('admin-funcionario-asignacion_particular-cargar_producto') }}"
-                                    required>
+                                    name="categoria_id">
                                     <option value="">---Seleccione---</option>
                                     @foreach ($categorias as $categoria)
                                         <option value="{{ $categoria->id }}">{{ $categoria->categoria }}</option>
@@ -177,8 +188,7 @@
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="producto_id">Productos</label>
                                 <select id="producto_id" class="form-control form-control-sm" name="producto_id"
-                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}"
-                                    required>
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}">
                                     <option value="">---Seleccione una categoría---</option>
                                 </select>
                             </div>
@@ -188,8 +198,7 @@
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="marca_id">Marcas</label>
                                 <select id="marca_id" class="form-control form-control-sm" name="marca_id"
-                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}"
-                                    required>
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}">
                                     <option value="">---Seleccione un producto---</option>
                                 </select>
                             </div>
@@ -198,8 +207,7 @@
                             <hr>
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="referencia_id">Referencias</label>
-                                <select id="referencia_id" class="form-control form-control-sm" name="referencia_id"
-                                    required>
+                                <select id="referencia_id" class="form-control form-control-sm" name="referencia_id">
                                     <option value="">---Seleccione una marca---</option>
                                 </select>
                             </div>
@@ -211,8 +219,7 @@
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label class="requerido" for="palabra1">Palabra Clave 1</label>
-                                <input type="text" class="form-control form-control-sm" name="palabra1" id="palabra1"
-                                    required>
+                                <input type="text" class="form-control form-control-sm" name="palabra1" id="palabra1">
                             </div>
                             <div class="form-group col-12 col-md-6">
                                 <label for="palabra2">Palabra Clave 2</label>
@@ -226,15 +233,11 @@
                                 <label for="palabra4">Palabra Clave 4</label>
                                 <input type="text" class="form-control form-control-sm" name="palabra4" id="palabra4">
                             </div>
-                            <div class="form-group col-12 col-md-6">
-                                <label for="palabra5">Palabra Clave 5</label>
-                                <input type="text" class="form-control form-control-sm" name="palabra5" id="palabra5">
-                            </div>
                         </div>
-                        <div class="row">
+                        <div class="row" id="caja_asignacion">
                             <hr style="border-top: solid 4px black">
                             <div class="col-12">
-                                <h6>Datos de asignacion por cargo</h6>
+                                <h6>Asignacion por cargo</h6>
                             </div>
                             <br>
                             <div class="form-group col-12 col-md-3">
@@ -257,15 +260,27 @@
                             <div class="form-group col-12 col-md-3">
                                 <label class="requerido" for="municipio_id">Municipios con sedes</label>
                                 <select id="municipio_id" class="form-control form-control-sm"
-                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sede') }}" required>
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sede') }}"
+                                    required>
                                     <option value="">---Seleccione un departamento---</option>
                                 </select>
                             </div>
                             <div class="form-group col-12 col-md-3">
                                 <label class="requerido" for="sede_id">Sedes</label>
-                                <select id="sede_id" class="form-control form-control-sm" required>
+                                <select id="sede_id" class="form-control form-control-sm" name="sede_id"
+                                    data_url="{{ route('admin-funcionario-asignacion_particular-cargar_cargo') }}"
+                                    required>
                                     <option value="">---Seleccione un municipio---</option>
                                 </select>
+                            </div>
+                            <div class="form-group col-12 col-md-3">
+                                <label class="requerido" for="cargo_id">Cargos</label>
+                                <select id="cargo_id" class="form-control form-control-sm" name="cargo_id" required>
+                                    <option value="">---Seleccione un municipio---</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 col-md-3 mt-5 mb-5 pl-md-4">
+                                <button type="submit" class="btn btn-primary btn-xs pl-4 pr-4 ">Guardar</button>
                             </div>
                         </div>
                     </form>

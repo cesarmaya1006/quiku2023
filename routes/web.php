@@ -186,6 +186,7 @@ Route::group(['middleware' => 'auth'], function () {
             // Rutas Asignacion particular
             Route::get('asignacion_particular-index', [AsignacionParticularController::class, 'index'])->name('admin-funcionario-asignacion_particular-index');
             Route::get('asignacion_particular-crear', [AsignacionParticularController::class, 'crear'])->name('admin-funcionario-asignacion_particular-crear');
+            Route::post('asignacion_particular', [AsignacionParticularController::class, 'guardar'])->name('admin-funcionario-asignacion_particular-guardar');
             // .-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-
             Route::get('asignacion_particular-cargar_motivo', [AsignacionParticularController::class, 'cargar_motivo'])->name('admin-funcionario-asignacion_particular-cargar_motivo');
             Route::get('asignacion_particular-cargar_sub_motivo', [AsignacionParticularController::class, 'cargar_sub_motivo'])->name('admin-funcionario-asignacion_particular-cargar_sub_motivo');
@@ -194,6 +195,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('asignacion_particular-cargar_referencia', [AsignacionParticularController::class, 'cargar_referencia'])->name('admin-funcionario-asignacion_particular-cargar_referencia');
             Route::get('asignacion_particular-cargar_municipio', [AsignacionParticularController::class, 'cargar_municipio'])->name('admin-funcionario-asignacion_particular-cargar_municipio');
             Route::get('asignacion_particular-cargar_sede', [AsignacionParticularController::class, 'cargar_sede'])->name('admin-funcionario-asignacion_particular-cargar_sede');
+            Route::get('asignacion_particular-cargar_cargo', [AsignacionParticularController::class, 'cargar_cargo'])->name('admin-funcionario-asignacion_particular-cargar_cargo');
             // ------------------------------------------------------------------------------------
 
         });

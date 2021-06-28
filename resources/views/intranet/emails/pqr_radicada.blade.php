@@ -8,6 +8,7 @@
     <style>
         p {
             font-size: 12pt;
+            text-align: justify;
         }
 
         table {
@@ -66,7 +67,6 @@
             </tr>
         </table>
     </header>
-
     <footer>
         <table>
             <tr>
@@ -84,61 +84,27 @@
     <main>
         <table>
             <tr>
-                <td style="width: 75%;margin-top: 135px;">
-                    <div style="margin-top: 50px;">
-                        <p>Apreciado/Apreciada: {{ $nombre }}</p>
-                    </div>
+                <td>
+                    <p style="float: right;">{{ date('Y-m-d') }}</p>
                 </td>
-                <td style="width: 25%;margin-top: 135px;text-align: center;">
+            </tr>
+            <tr>
+                <td>
                     <div style="margin-top: 50px;">
-                        <p>{{ date('Y-m-d') }}</p>
+                        <p>Apreciado/Apreciada:</p>
+                        <p>{{ $nombre }}</p>
                     </div>
                 </td>
             </tr>
         </table>
-        <br>
         <table>
             <tr>
-                <td style="width: 75%;margin-top: 135px;">
-                    <div style="margin-top: 50px;">
-                        <p>Hemos recibido su solicitud y la atenderemos en el menor tiempo posible.</p>
-                        <p>A continuación podrá verificar los datos e información que han quedado resgistrados en
+                <td>
+                    <div>
+                        <p>Hemos recibido su solicitud y la atenderemos en el menor tiempo posible.A continuación podrá
+                            verificar los datos e información que han quedado resgistrados en
                             nuestro sistema:</p>
                     </div>
-                </td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td style="width: 75%;margin-top: 135px;">
-                    <p>Fecha de radicación: {{ $fecha }}</p>
-                    <p>No. de identificación de su solicitud: {{ $num_radicado }}</p>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <table>
-            <tr>
-                <td colspan="6" style="text-align: center;">
-                    <h4>Datos del peticionario</h4>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <p>Nombres: {{ $nombre }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <p>Tipo ID: {{ $tipo_doc }}</p>
-                </td>
-                <td colspan="2">
-                    <p>No. ID: {{ $identificacion }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">
-                    <p>E-mail: {{ $email }}</p>
                 </td>
             </tr>
         </table>
@@ -146,9 +112,38 @@
         <table>
             <tr>
                 <td>
+                    <p><strong>Fecha de radicación: </strong> {{ $fecha }}</p>
+                    <p><strong>No. de identificación de su solicitud: </strong> {{ $num_radicado }}</p>
+                    <p><strong>Tipo de PQR:</strong> @switch($tipo_pqr_id)
+                            @case(1)
+                                Peticion
+                            @break
+                            @case(2)
+                                Queja
+                            @break
+                            @default
+                                Reclamo
+                        @endswitch
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Datos del peticionario: {{ $nombre }}</p>
+                    <p>Tipo ID: {{ $tipo_doc }} No. ID: {{ $identificacion }}</p>
+                    <p>E-mail: {{ $email }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4>Información registrada en su PQR</h4>
                     @switch($tipo_pqr_id)
                         @case(1)
-                            <h4>Peticion</h4>
                             <p>Lugar de adquisición del producto o servicio: {{ $pqr_radicada->adquisicion }}</p>
                             <p>¿Su PQR es sobre un producto o servicio?: {{ $pqr_radicada->tipo }}</p>
                             @if ($pqr_radicada->tipo == 'Servicio')
@@ -159,18 +154,19 @@
                             <p>No. Factura: {{ $pqr_radicada->factura }}</p>
                             <p>Fecha de factura: {{ $pqr_radicada->fecha_factura }}</p>
                             <p>Tipo de servicio: {{ $pqr_radicada->servicio_id }}</p>
+                            <?php $num_peticion = 0; ?>
                             @foreach ($pqr_radicada->peticiones as $peticion)
+                                <?php $num_peticion++; ?>
                                 <h5>Motivo: {{ $peticion->motivo->sub_motivo }}</h5>
-                                <?php $num_hecho =0; ?>
+                                <?php $num_hecho = 0; ?>
                                 @foreach ($peticion->hechos as $hecho)
-                                <?php $num_hecho ++; ?>
-                                    <p>Hecho{{$num_hecho}}: {{ $hecho->hecho }}</p>
+                                    <?php $num_hecho++; ?>
+                                    <p>Hecho{{ $num_hecho }}: {{ $hecho->hecho }}</p>
                                 @endforeach
                                 <p>Justificación: {{ $peticion->justificacion }}</p>
                             @endforeach
                         @break
                         @case(2)
-                            <h4>Queja</h4>
                             <p>Lugar de adquisición del producto o servicio: {{ $pqr_radicada->adquisicion }}</p>
                             <p>¿Su PQR es sobre un producto o servicio?: {{ $pqr_radicada->tipo }}</p>
                             @if ($pqr_radicada->tipo == 'Servicio')
@@ -181,18 +177,19 @@
                             <p>No. Factura: {{ $pqr_radicada->factura }}</p>
                             <p>Fecha de factura: {{ $pqr_radicada->fecha_factura }}</p>
                             <p>Tipo de servicio: {{ $pqr_radicada->servicio_id }}</p>
+                            <?php $num_peticion = 0; ?>
                             @foreach ($pqr_radicada->peticiones as $peticion)
+                                <?php $num_peticion++; ?>
                                 <h5>Motivo: {{ $peticion->motivo->sub_motivo }}</h5>
-                                <?php $num_hecho =0; ?>
+                                <?php $num_hecho = 0; ?>
                                 @foreach ($peticion->hechos as $hecho)
-                                <?php $num_hecho ++; ?>
-                                    <p>Hecho{{$num_hecho}}: {{ $hecho->hecho }}</p>
+                                    <?php $num_hecho++; ?>
+                                    <p>Hecho{{ $num_hecho }}: {{ $hecho->hecho }}</p>
                                 @endforeach
                                 <p>Justificación: {{ $peticion->justificacion }}</p>
                             @endforeach
                         @break
                         @default
-                            <h4>Reclamo</h4>
                             <p>Lugar de adquisición del producto o servicio: {{ $pqr_radicada->adquisicion }}</p>
                             <p>¿Su PQR es sobre un producto o servicio?: {{ $pqr_radicada->tipo }}</p>
                             @if ($pqr_radicada->tipo == 'Servicio')
@@ -203,13 +200,14 @@
                             <p>No. Factura: {{ $pqr_radicada->factura }}</p>
                             <p>Fecha de factura: {{ $pqr_radicada->fecha_factura }}</p>
                             <p>Tipo de servicio: {{ $pqr_radicada->servicio_id }}</p>
+                            <?php $num_peticion = 0; ?>
                             @foreach ($pqr_radicada->peticiones as $peticion)
+                                <?php $num_peticion++; ?>
                                 <h5>Motivo: {{ $peticion->motivo->sub_motivo }}</h5>
                                 <?php $num_hecho = 0; ?>
-                                <?php $num_hecho =0; ?>
                                 @foreach ($peticion->hechos as $hecho)
-                                <?php $num_hecho ++; ?>
-                                    <p>Hecho{{$num_hecho}}: {{ $hecho->hecho }}</p>
+                                    <?php $num_hecho++; ?>
+                                    <p>Hecho{{ $num_hecho }}: {{ $hecho->hecho }}</p>
                                 @endforeach
                                 <p>Justificación: {{ $peticion->justificacion }}</p>
                             @endforeach

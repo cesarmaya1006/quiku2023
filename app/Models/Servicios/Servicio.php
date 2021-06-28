@@ -2,6 +2,7 @@
 
 namespace App\Models\Servicios;
 
+use App\Models\PQR\AsignacionParticular;
 use App\Models\PQR\PQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,11 @@ class Servicio extends Model
     public function pqrs()
     {
         return $this->hasMany(PQR::class, 'servicio_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function asignacion()
+    {
+        return $this->hasMany(AsignacionParticular::class, 'servicio_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

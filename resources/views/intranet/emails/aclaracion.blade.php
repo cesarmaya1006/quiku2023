@@ -43,7 +43,8 @@
             line-height: 35px;
             padding-bottom: 5px;
         }
-        p{
+
+        p {
             line-height: 15px;
         }
 
@@ -82,6 +83,23 @@
     </footer>
     <main>
         <table>
+            <tr>
+                <td>
+                    <div style="margin-top: 50px;">
+                        <p>Bogota {{ date('Y-m-d') }}</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="margin-top: 15px;">
+                        <p>Apreciado/Apreciada:</p>
+                        <p><strong>{{ $nombre }}</strong></p>
+                        <p>Tipo ID: {{ $tipo_doc }} No. ID: {{ $identificacion }}</p>
+                        <p>E-mail:{{ $email }}</p>
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <td>
                     <div style="margin-top: 50px;">

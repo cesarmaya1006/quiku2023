@@ -43,8 +43,10 @@
             line-height: 35px;
             padding-bottom: 5px;
         }
-        p{
+
+        p {
             line-height: 15px;
+            text-align: justify;
         }
 
     </style>
@@ -84,54 +86,39 @@
         <table>
             <tr>
                 <td>
-                    <div>
-                        <p>Apreciado/Apreciada: {{ $nombre }}</p>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <p>Fecha de expedición: {{ Date('Y-m-d H:i:s') }}</p>
-                    </div>
+                    <p style="float: right;"> Bogotá, {{ date('Y-m-d') }}</p>
                 </td>
             </tr>
-        </table>
-        <table>
             <tr>
+                <td>
+                    <div style="margin-top: 15px;">
+                        <p>Apreciado/Apreciada:</p>
+                        <p><strong>{{ $nombre }}</strong></p>
+                        <p>Tipo ID: {{ $tipo_doc }} No. ID: {{ $identificacion }}</p>
+                        <p>E-mail: {{ $email }}</p>
+                    </div>
+                </td>
                 <td>
                     <p>Hemos recibido sus recursos y los atenderemos en el menor tiempo posible. A continuación podrá
                         verificar los datos e información que han quedado resgistrados en nuestro sistema:</p>
+                    <hr>
                     <p>Fecha de radicación: {{ $recurso->fecha_radicacion }}</p>
                     <p>No. de identificación de su solicitud: {{ $num_radicado }}</p>
                 </td>
             </tr>
-        </table>
-        <table>
             <tr>
-                <td colspan="2" style="text-align: center;">
+                <td style="text-align: center;">
                     <h4>Datos del peticionario</h4>
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td>
                     <p>Nombres:{{ $nombre }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     <p>Tipo ID: {{ $tipo_doc }}</p>
-                </td>
-                <td>
                     <p>No. ID: {{ $identificacion }}</p>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
                     <p>E-mail:{{ $email }}</p>
                 </td>
             </tr>
-        </table>
-        <hr>
-        <table>
             <tr>
                 <td>
                     <table>
@@ -146,8 +133,6 @@
                     </table>
                 </td>
             </tr>
-        </table>
-        <table>
             <tr>
                 <td>
                     <h4>Anexos</h4>

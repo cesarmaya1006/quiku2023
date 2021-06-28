@@ -3,6 +3,7 @@
 namespace App\Models\Admin;
 
 use App\Models\Empleados\Empleado;
+use App\Models\Empresas\Sede;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -23,4 +24,8 @@ class Cargo extends Model
         return $this->hasMany(Empleado::class, 'cargo_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function sedes()
+    {
+        return $this->belongsToMany(Sede::class, 'empleados');
+    }
 }
