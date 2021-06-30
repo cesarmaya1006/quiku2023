@@ -101,7 +101,7 @@
                                         Estado: <strong>{{ $reporte->estado->estado_usuario }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <strong><a href="{{ route('pqrRadicadaPdf', ['id' => $reporte->id]) }}"
+                                        <strong><a href="{{ route('pqrRadicadaPdfRi', ['id' => $reporte->id]) }}"
                                                 target="_blank" rel="noopener noreferrer"><i class="fa fa-download"
                                                     aria-hidden="true"></i>
                                                 Descargar
@@ -222,7 +222,7 @@
                                         Días de prórroga: <strong>{{ $reporte->prorroga_dias }} </strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <strong><a href="{{ route('prorrogaPdf', ['id' => $reporte->id]) }}" target="_blank"
+                                        <strong><a href="{{ route('prorrogaPdfRi', ['id' => $reporte->id]) }}" target="_blank"
                                                 rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
                                                 Descargar Radicado Prórroga</a></strong>
                                     </div>
@@ -365,7 +365,7 @@
                                                                 </div>
                                                                 <div class="col-12 form-group">
                                                                     <strong><a
-                                                                            href="{{ route('aclaracionPdf', ['id' => $aclaracion->id]) }}"
+                                                                            href="{{ route('aclaracionPdfRi', ['id' => $aclaracion->id]) }}"
                                                                             target="_blank" rel="noopener noreferrer"><i
                                                                                 class="fa fa-download"
                                                                                 aria-hidden="true"></i>

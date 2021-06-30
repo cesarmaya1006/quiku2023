@@ -77,7 +77,7 @@
                                             <td>{{ $concepto->estado->estado_usuario }}</td>
                                             <td>{{ date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . $concepto->tiempo_limite . ' days')) }}
                                             </td>
-                                            <td><a href="{{ route('download', ['id_tipo_pqr' => $concepto->tipo_pqr_id, 'id_pqr' => $concepto->id]) }}"
+                                            <td><a href="{{ route('pqrRadicadaPdfCuo', ['id' => $concepto->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
@@ -95,7 +95,7 @@
                                             <td>{{ $solicitud_datos->estado->estado_usuario }}</td>
                                             <td>{{ date('Y-m-d', strtotime($solicitud_datos->fecha_generacion . '+ ' . $solicitud_datos->tiempo_limite . ' days')) }}
                                             </td>
-                                            <td><a href="{{ route('download', ['id_tipo_pqr' => $solicitud_datos->tipo_pqr_id, 'id_pqr' => $solicitud_datos->id]) }}"
+                                            <td><a href="{{ route('pqrRadicadaPdfSd', ['id' => $solicitud_datos->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
@@ -114,7 +114,7 @@
                                             <td>{{ $denuncia->estado->estado_usuario }}</td>
                                             <td>{{ date('Y-m-d', strtotime($denuncia->fecha_generacion . '+ ' . $denuncia->tiempo_limite . ' days')) }}
                                             </td>
-                                            <td><a href="{{ route('download', ['id_tipo_pqr' => $denuncia->tipo_pqr_id, 'id_pqr' => $denuncia->id]) }}"
+                                            <td><a href="{{ route('pqrRadicadaPdfRi', ['id' => $denuncia->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>
@@ -150,7 +150,7 @@
                                             <td>{{ $solicitud_doc->estado->estado_usuario }}</td>
                                             <td>{{ date('Y-m-d', strtotime($solicitud_doc->fecha_generacion . '+ ' . $solicitud_doc->tiempo_limite . ' days')) }}
                                             </td>
-                                            <td><a href="{{ route('download', ['id_tipo_pqr' => $solicitud_doc->tipo_pqr_id, 'id_pqr' => $solicitud_doc->id]) }}"
+                                            <td><a href="{{ route('pqrRadicadaPdfSdi', ['id' => $solicitud_doc->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                         class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
                                             </td>

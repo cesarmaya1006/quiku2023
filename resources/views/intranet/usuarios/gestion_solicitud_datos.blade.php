@@ -105,7 +105,7 @@
                                         Estado: <strong>{{ $solicitudDatos->estado->estado_usuario }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <strong><a href="{{ route('pqrRadicadaPdf', ['id' => $solicitudDatos->id]) }}"
+                                        <strong><a href="{{ route('pqrRadicadaPdfSd', ['id' => $solicitudDatos->id]) }}"
                                                 target="_blank" rel="noopener noreferrer"><i class="fa fa-download"
                                                     aria-hidden="true"></i>
                                                 Descargar
@@ -226,7 +226,7 @@
                                         Días de prórroga: <strong>{{ $solicitudDatos->prorroga_dias }} </strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <strong><a href="{{ route('prorrogaPdf', ['id' => $solicitudDatos->id]) }}" target="_blank"
+                                        <strong><a href="{{ route('prorrogaPdfSd', ['id' => $solicitudDatos->id]) }}" target="_blank"
                                                 rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
                                                 Descargar Radicado Prórroga</a></strong>
                                     </div>
@@ -351,7 +351,7 @@
                                                                 </div>
                                                                 <div class="col-12 form-group">
                                                                     <strong><a
-                                                                            href="{{ route('aclaracionPdf', ['id' => $aclaracion->id]) }}"
+                                                                            href="{{ route('aclaracionPdfSd', ['id' => $aclaracion->id]) }}"
                                                                             target="_blank" rel="noopener noreferrer"><i
                                                                                 class="fa fa-download"
                                                                                 aria-hidden="true"></i>

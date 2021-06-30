@@ -101,7 +101,7 @@
                                         Estado: <strong>{{ $concepto->estado->estado_usuario }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <strong><a href="{{ route('pqrRadicadaPdf', ['id' => $concepto->id]) }}"
+                                        <strong><a href="{{ route('pqrRadicadaPdfCuo', ['id' => $concepto->id]) }}"
                                                 target="_blank" rel="noopener noreferrer"><i class="fa fa-download"
                                                     aria-hidden="true"></i>
                                                 Descargar
@@ -358,7 +358,7 @@
                                                                 </div>
                                                                 <div class="col-12 form-group">
                                                                     <strong><a
-                                                                            href="{{ route('aclaracionPdf', ['id' => $aclaracion->id]) }}"
+                                                                            href="{{ route('aclaracionPdfCuo', ['id' => $aclaracion->id]) }}"
                                                                             target="_blank" rel="noopener noreferrer"><i
                                                                                 class="fa fa-download"
                                                                                 aria-hidden="true"></i>

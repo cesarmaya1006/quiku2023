@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Mail\Prorroga;
+use App\Mail\CUO_Prorroga;
 use App\Mail\RespuestaPQR;
 use App\Models\PQR\Estado;
+use App\Mail\CUO_Respuesta;
 use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
 use App\Models\PQR\Prioridad;
@@ -15,8 +17,11 @@ use App\Mail\RespuestaReposicion;
 use App\Mail\ConstanciaAclaracion;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\CUO_RespuestaReposicion;
+use App\Mail\CUO_ConstanciaAclaracion;
 use Illuminate\Support\Facades\Config;
 use App\Mail\AclaracionComplementacion;
+use App\Mail\CUO_AclaracionComplementacion;
 use App\Http\Controllers\Fechas\FechasController;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionRecurso;
@@ -72,13 +77,14 @@ class ConceptoUOpinionController extends Controller
                     $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
                     $aclaracionNew = ConceptoUOpinionAclaracion::create($nuevaAclaracion);
                     $peticion_act = ConceptoUOpinionConsulta::findOrfail($request["id_peticion$i"]);
-                    // if ($peticion_act->pqr->persona_id != null) {
-                    //     $email = $peticion_act->pqr->persona->email;
-                    // } else {
-                    //     $email = $peticion_act->pqr->empresa->email;
-                    // }
-                    // $id_aclaracion = $aclaracionNew->id;
-                    // Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+                    $peticion_act = ConceptoUOpinion::findOrfail($peticion_act->conceptouopinion_id);
+                    if ($peticion_act->persona_id != null) {
+                        $email = $peticion_act->persona->email;
+                    } else {
+                        $email = $peticion_act->empresa->email;
+                    }
+                    $id_aclaracion = $aclaracionNew->id;
+                    Mail::to($email)->send(new CUO_AclaracionComplementacion($id_aclaracion));
                 }
             }
             $contadorAnexos += $request["totalPeticionAnexos$i"];
@@ -88,13 +94,14 @@ class ConceptoUOpinionController extends Controller
                 $respuesta['respuesta'] = $request["respuesta$i"];
                 $respuestaPQR = ConceptoUOpinionRespuesta::create($respuesta);
                 //----------------------------------------------------------------------
-                // if ($respuestaPQR->peticion->pqr->persona_id != null) {
-                //     $email = $respuestaPQR->peticion->pqr->persona->email;
-                // } else {
-                //     $email = $respuestaPQR->peticion->pqr->empresa->email;
-                // }
-                // $id_pqr = $respuestaPQR->peticion->pqr->id;
-                // Mail::to($email)->send(new RespuestaPQR($id_pqr));
+                $conceptoRespuesta = ConceptoUOpinion::findOrFail($request['id_pqr']);
+                if ($conceptoRespuesta->persona_id != null) {
+                    $email = $conceptoRespuesta->persona->email;
+                } else {
+                    $email = $conceptoRespuesta->empresa->email;
+                }
+                $id_pqr = $conceptoRespuesta->id;
+                Mail::to($email)->send(new CUO_Respuesta($id_pqr));
                 //----------------------------------------------------------------------
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
@@ -192,13 +199,14 @@ class ConceptoUOpinionController extends Controller
                 $aclaracionNew = ConceptoUOpinionAclaracion::findOrFail($request["id_aclaracion$i"]);
                 //----------------------------------------------------------------------
                 $peticion_act = ConceptoUOpinionConsulta::findOrfail($request["id_solicitud$i"]);
-                // if ($peticion_act->pqr->persona_id != null) {
-                //     $email = $peticion_act->pqr->persona->email;
-                // } else {
-                //     $email = $peticion_act->pqr->empresa->email;
-                // }
-                // $id_aclaracion = $aclaracionNew->id;
-                // Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
+                $peticion_act = ConceptoUOpinion::findOrfail($peticion_act->conceptouopinion_id);
+                if ($peticion_act->persona_id != null) {
+                    $email = $peticion_act->persona->email;
+                } else {
+                    $email = $peticion_act->empresa->email;
+                }
+                $id_aclaracion = $aclaracionNew->id;
+                Mail::to($email)->send(new CUO_ConstanciaAclaracion($id_aclaracion));
                 //----------------------------------------------------------------------
                 $contadorAnexos += $request["totalanexos$i"];
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
@@ -283,7 +291,7 @@ class ConceptoUOpinionController extends Controller
                         $email = $pqr->empresa->email;
                     }
                     $id_pqr = $pqr->id;
-                    // Mail::to($email)->send(new Prorroga($id_pqr));
+                    Mail::to($email)->send(new CUO_Prorroga($id_pqr));
                     //---------------------------------------------------------------------------
                 }
             }
@@ -303,13 +311,14 @@ class ConceptoUOpinionController extends Controller
             $nuevoRecurso['recurso'] = $request['recurso'];
             $respuestaRecurso = ConceptoUOpinionRecurso::create($nuevoRecurso);
             //---------------------------------------------------------------------------
-            // if ($respuestaRecurso->peticion->pqr->persona_id != null) {
-            //     $email = $respuestaRecurso->peticion->pqr->persona->email;
+            // $concepto = ConceptoUOpinion::findOrFail($request['id']);
+            // if ($concepto->persona_id != null) {
+            //     $email = $concepto->persona->email;
             // } else {
-            //     $email = $respuestaRecurso->peticion->pqr->empresa->email;
+            //     $email = $concepto->empresa->email;
             // }
             // $id_recurso = $respuestaRecurso->id;
-            // Mail::to($email)->send(new RespuestaReposicion($id_recurso));
+            // Mail::to($email)->send(new CUO_RespuestaReposicion($id_recurso));
             $estado = Estado::findOrFail(8);
             $pqrEstado['estadospqr_id'] = $estado['id'];
             ConceptoUOpinion::findOrFail($request['id'])->update($pqrEstado);
@@ -431,6 +440,14 @@ class ConceptoUOpinionController extends Controller
                     ConceptoUOpinion::findOrFail($request['id'])->update($pqrEstado);
                 }
             }
+            $concepto = ConceptoUOpinion::findOrFail($request['id']);
+            if ($concepto->persona_id != null) {
+                $email = $concepto->persona->email;
+            } else {
+                $email = $concepto->empresa->email;
+            }
+            $id_recurso = $respuestaRecurso->id;
+            Mail::to($email)->send(new CUO_RespuestaReposicion($id_recurso));
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
         } else {
             abort(404);

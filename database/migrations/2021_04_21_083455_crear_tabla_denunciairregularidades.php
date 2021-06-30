@@ -17,7 +17,7 @@ class CrearTablaDenunciairregularidades extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('denuncias_id');
             $table->foreign('denuncias_id', 'fk_denuncias_irregularidad')->references('id')->on('denuncias')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->unsignedBigInteger('empleado_id')->default('5')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_irregularidad')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('irregularidad');
             $table->longText('otro')->nullable();
