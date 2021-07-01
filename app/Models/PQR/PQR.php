@@ -73,4 +73,9 @@ class PQR extends Model
         return $this->belongsTo(Prioridad::class, 'prioridad_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }

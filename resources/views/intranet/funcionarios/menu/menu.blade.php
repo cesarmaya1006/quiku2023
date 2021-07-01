@@ -49,7 +49,8 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Funcionarios</a>
+                                <a class="nav-link"
+                                    href="{{ route('funcionarios_funcionarios-index') }}">Funcionarios</a>
                             </li>
                         </ul>
                     </div>

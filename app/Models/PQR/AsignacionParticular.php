@@ -6,6 +6,7 @@ use App\Models\Admin\Cargo;
 use App\Models\Empresas\Sede;
 use App\Models\Productos\Categoria;
 use App\Models\Productos\Marca;
+use App\Models\Productos\Producto;
 use App\Models\Productos\Referencia;
 use App\Models\Servicios\Servicio;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -48,6 +49,11 @@ class AsignacionParticular extends Model
         return $this->belongsTo(Sede::class, 'sede_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class, 'producto_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     public function marca()
     {
         return $this->belongsTo(Marca::class, 'marca_id', 'id');
@@ -63,4 +69,5 @@ class AsignacionParticular extends Model
         return $this->belongsTo(Cargo::class, 'cargo_id', 'id');
     }
     //----------------------------------------------------------------------------------
+
 }

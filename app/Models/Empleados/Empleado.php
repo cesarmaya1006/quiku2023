@@ -5,6 +5,8 @@ namespace App\Models\Empleados;
 use App\Models\Admin\Cargo;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Empresas\Empresa;
+use App\Models\Empresas\Sede;
+use App\Models\PQR\Peticion;
 use App\Models\PQR\PQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +23,11 @@ class Empleado extends Model
         return $this->belongsTo(Tipo_Docu::class, 'docutipos_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     public function cargo()
     {
         return $this->belongsTo(Cargo::class, 'cargo_id', 'id');
@@ -29,6 +36,11 @@ class Empleado extends Model
     public function pqrs()
     {
         return $this->hasMany(PQR::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function peticiones()
+    {
+        return $this->hasMany(Peticion::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function usuario()

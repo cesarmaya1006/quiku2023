@@ -19,6 +19,10 @@ use App\Mail\Prorroga;
 use App\Mail\Recurso_mail;
 use App\Mail\RespuestaPQR;
 use App\Mail\RespuestaReposicion;
+use App\Models\Empleados\Empleado;
+use App\Models\Empresas\Empresa;
+use App\Models\Personas\Persona;
+use App\Models\PQR\AsignacionParticular;
 use App\Models\PQR\DocRecurso;
 use App\Models\PQR\DocRespRecurso;
 use App\Models\PQR\Prioridad;
@@ -134,9 +138,9 @@ class PQR_P_Controller extends Controller
             }
             if ($peticion->recurso != 0) {
                 $recurso = $peticion->recurso;
-                if(!empty($peticion->recursos)){
-                    if(sizeOf($peticion->recursos)){
-                        $totalRecursos [] = $peticion->recursos;
+                if (!empty($peticion->recursos)) {
+                    if (sizeOf($peticion->recursos)) {
+                        $totalRecursos[] = $peticion->recursos;
                     }
                 }
             }
@@ -161,7 +165,7 @@ class PQR_P_Controller extends Controller
                 $estado = Estado::findOrFail(7);
                 $pqrEstado['estadospqr_id'] = $estado['id'];
                 PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
-            } elseif($recurso == 0) {
+            } elseif ($recurso == 0) {
                 $estado = Estado::findOrFail(6);
                 $pqrEstado['estadospqr_id'] = $estado['id'];
                 PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
@@ -235,8 +239,8 @@ class PQR_P_Controller extends Controller
         $recurso = 0;
         $totalRecursos = [];
         foreach ($peticiones as $key => $peticion) {
-            if($peticion->respuesta){
-                $totalPeticionesRes ++;
+            if ($peticion->respuesta) {
+                $totalPeticionesRes++;
             }
             $aclaraciones = Aclaracion::all()->where('peticion_id', $peticion["id"]);
             $totalAclaracionesRes += sizeof($aclaraciones);
@@ -246,11 +250,11 @@ class PQR_P_Controller extends Controller
                 }
             }
             if ($peticion->recurso != 0) {
-                $totalRecursos [] = $peticion->recursos;
+                $totalRecursos[] = $peticion->recursos;
                 $recurso = $peticion->recurso;
             }
         }
-        if (sizeOf($respuestaAclaraciones) == $totalAclaracionesRes && $totalAclaracionesRes > 0 && $recurso == 0 && $totalPeticionesRes != sizeOf($peticiones->toArray()) ) {
+        if (sizeOf($respuestaAclaraciones) == $totalAclaracionesRes && $totalAclaracionesRes > 0 && $recurso == 0 && $totalPeticionesRes != sizeOf($peticiones->toArray())) {
             $estado = Estado::findOrFail(2);
             $pqrEstado['estadospqr_id'] = $estado['id'];
             PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
@@ -271,7 +275,7 @@ class PQR_P_Controller extends Controller
                     $nuevoLimite = $pqr->tipoPqr->tiempos + $request['plazo_prorroga'] + $request['plazoRecurso'];
                     $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
                     $actualizarPqr['tiempo_limite'] = $respuestaDias;
-                    if($pqr['estadospqr_id'] <= 1){
+                    if ($pqr['estadospqr_id'] <= 1) {
                         $estado = Estado::findOrFail(2);
                         $actualizarPqr['estadospqr_id'] = $estado['id'];
                     }
@@ -367,66 +371,63 @@ class PQR_P_Controller extends Controller
             $validacionCierre = 0;
             foreach ($peticiones as $peticion) {
                 if ($peticion->recurso != 0) {
-                    if($peticion->recursos){
-                        if($peticion->recursos->count() > 1){
-                            $recursosTotal = 0; 
-                            $recursosRespuestasTotal = 0; 
+                    if ($peticion->recursos) {
+                        if ($peticion->recursos->count() > 1) {
+                            $recursosTotal = 0;
+                            $recursosRespuestasTotal = 0;
                             foreach ($peticion->recursos as $recurso) {
-                                $recursosTotal ++; 
-                                if($recurso->respuestarecurso){
-                                    $recursosRespuestasTotal ++; 
+                                $recursosTotal++;
+                                if ($recurso->respuestarecurso) {
+                                    $recursosRespuestasTotal++;
                                 }
                             }
-                            if($recursosTotal == $recursosRespuestasTotal){
-                                $validacionCierre ++;
+                            if ($recursosTotal == $recursosRespuestasTotal) {
+                                $validacionCierre++;
                             }
-
-                        }elseif($peticion->recursos->count() == 1){
+                        } elseif ($peticion->recursos->count() == 1) {
                             foreach ($peticion->recursos as $recurso) {
-                                if($recurso->tipo_reposicion_id > 1 && $recurso->respuestarecurso ){
-                                    $validacionCierre ++;
+                                if ($recurso->tipo_reposicion_id > 1 && $recurso->respuestarecurso) {
+                                    $validacionCierre++;
                                 }
                             }
                         }
                     }
 
-                    foreach ($peticion->recursos as $recurso) {  
+                    foreach ($peticion->recursos as $recurso) {
                         $recursototal++;
                         if ($recurso->respuestarecurso) {
                             $recursoRespuestaTotal++;
                         }
                     }
-
                 }
             }
-            if($contadorValidacion == 1 ){
-                if($recursototal > 1 && $recursototal == $recursoRespuestaTotal) {
+            if ($contadorValidacion == 1) {
+                if ($recursototal > 1 && $recursototal == $recursoRespuestaTotal) {
                     $estado = Estado::findOrFail(10);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     PQR::findOrFail($request['id'])->update($pqrEstado);
-                }
-                else{
+                } else {
                     $validadorif[] = $request['tipo_reposicion_id'];
-                    if($request['tipo_reposicion_id'] == 1){
+                    if ($request['tipo_reposicion_id'] == 1) {
                         $estado = Estado::findOrFail(9);
                         $pqrEstado['estadospqr_id'] = $estado['id'];
                         PQR::findOrFail($request['id'])->update($pqrEstado);
-                    }elseif($recursototal == $recursoRespuestaTotal && $recursototal > 1){
+                    } elseif ($recursototal == $recursoRespuestaTotal && $recursototal > 1) {
                         $estado = Estado::findOrFail(10);
                         $pqrEstado['estadospqr_id'] = $estado['id'];
                         PQR::findOrFail($request['id'])->update($pqrEstado);
-                    }else{
+                    } else {
                         $estado = Estado::findOrFail(8);
                         $pqrEstado['estadospqr_id'] = $estado['id'];
                         PQR::findOrFail($request['id'])->update($pqrEstado);
                     }
                 }
-            }else {
-                if($recursototal == $recursoRespuestaTotal && $validacionCierre == $contadorValidacion){
+            } else {
+                if ($recursototal == $recursoRespuestaTotal && $validacionCierre == $contadorValidacion) {
                     $estado = Estado::findOrFail(10);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     PQR::findOrFail($request['id'])->update($pqrEstado);
-                }elseif($recursototal == $recursoRespuestaTotal){
+                } elseif ($recursototal == $recursoRespuestaTotal) {
                     $estado = Estado::findOrFail(9);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     PQR::findOrFail($request['id'])->update($pqrEstado);
@@ -534,5 +535,229 @@ class PQR_P_Controller extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function asigacion_automatica($id)
+    {
+        $pqr = PQR::findOrFail($id);
+        $asignaciones = AsignacionParticular::where('tipo', 'Permanente')->get();
+
+        foreach ($asignaciones as $asignacion) {
+            $coincidencia = 0;
+            $no_null = 0;
+            if ($asignacion->tipo_pqr_id != null) {
+                $no_null++;
+                if ($asignacion->tipo_pqr_id == $pqr->tipo_pqr_id) {
+                    $coincidencia++;
+                }
+            }
+            if ($asignacion->prodserv != null) {
+                $no_null++;
+                if ($asignacion->prodserv == $pqr->tipo) {
+                    $coincidencia++;
+                }
+            }
+            if ($asignacion->motivo_id != null) {
+                $no_null++;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($asignacion->motivo_id == $peticion->motivo->motivo_id) {
+                        $coincidencia++;
+                    }
+                }
+            }
+            if ($asignacion->motivo_sub_id != null) {
+                $no_null++;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($asignacion->motivo_id == $peticion->motivo->id) {
+                        $coincidencia++;
+                    }
+                }
+            }
+            if ($pqr->servicio_id != null) {
+                if ($asignacion->servicio_id != null) {
+                    $no_null++;
+                    if ($asignacion->servicio_id == $pqr->servicio_id) {
+                        $coincidencia++;
+                    }
+                }
+            }
+            if ($pqr->referencia_id != null) {
+                if ($asignacion->categoria_id != null) {
+                    $no_null++;
+                    if ($asignacion->categoria_id == $pqr->referencia->marca->producto->categoria_id) {
+                        $coincidencia++;
+                    }
+                }
+                if ($asignacion->producto_id != null) {
+                    $no_null++;
+                    if ($asignacion->producto_id == $pqr->referencia->marca->producto_id) {
+                        $coincidencia++;
+                    }
+                }
+                if ($asignacion->marca_id != null) {
+                    $no_null++;
+                    if ($asignacion->marca_id == $pqr->referencia->marca_id) {
+                        $coincidencia++;
+                    }
+                }
+                if ($asignacion->referencia_id != null) {
+                    $no_null++;
+                    if ($asignacion->referencia_id == $pqr->referencia_id) {
+                        $coincidencia++;
+                    }
+                }
+            }
+            if ($asignacion->adquisicion != null) {
+                $no_null++;
+                if ($asignacion->adquisicion == $pqr->adquisicion) {
+                    $coincidencia++;
+                }
+            }
+            if ($asignacion->palabra1 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->justificacion, $asignacion->palabra1);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
+                        }
+                    }
+                    if ($encontrada === 0) {
+                        foreach ($peticion->hechos as $hecho) {
+                            if ($encontrada === 0) {
+                                $pos = strpos($hecho->hecho, $asignacion->palabra1);
+                                if ($pos !== false) {
+                                    $encontrada++;
+                                    $coincidencia++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if ($asignacion->palabra2 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->justificacion, $asignacion->palabra2);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
+                        }
+                    }
+                    if ($encontrada === 0) {
+                        foreach ($peticion->hechos as $hecho) {
+                            if ($encontrada === 0) {
+                                $pos = strpos($hecho->hecho, $asignacion->palabra2);
+                                if ($pos !== false) {
+                                    $encontrada++;
+                                    $coincidencia++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if ($asignacion->palabra3 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->justificacion, $asignacion->palabra3);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
+                        }
+                    }
+                    if ($encontrada === 0) {
+                        foreach ($peticion->hechos as $hecho) {
+                            if ($encontrada === 0) {
+                                $pos = strpos($hecho->hecho, $asignacion->palabra3);
+                                if ($pos !== false) {
+                                    $encontrada++;
+                                    $coincidencia++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if ($asignacion->palabra4 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->justificacion, $asignacion->palabra4);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
+                        }
+                    }
+                    if ($encontrada === 0) {
+                        foreach ($peticion->hechos as $hecho) {
+                            if ($encontrada === 0) {
+                                $pos = strpos($hecho->hecho, $asignacion->palabra4);
+                                if ($pos !== false) {
+                                    $encontrada++;
+                                    $coincidencia++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if ($no_null > 0 && $coincidencia > 0) {
+                if (intval($coincidencia) === intval($no_null)) {
+                    if ($pqr->sede_id != null) {
+                        if ($pqr->sede_id == $asignacion->sede_id) {
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $asignacion->sede_id)->get();
+                        } else {
+                            if ($pqr->persona_id != null) {
+                                $persona = Persona::findOrfail($pqr->persona_id);
+                                foreach ($persona->municipio->departamento->sedes as $sede) {
+                                    $sede_id = $sede->id;
+                                }
+                                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                            } else {
+                                $empresa = Empresa::findOrfail($pqr->empresa_id);
+                                foreach ($empresa->municipio->departamento->sedes as $sede) {
+                                    $sede_id = $sede->id;
+                                }
+                                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                            }
+                        }
+                    } else {
+                        if ($pqr->persona_id != null) {
+                            $persona = Persona::findOrfail($pqr->persona_id);
+                            foreach ($persona->municipio->departamento->sedes as $sede) {
+                                $sede_id = $sede->id;
+                            }
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                        } else {
+                            $empresa = Empresa::findOrfail($pqr->empresa_id);
+                            foreach ($empresa->municipio->departamento->sedes as $sede) {
+                                $sede_id = $sede->id;
+                            }
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                        }
+                    }
+                    $max_pqr = 0;
+                    foreach ($empleados as $empleado) {
+                        if ($empleado->pqrs->count() > $max_pqr) {
+                            $max_pqr = $empleado->pqrs->count();
+                        }
+                    }
+                    foreach ($empleados as $empleado) {
+                        if ($empleado->pqrs->count() <= $max_pqr) {
+                            $empleado_sel = $empleado;
+                        }
+                    }
+                    $pqr_act['empleado_id'] = $empleado_sel->id;
+                    $pqr->update($pqr_act);
+                }
+            }
+        }
     }
 }

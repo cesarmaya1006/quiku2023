@@ -12,6 +12,7 @@ use App\Http\Controllers\Intranet\Admin\UsuarioController;
 use App\Http\Controllers\Intranet\Email\EmailController;
 use App\Http\Controllers\Intranet\Empresas\AreaController;
 use App\Http\Controllers\Intranet\Empresas\CargoController;
+use App\Http\Controllers\Intranet\Empresas\FuncionarioFController;
 use App\Http\Controllers\Intranet\Empresas\NivelController;
 use App\Http\Controllers\Intranet\Empresas\SedeController;
 use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
@@ -197,7 +198,15 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('asignacion_particular-cargar_sede', [AsignacionParticularController::class, 'cargar_sede'])->name('admin-funcionario-asignacion_particular-cargar_sede');
             Route::get('asignacion_particular-cargar_cargo', [AsignacionParticularController::class, 'cargar_cargo'])->name('admin-funcionario-asignacion_particular-cargar_cargo');
             // ------------------------------------------------------------------------------------
-
+            //Gestión de funcionarios
+            Route::get('funcionarios/index', [FuncionarioFController::class, 'index'])->name('funcionarios_funcionarios-index');
+            Route::get('funcionarios/crear', [FuncionarioFController::class, 'crear'])->name('funcionarios_funcionarios-crear');
+            Route::get('funcionarios/editar/{id}', [FuncionarioFController::class, 'editar'])->name('funcionarios_funcionarios-editar');
+            Route::post('funcionarios-guardar', [FuncionarioFController::class, 'guardar'])->name('funcionarios_funcionarios-guardar');
+            Route::put('funcionarios-actualizar/{id}', [FuncionarioFController::class, 'actualizar'])->name('funcionarios_funcionarios-actualizar');
+            Route::get('funcionarios/{id}', [FuncionarioFController::class, 'activar'])->name('funcionarios_funcionarios-activar');
+            Route::get('funcionarios-cargar_niveles', [FuncionarioFController::class, 'cargar_niveles'])->name('funcionarios_funcionarios-cargar_niveles');
+            Route::get('funcionarios-cargar_cargos', [FuncionarioFController::class, 'cargar_cargos'])->name('funcionarios_funcionarios-cargar_cargos');
         });
     });
     //==================================================================================================================
@@ -256,6 +265,7 @@ Route::group(['middleware' => 'auth'], function () {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('listado/gestionarSugerencia/{id}', [SugerenciaController::class, 'gestionar'])->name('funcionario-gestionarSugerencia');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
     });
     //==================================================================================================================
 
@@ -358,3 +368,4 @@ Route::get('aclaracion_pdf/{id}', [EmailController::class, 'aclaracionPdf'])->na
 Route::get('constancia_aclaracion_pdf/{id}', [EmailController::class, 'constancia_aclaracionPdf'])->name('constancia_aclaracionPdf');
 Route::get('prorroga_pdf/{id}', [EmailController::class, 'prorrogaPdf'])->name('prorrogaPdf');
 Route::get('recurso_pdf/{id}', [EmailController::class, 'recursoPdf'])->name('recursoPdf');
+Route::get('asigacion_automatica/{id}', [PQR_P_Controller::class, 'asigacion_automatica'])->name('asigacion_automatica');
