@@ -1014,181 +1014,177 @@ class ClienteController extends Controller
         $asignaciones = AsignacionParticular::where('tipo', 'Permanente')->get();
 
         foreach ($asignaciones as $asignacion) {
-            if ($asignacion->tipo_pqr_id == $pqr->tipo_pqr_id && $asignacion->prodserv == $pqr->tipo) {
-                $coincidencia = 0;
-                $no_null = 0;
-                if ($asignacion->motivo_id != null) {
-                    $no_null++;
-                    foreach ($pqr->peticiones as $peticion) {
-                        if ($asignacion->motivo_id == $peticion->motivo->motivo_id) {
-                            $coincidencia++;
-                        }
-                    }
+            $coincidencia = 0;
+            $no_null = 0;
+            if ($asignacion->tipo_pqr_id != null) {
+                $no_null++;
+                if ($asignacion->tipo_pqr_id == $pqr->tipo_pqr_id) {
+                    $coincidencia++;
                 }
-                if ($asignacion->motivo_sub_id != null) {
-                    $no_null++;
-                    foreach ($pqr->peticiones as $peticion) {
-                        if ($asignacion->motivo_id == $peticion->motivo->id) {
-                            $coincidencia++;
-                        }
-                    }
+            }
+            if ($asignacion->prodserv != null) {
+                $no_null++;
+                if ($asignacion->prodserv == $pqr->tipo) {
+                    $coincidencia++;
                 }
-                if ($pqr->servicio_id != null) {
-                    if ($asignacion->servicio_id != null) {
-                        $no_null++;
-                        if ($asignacion->servicio_id == $pqr->servicio_id) {
-                            $coincidencia++;
-                        }
-                    }
-                }
-                if ($pqr->referencia_id != null) {
-                    if ($asignacion->categoria_id != null) {
-                        $no_null++;
-                        if ($asignacion->categoria_id == $pqr->referencia->marca->producto->categoria_id) {
-                            $coincidencia++;
-                        }
-                    }
-                    if ($asignacion->producto_id != null) {
-                        $no_null++;
-                        if ($asignacion->producto_id == $pqr->referencia->marca->producto_id) {
-                            $coincidencia++;
-                        }
-                    }
-                    if ($asignacion->marca_id != null) {
-                        $no_null++;
-                        if ($asignacion->marca_id == $pqr->referencia->marca_id) {
-                            $coincidencia++;
-                        }
-                    }
-                    if ($asignacion->referencia_id != null) {
-                        $no_null++;
-                        if ($asignacion->referencia_id == $pqr->referencia_id) {
-                            $coincidencia++;
-                        }
-                    }
-                }
-                if ($asignacion->adquisicion != null) {
-                    $no_null++;
-                    if ($asignacion->adquisicion == $pqr->adquisicion) {
+            }
+            if ($asignacion->motivo_id != null) {
+                $no_null++;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($asignacion->motivo_id == $peticion->motivo->motivo_id) {
                         $coincidencia++;
                     }
                 }
-                if ($asignacion->palabra1 != null) {
+            }
+            if ($asignacion->motivo_sub_id != null) {
+                $no_null++;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($asignacion->motivo_id == $peticion->motivo->id) {
+                        $coincidencia++;
+                    }
+                }
+            }
+            if ($pqr->servicio_id != null) {
+                if ($asignacion->servicio_id != null) {
                     $no_null++;
-                    $encontrada = 0;
-                    foreach ($pqr->peticiones as $peticion) {
-                        if ($encontrada === 0) {
-                            $pos = strpos($peticion->justificacion, $asignacion->palabra1);
-                            if ($pos !== false) {
-                                $encontrada++;
-                                $coincidencia++;
-                            }
+                    if ($asignacion->servicio_id == $pqr->servicio_id) {
+                        $coincidencia++;
+                    }
+                }
+            }
+            if ($pqr->referencia_id != null) {
+                if ($asignacion->categoria_id != null) {
+                    $no_null++;
+                    if ($asignacion->categoria_id == $pqr->referencia->marca->producto->categoria_id) {
+                        $coincidencia++;
+                    }
+                }
+                if ($asignacion->producto_id != null) {
+                    $no_null++;
+                    if ($asignacion->producto_id == $pqr->referencia->marca->producto_id) {
+                        $coincidencia++;
+                    }
+                }
+                if ($asignacion->marca_id != null) {
+                    $no_null++;
+                    if ($asignacion->marca_id == $pqr->referencia->marca_id) {
+                        $coincidencia++;
+                    }
+                }
+                if ($asignacion->referencia_id != null) {
+                    $no_null++;
+                    if ($asignacion->referencia_id == $pqr->referencia_id) {
+                        $coincidencia++;
+                    }
+                }
+            }
+            if ($asignacion->adquisicion != null) {
+                $no_null++;
+                if ($asignacion->adquisicion == $pqr->adquisicion) {
+                    $coincidencia++;
+                }
+            }
+            if ($asignacion->palabra1 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->justificacion, $asignacion->palabra1);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
                         }
-                        if ($encontrada === 0) {
-                            foreach ($peticion->hechos as $hecho) {
-                                if ($encontrada === 0) {
-                                    $pos = strpos($hecho->hecho, $asignacion->palabra1);
-                                    if ($pos !== false) {
-                                        $encontrada++;
-                                        $coincidencia++;
-                                    }
+                    }
+                    if ($encontrada === 0) {
+                        foreach ($peticion->hechos as $hecho) {
+                            if ($encontrada === 0) {
+                                $pos = strpos($hecho->hecho, $asignacion->palabra1);
+                                if ($pos !== false) {
+                                    $encontrada++;
+                                    $coincidencia++;
                                 }
                             }
                         }
                     }
                 }
-                if ($asignacion->palabra2 != null) {
-                    $no_null++;
-                    $encontrada = 0;
-                    foreach ($pqr->peticiones as $peticion) {
-                        if ($encontrada === 0) {
-                            $pos = strpos($peticion->justificacion, $asignacion->palabra2);
-                            if ($pos !== false) {
-                                $encontrada++;
-                                $coincidencia++;
-                            }
+            }
+            if ($asignacion->palabra2 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->justificacion, $asignacion->palabra2);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
                         }
-                        if ($encontrada === 0) {
-                            foreach ($peticion->hechos as $hecho) {
-                                if ($encontrada === 0) {
-                                    $pos = strpos($hecho->hecho, $asignacion->palabra2);
-                                    if ($pos !== false) {
-                                        $encontrada++;
-                                        $coincidencia++;
-                                    }
+                    }
+                    if ($encontrada === 0) {
+                        foreach ($peticion->hechos as $hecho) {
+                            if ($encontrada === 0) {
+                                $pos = strpos($hecho->hecho, $asignacion->palabra2);
+                                if ($pos !== false) {
+                                    $encontrada++;
+                                    $coincidencia++;
                                 }
                             }
                         }
                     }
                 }
-                if ($asignacion->palabra3 != null) {
-                    $no_null++;
-                    $encontrada = 0;
-                    foreach ($pqr->peticiones as $peticion) {
-                        if ($encontrada === 0) {
-                            $pos = strpos($peticion->justificacion, $asignacion->palabra3);
-                            if ($pos !== false) {
-                                $encontrada++;
-                                $coincidencia++;
-                            }
+            }
+            if ($asignacion->palabra3 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->justificacion, $asignacion->palabra3);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
                         }
-                        if ($encontrada === 0) {
-                            foreach ($peticion->hechos as $hecho) {
-                                if ($encontrada === 0) {
-                                    $pos = strpos($hecho->hecho, $asignacion->palabra3);
-                                    if ($pos !== false) {
-                                        $encontrada++;
-                                        $coincidencia++;
-                                    }
+                    }
+                    if ($encontrada === 0) {
+                        foreach ($peticion->hechos as $hecho) {
+                            if ($encontrada === 0) {
+                                $pos = strpos($hecho->hecho, $asignacion->palabra3);
+                                if ($pos !== false) {
+                                    $encontrada++;
+                                    $coincidencia++;
                                 }
                             }
                         }
                     }
                 }
-                if ($asignacion->palabra4 != null) {
-                    $no_null++;
-                    $encontrada = 0;
-                    foreach ($pqr->peticiones as $peticion) {
-                        if ($encontrada === 0) {
-                            $pos = strpos($peticion->justificacion, $asignacion->palabra4);
-                            if ($pos !== false) {
-                                $encontrada++;
-                                $coincidencia++;
-                            }
+            }
+            if ($asignacion->palabra4 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->peticiones as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->justificacion, $asignacion->palabra4);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
                         }
-                        if ($encontrada === 0) {
-                            foreach ($peticion->hechos as $hecho) {
-                                if ($encontrada === 0) {
-                                    $pos = strpos($hecho->hecho, $asignacion->palabra4);
-                                    if ($pos !== false) {
-                                        $encontrada++;
-                                        $coincidencia++;
-                                    }
+                    }
+                    if ($encontrada === 0) {
+                        foreach ($peticion->hechos as $hecho) {
+                            if ($encontrada === 0) {
+                                $pos = strpos($hecho->hecho, $asignacion->palabra4);
+                                if ($pos !== false) {
+                                    $encontrada++;
+                                    $coincidencia++;
                                 }
                             }
                         }
                     }
                 }
-                if ($no_null > 0 && $coincidencia > 0) {
-                    if (intval($coincidencia) === intval($no_null)) {
-                        if ($pqr->sede_id != null) {
-                            if ($pqr->sede_id == $asignacion->sede_id) {
-                                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $asignacion->sede_id)->get();
-                            } else {
-                                if ($pqr->persona_id != null) {
-                                    $persona = Persona::findOrfail($pqr->persona_id);
-                                    foreach ($persona->municipio->departamento->sedes as $sede) {
-                                        $sede_id = $sede->id;
-                                    }
-                                    $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
-                                } else {
-                                    $empresa = Empresa::findOrfail($pqr->empresa_id);
-                                    foreach ($empresa->municipio->departamento->sedes as $sede) {
-                                        $sede_id = $sede->id;
-                                    }
-                                    $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
-                                }
-                            }
+            }
+            if ($no_null > 0 && $coincidencia > 0) {
+                if (intval($coincidencia) === intval($no_null)) {
+                    if ($pqr->sede_id != null) {
+                        if ($pqr->sede_id == $asignacion->sede_id) {
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $asignacion->sede_id)->get();
                         } else {
                             if ($pqr->persona_id != null) {
                                 $persona = Persona::findOrfail($pqr->persona_id);
@@ -1204,23 +1200,28 @@ class ClienteController extends Controller
                                 $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
                             }
                         }
-
-
-                        $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $asignacion->sede_id)->get();
-                        $max_pqr = 0;
-                        foreach ($empleados as $empleado) {
-                            if ($empleado->pqrs->count() > $max_pqr) {
-                                $max_pqr = $empleado->pqrs->count();
+                    } else {
+                        if ($pqr->persona_id != null) {
+                            $persona = Persona::findOrfail($pqr->persona_id);
+                            foreach ($persona->municipio->departamento->sedes as $sede) {
+                                $sede_id = $sede->id;
                             }
-                        }
-                        foreach ($empleados as $empleado) {
-                            if ($empleado->pqrs->count() <= $max_pqr) {
-                                $empleado_sel = $empleado;
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                        } else {
+                            $empresa = Empresa::findOrfail($pqr->empresa_id);
+                            foreach ($empresa->municipio->departamento->sedes as $sede) {
+                                $sede_id = $sede->id;
                             }
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
                         }
-                        $pqr_act['empleado_id'] = $empleado_sel->id;
-                        $pqr->update($pqr_act);
                     }
+                    $max_pqr = 0;
+                    foreach ($empleados as $empleado) {
+                        $empleados_sel_max[] = ['cant' => $empleado->pqrs->count(), 'id' => $empleado->id];
+                    }
+                    $empleado_final = min($empleados_sel_max);
+                    $pqr_act['empleado_id'] = $empleado_final['id'];
+                    $pqr->update($pqr_act);
                 }
             }
         }

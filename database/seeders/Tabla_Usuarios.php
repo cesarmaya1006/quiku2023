@@ -128,6 +128,68 @@ class Tabla_Usuarios extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         //------------------------------------------------------
+        DB::table('usuarios')->insert([
+            'usuario' => 'asignador',
+            'password' => bcrypt('clave'),
+            'camb_password' => '0',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+
+        DB::table('usuario_rol')->insert([
+            'rol_id' => 5,
+            'usuario_id' => 6,
+            'estado' => 1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        DB::table('empleados')->insert([
+            'id' => 6,
+            'docutipos_id' => 1,
+            'cargo_id' => 2,
+            'sede_id' => 1,
+            'identificacion' => '90000002',
+            'nombre1' => 'Asignador',
+            'nombre2' => '',
+            'apellido1' => 'Pqr',
+            'telefono_celu' => '3501112233',
+            'direccion' => 'Calle de prueba 13',
+            'genero' => 'Masculino',
+            'fecha_nacimiento' => '1990-11-05',
+            'email' => 'asignador1|@gmail.com',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ]);
+        //------------------------------------------------------
+        for ($i = 7; $i < 18; $i++) {
+            DB::table('usuarios')->insert([
+                'usuario' => 'empleado' . $i,
+                'password' => bcrypt('clave'),
+                'camb_password' => '0',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+
+            DB::table('usuario_rol')->insert([
+                'rol_id' => 5,
+                'usuario_id' => $i,
+                'estado' => 1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+            DB::table('empleados')->insert([
+                'id' => $i,
+                'docutipos_id' => 1,
+                'cargo_id' => 1,
+                'sede_id' => 1,
+                'identificacion' => '9000000' . $i,
+                'nombre1' => 'Empleado' . $i,
+                'nombre2' => '',
+                'apellido1' => 'apellido' . $i,
+                'telefono_celu' => '35011122' . $i,
+                'direccion' => 'Calle de prueba ' . $i,
+                'genero' => 'Masculino',
+                'fecha_nacimiento' => '1990-11-05',
+                'email' => 'empleado' . $i . '@gmail.com',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            ]);
+        }
+        //------------------------------------------------------
 
     }
 }
