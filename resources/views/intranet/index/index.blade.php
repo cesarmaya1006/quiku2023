@@ -112,10 +112,8 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php
-                            echo $prq_p_num_rad_sin; ?> , <?php
-                            echo $prq_p_num_rad_ges; ?> , <?php
-                            echo $prq_p_num_rad_ven; ?> ,
+                        data: [<?php echo $prq_p_num_rad_sin; ?>, <?php echo $prq_p_num_rad_ges; ?>,
+                            <?php echo $prq_p_num_rad_ven; ?>,
                         ],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
                     }]
@@ -140,7 +138,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
     @if ($prq_q_num > 0)
@@ -154,10 +151,8 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php
-                            echo $prq_q_num_rad_sin; ?> , <?php
-                            echo $prq_q_num_rad_ges; ?> , <?php
-                            echo $prq_q_num_rad_ven; ?> ,
+                        data: [<?php echo $prq_q_num_rad_sin; ?>, <?php echo $prq_q_num_rad_ges; ?>,
+                            <?php echo $prq_q_num_rad_ven; ?>,
                         ],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
                     }]
@@ -182,7 +177,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
     @if ($prq_r_num > 0)
@@ -196,10 +190,8 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php
-                            echo $prq_r_num_rad_sin; ?> , <?php
-                            echo $prq_r_num_rad_ges; ?> , <?php
-                            echo $prq_r_num_rad_ven; ?> ,
+                        data: [<?php echo $prq_r_num_rad_sin; ?>, <?php echo $prq_r_num_rad_ges; ?>,
+                            <?php echo $prq_r_num_rad_ven; ?>,
                         ],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
                     }]
@@ -224,7 +216,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
     @if ($conceptos_num > 0)
@@ -238,10 +229,8 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php
-                            echo $concepto_rad_sin; ?> , <?php
-                            echo $concepto_rad_ges; ?> , <?php
-                            echo $concepto_rad_ven; ?> ,
+                        data: [<?php echo $concepto_rad_sin; ?>, <?php echo $concepto_rad_ges; ?>,
+                            <?php echo $concepto_rad_ven; ?>,
                         ],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
                     }]
@@ -266,7 +255,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
 
@@ -281,10 +269,8 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php
-                            echo $solicitudes_datos_sin; ?> , <?php
-                            echo $solicitudes_datos_ges; ?> , <?php
-                            echo $solicitudes_datos_ven; ?> ,
+                        data: [<?php echo $solicitudes_datos_sin; ?>, <?php echo $solicitudes_datos_ges; ?>,
+                            <?php echo $solicitudes_datos_ven; ?>,
                         ],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
                     }]
@@ -309,7 +295,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
     @if ($denuncias_num > 0)
@@ -323,7 +308,7 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php echo $denuncias_num; ?> , 20, 15],
+                        data: [<?php echo $denuncias_num; ?>, 20, 15],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
                     }]
                 }
@@ -347,7 +332,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
     @if ($felicitacionesnum > 0)
@@ -361,7 +345,7 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php echo $felicitacionesnum; ?> , 20,
+                        data: [<?php echo $felicitacionesnum; ?>, 20,
                             15
                         ],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
@@ -387,7 +371,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
     @if ($solicitudes_docnum > 0)
@@ -401,7 +384,7 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php echo $solicitudes_docnum; ?> , 20,
+                        data: [<?php echo $solicitudes_docnum; ?>, 20,
                             15
                         ],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
@@ -427,7 +410,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
     @if ($sugerencias_num > 0)
@@ -441,7 +423,7 @@ $sugerencias_num = $sugerencias->count();
                         'Vencidas',
                     ],
                     datasets: [{
-                        data: [ <?php echo $sugerencias_num; ?> , 20,
+                        data: [<?php echo $sugerencias_num; ?>, 20,
                             15
                         ],
                         backgroundColor: ['#00a65a', '#f39c12', '#f56954'],
@@ -467,7 +449,6 @@ $sugerencias_num = $sugerencias->count();
 
 
             })
-
         </script>
     @endif
 @endsection

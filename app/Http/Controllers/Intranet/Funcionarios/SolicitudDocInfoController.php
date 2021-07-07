@@ -4,15 +4,20 @@ namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Mail\Prorroga;
 use App\Mail\RespuestaPQR;
+use App\Mail\SDI_Prorroga;
 use App\Models\PQR\Estado;
+use App\Mail\SDI_Respuesta;
 use Illuminate\Http\Request;
 use App\Models\PQR\Prioridad;
 use App\Mail\RespuestaReposicion;
 use App\Mail\ConstanciaAclaracion;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SDI_RespuestaReposicion;
+use App\Mail\SDI_ConstanciaAclaracion;
 use Illuminate\Support\Facades\Config;
 use App\Mail\AclaracionComplementacion;
+use App\Mail\SDI_AclaracionComplementacion;
 use App\Http\Controllers\Fechas\FechasController;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfoRecurso;
@@ -41,7 +46,6 @@ class SolicitudDocInfoController extends Controller
 
     public function gestionar_guardar(Request $request)
     {
-        // dd($request->all());
         $pqrEstadoPrioridad['prioridad_id'] = $request['prioridad'];
         SolicitudDocInfo::findOrFail($request['id_pqr'])->update($pqrEstadoPrioridad);
         $documentos = $request->allFiles();
@@ -59,7 +63,6 @@ class SolicitudDocInfoController extends Controller
                     $actualizarPeticion['fecha_notificacion'] = date('Y-m-d');
                 }
             }
-            // dd($request->all());
             SolicitudDocInfoPeticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
             $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];
             for ($j = $iteradorAclaraciones; $j < $contadorAclaraciones; $j++) {
@@ -70,13 +73,14 @@ class SolicitudDocInfoController extends Controller
                     $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
                     $aclaracionNew = SolicitudDocInfoAclaracion::create($nuevaAclaracion);
                     $peticion_act = SolicitudDocInfoPeticion::findOrfail($request["id_peticion$i"]);
-                    // if ($peticion_act->pqr->persona_id != null) {
-                    //     $email = $peticion_act->pqr->persona->email;
-                    // } else {
-                    //     $email = $peticion_act->pqr->empresa->email;
-                    // }
-                    // $id_aclaracion = $aclaracionNew->id;
-                    // Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+                    $peticion_act = SolicitudDocInfo::findOrfail($peticion_act->solicituddocinfo_id);
+                    if ($peticion_act->persona_id != null) {
+                        $email = $peticion_act->persona->email;
+                    } else {
+                        $email = $peticion_act->empresa->email;
+                    }
+                    $id_aclaracion = $aclaracionNew->id;
+                    Mail::to($email)->send(new SDI_AclaracionComplementacion($id_aclaracion));
                 }
             }
             $contadorAnexos += $request["totalPeticionAnexos$i"];
@@ -86,13 +90,14 @@ class SolicitudDocInfoController extends Controller
                 $respuesta['respuesta'] = $request["respuesta$i"];
                 $respuestaPQR = SolicitudDocInfoRespuesta::create($respuesta);
                 //----------------------------------------------------------------------
-                // if ($respuestaPQR->peticion->pqr->persona_id != null) {
-                //     $email = $respuestaPQR->peticion->pqr->persona->email;
-                // } else {
-                //     $email = $respuestaPQR->peticion->pqr->empresa->email;
-                // }
-                // $id_pqr = $respuestaPQR->peticion->pqr->id;
-                // Mail::to($email)->send(new RespuestaPQR($id_pqr));
+                $solicitudRespuesta = SolicitudDocInfo::findOrFail($request['id_pqr']);
+                if ($solicitudRespuesta->persona_id != null) {
+                    $email = $solicitudRespuesta->persona->email;
+                } else {
+                    $email = $solicitudRespuesta->empresa->email;
+                }
+                $id_pqr = $solicitudRespuesta->id;
+                Mail::to($email)->send(new SDI_Respuesta($id_pqr));
                 //----------------------------------------------------------------------
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
@@ -189,14 +194,15 @@ class SolicitudDocInfoController extends Controller
                 SolicitudDocInfoAclaracion::findOrFail($request["id_aclaracion$i"])->update($aclaracion);
                 $aclaracionNew = SolicitudDocInfoAclaracion::findOrFail($request["id_aclaracion$i"]);
                 //----------------------------------------------------------------------
-                $peticion_act = SolicitudDocInfoPeticion::findOrfail($request["id_solicitud$i"]);
-                // if ($peticion_act->pqr->persona_id != null) {
-                //     $email = $peticion_act->pqr->persona->email;
-                // } else {
-                //     $email = $peticion_act->pqr->empresa->email;
-                // }
-                // $id_aclaracion = $aclaracionNew->id;
-                // Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
+                // $peticion_act = SolicitudDocInfoPeticion::findOrfail($request["id_solicitud$i"]);
+                $dataSolicitud = SolicitudDocInfo::findOrFail($request['id_pqr']);
+                if ($dataSolicitud->persona_id != null) {
+                    $email = $dataSolicitud->persona->email;
+                } else {
+                    $email = $dataSolicitud->empresa->email;
+                }
+                $id_aclaracion = $aclaracionNew->id;
+                Mail::to($email)->send(new SDI_ConstanciaAclaracion($id_aclaracion));
                 //----------------------------------------------------------------------
                 $contadorAnexos += $request["totalanexos$i"];
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
@@ -281,7 +287,7 @@ class SolicitudDocInfoController extends Controller
                         $email = $pqr->empresa->email;
                     }
                     $id_pqr = $pqr->id;
-                    // Mail::to($email)->send(new Prorroga($id_pqr));
+                    Mail::to($email)->send(new SDI_Prorroga($id_pqr));
                     //---------------------------------------------------------------------------
                 }
             }
@@ -429,6 +435,14 @@ class SolicitudDocInfoController extends Controller
                     SolicitudDocInfo::findOrFail($request['id'])->update($pqrEstado);
                 }
             }
+            $solicitud = SolicitudDocInfo::findOrFail($request['id']);
+            if ($solicitud->persona_id != null) {
+                $email = $solicitud->persona->email;
+            } else {
+                $email = $solicitud->empresa->email;
+            }
+            $id_recurso = $respuestaRecurso->id;
+            Mail::to($email)->send(new SDI_RespuestaReposicion($id_recurso));
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
         } else {
             abort(404);

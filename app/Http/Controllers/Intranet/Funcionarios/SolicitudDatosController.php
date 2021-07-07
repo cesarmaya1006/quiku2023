@@ -2,26 +2,31 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
+use App\Mail\SD_Prorroga;
 use App\Mail\RespuestaPQR;
+use App\Mail\SD_Respuesta;
 use App\Models\PQR\Estado;
 use Illuminate\Http\Request;
 use App\Models\PQR\Prioridad;
 use App\Models\PQR\Respuesta;
 use App\Http\Controllers\Controller;
+use App\Mail\SD_RespuestaReposicion;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SD_ConstanciaAclaracion;
 use Illuminate\Support\Facades\Config;
 use App\Mail\AclaracionComplementacion;
+use App\Mail\SD_AclaracionComplementacion;
 use App\Models\SolicitudDatos\SolicitudDatos;
 use App\Http\Controllers\Fechas\FechasController;
+use App\Models\SolicitudDatos\SolicitudDatosRecurso;
+use App\Models\SolicitudDatos\SolicitudDatosRespuesta;
 use App\Models\SolicitudDatos\SolicitudDatosSolicitud;
 use App\Models\SolicitudDatos\SolicitudDatosAclaracion;
-use App\Models\SolicitudDatos\SolicitudDatosDocRespuesta;
-use App\Models\SolicitudDatos\SolicitudDatosAclaracionAnexos;
 use App\Models\SolicitudDatos\SolicitudDatosDocRecurso;
-use App\Models\SolicitudDatos\SolicitudDatosDocRespRecurso;
-use App\Models\SolicitudDatos\SolicitudDatosRecurso;
 use App\Models\SolicitudDatos\SolicitudDatosRespRecurso;
-use App\Models\SolicitudDatos\SolicitudDatosRespuesta;
+use App\Models\SolicitudDatos\SolicitudDatosDocRespuesta;
+use App\Models\SolicitudDatos\SolicitudDatosDocRespRecurso;
+use App\Models\SolicitudDatos\SolicitudDatosAclaracionAnexos;
 
 class SolicitudDatosController extends Controller
 {
@@ -67,13 +72,13 @@ class SolicitudDatosController extends Controller
                     $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
                     $aclaracionNew = SolicitudDatosAclaracion::create($nuevaAclaracion);
                     $peticion_act = SolicitudDatosSolicitud::findOrfail($request["id_peticion$i"]);
-                    // if ($peticion_act->pqr->persona_id != null) {
-                    //     $email = $peticion_act->pqr->persona->email;
-                    // } else {
-                    //     $email = $peticion_act->pqr->empresa->email;
-                    // }
-                    // $id_aclaracion = $aclaracionNew->id;
-                    // Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+                    if ($peticion_act->solicitud->persona_id != null) {
+                        $email = $peticion_act->solicitud->persona->email;
+                    } else {
+                        $email = $peticion_act->solicitud->empresa->email;
+                    }
+                    $id_aclaracion = $aclaracionNew->id;
+                    Mail::to($email)->send(new SD_AclaracionComplementacion($id_aclaracion));
                 }
             }
             $contadorAnexos += $request["totalPeticionAnexos$i"];
@@ -83,13 +88,13 @@ class SolicitudDatosController extends Controller
                 $respuesta['respuesta'] = $request["respuesta$i"];
                 $respuestaPQR = SolicitudDatosRespuesta::create($respuesta);
                 //----------------------------------------------------------------------
-                // if ($respuestaPQR->peticion->pqr->persona_id != null) {
-                //     $email = $respuestaPQR->peticion->pqr->persona->email;
-                // } else {
-                //     $email = $respuestaPQR->peticion->pqr->empresa->email;
-                // }
-                // $id_pqr = $respuestaPQR->peticion->pqr->id;
-                // Mail::to($email)->send(new RespuestaPQR($id_pqr));
+                if ($respuestaPQR->peticion->solicitud->persona_id != null) {
+                    $email = $respuestaPQR->peticion->solicitud->persona->email;
+                } else {
+                    $email = $respuestaPQR->peticion->solicitud->empresa->email;
+                }
+                $id_pqr = $respuestaPQR->peticion->solicitud->id;
+                Mail::to($email)->send(new SD_Respuesta($id_pqr));
                 //----------------------------------------------------------------------
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
@@ -187,13 +192,13 @@ class SolicitudDatosController extends Controller
                 $aclaracionNew = SolicitudDatosAclaracion::findOrFail($request["id_aclaracion$i"]);
                 //----------------------------------------------------------------------
                 $peticion_act = SolicitudDatosSolicitud::findOrfail($request["id_solicitud$i"]);
-                // if ($peticion_act->pqr->persona_id != null) {
-                //     $email = $peticion_act->pqr->persona->email;
-                // } else {
-                //     $email = $peticion_act->pqr->empresa->email;
-                // }
-                // $id_aclaracion = $aclaracionNew->id;
-                // Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
+                if ($peticion_act->solicitud->persona_id != null) {
+                    $email = $peticion_act->solicitud->persona->email;
+                } else {
+                    $email = $peticion_act->solicitud->empresa->email;
+                }
+                $id_aclaracion = $aclaracionNew->id;
+                Mail::to($email)->send(new SD_ConstanciaAclaracion($id_aclaracion));
                 //----------------------------------------------------------------------
                 $contadorAnexos += $request["totalanexos$i"];
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
@@ -278,7 +283,7 @@ class SolicitudDatosController extends Controller
                         $email = $pqr->empresa->email;
                     }
                     $id_pqr = $pqr->id;
-                    // Mail::to($email)->send(new Prorroga($id_pqr));
+                    Mail::to($email)->send(new SD_Prorroga($id_pqr));
                     //---------------------------------------------------------------------------
                 }
             }
@@ -426,6 +431,14 @@ class SolicitudDatosController extends Controller
                     SolicitudDatos::findOrFail($request['id'])->update($pqrEstado);
                 }
             }
+            $solicitud = SolicitudDatos::findOrFail($request['id']);
+            if ($solicitud->persona_id != null) {
+                $email = $solicitud->persona->email;
+            } else {
+                $email = $solicitud->empresa->email;
+            }
+            $id_recurso = $respuestaRecurso->id;
+            Mail::to($email)->send(new SD_RespuestaReposicion($id_recurso));
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
         } else {
             abort(404);

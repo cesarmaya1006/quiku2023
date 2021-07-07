@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
+use App\Mail\RI_Prorroga;
+use App\Mail\RI_Respuesta;
 use App\Models\PQR\Estado;
 use Illuminate\Http\Request;
 use App\Models\PQR\Prioridad;
 use App\Models\Denuncias\Denuncia;
 use App\Http\Controllers\Controller;
+use App\Mail\RI_RespuestaReposicion;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RI_ConstanciaAclaracion;
 use Illuminate\Support\Facades\Config;
+use App\Models\Denuncias\DenunciaRecurso;
+use App\Mail\RI_AclaracionComplementacion;
 use App\Models\Denuncias\DenunciaRespuesta;
 use App\Models\Denuncias\DenunciaAclaracion;
+use App\Models\Denuncias\DenunciaDocRecurso;
+use App\Models\Denuncias\DenunciaRespRecurso;
 use App\Models\Denuncias\DenunciaDocRespuesta;
 use App\Models\Denuncias\DenunciaIrregularidad;
+use App\Models\Denuncias\DenunciaDocRespRecurso;
 use App\Http\Controllers\Fechas\FechasController;
 use App\Models\Denuncias\DenunciaAclaracionAnexos;
-use App\Models\Denuncias\DenunciaDocRecurso;
-use App\Models\Denuncias\DenunciaDocRespRecurso;
-use App\Models\Denuncias\DenunciaRecurso;
-use App\Models\Denuncias\DenunciaRespRecurso;
 
 class DenunciaController extends Controller
 {
@@ -61,13 +67,13 @@ class DenunciaController extends Controller
                     $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
                     $aclaracionNew = DenunciaAclaracion::create($nuevaAclaracion);
                     $peticion_act = DenunciaIrregularidad::findOrfail($request["id_peticion$i"]);
-                    // if ($peticion_act->pqr->persona_id != null) {
-                    //     $email = $peticion_act->pqr->persona->email;
-                    // } else {
-                    //     $email = $peticion_act->pqr->empresa->email;
-                    // }
-                    // $id_aclaracion = $aclaracionNew->id;
-                    // Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+                    if ($peticion_act->denuncia->persona_id != null) {
+                        $email = $peticion_act->denuncia->persona->email;
+                    } else {
+                        $email = $peticion_act->denuncia->empresa->email;
+                    }
+                    $id_aclaracion = $aclaracionNew->id;
+                    Mail::to($email)->send(new RI_AclaracionComplementacion($id_aclaracion));
                 }
             }
             $contadorAnexos += $request["totalPeticionAnexos$i"];
@@ -77,13 +83,13 @@ class DenunciaController extends Controller
                 $respuesta['respuesta'] = $request["respuesta$i"];
                 $respuestaPQR = DenunciaRespuesta::create($respuesta);
                 //----------------------------------------------------------------------
-                // if ($respuestaPQR->peticion->pqr->persona_id != null) {
-                //     $email = $respuestaPQR->peticion->pqr->persona->email;
-                // } else {
-                //     $email = $respuestaPQR->peticion->pqr->empresa->email;
-                // }
-                // $id_pqr = $respuestaPQR->peticion->pqr->id;
-                // Mail::to($email)->send(new RespuestaPQR($id_pqr));
+                if ($respuestaPQR->peticion->denuncia->persona_id != null) {
+                    $email = $respuestaPQR->peticion->denuncia->persona->email;
+                } else {
+                    $email = $respuestaPQR->peticion->denuncia->empresa->email;
+                }
+                $id_pqr = $respuestaPQR->peticion->denuncia->id;
+                Mail::to($email)->send(new RI_Respuesta($id_pqr));
                 //----------------------------------------------------------------------
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
                     if ($request->hasFile("documentos$k")) {
@@ -181,13 +187,13 @@ class DenunciaController extends Controller
                 $aclaracionNew = DenunciaAclaracion::findOrFail($request["id_aclaracion$i"]);
                 //----------------------------------------------------------------------
                 $peticion_act = DenunciaIrregularidad::findOrfail($request["id_solicitud$i"]);
-                // if ($peticion_act->pqr->persona_id != null) {
-                //     $email = $peticion_act->pqr->persona->email;
-                // } else {
-                //     $email = $peticion_act->pqr->empresa->email;
-                // }
-                // $id_aclaracion = $aclaracionNew->id;
-                // Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
+                if ($peticion_act->denuncia->persona_id != null) {
+                    $email = $peticion_act->denuncia->persona->email;
+                } else {
+                    $email = $peticion_act->denuncia->empresa->email;
+                }
+                $id_aclaracion = $aclaracionNew->id;
+                Mail::to($email)->send(new RI_ConstanciaAclaracion($id_aclaracion));
                 //----------------------------------------------------------------------
                 $contadorAnexos += $request["totalanexos$i"];
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
@@ -272,7 +278,7 @@ class DenunciaController extends Controller
                         $email = $pqr->empresa->email;
                     }
                     $id_pqr = $pqr->id;
-                    // Mail::to($email)->send(new Prorroga($id_pqr));
+                    Mail::to($email)->send(new RI_Prorroga($id_pqr));
                     //---------------------------------------------------------------------------
                 }
             }
@@ -420,6 +426,14 @@ class DenunciaController extends Controller
                     Denuncia::findOrFail($request['id'])->update($pqrEstado);
                 }
             }
+            $denuncia = Denuncia::findOrFail($request['id']);
+            if ($denuncia->persona_id != null) {
+                $email = $denuncia->persona->email;
+            } else {
+                $email = $denuncia->empresa->email;
+            }
+            $id_recurso = $respuestaRecurso->id;
+            Mail::to($email)->send(new RI_RespuestaReposicion($id_recurso));
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
         } else {
             abort(404);

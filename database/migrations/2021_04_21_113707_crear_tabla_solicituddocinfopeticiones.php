@@ -17,7 +17,7 @@ class CrearTablaSolicituddocinfopeticiones extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('solicituddocinfo_id');
             $table->foreign('solicituddocinfo_id', 'fk_solicituddocinfo_peticion')->references('id')->on('solicituddocinfo')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->unsignedBigInteger('empleado_id')->default('5')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_peticion')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('peticion');
             $table->longText('indentifiquedocinfo');

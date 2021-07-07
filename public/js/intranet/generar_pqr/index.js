@@ -14,19 +14,19 @@ window.addEventListener('DOMContentLoaded', function(){
             urlDescargaRadicado = 'pqr_radicada_pdf'
             break
           case 4 :
-            urlDescargaRadicado = ''
+            urlDescargaRadicado = 'pqr_radicada_pdf_cuo'
             break
           case 5 :
-            urlDescargaRadicado = ''
+            urlDescargaRadicado = 'pqr_radicada_pdf_sd'
             break
           case 6 :
-            urlDescargaRadicado = ''
+            urlDescargaRadicado = 'pqr_radicada_pdf_ri'
             break
           case 7 :
             urlDescargaRadicado = 'felicitacion_radicada_pdf'
             break
           case 8 :
-            urlDescargaRadicado = ''
+            urlDescargaRadicado = 'pqr_radicada_pdf_sfi'
             break
           case 9 :
             urlDescargaRadicado = 'sugerencia_radicada_pdf'

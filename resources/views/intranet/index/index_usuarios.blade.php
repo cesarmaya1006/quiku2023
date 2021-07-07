@@ -13,16 +13,61 @@
                                 <div class="col-12 col-md-4">
                                     <div class="card card-Light collapsed-card" style="box-shadow: 0px 0px 0px 0px ;">
                                         <div class="card-header">
-                                            <h3 class="card-title">
+                                            <h3 class="card-title col-11 justify-content-center">
                                                 @if ($tipo->id < 4)
-                                                    <a
-                                                        href="{{ route($tipo->url, ['id' => $tipo->id]) }}">{{ $tipo->tipo }}</a>
+                                                    <a class="col-12"
+                                                        href="{{ route($tipo->url, ['id' => $tipo->id]) }}">
+                                                        @switch($tipo->id)
+                                                            @case(1)
+                                                                <span class="justify-content-center"
+                                                                    style="font-size: 2.5em; color: #007bff;">
+                                                                    <i class="fas fa-pencil-alt"></i>
+                                                                </span>
+                                                            @break
+                                                            @case(2)
+                                                                <span class="justify-content-center"
+                                                                    style="font-size: 2.5em; color: #007bff;">
+                                                                    <i class="far fa-envelope"></i>
+                                                                </span>
+                                                            @break
+                                                            @case(3)
+                                                                <span class="justify-content-center"
+                                                                    style="font-size: 2.5em; color: #007bff;">
+                                                                    <i class="far fa-comment-alt"></i>
+                                                                </span>
+                                                            @break
+                                                            @default
+                                                        @endswitch
+                                                        <p class="mt-3">{{ $tipo->tipo }}</p>
+                                                    </a>
                                                 @else
-                                                    <a href="{{ route($tipo->url) }}"
-                                                        style="text-decoration: none;">{{ $tipo->tipo }}</a>
+                                                    <a href="{{ route($tipo->url) }}" style="text-decoration: none;">
+                                                        @switch($tipo->id)
+                                                            @case(5)
+                                                                <span class="justify-content-center"
+                                                                    style="font-size: 2.5em; color: #007bff;">
+                                                                    <i class="far fa-edit"></i>
+                                                                </span>
+                                                            @break
+                                                            @case(7)
+                                                                <span class="justify-content-center"
+                                                                    style="font-size: 2.5em; color: #007bff;">
+                                                                    <i class="far fa-grin"></i>
+                                                                </span>
+                                                            @break
+                                                            @case(8)
+                                                                <span class="justify-content-center"
+                                                                    style="font-size: 2.5em; color: #007bff;">
+                                                                    <i class="fas fa-list"></i>
+                                                                </span>
+                                                            @break
+                                                            @default
+                                                        @endswitch
+                                                        <p class="mt-3">{{ $tipo->tipo }}</p>
+                                                    </a>
                                                 @endif
                                             </h3>
-                                            <div class="card-tools">
+                                            <div class="card-tools col-1">
                                                 <button type="button" class="btn btn-tool"
                                                     data-card-widget="collapse"><i class="fas fa-plus"></i>
                                                 </button>
@@ -49,34 +94,59 @@
                         </div>
                         <div class="row card-otros d-none">
                             @foreach ($tipoPQR as $tipo)
-                            @if ($tipo->id == 4 || $tipo->id == 6 || $tipo->id == 9)
-                                <div class="col-12 col-md-4">
-                                    <div class="card card-Light collapsed-card" style="box-shadow: 0px 0px 0px 0px ;">
-                                        <div class="card-header">
-                                            <h3 class="card-title">
-                                                @if ($tipo->id < 4)
-                                                    <a
-                                                        href="{{ route($tipo->url, ['id' => $tipo->id]) }}">{{ $tipo->tipo }}</a>
-                                                @else
-                                                    <a href="{{ route($tipo->url) }}"
-                                                        style="text-decoration: none;">{{ $tipo->tipo }}</a>
-                                                @endif
-                                            </h3>
-                                            <div class="card-tools">
-                                                <button type="button" class="btn btn-tool"
-                                                    data-card-widget="collapse"><i class="fas fa-plus"></i>
-                                                </button>
+                                @if ($tipo->id == 4 || $tipo->id == 6 || $tipo->id == 9)
+                                    <div class="col-12 col-md-4">
+                                        <div class="card card-Light collapsed-card"
+                                            style="box-shadow: 0px 0px 0px 0px ;">
+                                            <div class="card-header">
+                                                <h3 class="card-title col-11">
+                                                    @if ($tipo->id < 4)
+                                                        <a href="{{ route($tipo->url, ['id' => $tipo->id]) }}">
+                                                            <p>{{ $tipo->tipo }}</p>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ route($tipo->url) }}"
+                                                            style="text-decoration: none;">
+                                                            @switch($tipo->id)
+                                                                @case(4)
+                                                                    <span class="justify-content-center"
+                                                                        style="font-size: 2.5em; color: #007bff;">
+                                                                        <i class="far fa-file-alt"></i>
+                                                                    </span>
+                                                                @break
+                                                                @case(6)
+                                                                    <span class="justify-content-center"
+                                                                        style="font-size: 2.5em; color: #007bff;">
+                                                                        <i class="far fa-file-alt"></i>
+                                                                    </span>
+                                                                @break
+                                                                @case(9)
+                                                                    <span class="justify-content-center"
+                                                                        style="font-size: 2.5em; color: #007bff;">
+                                                                        <i class="far fa-comment"></i>
+                                                                    </span>
+                                                                @break
+                                                                @default
+                                                            @endswitch
+                                                            <p class="mt-3">{{ $tipo->tipo }}</p>
+                                                        </a>
+                                                    @endif
+                                                </h3>
+                                                <div class="card-tools col-1">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <!-- /.card-tools -->
                                             </div>
-                                            <!-- /.card-tools -->
+                                            <!-- /.card-header -->
+                                            <div class="card-body" style="display: none;">
+                                                {{ $tipo->descripcion }}
+                                            </div>
+                                            <!-- /.card-body -->
                                         </div>
-                                        <!-- /.card-header -->
-                                        <div class="card-body" style="display: none;">
-                                            {{ $tipo->descripcion }}
-                                        </div>
-                                        <!-- /.card-body -->
                                     </div>
-                                </div>
-                            @endif
+                                @endif
                             @endforeach
                         </div>
                     </div>

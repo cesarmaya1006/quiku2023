@@ -362,10 +362,30 @@ Route::group(['middleware' => 'auth'], function () {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Route::get('pqr_radicada_pdf/{id}', [EmailController::class, 'pqrRadicadaPdf'])->name('pqrRadicadaPdf');
+Route::get('pqr_radicada_pdf_sd/{id}', [EmailController::class, 'pqrRadicadaPdfSd'])->name('pqrRadicadaPdfSd');
+Route::get('pqr_radicada_pdf_sfi/{id}', [EmailController::class, 'pqrRadicadaPdfSdi'])->name('pqrRadicadaPdfSdi');
+Route::get('pqr_radicada_pdf_cuo/{id}', [EmailController::class, 'pqrRadicadaPdfCuo'])->name('pqrRadicadaPdfCuo');
+Route::get('pqr_radicada_pdf_ri/{id}', [EmailController::class, 'pqrRadicadaPdfRi'])->name('pqrRadicadaPdfRi');
 Route::get('felicitacion_radicada_pdf/{id}', [EmailController::class, 'felicitacionRadicadaPdf'])->name('felicitacionRadicadaPdf');
 Route::get('sugerencia_radicada_pdf/{id}', [EmailController::class, 'sugerenciaRadicadaPdf'])->name('sugerenciaRadicadaPdf');
 Route::get('aclaracion_pdf/{id}', [EmailController::class, 'aclaracionPdf'])->name('aclaracionPdf');
+Route::get('aclaracion_pdf_sd/{id}', [EmailController::class, 'aclaracionPdfSd'])->name('aclaracionPdfSd');
+Route::get('aclaracion_pdf_sdi/{id}', [EmailController::class, 'aclaracionPdfSdi'])->name('aclaracionPdfSdi');
+Route::get('aclaracion_pdf_cuo/{id}', [EmailController::class, 'aclaracionPdfCuo'])->name('aclaracionPdfCuo');
+Route::get('aclaracion_pdf_ri/{id}', [EmailController::class, 'aclaracionPdfRi'])->name('aclaracionPdfRi');
 Route::get('constancia_aclaracion_pdf/{id}', [EmailController::class, 'constancia_aclaracionPdf'])->name('constancia_aclaracionPdf');
+Route::get('constancia_aclaracion_pdf_sd/{id}', [EmailController::class, 'constancia_aclaracionPdfSd'])->name('constancia_aclaracionPdfSd');
+Route::get('constancia_aclaracion_pdf_sdi/{id}', [EmailController::class, 'constancia_aclaracionPdfSdi'])->name('constancia_aclaracionPdfSdi');
+Route::get('constancia_aclaracion_pdf_cuo/{id}', [EmailController::class, 'constancia_aclaracionPdfCuo'])->name('constancia_aclaracionPdfCuo');
+Route::get('constancia_aclaracion_pdf_ri/{id}', [EmailController::class, 'constancia_aclaracionPdfRi'])->name('constancia_aclaracionPdfRi');
 Route::get('prorroga_pdf/{id}', [EmailController::class, 'prorrogaPdf'])->name('prorrogaPdf');
+Route::get('prorroga_pdf_sd/{id}', [EmailController::class, 'prorrogaPdfSd'])->name('prorrogaPdfSd');
+Route::get('prorroga_pdf_sdi/{id}', [EmailController::class, 'prorrogaPdfSdi'])->name('prorrogaPdfSdi');
+Route::get('prorroga_pdf_cuo/{id}', [EmailController::class, 'prorrogaPdfCuo'])->name('prorrogaPdfCuo');
+Route::get('prorroga_pdf_ri/{id}', [EmailController::class, 'prorrogaPdfRi'])->name('prorrogaPdfRi');
 Route::get('recurso_pdf/{id}', [EmailController::class, 'recursoPdf'])->name('recursoPdf');
 Route::get('asigacion_automatica/{id}', [PQR_P_Controller::class, 'asigacion_automatica'])->name('asigacion_automatica');
+Route::get('recurso_pdf_sd/{id}', [EmailController::class, 'recursoPdfSd'])->name('recursoPdfSd');
+Route::get('recurso_pdf_sdi/{id}', [EmailController::class, 'recursoPdfSdi'])->name('recursoPdfSdi');
+Route::get('recurso_pdf_cuo/{id}', [EmailController::class, 'recursoPdfCuo'])->name('recursoPdfCuo');
+Route::get('recurso_pdf_ri/{id}', [EmailController::class, 'recursoPdfRi'])->name('recursoPdfRi');

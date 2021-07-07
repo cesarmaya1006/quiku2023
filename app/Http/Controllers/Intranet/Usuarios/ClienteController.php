@@ -3,8 +3,15 @@
 namespace App\Http\Controllers\Intranet\Usuarios;
 
 use App\Models\PQR\PQR;
+use App\Mail\RI_Radicada;
+use App\Mail\SD_Radicada;
 use App\Models\PQR\Anexo;
+use App\Models\PQR\Hecho;
+use App\Mail\CUO_Radicada;
+use App\Mail\PQR_Radicada;
+use App\Mail\SDI_Radicada;
 use App\Models\Admin\Pais;
+use App\Models\PQR\Estado;
 use App\Models\PQR\tipoPQR;
 use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
@@ -12,22 +19,21 @@ use App\Models\Admin\Usuario;
 use App\Models\PQR\SubMotivo;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Productos\Marca;
+use App\Mail\SugerenciaRadicada;
 use App\Models\Personas\Persona;
+use App\Http\Requests\ValidarPqr;
 use App\Models\Admin\Departamento;
+use App\Models\Admin\DiasFestivos;
 use App\Models\Consultas\Consulta;
 use App\Models\Denuncias\Denuncia;
 use App\Models\Productos\Producto;
 use App\Models\Servicios\Servicio;
+use Barryvdh\DomPDF\Facade as PDF;
+use App\Mail\Felicitacion_Radicada;
 use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Fechas\FechasController;
-use App\Http\Controllers\Intranet\Funcionarios\ConceptoUOpinionController;
-use App\Http\Requests\ValidarPqr;
-use App\Mail\Felicitacion_Radicada;
-use App\Mail\PQR_Radicada;
-use App\Mail\SugerenciaRadicada;
-use App\Models\Admin\DiasFestivos;
 use App\Models\Productos\Referencia;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
 use App\Models\Denuncias\DenunciaAnexo;
@@ -36,7 +42,9 @@ use App\Models\Sugerencias\SugerenciaDoc;
 use App\Models\Felicitaciones\Felicitacion;
 use App\Models\Sugerencias\SugerenciaHecho;
 use App\Models\SolicitudDatos\SolicitudDatos;
+use App\Models\Denuncias\DenunciaIrregularidad;
 use App\Models\Felicitaciones\FelicitacionHecho;
+use App\Http\Controllers\Fechas\FechasController;
 use App\Models\SolicitudDatos\SolicitudDatosAnexo;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
@@ -46,14 +54,9 @@ use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
-use App\Models\Denuncias\DenunciaIrregularidad;
 use App\Models\Empleados\Empleado;
 use App\Models\Empresas\Empresa;
 use App\Models\PQR\AsignacionParticular;
-use App\Models\PQR\Estado;
-use App\Models\PQR\Hecho;
-use Barryvdh\DomPDF\Facade as PDF;
-use Illuminate\Support\Facades\Mail;
 
 class ClienteController extends Controller
 {
@@ -342,6 +345,14 @@ class ClienteController extends Controller
             $iteradorAnexos += $request['cantidadAnexosConsulta' . $i];
             $iteradorHechos += $request['cantidadHechosConsulta' . $i];
         }
+
+        if ($concepto->persona_id != null) {
+            $email = $concepto->persona->email;
+        } else {
+            $email = $concepto->empresa->email;
+        }
+        $id_pqr = $concepto->id;
+        Mail::to($email)->send(new CUO_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $concepto->id)->with('pqr_tipo', $concepto->tipo_pqr_id)->with('radicado', $concepto->radicado)->with('fecha_radicado', $concepto->created_at);
     }
 
@@ -469,7 +480,13 @@ class ClienteController extends Controller
             $iteradorAnexos += $request['cantidadAnexosIrregularidad' . $i];
             $iteradorHechos += $request['cantidadHechosIrregularidad' . $i];
         }
-
+        if ($denuncia->persona_id != null) {
+            $email = $denuncia->persona->email;
+        } else {
+            $email = $denuncia->empresa->email;
+        }
+        $id_pqr = $denuncia->id;
+        Mail::to($email)->send(new RI_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $denuncia->id)->with('pqr_tipo', $denuncia->tipo_pqr_id)->with('radicado', $denuncia->radicado)->with('fecha_radicado', $denuncia->created_at);
     }
 
@@ -540,6 +557,14 @@ class ClienteController extends Controller
             }
             $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
+
+        if ($solicitudId->persona_id != null) {
+            $email = $solicitudId->persona->email;
+        } else {
+            $email = $solicitudId->empresa->email;
+        }
+        $id_pqr = $solicitudId->id;
+        Mail::to($email)->send(new SD_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $solicitudId->id)->with('pqr_tipo', $solicitudId->tipo_pqr_id)->with('radicado', $solicitudId->radicado)->with('fecha_radicado', $solicitudId->created_at);
     }
 
@@ -611,6 +636,14 @@ class ClienteController extends Controller
             $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
         $solicitud = SolicitudDocInfo::findOrFail($solicitud->id);
+
+        if ($solicitud->persona_id != null) {
+            $email = $solicitud->persona->email;
+        } else {
+            $email = $solicitud->empresa->email;
+        }
+        $id_pqr = $solicitud->id;
+        Mail::to($email)->send(new SDI_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado)->with('fecha_radicado', $solicitud->created_at);
     }
 

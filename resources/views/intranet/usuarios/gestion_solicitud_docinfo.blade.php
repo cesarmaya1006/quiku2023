@@ -101,7 +101,7 @@
                                         Estado: <strong>{{ $solicitudDocInfo->estado->estado_usuario }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <strong><a href="{{ route('pqrRadicadaPdf', ['id' => $solicitudDocInfo->id]) }}"
+                                        <strong><a href="{{ route('pqrRadicadaPdfSdi', ['id' => $solicitudDocInfo->id]) }}"
                                                 target="_blank" rel="noopener noreferrer"><i class="fa fa-download"
                                                     aria-hidden="true"></i>
                                                 Descargar
@@ -222,7 +222,7 @@
                                         Días de prórroga: <strong>{{ $solicitudDocInfo->prorroga_dias }} </strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        <strong><a href="{{ route('prorrogaPdf', ['id' => $solicitudDocInfo->id]) }}" target="_blank"
+                                        <strong><a href="{{ route('prorrogaPdfSdi', ['id' => $solicitudDocInfo->id]) }}" target="_blank"
                                                 rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
                                                 Descargar Radicado Prórroga</a></strong>
                                     </div>
@@ -347,7 +347,7 @@
                                                                 </div>
                                                                 <div class="col-12 form-group">
                                                                     <strong><a
-                                                                            href="{{ route('aclaracionPdf', ['id' => $aclaracion->id]) }}"
+                                                                            href="{{ route('aclaracionPdfSdi', ['id' => $aclaracion->id]) }}"
                                                                             target="_blank" rel="noopener noreferrer"><i
                                                                                 class="fa fa-download"
                                                                                 aria-hidden="true"></i>
