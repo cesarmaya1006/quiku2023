@@ -30,7 +30,7 @@ class FuncionarioController extends Controller
     public function index()
     {
         $usuario = Usuario::findOrFail(session('id_usuario'));
-        $pqr_S = PQR::all();
+        $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
         $conceptos = ConceptoUOpinion::all();
         $solicitudes_datos = SolicitudDatos::all();
         $denuncias = Denuncia::all();
