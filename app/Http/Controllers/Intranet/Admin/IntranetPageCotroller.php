@@ -49,7 +49,7 @@ class IntranetPageCotroller extends Controller
                 }
             }
         } elseif (session('rol_id') == 5) {
-            $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
+            $pqr_S = PQR::all();
             $conceptos = ConceptoUOpinion::all();
             $solicitudes_datos = SolicitudDatos::all();
             $denuncias = Denuncia::all();
