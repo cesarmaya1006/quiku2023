@@ -113,6 +113,12 @@ class FuncionarioController extends Controller
         return redirect('admin/index')->with('mensaje', 'Se actualizaron los datos de manera exitosa en la plataforma');
     }
 
+    public function gestionar_asignacion($id)
+    {
+        $pqr = PQR::findorFail($id);
+        return view('intranet.funcionarios.gestion_asignacion', compact('pqr'));
+    }
+
     /**
      * Display the specified resource.
      *

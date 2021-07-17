@@ -82,7 +82,7 @@
                                 </div>
                             </div>
 
-                            @foreach ($solicitudDatos->Solicitudes as $solicitud)
+                            @foreach ($solicitudDatos->peticiones as $solicitud)
                                 @php
                                 $recursoValidacion += $solicitud->recurso;
                                 if( $plazoRecurso != $solicitud->recurso_dias){
@@ -92,7 +92,7 @@
                             @endforeach
         
                         </div>
-                        @foreach ($solicitudDatos->Solicitudes as $solicitud)
+                        @foreach ($solicitudDatos->peticiones as $solicitud)
                         @php
                             $numerador++;
                         @endphp
@@ -133,11 +133,11 @@
                                 <div class="col-12">
                                     <table class="table table-light">
                                         <tbody>
-                                            @foreach ($solicitud->documentos as $anexo)
+                                            @foreach ($solicitud->anexos as $anexo)
                                             <tr>
                                                 <td class="text-justify">{{ $anexo->titulo }}</td>
                                                 <td class="text-justify">{{ $anexo->descripcion }}</td>
-                                                <td><a href="{{ asset('documentos/solicituddatos/' . $anexo->url) }}"
+                                                <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
                                                         target="_blank" rel="noopener noreferrer">Descargar</a>
                                                 </td>
                                             </tr>

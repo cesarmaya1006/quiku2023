@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
+use App\Models\PQR\PQR;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Felicitaciones\Felicitacion;
-use Illuminate\Http\Request;
 
 class FelicitacionController extends Controller
 {
@@ -15,7 +16,7 @@ class FelicitacionController extends Controller
      */
     public function gestionar($id)
     {
-        $felicitacion = Felicitacion::findOrFail($id);
+        $felicitacion = PQR::findOrFail($id);
 
         return view('intranet.funcionarios.felicitacion.gestion', compact('felicitacion'));
     }

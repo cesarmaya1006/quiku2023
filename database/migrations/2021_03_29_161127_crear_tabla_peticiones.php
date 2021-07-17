@@ -17,16 +17,33 @@ class CrearTablaPeticiones extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('pqr_id');
             $table->foreign('pqr_id', 'fk_pqr_peticiones')->references('id')->on('pqr')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('motivo_sub_id');
+            $table->unsignedBigInteger('motivo_sub_id')->nullable();
             $table->foreign('motivo_sub_id', 'fk_motivo_peticiones')->references('id')->on('motivo_sub')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empleado_id')->default('5')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_peticiones')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('otro')->nullable();
+            // Solicitud de info-datos 
+            $table->longText('peticion')->nullable();
+            $table->longText('indentifiquedocinfo')->nullable();
+            // Solicitud de datos personales 
+            $table->longText('tiposolicitud')->nullable();
+            $table->longText('datossolicitud')->nullable();
+            $table->longText('descripcionsolicitud')->nullable();
+            // Concepto u opinión
+            $table->longText('consulta')->nullable();
+            // Reporte de irregularidad
+            $table->longText('irregularidad')->nullable();
+            // Felicitacion
+            $table->text('nombre_funcionario')->nullable();
+            $table->text('felicitacion')->nullable();
+            // Sugerencia
+            $table->text('sugerencia')->nullable();
+
             $table->boolean('recurso')->default(0)->nullable();
             $table->boolean('usuario_recurso')->default(0)->nullable();
             $table->bigInteger('recurso_dias')->default(0);
             $table->date('fecha_notificacion')->nullable();
-            $table->longText('justificacion');
+            $table->longText('justificacion')->nullable();
             $table->boolean('aclaracion')->default(0)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';

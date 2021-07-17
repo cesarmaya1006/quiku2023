@@ -133,7 +133,7 @@
                 <td>
                     <h4>Información registrada en sus Consultas</h4>
                     <?php $num_peticion = 0; ?>
-                    @foreach ($pqr_radicada->consultas as $peticion)
+                    @foreach ($pqr_radicada->peticiones as $peticion)
                         <?php $num_peticion++; ?>
                         <h5>Tipo de solicitud : {{ $peticion->consulta }}</h5>
                         <?php $num_hecho = 0; ?>
@@ -155,12 +155,12 @@
                 <td>
                     <ul>
                         <?php $num_anexos = 0; ?>
-                        @foreach ($pqr_radicada->consultas as $peticion)
-                            @if ($peticion->documentos->count() > 0)
+                        @foreach ($pqr_radicada->peticiones as $peticion)
+                            @if ($peticion->anexos->count() > 0)
                                 <?php $num_anexos = 1; ?>
-                                @foreach ($peticion->documentos as $anexo)
+                                @foreach ($peticion->anexos as $anexo)
                                     <li>
-                                        <a href="{{ asset('documentos/conceptouopinion/' . $anexo->url) }}" target="_blank"
+                                        <a href="{{ asset('documentos/pqr/' . $anexo->url) }}" target="_blank"
                                             rel="noopener noreferrer">{{ $anexo->titulo }}</a>
                                     </li>
                                 @endforeach

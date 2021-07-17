@@ -27,7 +27,7 @@ class CrearTablaPqr extends Migration
             $table->text('adquisicion', 100)->nullable();
             $table->unsignedBigInteger('sede_id')->nullable();
             $table->foreign('sede_id', 'fk_sede_pqr')->references('id')->on('sedes')->onDelete('restrict')->onUpdate('restrict');
-            $table->text('tipo', 100);
+            $table->text('tipo', 100)->nullable();
             $table->unsignedBigInteger('servicio_id')->nullable();
             $table->foreign('servicio_id', 'fk_servicio_pqr')->references('id')->on('servicios')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('referencia_id')->nullable();

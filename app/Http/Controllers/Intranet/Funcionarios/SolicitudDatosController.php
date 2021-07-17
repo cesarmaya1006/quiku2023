@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
+use App\Models\PQR\PQR;
 use App\Mail\SD_Prorroga;
 use App\Mail\RespuestaPQR;
 use App\Mail\SD_Respuesta;
@@ -37,7 +38,7 @@ class SolicitudDatosController extends Controller
      */
     public function gestionar($id)
     {
-        $solicitudDatos = SolicitudDatos::findOrFail($id);
+        $solicitudDatos = PQR::findOrFail($id);
         $estadoPrioridad = Prioridad::all();
         return view('intranet.funcionarios.solicitud_dat.gestion', compact('solicitudDatos', 'estadoPrioridad'));
     }

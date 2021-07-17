@@ -148,17 +148,19 @@
             <tr>
                 <td>
                     <h4>Felicitacion</h4>
-                    @foreach ($felicitacion->hechos as $hecho)
-                        <p>Hecho: {{ $hecho->hecho }}
-                        <p>
-                    @endforeach
-                    @if ($felicitacion->sede_id)
+                    @foreach ($felicitacion->peticiones as $peticion)
+                        @foreach ($peticion->hechos as $hecho)
+                            <p>Hecho: {{ $hecho->hecho }}
+                            <p>
+                        @endforeach
+                        @if ($felicitacion->sede_id)
                         <p>Sede:
                             {{ $felicitacion->sede->nombre . '  (' . $felicitacion->sede->municipio->municipio . ')' }}
                         </p>
-                    @endif
-                    <p>Nombre de funcionario: {{ $felicitacion->nombre_funcionario }}</p>
-                    <p>Escriba sus felicitaciones: {{ $felicitacion->felicitacion }}</p>
+                        @endif
+                        <p>Nombre de funcionario: {{ $peticion->nombre_funcionario }}</p>
+                        <p>Escriba sus felicitaciones: {{ $peticion->felicitacion }}</p>
+                    @endforeach
                 </td>
             </tr>
         </table>

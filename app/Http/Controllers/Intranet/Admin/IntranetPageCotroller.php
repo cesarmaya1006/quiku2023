@@ -49,13 +49,21 @@ class IntranetPageCotroller extends Controller
                 }
             }
         } elseif (session('rol_id') == 5) {
-            $pqr_S = PQR::all();
-            $conceptos = ConceptoUOpinion::all();
-            $solicitudes_datos = SolicitudDatos::all();
-            $denuncias = Denuncia::all();
-            $felicitaciones = Felicitacion::all();
-            $solicitudes_doc = SolicitudDocInfo::all();
-            $sugerencias = Sugerencia::all();
+            $pqr_S = PQR::where('empleado_id',$usuario->id)->get();
+            $conceptos = ConceptoUOpinion::where('empleado_id',$usuario->id)->get();
+            $solicitudes_datos = SolicitudDatos::where('empleado_id',$usuario->id)->get();
+            $denuncias = Denuncia::where('empleado_id',$usuario->id)->get();
+            $felicitaciones = Felicitacion::where('empleado_id',$usuario->id)->get();
+            $solicitudes_doc = SolicitudDocInfo::where('empleado_id',$usuario->id)->get();
+            $sugerencias = Sugerencia::where('empleado_id',$usuario->id)->get();
+            // $pqr_S = PQR::all();
+            // $conceptos = ConceptoUOpinion::all();
+            // $solicitudes_datos = SolicitudDatos::all();
+            // $denuncias = Denuncia::all();
+            // $felicitaciones = Felicitacion::all();
+            // $solicitudes_doc = SolicitudDocInfo::all();
+            // $sugerencias = Sugerencia::all();
+            
         } elseif (session('rol_id') == 4) {
             $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
             $consultas = ConceptoUOpinion::where('empleado_id', session('id_usuario'))->get();

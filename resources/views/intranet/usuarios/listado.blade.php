@@ -50,26 +50,93 @@
                                             <td>{{ $pqr->created_at }}</td>
                                             <td>{{ $pqr->tipoPqr->tipo }}</td>
                                             <td>{{ $pqr->estado->estado_usuario }}</td>
-                                            <td>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}
-                                            </td>
-                                            <td><a href="{{ route('pqrRadicadaPdf', $pqr->id) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
-                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></a></td>
-                                            <td>
-                                                @if ($pqr->peticiones->count() > 0)
-                                                    <a href="{{ route('usuario-gestionarPQR', ['id' => $pqr->id]) }}"
-                                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                                @else
-                                                    <a href="{{ route('usuario-generarPQR_motivos', ['id' => $pqr->id]) }}"
-                                                        class="btn-accion-tabla eliminar tooltipsC" title="Terminar de Registrar"><i
-                                                            class="fas fa-wrench text-danger btn-editar" aria-hidden="true"></a>
-                                                @endif
+                                            <td>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</td>
+                                            @if ($pqr->tipo_pqr_id == 1 || $pqr->tipo_pqr_id == 2 || $pqr->tipo_pqr_id == 3)
+                                                <td><a href="{{ route('pqrRadicadaPdf', $pqr->id) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
+                                                            class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a></td>
+                                                <td>
+                                                    @if ($pqr->peticiones->count() > 0)
+                                                        <a href="{{ route('usuario-gestionarPQR', ['id' => $pqr->id]) }}"
+                                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                                    @else
+                                                        <a href="{{ route('usuario-generarPQR_motivos', ['id' => $pqr->id]) }}"
+                                                            class="btn-accion-tabla eliminar tooltipsC" title="Terminar de Registrar"><i
+                                                                class="fas fa-wrench text-danger btn-editar" aria-hidden="true"></i></a>
+                                                    @endif
 
+                                                </td>
+                                            @elseif ($pqr->tipo_pqr_id == 4)
+                                                <td>
+                                                    <a href="{{ route('pqrRadicadaPdfCuo', ['id' => $pqr->id]) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
+                                                            class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('usuario-gestionarConceptoUOpinion', ['id' => $pqr->id]) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                            @elseif ($pqr->tipo_pqr_id == 5)
+                                                <td>
+                                                    <a href="{{ route('pqrRadicadaPdfSd', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
+                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('usuario-gestionarSolicitudDatos', ['id' => $pqr->id]) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                            @elseif ($pqr->tipo_pqr_id == 6)
+                                                <td>
+                                                    <a href="{{ route('pqrRadicadaPdfRi', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
+                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                            <td>
+                                                <a href="{{ route('usuario-gestionarReporte', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                                             </td>
+                                            @elseif ($pqr->tipo_pqr_id == 7)
+                                                <td>
+                                                    <a href="{{ route('felicitacionRadicadaPdf',$pqr->id) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
+                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('usuario-gestionarFelicitacion', ['id' => $pqr->id]) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                            @elseif ($pqr->tipo_pqr_id == 8)
+                                                <td>
+                                                    <a href="{{ route('pqrRadicadaPdfSdi', ['id' => $pqr->id]) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
+                                                            class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('usuario-gestionarSolicitudDocInfo', ['id' => $pqr->id]) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                            @elseif ($pqr->tipo_pqr_id == 9)
+                                                <td>
+                                                    <a href="{{ route('sugerenciaRadicadaPdf', $pqr->id) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
+                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('usuario-gestionarsugerencia', ['id' => $pqr->id]) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
-                                    @foreach ($conceptos as $concepto)
+                                    {{-- @foreach ($conceptos as $concepto)
                                         <tr>
                                             <td>{{ $concepto->radicado }}</td>
                                             <td>{{ $concepto->created_at }}</td>
@@ -177,7 +244,7 @@
                                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                 </tbody>
                             </table>
                         </div>
@@ -190,14 +257,5 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-    <script>
-        let btnsTabla = document.querySelectorAll('.btn-editar')
-        btnsTabla.forEach(btn => {
-            if (btn.parentNode.tagName != 'A') {
-                btn.remove()
-            }
-        })
-
-    </script>
 @endsection
 <!-- ************************************************************* -->

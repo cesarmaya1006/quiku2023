@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
+use App\Models\PQR\PQR;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Sugerencias\Sugerencia;
-use Illuminate\Http\Request;
 
 class SugerenciaController extends Controller
 {
@@ -15,7 +16,7 @@ class SugerenciaController extends Controller
      */
     public function gestionar($id)
     {
-        $sugerencia = Sugerencia::findOrFail($id);
+        $sugerencia = PQR::findOrFail($id);
 
         return view('intranet.funcionarios.sugerencia.gestion', compact('sugerencia'));
     }

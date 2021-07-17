@@ -320,3 +320,110 @@
         </div>
     @endif
 @endif
+@if ($usuario->empleado)
+    @if ($usuario->empleado->cargo->cargo == 'Funcionario 1')
+    <div class="container-fluid" style="font-size: 0.8em;">
+        <div class="row">
+            <div class="col-12">
+                <h6>Listado de Pqrs</h6>
+            </div>
+            <div class="col-12">
+                <table class="table table-striped table-hover table-sm display">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th class="text-center" style="white-space:nowrap;">Ref</th>
+                            <th class="text-center" style="white-space:nowrap;">Estado</th>
+                            <th class="text-center" style="white-space:nowrap;">Área</th>
+                            <th class="text-center" style="white-space:nowrap;">Nivel</th>
+                            <th class="text-center" style="white-space:nowrap;">Cargo</th>
+                            <th class="text-center" style="white-space:nowrap;">Funcionario</th>
+                            <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
+                            <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
+                            <th class="text-center" style="white-space:nowrap;">Cliente</th>
+                            <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
+                            <th class="text-center" style="white-space:nowrap;">Adquisición</th>
+                            <th class="text-center" style="white-space:nowrap;">Departamento</th>
+                            <th class="text-center" style="white-space:nowrap;">Municipio</th>
+                            <th class="text-center" style="white-space:nowrap;">Sede</th>
+                            <th class="text-center" style="white-space:nowrap;">Servicio</th>
+                            <th class="text-center" style="white-space:nowrap;">Categoría</th>
+                            <th class="text-center" style="white-space:nowrap;">Producto</th>
+                            <th class="text-center" style="white-space:nowrap;">Marca</th>
+                            <th class="text-center" style="white-space:nowrap;">Refefencia</th>
+                            <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                            <th class="text-center" style="white-space:nowrap;">Ver</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pqr_S as $pqr)
+                            <tr>
+                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->id }}</td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->empleado_id != null ? 'Asignada' : '---' }}</td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->empleado_id != null ? $pqr->empleado->cargo->nivel->area->area : '---' }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->empleado_id != null ? $pqr->empleado->cargo->nivel->nivel : '---' }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->empleado_id != null ? $pqr->empleado->cargo->cargo : '---' }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->empleado_id != null ? $pqr->empleado->nombre1 . ' ' . $pqr->empleado->nombre2 . ' ' . $pqr->empleado->apellido1 . ' ' . $pqr->empleado->apellido2 : '---' }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->radicado }}</td>
+                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipoPqr->tipo }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipo }}</td>
+                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->adquisicion }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->adquisicion == 'Sede física' ? $pqr->sede->municipio->departamento->departamento : '---' }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->adquisicion == 'Sede física' ? $pqr->sede->municipio->municipio : '---' }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->adquisicion == 'Sede física' ? $pqr->sede->nombre : '---' }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->servicio_id != null ? $pqr->servicio->servicio : '---' }}</td>
+                                <td class="{{ $pqr->referencia_id != null ? '' : 'text-center' }}"
+                                    style="white-space:nowrap;">
+                                    {{ $pqr->referencia_id != null ? $pqr->referencia->marca->producto->categoria->categoria : '---' }}
+                                </td>
+                                <td class="{{ $pqr->referencia_id != null ? '' : 'text-center' }}"
+                                    style="white-space:nowrap;">
+                                    {{ $pqr->referencia_id != null ? $pqr->referencia->marca->producto->producto : '---' }}
+                                </td>
+                                <td class="{{ $pqr->referencia_id != null ? '' : 'text-center' }}"
+                                    style="white-space:nowrap;">
+                                    {{ $pqr->referencia_id != null ? $pqr->referencia->marca->marca : '---' }}
+                                </td>
+                                <td class="{{ $pqr->referencia_id != null ? '' : 'text-center' }}"
+                                    style="white-space:nowrap;">
+                                    {{ $pqr->referencia_id != null ? $pqr->referencia->referencia : '---' }}
+                                </td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $pqr->prioridad->prioridad }}
+                                </td>
+                                <td>
+                                    <a href="{{ route('funcionario-gestionar-asignacion', ['id' => $pqr->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                </td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @endif
+@endif

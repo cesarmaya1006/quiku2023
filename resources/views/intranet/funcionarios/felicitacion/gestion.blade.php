@@ -72,67 +72,69 @@
                     </div>
                     <hr style="border-top: solid 4px black">
                     <div class="col-12 peticion_general rounded border mb-3 p-2">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-12">
+                        @foreach ($felicitacion->peticiones as $peticion)
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row">
                                                 <div class="col-12">
-                                                    <h5>Felicitaciones</h5>
+                                                    <div class="col-12">
+                                                        <h5>Felicitaciones</h5>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12">
-                                <h6>Hechos</h6>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-light">
-                                    <tbody>
-                                        @foreach ($felicitacion->hechos as $hecho)
-                                        <tr>
-                                            <td class="text-justify">{{ $hecho->hecho }}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12 col-md-12">
-                                <h6>Nombre de funcionario</h6>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-light">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-justify">{{ $felicitacion->nombre_funcionario }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6>Hechos</h6>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-light">
+                                        <tbody>
+                                            @foreach ($peticion->hechos as $hecho)
+                                            <tr>
+                                                <td class="text-justify">{{ $hecho->hecho }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <hr>
-                            <div class="col-12 col-md-12">
-                                <h6>Escriba sus felicitaciones</h6>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <h6>Nombre de funcionario</h6>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-light">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-justify">{{ $peticion->nombre_funcionario }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <hr>
+                                <div class="col-12 col-md-12">
+                                    <h6>Escriba sus felicitaciones</h6>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-light">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-justify">{{ $peticion->felicitacion }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="col-12">
-                                <table class="table table-light">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-justify">{{ $felicitacion->felicitacion }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <hr>
+                            <hr>
+                        @endforeach
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{route('funcionario-index')}}" class="btn btn-primary px-5 ">Salir</i></a>

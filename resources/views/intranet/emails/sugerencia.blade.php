@@ -147,11 +147,12 @@
         <table>
             <tr>
                 <td>
-
                     <h4>Sugerencia</h4>
-                    @foreach ($sugerencia->hechos as $hecho)
-                        <p>Hecho: {{ $hecho->hecho }}
-                        <p>
+                    @foreach ($sugerencia->peticiones as $peticion)
+                        @foreach ($peticion->hechos as $hecho)
+                            <p>Hecho: {{ $hecho->hecho }}
+                            <p>
+                        @endforeach
                     @endforeach
                     <p><strong>Sugerencia:</strong> {{ $sugerencia->sugerencia }}</p>
                 </td>
@@ -167,25 +168,29 @@
             <tr>
                 <td>
                     <ul>
-                        @if ($sugerencia->documentos->count() > 0)
-                            @foreach ($sugerencia->documentos as $documento)
-                                <li>
-                                    <a href="{{ asset('documentos/pqr/' . $documento->url) }}" target="_blank"
-                                        rel="noopener noreferrer">{{ $documento->titulo }}</a>
-                                </li>
-                            @endforeach
-                        @endif
+                        @foreach ($sugerencia->peticiones as $peticion)
+                            @if ($peticion->anexos->count() > 0)
+                                @foreach ($peticion->anexos as $documento)
+                                    <li>
+                                        <a href="{{ asset('documentos/pqr/' . $documento->url) }}" target="_blank"
+                                            rel="noopener noreferrer">{{ $documento->titulo }}</a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        @endforeach
                     </ul>
                 </td>
             </tr>
-            @if ($sugerencia->documentos->count() > 0)
-                <tr>
-                    <td>
-                        <p> <strong>Nota : La relación de anexos anterior no implica que se ha verificado su
-                                contenido.</strong></p>
-                    </td>
-                </tr>
-            @endif
+            @foreach ($sugerencia->peticiones as $peticion)
+                @if ($peticion->anexos->count() > 0)
+                    <tr>
+                        <td>
+                            <p> <strong>Nota : La relación de anexos anterior no implica que se ha verificado su
+                                    contenido.</strong></p>
+                        </td>
+                    </tr>
+                @endif
+            @endforeach
             <tr>
                 <td>
                     <p>En cualquier momento usted podrá consultar el estado y las respuestas a su solicitud ingresando a

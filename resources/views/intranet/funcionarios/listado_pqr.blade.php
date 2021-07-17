@@ -172,20 +172,44 @@
                                             @if ($pqr->tipo_pqr_id == 1)
                                                 <a href="{{ route('funcionario-gestionar_pqr_p', ['id' => $pqr->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                                             @elseif ($pqr->tipo_pqr_id == 2)
                                                 <a href="{{ route('funcionario-gestionar_pqr_q', ['id' => $pqr->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                            @else
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                            @elseif($pqr->tipo_pqr_id == 3)
                                                 <a href="{{ route('funcionario-gestionar_pqr_r', ['id' => $pqr->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                            @elseif($pqr->tipo_pqr_id == 4)
+                                                <a href="{{ route('funcionario-gestionarConceptoUOpinion', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                            @elseif($pqr->tipo_pqr_id == 5)
+                                                <a href="{{ route('funcionario-gestionarSolicitudDatos', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                            @elseif($pqr->tipo_pqr_id == 6)
+                                                <a href="{{ route('funcionario-gestionarDenuncia', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                            @elseif($pqr->tipo_pqr_id == 7)
+                                                <a href="{{ route('funcionario-gestionarFelicitacion', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                            @elseif($pqr->tipo_pqr_id == 8)
+                                                <a href="{{ route('funcionario-gestionarSolicitudDocumentos', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                            @elseif($pqr->tipo_pqr_id == 9)
+                                                <a href="{{ route('funcionario-gestionarSugerencia', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i>
                                             @endif
                                         </td>
                                     </tr>
                                 @endforeach
-                                @foreach ($conceptos as $concepto)
+                                {{-- @foreach ($conceptos as $concepto)
                                     @php
                                         $diasRecurso = 0;
                                     @endphp
@@ -236,7 +260,7 @@
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
                                                 class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
+                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></i></td>
                                     </tr>
                                 @endforeach
                                 @foreach ($solicitudes_datos as $solicitud_datos)
@@ -290,7 +314,7 @@
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
                                                 class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
+                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a></td>
                                     </tr>
                                 @endforeach
                                 @foreach ($denuncias as $denuncia)
@@ -334,7 +358,7 @@
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarDenuncia', ['id' => $denuncia->id]) }}"
                                                 class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
+                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a></td>
                                     </tr>
                                 @endforeach
                                 @foreach ($felicitaciones as $felicitacion)
@@ -353,7 +377,7 @@
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarFelicitacion', ['id' => $felicitacion->id]) }}"
                                                 class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
+                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a></td>
                                     </tr>
                                 @endforeach
                                 @foreach ($solicitudes_doc as $solicitud_doc)
@@ -407,7 +431,7 @@
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarSolicitudDocumentos', ['id' => $solicitud_doc->id]) }}"
                                                 class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
+                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a></td>
                                     </tr>
                                 @endforeach
                                 @foreach ($sugerencias as $sugerencia)
@@ -426,9 +450,9 @@
                                         <td>{{ $fechaFinal }}</td>
                                         <td><a href="{{ route('funcionario-gestionarSugerencia', ['id' => $sugerencia->id]) }}"
                                                 class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></a></td>
+                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a></td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -440,14 +464,5 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-    <script>
-        let btnsTabla = document.querySelectorAll('.btn-editar')
-        btnsTabla.forEach(btn => {
-            if (btn.parentNode.tagName != 'A') {
-                btn.remove()
-            }
-        })
-
-    </script>
 @endsection
 <!-- ************************************************************* -->

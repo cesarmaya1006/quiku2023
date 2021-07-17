@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
+use App\Models\PQR\PQR;
 use App\Mail\RI_Prorroga;
 use App\Mail\RI_Respuesta;
 use App\Models\PQR\Estado;
@@ -34,7 +35,7 @@ class DenunciaController extends Controller
      */
     public function gestionar($id)
     {
-        $denuncia = Denuncia::findOrFail($id);
+        $denuncia = PQR::findOrFail($id);
         $estadoPrioridad = Prioridad::all();
         return view('intranet.funcionarios.denuncia.gestion', compact('denuncia', 'estadoPrioridad'));
     }

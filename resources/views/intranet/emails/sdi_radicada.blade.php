@@ -153,11 +153,11 @@
                     <ul>
                         <?php $num_anexos = 0; ?>
                         @foreach ($pqr_radicada->peticiones as $peticion)
-                            @if ($peticion->documentos->count() > 0)
+                            @if ($peticion->anexos->count() > 0)
                                 <?php $num_anexos = 1; ?>
-                                @foreach ($peticion->documentos as $anexo)
+                                @foreach ($peticion->anexos as $anexo)
                                     <li>
-                                        <a href="{{ asset('documentos/solicituddocinfo/' . $anexo->url) }}" target="_blank"
+                                        <a href="{{ asset('documentos/pqr/' . $anexo->url) }}" target="_blank"
                                             rel="noopener noreferrer">{{ $anexo->titulo }}</a>
                                     </li>
                                 @endforeach

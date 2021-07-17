@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Mail\Prorroga;
+use App\Models\PQR\PQR;
 use App\Mail\RespuestaPQR;
 use App\Mail\SDI_Prorroga;
 use App\Models\PQR\Estado;
@@ -39,7 +40,7 @@ class SolicitudDocInfoController extends Controller
      */
     public function gestionar($id)
     {
-        $solicitud_doc = SolicitudDocInfo::findOrFail($id);
+        $solicitud_doc = PQR::findOrFail($id);
         $estadoPrioridad = Prioridad::all();
         return view('intranet.funcionarios.solicitud_doc.gestion', compact('solicitud_doc', 'estadoPrioridad'));
     }

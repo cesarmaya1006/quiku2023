@@ -18,10 +18,10 @@
     $aclaracionesMenu = 0;
     $aclaraciones = 0;
     $aclaracionesRespuesta = 0;
-    $solicitudes = $reporte->irregularidades->count();
+    $solicitudes = $reporte->peticiones->count();
     $solicitudesRespuesta = 0;
     $recursosMenu = 0;
-    foreach ($reporte->irregularidades as $solicitud) {
+    foreach ($reporte->peticiones as $solicitud) {
         if ($solicitud->aclaraciones) {
             foreach ($solicitud->aclaraciones as $aclaracion) {
                 $aclaraciones++;
@@ -228,7 +228,7 @@
                                     </div>
                                 </div>
                             @endif
-                            @foreach ($reporte->irregularidades as $solicitud)
+                            @foreach ($reporte->peticiones as $solicitud)
                                 <?php $n_solicitud++; ?>
                                 <div class="col-12 rounded border mb-3 p-2 solicitud_general">
                                     <div class="menu-card-radicado menu-card">
@@ -279,11 +279,11 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($solicitud->documentos as $anexo)
+                                                        @foreach ($solicitud->anexos as $anexo)
                                                             <tr>
                                                                 <td class="text-justify">{{ $anexo->titulo }}</td>
                                                                 <td class="text-justify">{{ $anexo->descripcion }}</td>
-                                                                <td><a href="{{ asset('documentos/denuncias/' . $anexo->url) }}"
+                                                                <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
                                                                         target="_blank"
                                                                         rel="noopener noreferrer">Descargar</a>
                                                                 </td>

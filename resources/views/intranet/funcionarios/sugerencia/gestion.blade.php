@@ -72,76 +72,78 @@
                     </div>
                     <hr style="border-top: solid 4px black">
                     <div class="col-12 peticion_general rounded border mb-3 p-2">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-12">
+                        @foreach ($sugerencia->peticiones as $peticion)
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row">
                                                 <div class="col-12">
-                                                    <h5>Sugerencia</h5>
+                                                    <div class="col-12">
+                                                        <h5>Sugerencia</h5>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12">
-                                <h6>Hechos</h6>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-light">
-                                    <tbody>
-                                        @foreach ($sugerencia->hechos as $hecho)
-                                        <tr>
-                                            <td class="text-justify">{{ $hecho->hecho }}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-12 col-md-12">
-                                <h6>Sugerencia</h6>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-light">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-justify">{{ $sugerencia->sugerencia }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <hr>
-                        @if (isset($sugerencia->documentos))
-                        <div class="row">
-                            <div class="col-12">
+                            <hr>
+                            <div class="row">
                                 <div class="col-12">
-                                    <h6>Anexos de sugerencia</h6>
+                                    <h6>Hechos</h6>
                                 </div>
-                                <table class="table table-light">
-                                    <tbody>
-                                        @foreach ($sugerencia->documentos as $anexo)
-                                        <tr>
-                                            <td class="text-justify">{{ $anexo->titulo }}</td>
-                                            <td class="text-justify">{{ $anexo->descripcion }}</td>
-                                            <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
-                                                    target="_blank" rel="noopener noreferrer">Descargar</a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                <div class="col-12">
+                                    <table class="table table-light">
+                                        <tbody>
+                                            @foreach ($peticion->hechos as $hecho)
+                                            <tr>
+                                                <td class="text-justify">{{ $hecho->hecho }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                        @endif
+                            <hr>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <h6>Sugerencia</h6>
+                                </div>
+                                <div class="col-12">
+                                    <table class="table table-light">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-justify">{{ $peticion->sugerencia }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <hr>
+                            @if (isset($peticion->anexos))
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="col-12">
+                                        <h6>Anexos de sugerencia</h6>
+                                    </div>
+                                    <table class="table table-light">
+                                        <tbody>
+                                            @foreach ($peticion->anexos as $anexo)
+                                            <tr>
+                                                <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                <td class="text-justify">{{ $anexo->descripcion }}</td>
+                                                <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
+                                                        target="_blank" rel="noopener noreferrer">Descargar</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endif
+                        @endforeach
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{route('funcionario-index')}}" class="btn btn-primary px-5 ">Salir</i></a>

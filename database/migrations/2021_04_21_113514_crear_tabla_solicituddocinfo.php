@@ -16,6 +16,8 @@ class CrearTablaSolicituddocinfo extends Migration
         Schema::create('solicituddocinfo', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
             $table->text('radicado', 255)->nullable();
+            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->foreign('empleado_id', 'fk_empleado_solicituddocinfo')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('tipo_pqr_id')->default(8);
             $table->foreign('tipo_pqr_id', 'fk_tipoPQR_solicituddocinfo')->references('id')->on('tipo_pqr')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('persona_id')->nullable();

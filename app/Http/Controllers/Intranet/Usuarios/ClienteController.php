@@ -294,14 +294,15 @@ class ClienteController extends Controller
         $nuevaConcepto['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
         $nuevaConcepto['estadospqr_id'] = $estado['id'];
+        $nuevaConcepto['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaConcepto['tiempo_limite'] = $respuestaDias;
-        $concepto = ConceptoUOpinion::create($nuevaConcepto);
+        $concepto = PQR::create($nuevaConcepto);
 
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $concepto->id;
-        ConceptoUOpinion::findOrFail($concepto->id)->update($pqr_rad);
-        $concepto = ConceptoUOpinion::findOrFail($concepto->id);
+        PQR::findOrFail($concepto->id)->update($pqr_rad);
+        $concepto = PQR::findOrFail($concepto->id);
 
-        $nuevasConsultas['conceptouopinion_id'] = $concepto->id;
+        $nuevasConsultas['pqr_id'] = $concepto->id;
         $cantidadConsultas = $request['cantidadConsultas'];
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
@@ -312,10 +313,10 @@ class ClienteController extends Controller
             $nuevasConsultas['consulta'] = $request['consulta' . $i];
             $contadorAnexos += $request['cantidadAnexosConsulta' . $i];
             $contadorHechos += $request['cantidadHechosConsulta' . $i];
-            $consulta = ConceptoUOpinionConsulta::create($nuevasConsultas);
+            $consulta = Peticion::create($nuevasConsultas);
             for ($j = $iteradorAnexos; $j < $contadorAnexos; $j++) {
                 if ($request->hasFile("documentos$j")) {
-                    $ruta = Config::get('constantes.folder_doc_conceptouopinion');
+                    $ruta = Config::get('constantes.folder_doc_pqr');
                     $ruta = trim($ruta);
                     $doc_subido = $documentos["documentos$j"];
                     $tamaño = $doc_subido->getSize();
@@ -323,7 +324,7 @@ class ClienteController extends Controller
                         $tamaño = $tamaño / 1000;
                     }
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                    $nuevo_documento['conceptouopinionconsultas_id'] = $consulta->id;
+                    $nuevo_documento['peticion_id'] = $consulta->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
                     if ($request["descripcion$j"]) {
                         $nuevo_documento['descripcion'] = $request["descripcion$j"];
@@ -334,13 +335,13 @@ class ClienteController extends Controller
                     $nuevo_documento['peso'] = $tamaño;
                     $nuevo_documento['url'] = $nombre_doc;
                     $doc_subido->move($ruta, $nombre_doc);
-                    ConceptoUOpinionConsultaAnexo::create($nuevo_documento);
+                    Anexo::create($nuevo_documento);
                 }
             }
             for ($k = $iteradorHechos; $k < $contadorHechos; $k++) {
-                $nuevosHechos['conceptouopinionconsultas_id'] = $consulta->id;
+                $nuevosHechos['peticion_id'] = $consulta->id;
                 $nuevosHechos['hecho'] = $request['hecho' . $k];
-                ConceptoUOpinionConsultaHecho::create($nuevosHechos);
+                Hecho::create($nuevosHechos);
             }
             $iteradorAnexos += $request['cantidadAnexosConsulta' . $i];
             $iteradorHechos += $request['cantidadHechosConsulta' . $i];
@@ -352,7 +353,7 @@ class ClienteController extends Controller
             $email = $concepto->empresa->email;
         }
         $id_pqr = $concepto->id;
-        Mail::to($email)->send(new CUO_Radicada($id_pqr));
+        // Mail::to($email)->send(new CUO_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $concepto->id)->with('pqr_tipo', $concepto->tipo_pqr_id)->with('radicado', $concepto->radicado)->with('fecha_radicado', $concepto->created_at);
     }
 
@@ -374,25 +375,30 @@ class ClienteController extends Controller
         } else {
             $nuevaFelicitacion['empresa_id'] = $usuario->id;
         }
-        $nuevaFelicitacion['nombre_funcionario'] = $request['nombre_funcionario'];
         $nuevaFelicitacion['sede_id'] = $request['sede_id'];
-        $nuevaFelicitacion['felicitacion'] = $request['felicitacion'];
         $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d");
         $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(6);
         $nuevaFelicitacion['estadospqr_id'] = $estado['id'];
+        $nuevaFelicitacion['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaFelicitacion['tiempo_limite'] = $respuestaDias;
-        $felicitacion = Felicitacion::create($nuevaFelicitacion);
-
+        $felicitacion = PQR::create($nuevaFelicitacion);
+        
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $felicitacion->id;
-        Felicitacion::findOrFail($felicitacion->id)->update($pqr_rad);
-        $felicitacion = Felicitacion::findOrFail($felicitacion->id);
+        PQR::findOrFail($felicitacion->id)->update($pqr_rad);
+        $felicitacion = PQR::findOrFail($felicitacion->id);
 
-        $nuevosHechos['felicitacion_id'] = $felicitacion->id;
+
+        $nuevaFelicitacionPeticion['pqr_id'] = $felicitacion->id;
+        $nuevaFelicitacionPeticion['nombre_funcionario'] = $request['nombre_funcionario'];
+        $nuevaFelicitacionPeticion['felicitacion'] = $request['felicitacion'];
+        $peticion = Peticion::create($nuevaFelicitacionPeticion);
+
+        $nuevosHechos['peticion_id'] = $peticion->id;
         $cantidadHechos = $request['cantidadHechos'];
         for ($i = 0; $i < $cantidadHechos; $i++) {
             $nuevosHechos['hecho'] = $request['hecho' . $i];
-            FelicitacionHecho::create($nuevosHechos);
+            Hecho::create($nuevosHechos);
         }
         if ($felicitacion->persona_id != null) {
             $email = $felicitacion->persona->email;
@@ -400,7 +406,7 @@ class ClienteController extends Controller
             $email = $felicitacion->empresa->email;
         }
         $id_felicitacion = $felicitacion->id;
-        Mail::to($email)->send(new Felicitacion_Radicada($id_felicitacion));
+        // Mail::to($email)->send(new Felicitacion_Radicada($id_felicitacion));
 
         return redirect('/usuario/generar')->with('id', $felicitacion->id)->with('pqr_tipo', $felicitacion->tipo_pqr_id)->with('radicado', $felicitacion->radicado)->with('fecha_radicado', $felicitacion->created_at);
     }
@@ -428,14 +434,15 @@ class ClienteController extends Controller
         $nuevaDenuncia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
         $nuevaDenuncia['estadospqr_id'] = $estado['id'];
+        $nuevaDenuncia['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaDenuncia['tiempo_limite'] = $respuestaDias;
-        $denuncia = Denuncia::create($nuevaDenuncia);
+        $denuncia = PQR::create($nuevaDenuncia);
 
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $denuncia->id;
-        Denuncia::findOrFail($denuncia->id)->update($pqr_rad);
-        $denuncia = Denuncia::findOrFail($denuncia->id);
+        PQR::findOrFail($denuncia->id)->update($pqr_rad);
+        $denuncia = PQR::findOrFail($denuncia->id);
 
-        $nuevasIrregularidades['denuncias_id'] = $denuncia->id;
+        $nuevasIrregularidades['pqr_id'] = $denuncia->id;
         $cantidadIrregularidades = $request['cantidadIrregularidades'];
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
@@ -447,10 +454,10 @@ class ClienteController extends Controller
             $nuevasIrregularidades['otro'] = $request['otro' . $i];
             $contadorAnexos += $request['cantidadAnexosIrregularidad' . $i];
             $contadorHechos += $request['cantidadHechosIrregularidad' . $i];
-            $irregularidad = DenunciaIrregularidad::create($nuevasIrregularidades);
+            $irregularidad = Peticion::create($nuevasIrregularidades);
             for ($j = $iteradorAnexos; $j < $contadorAnexos; $j++) {
                 if ($request->hasFile("documentos$j")) {
-                    $ruta = Config::get('constantes.folder_doc_denuncias');
+                    $ruta = Config::get('constantes.folder_doc_pqr');
                     $ruta = trim($ruta);
                     $doc_subido = $documentos["documentos$j"];
                     $tamaño = $doc_subido->getSize();
@@ -458,7 +465,7 @@ class ClienteController extends Controller
                         $tamaño = $tamaño / 1000;
                     }
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                    $nuevo_documento['denunciairregularidades_id'] = $irregularidad->id;
+                    $nuevo_documento['peticion_id'] = $irregularidad->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
                     if ($request["descripcion$j"]) {
                         $nuevo_documento['descripcion'] = $request["descripcion$j"];
@@ -469,13 +476,13 @@ class ClienteController extends Controller
                     $nuevo_documento['peso'] = $tamaño;
                     $nuevo_documento['url'] = $nombre_doc;
                     $doc_subido->move($ruta, $nombre_doc);
-                    DenunciaAnexo::create($nuevo_documento);
+                    Anexo::create($nuevo_documento);
                 }
             }
             for ($k = $iteradorHechos; $k < $contadorHechos; $k++) {
-                $nuevosHechos['denunciairregularidades_id'] = $irregularidad->id;
+                $nuevosHechos['peticion_id'] = $irregularidad->id;
                 $nuevosHechos['hecho'] = $request['hecho' . $k];
-                DenunciaHecho::create($nuevosHechos);
+                Hecho::create($nuevosHechos);
             }
             $iteradorAnexos += $request['cantidadAnexosIrregularidad' . $i];
             $iteradorHechos += $request['cantidadHechosIrregularidad' . $i];
@@ -486,7 +493,7 @@ class ClienteController extends Controller
             $email = $denuncia->empresa->email;
         }
         $id_pqr = $denuncia->id;
-        Mail::to($email)->send(new RI_Radicada($id_pqr));
+        // Mail::to($email)->send(new RI_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $denuncia->id)->with('pqr_tipo', $denuncia->tipo_pqr_id)->with('radicado', $denuncia->radicado)->with('fecha_radicado', $denuncia->created_at);
     }
 
@@ -513,14 +520,15 @@ class ClienteController extends Controller
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
         $nuevaSolicitud['estadospqr_id'] = $estado['id'];
+        $nuevaSolicitud['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
-        $solicitudRad = SolicitudDatos::create($nuevaSolicitud);
+        $solicitudRad = PQR::create($nuevaSolicitud);
 
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitudRad->id;
-        SolicitudDatos::findOrFail($solicitudRad->id)->update($pqr_rad);
-        $solicitudId = SolicitudDatos::findOrFail($solicitudRad->id);
+        PQR::findOrFail($solicitudRad->id)->update($pqr_rad);
+        $solicitudId = PQR::findOrFail($solicitudRad->id);
 
-        $nuevasSolicitudes['solicituddatos_id'] = $solicitudId->id;
+        $nuevasSolicitudes['pqr_id'] = $solicitudId->id;
         $cantidadSolicitudes = $request['cantidadSolicitudes'];
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
@@ -530,10 +538,10 @@ class ClienteController extends Controller
             $nuevasSolicitudes['datossolicitud'] = $request['datossolicitud' . $i];
             $nuevasSolicitudes['descripcionsolicitud'] = $request['descripcionsolicitud' . $i];
             $contadorAnexos += $request['cantidadAnexosSolicitud' . $i];
-            $solicitud = SolicitudDatosSolicitud::create($nuevasSolicitudes);
+            $solicitud = Peticion::create($nuevasSolicitudes);
             for ($j = $iterador; $j < $contadorAnexos; $j++) {
                 if ($request->hasFile("documentos$j")) {
-                    $ruta = Config::get('constantes.folder_doc_solicituddatos');
+                    $ruta = Config::get('constantes.folder_doc_pqr');
                     $ruta = trim($ruta);
                     $doc_subido = $documentos["documentos$j"];
                     $tamaño = $doc_subido->getSize();
@@ -541,7 +549,7 @@ class ClienteController extends Controller
                         $tamaño = $tamaño / 1000;
                     }
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                    $nuevo_documento['solicituddatossolicitud_id'] = $solicitud->id;
+                    $nuevo_documento['peticion_id'] = $solicitud->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
                     if ($request["descripcion$j"]) {
                         $nuevo_documento['descripcion'] = $request["descripcion$j"];
@@ -552,19 +560,18 @@ class ClienteController extends Controller
                     $nuevo_documento['peso'] = $tamaño;
                     $nuevo_documento['url'] = $nombre_doc;
                     $doc_subido->move($ruta, $nombre_doc);
-                    SolicitudDatosAnexo::create($nuevo_documento);
+                    Anexo::create($nuevo_documento);
                 }
             }
             $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
-
         if ($solicitudId->persona_id != null) {
             $email = $solicitudId->persona->email;
         } else {
             $email = $solicitudId->empresa->email;
         }
         $id_pqr = $solicitudId->id;
-        Mail::to($email)->send(new SD_Radicada($id_pqr));
+        // Mail::to($email)->send(new SD_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $solicitudId->id)->with('pqr_tipo', $solicitudId->tipo_pqr_id)->with('radicado', $solicitudId->radicado)->with('fecha_radicado', $solicitudId->created_at);
     }
 
@@ -586,19 +593,19 @@ class ClienteController extends Controller
         } else {
             $nuevaSolicitud['empresa_id'] = $usuario->id;
         }
-        $nuevaSolicitud['sede_id'] = $request['sede_id'];
+        // $nuevaSolicitud['sede_id'] = $request['sede_id'];
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
         $nuevaSolicitud['estadospqr_id'] = $estado['id'];
+        $nuevaSolicitud['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
-        $solicitud = SolicitudDocInfo::create($nuevaSolicitud);
-
+        $solicitud = PQR::create($nuevaSolicitud);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitud->id;
-        SolicitudDocInfo::findOrFail($solicitud->id)->update($pqr_rad);
-        $solicitud = SolicitudDocInfo::findOrFail($solicitud->id);
+        PQR::findOrFail($solicitud->id)->update($pqr_rad);
+        $solicitud = PQR::findOrFail($solicitud->id);
 
-        $nuevasPeticiones['solicituddocinfo_id'] = $solicitud->id;
+        $nuevasPeticiones['pqr_id'] = $solicitud->id;
         $cantidadPeticiones = $request['cantidadPeticiones'];
         $documentos = $request->allFiles();
         $contadorAnexos = 0;
@@ -608,10 +615,10 @@ class ClienteController extends Controller
             $nuevasPeticiones['indentifiquedocinfo'] = $request['indentifiquedocinfo' . $i];
             $nuevasPeticiones['justificacion'] = $request['justificacion' . $i];
             $contadorAnexos += $request['cantidadAnexosSolicitud' . $i];
-            $peticion = SolicitudDocInfoPeticion::create($nuevasPeticiones);
+            $peticion = Peticion::create($nuevasPeticiones);
             for ($j = $iterador; $j < $contadorAnexos; $j++) {
                 if ($request->hasFile("documentos$j")) {
-                    $ruta = Config::get('constantes.folder_doc_solicituddocinfo');
+                    $ruta = Config::get('constantes.folder_doc_pqr');
                     $ruta = trim($ruta);
                     $doc_subido = $documentos["documentos$j"];
                     $tamaño = $doc_subido->getSize();
@@ -619,7 +626,7 @@ class ClienteController extends Controller
                         $tamaño = $tamaño / 1000;
                     }
                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                    $nuevo_documento['solicituddocinfopeticion_id'] = $peticion->id;
+                    $nuevo_documento['peticion_id'] = $peticion->id;
                     $nuevo_documento['titulo'] = $request["titulo$j"];
                     if ($request["descripcion$j"]) {
                         $nuevo_documento['descripcion'] = $request["descripcion$j"];
@@ -630,20 +637,18 @@ class ClienteController extends Controller
                     $nuevo_documento['peso'] = $tamaño;
                     $nuevo_documento['url'] = $nombre_doc;
                     $doc_subido->move($ruta, $nombre_doc);
-                    SolicitudDocInfoAnexo::create($nuevo_documento);
+                    Anexo::create($nuevo_documento);
                 }
             }
             $iterador += $request['cantidadAnexosSolicitud' . $i];
         }
-        $solicitud = SolicitudDocInfo::findOrFail($solicitud->id);
-
         if ($solicitud->persona_id != null) {
             $email = $solicitud->persona->email;
         } else {
             $email = $solicitud->empresa->email;
         }
         $id_pqr = $solicitud->id;
-        Mail::to($email)->send(new SDI_Radicada($id_pqr));
+        // Mail::to($email)->send(new SDI_Radicada($id_pqr));
         return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado)->with('fecha_radicado', $solicitud->created_at);
     }
 
@@ -667,29 +672,33 @@ class ClienteController extends Controller
             $nuevaSugerencia['empresa_id'] = $usuario->id;
         }
         $nuevaSugerencia['sede_id'] = $request['sede_id'];
-        $nuevaSugerencia['sugerencia'] = $request['sugerencia'];
         $nuevaSugerencia['fecha_generacion'] = date("Y-m-d");
         $nuevaSugerencia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(6);
         $nuevaSugerencia['estadospqr_id'] = $estado['id'];
+        $nuevaSugerencia['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaSugerencia['tiempo_limite'] = $respuestaDias;
-        $sugerencia = Sugerencia::create($nuevaSugerencia);
-
+        $sugerencia = PQR::create($nuevaSugerencia);
+        
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $sugerencia->id;
-        Sugerencia::findOrFail($sugerencia->id)->update($pqr_rad);
-        $sugerencia = Sugerencia::findOrFail($sugerencia->id);
+        PQR::findOrFail($sugerencia->id)->update($pqr_rad);
+        $sugerencia = PQR::findOrFail($sugerencia->id);
+        
+        $nuevaPeticion['pqr_id'] = $sugerencia->id;
+        $nuevaPeticion['sugerencia'] = $request['sugerencia'];
+        $peticion = Peticion::create($nuevaPeticion);
 
-        $nuevosHechos['sugerencia_id'] = $sugerencia->id;
+        $nuevosHechos['peticion_id'] = $peticion->id;
         $cantidadHechos = $request['cantidadHechos'];
         for ($i = 0; $i < $cantidadHechos; $i++) {
             $nuevosHechos['hecho'] = $request['hecho' . $i];
-            SugerenciaHecho::create($nuevosHechos);
+            Hecho::create($nuevosHechos);
         }
         $cantidadAnexos = $request['cantidadAnexos'];
         $documentos = $request->allFiles();
         for ($i = 0; $i < $cantidadAnexos; $i++) {
             if ($request->hasFile("documentos$i")) {
-                $ruta = Config::get('constantes.folder_doc_sugerencias');
+                $ruta = Config::get('constantes.folder_doc_pqr');
                 $ruta = trim($ruta);
                 $doc_subido = $documentos["documentos$i"];
                 $tamaño = $doc_subido->getSize();
@@ -697,7 +706,7 @@ class ClienteController extends Controller
                     $tamaño = $tamaño / 1000;
                 }
                 $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                $nuevo_documento['sugerencia_id'] = $sugerencia->id;
+                $nuevo_documento['peticion_id'] = $sugerencia->id;
                 $nuevo_documento['titulo'] = $request["titulo$i"];
                 if ($request["descripcion$i"]) {
                     $nuevo_documento['descripcion'] = $request["descripcion$i"];
@@ -708,7 +717,7 @@ class ClienteController extends Controller
                 $nuevo_documento['peso'] = $tamaño;
                 $nuevo_documento['url'] = $nombre_doc;
                 $doc_subido->move($ruta, $nombre_doc);
-                SugerenciaDoc::create($nuevo_documento);
+                Anexo::create($nuevo_documento);
             }
         }
 
@@ -718,7 +727,7 @@ class ClienteController extends Controller
             $email = $sugerencia->empresa->email;
         }
         $id_sugerencia = $sugerencia->id;
-        Mail::to($email)->send(new SugerenciaRadicada($id_sugerencia));
+        // Mail::to($email)->send(new SugerenciaRadicada($id_sugerencia));
 
         return redirect('/usuario/generar')->with('id', $sugerencia->id)->with('pqr_tipo', $sugerencia->tipo_pqr_id)->with('radicado', $sugerencia->radicado)->with('fecha_radicado', $sugerencia->created_at);
     }
@@ -817,37 +826,37 @@ class ClienteController extends Controller
     //=========================================================================================================================
     public function gestionar_felicitaciones($id)
     {
-        $felicitacion = Felicitacion::findOrFail($id);
+        $felicitacion = PQR::findOrFail($id);
         return view('intranet.usuarios.gestion_felicitaciones', compact('felicitacion'));
     }
     //=========================================================================================================================
     public function gestionar_sugerencia($id)
     {
-        $sugerencia = Sugerencia::findOrFail($id);
+        $sugerencia = PQR::findOrFail($id);
         return view('intranet.usuarios.gestion_sugerencias', compact('sugerencia'));
     }
     //=========================================================================================================================
     public function gestionar_solicitudDatos($id)
     {
-        $solicitudDatos = SolicitudDatos::findOrFail($id);
+        $solicitudDatos = PQR::findOrFail($id);
         return view('intranet.usuarios.gestion_solicitud_datos', compact('solicitudDatos'));
     }
     //=========================================================================================================================
     public function gestionar_solicitudDocInfo($id)
     {
-        $solicitudDocInfo = SolicitudDocInfo::findOrFail($id);
+        $solicitudDocInfo = PQR::findOrFail($id);
         return view('intranet.usuarios.gestion_solicitud_docinfo', compact('solicitudDocInfo'));
     }
     //=========================================================================================================================
     public function gestionar_conceptoUOpinion($id)
     {
-        $concepto = ConceptoUOpinion::findOrFail($id);
+        $concepto = PQR::findOrFail($id);
         return view('intranet.usuarios.gestion_conceptouopinion', compact('concepto'));
     }
     //=========================================================================================================================
     public function gestionar_reporteDeIrregularidad($id)
     {
-        $reporte = Denuncia::findOrFail($id);
+        $reporte = PQR::findOrFail($id);
         return view('intranet.usuarios.gestion_reportedeirregularidades', compact('reporte'));
     }
     //=========================================================================================================================
@@ -915,7 +924,7 @@ class ClienteController extends Controller
                 }
                 break;
             case 4:
-                $pqr = ConceptoUOpinion::findOrFail($id_pqr);
+                $pqr = PQR::findOrFail($id_pqr);
                 foreach ($pqr->consultas as $concepto) {
                     $num++;
                     $contenido .= '<h4>Concepto u opinion #' . $num . '</h4>';
@@ -926,7 +935,7 @@ class ClienteController extends Controller
                 }
                 break;
             case 5:
-                $pqr = SolicitudDatos::findOrFail($id_pqr);
+                $pqr = PQR::findOrFail($id_pqr);
                 foreach ($pqr->solicitudes as $solicitud) {
                     $num++;
                     $contenido .= '<h4>Solicitud #' . $num . '</h4>';
@@ -937,7 +946,7 @@ class ClienteController extends Controller
                 break;
 
             case 6:
-                $pqr = Denuncia::findOrFail($id_pqr);
+                $pqr = PQR::findOrFail($id_pqr);
                 $contenido .= '<h4>Denuncia</h4>';
                 $contenido .= '<p>Tipo de solicitud: ' . $pqr->solicitud . '</p>';
                 foreach ($pqr->hechos as $hecho) {
@@ -945,7 +954,7 @@ class ClienteController extends Controller
                 }
                 break;
             case 7:
-                $pqr = Felicitacion::findOrFail($id_pqr);
+                $pqr = PQR::findOrFail($id_pqr);
                 $contenido .= '<h4>Felicitacion</h4>';
                 foreach ($pqr->hechos as $hecho) {
                     $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
@@ -958,7 +967,7 @@ class ClienteController extends Controller
                 break;
 
             case 8:
-                $pqr = SolicitudDocInfo::findOrFail($id_pqr);
+                $pqr = PQR::findOrFail($id_pqr);
                 foreach ($pqr->peticiones as $peticion) {
                     $num++;
                     $contenido .= '<h4>Petición #' . $num . '</h4>';
@@ -969,7 +978,7 @@ class ClienteController extends Controller
                 break;
 
             default:
-                $pqr = Sugerencia::findOrFail($id_pqr);
+                $pqr = PQR::findOrFail($id_pqr);
                 $contenido .= '<h4>Sugerencia</h4>';
                 foreach ($pqr->hechos as $hecho) {
                     $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';

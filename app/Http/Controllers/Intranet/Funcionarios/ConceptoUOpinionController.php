@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Mail\Prorroga;
+use App\Models\PQR\PQR;
 use App\Mail\CUO_Prorroga;
 use App\Mail\RespuestaPQR;
 use App\Models\PQR\Estado;
@@ -43,7 +44,7 @@ class ConceptoUOpinionController extends Controller
      */
     public function gestionar($id)
     {
-        $concepto = ConceptoUOpinion::findOrFail($id);
+        $concepto = PQR::findOrFail($id);
         $estadoPrioridad = Prioridad::all();
         return view('intranet.funcionarios.concepto_op.gestion', compact('concepto', 'estadoPrioridad'));
     }

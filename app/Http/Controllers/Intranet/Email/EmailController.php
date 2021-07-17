@@ -142,7 +142,7 @@ class EmailController extends Controller
                 }
                 break;
             case 4:
-                $pqr = ConceptoUOpinion::findOrFail($id);
+                $pqr = PQR::findOrFail($id);
                 foreach ($pqr->consultas as $concepto) {
                     $num++;
                     $contenido .= '<h4>Concepto u opinion #' . $num . '</h4>';
@@ -153,7 +153,7 @@ class EmailController extends Controller
                 }
                 break;
             case 5:
-                $pqr = SolicitudDatos::findOrFail($id);
+                $pqr = PQR::findOrFail($id);
                 foreach ($pqr->solicitudes as $solicitud) {
                     $num++;
                     $contenido .= '<h4>Solicitud #' . $num . '</h4>';
@@ -164,7 +164,7 @@ class EmailController extends Controller
                 break;
 
             case 6:
-                $pqr = Denuncia::findOrFail($id);
+                $pqr = PQR::findOrFail($id);
                 $contenido .= '<h4>Denuncia</h4>';
                 $contenido .= '<p>Tipo de solicitud: ' . $pqr->solicitud . '</p>';
                 foreach ($pqr->hechos as $hecho) {
@@ -172,7 +172,7 @@ class EmailController extends Controller
                 }
                 break;
             case 7:
-                $pqr = Felicitacion::findOrFail($id);
+                $pqr = PQR::findOrFail($id);
                 $contenido .= '<h4>Felicitacion</h4>';
                 foreach ($pqr->hechos as $hecho) {
                     $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
@@ -185,7 +185,7 @@ class EmailController extends Controller
                 break;
 
             case 8:
-                $pqr = SolicitudDocInfo::findOrFail($id);
+                $pqr = PQR::findOrFail($id);
                 foreach ($pqr->peticiones as $peticion) {
                     $num++;
                     $contenido .= '<h4>Petición #' . $num . '</h4>';
@@ -196,7 +196,7 @@ class EmailController extends Controller
                 break;
 
             default:
-                $pqr = Sugerencia::findOrFail($id);
+                $pqr = PQR::findOrFail($id);
                 $contenido .= '<h4>Sugerencia</h4>';
                 foreach ($pqr->hechos as $hecho) {
                     $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
@@ -438,7 +438,7 @@ class EmailController extends Controller
 
     public function pqrRadicadaPdfSd($id)
     {
-        $pqr_radicada = SolicitudDatos::findOrFail($id);
+        $pqr_radicada = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
         //$imagen = asset('imagenes/sistema/icono_sistema.png');
         $fecha = $pqr_radicada->fecha_radicado;
@@ -458,11 +458,11 @@ class EmailController extends Controller
         }
 
         $anexos_li = '';
-        foreach ($pqr_radicada->solicitudes as $peticion) {
-            if ($peticion->documentos->count() > 0) {
-                foreach ($peticion->documentos as $anexo) {
+        foreach ($pqr_radicada->peticiones as $peticion) {
+            if ($peticion->anexos->count() > 0) {
+                foreach ($peticion->anexos as $anexo) {
                     $anexos_li .= '<li>';
-                    $anexos_li .= '<a href="' . asset('documentos/solicituddatos/' . $anexo->url) . '" target="_blank"';
+                    $anexos_li .= '<a href="' . asset('documentos/pqr/' . $anexo->url) . '" target="_blank"';
                     $anexos_li .= 'rel="noopener noreferrer">';
                     $anexos_li .= '<p>' . $anexo->titulo . ' </p>';
                     $anexos_li .= '</a>';
@@ -476,9 +476,9 @@ class EmailController extends Controller
         $tipo_pqr_id = $pqr_radicada->tipo_pqr_id;
         $contenido = '';
         $num = 0;
-        $pqr = SolicitudDatos::findOrFail($id);
+        $pqr = PQR::findOrFail($id);
         $contenido .= '<h4>Solicitud sobre mis datos personales</h4>';
-        foreach ($pqr->solicitudes as $peticion) {
+        foreach ($pqr->peticiones as $peticion) {
             $num++;
             $contenido .= '<h4>Tipo de solicitud: ' . $peticion->tiposolicitud . '</h4>';
             $contenido .= '<p>Datos personales objeto de la solicitud: ' . $peticion->datossolicitud . '<p>';
@@ -503,7 +503,7 @@ class EmailController extends Controller
 
     public function pqrRadicadaPdfSdi($id)
     {
-        $pqr_radicada = SolicitudDocInfo::findOrFail($id);
+        $pqr_radicada = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
         //$imagen = asset('imagenes/sistema/icono_sistema.png');
         $fecha = $pqr_radicada->fecha_radicado;
@@ -524,10 +524,10 @@ class EmailController extends Controller
 
         $anexos_li = '';
         foreach ($pqr_radicada->peticiones as $peticion) {
-            if ($peticion->documentos->count() > 0) {
-                foreach ($peticion->documentos as $anexo) {
+            if ($peticion->anexos->count() > 0) {
+                foreach ($peticion->anexos as $anexo) {
                     $anexos_li .= '<li>';
-                    $anexos_li .= '<a href="' . asset('documentos/solicituddocinfo/' . $anexo->url) . '" target="_blank"';
+                    $anexos_li .= '<a href="' . asset('documentos/pqr/' . $anexo->url) . '" target="_blank"';
                     $anexos_li .= 'rel="noopener noreferrer">';
                     $anexos_li .= '<p>' . $anexo->titulo . ' </p>';
                     $anexos_li .= '</a>';
@@ -541,7 +541,7 @@ class EmailController extends Controller
         $tipo_pqr_id = $pqr_radicada->tipo_pqr_id;
         $contenido = '';
         $num = 0;
-        $pqr = SolicitudDocInfo::findOrFail($id);
+        $pqr = PQR::findOrFail($id);
         $contenido .= '<h4>Solicitud de documentos o información</h4>';
         foreach ($pqr->peticiones as $peticion) {
             $num++;
@@ -568,7 +568,7 @@ class EmailController extends Controller
 
     public function pqrRadicadaPdfCuo($id)
     {
-        $pqr_radicada = ConceptoUOpinion::findOrFail($id);
+        $pqr_radicada = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
         //$imagen = asset('imagenes/sistema/icono_sistema.png');
         $fecha = $pqr_radicada->fecha_radicado;
@@ -588,11 +588,11 @@ class EmailController extends Controller
         }
 
         $anexos_li = '';
-        foreach ($pqr_radicada->consultas as $peticion) {
-            if ($peticion->documentos->count() > 0) {
-                foreach ($peticion->documentos as $anexo) {
+        foreach ($pqr_radicada->peticiones as $peticion) {
+            if ($peticion->anexos->count() > 0) {
+                foreach ($peticion->anexos as $anexo) {
                     $anexos_li .= '<li>';
-                    $anexos_li .= '<a href="' . asset('documentos/conceptouopinion/' . $anexo->url) . '" target="_blank"';
+                    $anexos_li .= '<a href="' . asset('documentos/pqr/' . $anexo->url) . '" target="_blank"';
                     $anexos_li .= 'rel="noopener noreferrer">';
                     $anexos_li .= '<p>' . $anexo->titulo . ' </p>';
                     $anexos_li .= '</a>';
@@ -606,9 +606,9 @@ class EmailController extends Controller
         $tipo_pqr_id = $pqr_radicada->tipo_pqr_id;
         $contenido = '';
         $num = 0;
-        $pqr = ConceptoUOpinion::findOrFail($id);
+        $pqr = PQR::findOrFail($id);
         $contenido .= '<h4>Concepto u opinión</h4>';
-        foreach ($pqr->consultas as $peticion) {
+        foreach ($pqr->peticiones as $peticion) {
             $num++;
             $contenido .= '<h4>Concepto u opinión: ' . $peticion->consulta . '</h4>';
             foreach ($peticion->hechos as $hecho) {
@@ -634,7 +634,7 @@ class EmailController extends Controller
 
     public function pqrRadicadaPdfRi($id)
     {
-        $pqr_radicada = Denuncia::findOrFail($id);
+        $pqr_radicada = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
         //$imagen = asset('imagenes/sistema/icono_sistema.png');
         $fecha = $pqr_radicada->fecha_radicado;
@@ -654,11 +654,11 @@ class EmailController extends Controller
         }
 
         $anexos_li = '';
-        foreach ($pqr_radicada->irregularidades as $peticion) {
-            if ($peticion->documentos->count() > 0) {
-                foreach ($peticion->documentos as $anexo) {
+        foreach ($pqr_radicada->peticiones as $peticion) {
+            if ($peticion->anexos->count() > 0) {
+                foreach ($peticion->anexos as $anexo) {
                     $anexos_li .= '<li>';
-                    $anexos_li .= '<a href="' . asset('documentos/denuncias/' . $anexo->url) . '" target="_blank"';
+                    $anexos_li .= '<a href="' . asset('documentos/pqr/' . $anexo->url) . '" target="_blank"';
                     $anexos_li .= 'rel="noopener noreferrer">';
                     $anexos_li .= '<p>' . $anexo->titulo . ' </p>';
                     $anexos_li .= '</a>';
@@ -672,9 +672,9 @@ class EmailController extends Controller
         $tipo_pqr_id = $pqr_radicada->tipo_pqr_id;
         $contenido = '';
         $num = 0;
-        $pqr = Denuncia::findOrFail($id);
+        $pqr = PQR::findOrFail($id);
         $contenido .= '<h4>Reporte irregularidad</h4>';
-        foreach ($pqr->irregularidades as $peticion) {
+        foreach ($pqr->peticiones as $peticion) {
             $num++;
             $contenido .= '<h4>Tipo de irregularidad: ' . $peticion->irregularidad . '</h4>';
             foreach ($peticion->hechos as $hecho) {
@@ -701,7 +701,7 @@ class EmailController extends Controller
     public function felicitacionRadicadaPdf($id)
     {
 
-        $felicitacion = Felicitacion::findOrFail($id);
+        $felicitacion = PQR::findOrFail($id);
         //$imagen = asset('imagenes/sistema/icono_sistema.png');
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
         $fecha = $felicitacion->fecha_radicado;
@@ -726,7 +726,7 @@ class EmailController extends Controller
     }
     public function sugerenciaRadicadaPdf($id)
     {
-        $sugerencia = Sugerencia::findOrFail($id);
+        $sugerencia = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
         $fecha = $sugerencia->fecha_radicado;
         $num_radicado = $sugerencia->radicado;
