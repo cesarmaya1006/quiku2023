@@ -19,6 +19,10 @@ use App\Mail\AclaracionComplementacion;
 use App\Mail\SD_AclaracionComplementacion;
 use App\Models\SolicitudDatos\SolicitudDatos;
 use App\Http\Controllers\Fechas\FechasController;
+use App\Models\Empleados\Empleado;
+use App\Models\Empresas\Empresa;
+use App\Models\Personas\Persona;
+use App\Models\PQR\AsignacionParticular;
 use App\Models\SolicitudDatos\SolicitudDatosRecurso;
 use App\Models\SolicitudDatos\SolicitudDatosRespuesta;
 use App\Models\SolicitudDatos\SolicitudDatosSolicitud;
@@ -137,9 +141,9 @@ class SolicitudDatosController extends Controller
             }
             if ($peticion->recurso != 0) {
                 $recurso = $peticion->recurso;
-                if(!empty($peticion->recursos)){
-                    if(sizeOf($peticion->recursos)){
-                        $totalRecursos [] = $peticion->recursos;
+                if (!empty($peticion->recursos)) {
+                    if (sizeOf($peticion->recursos)) {
+                        $totalRecursos[] = $peticion->recursos;
                     }
                 }
             }
@@ -163,7 +167,7 @@ class SolicitudDatosController extends Controller
                 $estado = Estado::findOrFail(7);
                 $pqrEstado['estadospqr_id'] = $estado['id'];
                 SolicitudDatos::findOrFail($request['id_pqr'])->update($pqrEstado);
-            } elseif($recurso == 0) {
+            } elseif ($recurso == 0) {
                 $estado = Estado::findOrFail(6);
                 $pqrEstado['estadospqr_id'] = $estado['id'];
                 SolicitudDatos::findOrFail($request['id_pqr'])->update($pqrEstado);
@@ -236,8 +240,8 @@ class SolicitudDatosController extends Controller
         $recurso = 0;
         $totalRecursos = [];
         foreach ($peticiones as $key => $peticion) {
-            if($peticion->respuesta){
-                $totalPeticionesRes ++;
+            if ($peticion->respuesta) {
+                $totalPeticionesRes++;
             }
             $aclaraciones = SolicitudDatosAclaracion::all()->where('solicituddatossolicitudes_id', $peticion["id"]);
             $totalAclaracionesRes += sizeof($aclaraciones);
@@ -247,11 +251,11 @@ class SolicitudDatosController extends Controller
                 }
             }
             if ($peticion->recurso != 0) {
-                $totalRecursos [] = $peticion->recursos;
+                $totalRecursos[] = $peticion->recursos;
                 $recurso = $peticion->recurso;
             }
         }
-        if (sizeOf($respuestaAclaraciones) == $totalAclaracionesRes && $totalAclaracionesRes > 0 && $recurso == 0 && $totalPeticionesRes != sizeOf($peticiones->toArray()) ) {
+        if (sizeOf($respuestaAclaraciones) == $totalAclaracionesRes && $totalAclaracionesRes > 0 && $recurso == 0 && $totalPeticionesRes != sizeOf($peticiones->toArray())) {
             $estado = Estado::findOrFail(2);
             $pqrEstado['estadospqr_id'] = $estado['id'];
             SolicitudDatos::findOrFail($request['id_pqr'])->update($pqrEstado);
@@ -272,7 +276,7 @@ class SolicitudDatosController extends Controller
                     $nuevoLimite = $pqr->tipoPqr->tiempos + $request['plazo_prorroga'] + $request['plazoRecurso'];
                     $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
                     $actualizarPqr['tiempo_limite'] = $respuestaDias;
-                    if($pqr['estadospqr_id'] <= 1){
+                    if ($pqr['estadospqr_id'] <= 1) {
                         $estado = Estado::findOrFail(2);
                         $actualizarPqr['estadospqr_id'] = $estado['id'];
                     }
@@ -368,65 +372,62 @@ class SolicitudDatosController extends Controller
             $validacionCierre = 0;
             foreach ($peticiones as $peticion) {
                 if ($peticion->recurso != 0) {
-                    if($peticion->recursos){
-                        if($peticion->recursos->count() > 1){
-                            $recursosTotal = 0; 
-                            $recursosRespuestasTotal = 0; 
+                    if ($peticion->recursos) {
+                        if ($peticion->recursos->count() > 1) {
+                            $recursosTotal = 0;
+                            $recursosRespuestasTotal = 0;
                             foreach ($peticion->recursos as $recurso) {
-                                $recursosTotal ++; 
-                                if($recurso->respuestarecurso){
-                                    $recursosRespuestasTotal ++; 
+                                $recursosTotal++;
+                                if ($recurso->respuestarecurso) {
+                                    $recursosRespuestasTotal++;
                                 }
                             }
-                            if($recursosTotal == $recursosRespuestasTotal){
-                                $validacionCierre ++;
+                            if ($recursosTotal == $recursosRespuestasTotal) {
+                                $validacionCierre++;
                             }
-
-                        }elseif($peticion->recursos->count() == 1){
+                        } elseif ($peticion->recursos->count() == 1) {
                             foreach ($peticion->recursos as $recurso) {
-                                if($recurso->tipo_reposicion_id > 1 && $recurso->respuestarecurso ){
-                                    $validacionCierre ++;
+                                if ($recurso->tipo_reposicion_id > 1 && $recurso->respuestarecurso) {
+                                    $validacionCierre++;
                                 }
                             }
                         }
                     }
 
-                    foreach ($peticion->recursos as $recurso) {  
+                    foreach ($peticion->recursos as $recurso) {
                         $recursototal++;
                         if ($recurso->respuestarecurso) {
                             $recursoRespuestaTotal++;
                         }
                     }
-
                 }
             }
-            if($contadorValidacion == 1 ){
-                if($recursototal > 1 && $recursototal == $recursoRespuestaTotal) {
+            if ($contadorValidacion == 1) {
+                if ($recursototal > 1 && $recursototal == $recursoRespuestaTotal) {
                     $estado = Estado::findOrFail(10);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     SolicitudDatos::findOrFail($request['id'])->update($pqrEstado);
-                }
-                else{
-                    if($request['tipo_reposicion_id'] == 1){
+                } else {
+                    if ($request['tipo_reposicion_id'] == 1) {
                         $estado = Estado::findOrFail(9);
                         $pqrEstado['estadospqr_id'] = $estado['id'];
                         SolicitudDatos::findOrFail($request['id'])->update($pqrEstado);
-                    }elseif($recursototal == $recursoRespuestaTotal && $recursototal > 1){
+                    } elseif ($recursototal == $recursoRespuestaTotal && $recursototal > 1) {
                         $estado = Estado::findOrFail(10);
                         $pqrEstado['estadospqr_id'] = $estado['id'];
                         SolicitudDatos::findOrFail($request['id'])->update($pqrEstado);
-                    }else{
+                    } else {
                         $estado = Estado::findOrFail(8);
                         $pqrEstado['estadospqr_id'] = $estado['id'];
                         SolicitudDatos::findOrFail($request['id'])->update($pqrEstado);
                     }
                 }
-            }else {
-                if($recursototal == $recursoRespuestaTotal && $validacionCierre == $contadorValidacion){
+            } else {
+                if ($recursototal == $recursoRespuestaTotal && $validacionCierre == $contadorValidacion) {
                     $estado = Estado::findOrFail(10);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     SolicitudDatos::findOrFail($request['id'])->update($pqrEstado);
-                }elseif($recursototal == $recursoRespuestaTotal){
+                } elseif ($recursototal == $recursoRespuestaTotal) {
                     $estado = Estado::findOrFail(9);
                     $pqrEstado['estadospqr_id'] = $estado['id'];
                     SolicitudDatos::findOrFail($request['id'])->update($pqrEstado);
@@ -543,5 +544,117 @@ class SolicitudDatosController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function asigacion_automatica($id)
+    {
+        $pqr = SolicitudDatos::findOrFail($id);
+        $asignaciones = AsignacionParticular::where('tipo', 'Permanente')->get();
+
+        foreach ($asignaciones as $asignacion) {
+            $coincidencia = 0;
+            $no_null = 0;
+            if ($asignacion->tipo_pqr_id != null) {
+                $no_null++;
+                if ($asignacion->tipo_pqr_id == $pqr->tipo_pqr_id) {
+                    $coincidencia++;
+                }
+            }
+            if ($asignacion->palabra1 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->solicitudes as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->datossolicitud, $asignacion->palabra1);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
+                        }
+                    }
+                }
+            }
+            if ($asignacion->palabra2 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->solicitudes as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->datossolicitud, $asignacion->palabra2);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
+                        }
+                    }
+                }
+            }
+            if ($asignacion->palabra3 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->solicitudes as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->datossolicitud, $asignacion->palabra3);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
+                        }
+                    }
+                }
+            }
+            if ($asignacion->palabra4 != null) {
+                $no_null++;
+                $encontrada = 0;
+                foreach ($pqr->solicitudes as $peticion) {
+                    if ($encontrada === 0) {
+                        $pos = strpos($peticion->datossolicitud, $asignacion->palabra4);
+                        if ($pos !== false) {
+                            $encontrada++;
+                            $coincidencia++;
+                        }
+                    }
+                }
+            }
+            if ($no_null > 0 && $coincidencia > 0) {
+                if (intval($coincidencia) === intval($no_null)) {
+                    if ($pqr->sede_id != null) {
+                        if ($pqr->sede_id == $asignacion->sede_id) {
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $asignacion->sede_id)->get();
+                        } else {
+                            if ($pqr->persona_id != null) {
+                                $persona = Persona::findOrfail($pqr->persona_id);
+                                foreach ($persona->municipio->departamento->sedes as $sede) {
+                                    $sede_id = $sede->id;
+                                }
+                                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                            } else {
+                                $empresa = Empresa::findOrfail($pqr->empresa_id);
+                                foreach ($empresa->municipio->departamento->sedes as $sede) {
+                                    $sede_id = $sede->id;
+                                }
+                                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                            }
+                        }
+                    } else {
+                        if ($pqr->persona_id != null) {
+                            $persona = Persona::findOrfail($pqr->persona_id);
+                            foreach ($persona->municipio->departamento->sedes as $sede) {
+                                $sede_id = $sede->id;
+                            }
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                        } else {
+                            $empresa = Empresa::findOrfail($pqr->empresa_id);
+                            foreach ($empresa->municipio->departamento->sedes as $sede) {
+                                $sede_id = $sede->id;
+                            }
+                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
+                        }
+                    }
+                    $max_pqr = 0;
+                    foreach ($empleados as $empleado) {
+                        $empleados_sel_max[] = ['cant' => $empleado->pqrs->count(), 'id' => $empleado->id];
+                    }
+                    $empleado_final = min($empleados_sel_max);
+                    $pqr_act['empleado_id'] = $empleado_final['id'];
+                    $pqr->update($pqr_act);
+                }
+            }
+        }
     }
 }
