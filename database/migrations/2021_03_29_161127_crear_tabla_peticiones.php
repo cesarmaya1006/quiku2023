@@ -19,7 +19,7 @@ class CrearTablaPeticiones extends Migration
             $table->foreign('pqr_id', 'fk_pqr_peticiones')->references('id')->on('pqr')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('motivo_sub_id')->nullable();
             $table->foreign('motivo_sub_id', 'fk_motivo_peticiones')->references('id')->on('motivo_sub')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('empleado_id')->default('5')->nullable();
+            $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_peticiones')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('otro')->nullable();
             // Solicitud de info-datos 

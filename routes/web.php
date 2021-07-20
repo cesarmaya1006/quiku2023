@@ -1,36 +1,37 @@
 <?php
 
-use App\Http\Controllers\Extranet\ExtranetPageController;
-use App\Http\Controllers\Intranet\Admin\CategoriaController;
-use App\Http\Controllers\Intranet\Admin\IntranetPageCotroller;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Models\SolicitudDatos\SolicitudDatos;
+use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\MenuController;
+use App\Http\Controllers\Intranet\Email\EmailController;
+use App\Http\Controllers\Extranet\ExtranetPageController;
 use App\Http\Controllers\Intranet\Admin\MenuRolController;
 use App\Http\Controllers\Intranet\Admin\PermisoController;
-use App\Http\Controllers\Intranet\Admin\PermisoRolController;
-use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\UsuarioController;
-use App\Http\Controllers\Intranet\Email\EmailController;
 use App\Http\Controllers\Intranet\Empresas\AreaController;
-use App\Http\Controllers\Intranet\Empresas\CargoController;
-use App\Http\Controllers\Intranet\Empresas\FuncionarioFController;
-use App\Http\Controllers\Intranet\Empresas\NivelController;
 use App\Http\Controllers\Intranet\Empresas\SedeController;
-use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
-use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
-use App\Http\Controllers\Intranet\Funcionarios\ConceptoUOpinionController;
-use App\Http\Controllers\Intranet\Funcionarios\DenunciaController;
-use App\Http\Controllers\Intranet\Funcionarios\FelicitacionController;
-use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
+use App\Http\Controllers\Intranet\Empresas\CargoController;
+use App\Http\Controllers\Intranet\Empresas\NivelController;
+use App\Http\Controllers\Intranet\Admin\CategoriaController;
+use App\Http\Controllers\Intranet\Admin\PermisoRolController;
+use App\Http\Controllers\Intranet\Funcionarios\PQRController;
+use App\Http\Controllers\Intranet\Usuarios\ClienteController;
+use App\Http\Controllers\Intranet\Admin\IntranetPageCotroller;
 use App\Http\Controllers\Intranet\Funcionarios\PQR_P_Controller;
 use App\Http\Controllers\Intranet\Funcionarios\PQR_Q_Controller;
 use App\Http\Controllers\Intranet\Funcionarios\PQR_R_Controller;
-use App\Http\Controllers\Intranet\Funcionarios\SolicitudDatosController;
-use App\Http\Controllers\Intranet\Funcionarios\SolicitudDocInfoController;
+use App\Http\Controllers\Intranet\Empresas\FuncionarioFController;
+use App\Http\Controllers\Intranet\Funcionarios\DenunciaController;
 use App\Http\Controllers\Intranet\Funcionarios\SugerenciaController;
-use App\Http\Controllers\Intranet\Usuarios\ClienteController;
-use App\Models\SolicitudDatos\SolicitudDatos;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
+use App\Http\Controllers\Intranet\Funcionarios\FelicitacionController;
+use App\Http\Controllers\Intranet\Funcionarios\SolicitudDatosController;
+use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
+use App\Http\Controllers\Intranet\Funcionarios\ConceptoUOpinionController;
+use App\Http\Controllers\Intranet\Funcionarios\SolicitudDocInfoController;
+use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
 
 /*
 |--------------------------------------------------------------------------
@@ -266,8 +267,12 @@ Route::group(['middleware' => 'auth'], function () {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('listado/gestionarSugerencia/{id}', [SugerenciaController::class, 'gestionar'])->name('funcionario-gestionarSugerencia');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 
-
+        Route::post('asignacion', [PQRController::class, 'asignacion_guardar'])->name('asignacion_guardar');
+        Route::post('historial', [PQRController::class, 'historial_guardar'])->name('historial_guardar');
+        Route::post('asignacion_tarea', [PQRController::class, 'asignacion_tarea_guardar'])->name('asignacion_tarea_guardar');
+        Route::get('cargar_tareas', [PQRController::class, 'cargar_tareas'])->name('cargar_tareas');
+        Route::get('cargar_cargos', [PQRController::class, 'cargar_cargos'])->name('cargar_cargos');
+        Route::get('cargar_funcionarios', [PQRController::class, 'cargar_funcionarios'])->name('cargar_funcionarios');
     });
     //==================================================================================================================
 

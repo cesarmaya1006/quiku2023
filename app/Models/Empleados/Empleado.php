@@ -6,6 +6,7 @@ use App\Models\Admin\Cargo;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Empresas\Empresa;
 use App\Models\Empresas\Sede;
+use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\Peticion;
 use App\Models\PQR\PQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,6 +42,11 @@ class Empleado extends Model
     public function peticiones()
     {
         return $this->hasMany(Peticion::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function historial()
+    {
+        return $this->hasMany(HistorialAsignacion::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function usuario()

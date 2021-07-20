@@ -44,6 +44,7 @@ class CrearTablaPqr extends Migration
             $table->date('fecha_respuesta')->nullable();
             $table->bigInteger('tiempo_limite')->default(0);
             $table->unsignedBigInteger('estadospqr_id')->nullable();
+            $table->boolean('estado_asignacion')->default(0)->nullable();
             $table->foreign('estadospqr_id', 'fk_estadospqr_pqr')->references('id')->on('estadospqr')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
             $table->charset = 'utf8';

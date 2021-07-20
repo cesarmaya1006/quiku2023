@@ -78,4 +78,14 @@ class PQR extends Model
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function historialasignacion()
+    {
+        return $this->hasMany(HistorialAsignacion::class, 'pqr_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function asignaciontareas()
+    {
+        return $this->hasMany(AsignacionTarea::class, 'pqr_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }

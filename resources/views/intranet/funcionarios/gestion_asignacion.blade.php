@@ -354,80 +354,111 @@
                         @endforeach
                     </div> 
                     <!-- /.card-body -->
+                    @if (sizeOf($pqr->historialasignacion))
+                        <div class="rounded border m-3 p-2">
+                            <div class="row d-flex px-12 p-3">
+                                <div class="col-12 table-responsive">
+                                    <table class="table table-light" style="font-size: 0.8em;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Empleado</th>
+                                                <th scope="col">Historial</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($pqr->historialasignacion as $historial)
+                                                <tr>
+                                                    <td>{{ $historial->created_at }}</td>
+                                                    <td class="text-justify">{{ $historial->empleado->id }}</td>
+                                                    <td class="text-justify">{{ $historial->historial }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row d-flex px-12 p-3"> 
+                                    <div class="container-mensaje-historial form-group col-12">
+                                        <label for="" class="">Agregar Historial</label>
+                                        <textarea class="form-control" rows="3" placeholder="" name="mensaje-historial"
+                                            id="mensaje-historial" required></textarea>
+                                    </div>
+                                    <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
+                                        <button href="" class="btn btn-primary mx-2 px-4" id="guardarHistorial" data_url="{{ route('historial_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
-                    <div class="rounded border m-3 p-2">
-                        <form action="{{ route('usuario-gestionar_pqr_p_guardar') }}" method="POST" autocomplete="off"
-                                enctype="multipart/form-data" id="">
-                            @csrf
-                            @method('post')
+                    @if ($pqr->estado_asignacion == 0)
+                        <div class="rounded border m-3 p-2">
                             <div class="row d-flex px-12 p-3"> 
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">¿Acepta la asignación?</label>
-                                    <select name="" id="" class="custom-select rounded-0" required="">
+                                    <select name="confirmacion-asignacion" id="confirmacion-asignacion" class="custom-select rounded-0" required="">
                                         <option value="1">Aceptar</option>
-                                        <option value="2">Rechazar</option>
+                                        <option value="0">Rechazar</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-10">
+                                <div class="container-mensaje-asigacion form-group col-10 d-none">
                                     <label for="" class="">Mensaje</label>
-                                    <textarea class="form-control" rows="3" placeholder="" name=""
-                                        id="" required></textarea>
+                                    <textarea class="form-control" rows="3" placeholder="" name="mensaje-asignacion"
+                                        id="mensaje-asignacion" required></textarea>
                                 </div>
                                 <div class="col-12 col-md-3 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4">Guardar</button>
+                                    <button href="" class="btn btn-primary mx-2 px-4" id="guardarAsignacion" data_url="{{ route('asignacion_guardar') }}"
+                                    data_token="{{ csrf_token() }}">Guardar</button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="rounded border m-3 p-2">
-                        <form action="{{ route('usuario-gestionar_pqr_p_guardar') }}" method="POST" autocomplete="off"
-                                enctype="multipart/form-data" id="">
-                            @csrf
-                            @method('post')
+                        </div>
+                    @endif
+                    @if ($pqr->estado_asignacion)
+                        <div class="rounded border m-3 p-2">
+                            <div class="col-12 table-responsive d-flex justify-content-center">
+                                <table class="table table-light col-12" style="font-size: 0.8em;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Tarea</th>
+                                            <th scope="col">Funcionario</th>
+                                            <th scope="col">Fecha de asignación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pqr->asignaciontareas as $asignacion)
+                                            <tr>
+                                                <td>{{$asignacion->tarea->tarea}}</td>
+                                                <td>{{$asignacion->empleado->id}}</td>
+                                                <td>{{$asignacion->created_at}}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
                             <div class="row d-flex px-4"> 
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Tarea</label>
-                                    <select name="" id="" class="custom-select rounded-0" required="">
-                                        <option value="1">SUPERVIZA</option>
-                                        <option value="2">PROYECTA</option>
-                                        <option value="3">REVISA</option>
-                                        <option value="4">APRUEBA</option>
-                                        <option value="5">RADICA</option>
+                                    <select name="tarea" id="tarea" class="custom-select rounded-0" required="" data_url="{{ route('cargar_tareas') }}">                                    </select>
+                                </div>
+                                <div class="col-12 col-md-5 form-group">
+                                    <label for="">Cargo</label>
+                                    <select name="cargo" id="cargo" class="custom-select rounded-0" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Funcionario</label>
-                                    <select name="" id="" class="custom-select rounded-0" required="">
-                                        <option value="1">Funcionario 1</option>
-                                        <option value="2">Funcionario 2</option>
-                                        <option value="3">Funcionario 3</option>
-                                        <option value="4">Funcionario 4</option>
+                                    <select name="funcionario" id="funcionario" class="custom-select rounded-0" required="">
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-2 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4">Asignar</button>
+                                    <button href="" class="btn btn-primary mx-2 px-4" id="asignacion_tarea_guardar" data_url="{{ route('asignacion_tarea_guardar') }}"
+                                    data_token="{{ csrf_token() }}">Asignar</button>
                                 </div>
                             </div>
-                        </form>
-                        <div class="col-12 table-responsive d-flex justify-content-center">
-                            <table class="table table-light col-12" style="font-size: 0.8em;">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Tarea</th>
-                                        <th scope="col">Funcionario</th>
-                                        <th scope="col">Fecha de asignación</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>---</td>
-                                        <td>---</td>
-                                        <td>---</td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
-                    </div>
+                    @endif
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                     </div>
@@ -439,6 +470,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-    {{-- <script src="{{ asset('js/intranet/generar_pqr/gestion_usuario.js') }}"></script> --}}
+    <script src="{{ asset('js/intranet/generar_pqr/gestion_asignacion.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->
