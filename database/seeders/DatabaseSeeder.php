@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_Servicios::class);
         $this->call(Tabla_DiasFestivos::class);
         $this->call(Tabla_Tareas::class);
+        $this->call(Tabla_AsignancionEstados::class);
     }
 
     protected function truncateTablas(array $tablas)

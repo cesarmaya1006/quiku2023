@@ -10,6 +10,7 @@ use App\Models\Admin\Municipio;
 use App\Models\Empresas\Empresa;
 use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;
+use App\Models\PQR\HisotrialTarea;
 use App\Models\Servicios\Servicio;
 use App\Models\Productos\Referencia;
 use Illuminate\Database\Eloquent\Model;
@@ -81,6 +82,11 @@ class PQR extends Model
     public function historialasignacion()
     {
         return $this->hasMany(HistorialAsignacion::class, 'pqr_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function historialtareas()
+    {
+        return $this->hasMany(HisotrialTarea::class, 'pqr_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function asignaciontareas()

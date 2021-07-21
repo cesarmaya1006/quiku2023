@@ -49,6 +49,11 @@ class Empleado extends Model
         return $this->hasMany(HistorialAsignacion::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function historialTareas()
+    {
+        return $this->hasMany(HistorialTarea::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     public function usuario()
     {
         return $this->hasOne(Usuario::class, 'id');

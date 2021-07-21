@@ -489,6 +489,11 @@ class PQRController extends Controller
                     $asignacionTarea['pqr_id'] = $request['idPqr'];
                     $asignacionTarea['empleado_id'] = session('id_usuario');
                     $asignacionTarea['tareas_id'] = $value['id'];
+                    if($asignacionTarea['tareas_id'] == 2){
+                        $asignacionTarea['estado_id'] = 2;
+                    }else{
+                        $asignacionTarea['estado_id'] = 1;
+                    }
                     AsignacionTarea::create($asignacionTarea);
                 }
             }

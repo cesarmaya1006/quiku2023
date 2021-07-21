@@ -356,6 +356,7 @@
                     <!-- /.card-body -->
                     @if (sizeOf($pqr->historialasignacion))
                         <div class="rounded border m-3 p-2">
+                            <h5 class="">Historial asignación</h5>
                             <div class="row d-flex px-12 p-3">
                                 <div class="col-12 table-responsive">
                                     <table class="table table-light" style="font-size: 0.8em;">
@@ -377,16 +378,17 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="row d-flex px-12 p-3"> 
-                                    <div class="container-mensaje-historial form-group col-12">
-                                        <label for="" class="">Agregar Historial</label>
-                                        <textarea class="form-control" rows="3" placeholder="" name="mensaje-historial"
-                                            id="mensaje-historial" required></textarea>
-                                    </div>
-                                    <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                        <button href="" class="btn btn-primary mx-2 px-4" id="guardarHistorial" data_url="{{ route('historial_guardar') }}"
-                                        data_token="{{ csrf_token() }}">Guardar</button>
-                                    </div>
+                            </div>
+                            <hr>
+                            <div class="row d-flex px-12 p-3"> 
+                                <div class="container-mensaje-historial form-group col-12">
+                                    <label for="" class="">Agregar Historial</label>
+                                    <textarea class="form-control" rows="3" placeholder="" name="mensaje-historial"
+                                        id="mensaje-historial" required></textarea>
+                                </div>
+                                <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
+                                    <button href="" class="btn btn-primary mx-2 px-4" id="guardarHistorial" data_url="{{ route('historial_guardar') }}"
+                                    data_token="{{ csrf_token() }}">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -394,6 +396,7 @@
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                     @if ($pqr->estado_asignacion == 0)
                         <div class="rounded border m-3 p-2">
+                            <h5 class="">Gestion asignación</h5>
                             <div class="row d-flex px-12 p-3"> 
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">¿Acepta la asignación?</label>
@@ -416,6 +419,7 @@
                     @endif
                     @if ($pqr->estado_asignacion)
                         <div class="rounded border m-3 p-2">
+                            <h5 class="">Gestión tareas</h5>
                             <div class="col-12 table-responsive d-flex justify-content-center">
                                 <table class="table table-light col-12" style="font-size: 0.8em;">
                                     <thead>
@@ -423,6 +427,7 @@
                                             <th scope="col">Tarea</th>
                                             <th scope="col">Funcionario</th>
                                             <th scope="col">Fecha de asignación</th>
+                                            <th scope="col">Estado Tarea</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -431,12 +436,14 @@
                                                 <td>{{$asignacion->tarea->tarea}}</td>
                                                 <td>{{$asignacion->empleado->id}}</td>
                                                 <td>{{$asignacion->created_at}}</td>
+                                                <td>{{$asignacion->estadotarea->estado}}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                             <hr>
+                            <h5 class="">Asignación tareas</h5>
                             <div class="row d-flex px-4"> 
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Tarea</label>
@@ -457,6 +464,32 @@
                                     data_token="{{ csrf_token() }}">Asignar</button>
                                 </div>
                             </div>
+                            <hr>
+                            @if (sizeOf($pqr->historialtareas))
+                            <h5 class="">Historial tareas</h5>
+                                <div class="col-12 table-responsive">
+                                    <table class="table table-light" style="font-size: 0.8em;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Fecha</th>
+                                                <th scope="col">Empleado</th>
+                                                <th scope="col">Tarea</th>
+                                                <th scope="col">Historial</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($pqr->historialtareas as $historial)
+                                                <tr>
+                                                    <td>{{ $historial->created_at }}</td>
+                                                    <td class="text-justify">{{ $historial->empleado->id }}</td>
+                                                    <td class="text-justify">{{ $historial->tarea->tarea }}</td>
+                                                    <td class="text-justify">{{ $historial->historial }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
                         </div>
                     @endif
                     <div class="card-footer d-flex justify-content-end">

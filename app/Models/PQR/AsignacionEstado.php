@@ -2,27 +2,20 @@
 
 namespace App\Models\PQR;
 
-use App\Models\PQR\HisotrialTarea;
 use App\Models\PQR\AsignacionTarea;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tarea extends Model
+class AsignacionEstado extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'tareas';
+    protected $table = 'asignancion_estados';
     protected $guarded = [];
-    
     //----------------------------------------------------------------------------------
-    public function tareas()
+    public function estados()
     {
-        return $this->hasMany(AsignacionTarea::class, 'tareas_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function tareashistorial()
-    {
-        return $this->hasMany(HisotrialTarea::class, 'tareas_id', 'id');
+       return $this->hasMany(AsignacionTarea::class, 'estado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }
