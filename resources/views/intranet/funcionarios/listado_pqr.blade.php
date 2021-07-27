@@ -119,7 +119,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pqr_S as $pqr)
+                                @foreach ($pqr as $pqr)
                                         @php
                                             $diasRecurso = 0;
                                         @endphp

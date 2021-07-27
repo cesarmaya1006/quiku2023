@@ -3,9 +3,10 @@
 namespace App\Models\PQR;
 
 use App\Models\Empleados\Empleado;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\PQR\HistorialPeticion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Peticion extends Model
 {
@@ -53,4 +54,10 @@ class Peticion extends Model
         return $this->hasMany(Recurso::class, 'peticion_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function historialpeticiones()
+    {
+        return $this->hasMany(HistorialPeticion::class, 'peticion_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }
+

@@ -30,63 +30,23 @@ class IntranetPageCotroller extends Controller
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if (session('rol_id') == 6) {
             if ($usuario->persona->count() > 0) {
-                $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
-                $conceptos = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();
-                $solicitudes_datos = SolicitudDatos::where('persona_id', session('id_usuario'))->get();
-                $denuncias = Denuncia::where('persona_id', session('id_usuario'))->get();
-                $felicitaciones = Felicitacion::where('persona_id', session('id_usuario'))->get();
-                $solicitudes_doc = SolicitudDocInfo::where('persona_id', session('id_usuario'))->get();
-                $sugerencias = Sugerencia::where('persona_id', session('id_usuario'))->get();
+                $pqrs = PQR::where('persona_id', session('id_usuario'))->get();
             } else {
                 foreach ($usuario->representante->empresas as $empresa) {
-                    $pqr_S = PQR::where('empresa_id', session('id_usuario'))->get();
-                    $conceptos = ConceptoUOpinion::where('empresa_id', session('id_usuario'))->get();
-                    $solicitudes_datos = SolicitudDatos::where('empresa_id', session('id_usuario'))->get();
-                    $denuncias = Denuncia::where('empresa_id', session('id_usuario'))->get();
-                    $felicitaciones = Felicitacion::where('empresa_id', session('id_usuario'))->get();
-                    $solicitudes_doc = SolicitudDocInfo::where('empresa_id', session('id_usuario'))->get();
-                    $sugerencias = Sugerencia::where('empresa_id', session('id_usuario'))->get();
+                    $pqrs = PQR::where('empresa_id', session('id_usuario'))->get();
                 }
             }
         } elseif (session('rol_id') == 5) {
-            $pqr_S = PQR::where('empleado_id',$usuario->id)->get();
-            $conceptos = ConceptoUOpinion::where('empleado_id',$usuario->id)->get();
-            $solicitudes_datos = SolicitudDatos::where('empleado_id',$usuario->id)->get();
-            $denuncias = Denuncia::where('empleado_id',$usuario->id)->get();
-            $felicitaciones = Felicitacion::where('empleado_id',$usuario->id)->get();
-            $solicitudes_doc = SolicitudDocInfo::where('empleado_id',$usuario->id)->get();
-            $sugerencias = Sugerencia::where('empleado_id',$usuario->id)->get();
-            // $pqr_S = PQR::all();
-            // $conceptos = ConceptoUOpinion::all();
-            // $solicitudes_datos = SolicitudDatos::all();
-            // $denuncias = Denuncia::all();
-            // $felicitaciones = Felicitacion::all();
-            // $solicitudes_doc = SolicitudDocInfo::all();
-            // $sugerencias = Sugerencia::all();
-            
+            $pqrs = PQR::where('empleado_id',$usuario->id)->get();
         } elseif (session('rol_id') == 4) {
-            $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
-            $consultas = ConceptoUOpinion::where('empleado_id', session('id_usuario'))->get();
-            $sugerencias = Sugerencia::where('empleado_id', session('id_usuario'))->get();
+            $pqrs = PQR::where('empleado_id', session('id_usuario'))->get();
         } elseif (session('rol_id') == 1) {
-            $pqr_S = PQR::get();
-            $conceptos = ConceptoUOpinion::get();
-            $solicitudes_datos = SolicitudDatos::where('persona_id', session('id_usuario'))->get();
-            $denuncias = Denuncia::get();
-            $felicitaciones = Felicitacion::get();
-            $solicitudes_doc = SolicitudDocInfo::get();
-            $sugerencias = Sugerencia::get();
+            $pqrs = PQR::get();
         } elseif (session('rol_id') == 3) {
-            $pqr_S = PQR::get();
-            $conceptos = ConceptoUOpinion::get();
-            $solicitudes_datos = SolicitudDatos::where('persona_id', session('id_usuario'))->get();
-            $denuncias = Denuncia::get();
-            $felicitaciones = Felicitacion::get();
-            $solicitudes_doc = SolicitudDocInfo::get();
-            $sugerencias = Sugerencia::get();
+            $pqrs = PQR::get();
         }
 
-        return view('intranet.index.index', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario', 'tipoPQR'));
+        return view('intranet.index.index', compact('pqrs', 'usuario', 'tipoPQR'));
     }
 
     public function restablecer_password(ValidarPassword $request)

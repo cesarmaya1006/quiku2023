@@ -69,16 +69,10 @@ class ClienteController extends Controller
     {
 
         $usuario = Usuario::findOrFail(session('id_usuario'));
-        $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
-        $conceptos = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();
-        $solicitudes_datos = SolicitudDatos::where('persona_id', session('id_usuario'))->get();
-        $denuncias = Denuncia::where('persona_id', session('id_usuario'))->get();
-        $felicitaciones = Felicitacion::where('persona_id', session('id_usuario'))->get();
-        $solicitudes_doc = SolicitudDocInfo::where('persona_id', session('id_usuario'))->get();
-        $sugerencias = Sugerencia::where('persona_id', session('id_usuario'))->get();
+        $pqrs = PQR::where('persona_id', session('id_usuario'))->get();
 
-        if ($pqr_S->count() > 0) {
-            foreach ($pqr_S as $pqr) {
+        if ($pqrs->count() > 0) {
+            foreach ($pqrs as $pqr) {
                 // if ($pqr->peticiones->count() == 0) {
                 //     $pqr_update['estado'] = 'Sin radicar';
                 //     PQR::findOrFail($pqr->id)->update($pqr_update);
@@ -89,7 +83,7 @@ class ClienteController extends Controller
             }
         }
         $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
-        return view('intranet.usuarios.listado', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario'));
+        return view('intranet.usuarios.listado', compact('pqrs', 'usuario'));
     }
 
     /**
