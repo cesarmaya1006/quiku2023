@@ -109,6 +109,14 @@
                                 <div class="col-12 col-md-6">
                                     Prioridad: <strong>{{ $pqr->prioridad->prioridad }}</strong>
                                 </div>
+                                @if(!sizeOf($pqr->peticiones->where('recurso_dias', '0')))
+                                    <div class="col-12 col-md-6">
+                                        Procede recurso: <strong>Si</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        Plazo días recurso: <strong>{{ $pqr->peticiones->max('recurso_dias') }}</strong>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <hr style="border-top: solid 4px black">
@@ -147,7 +155,7 @@
                             </div>
                             <hr>
 
-                            @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0 || $pqr->estadospqr_id > 6 && $pqr->prorroga == 1)
+                            @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
                                 <div class="row px-4 form-respuestaProrroga">
                                     <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
                                     <div class="col-12 col-md-6 ">

@@ -195,12 +195,7 @@ window.addEventListener('DOMContentLoaded', function(){
 // Cargar estado prorroga
     if(document.querySelector('.respuestaProrroga')){
         let verificacionProrroga = document.querySelector('.respuestaProrroga')
-        if(verificacionProrroga.value == 1){
-            verificacionProrroga.parentElement.querySelector('.prorroga_si').setAttribute('checked','')
-            verificacionProrroga.parentElement.querySelector('.prorroga_no').setAttribute('disabled','')
-            verificacionProrroga.parentElement.querySelector('.plazo_prorroga').parentElement.remove()
-            verificacionProrroga.parentElement.querySelector('.prorroga_pdf').setAttribute('disabled','')
-        }else {
+        if(verificacionProrroga.value == 0){
             verificacionProrroga.parentElement.querySelector('.prorroga_no').setAttribute('checked','')
             verificacionProrroga.parentElement.querySelector('.contentProrroga').classList.add('d-none')
         }
