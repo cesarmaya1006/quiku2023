@@ -2,16 +2,18 @@
 
 namespace App\Models\Empleados;
 
+use App\Models\PQR\PQR;
 use App\Models\Admin\Cargo;
+use App\Models\PQR\Peticion;
+use App\Models\Empresas\Sede;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Empresas\Empresa;
-use App\Models\Empresas\Sede;
+use App\Models\PQR\HistorialTarea;
+use App\Models\PQR\HistorialPeticion;
 use App\Models\PQR\HistorialAsignacion;
-use App\Models\PQR\Peticion;
-use App\Models\PQR\PQR;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Empleado extends Model
 {
@@ -54,6 +56,11 @@ class Empleado extends Model
         return $this->hasMany(HistorialTarea::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function historialpeticiones()
+    {
+        return $this->hasMany(HistorialPeticion::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     public function usuario()
     {
         return $this->hasOne(Usuario::class, 'id');
@@ -73,4 +80,5 @@ class Empleado extends Model
     {
         return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
+    
 }

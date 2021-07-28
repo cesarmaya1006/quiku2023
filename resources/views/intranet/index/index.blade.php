@@ -1,60 +1,60 @@
 <?php
-$prq_p_num = $pqr_S->where('tipo_pqr_id', 1)->count();
-$prq_p_num_rad_sin = $pqr_S
+$prq_p_num = $pqrs->where('tipo_pqr_id', 1)->count();
+$prq_p_num_rad_sin = $pqrs
 ->where('tipo_pqr_id', 1)
 ->where('estado', 'Radicada, sin iniciar tramite')
 ->count();
-$prq_p_num_rad_ges = $pqr_S
+$prq_p_num_rad_ges = $pqrs
 ->where('tipo_pqr_id', 1)
 ->where('estado', 'En tramite')
 ->count();
-$prq_p_num_rad_ven = $pqr_S
+$prq_p_num_rad_ven = $pqrs
 ->where('tipo_pqr_id', 1)
 ->where('estado', 'Vencida')
 ->count();
 
-$prq_q_num = $pqr_S->where('tipo_pqr_id', 2)->count();
-$prq_q_num_rad_sin = $pqr_S
+$prq_q_num = $pqrs->where('tipo_pqr_id', 2)->count();
+$prq_q_num_rad_sin = $pqrs
 ->where('tipo_pqr_id', 2)
 ->where('estado', 'Radicada, sin iniciar tramite')
 ->count();
-$prq_q_num_rad_ges = $pqr_S
+$prq_q_num_rad_ges = $pqrs
 ->where('tipo_pqr_id', 2)
 ->where('estado', 'En tramite')
 ->count();
-$prq_q_num_rad_ven = $pqr_S
+$prq_q_num_rad_ven = $pqrs
 ->where('tipo_pqr_id', 2)
 ->where('estado', 'Vencida')
 ->count();
 
-$prq_r_num = $pqr_S->where('tipo_pqr_id', 3)->count();
-$prq_r_num_rad_sin = $pqr_S
+$prq_r_num = $pqrs->where('tipo_pqr_id', 3)->count();
+$prq_r_num_rad_sin = $pqrs
 ->where('tipo_pqr_id', 3)
 ->where('estado', 'Radicada, sin iniciar tramite')
 ->count();
-$prq_r_num_rad_ges = $pqr_S
+$prq_r_num_rad_ges = $pqrs
 ->where('tipo_pqr_id', 3)
 ->where('estado', 'En tramite')
 ->count();
-$prq_r_num_rad_ven = $pqr_S
+$prq_r_num_rad_ven = $pqrs
 ->where('tipo_pqr_id', 3)
 ->where('estado', 'Vencida')
 ->count();
 
-$conceptos_num = $conceptos->count();
-$concepto_rad_sin = $conceptos->where('estado', 'Radicada, sin iniciar tramite')->count();
-$concepto_rad_ges = $conceptos->where('estado', 'En tramite')->count();
-$concepto_rad_ven = $conceptos->where('estado', 'Vencida')->count();
+$conceptos_num = $pqrs->count();
+$concepto_rad_sin = $pqrs->where('estado', 'Radicada, sin iniciar tramite')->count();
+$concepto_rad_ges = $pqrs->where('estado', 'En tramite')->count();
+$concepto_rad_ven = $pqrs->where('estado', 'Vencida')->count();
 
-$solicitudes_datos_num = $solicitudes_datos->count();
-$solicitudes_datos_sin = $solicitudes_datos->where('estado', 'Radicada, sin iniciar tramite')->count();
-$solicitudes_datos_ges = $solicitudes_datos->where('estado', 'En tramite')->count();
-$solicitudes_datos_ven = $solicitudes_datos->where('estado', 'Vencida')->count();
+$solicitudes_datos_num = $pqrs->count();
+$solicitudes_datos_sin = $pqrs->where('estado', 'Radicada, sin iniciar tramite')->count();
+$solicitudes_datos_ges = $pqrs->where('estado', 'En tramite')->count();
+$solicitudes_datos_ven = $pqrs->where('estado', 'Vencida')->count();
 
-$denuncias_num = $denuncias->count();
-$felicitacionesnum = $felicitaciones->count();
-$solicitudes_docnum = $solicitudes_doc->count();
-$sugerencias_num = $sugerencias->count();
+$denuncias_num = $pqrs->count();
+$felicitacionesnum = $pqrs->count();
+$solicitudes_docnum = $pqrs->count();
+$sugerencias_num = $pqrs->count();
 ?>
 @extends("theme.back.plantilla")
 <!-- ************************************************************* -->
@@ -101,7 +101,7 @@ $sugerencias_num = $sugerencias->count();
 <!-- script hoja -->
 @section('scripts_pagina')
     <script src="{{ asset('lte/plugins/chart.js/Chart.min.js') }}"></script>
-    @if ($prq_p_num > 0)
+    {{-- @if ($prq_p_num > 0)
         <script>
             $(function() {
 
@@ -257,7 +257,6 @@ $sugerencias_num = $sugerencias->count();
             })
         </script>
     @endif
-
     @if ($solicitudes_datos_num > 0)
         <script>
             $(function() {
@@ -450,6 +449,5 @@ $sugerencias_num = $sugerencias->count();
 
             })
         </script>
-    @endif
+    @endif --}}
 @endsection
-<!-- ************************************************************* -->

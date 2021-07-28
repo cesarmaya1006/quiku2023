@@ -85,6 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
         Route::post('restablecer-password', [IntranetPageCotroller::class, 'restablecer_password'])->name('admin-restablecer_password');
         Route::get('index/gestionarAsignacion/{id}', [FuncionarioController::class, 'gestionar_asignacion'])->name('funcionario-gestionar-asignacion');
+        Route::get('index/gestionarAsignacionPeticion/{id}', [FuncionarioController::class, 'gestionar_asignacion_peticion'])->name('funcionario-gestionar-asignacion-peticion');
         // Rutas Index
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'adminSistema'], function () {
@@ -224,7 +225,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('listado/gestionar_pqr_p/{id}', [PQR_P_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_p');
         Route::post('listado/gestionar_pqr_p', [PQR_P_Controller::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_p_guardar');
-        Route::post('prorroga', [PQR_P_Controller::class, 'prorroga_guardar'])->name('prorroga_guardar');
+        // Route::post('prorroga', [PQR_P_Controller::class, 'prorroga_guardar'])->name('prorroga_guardar');
         Route::post('respuesta_recurso', [PQR_P_Controller::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
         Route::post('respuesta_recurso_anexos', [PQR_P_Controller::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');
 
@@ -269,7 +270,13 @@ Route::group(['middleware' => 'auth'], function () {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::post('asignacion', [PQRController::class, 'asignacion_guardar'])->name('asignacion_guardar');
         Route::post('historial', [PQRController::class, 'historial_guardar'])->name('historial_guardar');
+        Route::post('historial_tarea', [PQRController::class, 'historial_tarea_guardar'])->name('historial_tarea_guardar');
+        Route::post('historial_peticion', [PQRController::class, 'historial_peticion_guardar'])->name('historial_peticion_guardar');
         Route::post('asignacion_tarea', [PQRController::class, 'asignacion_tarea_guardar'])->name('asignacion_tarea_guardar');
+        Route::post('asignacion_peticion', [PQRController::class, 'asignacion_peticion_guardar'])->name('asignacion_peticion_guardar');
+        Route::post('prioridad', [PQRController::class, 'prioridad_guardar'])->name('prioridad_guardar');
+        Route::post('prorroga', [PQRController::class, 'prorroga_guardar'])->name('prorroga_guardar');
+        Route::post('plazo_recurso', [PQRController::class, 'plazo_recurso_guardar'])->name('plazo_recurso_guardar');
         Route::get('cargar_tareas', [PQRController::class, 'cargar_tareas'])->name('cargar_tareas');
         Route::get('cargar_cargos', [PQRController::class, 'cargar_cargos'])->name('cargar_cargos');
         Route::get('cargar_funcionarios', [PQRController::class, 'cargar_funcionarios'])->name('cargar_funcionarios');

@@ -2,7 +2,7 @@
 
 namespace App\Models\PQR;
 
-use App\Models\PQR\HisotrialTarea;
+use App\Models\PQR\HistorialTarea;
 use App\Models\PQR\AsignacionTarea;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -22,7 +22,7 @@ class Tarea extends Model
     //----------------------------------------------------------------------------------
     public function tareashistorial()
     {
-        return $this->hasMany(HisotrialTarea::class, 'tareas_id', 'id');
+        return $this->hasMany(HistorialTarea::class, 'tareas_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

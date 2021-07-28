@@ -26,8 +26,7 @@
             <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Listado PQR
-                        </h3>
+                        <h3 class="card-title">Listado PQR</h3>
                     </div>
                     <div class="card-body">
                         <div class="col-12 col-md-12 table-responsive">
@@ -44,7 +43,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($pqr_S as $pqr)
+                                    @foreach ($pqrs as $pqr)
                                         <tr>
                                             <td>{{ $pqr->radicado }}</td>
                                             <td>{{ $pqr->created_at }}</td>

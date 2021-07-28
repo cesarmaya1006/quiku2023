@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
+use App\Models\PQR\PQR;
 use App\Models\Admin\Pais;
 use Illuminate\Http\Request;
 use App\Models\Admin\Usuario;
+use App\Models\PQR\Prioridad;
 use App\Models\Admin\Tipo_Docu;
+use App\Models\Personas\Persona;
 use App\Models\Admin\Departamento;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidarRegistroAsistido;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\Consultas\Consulta;
 use App\Models\Denuncias\Denuncia;
 use App\Models\Empleados\Empleado;
-use App\Models\Felicitaciones\Felicitacion;
-use App\Models\Personas\Persona;
-use App\Models\PQR\PQR;
-use App\Models\SolicitudDatos\SolicitudDatos;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
+use App\Http\Controllers\Controller;
 use App\Models\Sugerencias\Sugerencia;
+use App\Models\Felicitaciones\Felicitacion;
+use App\Models\SolicitudDatos\SolicitudDatos;
+use App\Http\Requests\ValidarRegistroAsistido;
+use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
+use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 
 class FuncionarioController extends Controller
 {
@@ -29,15 +30,8 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
-        $usuario = Usuario::findOrFail(session('id_usuario'));
-        $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
-        $conceptos = ConceptoUOpinion::all();
-        $solicitudes_datos = SolicitudDatos::all();
-        $denuncias = Denuncia::all();
-        $felicitaciones = Felicitacion::all();
-        $solicitudes_doc = SolicitudDocInfo::all();
-        $sugerencias = Sugerencia::all();
-        return view('intranet.funcionarios.listado_pqr', compact('pqr_S', 'conceptos', 'solicitudes_datos', 'denuncias', 'felicitaciones', 'solicitudes_doc', 'sugerencias', 'usuario'));
+        $pqr = PQR::where('empleado_id', session('id_usuario'))->get();
+        return view('intranet.funcionarios.listado_pqr', compact('pqr'));
     }
     public function crear_usuario()
     {
@@ -117,6 +111,13 @@ class FuncionarioController extends Controller
     {
         $pqr = PQR::findorFail($id);
         return view('intranet.funcionarios.gestion_asignacion', compact('pqr'));
+    }
+
+    public function gestionar_asignacion_peticion($id)
+    {
+        $pqr = PQR::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.gestion_asignacion_peticion', compact('pqr', 'estadoPrioridad'));
     }
 
     /**

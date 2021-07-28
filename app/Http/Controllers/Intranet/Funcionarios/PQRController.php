@@ -7,6 +7,7 @@ use App\Models\PQR\PQR;
 use App\Models\PQR\Tarea;
 use App\Mail\RespuestaPQR;
 use App\Models\PQR\Estado;
+use App\Models\Admin\Cargo;
 use App\Models\PQR\Recurso;
 use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
@@ -22,17 +23,18 @@ use App\Mail\RespuestaReposicion;
 use App\Mail\ConstanciaAclaracion;
 use App\Models\Empleados\Empleado;
 use App\Models\PQR\DocRespRecurso;
+use App\Models\PQR\HistorialTarea;
 use App\Models\PQR\AsignacionTarea;
 use App\Http\Controllers\Controller;
 use App\Models\PQR\AclaracionAnexos;
 use App\Models\PQR\EstadoAsignacion;
 use Illuminate\Support\Facades\Mail;
+use App\Models\PQR\HistorialPeticion;
 use Illuminate\Support\Facades\Config;
 use App\Mail\AclaracionComplementacion;
 use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\AsignacionParticular;
 use App\Http\Controllers\Fechas\FechasController;
-use App\Models\Admin\Cargo;
 
 class PQRController extends Controller
 {
@@ -284,13 +286,13 @@ class PQRController extends Controller
                     }
                     $respuestaProrroga = PQR::findOrFail($request['idPqr'])->update($actualizarPqr);
                     //---------------------------------------------------------------------------
-                    if ($pqr->persona_id != null) {
-                        $email = $pqr->persona->email;
-                    } else {
-                        $email = $pqr->empresa->email;
-                    }
-                    $id_pqr = $pqr->id;
-                    Mail::to($email)->send(new Prorroga($id_pqr));
+                    // if ($pqr->persona_id != null) {
+                    //     $email = $pqr->persona->email;
+                    // } else {
+                    //     $email = $pqr->empresa->email;
+                    // }
+                    // $id_pqr = $pqr->id;
+                    // Mail::to($email)->send(new Prorroga($id_pqr));
                     //---------------------------------------------------------------------------
                 }
             }
@@ -300,6 +302,33 @@ class PQRController extends Controller
         }
     }
 
+    public function plazo_recurso_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $plazoRecurso['recurso_dias'] = $request['plazo_recurso'];
+            Peticion::findOrFail($request['peticion'])->update($plazoRecurso);
+            $pqr = PQR::findOrfail($request['idPqr']);
+            $nuevoLimite = $pqr->tipoPqr->tiempos + $pqr['prorroga_dias'] + $request['plazo_recurso'];
+            $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
+            $actualizarPqr['tiempo_limite'] = $respuestaDias;
+            $estado = Estado::findOrFail(7);
+            $actualizarPqr['estadospqr_id'] = $estado['id'];
+            $respuestaRecurso = PQR::findOrFail($request['idPqr'])->update($actualizarPqr);
+            //---------------------------------------------------------------------------
+            // if ($pqr->persona_id != null) {
+            //     $email = $pqr->persona->email;
+            // } else {
+            //     $email = $pqr->empresa->email;
+            // }
+            // $id_pqr = $pqr->id;
+            // Mail::to($email)->send(new Prorroga($id_pqr));
+            //---------------------------------------------------------------------------
+            return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
+        } else {
+            abort(404);
+        }
+    }
+    
 
     public function recurso_guardar(Request $request)
     {
@@ -523,6 +552,34 @@ class PQRController extends Controller
         }
     }
 
+    public function historial_tarea_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['pqr_id'] = $request['idPqr'];
+            $asignacionHistorial['tareas_id'] = $request['idTarea'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['mensajeHistorial'];
+            $historial = HistorialTarea::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_peticion_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['pqr_id'] = $request['idPqr'];
+            $asignacionHistorial['peticion_id'] = $request['idPeticion'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['mensajeHistorial'];
+            $historial = HistorialPeticion::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function asignacion_tarea_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -533,6 +590,28 @@ class PQRController extends Controller
             }
             $tareaActualizar = AsignacionTarea::findOrFail($id)->update($asignacionTarea);
             return response()->json(['mensaje' => 'ok', 'data' => $tareaActualizar]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function asignacion_peticion_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionPeticion['empleado_id'] = (int)$request['funcionario'];
+            $peticionActualizar = Peticion::findOrFail($request['peticion'])->update($asignacionPeticion);
+            return response()->json(['mensaje' => 'ok', 'data' => $peticionActualizar]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function prioridad_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $prioridad['prioridad_id'] = (int)$request['prioridad'];
+            $pqrActualizar = PQR::findOrFail($request['idPqr'])->update($prioridad);
+            return response()->json(['mensaje' => 'ok', 'data' => $pqrActualizar]);
         } else {
             abort(404);
         }
