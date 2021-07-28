@@ -29,7 +29,7 @@ class IntranetPageCotroller extends Controller
         $tipoPQR = tipoPQR::all();
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if (session('rol_id') == 6) {
-            if ($usuario->persona->count() > 0) {
+            if ($usuario->persona != null) {
                 $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
                 $conceptos = ConceptoUOpinion::where('persona_id', session('id_usuario'))->get();
                 $solicitudes_datos = SolicitudDatos::where('persona_id', session('id_usuario'))->get();
@@ -49,13 +49,13 @@ class IntranetPageCotroller extends Controller
                 }
             }
         } elseif (session('rol_id') == 5) {
-            $pqr_S = PQR::where('empleado_id',$usuario->id)->get();
-            $conceptos = ConceptoUOpinion::where('empleado_id',$usuario->id)->get();
-            $solicitudes_datos = SolicitudDatos::where('empleado_id',$usuario->id)->get();
-            $denuncias = Denuncia::where('empleado_id',$usuario->id)->get();
-            $felicitaciones = Felicitacion::where('empleado_id',$usuario->id)->get();
-            $solicitudes_doc = SolicitudDocInfo::where('empleado_id',$usuario->id)->get();
-            $sugerencias = Sugerencia::where('empleado_id',$usuario->id)->get();
+            $pqr_S = PQR::where('empleado_id', $usuario->id)->get();
+            $conceptos = ConceptoUOpinion::where('empleado_id', $usuario->id)->get();
+            $solicitudes_datos = SolicitudDatos::where('empleado_id', $usuario->id)->get();
+            $denuncias = Denuncia::where('empleado_id', $usuario->id)->get();
+            $felicitaciones = Felicitacion::where('empleado_id', $usuario->id)->get();
+            $solicitudes_doc = SolicitudDocInfo::where('empleado_id', $usuario->id)->get();
+            $sugerencias = Sugerencia::where('empleado_id', $usuario->id)->get();
             // $pqr_S = PQR::all();
             // $conceptos = ConceptoUOpinion::all();
             // $solicitudes_datos = SolicitudDatos::all();
@@ -63,7 +63,7 @@ class IntranetPageCotroller extends Controller
             // $felicitaciones = Felicitacion::all();
             // $solicitudes_doc = SolicitudDocInfo::all();
             // $sugerencias = Sugerencia::all();
-            
+
         } elseif (session('rol_id') == 4) {
             $pqr_S = PQR::where('empleado_id', session('id_usuario'))->get();
             $consultas = ConceptoUOpinion::where('empleado_id', session('id_usuario'))->get();

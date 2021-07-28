@@ -76,7 +76,6 @@ class ClienteController extends Controller
         $felicitaciones = Felicitacion::where('persona_id', session('id_usuario'))->get();
         $solicitudes_doc = SolicitudDocInfo::where('persona_id', session('id_usuario'))->get();
         $sugerencias = Sugerencia::where('persona_id', session('id_usuario'))->get();
-
         if ($pqr_S->count() > 0) {
             foreach ($pqr_S as $pqr) {
                 // if ($pqr->peticiones->count() == 0) {
@@ -383,7 +382,7 @@ class ClienteController extends Controller
         $nuevaFelicitacion['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaFelicitacion['tiempo_limite'] = $respuestaDias;
         $felicitacion = PQR::create($nuevaFelicitacion);
-        
+
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $felicitacion->id;
         PQR::findOrFail($felicitacion->id)->update($pqr_rad);
         $felicitacion = PQR::findOrFail($felicitacion->id);
@@ -679,11 +678,11 @@ class ClienteController extends Controller
         $nuevaSugerencia['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaSugerencia['tiempo_limite'] = $respuestaDias;
         $sugerencia = PQR::create($nuevaSugerencia);
-        
+
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $sugerencia->id;
         PQR::findOrFail($sugerencia->id)->update($pqr_rad);
         $sugerencia = PQR::findOrFail($sugerencia->id);
-        
+
         $nuevaPeticion['pqr_id'] = $sugerencia->id;
         $nuevaPeticion['sugerencia'] = $request['sugerencia'];
         $peticion = Peticion::create($nuevaPeticion);
