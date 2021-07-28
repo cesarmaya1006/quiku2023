@@ -36,7 +36,8 @@
                             <input type="hidden" name="persona_id " value="{{ $usuario->persona->id }}">
                         @endif
                         @if ($usuario->representante)
-                            <input type="hidden" name="empresa_id  " value="{{ $usuario->representante->empresa->id }}">
+                            <input type="hidden" name="empresa_id  "
+                                value="{{ $usuario->representante->empresas[0]->id }}">
                         @endif
                         <div class="card-body m-2">
                             <div class="row d-flex">
