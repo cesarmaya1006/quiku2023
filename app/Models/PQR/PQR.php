@@ -5,6 +5,7 @@ namespace App\Models\PQR;
 use App\Models\PQR\Estado;
 use App\Models\PQR\tipoPQR;
 use App\Models\PQR\Peticion;
+use App\Models\PQR\PqrAnexo;
 use App\Models\Empresas\Sede;
 use App\Models\Admin\Municipio;
 use App\Models\Empresas\Empresa;
@@ -98,6 +99,11 @@ class PQR extends Model
     public function asignaciontareas()
     {
         return $this->hasMany(AsignacionTarea::class, 'pqr_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function anexos()
+    {
+        return $this->hasMany(PqrAnexo::class, 'pqr_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

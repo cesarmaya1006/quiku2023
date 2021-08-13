@@ -136,111 +136,6 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="col-12 rounded border mb-3 p-2 pt-3">
-                            <div class="row d-flex px-4"> 
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Prioridad</label>
-                                    <select class="custom-select rounded-0" id="prioridad" required>
-                                        @foreach ($estadoPrioridad as $prioridad)
-                                            <option value="{{ $prioridad->id }}"
-                                                {{ $pqr->prioridad->id == $prioridad->id ? 'selected' : '' }}>
-                                                {{ $prioridad->prioridad }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-2 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4" id="prioridad_guardar" data_url="{{ route('prioridad_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar</button>
-                                </div>
-                            </div>
-                            <hr>
-
-                            @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
-                                <div class="row px-4 form-respuestaProrroga">
-                                    <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
-                                    <div class="col-12 col-md-6 ">
-                                        <h6>Prórroga</h6>
-                                    </div>
-                                    <div class="col-12 col-md-6 d-flex flex-row">
-                                        <div class="form-check mb-3 mr-4">
-                                            <input id="" name="prorroga" type="radio" class="form-check-input prorroga_si"
-                                                value="1" />
-                                            <label id="_label" class="form-check-label" for="">SI</label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input id="" name="prorroga" type="radio" class="form-check-input prorroga_no"
-                                                value="0" />
-                                            <label id="_label" class="form-check-label" for="">NO</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 contentProrroga" id="contentProrroga">
-                                        <div class="col-12 d-flex row">
-                                            <div class="col-12 form-group">
-                                                <label for="plazo" class="col-md-6">Plazo prórroga días hábiles:</label>
-                                                <input type="number" class="form-control form-control-sm plazo_prorroga col-md-3"
-                                                    name="plazo_prorroga" id="plazo_prorroga" min="1"
-                                                    max="{{$pqr->tipoPqr->tiempos * 2}}">
-                                                <p>El máximo de días de prórroga es: {{$pqr->tipoPqr->tiempos * 2}}</p>
-                                            </div>
-                                            <div class="col-12 d-flex row">
-                                                <label for="prorroga_pdf">Justificacion de prórroga</label>
-                                                <textarea type="text" class="form-control form-control-sm prorroga_pdf"
-                                                    name="prorroga_pdf" id="prorroga_pdf">{{$pqr->prorroga_pdf}}</textarea>
-                                            </div>
-                                        </div>
-                                        @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
-                                            <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
-                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prórroga</button>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                                <hr>
-                            @endif
-                            @php
-                                $recursoValidacion = 1;
-                                if($pqr->peticiones->where('recurso','0')->count() == $pqr->peticiones->count()){
-                                    $recursoValidacion = 0;
-                                }
-                            @endphp
-                            @if($pqr->estadospqr_id < 6)
-                                <div class="row px-4">
-                                    <input class="respuestaRecurso" type="hidden" value="{{ $recursoValidacion }}">
-                                    <div class="col-12 col-md-6">
-                                        <h6>¿A las respuestas le procede recurso?</h6>
-                                    </div>
-                                    <div class="col-12 col-md-6 d-flex flex-row">
-                                        <div class="form-check mb-3 mr-4">
-                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_si" value="1"/>
-                                            <label id="_label" class="form-check-label" for="">SI</label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_no" value="0"/>
-                                            <label id="_label" class="form-check-label" for="">NO</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 row recurso-form">
-                                        {{-- @if ($plazoRecurso == 0) --}}
-                                            <div class="col-12 col-md-5 form-group">
-                                                <label for="">Plazo recurso días hábiles:</label>
-                                                <input type="number" class="form-control plazo_recurso"
-                                                name="plazo_recurso" id="plazo_recurso" min="0"
-                                                max="{{$pqr->tipoPqr->tiempos}}">
-                                            </div>
-                                            <div class="col-12 col-md-2 form-group d-flex align-items-end">
-                                                <button href="" class="btn btn-primary mx-2 px-4" id="plazo_recurso_guardar" data_url="{{ route('plazo_recurso_guardar') }}"
-                                                data_token="{{ csrf_token() }}">Guardar</button>
-                                            </div>
-                                        {{-- @else --}}
-                                            {{-- <div class="col-12 col-md- form-group">
-                                                <label for="plazo">Plazo recurso días hábiles: {{ $plazoRecurso}}</label>
-                                                <input class="plazoRecurso" type="hidden" value="{{ $plazoRecurso }}">
-                                            </div> --}}
-                                        {{-- @endif --}}
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
                         @foreach ($pqr->peticiones as $key => $peticion)
                             <div class="col-12 rounded border mb-3 p-2 peticion_general">
                                 <div class="menu-card-radicado menu-card">
@@ -251,7 +146,13 @@
                                     @if($peticion->motivo_sub_id)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
+                                                <p class="text-justify"><strong>Categoría Motivo:</strong> {{ $peticion->motivo->motivo->motivo }}</p>
+                                            </div>
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Sub - Categoría Motivo:</strong> {{ $peticion->motivo->sub_motivo }}</p>
+                                            </div>
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Justificación:</strong> {{ $peticion->justificacion }}</p>
                                             </div>
                                             @if ($peticion->otro)
                                                 <p class="text-justify">{{ $peticion->otro }}</p>
@@ -408,6 +309,54 @@
                                     </div>
                                 @endif
                                 <br>
+                                @if (isset($peticion->respuesta->respuesta))
+                                <div class="menu-card-recursos menu-card">
+                                    <div class="col-12 row mb-2">
+                                        <div class="col-6">
+                                            <h5>Respuesta petición</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ $peticion->respuesta->respuesta }}</textarea>
+                                    </div>
+                                </div>
+                                <hr>
+                                @if (sizeOf($peticion->respuesta->documentos))
+                                    <div class="row respuestaAnexos">
+                                        <div class="col-12">
+                                            <div class="col-12">
+                                                <h6>Anexos respuesta petición</h6>
+                                            </div>
+                                            <div class="col-12 table-responsive">
+                                                <table class="table table-light"  style="font-size: 0.8em;" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Nombre</th>
+                                                            <th scope="col">Descripción</th>
+                                                            <th scope="col">Archivo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($peticion->respuesta->documentos as $anexo)
+                                                            <tr>
+                                                                <td class="text-justify">{{ $anexo->titulo }}
+                                                                </td>
+                                                                <td class="text-justify">
+                                                                    {{ $anexo->descripcion }}
+                                                                </td>
+                                                                <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer">Descargar</a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                             @endif
                                 <div class="menu-card-recursos menu-card">
                                     @if (sizeOf($peticion->recursos))
                                         <div class="row card-recursos">
@@ -492,17 +441,6 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row d-flex px-12 p-3 mensaje-peticion"> 
-                                    <input class="id_peticion" type="hidden" value="{{ $peticion->id }}">
-                                    <div class="container-mensaje-historial form-group col-12">
-                                        <label for="" class="">Agregar Historial</label>
-                                        <textarea class="form-control mensaje-historial-peticion" rows="3" placeholder="" required></textarea>
-                                    </div>
-                                    <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                        <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialPeticion" data_url="{{ route('historial_peticion_guardar') }}"
-                                        data_token="{{ csrf_token() }}">Guardar</button>
-                                    </div>
-                                </div>
                             </div>
                         @endforeach
                         
@@ -535,32 +473,6 @@
                                 </table>
                             </div>
                             <hr>
-                            <h5 class="">Asignación Peticiones</h5>
-                            <div class="row d-flex px-4"> 
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Peticion</label>
-                                    <select name="peticion" id="peticion" class="custom-select rounded-0" required="">                                    
-                                    @foreach($pqr->peticiones as $key=> $peticion)
-                                        <option value="{{$peticion->id}}">{{$key + 1}}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Cargo</label>
-                                    <select name="cargo" id="cargo" class="custom-select rounded-0" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Funcionario</label>
-                                    <select name="funcionario" id="funcionario" class="custom-select rounded-0" required="">
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-2 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4" id="asignacion_peticion_guardar" data_url="{{ route('asignacion_peticion_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Asignar</button>
-                                </div>
-                            </div>
-                            <hr>
                         </div>
                         <div class="rounded border m-3 p-2">
                             <h5 class="">Historial de tareas</h5>
@@ -590,7 +502,7 @@
                             </div>
                             <hr>
                             <div class="row d-flex px-12 p-3"> 
-                                <input class="id_tarea" id="id_tarea" name="id_tarea" type="hidden" value="2">
+                                <input class="id_tarea" id="id_tarea" name="id_tarea" type="hidden" value="1">
                                 <div class="container-mensaje-historial-tarea form-group col-12">
                                     <label for="" class="">Agregar Historial</label>
                                     <textarea class="form-control" rows="3" placeholder="" name="mensaje-historia-tarea"
@@ -602,6 +514,38 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($pqr->anexos)   
+                            <div class="rounded border m-3 p-2 mb-4">
+                                <h5 class="">Historial de respuesta </h5>
+                                <div class="row d-flex px-12 p-3">
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-light" style="font-size: 0.8em;">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Fecha</th>
+                                                    <th scope="col">Empleado</th>
+                                                    <th scope="col">Tarea</th>
+                                                    {{-- <th scope="col">Estado</th> --}}
+                                                    <th scope="col">Descarga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pqr->anexos as $anexo)
+                                                    <tr>
+                                                        <td>{{ $anexo->created_at }}</td>
+                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
+                                                        {{-- <td class="text-justify">{{ $anexo->estado ? 'Activo' : 'Rechazado'  }}</td> --}}
+                                                        <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        @endif
                     @endif
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
@@ -614,6 +558,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-    <script src="{{ asset('js/intranet/generar_pqr/gestion_asignacion_peticion.js') }}"></script>
+    <script src="{{ asset('js/intranet/generar_pqr/gestion_asignacion_supervisa.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

@@ -16,7 +16,7 @@ class Tabla_Tareas extends Seeder
     public function run()
     {
         $tipos = [
-            ['tarea' => 'SUPERVIZA'],
+            ['tarea' => 'SUPERVISA'],
             ['tarea' => 'PROYECTA'],
             ['tarea' => 'REVISA'],
             ['tarea' => 'APRUEBA'],

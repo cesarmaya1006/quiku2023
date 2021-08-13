@@ -67,17 +67,16 @@
             <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Gestión a PQR Número de radicado:
+                        <h3 class="card-title">Gestión a Petición Número de radicado:
                             <strong>{{ $pqr->radicado }}</strong>
                         </h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('usuario_gestionar_pqr_guardar') }}" method="POST" autocomplete="off"
+                        <form action="{{ route('usuario-gestionar_pqr_p_guardar') }}" method="POST" autocomplete="off"
                             enctype="multipart/form-data" id="fromGestionPqrUsuario">
                             @csrf
                             @method('post')
-                            {{-- Inicio Bloque header --}}
-                            <div class="col-12 rounded border mb-3 p-2">
+                            <div class="col-12 solicitud rounded border mb-3 p-2">
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         @if ($pqr->persona_id != null)
@@ -88,18 +87,14 @@
                                             <strong>{{ $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social }}</strong>
                                         @endif
                                     </div>
-                                    @if($pqr->adquisicion)
-                                        <div class="col-12 col-md-6">
-                                            Lugar de adquisición del producto o servicio:
-                                            <strong>{{ $pqr->adquisicion }}</strong>
-                                        </div>
-                                    @endif
-                                    @if($pqr->tipo)
-                                        <div class="col-12 col-md-6">
-                                            Tipo petición: <strong>{{ $pqr->tipo }}</strong>
-                                        </div>
-                                    @endif
-                                    @if ($pqr->sede)
+                                    <div class="col-12 col-md-6">
+                                        Lugar de adquisición del producto o servicio:
+                                        <strong>{{ $pqr->adquisicion }}</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        Tipo petición: <strong>{{ $pqr->tipo }}</strong>
+                                    </div>
+                                    @if ($pqr->adquisicion == 'Sede física')
                                         <div class="col-12 col-md-6">
                                             Departatmento :
                                             <strong>{{ $pqr->sede->municipio->departamento->departamento }}</strong>
@@ -125,27 +120,21 @@
                                         <div class="col-12 col-md-6">
                                             Referencia : <strong>{{ $pqr->referencia->referencia }}</strong>
                                         </div>
-                                    @endif
-                                    @if($pqr->servicio)
+                                    @else
                                         <div class="col-12 col-md-6">
                                             Servicio : <strong>{{ $pqr->servicio->servicio }}</strong>
                                         </div>
                                     @endif
-                                    @if($pqr->factura)
-                                        <div class="col-12 col-md-6">
-                                            Número de factura: <strong>{{ $pqr->factura }}</strong>
-                                        </div>
-                                    @endif
-                                    @if($pqr->fecha_factura)
-                                        <div class="col-12 col-md-6">
-                                            Fecha de factura: <strong>{{ $pqr->fecha_factura }}</strong>
-                                        </div>
-                                    @endif
-                                    @if($pqr->fecha_radicado)
-                                        <div class="col-12 col-md-6">
-                                            Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
-                                        </div>
-                                    @endif
+                                    <div class="col-12 col-md-6">
+                                        Número de factura: <strong>{{ $pqr->factura }}</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        Fecha de factura: <strong>{{ $pqr->fecha_factura }}</strong>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
+                                    </div>
                                     <div class="col-12 col-md-6">
                                         Fecha estimada de respuesta:
                                         <strong>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</strong>
@@ -162,9 +151,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- Fin Bloque header --}}
 
-                            {{-- Inicio Bloque Tarjetas --}}
                             <div class="col-12 d-flex flex-wrap rounded border justify-content-center m-2 p-2 ">
                                 <a href="" class="menu-radicado btn card-step verificado activo"
                                     data-content='menu-card-radicado'>
@@ -186,7 +173,6 @@
                                         </div>
                                     </a>
                                 @endif
-                                {{-- {{$pqr->peticiones}} --}}
                                 @if ($aclaracionesMenu == 1)
                                     <a href="" class="menu-aclaracion btn card-step verificado "
                                         data-content='menu-card-aclaraciones'>
@@ -208,7 +194,7 @@
                                         </div>
                                     </a>
                                 @endif
-                                @if ($respuestaMenu == 1 && $pqr->asignaciontareas->sum('estado_id') == 55 )
+                                @if ($respuestaMenu == 1)
                                     <a href="" class="menu-respuesta btn card-step verificado"
                                         data-content='menu-card-respuesta'>
                                         <div class="">
@@ -270,7 +256,6 @@
                                     </a>
                                 @endif
                             </div>
-                            {{-- Fin Bloque Tarjetas --}}
                             <hr style="border-top: solid 4px black">
                             <?php $n_peticion = 0; ?>
                             @if ($pqr->prorroga_dias)
@@ -285,132 +270,66 @@
                                     </div>
                                 </div>
                             @endif
-                            @foreach ($pqr->peticiones as $key => $peticion)
+                            @foreach ($pqr->peticiones as $peticion)
                                 <?php $n_peticion++; ?>
                                 <div class="col-12 rounded border mb-3 p-2 peticion_general">
                                     <div class="menu-card-radicado menu-card">
-                                        <div class="col-12">
-                                            <div class="col-12 row my-2 ">
-                                                <div class="col-6">
-                                                    <h5>Petición {{ $key + 1 }}</h5>
-                                                </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h5>Petición {{ $n_peticion }}</h5>
+                                            </div>
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
+                                            </div>
+                                            @if ($peticion->otro)
+                                                <p class="text-justify">{{ $peticion->otro }}</p>
+                                            @endif
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h6>Hechos</h6>
+                                            </div>
+                                            <div class="col-12">
+                                                <ul>
+                                                    @foreach ($peticion->hechos as $hecho)
+                                                        <li>
+                                                            <p class="text-justify">{{ $hecho->hecho }}</p>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h6>Anexos</h6>
+                                            </div>
+                                            <div class="col-12">
+                                                <table class="table table-light" style="font-size: 0.8em;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Titulo</th>
+                                                            <th scope="col">Descripción</th>
+                                                            <th scope="col">Descarga</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($peticion->anexos as $anexo)
+                                                            <tr>
+                                                                <td class="text-justify">{{ $anexo->titulo }}</td>
+                                                                <td class="text-justify">{{ $anexo->descripcion }}</td>
+                                                                <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer">Descargar</a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                         <hr>
-                                        @if($peticion->motivo_sub_id)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Categoría Motivo:</strong> {{ $peticion->motivo->motivo->motivo }}</p>
-                                                </div>
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Sub - Categoría Motivo:</strong> {{ $peticion->motivo->sub_motivo }}</p>
-                                                </div>
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Justificación:</strong> {{ $peticion->justificacion }}</p>
-                                                </div>
-                                                @if ($peticion->otro)
-                                                    <p class="text-justify">{{ $peticion->otro }}</p>
-                                                @endif
-                                            </div>
-                                            <hr>
-                                        @endif
-                                        @if($peticion->consulta)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Consulta:</strong> {{ $peticion->consulta }}</p>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        @endif
-                                        @if($peticion->tiposolicitud)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Tipo de solicitud:</strong> {{ $peticion->tiposolicitud }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Datos personales objeto de la solicitud:</strong> {{ $peticion->datossolicitud }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Descripción de la solicitud:</strong> {{ $peticion->descripcionsolicitud }}</p>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        @endif
-                                        @if($peticion->irregularidad)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Tipo de irregularidad:</strong> {{ $peticion->irregularidad }}</p>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        @endif
-                                        @if($peticion->felicitacion)
-                                            @if($peticion->nombre_funcionario)
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Nombre de funcionario:</strong> {{ $peticion->nombre_funcionario }}</p>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Felicitaciones:</strong> {{ $peticion->felicitacion }}</p>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        @endif
-                                        @if($peticion->hechos)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <h6>Hechos</h6>
-                                                </div>
-                                                <div class="col-12">
-                                                    <ul>
-                                                        @foreach ($peticion->hechos as $hecho)
-                                                            <li>
-                                                                <p class="text-justify">{{ $hecho->hecho }}</p>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <br>
-                                        @endif
-                                        @if(sizeof($peticion->anexos))
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <h6>Anexos</h6>
-                                                </div>
-                                                <div class="col-12">
-                                                    <table class="table table-light" style="font-size: 0.8em;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Titulo</th>
-                                                                <th scope="col">Descripción</th>
-                                                                <th scope="col">Descarga</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($peticion->anexos as $anexo)
-                                                                <tr>
-                                                                    <td class="text-justify">{{ $anexo->titulo }}</td>
-                                                                    <td class="text-justify">{{ $anexo->descripcion }}</td>
-                                                                    <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
-                                                                            target="_blank"
-                                                                            rel="noopener noreferrer">Descargar</a>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                        @endif
                                     </div>
                                     @if ($peticion->aclaraciones->count() > 0)
                                         <div class="row menu-card-aclaraciones menu-card d-none">
@@ -551,7 +470,7 @@
                                         </div>
                                     @endif
                                     <br>
-                                    @if ($peticion->respuesta && $pqr->asignaciontareas->sum('estado_id') == 55)
+                                    @if ($peticion->respuesta)
                                         <div class="row menu-card-respuesta menu-card d-none">
                                             <div class="col-12">
                                                 <h5>Petición {{ $n_peticion }}</h5>
@@ -564,7 +483,7 @@
                                                     rows="5"
                                                     readonly>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
                                             </div>
-                                            {{-- @if (sizeOf($peticion->respuesta->documentos))
+                                            @if (isset($peticion->respuesta->documentos))
                                                 <div class="row respuestaAnexos">
                                                     <div class="col-12">
                                                         <div class="col-12">
@@ -586,8 +505,7 @@
                                                         </table>
                                                     </div>
                                                 </div>
-                                            @endif --}}
-
+                                            @endif
                                         </div>
                                     @endif
                                     <div class="menu-card-recursos menu-card d-none">
@@ -848,31 +766,6 @@
                                 </div>
                                 <input class="totalAclaraciones" name="totalAclaraciones" type="hidden" value="">
                             @endforeach
-                            @if ($peticion->respuesta && $pqr->asignaciontareas->sum('estado_id') == 55)
-                                <div class="rounded border p-2">
-                                    <h4 class="mb-4">Respuesta PQR</h4>
-                                    @if ($pqr->anexos)
-                                        @php
-                                            $respuesta = $pqr->anexos->where('tareas_id', '4')->last();
-                                        @endphp
-                                        @if($respuesta)
-                                            <div class="rounded border p-2 mt-3">
-                                                @if ($respuesta->estado == 1)
-                                                    @if($respuesta->extension == 'pdf')
-                                                        <iframe src="{{ asset('documentos/tareas/' . $respuesta->url) }}" frameborder="0" class="col-12" height="600"></iframe>
-                                                    @else
-                                                        <div class="col-12 ">
-                                                            <strong><a href="{{ asset('documentos/tareas/' . $respuesta->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
-                                                                    Descargar Respuesta</a></strong>
-                                                        </div>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                        @endif
-                                    @endif
-                                    <hr>
-                                </div>
-                            @endif
                             <input class="plazoRecurso" name="plazoRecurso" type="hidden" value="{{ $plazoRecurso }}">
                             <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                             <input class="totalGeneralAnexos" id="totalGeneralAnexos" name="totalGeneralAnexos"
@@ -887,6 +780,7 @@
                             </div>
                         </form>
                     </div>
+                    <!-- /.card-body -->
                 </div>
             </div>
         </div>

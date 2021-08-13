@@ -16,9 +16,17 @@ class Tabla_AsignancionEstados extends Seeder
     public function run()
     {
         $estados = [
-            ['estado' => 'Inicial'],
-            ['estado' => 'En trámite'],
-            ['estado' => 'Completado']
+            ['estado' => '0'],
+            ['estado' => '10'],
+            ['estado' => '20'],
+            ['estado' => '30'],
+            ['estado' => '40'],
+            ['estado' => '50'],
+            ['estado' => '60'],
+            ['estado' => '70'],
+            ['estado' => '80'],
+            ['estado' => '90'],
+            ['estado' => '100']
         ];
         foreach ($estados as $key => $value) {
             DB::table('asignancion_estados')->insert([

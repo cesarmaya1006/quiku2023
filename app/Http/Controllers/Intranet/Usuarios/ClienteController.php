@@ -70,19 +70,6 @@ class ClienteController extends Controller
 
         $usuario = Usuario::findOrFail(session('id_usuario'));
         $pqrs = PQR::where('persona_id', session('id_usuario'))->get();
-
-        if ($pqrs->count() > 0) {
-            foreach ($pqrs as $pqr) {
-                // if ($pqr->peticiones->count() == 0) {
-                //     $pqr_update['estado'] = 'Sin radicar';
-                //     PQR::findOrFail($pqr->id)->update($pqr_update);
-                // } elseif ($pqr->estado == 'Sin radicar') {
-                //     $pqr_update['estado'] = 'Radicada, sin iniciar tramite';
-                //     PQR::findOrFail($pqr->id)->update($pqr_update);
-                // }
-            }
-        }
-        $pqr_S = PQR::where('persona_id', session('id_usuario'))->get();
         return view('intranet.usuarios.listado', compact('pqrs', 'usuario'));
     }
 

@@ -27,6 +27,7 @@ use App\Models\PQR\HistorialTarea;
 use App\Models\PQR\AsignacionTarea;
 use App\Http\Controllers\Controller;
 use App\Models\PQR\AclaracionAnexos;
+use App\Models\PQR\AsignacionEstado;
 use App\Models\PQR\EstadoAsignacion;
 use Illuminate\Support\Facades\Mail;
 use App\Models\PQR\HistorialPeticion;
@@ -35,6 +36,7 @@ use App\Mail\AclaracionComplementacion;
 use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\AsignacionParticular;
 use App\Http\Controllers\Fechas\FechasController;
+use App\Models\PQR\PqrAnexo;
 
 class PQRController extends Controller
 {
@@ -47,145 +49,146 @@ class PQRController extends Controller
     {
         $pqr = PQR::findOrFail($id);
         $estadoPrioridad = Prioridad::all();
-        return view('intranet.funcionarios.pqr_p.gestion', compact('pqr', 'estadoPrioridad'));
+        $estados = AsignacionEstado::all();
+        return view('intranet.funcionarios.pqr.gestion', compact('pqr', 'estadoPrioridad', 'estados'));
     }
 
-    public function gestionar_guardar(Request $request)
-    {
-        $pqrEstadoPrioridad['prioridad_id'] = $request['prioridad'];
-        PQR::findOrFail($request['id_pqr'])->update($pqrEstadoPrioridad);
-        $documentos = $request->allFiles();
-        $totalPeticiones = $request['totalPeticiones'];
-        $contadorAclaraciones = 0;
-        $iteradorAclaraciones = 0;
-        $contadorAnexos = 0;
-        $iteradorAnexos = 0;
-        for ($i = 0; $i < $totalPeticiones; $i++) {
-            $actualizarPeticion['aclaracion'] = $request["aclaracion_check$i"];
-            if ($request["recurso"] == 1) {
-                if ($request["plazo_recurso"] != null) {
-                    $actualizarPeticion['recurso'] = $request["recurso"];
-                    $actualizarPeticion['recurso_dias'] = $request["plazo_recurso"];
-                    $actualizarPeticion['fecha_notificacion'] = date('Y-m-d');
-                }
-            }
-            Peticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
-            $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];
-            for ($j = $iteradorAclaraciones; $j < $contadorAclaraciones; $j++) {
-                if ($request["solicitud_aclaracion$j"] != null) {
-                    $nuevaAclaracion['peticion_id'] = $request["id_peticion$i"];
-                    $nuevaAclaracion['fecha'] = date("Y-m-d");
-                    $nuevaAclaracion['tipo_solicitud'] = $request["tipo_aclaracion$j"];
-                    $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
-                    $aclaracionNew = Aclaracion::create($nuevaAclaracion);
-                    $peticion_act = Peticion::findOrfail($request["id_peticion$i"]);
-                    if ($peticion_act->pqr->persona_id != null) {
-                        $email = $peticion_act->pqr->persona->email;
-                    } else {
-                        $email = $peticion_act->pqr->empresa->email;
-                    }
-                    $id_aclaracion = $aclaracionNew->id;
-                    Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
-                }
-            }
-            $contadorAnexos += $request["totalPeticionAnexos$i"];
-            if ($request["respuesta$i"]) {
-                $respuesta['peticion_id'] = $request["id_peticion$i"];
-                $respuesta['fecha'] = date("Y-m-d");
-                $respuesta['respuesta'] = $request["respuesta$i"];
-                $respuestaPQR = Respuesta::create($respuesta);
-                //----------------------------------------------------------------------
-                if ($respuestaPQR->peticion->pqr->persona_id != null) {
-                    $email = $respuestaPQR->peticion->pqr->persona->email;
-                } else {
-                    $email = $respuestaPQR->peticion->pqr->empresa->email;
-                }
-                $id_pqr = $respuestaPQR->peticion->pqr->id;
-                Mail::to($email)->send(new RespuestaPQR($id_pqr));
-                //----------------------------------------------------------------------
-                for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
-                    if ($request->hasFile("documentos$k")) {
-                        $ruta = Config::get('constantes.folder_doc_respuestas');
-                        $ruta = trim($ruta);
-                        $doc_subido = $documentos["documentos$k"];
-                        $tamaño = $doc_subido->getSize();
-                        if ($tamaño > 0) {
-                            $tamaño = $tamaño / 1000;
-                        }
-                        $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                        $nuevo_documento['respuesta_id'] = $respuestaPQR["id"];
-                        $nuevo_documento['titulo'] = $request["titulo$k"];
-                        if ($request["descripcion$k"]) {
-                            $nuevo_documento['descripcion'] = $request["descripcion$k"];
-                        } else {
-                            $nuevo_documento['descripcion'] = '';
-                        }
-                        $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
-                        $nuevo_documento['peso'] = $tamaño;
-                        $nuevo_documento['url'] = $nombre_doc;
-                        $doc_subido->move($ruta, $nombre_doc);
-                        $doc = DocRespuesta::create($nuevo_documento);
-                    }
-                }
-            }
-            $iteradorAclaraciones += $request["totalPeticionAclaraciones$i"];
-            $iteradorAnexos += $request["totalPeticionAnexos$i"];
-        }
-        $peticiones = Peticion::all()->where('pqr_id', $request["id_pqr"]);
-        $respuestasPeticiones = [];
-        $totalAclaracionesRes = 0;
-        $respuestaAclaraciones = [];
-        $recurso = 0;
-        $totalRecursos = [];
-        foreach ($peticiones as $key => $peticion) {
-            if ($peticion->respuesta) {
-                $respuestasPeticiones[] = $peticion->respuesta;
-            }
-            if ($peticion->recurso != 0) {
-                $recurso = $peticion->recurso;
-                if (!empty($peticion->recursos)) {
-                    if (sizeOf($peticion->recursos)) {
-                        $totalRecursos[] = $peticion->recursos;
-                    }
-                }
-            }
-            $aclaraciones = Aclaracion::all()->where('peticion_id', $peticion["id"]);
-            $totalAclaracionesRes += sizeof($aclaraciones);
-            foreach ($aclaraciones as $key => $aclaracion) {
-                if ($aclaracion->respuesta) {
-                    $respuestaAclaraciones[] = $aclaracion;
-                }
-            }
-        }
-        if ($request["plazo_recurso"] && $request["recurso"] == 1) {
-            $pqrFechaLimiteRecurso = PQR::findOrFail($request['id_pqr']);
-            $nuevoLimite = $pqrFechaLimiteRecurso->prorroga_dias + $pqrFechaLimiteRecurso->tipoPqr->tiempos + $request["plazo_recurso"];
-            $respuestaDias = FechasController::festivos($nuevoLimite, $pqrFechaLimiteRecurso['fecha_generacion']);
-            $actualizarPqr['tiempo_limite'] = $respuestaDias;
-            PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);
-        }
+    // public function gestionar_guardar(Request $request)
+    // {
+    //     $pqrEstadoPrioridad['prioridad_id'] = $request['prioridad'];
+    //     PQR::findOrFail($request['id_pqr'])->update($pqrEstadoPrioridad);
+    //     $documentos = $request->allFiles();
+    //     $totalPeticiones = $request['totalPeticiones'];
+    //     $contadorAclaraciones = 0;
+    //     $iteradorAclaraciones = 0;
+    //     $contadorAnexos = 0;
+    //     $iteradorAnexos = 0;
+    //     for ($i = 0; $i < $totalPeticiones; $i++) {
+    //         $actualizarPeticion['aclaracion'] = $request["aclaracion_check$i"];
+    //         if ($request["recurso"] == 1) {
+    //             if ($request["plazo_recurso"] != null) {
+    //                 $actualizarPeticion['recurso'] = $request["recurso"];
+    //                 $actualizarPeticion['recurso_dias'] = $request["plazo_recurso"];
+    //                 $actualizarPeticion['fecha_notificacion'] = date('Y-m-d');
+    //             }
+    //         }
+    //         Peticion::findOrFail($request["id_peticion$i"])->update($actualizarPeticion);
+    //         $contadorAclaraciones += $request["totalPeticionAclaraciones$i"];
+    //         for ($j = $iteradorAclaraciones; $j < $contadorAclaraciones; $j++) {
+    //             if ($request["solicitud_aclaracion$j"] != null) {
+    //                 $nuevaAclaracion['peticion_id'] = $request["id_peticion$i"];
+    //                 $nuevaAclaracion['fecha'] = date("Y-m-d");
+    //                 $nuevaAclaracion['tipo_solicitud'] = $request["tipo_aclaracion$j"];
+    //                 $nuevaAclaracion['aclaracion'] = $request["solicitud_aclaracion$j"];
+    //                 $aclaracionNew = Aclaracion::create($nuevaAclaracion);
+    //                 $peticion_act = Peticion::findOrfail($request["id_peticion$i"]);
+    //                 if ($peticion_act->pqr->persona_id != null) {
+    //                     $email = $peticion_act->pqr->persona->email;
+    //                 } else {
+    //                     $email = $peticion_act->pqr->empresa->email;
+    //                 }
+    //                 $id_aclaracion = $aclaracionNew->id;
+    //                 Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+    //             }
+    //         }
+    //         $contadorAnexos += $request["totalPeticionAnexos$i"];
+    //         if ($request["respuesta$i"]) {
+    //             $respuesta['peticion_id'] = $request["id_peticion$i"];
+    //             $respuesta['fecha'] = date("Y-m-d");
+    //             $respuesta['respuesta'] = $request["respuesta$i"];
+    //             $respuestaPQR = Respuesta::create($respuesta);
+    //             //----------------------------------------------------------------------
+    //             if ($respuestaPQR->peticion->pqr->persona_id != null) {
+    //                 $email = $respuestaPQR->peticion->pqr->persona->email;
+    //             } else {
+    //                 $email = $respuestaPQR->peticion->pqr->empresa->email;
+    //             }
+    //             $id_pqr = $respuestaPQR->peticion->pqr->id;
+    //             Mail::to($email)->send(new RespuestaPQR($id_pqr));
+    //             //----------------------------------------------------------------------
+    //             for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
+    //                 if ($request->hasFile("documentos$k")) {
+    //                     $ruta = Config::get('constantes.folder_doc_respuestas');
+    //                     $ruta = trim($ruta);
+    //                     $doc_subido = $documentos["documentos$k"];
+    //                     $tamaño = $doc_subido->getSize();
+    //                     if ($tamaño > 0) {
+    //                         $tamaño = $tamaño / 1000;
+    //                     }
+    //                     $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+    //                     $nuevo_documento['respuesta_id'] = $respuestaPQR["id"];
+    //                     $nuevo_documento['titulo'] = $request["titulo$k"];
+    //                     if ($request["descripcion$k"]) {
+    //                         $nuevo_documento['descripcion'] = $request["descripcion$k"];
+    //                     } else {
+    //                         $nuevo_documento['descripcion'] = '';
+    //                     }
+    //                     $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+    //                     $nuevo_documento['peso'] = $tamaño;
+    //                     $nuevo_documento['url'] = $nombre_doc;
+    //                     $doc_subido->move($ruta, $nombre_doc);
+    //                     $doc = DocRespuesta::create($nuevo_documento);
+    //                 }
+    //             }
+    //         }
+    //         $iteradorAclaraciones += $request["totalPeticionAclaraciones$i"];
+    //         $iteradorAnexos += $request["totalPeticionAnexos$i"];
+    //     }
+    //     $peticiones = Peticion::all()->where('pqr_id', $request["id_pqr"]);
+    //     $respuestasPeticiones = [];
+    //     $totalAclaracionesRes = 0;
+    //     $respuestaAclaraciones = [];
+    //     $recurso = 0;
+    //     $totalRecursos = [];
+    //     foreach ($peticiones as $key => $peticion) {
+    //         if ($peticion->respuesta) {
+    //             $respuestasPeticiones[] = $peticion->respuesta;
+    //         }
+    //         if ($peticion->recurso != 0) {
+    //             $recurso = $peticion->recurso;
+    //             if (!empty($peticion->recursos)) {
+    //                 if (sizeOf($peticion->recursos)) {
+    //                     $totalRecursos[] = $peticion->recursos;
+    //                 }
+    //             }
+    //         }
+    //         $aclaraciones = Aclaracion::all()->where('peticion_id', $peticion["id"]);
+    //         $totalAclaracionesRes += sizeof($aclaraciones);
+    //         foreach ($aclaraciones as $key => $aclaracion) {
+    //             if ($aclaracion->respuesta) {
+    //                 $respuestaAclaraciones[] = $aclaracion;
+    //             }
+    //         }
+    //     }
+    //     if ($request["plazo_recurso"] && $request["recurso"] == 1) {
+    //         $pqrFechaLimiteRecurso = PQR::findOrFail($request['id_pqr']);
+    //         $nuevoLimite = $pqrFechaLimiteRecurso->prorroga_dias + $pqrFechaLimiteRecurso->tipoPqr->tiempos + $request["plazo_recurso"];
+    //         $respuestaDias = FechasController::festivos($nuevoLimite, $pqrFechaLimiteRecurso['fecha_generacion']);
+    //         $actualizarPqr['tiempo_limite'] = $respuestaDias;
+    //         PQR::findOrFail($request['id_pqr'])->update($actualizarPqr);
+    //     }
 
-        if (sizeOf($peticiones) == sizeOf($respuestasPeticiones)) {
-            if ($recurso && sizeOf($totalRecursos) == 0) {
-                $estado = Estado::findOrFail(7);
-                $pqrEstado['estadospqr_id'] = $estado['id'];
-                PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
-            } elseif ($recurso == 0) {
-                $estado = Estado::findOrFail(6);
-                $pqrEstado['estadospqr_id'] = $estado['id'];
-                PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
-            }
-        } elseif (sizeOf($respuestaAclaraciones) != $totalAclaracionesRes && $recurso == 0) {
-            $estado = Estado::findOrFail(5);
-            $pqrEstado['estadospqr_id'] = $estado['id'];
-            PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
-        } elseif (sizeOf($respuestasPeticiones)) {
-            $estado = Estado::findOrFail(2);
-            $pqrEstado['estadospqr_id'] = $estado['id'];
-            PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
-        }
-        return redirect('/funcionario/listado');
-    }
+    //     if (sizeOf($peticiones) == sizeOf($respuestasPeticiones)) {
+    //         if ($recurso && sizeOf($totalRecursos) == 0) {
+    //             $estado = Estado::findOrFail(7);
+    //             $pqrEstado['estadospqr_id'] = $estado['id'];
+    //             PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+    //         } elseif ($recurso == 0) {
+    //             $estado = Estado::findOrFail(6);
+    //             $pqrEstado['estadospqr_id'] = $estado['id'];
+    //             PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+    //         }
+    //     } elseif (sizeOf($respuestaAclaraciones) != $totalAclaracionesRes && $recurso == 0) {
+    //         $estado = Estado::findOrFail(5);
+    //         $pqrEstado['estadospqr_id'] = $estado['id'];
+    //         PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+    //     } elseif (sizeOf($respuestasPeticiones)) {
+    //         $estado = Estado::findOrFail(2);
+    //         $pqrEstado['estadospqr_id'] = $estado['id'];
+    //         PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
+    //     }
+    //     return redirect('/funcionario/listado');
+    // }
 
 
     public function gestionar_guardar_usuario(Request $request)
@@ -207,7 +210,9 @@ class PQRController extends Controller
                     $email = $peticion_act->pqr->empresa->email;
                 }
                 $id_aclaracion = $aclaracionNew->id;
-                Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
+                if($email){
+                    Mail::to($email)->send(new ConstanciaAclaracion($id_aclaracion));
+                }
                 //----------------------------------------------------------------------
                 $contadorAnexos += $request["totalanexos$i"];
                 for ($k = $iteradorAnexos; $k < $contadorAnexos; $k++) {
@@ -264,8 +269,40 @@ class PQRController extends Controller
             $pqrEstado['estadospqr_id'] = $estado['id'];
             PQR::findOrFail($request['id_pqr'])->update($pqrEstado);
         }
+        // dd($recurso);
         return redirect('/usuario/listado');
     }
+
+    public function aclaracion_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $nuevaAclaracion['peticion_id'] = $request["id_peticion"];
+            $nuevaAclaracion['fecha'] = date("Y-m-d");
+            $nuevaAclaracion['tipo_solicitud'] = $request["tipoAclaracion"];
+            $nuevaAclaracion['aclaracion'] = $request["solicitudAclaracion"];
+            $aclaracionNew = Aclaracion::create($nuevaAclaracion);
+            $peticion_act = Peticion::findOrfail($request["id_peticion"]);
+            $pqr = PQR::findOrfail($peticion_act->pqr_id);
+            if($pqr->estadospqr_id <= 5){
+                $pqrEstado['estadospqr_id'] = 5; 
+                PQR::findOrFail($pqr->id)->update($pqrEstado);
+            }
+            if ($peticion_act->pqr->persona_id != null) {
+                $email = $peticion_act->pqr->persona->email;
+            } else {
+                $email = $peticion_act->pqr->empresa->email;
+            }
+            $id_aclaracion = $aclaracionNew->id;
+            if($email){
+                Mail::to($email)->send(new AclaracionComplementacion($id_aclaracion));
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $aclaracionNew]);
+        } else {
+            abort(404);
+        }
+    }
+
 
     public function prorroga_guardar(Request $request)
     {
@@ -286,13 +323,15 @@ class PQRController extends Controller
                     }
                     $respuestaProrroga = PQR::findOrFail($request['idPqr'])->update($actualizarPqr);
                     //---------------------------------------------------------------------------
-                    // if ($pqr->persona_id != null) {
-                    //     $email = $pqr->persona->email;
-                    // } else {
-                    //     $email = $pqr->empresa->email;
-                    // }
-                    // $id_pqr = $pqr->id;
-                    // Mail::to($email)->send(new Prorroga($id_pqr));
+                    if ($pqr->persona_id != null) {
+                        $email = $pqr->persona->email;
+                    } else {
+                        $email = $pqr->empresa->email;
+                    }
+                    $id_pqr = $pqr->id;
+                    if($email){
+                        Mail::to($email)->send(new Prorroga($id_pqr));
+                    }
                     //---------------------------------------------------------------------------
                 }
             }
@@ -302,11 +341,80 @@ class PQRController extends Controller
         }
     }
 
+    
+    public function respuesta_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $respuestaValidacion = Respuesta::where('peticion_id', $request["id_peticion"])->get();
+            if(!sizeOf($respuestaValidacion)){
+                $respuesta['peticion_id'] = $request["id_peticion"];
+                $respuesta['fecha'] = date("Y-m-d");
+                $respuesta['respuesta'] = $request["respuesta"];
+                $respuestaPQR = Respuesta::create($respuesta);
+                $id_respuesta = $respuestaPQR['id'];
+            }else{
+                $respuesta['respuesta'] = $request["respuesta"];
+                $id_respuesta = $respuestaValidacion[0]['id'];
+                $respuestaPQR = Respuesta::findOrFail($id_respuesta)->update($respuesta);
+            }
+            if( $request["estado"]){
+                $nuevoEstado['estado_id'] = $request["estado"];
+                Peticion::findOrFail($request['id_peticion'])->update($nuevoEstado);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_anexo_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $documentos = $request->allFiles();
+            if ($request->hasFile('archivo')) {
+                $ruta = Config::get('constantes.folder_doc_respuestas');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["archivo"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['respuesta_id'] = $request["respuesta_id"];
+                $nuevo_documento['titulo'] = $request["titulo"];
+                if ($request["descripcion"]) {
+                    $nuevo_documento['descripcion'] = $request["descripcion"];
+                } else {
+                    $nuevo_documento['descripcion'] = '';
+                }
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+                $respuesta = DocRespuesta::create($nuevo_documento);
+            }
+
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function estado_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $nuevoEstado['estado_id'] = $request["estado"];
+            $peticion = Peticion::findOrFail($request['id_peticion'])->update($nuevoEstado);
+            return response()->json(['mensaje' => 'ok', 'data' => $peticion]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function plazo_recurso_guardar(Request $request)
     {
         if ($request->ajax()) {
             $plazoRecurso['recurso_dias'] = $request['plazo_recurso'];
-            Peticion::findOrFail($request['peticion'])->update($plazoRecurso);
             $pqr = PQR::findOrfail($request['idPqr']);
             $nuevoLimite = $pqr->tipoPqr->tiempos + $pqr['prorroga_dias'] + $request['plazo_recurso'];
             $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
@@ -314,15 +422,10 @@ class PQRController extends Controller
             $estado = Estado::findOrFail(7);
             $actualizarPqr['estadospqr_id'] = $estado['id'];
             $respuestaRecurso = PQR::findOrFail($request['idPqr'])->update($actualizarPqr);
-            //---------------------------------------------------------------------------
-            // if ($pqr->persona_id != null) {
-            //     $email = $pqr->persona->email;
-            // } else {
-            //     $email = $pqr->empresa->email;
-            // }
-            // $id_pqr = $pqr->id;
-            // Mail::to($email)->send(new Prorroga($id_pqr));
-            //---------------------------------------------------------------------------
+            $peticiones = Peticion::where('pqr_id', $request['idPqr'])->get();
+            foreach ($peticiones as $key => $peticion) {
+                Peticion::findOrFail($peticion->id)->update($plazoRecurso);
+            }
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
         } else {
             abort(404);
@@ -514,18 +617,36 @@ class PQRController extends Controller
             }else{
                 $estado = PQR::findOrFail($request['idPqr'])->update($asignacionData);
                 $tareas = Tarea::all();
-                foreach ($tareas as $value) {
-                    $asignacionTarea['pqr_id'] = $request['idPqr'];
-                    $asignacionTarea['empleado_id'] = session('id_usuario');
-                    $asignacionTarea['tareas_id'] = $value['id'];
-                    if($asignacionTarea['tareas_id'] == 2){
-                        $asignacionTarea['estado_id'] = 2;
-                    }else{
+                $validarTareas = AsignacionTarea::where('pqr_id', $request['idPqr'])->get();
+                if(!sizeOf($validarTareas)){
+                    foreach ($tareas as $value) {
+                        $asignacionTarea['pqr_id'] = $request['idPqr'];
+                        $asignacionTarea['empleado_id'] = session('id_usuario');
+                        $asignacionTarea['tareas_id'] = $value['id'];
                         $asignacionTarea['estado_id'] = 1;
+                        AsignacionTarea::create($asignacionTarea);
                     }
-                    AsignacionTarea::create($asignacionTarea);
                 }
             }
+            $asignacionHistorial['pqr_id'] = $request['idPqr'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['mensajeAsignacion'];
+            $historial = HistorialAsignacion::create($asignacionHistorial);
+
+            $respuesta['estado'] = $estado;
+            $respuesta['historial'] = $historial;
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function asignacion_asignador_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionData['estado_asignacion'] = 0;
+            $asignacionData['empleado_id'] = $request['funcionario'];
+            $estado = PQR::findOrFail($request['idPqr'])->update($asignacionData);
             $asignacionHistorial['pqr_id'] = $request['idPqr'];
             $asignacionHistorial['empleado_id'] = session('id_usuario');
             $asignacionHistorial['historial'] = $request['mensajeAsignacion'];
@@ -617,6 +738,76 @@ class PQRController extends Controller
         }
     }
 
+    public function pqr_anexo_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $documentos = $request->allFiles();
+            if ($request->hasFile('archivo')) {
+                $ruta = Config::get('constantes.folder_doc_tareas');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["archivo"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['pqr_id'] = $request["pqr_id"];
+                $nuevo_documento['titulo'] = $request["titulo"];
+                if ($request["descripcion"]) {
+                    $nuevo_documento['descripcion'] = $request["descripcion"];
+                } else {
+                    $nuevo_documento['descripcion'] = '';
+                }
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $nuevo_documento['tareas_id'] = $request["idTarea"];
+                $nuevo_documento['empleado_id'] = session('id_usuario');
+                $doc_subido->move($ruta, $nombre_doc);
+                $respuesta = PqrAnexo::create($nuevo_documento);
+                $pqr = PQR::findOrfail($request["pqr_id"]);
+                $pqr_id = $pqr->id;
+                if ($pqr->persona_id != null) {
+                    $email = $pqr->persona->email;
+                }elseif($pqr->empresa_id != null){
+                    $email = $pqr->empresa->email;
+                } 
+                if($email){
+                    Mail::to($email)->send(new RespuestaPQR($pqr_id));
+                }
+                if($pqr->peticiones->sum('recurso_dias')){
+                    $pqrEstado['estadospqr_id'] = 7; 
+                }else{
+                    $pqrEstado['estadospqr_id'] = 6; 
+                }
+                PQR::findOrFail($pqr->id)->update($pqrEstado);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function cambiar_estado_tareas_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            if($request['estado']){
+                $estado['estado_id'] = $request['estado'];
+                $tarea = $request['idTarea'] - 1;
+            }else{
+                $estado['estado_id'] = 11;
+                $tarea = $request['idTarea'];
+            }
+            $respuesta = AsignacionTarea::where('pqr_id',$request['idPqr'])->where('tareas_id',$tarea)->update($estado);
+            if($request['idTarea'] == 5){
+                AsignacionTarea::where('pqr_id',$request['idPqr'])->where('tareas_id', 1)->update($estado);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+
+    }
     public function cargar_tareas(Request $request)
     {
         if ($request->ajax()) {
