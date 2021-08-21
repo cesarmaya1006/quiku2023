@@ -129,10 +129,10 @@
                         <thead class="thead-inverse">
                             <tr>
                                 <th class="text-center" style="white-space:nowrap;">Estado</th>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
@@ -142,14 +142,14 @@
                                 @if ($pqr->empleado_id == null)
                                     <tr>
                                         <td class="text-center" style="white-space:nowrap;">
-                                            {{ $pqr->empleado_id != null ? 'Asignada' : '---' }}</td>
+                                            {{ $pqr->empleado_id != null ? 'Asignada' : 'Sin Asignar' }}</td>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->radicado }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipoPqr->tipo }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
                                         </td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipo }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->prioridad->prioridad }}
                                         </td>
@@ -177,10 +177,10 @@
                         <thead class="thead-inverse">
                             <tr>
                                 <th class="text-center" style="white-space:nowrap;">Estado</th>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
@@ -190,14 +190,14 @@
                                 @if ($pqr->empleado_id)
                                     <tr>
                                         <td class="text-center" style="white-space:nowrap;">
-                                            {{ $pqr->empleado_id != null ? 'Asignada' : '---' }}</td>
+                                            {{ $pqr->empleado_id != null ? 'Asignada' : 'Sin asignar' }}</td>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->radicado }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipoPqr->tipo }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
                                         </td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipo }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->prioridad->prioridad }}
                                         </td>
@@ -228,11 +228,10 @@
                         <thead class="thead-inverse">
                             <tr>
                                 <th class="text-center" style="white-space:nowrap;">Estado</th>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
-                                <th class="text-center" style="white-space:nowrap;">Adquisición</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
@@ -243,14 +242,13 @@
                                     <tr>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->empleado_id != null ? 'Asignada' : '---' }}</td>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->radicado }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipoPqr->tipo }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
                                         </td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipo }}</td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->adquisicion }}</td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->prioridad->prioridad }}
                                         </td>
@@ -277,11 +275,10 @@
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
-                                <th class="text-center" style="white-space:nowrap;">Adquisición</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
@@ -290,14 +287,12 @@
                             @foreach ($pqrs as $pqr)
                                 @if ($pqr->estado_asignacion == 1 && $pqr->asignaciontareas->sum('estado_id') != 55)
                                     <tr>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->radicado }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipoPqr->tipo }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
-                                        </td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipo }}</td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->adquisicion }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->prioridad->prioridad }}
@@ -327,27 +322,24 @@
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
-                                <th class="text-center" style="white-space:nowrap;">Adquisición</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($tareas as $tarea)
-                                @if ($tarea->tareas_id == 1 && $tarea->estado_id == 1)
+                                @if ($tarea->tareas_id == 1 && ($tarea->estado_id == 1 || $tarea->estado_id == 6 ))
                                     <tr>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->radicado }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipoPqr->tipo }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $tarea->pqr->persona_id != null ? $tarea->pqr->persona->nombre1 . ' ' . $tarea->pqr->persona->nombre2 . ' ' . $tarea->pqr->persona->apellido1 . ' ' . $tarea->pqr->persona->apellido2 : $tarea->pqr->empresa->nombre1 . ' ' . $tarea->pqr->empresa->nombre2 . ' ' . $tarea->pqr->empresa->apellido1 . ' ' . $tarea->pqr->empresa->apellido2 }}
-                                        </td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipo }}</td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->adquisicion }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $tarea->pqr->prioridad->prioridad }}
@@ -376,11 +368,10 @@
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
-                                <th class="text-center" style="white-space:nowrap;">Adquisición</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Estado Peticiones</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
@@ -390,14 +381,12 @@
                             @foreach ($tareas as $tarea)
                                 @if ($tarea->tareas_id == 2 && $tarea->estado_id != 11 )
                                         <tr>
+                                            <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                             <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->radicado }}</td>
                                             <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipoPqr->tipo }}
                                             </td>
                                             <td class="text-center" style="white-space:nowrap;">
                                                 {{ $tarea->pqr->persona_id != null ? $tarea->pqr->persona->nombre1 . ' ' . $tarea->pqr->persona->nombre2 . ' ' . $tarea->pqr->persona->apellido1 . ' ' . $tarea->pqr->persona->apellido2 : $tarea->pqr->empresa->nombre1 . ' ' . $tarea->pqr->empresa->nombre2 . ' ' . $tarea->pqr->empresa->apellido1 . ' ' . $tarea->pqr->empresa->apellido2 }}
-                                            </td>
-                                            <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipo }}</td>
-                                            <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->adquisicion }}
                                             </td>
                                             <td class="text-center" style="white-space:nowrap;">
                                                 {{ $tarea->pqr->prioridad->prioridad }}
@@ -445,11 +434,10 @@
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
-                                <th class="text-center" style="white-space:nowrap;">Adquisición</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
@@ -458,14 +446,12 @@
                             @foreach ($tareas as $tarea)
                                 @if ($tarea->tareas_id == 3 && $tarea->estado_id != 11 && sizeOf(($tarea->pqr->asignaciontareas->where('tareas_id', $tarea->tareas_id -1 ))->where('estado_id', 11)))
                                         <tr>
+                                            <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                             <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->radicado }}</td>
                                             <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipoPqr->tipo }}
                                             </td>
                                             <td class="text-center" style="white-space:nowrap;">
                                                 {{ $tarea->pqr->persona_id != null ? $tarea->pqr->persona->nombre1 . ' ' . $tarea->pqr->persona->nombre2 . ' ' . $tarea->pqr->persona->apellido1 . ' ' . $tarea->pqr->persona->apellido2 : $tarea->pqr->empresa->nombre1 . ' ' . $tarea->pqr->empresa->nombre2 . ' ' . $tarea->pqr->empresa->apellido1 . ' ' . $tarea->pqr->empresa->apellido2 }}
-                                            </td>
-                                            <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipo }}</td>
-                                            <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->adquisicion }}
                                             </td>
                                             <td class="text-center" style="white-space:nowrap;">
                                                 {{ $tarea->pqr->prioridad->prioridad }}
@@ -494,11 +480,10 @@
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
-                                <th class="text-center" style="white-space:nowrap;">Adquisición</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
@@ -507,14 +492,12 @@
                             @foreach ($tareas as $tarea)
                                 @if ($tarea->tareas_id == 4 && $tarea->estado_id != 11 && sizeOf(($tarea->pqr->asignaciontareas->where('tareas_id', $tarea->tareas_id -1 ))->where('estado_id', 11)))
                                         <tr>
+                                            <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                             <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->radicado }}</td>
                                             <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipoPqr->tipo }}
                                             </td>
                                             <td class="text-center" style="white-space:nowrap;">
                                                 {{ $tarea->pqr->persona_id != null ? $tarea->pqr->persona->nombre1 . ' ' . $tarea->pqr->persona->nombre2 . ' ' . $tarea->pqr->persona->apellido1 . ' ' . $tarea->pqr->persona->apellido2 : $tarea->pqr->empresa->nombre1 . ' ' . $tarea->pqr->empresa->nombre2 . ' ' . $tarea->pqr->empresa->apellido1 . ' ' . $tarea->pqr->empresa->apellido2 }}
-                                            </td>
-                                            <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipo }}</td>
-                                            <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->adquisicion }}
                                             </td>
                                             <td class="text-center" style="white-space:nowrap;">
                                                 {{ $tarea->pqr->prioridad->prioridad }}
@@ -543,11 +526,10 @@
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
-                                <th class="text-center" style="white-space:nowrap;">Adquisición</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
@@ -556,14 +538,12 @@
                             @foreach ($tareas as $tarea)
                                 @if ($tarea->tareas_id == 5 && $tarea->estado_id != 11 && sizeOf(($tarea->pqr->asignaciontareas->where('tareas_id', $tarea->tareas_id -1 ))->where('estado_id', 11)))
                                         <tr>
+                                            <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                             <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->radicado }}</td>
                                             <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipoPqr->tipo }}
                                             </td>
                                             <td class="text-center" style="white-space:nowrap;">
                                                 {{ $tarea->pqr->persona_id != null ? $tarea->pqr->persona->nombre1 . ' ' . $tarea->pqr->persona->nombre2 . ' ' . $tarea->pqr->persona->apellido1 . ' ' . $tarea->pqr->persona->apellido2 : $tarea->pqr->empresa->nombre1 . ' ' . $tarea->pqr->empresa->nombre2 . ' ' . $tarea->pqr->empresa->apellido1 . ' ' . $tarea->pqr->empresa->apellido2 }}
-                                            </td>
-                                            <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipo }}</td>
-                                            <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->adquisicion }}
                                             </td>
                                             <td class="text-center" style="white-space:nowrap;">
                                                 {{ $tarea->pqr->prioridad->prioridad }}
@@ -592,27 +572,24 @@
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>                              
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                                 <th class="text-center" style="white-space:nowrap;">Cliente</th>
-                                <th class="text-center" style="white-space:nowrap;">Producto / Servicio</th>
-                                <th class="text-center" style="white-space:nowrap;">Adquisición</th>
                                 <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                                 <th class="text-center" style="white-space:nowrap;">Ver</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($pqrs as $pqr)
-                                @if (($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 9 || $pqr->estadospqr_id == 11 ) && $pqr->asignaciontareas->sum('estado_id') == 55)
+                                @if (($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 9 || $pqr->estadospqr_id == 10 ) && $pqr->asignaciontareas->sum('estado_id') == 55)
                                     <tr>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->radicado }}</td>
                                         <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipoPqr->tipo }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
-                                        </td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipo }}</td>
-                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->adquisicion }}
                                         </td>
                                         <td class="text-center" style="white-space:nowrap;">
                                             {{ $pqr->prioridad->prioridad }}

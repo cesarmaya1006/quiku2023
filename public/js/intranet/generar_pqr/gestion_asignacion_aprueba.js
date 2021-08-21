@@ -72,7 +72,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 let data = {
                     idTarea,
                     mensajeHistorial,
-                    idPqr
+                    idPqr,
+                    apruebaRadica: 1
                 }
                 $.ajax({
                     async:false,
@@ -107,7 +108,6 @@ window.addEventListener('DOMContentLoaded', function(){
                     headers: { 'X-CSRF-TOKEN': token },
                     data: data,
                     success: function(respuesta) {
-                        // window.location = "/admin/index"
                         // console.log(respuesta)
                     },
                     error: function(error) {

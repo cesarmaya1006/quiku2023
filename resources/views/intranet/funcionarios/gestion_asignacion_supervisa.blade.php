@@ -151,12 +151,12 @@
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Sub - Categoría Motivo:</strong> {{ $peticion->motivo->sub_motivo }}</p>
                                             </div>
+                                            @if ($peticion->otro)
+                                                <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}</p>
+                                            @endif
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Justificación:</strong> {{ $peticion->justificacion }}</p>
                                             </div>
-                                            @if ($peticion->otro)
-                                                <p class="text-justify">{{ $peticion->otro }}</p>
-                                            @endif
                                         </div>
                                         <hr>
                                     @endif
@@ -182,6 +182,24 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Descripción de la solicitud:</strong> {{ $peticion->descripcionsolicitud }}</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($peticion->peticion)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Tipo de petición:</strong> {{ $peticion->peticion }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Documento o información requerida:</strong> {{ $peticion->indentifiquedocinfo }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Justificacion:</strong> {{ $peticion->justificacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
@@ -273,7 +291,6 @@
                                                     <tr>
                                                         <th scope="col">Fecha Sol Aclaración</th>
                                                         <th scope="col">Aclaracion</th>
-                                                        <th scope="col">Estado</th>
                                                         <th scope="col">Fecha Resp.</th>
                                                         <th scope="col">Respuesta</th>
                                                         <th scope="col">Documento</th>
@@ -285,7 +302,6 @@
                                                             <tr>
                                                                 <td>{{ $aclaracion->fecha }}</td>
                                                                 <td class="text-justify">{{ $aclaracion->aclaracion }}</td>
-                                                                <td>Resuelta</td>
                                                                 <td>{{ $aclaracion->fecha_respuesta }}</td>
                                                                 <td class="text-justify">{{ $aclaracion->respuesta }}</td>
                                                                 @if ($aclaracion->anexos)
@@ -370,9 +386,9 @@
                                                             <th scope="col">Fecha recurso</th>
                                                             <th scope="col">Tipo de recurso</th>
                                                             <th scope="col">Recurso</th>
-                                                            <th scope="col">Estado</th>
                                                             <th scope="col">Documentos recurso</th>
                                                             <th scope="col">Fecha respuesta recurso</th>
+                                                            <th scope="col">Descripción</th>
                                                             <th scope="col">Documentos respuesta recurso</th>
                                                         </tr>
                                                     </thead>
@@ -382,7 +398,6 @@
                                                                 <td>{{ $recurso->fecha_radicacion }}</td>
                                                                 <td class="text-justify">{{ $recurso->tiporeposicion->tipo }}</td>
                                                                 <td class="text-justify">{{ $recurso->recurso }}</td>
-                                                                <td>Resuelta</td>
                                                                 @if ($recurso->documentos)
                                                                     <td>
                                                                         @foreach ($recurso->documentos as $anexo)
@@ -392,12 +407,17 @@
                                                                         @endforeach
                                                                     </td>
                                                                 @else
-                                                                    <td>---</td>
+                                                                    <td></td>
                                                                 @endif
                                                                 @if ($recurso->respuestarecurso)
                                                                     <td>{{ $recurso->respuestarecurso->fecha }}</td>
                                                                 @else
-                                                                    <td>---</td>
+                                                                    <td></td>
+                                                                @endif
+                                                                @if ($recurso->respuestarecurso)
+                                                                    <td>{{ $recurso->respuestarecurso->respuesta }}</td>
+                                                                @else
+                                                                    <td></td>
                                                                 @endif
                                                                 <td>
                                                                     @if ($recurso->respuestarecurso)
@@ -491,7 +511,11 @@
                                             @foreach ($pqr->historialtareas as $historial)
                                                 <tr>
                                                     <td>{{ $historial->created_at }}</td>
-                                                    <td class="text-justify">{{ $historial->tarea->tarea }}</td>
+                                                    @if($historial->tarea)
+                                                        <td class="text-justify">{{ $historial->tarea->tarea }}</td>
+                                                    @else
+                                                        <td class="text-justify">ADMINISTRADOR</td>
+                                                    @endif
                                                     <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
                                                     <td class="text-justify">{{ $historial->historial }}</td>
                                                 </tr>

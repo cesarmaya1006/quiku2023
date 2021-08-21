@@ -1,332 +1,45 @@
 window.addEventListener('DOMContentLoaded', function(){
-    ajustarNameAclaracion()
-    let id_pqr = document.querySelector('.id_pqr').value
-    let btnSubmit = document.querySelector('#fromGestionPqrUsuario')
-    btnSubmit.addEventListener('submit', function (e) {
-        e.preventDefault()
-        let anexos = document.querySelectorAll('input[type="file"]')
-        anexos.forEach(anexo =>{
-            if(anexo.value == ''){
-                anexo.parentNode.parentNode.remove()
-            }
-        })
-        ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
-        ajustarPeticiones()
-        document.querySelector('.totalGeneralaclaraciones').value = document.querySelectorAll('.aclaracion').length
-        document.querySelector('.totalGeneralAnexos').value = document.querySelectorAll('.anexoconsulta').length
-        let ajustarContadoresAnexos = document.querySelectorAll('.aclaracion')
-        ajustarContadoresAnexos.forEach(contador => {
-            contador.querySelector('.totalanexos').value = contador.querySelectorAll('.anexoconsulta').length
-        })
-        this.submit();
-    })
-    // ---------------------------------------------------------------------------------------------------------
-    // Inicio Función para ajustar name y id de cada peticion.
-    function ajustarNameAclaracion(){
-        let aclaraciones = document.querySelectorAll('.aclaracion')
-        for (let i = 0; i < aclaraciones.length; i++) {
-            const aclaracion = aclaraciones[i]
-            aclaracion.querySelector('.id_aclaracion').name = `id_aclaracion${i}`
-            aclaracion.querySelector('.totalanexos').name = `totalanexos${i}`
-            aclaracion.querySelector('.aclaracionRespuesta').name = `aclaracionRespuesta${i}`
-        }
-    }
-    
-    function ajustarPeticiones(){
-        let peticion = document.querySelectorAll('.peticion_general')
-        for (let i = 0; i < peticion.length; i++) {
-            peticion[i].querySelector('.totalPeticionAclaraciones').name = `totalPeticionAclaraciones${i}`
-            peticion[i].querySelector('.totalPeticionAclaraciones').value = peticion[i].querySelectorAll('.aclaracion').length
-            peticion[i].querySelector('.id_peticion').name = `id_peticion${i}`
-        }
-    }
-    // Fin Función para ajustar name y id de cada peticion.
-    // ---------------------------------------------------------------------------------------------------------
+    const id_pqr = document.querySelector('.id_pqr').value
     // Inicio Función para generar varios anexos en una consulta con validación.
-    ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
-    let btncrearAnexo = document.querySelectorAll('.crearAnexo')
-    btncrearAnexo.forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
-    let btnEliminarAnexo = document.querySelectorAll('.eliminaranexoConsulta')
-    btnEliminarAnexo.forEach(btn => btn.addEventListener('click', agregarEliminarAnexo))
-
-    function crearNuevoAnexo(e) {
-        e.preventDefault()
-        let consulta = e.target.parentNode.parentNode
-        let nuevoAnexo = consulta.querySelectorAll('.anexoconsulta')[0].cloneNode(true)
-        nuevoAnexo.querySelector('.titulo-anexoConsulta input').value = ''
-        nuevoAnexo.querySelector('.descripcion-anexoConsulta input').value = ''
-        nuevoAnexo.querySelector('.doc-anexoConsulta input').value = ''
-        consulta.querySelector('#anexosConsulta').appendChild(nuevoAnexo)
-        ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
-        document.querySelectorAll('.eliminaranexoConsulta').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
-    }
-
-    function ajustarNameAnexo(anexosConsulta) {
-        for (let i = 0; i < anexosConsulta.length; i++) {
-            const anexoconsulta = anexosConsulta[i];
-            anexoconsulta.id = `anexosConsulta${i}`
-            anexoconsulta.querySelector('.titulo-anexoConsulta input').id = `titulo${i}`
-            anexoconsulta.querySelector('.titulo-anexoConsulta input').name = `titulo${i}`
-            anexoconsulta.querySelector('.descripcion-anexoConsulta input').id = `descripcion${i}`
-            anexoconsulta.querySelector('.descripcion-anexoConsulta input').name = `descripcion${i}`
-            anexoconsulta.querySelector('.doc-anexoConsulta input').id = `documentos${i}`
-            anexoconsulta.querySelector('.doc-anexoConsulta input').name = `documentos${i}`
+    if(document.querySelectorAll('.crearAnexo').length){
+        let btncrearAnexo = document.querySelectorAll('.crearAnexo')
+        btncrearAnexo.forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
+        let btnEliminarAnexo = document.querySelector('.eliminaranexoConsulta')
+        btnEliminarAnexo.addEventListener('click', agregarEliminarAnexo)
+    
+        function crearNuevoAnexo(e) {
+            e.preventDefault()
+            let consulta = e.target.parentNode.parentNode
+            let nuevoAnexo = consulta.querySelectorAll('.anexoconsulta')[0].cloneNode(true)
+            nuevoAnexo.querySelector('.titulo-anexoConsulta input').value = ''
+            nuevoAnexo.querySelector('.descripcion-anexoConsulta input').value = ''
+            nuevoAnexo.querySelector('.doc-anexoConsulta input').value = ''
+            consulta.querySelector('.anexosConsulta').appendChild(nuevoAnexo)
+            document.querySelectorAll('.eliminaranexoConsulta').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
         }
-    }
-
-    function agregarEliminarAnexo(e) {
-        e.preventDefault()
-        let consulta = e.target
-        if (consulta.tagName === 'I') {
-            consulta = consulta.parentNode.parentNode.parentNode.parentNode
-        }else {
-            consulta = consulta.parentNode.parentNode.parentNode
-        }
-        if (consulta.querySelectorAll('.anexoconsulta').length >= 2) {
-            let idAnexo = e.target
-            if (idAnexo.tagName === 'I') {
-                idAnexo = idAnexo.parentNode.parentNode.parentNode
-            } else {
-                idAnexo = idAnexo.parentNode.parentNode
+    
+        function agregarEliminarAnexo(e) {
+            e.preventDefault()
+            let consulta = e.target
+            if (consulta.tagName === 'I') {
+                consulta = consulta.parentNode.parentNode.parentNode.parentNode
+            }else {
+                consulta = consulta.parentNode.parentNode.parentNode
             }
-            idAnexo.remove()
-            ajustarNameAnexo(document.querySelectorAll('.anexoconsulta'))
+            if (consulta.querySelectorAll('.anexoconsulta').length >= 2) {
+                let idAnexo = e.target
+                if (idAnexo.tagName === 'I') {
+                    idAnexo = idAnexo.parentNode.parentNode.parentNode
+                } else {
+                    idAnexo = idAnexo.parentNode.parentNode
+                }
+                idAnexo.remove()
+            }
         }
     }
     // Fin Función para generar varios anexos en una consulta con validación.
-    // ---------------------------------------------------------------------------------------------------------
-    // Inicio Función para generar varios anexos en una recurso con validación.
-    let btncrearAnexoRecurso = document.querySelectorAll('.crearAnexoRecurso')
-    btncrearAnexoRecurso.forEach(btn => btn.addEventListener('click', crearNuevoAnexoRecurso))
-    let btnEliminarAnexoRecurso = document.querySelectorAll('.eliminaranexoRecurso')
-    btnEliminarAnexoRecurso.forEach(btn => btn.addEventListener('click', agregarEliminarAnexoRecurso))
-
-    function crearNuevoAnexoRecurso(e) {
-        e.preventDefault()
-        let recurso = e.target.parentNode.parentNode
-        let nuevoAnexo = recurso.querySelectorAll('.anexoRecurso')[0].cloneNode(true)
-        nuevoAnexo.querySelector('.titulo-anexoRecurso input').value = ''
-        nuevoAnexo.querySelector('.descripcion-anexoRecurso input').value = ''
-        nuevoAnexo.querySelector('.doc-anexoRecurso input').value = ''
-        recurso.querySelector('#anexosRecursos').appendChild(nuevoAnexo)
-        document.querySelectorAll('.eliminaranexoRecurso').forEach(item => item.addEventListener('click', agregarEliminarAnexoRecurso))
-    }
-
-    function agregarEliminarAnexoRecurso(e) {
-        e.preventDefault()
-        let recurso = e.target
-        if (recurso.tagName === 'I') {
-            recurso = recurso.parentNode.parentNode.parentNode.parentNode
-        }else {
-            recurso = recurso.parentNode.parentNode.parentNode
-        }
-        if (recurso.querySelectorAll('.anexoRecurso').length >= 2) {
-            let idAnexo = e.target
-            if (idAnexo.tagName === 'I') {
-                idAnexo = idAnexo.parentNode.parentNode.parentNode
-            } else {
-                idAnexo = idAnexo.parentNode.parentNode
-            }
-            idAnexo.remove()
-        }
-    }
-    // Fin Función para generar varios anexos en una recurso con validación.
-    // ---------------------------------------------------------------------------------------------------------
-    let btnRecursosGuardar = document.querySelectorAll('.guardarRecurso button')
-    btnRecursosGuardar.forEach(e => {
-        e.addEventListener('click', guardarRecurso)
-    })
-    function guardarRecurso(e){
-        e.preventDefault()
-        let contenedor = e.target.parentNode.parentNode
-        let url = e.target.getAttribute('data_url')
-        let token = e.target.getAttribute('data_token')
-        let tipo_reposicion = contenedor.querySelector('.tipo_reposicion').value
-        let respuestaRecurso = contenedor.querySelector('.respuestaRecurso').value
-        let idPeticionRecurso = contenedor.querySelector('.id_peticionRecurso').value
-        if(tipo_reposicion == 4){
-            let recurso_id1 = 0
-            if(tipo_reposicion != '' && respuestaRecurso != ''){
-                let data = {
-                    peticion_id : idPeticionRecurso,
-                    tipo_reposicion_id : 2,
-                    recurso : respuestaRecurso,
-                    id: id_pqr
-                }
-                $.ajax({
-                    async:false,
-                    url: url,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                        recurso_id1 = respuesta.data.id
-                    },
-                    error: function(error) {
-                        console.log(error)
-                    }
-                });
-            }
-
-            let anexosRecursos1 = contenedor.querySelectorAll('.anexoRecurso')
-            anexosRecursos1.forEach(anexo => {
-                let titulo = anexo.querySelector('.titulo-anexoRecurso input').value
-                let descripcion = anexo.querySelector('.descripcion-anexoRecurso input').value
-                let archivo = anexo.querySelector('.doc-anexoRecurso input').files[0]
-                let dataAnexo = new FormData();
-                dataAnexo.append('recurso_id', recurso_id1);
-                dataAnexo.append('titulo', titulo);
-                dataAnexo.append('descripcion', descripcion);
-                dataAnexo.append('archivo', archivo);
-                dataAnexo.append('_token', token);
-                let urlAnexo = anexo.parentNode.parentNode.parentNode
-                urlAnexo =  urlAnexo.querySelector('.guardarRecurso button').getAttribute('data_url_anexos')
-                $.ajax({
-                    url: urlAnexo,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: dataAnexo,
-                    processData: false, 
-                    contentType: false,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                    },
-                    error: function(error) {
-                        console.log(error)
-                    }
-                });
-            })
-            let recurso_id2 = 0
-            if(tipo_reposicion != '' && respuestaRecurso != ''){
-                let data = {
-                    peticion_id : idPeticionRecurso,
-                    tipo_reposicion_id : 3,
-                    recurso : respuestaRecurso,
-                    id: id_pqr
-                }
-                $.ajax({
-                    async:false,
-                    url: url,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        recurso_id2 = respuesta.data.id
-                    },
-                    error: function(error) {
-                        console.log(error)
-                    }
-                });
-            }
-
-            let anexosRecursos2 = contenedor.querySelectorAll('.anexoRecurso')
-            anexosRecursos2.forEach(anexo => {
-                let titulo = anexo.querySelector('.titulo-anexoRecurso input').value
-                let descripcion = anexo.querySelector('.descripcion-anexoRecurso input').value
-                let archivo = anexo.querySelector('.doc-anexoRecurso input').files[0]
-                let dataAnexo = new FormData();
-                dataAnexo.append('recurso_id', recurso_id2);
-                dataAnexo.append('titulo', titulo);
-                dataAnexo.append('descripcion', descripcion);
-                dataAnexo.append('archivo', archivo);
-                dataAnexo.append('_token', token);
-                let urlAnexo = anexo.parentNode.parentNode.parentNode
-                urlAnexo =  urlAnexo.querySelector('.guardarRecurso button').getAttribute('data_url_anexos')
-                $.ajax({
-                    url: urlAnexo,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: dataAnexo,
-                    processData: false, 
-                    contentType: false,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                    },
-                    error: function(error) {
-                        console.log(error)
-                    }
-                });
-            })
-            
-        }else{
-            let recurso_id = 0
-            if(tipo_reposicion != '' && respuestaRecurso != ''){
-                let data = {
-                    peticion_id : idPeticionRecurso,
-                    tipo_reposicion_id : tipo_reposicion,
-                    recurso : respuestaRecurso,
-                    id: id_pqr
-                }
-                $.ajax({
-                    async:false,
-                    url: url,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                        recurso_id = respuesta.data.id
-                    },
-                    error: function(error) {
-                        console.log(error)
-                    }
-                });
-            }
     
-            let anexosRecursos = contenedor.querySelectorAll('.anexoRecurso')
-            anexosRecursos.forEach(anexo => {
-                let titulo = anexo.querySelector('.titulo-anexoRecurso input').value
-                let descripcion = anexo.querySelector('.descripcion-anexoRecurso input').value
-                let archivo = anexo.querySelector('.doc-anexoRecurso input').files[0]
-                let dataAnexo = new FormData();
-                dataAnexo.append('recurso_id', recurso_id);
-                dataAnexo.append('titulo', titulo);
-                dataAnexo.append('descripcion', descripcion);
-                dataAnexo.append('archivo', archivo);
-                dataAnexo.append('_token', token);
-                let urlAnexo = anexo.parentNode.parentNode.parentNode
-                urlAnexo =  urlAnexo.querySelector('.guardarRecurso button').getAttribute('data_url_anexos')
-                $.ajax({
-                    url: urlAnexo,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: dataAnexo,
-                    processData: false, 
-                    contentType: false,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                    },
-                    error: function(error) {
-                        console.log(error)
-                    }
-                });
-            })
-            location.reload();
-        }
-        location.reload();
-    }
-    // ---------------------------------------------------------------------------------------------------------
-    let verificacionRecurso = document.querySelectorAll('.respuestaProcedeRecurso')
-    verificacionRecurso.forEach(item => {
-        if(item.value == 1){
-            item.parentElement.querySelector('.recurso_procede_no').setAttribute('checked','')
-            item.parentElement.querySelector('.form-recursos').classList.add('d-none')
-        }
-    })
-    
-    $('.recurso_procede_check').on('change', function(e) {
-        let padre = e.target.parentNode.parentNode.parentNode
-        switch (e.target.value) {
-            case '1':
-                padre.querySelector('.form-recursos').classList.remove('d-none');
-                break;
-            case '0':
-                padre.querySelector('.form-recursos').classList.add('d-none');
-                break;
-        }
-    });
-    
+    // Inicio bloque para la funcion de tarjetas
     let menuCardLink = document.querySelectorAll('.card-step')
     menuCardLink.forEach(link => {
         link.addEventListener('click', menuscards)
@@ -335,7 +48,6 @@ window.addEventListener('DOMContentLoaded', function(){
     function menuscards (link) {
         link.preventDefault()
         let seleccion = link.target
-
         switch (seleccion.tagName) {
             case 'I':
                 seleccion = seleccion.parentNode.parentNode.parentNode
@@ -350,7 +62,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 seleccion = seleccion.parentNode
                 break;
         }
-        let menuCardLink = document.querySelectorAll('.card-step')
+
         menuCardLink.forEach(link => {
             if(link.classList.contains('activo')){
                 link.classList.remove('activo')
@@ -371,4 +83,220 @@ window.addEventListener('DOMContentLoaded', function(){
             contenedor.classList.remove('d-none')
         })
     }
+    // Fin bloque para la funcion de tarjetas
+    
+    // Inicio bloque para la funcion de aclaraciones
+    if(document.querySelectorAll('.btn-guardar-aclaracion')){
+        let btnRespuestas = document.querySelectorAll('.btn-guardar-aclaracion')
+        btnRespuestas.forEach(btn=> btn.addEventListener('click', guardarRespuestas))
+
+        function guardarRespuestas(btn){
+            btn.preventDefault()
+            padreRespuesta = btn.target.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let url2 = btn.target.getAttribute('data_url2')
+            let token = btn.target.getAttribute('data_token')
+            let respuesta = padreRespuesta.querySelector('.aclaracionRespuesta').value
+            let id_aclaracion = padreRespuesta.querySelector('.id_aclaracion').value
+            let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
+            if (respuesta != '') {
+                data = {
+                    url,
+                    respuesta,
+                    id_aclaracion
+                }
+                guardarRespuesta(data)
+            }
+            function guardarRespuesta(data){
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        guardarRespuestaAnexo(anexos, respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function guardarRespuestaAnexo(anexos, idrespuesta){
+                anexos.forEach(anexo => {
+                    let titulo = anexo.querySelector('.titulo').value
+                    let descripcion = anexo.querySelector('.descripcion').value
+                    let archivo = anexo.querySelector('.documento').files[0]
+                    if (archivo) {
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('respuesta_id', idrespuesta.data.id);
+                        dataAnexo.append('titulo', titulo);
+                        dataAnexo.append('descripcion', descripcion);
+                        dataAnexo.append('archivo', archivo);
+                        dataAnexo.append('_token', token);
+                        $.ajax({
+                            async:false,
+                            url: url2,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false, 
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                })
+            }
+            location.reload();
+        }
+    }
+    // Fin bloque para la funcion de aclaraciones
+    
+    // Incio función para ocultar bloque de recursos
+    let verificacionRecurso = document.querySelectorAll('.respuestaProcedeRecurso')
+    verificacionRecurso.forEach(item => {
+        if(item.value == 1){
+            if(item.parentElement.querySelector('.recurso_procede_no')){
+                item.parentElement.querySelector('.recurso_procede_no').setAttribute('checked','')
+                item.parentElement.querySelector('.form-recursos').classList.add('d-none')
+            }
+        }
+    })
+    
+    $('.recurso_procede_check').on('change', function(e) {
+        let padre = e.target.parentNode.parentNode.parentNode
+        switch (e.target.value) {
+            case '1':
+                padre.querySelector('.form-recursos').classList.remove('d-none');
+                break;
+            case '0':
+                padre.querySelector('.form-recursos').classList.add('d-none');
+                break;
+            }
+    });
+    // Fin función para ocultar bloque de recursos
+
+    // Inicio función para guardar recurso
+    if(document.querySelectorAll('.btn-recurso')){
+
+        let btnRecursosGuardar = document.querySelectorAll('.btn-recurso')
+        btnRecursosGuardar.forEach(e => {
+            e.addEventListener('click', guardarRecurso)
+        })
+        function guardarRecurso(e){
+            e.preventDefault()
+            let contenedor = e.target.parentNode.parentNode
+            let url = e.target.getAttribute('data_url')
+            let url2 = e.target.getAttribute('data_url_anexos')
+            let token = e.target.getAttribute('data_token')
+            let tipo_reposicion = contenedor.querySelector('.tipo_reposicion').value
+            let respuestaRecurso = contenedor.querySelector('.respuestaRecurso').value
+            let idPeticionRecurso = contenedor.querySelector('.id_peticionRecurso').value
+            let anexos = contenedor.querySelectorAll('.anexoconsulta')
+            if(tipo_reposicion != '' && respuestaRecurso != ''){
+                if(tipo_reposicion == 4){
+                    let data = {
+                        peticion_id : idPeticionRecurso,
+                        tipo_reposicion_id : 2,
+                        recurso : respuestaRecurso,
+                        id: id_pqr
+                    }
+                    $.ajax({
+                        async:false,
+                        url: url,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                            guardarRespuestaAnexo(anexos, respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error)
+                        }
+                    });
+
+                    let data2 = {
+                        peticion_id : idPeticionRecurso,
+                        tipo_reposicion_id : 3,
+                        recurso : respuestaRecurso,
+                        id: id_pqr
+                    }
+                    $.ajax({
+                        async:false,
+                        url: url,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data2,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                            guardarRespuestaAnexo(anexos, respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }else{
+                    let data = {
+                        peticion_id : idPeticionRecurso,
+                        tipo_reposicion_id : tipo_reposicion,
+                        recurso : respuestaRecurso,
+                        id: id_pqr
+                    }
+                    $.ajax({
+                        async:false,
+                        url: url,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                            guardarRespuestaAnexo(anexos, respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }
+            }
+
+            function guardarRespuestaAnexo(anexos, idrespuesta){
+                anexos.forEach(anexo => {
+                    let titulo = anexo.querySelector('.titulo').value
+                    let descripcion = anexo.querySelector('.descripcion').value
+                    let archivo = anexo.querySelector('.documento').files[0]
+                    if (archivo) {
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('recurso_id', idrespuesta.data.id);
+                        dataAnexo.append('titulo', titulo);
+                        dataAnexo.append('descripcion', descripcion);
+                        dataAnexo.append('archivo', archivo);
+                        dataAnexo.append('_token', token);
+                        $.ajax({
+                            async:false,
+                            url: url2,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false, 
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                })
+            }
+            location.reload();
+        }
+    }       
+    // Fin función para guardar recurso 
 })

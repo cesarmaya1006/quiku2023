@@ -247,7 +247,9 @@ class ClienteController extends Controller
         }
         $id_pqr = $pqr->id;
         $this->asigacion_automatica($id_pqr);
-        Mail::to($email)->send(new PQR_Radicada($id_pqr));
+        if($email){
+            Mail::to($email)->send(new PQR_Radicada($id_pqr));
+        }
         return redirect('/usuario/generar')->with('id', $idPQR)->with('pqr_tipo', $pqr->tipo_pqr_id)->with('radicado', $pqr->radicado)->with('fecha_radicado', $pqr->created_at);
     }
 
@@ -334,7 +336,9 @@ class ClienteController extends Controller
             $email = $concepto->empresa->email;
         }
         $id_pqr = $concepto->id;
-        // Mail::to($email)->send(new CUO_Radicada($id_pqr));
+        if($email){
+            Mail::to($email)->send(new CUO_Radicada($id_pqr));
+        }
         return redirect('/usuario/generar')->with('id', $concepto->id)->with('pqr_tipo', $concepto->tipo_pqr_id)->with('radicado', $concepto->radicado)->with('fecha_radicado', $concepto->created_at);
     }
 
@@ -387,7 +391,9 @@ class ClienteController extends Controller
             $email = $felicitacion->empresa->email;
         }
         $id_felicitacion = $felicitacion->id;
-        // Mail::to($email)->send(new Felicitacion_Radicada($id_felicitacion));
+        if($email){
+            Mail::to($email)->send(new Felicitacion_Radicada($id_felicitacion));
+        }
 
         return redirect('/usuario/generar')->with('id', $felicitacion->id)->with('pqr_tipo', $felicitacion->tipo_pqr_id)->with('radicado', $felicitacion->radicado)->with('fecha_radicado', $felicitacion->created_at);
     }
@@ -474,7 +480,9 @@ class ClienteController extends Controller
             $email = $denuncia->empresa->email;
         }
         $id_pqr = $denuncia->id;
-        // Mail::to($email)->send(new RI_Radicada($id_pqr));
+        if($email){
+            Mail::to($email)->send(new RI_Radicada($id_pqr));
+        }
         return redirect('/usuario/generar')->with('id', $denuncia->id)->with('pqr_tipo', $denuncia->tipo_pqr_id)->with('radicado', $denuncia->radicado)->with('fecha_radicado', $denuncia->created_at);
     }
 
@@ -552,7 +560,9 @@ class ClienteController extends Controller
             $email = $solicitudId->empresa->email;
         }
         $id_pqr = $solicitudId->id;
-        // Mail::to($email)->send(new SD_Radicada($id_pqr));
+        if($email){
+            Mail::to($email)->send(new SD_Radicada($id_pqr));
+        }
         return redirect('/usuario/generar')->with('id', $solicitudId->id)->with('pqr_tipo', $solicitudId->tipo_pqr_id)->with('radicado', $solicitudId->radicado)->with('fecha_radicado', $solicitudId->created_at);
     }
 
@@ -574,7 +584,6 @@ class ClienteController extends Controller
         } else {
             $nuevaSolicitud['empresa_id'] = $usuario->id;
         }
-        // $nuevaSolicitud['sede_id'] = $request['sede_id'];
         $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
@@ -629,7 +638,9 @@ class ClienteController extends Controller
             $email = $solicitud->empresa->email;
         }
         $id_pqr = $solicitud->id;
-        // Mail::to($email)->send(new SDI_Radicada($id_pqr));
+        if($email){
+            Mail::to($email)->send(new SDI_Radicada($id_pqr));
+        }
         return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado)->with('fecha_radicado', $solicitud->created_at);
     }
 
@@ -708,7 +719,9 @@ class ClienteController extends Controller
             $email = $sugerencia->empresa->email;
         }
         $id_sugerencia = $sugerencia->id;
-        // Mail::to($email)->send(new SugerenciaRadicada($id_sugerencia));
+        if($email){
+            Mail::to($email)->send(new SugerenciaRadicada($id_sugerencia));
+        }
 
         return redirect('/usuario/generar')->with('id', $sugerencia->id)->with('pqr_tipo', $sugerencia->tipo_pqr_id)->with('radicado', $sugerencia->radicado)->with('fecha_radicado', $sugerencia->created_at);
     }

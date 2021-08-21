@@ -187,7 +187,7 @@
                                                             </div>
                                                         @endif
                                                         @if ($peticion->otro)
-                                                            <p class="text-justify mt-2">{{ $peticion->otro }}</p>
+                                                            <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}</p>
                                                         @endif
                                                         @if ($peticion->peticion)
                                                             <div class="row mt-2">
@@ -401,24 +401,26 @@
                                             <div class="col-6">
                                                 <h5>Respuesta petición</h5>
                                             </div>
-                                            <div class="col-6 row estado-peticion">
-                                                <div class="col-2 d-flex mb-2">
-                                                    <h6>Estado:</h6>
+                                            @if ($pqr->estadospqr_id < 6)
+                                                <div class="col-6 row estado-peticion">
+                                                    <div class="col-2 d-flex mb-2">
+                                                        <h6>Avance:</h6>
+                                                    </div>
+                                                    <select class="custom-select rounded-0 estadoPeticion col-4">
+                                                        @foreach ($estados as $estado)
+                                                            <option value="{{ $estado->id }}"
+                                                            {{ $peticion->estadopeticion->id == $estado->id ? 'selected' : '' }}>
+                                                            {{ $estado->estado }} %</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <button type="" class="btn btn-primary btn-estado col-2 mx-2"
+                                                        data_url="{{ route('estado_guardar') }}"
+                                                        data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
                                                 </div>
-                                                <select class="custom-select rounded-0 estadoPeticion col-4">
-                                                    @foreach ($estados as $estado)
-                                                        <option value="{{ $estado->id }}"
-                                                        {{ $peticion->estadopeticion->id == $estado->id ? 'selected' : '' }}>
-                                                        {{ $estado->estado }} %</option>
-                                                    @endforeach
-                                                </select>
-                                                <button type="" class="btn btn-primary btn-estado col-2 mx-2"
-                                                    data_url="{{ route('estado_guardar') }}"
-                                                    data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
-                                            </div>
+                                            @endif
                                         </div>
                                         <div class="col-12 form-group">
-                                            @if ($peticion->estadopeticion->estado == 100)
+                                            @if ($peticion->estadopeticion->estado == 100 || sizeOf($peticion->recursos))
                                                 <textarea type="text" class="form-control form-control-sm respuesta" rows="6" disabled>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
                                             @else
                                                 <textarea type="text" class="form-control form-control-sm respuesta" rows="6" max>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
@@ -427,7 +429,7 @@
                                                 <input class="respuesta_anterior" type="hidden" value="{{ $peticion->respuesta->respuesta }}" data_url="{{ route('historial_peticion_guardar') }}">
                                             @endif
                                         </div>
-                                        @if($peticion->estadopeticion->estado != 100)
+                                        @if($peticion->estadopeticion->estado != 100 && !sizeOf($peticion->recursos))
                                             <div class="col-12 anexosConsulta">
                                                 <div class="col-12 d-flex row anexoconsulta">
                                                     <div class="col-12 titulo-anexo d-flex justify-content-between">
@@ -518,9 +520,9 @@
                                                             <th scope="col">Fecha recurso</th>
                                                             <th scope="col">Tipo de recurso</th>
                                                             <th scope="col">Recurso</th>
-                                                            <th scope="col">Estado</th>
                                                             <th scope="col">Documentos recurso</th>
                                                             <th scope="col">Fecha respuesta recurso</th>
+                                                            <th scope="col">Descripción</th>
                                                             <th scope="col">Documentos respuesta recurso</th>
                                                         </tr>
                                                     </thead>
@@ -532,7 +534,6 @@
                                                                     {{ $recurso->tiporeposicion->tipo }}</td>
                                                                 <td class="text-justify">{{ $recurso->recurso }}
                                                                 </td>
-                                                                <td>Resuelta</td>
                                                                 @if ($recurso->documentos)
                                                                     <td>
                                                                         @foreach ($recurso->documentos as $anexo)
@@ -542,13 +543,19 @@
                                                                         @endforeach
                                                                     </td>
                                                                 @else
-                                                                    <td>---</td>
+                                                                    <td></td>
                                                                 @endif
                                                                 @if ($recurso->respuestarecurso)
                                                                     <td>{{ $recurso->respuestarecurso->fecha }}
                                                                     </td>
                                                                 @else
-                                                                    <td>---</td>
+                                                                    <td></td>
+                                                                @endif
+                                                                @if ($recurso->respuestarecurso)
+                                                                    <td>{{ $recurso->respuestarecurso->respuesta }}
+                                                                    </td>
+                                                                @else
+                                                                    <td></td>
                                                                 @endif
                                                                 <td>
                                                                     @if ($recurso->respuestarecurso)
@@ -564,6 +571,23 @@
                                                     </tbody>
                                                 </table>
                                                 <hr class="mt-5">
+                                                <div class="col-12 d-flex justify-content-end">
+                                                    <div class="col-6 row estado-peticion">
+                                                        <div class="col-2 d-flex mb-2">
+                                                            <h6>Avance:</h6>
+                                                        </div>
+                                                        <select class="custom-select rounded-0 estadoPeticion col-4">
+                                                            @foreach ($estados as $estado)
+                                                                <option value="{{ $estado->id }}"
+                                                                {{ $peticion->estadopeticion->id == $estado->id ? 'selected' : '' }}>
+                                                                {{ $estado->estado }} %</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <button type="" class="btn btn-primary btn-estado-recurso col-2 mx-2"
+                                                            data_url="{{ route('estado_guardar') }}"
+                                                            data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
+                                                    </div>
+                                                </div>
                                             </div>
                                             @php
                                                 $variableRecursoApelacion = false;
@@ -582,91 +606,50 @@
                                                             value="{{ $recurso->tipo_reposicion_id }}">
                                                         <div class="row">
                                                             <div class="col-12 col-md-6">
-                                                                <h6>Recurso de
+                                                                <h6>Respuesta recurso de
                                                                     {{ $recurso->tiporeposicion->tipo }}
                                                                 </h6>
                                                             </div>
                                                             <textarea type="text"
                                                                 class="form-control form-control-sm text-justify"
                                                                 disabled>{{ $recurso->recurso }}</textarea>
-                                                            @if ($variableRecursoApelacion && $recurso->tipo_reposicion_id == 3)
-                                                                <div class="col-12" id="anexosRespuestaRecursos">
-                                                                    <div class="col-12 d-flex row anexoRespuestaRecurso"
-                                                                        id="anexoRespuestaRecurso">
-                                                                        <div
-                                                                            class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
-                                                                            <label for="titulo">Título anexo</label>
-                                                                            <input type="text"
-                                                                                class="form-control form-control-sm">
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
-                                                                            <label
-                                                                                for="descripcion">Descripción</label>
-                                                                            <input type="text"
-                                                                                class="form-control form-control-sm">
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
-                                                                            <label for="documentoRecurso">Anexos o
-                                                                                Pruebas</label>
-                                                                            <input
-                                                                                class="form-control form-control-sm"
-                                                                                type="file">
-                                                                        </div>
+                                                            <div class="col-12" id="anexosRespuestaRecursos">
+                                                                <div class="col-12 d-flex row anexoRespuestaRecurso"
+                                                                    id="anexoRespuestaRecurso">
+                                                                    <div
+                                                                        class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
+                                                                        <label for="titulo">Título anexo</label>
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm">
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
+                                                                        <label
+                                                                            for="descripcion">Descripción</label>
+                                                                        <input type="text"
+                                                                            class="form-control form-control-sm">
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
+                                                                        <label for="documentoRecurso">Anexos o
+                                                                            Pruebas</label>
+                                                                        <input
+                                                                            class="form-control form-control-sm"
+                                                                            type="file">
                                                                     </div>
                                                                 </div>
-                                                            @elseif($recurso->tipo_reposicion_id == 1 ||
-                                                                $recurso->tipo_reposicion_id == 2)
-                                                                <div class="col-12" id="anexosRespuestaRecursos">
-                                                                    <div class="col-12 d-flex row anexoRespuestaRecurso"
-                                                                        id="anexoRespuestaRecurso">
-                                                                        <div
-                                                                            class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
-                                                                            <label for="titulo">Título anexo</label>
-                                                                            <input type="text"
-                                                                                class="form-control form-control-sm">
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
-                                                                            <label
-                                                                                for="descripcion">Descripción</label>
-                                                                            <input type="text"
-                                                                                class="form-control form-control-sm">
-                                                                        </div>
-                                                                        <div
-                                                                            class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
-                                                                            <label for="documentoRecurso">Anexos o
-                                                                                Pruebas</label>
-                                                                            <input
-                                                                                class="form-control form-control-sm"
-                                                                                type="file">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            @endif
+                                                            </div>
                                                         </div>
-                                                        @if ($variableRecursoApelacion && $recurso->tipo_reposicion_id == 3)
-                                                            <div
-                                                                class="card-footer d-flex justify-content-end guardarRespuestaRecurso">
-                                                                <button type="" class="btn btn-primary px-4"
-                                                                    data_url="{{ route('respuesta_recurso_guardar') }}"
-                                                                    data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}"
-                                                                    data_token="{{ csrf_token() }}">Guardar
-                                                                    recurso</button>
-                                                            </div>
-                                                        @elseif($recurso->tipo_reposicion_id == 1 ||
-                                                            $recurso->tipo_reposicion_id == 2)
-                                                            <div
-                                                                class="card-footer d-flex justify-content-end guardarRespuestaRecurso">
-                                                                <button type="" class="btn btn-primary px-4"
-                                                                    data_url="{{ route('respuesta_recurso_guardar') }}"
-                                                                    data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}"
-                                                                    data_token="{{ csrf_token() }}">Guardar
-                                                                    recurso</button>
-                                                            </div>
-                                                        @endif
+                                                        <div
+                                                            class="card-footer d-flex guardarRespuestaRecurso mb-2">
+                                                            <button type="" class="btn btn-primary px-4"
+                                                                data_url="{{ route('respuesta_recurso_guardar') }}"
+                                                                data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}"
+                                                                data_token="{{ csrf_token() }}">Guardar
+                                                                recurso</button>
+                                                        </div>
                                                     </div>
+                                                    <hr class="mt-3">
                                                 @endif
                                             @endforeach
                                         </div>
@@ -675,6 +658,7 @@
                                 @endif   
                                 {{-- Fin bloque de respuesta recurso --}}
                                 {{-- Incio historial petición  --}}
+
                                 <h6 class="">Historial peticiones</h6>
                                 <div class="row d-flex px-12 p-3">
                                     <div class="col-12 table-responsive">

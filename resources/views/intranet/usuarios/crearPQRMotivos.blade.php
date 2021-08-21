@@ -39,7 +39,7 @@
                                         <div class="col-12 d-flex justify-content-between">
                                             <label for="">Categoría Motivo</label>
                                         </div>
-                                        <select name="motivo_pqr" id="motivo_pqr"
+                                        <select name="motivo_pqr"
                                             data_url="{{ route('cargar_submotivos') }}"
                                             class="custom-select rounded-0 motivo_pqr" required>
                                             <option value="">--Seleccione--</option>
@@ -50,7 +50,7 @@
                                     </div>
                                     <div class="form-group col-12 col-md-6 indentifiquedocinfo-motivo">
                                         <label for="motivo_sub_id">Sub - Categoría Motivo</label>
-                                        <select name="motivo_sub_id" id="motivo_sub_id"
+                                        <select name="motivo_sub_id"
                                             class="custom-select rounded-0 motivo_sub_id" required>
                                             <option value="">--Seleccione--</option>
                                         </select>
@@ -105,7 +105,7 @@
                                             <div class="col-12 col-md-4 form-group doc-anexomotivo">
                                                 <label for="documentos">Anexos o Pruebas</label>
                                                 <input class="form-control form-control-sm" type="file" name="documentos"
-                                                    id="documentos" accept="application/pdf">
+                                                    id="documentos">
                                             </div>
                                         </div>
                                     </div>

@@ -78,7 +78,11 @@
                                             @foreach ($pqr->historialtareas as $historial)
                                                 <tr>
                                                     <td>{{ $historial->created_at }}</td>
-                                                    <td class="text-justify">{{ $historial->tarea->tarea }}</td>
+                                                    @if($historial->tarea)
+                                                        <td class="text-justify">{{ $historial->tarea->tarea }}</td>
+                                                    @else
+                                                        <td class="text-justify">ADMINISTRADOR</td>
+                                                    @endif
                                                     <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
                                                     <td class="text-justify">{{ $historial->historial }}</td>
                                                 </tr>

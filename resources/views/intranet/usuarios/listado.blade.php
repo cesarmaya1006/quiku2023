@@ -50,7 +50,7 @@
                                             <td>{{ $pqr->tipoPqr->tipo }}</td>
                                             <td>{{ $pqr->estado->estado_usuario }}</td>
                                             <td>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</td>
-                                            @if ($pqr->tipo_pqr_id == 1 || $pqr->tipo_pqr_id == 2 || $pqr->tipo_pqr_id == 3)
+                                            {{-- @if ($pqr->tipo_pqr_id == 1 || $pqr->tipo_pqr_id == 2 || $pqr->tipo_pqr_id == 3) --}}
                                                 <td><a href="{{ route('pqrRadicadaPdf', $pqr->id) }}"
                                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a></td>
@@ -66,7 +66,7 @@
                                                     @endif
 
                                                 </td>
-                                            @elseif ($pqr->tipo_pqr_id == 4)
+                                            {{-- @elseif ($pqr->tipo_pqr_id == 4)
                                                 <td>
                                                     <a href="{{ route('pqrRadicadaPdfCuo', ['id' => $pqr->id]) }}"
                                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
@@ -132,7 +132,7 @@
                                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                                                 </td>
-                                            @endif
+                                            @endif --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
