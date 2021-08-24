@@ -29,7 +29,7 @@ class IntranetPageCotroller extends Controller
     {
         $tipoPQR = tipoPQR::all();
         $usuario = Usuario::findOrFail(session('id_usuario'));
-        $tareas = AsignacionTarea::where('empleado_id',$usuario->id )->get();
+        $tareas = AsignacionTarea::where('empleado_id', $usuario->id)->get();
         if (session('rol_id') == 6) {
             if ($usuario->persona->count() > 0) {
                 $pqrs = PQR::where('persona_id', session('id_usuario'))->get();
@@ -39,11 +39,10 @@ class IntranetPageCotroller extends Controller
                 }
             }
         } elseif (session('rol_id') == 5) {
-            if($usuario->empleado->cargo->id == 1){
-                $pqrs = PQR::where('empleado_id',$usuario->id)->get();
-                
-            }elseif($usuario->empleado->cargo->id == 2){
+            if ($usuario->empleado->cargo->id == 2) {
                 $pqrs = PQR::all();
+            } else {
+                $pqrs = PQR::where('empleado_id', $usuario->id)->get();
             }
         } elseif (session('rol_id') == 4) {
             $pqrs = PQR::where('empleado_id', session('id_usuario'))->get();

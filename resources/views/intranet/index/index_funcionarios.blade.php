@@ -217,7 +217,7 @@
     @endif
 @endif
 @if ($usuario->empleado)
-    @if ($usuario->empleado->cargo->id == 1)
+    @if ($usuario->empleado->cargo->id != 2)
         <div class="container-fluid" style="font-size: 0.8em;">
             <div class="row">
                 <div class="col-12">
@@ -401,7 +401,7 @@
                                                 <td class="text-center bg-success" style="white-space:nowrap;">
                                                     {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
                                                 </td>
-                                            @elseif($porcentaje / $tarea->pqr->peticiones->count() == 0 )    
+                                            @elseif($porcentaje / $tarea->pqr->peticiones->count() == 0 )
                                                 <td class="text-center bg-danger" style="white-space:nowrap;">
                                                     {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
                                                 </td>
@@ -571,7 +571,7 @@
                 <div class="col-12">
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
-                            <tr>                              
+                            <tr>
                                 <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
                                 <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                                 <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
