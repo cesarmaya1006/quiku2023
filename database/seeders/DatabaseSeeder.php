@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             'docutipos', 'roles', 'menu', 'menu_rol', 'icono', 'pais', 'departamento', 'municipio',
             'sedes', 'parametros', 'areas', 'niveles', 'cargos', 'tipo_reposicion', 'area_influencia',
             'usuarios', 'personas', 'tipo_pqr', 'prioridades', 'estadospqr', 'motivos', 'motivo_sub', 'categorias', 'productos', 'marcas',
-            'referencias', 'servicios', 'diasfestivos',
+            'referencias', 'servicios', 'diasfestivos', 'asignacion_particular_pqr'
 
         ]);
         // --------------------------------------------------------------------------------------------------
@@ -51,6 +51,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_DiasFestivos::class);
         $this->call(Tabla_Tareas::class);
         $this->call(Tabla_AsignancionEstados::class);
+        $this->call(Tabla_AsignacionParticularPQR::class);
     }
 
     protected function truncateTablas(array $tablas)
