@@ -37,7 +37,11 @@ class IntranetPageCotroller extends Controller
                 }
             }
         } elseif (session('rol_id') == 5) {
-            $pqrs = PQR::where('empleado_id',$usuario->id)->get();
+            if ($usuario->empleado->cargo_id == 2) {
+                $pqrs = PQR::where('estadospqr_id', '1')->get();
+            } else {
+                $pqrs = PQR::where('empleado_id', $usuario->id)->where('estadospqr_id', '1')->get();
+            }
         } elseif (session('rol_id') == 4) {
             $pqrs = PQR::where('empleado_id', session('id_usuario'))->get();
         } elseif (session('rol_id') == 1) {

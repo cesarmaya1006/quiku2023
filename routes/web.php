@@ -23,6 +23,7 @@ use App\Http\Controllers\Intranet\Funcionarios\PQR_P_Controller;
 use App\Http\Controllers\Intranet\Funcionarios\PQR_Q_Controller;
 use App\Http\Controllers\Intranet\Funcionarios\PQR_R_Controller;
 use App\Http\Controllers\Intranet\Empresas\FuncionarioFController;
+use App\Http\Controllers\Intranet\Empresas\WikuController;
 use App\Http\Controllers\Intranet\Funcionarios\DenunciaController;
 use App\Http\Controllers\Intranet\Funcionarios\SugerenciaController;
 use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
@@ -210,6 +211,16 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('funcionarios/{id}', [FuncionarioFController::class, 'activar'])->name('funcionarios_funcionarios-activar');
             Route::get('funcionarios-cargar_niveles', [FuncionarioFController::class, 'cargar_niveles'])->name('funcionarios_funcionarios-cargar_niveles');
             Route::get('funcionarios-cargar_cargos', [FuncionarioFController::class, 'cargar_cargos'])->name('funcionarios_funcionarios-cargar_cargos');
+            // ------------------------------------------------------------------------------------
+            //Gestión de wiku
+            Route::get('wiku/index', [WikuController::class, 'index'])->name('wiku-index');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            Route::get('wiku_norma/crear', [WikuController::class, 'crear_norma'])->name('wiku_norma-crear');
+            Route::post('wiku_norma-guardar', [WikuController::class, 'guardar_norma'])->name('wiku_norma-guardar');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            Route::get('wiku/index_fuenteN', [WikuController::class, 'index_fuenteN'])->name('wiku-index_fuenteN');
+            Route::get('wiku_fuente/crear', [WikuController::class, 'crear_fuente'])->name('wiku_fuenteN-crear');
+            Route::post('wiku_fuente-guardar', [WikuController::class, 'guardar_fuenteN'])->name('wiku_fuenteN-guardar');
         });
     });
     //==================================================================================================================

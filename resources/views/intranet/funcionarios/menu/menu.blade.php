@@ -52,6 +52,9 @@
                                 <a class="nav-link"
                                     href="{{ route('funcionarios_funcionarios-index') }}">Funcionarios</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('wiku-index') }}">Wiku</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
