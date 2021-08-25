@@ -1,4 +1,39 @@
 window.addEventListener('DOMContentLoaded', function(){
+    let idPqr = document.querySelector('#id_pqr').value
+    //  Guardar Historial PQR-tarea  
+    if(document.querySelector('#guardarHistorialTarea')){
+        let guardarHistorialTarea = document.querySelector('#guardarHistorialTarea')
+        guardarHistorialTarea.addEventListener('click', function(e){
+            e.preventDefault()
+            let url = e.target.getAttribute('data_url')
+            let token = e.target.getAttribute('data_token')
+            let mensajeHistorial = document.querySelector('#mensaje-historial-tarea').value
+            if (mensajeHistorial == '') {
+                alert("Debe agregar un historial")
+            }else{
+                guardarHistorialTarea()
+            }
+
+            function guardarHistorialTarea (){
+                let data = {
+                    mensajeHistorial,
+                    idPqr
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+        })
+    }
     // Carga de tareas en selector
     if(document.querySelector('#tarea')){
         tareas = document.querySelector('#tarea')
@@ -86,7 +121,6 @@ window.addEventListener('DOMContentLoaded', function(){
             let token = e.target.getAttribute('data_token')
             let confirmacionAsignacion = document.querySelector('#confirmacion-asignacion').value
             let mensajeAsignacion = document.querySelector('#mensaje-asignacion').value
-            let idPqr = document.querySelector('#id_pqr').value
             if(confirmacionAsignacion == '0' ){
                 if (mensajeAsignacion == '') {
                     alert("debe agregar un mensaje")
@@ -94,7 +128,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     guardarAsignacion()
                 }
             }else{
-                mensajeAsignacion = "Aceptado por el funcionario"
+                mensajeAsignacion = "Aceptada por el funcionario"
                 guardarAsignacion()
             }
             function guardarAsignacion (){
@@ -132,9 +166,8 @@ window.addEventListener('DOMContentLoaded', function(){
             let url = e.target.getAttribute('data_url')
             let token = e.target.getAttribute('data_token')
             let mensajeHistorial = document.querySelector('#mensaje-historial').value
-            let idPqr = document.querySelector('#id_pqr').value
             if (mensajeHistorial == '') {
-                alert("debe agregar un historial")
+                alert("Debe agregar un historial")
             }else{
                 guardarHistorial()
             }
@@ -169,7 +202,6 @@ window.addEventListener('DOMContentLoaded', function(){
             let token = e.target.getAttribute('data_token')
             let tarea = document.querySelector('#tarea').value
             let funcionario = document.querySelector('#funcionario').value
-            let idPqr = document.querySelector('#id_pqr').value
             if (tarea == '' || cargo == '' || funcionario == '' ) {
                 alert("Debe dilegenciar todos los campos")
             }else{

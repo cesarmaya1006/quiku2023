@@ -38,7 +38,9 @@ class CrearTablaPeticiones extends Migration
             $table->text('felicitacion')->nullable();
             // Sugerencia
             $table->text('sugerencia')->nullable();
-
+            // Estado
+            $table->unsignedBigInteger('estado_id')->default(1)->nullable();
+            $table->foreign('estado_id', 'fk_estados_peticion')->references('id')->on('asignancion_estados')->onDelete('restrict')->onUpdate('restrict'); 
             $table->boolean('recurso')->default(0)->nullable();
             $table->boolean('usuario_recurso')->default(0)->nullable();
             $table->bigInteger('recurso_dias')->default(0);

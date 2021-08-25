@@ -20,6 +20,8 @@ use App\Models\SolicitudDatos\SolicitudDatos;
 use App\Http\Requests\ValidarRegistroAsistido;
 use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
 use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
+use App\Models\PQR\AsignacionEstado;
+use App\Models\PQR\Peticion;
 
 class FuncionarioController extends Controller
 {
@@ -30,8 +32,10 @@ class FuncionarioController extends Controller
      */
     public function index()
     {
+        $peticiones = Peticion::where('empleado_id', session('id_usuario'))->get();
         $pqr = PQR::where('empleado_id', session('id_usuario'))->get();
-        return view('intranet.funcionarios.listado_pqr', compact('pqr'));
+        $estados = AsignacionEstado::get();
+        return view('intranet.funcionarios.listado_pqr', compact('pqr', 'peticiones', 'estados'));
     }
     public function crear_usuario()
     {
@@ -109,15 +113,55 @@ class FuncionarioController extends Controller
 
     public function gestionar_asignacion($id)
     {
+        $estados = AsignacionEstado::all();
         $pqr = PQR::findorFail($id);
-        return view('intranet.funcionarios.gestion_asignacion', compact('pqr'));
+        return view('intranet.funcionarios.gestion_asignacion', compact('pqr', 'estados'));
+    }
+    public function gestionar_asignacion_asignador($id)
+    {
+        $estados = AsignacionEstado::all();
+        $pqr = PQR::findorFail($id);
+        return view('intranet.funcionarios.gestion_asignacion_asignador', compact('pqr', 'estados'));
     }
 
-    public function gestionar_asignacion_peticion($id)
+    public function gestionar_asignacion_supervisa($id)
     {
+        $estados = AsignacionEstado::all();
         $pqr = PQR::findorFail($id);
         $estadoPrioridad = Prioridad::all();
-        return view('intranet.funcionarios.gestion_asignacion_peticion', compact('pqr', 'estadoPrioridad'));
+        return view('intranet.funcionarios.gestion_asignacion_supervisa', compact('pqr', 'estadoPrioridad', 'estados'));
+    }
+
+    public function gestionar_asignacion_proyecta($id)
+    {
+        $estados = AsignacionEstado::all();
+        $pqr = PQR::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.gestion_asignacion_proyecta', compact('pqr', 'estadoPrioridad', 'estados'));
+    }
+
+    public function gestionar_asignacion_revisa($id)
+    {
+        $estados = AsignacionEstado::all();
+        $pqr = PQR::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.gestion_asignacion_revisa', compact('pqr', 'estadoPrioridad', 'estados'));
+    }
+
+    public function gestionar_asignacion_aprueba($id)
+    {
+        $estados = AsignacionEstado::all();
+        $pqr = PQR::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.gestion_asignacion_aprueba', compact('pqr', 'estadoPrioridad', 'estados'));
+    }
+
+    public function gestionar_asignacion_radica($id)
+    {
+        $estados = AsignacionEstado::all();
+        $pqr = PQR::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.gestion_asignacion_radica', compact('pqr', 'estadoPrioridad', 'estados'));
     }
 
     /**

@@ -107,7 +107,7 @@
                                             <div class="col-12 col-md-4 form-group doc-anexoConsulta">
                                                 <label for="documentos">Anexos o Pruebas</label>
                                                 <input class="form-control form-control-sm" type="file" name="documentos"
-                                                    accept="application/pdf" id="documentos">
+                                                    id="documentos">
                                             </div>
                                         </div>
                                     </div>

@@ -120,7 +120,7 @@
 
                             </div>
                             @foreach ($pqr->peticiones as $peticion)
-                                {{-- @if (session('id_usuario') == $peticion->empleado_id) --}}
+                                @if (session('id_usuario') == $peticion->empleado_id)
                                     @php
                                         $numerador++;
                                     @endphp
@@ -540,11 +540,11 @@
                                         <input class="id_peticion" id="id_peticion" name="id_peticion" type="hidden"
                                             value="{{ $peticion->id }}">
                                     </div>
-                                {{-- @endif --}}
+                                @endif
 
                             @endforeach
                             {{-- @if (session('id_usuario') == $pqr->empleado_id) --}}
-                                <div class="col-12 rounded border mb-3 p-2 pt-3">
+                                {{-- <div class="col-12 rounded border mb-3 p-2 pt-3">
                                     <div class="form-group mt-3">
                                         <label class="" for="">Prioridad</label>
                                         <select class="form-control form-control-sm col-12 col-md-6" name="prioridad"
@@ -647,7 +647,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                </div>
+                                </div> --}}
                             {{-- @endif --}}
 
                             <div class="card-footer d-flex justify-content-end">

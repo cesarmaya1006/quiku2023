@@ -18,4 +18,9 @@ class AsignacionEstado extends Model
        return $this->hasMany(AsignacionTarea::class, 'estado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function estadospeticion()
+    {
+       return $this->hasMany(Peticion::class, 'estado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }

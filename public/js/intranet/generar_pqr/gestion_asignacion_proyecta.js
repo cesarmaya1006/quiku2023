@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded', function(){
     let idPqr = document.querySelector('#id_pqr').value
+    let idTarea = document.querySelector('#id_tarea').value
 // Carga de cargos en selector
     if(document.querySelector('#cargo')){
         cargos = document.querySelector('#cargo')
@@ -53,9 +54,9 @@ window.addEventListener('DOMContentLoaded', function(){
             let url = e.target.getAttribute('data_url')
             let token = e.target.getAttribute('data_token')
             let mensajeHistorial = document.querySelector('#mensaje-historial-tarea').value
-            let idTarea = document.querySelector('#id_tarea').value
+            
             if (mensajeHistorial == '') {
-                alert("debe agregar un historial")
+                alert("Debe agregar un historial")
             }else{
                 guardarHistorialTarea()
             }
@@ -88,14 +89,13 @@ window.addEventListener('DOMContentLoaded', function(){
         HistorialPeticiones.forEach(btn => btn.addEventListener('click', guardarHistorialPeticiones))
         function guardarHistorialPeticiones(btn){
             btn.preventDefault()
-            console.log(btn.target.parentElement.parentElement)
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
             let token = btn.target.getAttribute('data_token')
             let mensajeHistorial = contenedorHisotrial.querySelector('.mensaje-historial-peticion').value
             let idPeticion = contenedorHisotrial.querySelector('.id_peticion').value
             if (mensajeHistorial == '') {
-                alert("debe agregar un historial")
+                alert("Debe agregar un historial")
             }else{
                 guardarHistorialPeticion()
             }
@@ -132,7 +132,7 @@ window.addEventListener('DOMContentLoaded', function(){
             let peticion = document.querySelector('#peticion').value
             let funcionario = document.querySelector('#funcionario').value
             if (peticion == '' || cargo == '' || funcionario == '' ) {
-                alert("Debe dilegenciar todos los campos")
+                alert("Debe dilegenciar todos los campos del formulario")
             }else{
                 guardarAsignacionPeticion()
             }
@@ -167,7 +167,7 @@ window.addEventListener('DOMContentLoaded', function(){
             let token = e.target.getAttribute('data_token')
             let prioridad = document.querySelector('#prioridad').value
             if (prioridad == '' ) {
-                alert("Debe dilegenciar todos los campos")
+                alert("Debe dilegenciar todos los campos del formulario")
             }else{
                 guardarPrioridad()
             }
@@ -246,70 +246,121 @@ window.addEventListener('DOMContentLoaded', function(){
                         console.log(error)
                     }
                 });
+            }else{
+                alert('Debe diligenciar todos los campos del formulario')
             }
         })
     }
 
-// Ajuste visual para formulario recurso 
-    if(document.querySelector('.respuestaRecurso')){
-        let verificacionRecurso = document.querySelector('.respuestaRecurso')
-        if(verificacionRecurso.value == 1){
-            verificacionRecurso.parentElement.querySelector('.recurso_si').setAttribute('checked','')
-            verificacionRecurso.parentElement.querySelector('.recurso_no').setAttribute('disabled','')
-        }else{
-            verificacionRecurso.parentElement.querySelector('.recurso_no').setAttribute('checked','')
-            verificacionRecurso.parentElement.querySelector('.recurso-form').classList.add('d-none')
-        }
-    }
-
-    $('.recurso_check').on('change', function(e) {
-        let padre = e.target.parentNode.parentNode.parentNode
-        switch (e.target.value) {
-            case '1':
-                padre.querySelector('.recurso-form').classList.remove('d-none');
-                break;
-            case '0':
-                padre.querySelector('.recurso-form').classList.add('d-none');
-                break;
-        }
-    });
-// Guardar recursos
-    if(document.querySelector('#plazo_recurso_guardar')){
-        let plazoRecurso = document.querySelector('#plazo_recurso_guardar')
-        plazoRecurso.addEventListener('click', function(e){
-            e.preventDefault()
+//Guardar respuesta anexo  
+    if(document.querySelector('.btn-pqr-anexo')){
+        let btnRespuesta = document.querySelector('.btn-pqr-anexo')
+        btnRespuesta.addEventListener('click', function(e){
+            e.preventDefault
+            let contenedorPadre = btnRespuesta.parentElement.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
+            let url2 = e.target.getAttribute('data_url2')
+            let url3 = e.target.getAttribute('data_url3')
             let token = e.target.getAttribute('data_token')
-            let plazo_recurso = document.querySelector('#plazo_recurso').value
-            let id_peticiones = document.querySelectorAll('.id_peticion')
-            id_peticiones.forEach(idpeticion => {
-                peticion = idpeticion.value
-                if(plazo_recurso != ''){
-                    let data = {
-                        plazo_recurso,
-                        idPqr,
-                        peticion
-                    }
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        headers: { 'X-CSRF-TOKEN': token },
-                        data: data,
-                        success: function(respuesta) {
-                            location.reload();
-            
-                        },
-                        error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                }else{
-                    alert('Debe agragar plazo de días')
+            let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
+            let titulo = contenedorPadre.querySelector('.titulo').value
+            let descripcion = contenedorPadre.querySelector('.descripcion').value
+            let archivo = contenedorPadre.querySelector('.anexo').files[0]
+            let dataAnexo = new FormData();
+            dataAnexo.append('pqr_id', idPqr);
+            dataAnexo.append('titulo', titulo);
+            dataAnexo.append('descripcion', descripcion);
+            dataAnexo.append('archivo', archivo);
+            dataAnexo.append('idTarea', idTarea);
+            dataAnexo.append('_token', token);
+            if (titulo != '' && archivo  && mensajeHistorial != '' && idPqr != '') {
+                let data = {
+                    idTarea,
+                    mensajeHistorial,
+                    idPqr
                 }
-            })
+                $.ajax({
+                    async:false,
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: dataAnexo,
+                    processData: false, 
+                    contentType: false,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
 
+                $.ajax({
+                    url: url2,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+                $.ajax({
+                    url: url3,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        window.location = "/admin/index"
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }else{
+                alert('Debe diligenciar todos los campos del formulario')
+            }
         })
     }
 
+// Guardar estado 
+       if(document.querySelector('.btn-estado')){
+        let btnEstados = document.querySelectorAll('.btn-estado')
+        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+
+        function guardarEstado(btn){
+            btn.preventDefault()
+            let btnE = btn.target 
+            if (btnE.tagName === 'I') {
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+                btnE = btnE.parentElement.parentElement
+            }else {
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
+            }
+            let url = btnE.getAttribute('data_url')
+            let token = btnE.getAttribute('data_token')
+            let estado = padreEstado.querySelector('.estadoPeticion').value
+            let id_peticion = padreEstado.querySelector('.id_peticion').value
+            let data = {
+                estado,
+                id_peticion
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+    
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        }
+    }
 })
 

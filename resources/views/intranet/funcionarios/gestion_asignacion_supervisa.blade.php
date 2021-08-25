@@ -24,7 +24,7 @@
             <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Gestión a PQR Número de radicado:
+                        <h3 class="card-title">Gestión a Petición Número de radicado:
                             <strong>{{ $pqr->radicado }}</strong>
                         </h3>
                     </div>
@@ -106,29 +106,41 @@
                                 <div class="col-12 col-md-6">
                                     Estado: <strong>{{ $pqr->estado->estado_usuario }}</strong>
                                 </div>
+                                <div class="col-12 col-md-6">
+                                    Prioridad: <strong>{{ $pqr->prioridad->prioridad }}</strong>
+                                </div>
+                                @if(!sizeOf($pqr->peticiones->where('recurso_dias', '0')))
+                                    <div class="col-12 col-md-6">
+                                        Procede recurso: <strong>Si</strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        Plazo días recurso: <strong>{{ $pqr->peticiones->max('recurso_dias') }}</strong>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <hr style="border-top: solid 4px black">
-                        <?php $n_peticion = 0; ?>
                         @if ($pqr->prorroga_dias)
-                            <div class="menu-card-prorroga menu-card d-none rounded border mb-3 p-2 ">
+                            <div class="menu-card-prorroga menu-card rounded border mb-3 p-2 ">
+                                <div class="col-12 col-md-6 ">
+                                    <h5>Prórroga</h5>
+                                </div>
                                 <div class="col-12 col-md-6">
                                     Días de prórroga: <strong>{{ $pqr->prorroga_dias }} </strong>
                                 </div>
-                                <div class="col-12 col-md-6">
+                                <div class="col-12 col-md-6 mt-2">
                                     <strong>
                                         <a href="{{ route('prorrogaPdf', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
-                                            <i class="fa fa-download" aria-hidden="true"></i>Descargar Radicado Prórroga</a>
+                                            <i class="fa fa-download" aria-hidden="true"></i> Descargar Radicado Prórroga</a>
                                     </strong>
                                 </div>
                             </div>
                         @endif
-                        @foreach ($pqr->peticiones as $peticion)
-                            <?php $n_peticion++; ?>
+                        @foreach ($pqr->peticiones as $key => $peticion)
                             <div class="col-12 rounded border mb-3 p-2 peticion_general">
                                 <div class="menu-card-radicado menu-card">
                                     <div class="col-12">
-                                        <h5>Petición {{ $n_peticion }}</h5>
+                                        <h5>Petición {{ $key + 1 }}</h5>
                                     </div>
                                     <hr>
                                     @if($peticion->motivo_sub_id)
@@ -215,7 +227,7 @@
                                         </div>
                                         <hr>
                                     @endif
-                                    @if(sizeof($peticion->hechos))
+                                    @if($peticion->hechos)
                                         <div class="row">
                                             <div class="col-12">
                                                 <h6>Hechos</h6>
@@ -266,7 +278,10 @@
                                 </div>
 
                                 @if(sizeOf($peticion->aclaraciones))
-                                    <div class="row menu-card-aclaraciones menu-card">
+                                    <div class="row menu-card-aclaraciones menu-card d-none">
+                                        <div class="col-12">
+                                            <h5>Petición {{ $key + 1 }}</h5>
+                                        </div>
                                         <div class="col-12">
                                             <h6>Aclaraciones</h6>
                                         </div>
@@ -309,56 +324,55 @@
                                         </div>
                                     </div>
                                 @endif
+                                <br>
                                 @if (isset($peticion->respuesta->respuesta))
-                                    <div class="menu-card-recursos menu-card">
-                                        <div class="col-12 row mb-2">
-                                            <div class="col-6">
-                                                <h5>Respuesta petición</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 form-group">
-                                            <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ $peticion->respuesta->respuesta }}</textarea>
+                                <div class="menu-card-recursos menu-card">
+                                    <div class="col-12 row mb-2">
+                                        <div class="col-6">
+                                            <h5>Respuesta petición</h5>
                                         </div>
                                     </div>
-                                    <hr>
-                                    @if (sizeOf($peticion->respuesta->documentos))
-                                        <div class="row respuestaAnexos">
+                                    <div class="col-12 form-group">
+                                        <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ $peticion->respuesta->respuesta }}</textarea>
+                                    </div>
+                                </div>
+                                <hr>
+                                @if (sizeOf($peticion->respuesta->documentos))
+                                    <div class="row respuestaAnexos">
+                                        <div class="col-12">
                                             <div class="col-12">
-                                                <div class="col-12">
-                                                    <h6>Anexos respuesta petición</h6>
-                                                </div>
-                                                <div class="col-12 table-responsive">
-                                                    <table class="table table-light"  style="font-size: 0.8em;" >
-                                                        <thead>
+                                                <h6>Anexos respuesta petición</h6>
+                                            </div>
+                                            <div class="col-12 table-responsive">
+                                                <table class="table table-light"  style="font-size: 0.8em;" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Nombre</th>
+                                                            <th scope="col">Descripción</th>
+                                                            <th scope="col">Archivo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($peticion->respuesta->documentos as $anexo)
                                                             <tr>
-                                                                <th scope="col">Nombre</th>
-                                                                <th scope="col">Descripción</th>
-                                                                <th scope="col">Archivo</th>
+                                                                <td class="text-justify">{{ $anexo->titulo }}
+                                                                </td>
+                                                                <td class="text-justify">
+                                                                    {{ $anexo->descripcion }}
+                                                                </td>
+                                                                <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer">Descargar</a>
+                                                                </td>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($peticion->respuesta->documentos as $anexo)
-                                                                <tr>
-                                                                    <td class="text-justify">{{ $anexo->titulo }}
-                                                                    </td>
-                                                                    <td class="text-justify">
-                                                                        {{ $anexo->descripcion }}
-                                                                    </td>
-                                                                    <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
-                                                                            target="_blank"
-                                                                            rel="noopener noreferrer">Descargar</a>
-                                                                    </td>
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                        <hr>
-                                    @endif
-                                 @endif
-                                <br>
+                                    </div>
+                                @endif
+                             @endif
                                 <div class="menu-card-recursos menu-card">
                                     @if (sizeOf($peticion->recursos))
                                         <div class="row card-recursos">
@@ -422,156 +436,74 @@
                                         </div>
                                     @endif
                                 </div>
-                                @if(sizeOf($peticion->historialpeticiones))
-                                    <hr>
-                                    <h5 class="">Historial peticiones</h5>
-                                    <div class="row d-flex px-12 p-3">
-                                        <div class="col-12 table-responsive">
-                                            <table class="table table-light" style="font-size: 0.8em;">
-                                                <thead>
+                                <hr>
+                                <h5 class="">Historial peticiones</h5>
+                                <div class="row d-flex px-12 p-3">
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-light" style="font-size: 0.8em;">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Fecha</th>
+                                                    <th scope="col">Empleado</th>
+                                                    <th scope="col">Historial</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($peticion->historialpeticiones as $historial)
                                                     <tr>
-                                                        <th scope="col">Fecha</th>
-                                                        <th scope="col">Empleado</th>
-                                                        <th scope="col">Historial</th>
+                                                        <td>{{ $historial->created_at }}</td>
+                                                        <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">{{ $historial->historial }}</td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($peticion->historialpeticiones as $historial)
-                                                        <tr>
-                                                            <td>{{ $historial->created_at }}</td>
-                                                            <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                            <td class="text-justify">{{ $historial->historial }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-                                @endif
+                                </div>
+                                <hr>
                             </div>
                         @endforeach
+                        
                     </div> 
-                    @if (sizeOf($pqr->historialasignacion) )
-                        <div class="rounded border m-3 p-2">
-                            <h5 class="">Historial asignación</h5>
-                            <div class="row d-flex px-12 p-3">
-                                <div class="col-12 table-responsive">
-                                    <table class="table table-light" style="font-size: 0.8em;">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Fecha</th>
-                                                <th scope="col">Empleado</th>
-                                                <th scope="col">Historial</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pqr->historialasignacion as $historial)
-                                                <tr>
-                                                    <td>{{ $historial->created_at }}</td>
-                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                    <td class="text-justify">{{ $historial->historial }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row d-flex px-12 p-3"> 
-                                <div class="container-mensaje-historial form-group col-12">
-                                    <label for="" class="">Agregar Historial</label>
-                                    <textarea class="form-control" rows="3" placeholder="" name="mensaje-historial"
-                                        id="mensaje-historial" required></textarea>
-                                </div>
-                                <div class="col-12 col-md-12 form-group d-flex">
-                                    <button href="" class="btn btn-primary px-4" id="guardarHistorial" data_url="{{ route('historial_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar historial</button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
+                    <!-- /.card-body -->
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
-                    
-                    @if ($pqr->estado_asignacion == 0)
+                    @if ($pqr->peticiones)
                         <div class="rounded border m-3 p-2">
-                            <h5 class="">Gestion asignación</h5>
-                            <div class="row d-flex px-12 p-3"> 
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">¿Acepta la asignación?</label>
-                                    <select name="confirmacion-asignacion" id="confirmacion-asignacion" class="custom-select rounded-0" required="">
-                                        <option value="1">Aceptar</option>
-                                        <option value="0">Rechazar</option>
-                                    </select>
-                                </div>
-                                <div class="container-mensaje-asigacion form-group col-10 d-none">
-                                    <label for="" class="">Mensaje</label>
-                                    <textarea class="form-control" rows="3" placeholder="" name="mensaje-asignacion"
-                                        id="mensaje-asignacion" required></textarea>
-                                </div>
-                                <div class="col-12 col-md-3 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4" id="guardarAsignacion" data_url="{{ route('asignacion_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar</button>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                    @if ($pqr->estado_asignacion)
-                        <div class="rounded border m-3 p-2">
-                            <h5 class="">Gestión tareas</h5>
+                            <h5 class="">Gestión Peticiones</h5>
                             <div class="col-12 table-responsive d-flex justify-content-center">
                                 <table class="table table-light col-12" style="font-size: 0.8em;">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Tarea</th>
+                                            <th scope="col">Petición #</th>
                                             <th scope="col">Funcionario</th>
-                                            <th scope="col">Fecha de asignación</th>
-                                            <th scope="col">Estado Tarea</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($pqr->asignaciontareas as $asignacion)
+                                        @foreach ($pqr->peticiones as $key=> $peticion)
                                             <tr>
-                                                <td>{{$asignacion->tarea->tarea}}</td>
-                                                <td>{{$asignacion->empleado->nombre1}} {{$asignacion->empleado->apellido1}}</td>
-                                                <td>{{$asignacion->created_at}}</td>
-                                                <td>{{$asignacion->estadotarea->estado}} %</td>
+                                                <td>{{$key + 1}}</td>
+                                                @if($peticion->empleado)
+                                                    <td>{{$peticion->empleado->nombre1 }} {{$peticion->empleado->apellido1}}</td>
+                                                @else    
+                                                    <td>Sin asignar</td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
                             <hr>
-                            <h5 class="">Asignación tareas</h5>
-                            <div class="row d-flex px-4"> 
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Tarea</label>
-                                    <select name="tarea" id="tarea" class="custom-select rounded-0" required="" data_url="{{ route('cargar_tareas') }}">                                    </select>
-                                </div>
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Cargo</label>
-                                    <select name="cargo" id="cargo" class="custom-select rounded-0" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Funcionario</label>
-                                    <select name="funcionario" id="funcionario" class="custom-select rounded-0" required="">
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-6 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary py-2 px-3" id="asignacion_tarea_guardar" data_url="{{ route('asignacion_tarea_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar asignación</button>
-                                </div>
-                            </div>
-                            {{-- @if (sizeOf($pqr->historialtareas)) --}}
-                            <hr>
-                            <h5 class="">Historial tareas</h5>
+                        </div>
+                        <div class="rounded border m-3 p-2">
+                            <h5 class="">Historial de tareas</h5>
+                            <div class="row d-flex px-12 p-3">
                                 <div class="col-12 table-responsive">
                                     <table class="table table-light" style="font-size: 0.8em;">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Fecha</th>
-                                                <th scope="col">Empleado</th>
                                                 <th scope="col">Tarea</th>
+                                                <th scope="col">Empleado</th>
                                                 <th scope="col">Historial</th>
                                             </tr>
                                         </thead>
@@ -579,66 +511,65 @@
                                             @foreach ($pqr->historialtareas as $historial)
                                                 <tr>
                                                     <td>{{ $historial->created_at }}</td>
-                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
                                                     @if($historial->tarea)
                                                         <td class="text-justify">{{ $historial->tarea->tarea }}</td>
                                                     @else
                                                         <td class="text-justify">ADMINISTRADOR</td>
                                                     @endif
+                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
                                                     <td class="text-justify">{{ $historial->historial }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-                                <hr>
-                                <div class="row d-flex px-12 p-3"> 
-                                    <div class="container-mensaje-historial-tarea form-group col-12">
-                                        <label for="" class="">Agregar Historial</label>
-                                        <textarea class="form-control" rows="3" placeholder="" name="mensaje-historia-tarea"
-                                            id="mensaje-historial-tarea" required></textarea>
-                                    </div>
-                                    <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                        <button href="" class="btn btn-primary mx-2 px-4" id="guardarHistorialTarea" data_url="{{ route('historial_tarea_guardar') }}"
-                                        data_token="{{ csrf_token() }}">Guardar</button>
-                                    </div>
+                            </div>
+                            <hr>
+                            <div class="row d-flex px-12 p-3"> 
+                                <input class="id_tarea" id="id_tarea" name="id_tarea" type="hidden" value="1">
+                                <div class="container-mensaje-historial-tarea form-group col-12">
+                                    <label for="" class="">Agregar Historial</label>
+                                    <textarea class="form-control" rows="3" placeholder="" name="mensaje-historia-tarea"
+                                        id="mensaje-historial-tarea" required></textarea>
                                 </div>
-                            {{-- @endif --}}
-
-                            @if(sizeOf($pqr->anexos))   
-                                <hr>
-                                <div class="p-2 mb-4">
-                                    <h5 class="">Historial de respuesta </h5>
-                                    <div class="row d-flex px-12 p-3">
-                                        <div class="col-12 table-responsive">
-                                            <table class="table table-light" style="font-size: 0.8em;">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Fecha</th>
-                                                        <th scope="col">Empleado</th>
-                                                        <th scope="col">Tarea</th>
-                                                        {{-- <th scope="col">Estado</th> --}}
-                                                        <th scope="col">Descarga</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($pqr->anexos as $anexo)
-                                                        <tr>
-                                                            <td>{{ $anexo->created_at }}</td>
-                                                            <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
-                                                            <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                            {{-- <td class="text-justify">{{ $anexo->estado ? 'Activo' : 'Rechazado'  }}</td> --}}
-                                                            <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <hr>
+                                <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
+                                    <button href="" class="btn btn-primary mx-2 px-4" id="guardarHistorialTarea" data_url="{{ route('historial_tarea_guardar') }}"
+                                    data_token="{{ csrf_token() }}">Guardar</button>
                                 </div>
-                            @endif
+                            </div>
                         </div>
+                        @if ($pqr->anexos)   
+                            <div class="rounded border m-3 p-2 mb-4">
+                                <h5 class="">Historial de respuesta </h5>
+                                <div class="row d-flex px-12 p-3">
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-light" style="font-size: 0.8em;">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Fecha</th>
+                                                    <th scope="col">Empleado</th>
+                                                    <th scope="col">Tarea</th>
+                                                    {{-- <th scope="col">Estado</th> --}}
+                                                    <th scope="col">Descarga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pqr->anexos as $anexo)
+                                                    <tr>
+                                                        <td>{{ $anexo->created_at }}</td>
+                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
+                                                        {{-- <td class="text-justify">{{ $anexo->estado ? 'Activo' : 'Rechazado'  }}</td> --}}
+                                                        <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        @endif
                     @endif
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
@@ -651,6 +582,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-    <script src="{{ asset('js/intranet/generar_pqr/gestion_asignacion.js') }}"></script>
+    <script src="{{ asset('js/intranet/generar_pqr/gestion_asignacion_supervisa.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

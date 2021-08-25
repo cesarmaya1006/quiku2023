@@ -2,33 +2,32 @@
 
 namespace App\Models\PQR;
 
-use App\Models\PQR\PqrAnexo;
-use App\Models\PQR\HistorialTarea;
-use App\Models\PQR\AsignacionTarea;
+use App\Models\PQR\PQR;
+use App\Models\PQR\Tarea;
+use App\Models\Empleados\Empleado;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tarea extends Model
+class PqrAnexo extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'tareas';
+    protected $table = 'pqr_anexos';
     protected $guarded = [];
-    
     //----------------------------------------------------------------------------------
-    public function tareas()
+    public function pqr()
     {
-        return $this->hasMany(AsignacionTarea::class, 'tareas_id', 'id');
+        return $this->belongsTo(PQR::class, 'pqr_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    public function tareashistorial()
+    public function empleado()
     {
-        return $this->hasMany(HistorialTarea::class, 'tareas_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    public function tareapqranexos()
+    public function tarea()
     {
-        return $this->hasMany(PqrAnexo::class, 'tareas_id', 'id');
+        return $this->belongsTo(Tarea::class, 'tareas_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

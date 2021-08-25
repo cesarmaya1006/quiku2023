@@ -38,7 +38,7 @@ class CrearTablaPqr extends Migration
             $table->date('fecha_factura', 100)->nullable();
             $table->boolean('prorroga')->default(0)->nullable();
             $table->bigInteger('prorroga_dias')->default(0)->nullable();
-            $table->string('prorroga_pdf')->nullable();
+            $table->longText('prorroga_pdf')->nullable();
             $table->date('fecha_generacion');
             $table->date('fecha_radicado');
             $table->date('fecha_respuesta')->nullable();

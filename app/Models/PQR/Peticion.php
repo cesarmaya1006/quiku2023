@@ -3,6 +3,7 @@
 namespace App\Models\PQR;
 
 use App\Models\Empleados\Empleado;
+use App\Models\PQR\AsignacionEstado;
 use App\Models\PQR\HistorialPeticion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -59,5 +60,11 @@ class Peticion extends Model
         return $this->hasMany(HistorialPeticion::class, 'peticion_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function estadopeticion()
+    {
+        return $this->belongsTo(AsignacionEstado::class, 'estado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+
 }
 

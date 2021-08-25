@@ -2,6 +2,8 @@
 window.addEventListener('DOMContentLoaded', function () {
     // Incio Validacion envio de formulario
     if (document.querySelectorAll('#fromPQRMotivos')) {
+        sub_motivo()
+        ajustarOtro(document.querySelector('.motivo'))
         let btnSubmit = document.querySelector('#fromPQRMotivos')
         btnSubmit.addEventListener('submit', function (e) {
             e.preventDefault()
@@ -180,7 +182,8 @@ window.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.eliminarHecho').forEach(item => item.addEventListener('click', agregarEliminarHecho))
             ajustarNameHecho(document.querySelectorAll('.hechoMotivo'))
             ajustarNameAnexo(document.querySelectorAll('.anexomotivo'))
-            ajustarOtro()
+            ajustarOtro(nuevaMotivo)
+            sub_motivo()
         }
 
         function eliminarMotivo(e) {
@@ -224,22 +227,69 @@ window.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#cantidadmotivos').value = document.querySelectorAll('.motivo').length
         }
 
-        function ajustarOtro(){
-            $('.motivo_sub_id').on('change', function(event) {
-                if (event.target.value == '3' || event.target.value == '6' || event.target.value == '9' || event.target.value == '12' || event.target.value == '16' || event.target.value == '19' || event.target.value == '22'|| event.target.value == '26') {
-                    let padreHTML = event.target.parentNode.parentNode
-                    let otro = padreHTML.querySelector('.otro')
-                    otro.classList.toggle('d-none')
-                }else{
-                    let padreHTML = event.target.parentNode.parentNode
-                    let otro = padreHTML.querySelector('.otro')
-                    otro.querySelector('input').value = ''
-                    if (!otro.classList.contains('d-none')) {
+        function ajustarOtro(peticion){
+            if(peticion.querySelectorAll('.motivo_sub_id')){
+                subMotivos = peticion.querySelector('.motivo_sub_id')
+                subMotivos.addEventListener('change', validacion)
+
+                function validacion(event){
+                    if (event.target.value == '3' || event.target.value == '6' || event.target.value == '9' || event.target.value == '12' || event.target.value == '16' || event.target.value == '19' || event.target.value == '22'|| event.target.value == '26') {
+                        let padreHTML = event.target.parentNode.parentNode
+                        let otro = padreHTML.querySelector('.otro')
                         otro.classList.toggle('d-none')
+                    }else{
+                        let padreHTML = event.target.parentNode.parentNode
+                        let otro = padreHTML.querySelector('.otro')
+                        otro.querySelector('input').value = ''
+                        if (!otro.classList.contains('d-none')) {
+                            otro.classList.toggle('d-none')
+                        }
                     }
+                }
+            }
+        }
+        
+    }
+    function sub_motivo(){
+        if(document.querySelectorAll('.motivo_pqr')){
+            selectorMotivos = document.querySelectorAll('.motivo_pqr')
+            selectorMotivos.forEach(selectorMotivo => {
+                selectorMotivo.addEventListener('change', cargarSubMotivos)
+            })
+        }
+
+        function cargarSubMotivos(motivo){
+            let url = motivo.target.getAttribute('data_url')
+            let id = motivo.target.value
+            let data = {
+                id
+            }
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: data,
+                success: function(respuesta) {
+                    selectorSubMotivos = motivo.target.parentNode.parentNode.querySelector('.motivo_sub_id')
+                    selectorSubMotivos.querySelectorAll('option').forEach(option => {
+                        option.remove()
+                    })
+                    respuesta_html = '';
+                    respuesta_html += '<option value="">--Seleccione--</option>';
+                    option = document.createElement('option')
+                    option.valor = ''
+                    option.text = '--Seleccione--'
+                    selectorSubMotivos.appendChild(option)
+                    respuesta.forEach(item => {
+                        option = document.createElement('option')
+                        option.value = item['id']
+                        option.text = item['sub_motivo']
+                        selectorSubMotivos.appendChild(option)
+                    });
+                },
+                error: function(error) {
+                    console.log(error)
                 }
             });
         }
-        ajustarOtro()
     }
 })

@@ -50,7 +50,7 @@
                                             <td>{{ $pqr->tipoPqr->tipo }}</td>
                                             <td>{{ $pqr->estado->estado_usuario }}</td>
                                             <td>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</td>
-                                            @if ($pqr->tipo_pqr_id == 1 || $pqr->tipo_pqr_id == 2 || $pqr->tipo_pqr_id == 3)
+                                            {{-- @if ($pqr->tipo_pqr_id == 1 || $pqr->tipo_pqr_id == 2 || $pqr->tipo_pqr_id == 3) --}}
                                                 <td><a href="{{ route('pqrRadicadaPdf', $pqr->id) }}"
                                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
                                                             class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a></td>
@@ -66,7 +66,7 @@
                                                     @endif
 
                                                 </td>
-                                            @elseif ($pqr->tipo_pqr_id == 4)
+                                            {{-- @elseif ($pqr->tipo_pqr_id == 4)
                                                 <td>
                                                     <a href="{{ route('pqrRadicadaPdfCuo', ['id' => $pqr->id]) }}"
                                                         class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
@@ -132,118 +132,9 @@
                                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                                                 </td>
-                                            @endif
+                                            @endif --}}
                                         </tr>
                                     @endforeach
-                                    {{-- @foreach ($conceptos as $concepto)
-                                        <tr>
-                                            <td>{{ $concepto->radicado }}</td>
-                                            <td>{{ $concepto->created_at }}</td>
-                                            <td>{{ $concepto->tipoPqr->tipo }}</td>
-                                            <td>{{ $concepto->estado->estado_usuario }}</td>
-                                            <td>{{ date('Y-m-d', strtotime($concepto->fecha_generacion . '+ ' . $concepto->tiempo_limite . ' days')) }}
-                                            </td>
-                                            <td><a href="{{ route('pqrRadicadaPdfCuo', ['id' => $concepto->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
-                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                            <td><a href="{{ route('usuario-gestionarConceptoUOpinion', ['id' => $concepto->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    @foreach ($solicitudes_datos as $solicitud_datos)
-                                        <tr>
-                                            <td>{{ $solicitud_datos->radicado }}</td>
-                                            <td>{{ $solicitud_datos->created_at }}</td>
-                                            <td>{{ $solicitud_datos->tipoPqr->tipo }}</td>
-                                            <td>{{ $solicitud_datos->estado->estado_usuario }}</td>
-                                            <td>{{ date('Y-m-d', strtotime($solicitud_datos->fecha_generacion . '+ ' . $solicitud_datos->tiempo_limite . ' days')) }}
-                                            </td>
-                                            <td><a href="{{ route('pqrRadicadaPdfSd', ['id' => $solicitud_datos->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
-                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('usuario-gestionarSolicitudDatos', ['id' => $solicitud_datos->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    @foreach ($denuncias as $denuncia)
-                                        <tr>
-                                            <td>{{ $denuncia->radicado }}</td>
-                                            <td>{{ $denuncia->created_at }}</td>
-                                            <td>{{ $denuncia->tipoPqr->tipo }}</td>
-                                            <td>{{ $denuncia->estado->estado_usuario }}</td>
-                                            <td>{{ date('Y-m-d', strtotime($denuncia->fecha_generacion . '+ ' . $denuncia->tiempo_limite . ' days')) }}
-                                            </td>
-                                            <td><a href="{{ route('pqrRadicadaPdfRi', ['id' => $denuncia->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
-                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                            <td><a href="{{ route('usuario-gestionarReporte', ['id' => $denuncia->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    @foreach ($felicitaciones as $felicitacion)
-                                        <tr>
-                                            <td>{{ $felicitacion->radicado }}</td>
-                                            <td>{{ $felicitacion->created_at }}</td>
-                                            <td>{{ $felicitacion->tipoPqr->tipo }}</td>
-                                            <td>{{ $felicitacion->estado->estado_usuario }}</td>
-                                            <td>{{ date('Y-m-d', strtotime($felicitacion->fecha_generacion . '+ ' . $felicitacion->tiempo_limite . ' days')) }}
-                                            </td>
-                                            <td><a href="{{ route('felicitacionRadicadaPdf',$felicitacion->id) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
-                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                            <td><a href="{{ route('usuario-gestionarFelicitacion', ['id' => $felicitacion->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    @foreach ($solicitudes_doc as $solicitud_doc)
-                                        <tr>
-                                            <td>{{ $solicitud_doc->radicado }}</td>
-                                            <td>{{ $solicitud_doc->created_at }}</td>
-                                            <td>{{ $solicitud_doc->tipoPqr->tipo }}</td>
-                                            <td>{{ $solicitud_doc->estado->estado_usuario }}</td>
-                                            <td>{{ date('Y-m-d', strtotime($solicitud_doc->fecha_generacion . '+ ' . $solicitud_doc->tiempo_limite . ' days')) }}
-                                            </td>
-                                            <td><a href="{{ route('pqrRadicadaPdfSdi', ['id' => $solicitud_doc->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
-                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                            <td><a href="{{ route('usuario-gestionarSolicitudDocInfo', ['id' => $solicitud_doc->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    @foreach ($sugerencias as $sugerencia)
-                                        <tr>
-                                            <td>{{ $sugerencia->radicado }}</td>
-                                            <td>{{ $sugerencia->created_at }}</td>
-                                            <td>{{ $sugerencia->tipoPqr->tipo }}</td>
-                                            <td>{{ $sugerencia->estado->estado_usuario }}</td>
-                                            <td>{{ date('Y-m-d', strtotime($sugerencia->fecha_generacion . '+ ' . $sugerencia->tiempo_limite . ' days')) }}
-                                            </td>
-                                            <td><a href="{{ route('sugerenciaRadicadaPdf', $sugerencia->id) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
-                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                            <td><a href="{{ route('usuario-gestionarsugerencia', ['id' => $sugerencia->id]) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach --}}
                                 </tbody>
                             </table>
                         </div>

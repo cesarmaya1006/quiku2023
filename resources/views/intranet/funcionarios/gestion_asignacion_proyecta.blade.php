@@ -24,12 +24,12 @@
             <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Gestión a Petición Número de radicado:
+                        <h3 class="card-title">Gestión a PQR Número de radicado:
                             <strong>{{ $pqr->radicado }}</strong>
                         </h3>
                     </div>
                     <div class="card-body">
-                        <div class="col-12 solicitud rounded border mb-3 p-2">
+                        <div class="col-12 rounded border mb-3 p-2">
                             <div class="row">
                                 <div class="col-12 col-md-6">
                                     @if ($pqr->persona_id != null)
@@ -109,6 +109,9 @@
                                 <div class="col-12 col-md-6">
                                     Prioridad: <strong>{{ $pqr->prioridad->prioridad }}</strong>
                                 </div>
+                                <div class="col-12 col-md-6">
+                                    {{-- Porcentaje PQR: <strong>{{ ( $pqr->peticiones->count() / ($pqr->peticiones->sum('estado_id') - $pqr->peticiones->count()) * 100  )}} %</strong> --}}
+                                </div>
                                 @if(!sizeOf($pqr->peticiones->where('recurso_dias', '0')))
                                     <div class="col-12 col-md-6">
                                         Procede recurso: <strong>Si</strong>
@@ -148,9 +151,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-2 form-group d-flex align-items-end">
+                                <div class="col-12 col-md-4 form-group d-flex align-items-end">
                                     <button href="" class="btn btn-primary mx-2 px-4" id="prioridad_guardar" data_url="{{ route('prioridad_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar</button>
+                                    data_token="{{ csrf_token() }}">Guardar prioridad</button>
                                 </div>
                             </div>
                             <hr>
@@ -182,80 +185,62 @@
                                                     max="{{$pqr->tipoPqr->tiempos * 2}}">
                                                 <p>El máximo de días de prórroga es: {{$pqr->tipoPqr->tiempos * 2}}</p>
                                             </div>
-                                            <div class="col-12 d-flex row">
+                                            <div class="col-12 d-flex row mb-2">
                                                 <label for="prorroga_pdf">Justificacion de prórroga</label>
                                                 <textarea type="text" class="form-control form-control-sm prorroga_pdf"
                                                     name="prorroga_pdf" id="prorroga_pdf">{{$pqr->prorroga_pdf}}</textarea>
                                             </div>
                                         </div>
                                         @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
-                                            <div class="card-footer d-flex justify-content-end" id="guardarProrroga">
-                                                <button type="" class="btn btn-primary px-4" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prórroga</button>
+                                            <div class="" id="guardarProrroga">
+                                                <button type="" class="btn btn-primary" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prórroga</button>
                                             </div>
                                         @endif
                                     </div>
                                 </div>
                                 <hr>
                             @endif
-                            @php
-                                $recursoValidacion = 1;
-                                if($pqr->peticiones->where('recurso','0')->count() == $pqr->peticiones->count()){
-                                    $recursoValidacion = 0;
-                                }
-                            @endphp
-                            @if($pqr->estadospqr_id < 6)
-                                <div class="row px-4">
-                                    <input class="respuestaRecurso" type="hidden" value="{{ $recursoValidacion }}">
-                                    <div class="col-12 col-md-6">
-                                        <h6>¿A las respuestas le procede recurso?</h6>
-                                    </div>
-                                    <div class="col-12 col-md-6 d-flex flex-row">
-                                        <div class="form-check mb-3 mr-4">
-                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_si" value="1"/>
-                                            <label id="_label" class="form-check-label" for="">SI</label>
-                                        </div>
-                                        <div class="form-check mb-3">
-                                            <input id="" name="recurso" type="radio" class="form-check-input recurso_check recurso_no" value="0"/>
-                                            <label id="_label" class="form-check-label" for="">NO</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 row recurso-form">
-                                        {{-- @if ($plazoRecurso == 0) --}}
-                                            <div class="col-12 col-md-5 form-group">
-                                                <label for="">Plazo recurso días hábiles:</label>
-                                                <input type="number" class="form-control plazo_recurso"
-                                                name="plazo_recurso" id="plazo_recurso" min="0"
-                                                max="{{$pqr->tipoPqr->tiempos}}">
-                                            </div>
-                                            <div class="col-12 col-md-2 form-group d-flex align-items-end">
-                                                <button href="" class="btn btn-primary mx-2 px-4" id="plazo_recurso_guardar" data_url="{{ route('plazo_recurso_guardar') }}"
-                                                data_token="{{ csrf_token() }}">Guardar</button>
-                                            </div>
-                                        {{-- @else --}}
-                                            {{-- <div class="col-12 col-md- form-group">
-                                                <label for="plazo">Plazo recurso días hábiles: {{ $plazoRecurso}}</label>
-                                                <input class="plazoRecurso" type="hidden" value="{{ $plazoRecurso }}">
-                                            </div> --}}
-                                        {{-- @endif --}}
-                                    </div>
-                                </div>
-                            @endif
                         </div>
                         @foreach ($pqr->peticiones as $key => $peticion)
                             <div class="col-12 rounded border mb-3 p-2 peticion_general">
                                 <div class="menu-card-radicado menu-card">
                                     <div class="col-12">
-                                        <h5>Petición {{ $key + 1 }}</h5>
+                                        <div class="col-12 row my-2 ">
+                                            <div class="col-6">
+                                                <h5>Petición {{ $key + 1 }}</h5>
+                                            </div>
+                                            <div class="col-6 row estado-peticion">
+                                                <div class="col-2 d-flex mb-2">
+                                                    <h6>Avance:</h6>
+                                                </div>
+                                                <select class="custom-select rounded-0 estadoPeticion col-4">
+                                                    @foreach ($estados as $estado)
+                                                        <option value="{{ $estado->id }}"
+                                                        {{ $peticion->estadopeticion->id == $estado->id ? 'selected' : '' }}>
+                                                        {{ $estado->estado }} %</option>
+                                                    @endforeach
+                                                </select>
+                                                <button type="" class="btn btn-primary btn-estado col-2 mx-2"
+                                                    data_url="{{ route('estado_guardar') }}"
+                                                    data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <hr>
                                     @if($peticion->motivo_sub_id)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->motivo->sub_motivo }}</p>
+                                                <p class="text-justify"><strong>Categoría Motivo:</strong> {{ $peticion->motivo->motivo->motivo }}</p>
+                                            </div>
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Sub - Categoría Motivo:</strong> {{ $peticion->motivo->sub_motivo }}</p>
                                             </div>
                                             @if ($peticion->otro)
-                                                <p class="text-justify">{{ $peticion->otro }}</p>
+                                                <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}</p>
                                             @endif
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Justificación:</strong> {{ $peticion->justificacion }}</p>
+                                            </div>
                                         </div>
                                         <hr>
                                     @endif
@@ -281,6 +266,24 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Descripción de la solicitud:</strong> {{ $peticion->descripcionsolicitud }}</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if($peticion->peticion)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Tipo de petición:</strong> {{ $peticion->peticion }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Documento o información requerida:</strong> {{ $peticion->indentifiquedocinfo }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Justificacion:</strong> {{ $peticion->justificacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
@@ -357,12 +360,8 @@
                                         <hr>
                                     @endif
                                 </div>
-
                                 @if(sizeOf($peticion->aclaraciones))
-                                    <div class="row menu-card-aclaraciones menu-card d-none">
-                                        <div class="col-12">
-                                            <h5>Petición {{ $key + 1 }}</h5>
-                                        </div>
+                                    <div class="row menu-card-aclaraciones menu-card">
                                         <div class="col-12">
                                             <h6>Aclaraciones</h6>
                                         </div>
@@ -372,7 +371,6 @@
                                                     <tr>
                                                         <th scope="col">Fecha Sol Aclaración</th>
                                                         <th scope="col">Aclaracion</th>
-                                                        <th scope="col">Estado</th>
                                                         <th scope="col">Fecha Resp.</th>
                                                         <th scope="col">Respuesta</th>
                                                         <th scope="col">Documento</th>
@@ -384,7 +382,6 @@
                                                             <tr>
                                                                 <td>{{ $aclaracion->fecha }}</td>
                                                                 <td class="text-justify">{{ $aclaracion->aclaracion }}</td>
-                                                                <td>Resuelta</td>
                                                                 <td>{{ $aclaracion->fecha_respuesta }}</td>
                                                                 <td class="text-justify">{{ $aclaracion->respuesta }}</td>
                                                                 @if ($aclaracion->anexos)
@@ -408,8 +405,58 @@
                                     </div>
                                 @endif
                                 <br>
-                                <div class="menu-card-recursos menu-card">
-                                    @if (sizeOf($peticion->recursos))
+                                @if (isset($peticion->respuesta->respuesta))
+                                    <div class="menu-card-recursos menu-card">
+                                        <div class="col-12 row mb-2">
+                                            <div class="col-6">
+                                                <h5>Respuesta petición</h5>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 form-group">
+                                            <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ $peticion->respuesta->respuesta }}</textarea>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    @if (sizeOf($peticion->respuesta->documentos))
+                                        <div class="row respuestaAnexos">
+                                            <div class="col-12">
+                                                <div class="col-12">
+                                                    <h6>Anexos respuesta petición</h6>
+                                                </div>
+                                                <div class="col-12 table-responsive">
+                                                    <table class="table table-light"  style="font-size: 0.8em;" >
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Nombre</th>
+                                                                <th scope="col">Descripción</th>
+                                                                <th scope="col">Archivo</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($peticion->respuesta->documentos as $anexo)
+                                                                <tr>
+                                                                    <td class="text-justify">{{ $anexo->titulo }}
+                                                                    </td>
+                                                                    <td class="text-justify">
+                                                                        {{ $anexo->descripcion }}
+                                                                    </td>
+                                                                    <td><a href="{{ asset('documentos/respuestas/' . $anexo->url) }}"
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer">Descargar</a>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                @endif
+                                
+                                @if (sizeOf($peticion->recursos))
+                                    <div class="menu-card-recursos menu-card">
                                         <div class="row card-recursos">
                                             <div class="col-12">
                                                 <h6>Recursos</h6>
@@ -421,9 +468,9 @@
                                                             <th scope="col">Fecha recurso</th>
                                                             <th scope="col">Tipo de recurso</th>
                                                             <th scope="col">Recurso</th>
-                                                            <th scope="col">Estado</th>
                                                             <th scope="col">Documentos recurso</th>
                                                             <th scope="col">Fecha respuesta recurso</th>
+                                                            <th scope="col">Descripción</th>
                                                             <th scope="col">Documentos respuesta recurso</th>
                                                         </tr>
                                                     </thead>
@@ -433,7 +480,6 @@
                                                                 <td>{{ $recurso->fecha_radicacion }}</td>
                                                                 <td class="text-justify">{{ $recurso->tiporeposicion->tipo }}</td>
                                                                 <td class="text-justify">{{ $recurso->recurso }}</td>
-                                                                <td>Resuelta</td>
                                                                 @if ($recurso->documentos)
                                                                     <td>
                                                                         @foreach ($recurso->documentos as $anexo)
@@ -443,12 +489,17 @@
                                                                         @endforeach
                                                                     </td>
                                                                 @else
-                                                                    <td>---</td>
+                                                                    <td></td>
                                                                 @endif
                                                                 @if ($recurso->respuestarecurso)
                                                                     <td>{{ $recurso->respuestarecurso->fecha }}</td>
                                                                 @else
-                                                                    <td>---</td>
+                                                                    <td></td>
+                                                                @endif
+                                                                @if ($recurso->respuestarecurso)
+                                                                    <td>{{ $recurso->respuestarecurso->respuesta }}</td>
+                                                                @else
+                                                                    <td></td>
                                                                 @endif
                                                                 <td>
                                                                     @if ($recurso->respuestarecurso)
@@ -465,9 +516,9 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    @endif
-                                </div>
-                                <hr>
+                                    </div>
+                                    <hr>
+                                @endif
                                 <h5 class="">Historial peticiones</h5>
                                 <div class="row d-flex px-12 p-3">
                                     <div class="col-12 table-responsive">
@@ -498,14 +549,13 @@
                                         <label for="" class="">Agregar Historial</label>
                                         <textarea class="form-control mensaje-historial-peticion" rows="3" placeholder="" required></textarea>
                                     </div>
-                                    <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                        <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialPeticion" data_url="{{ route('historial_peticion_guardar') }}"
-                                        data_token="{{ csrf_token() }}">Guardar</button>
+                                    <div class="col-12 col-md-12 form-group d-flex">
+                                        <button href="" class="btn btn-primary px-4 guardarHistorialPeticion" data_url="{{ route('historial_peticion_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar historial</button>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
-                        
                     </div> 
                     <!-- /.card-body -->
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
@@ -513,7 +563,7 @@
                         <div class="rounded border m-3 p-2">
                             <h5 class="">Gestión Peticiones</h5>
                             <div class="col-12 table-responsive d-flex justify-content-center">
-                                <table class="table table-light col-12" style="font-size: 0.8em;">
+                                <table class="table table-striped col-12" style="font-size: 0.8em;">
                                     <thead>
                                         <tr>
                                             <th scope="col">Petición #</th>
@@ -523,11 +573,12 @@
                                     <tbody>
                                         @foreach ($pqr->peticiones as $key=> $peticion)
                                             <tr>
-                                                <td>{{$key + 1}}</td>
                                                 @if($peticion->empleado)
-                                                    <td>{{$peticion->empleado->nombre1 }} {{$peticion->empleado->apellido1}}</td>
+                                                    <td class="bg-success">{{$key + 1}}</td>
+                                                    <td class="bg-success">{{$peticion->empleado->nombre1 }} {{$peticion->empleado->apellido1}}</td>
                                                 @else    
-                                                    <td>Sin asignar</td>
+                                                    <td class="bg-danger">{{$key + 1}}</td>
+                                                    <td class="bg-danger">Sin asignar</td>
                                                 @endif
                                             </tr>
                                         @endforeach
@@ -555,9 +606,9 @@
                                     <select name="funcionario" id="funcionario" class="custom-select rounded-0" required="">
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-2 form-group d-flex align-items-end">
+                                <div class="col-12 col-md-4 form-group d-flex align-items-end">
                                     <button href="" class="btn btn-primary mx-2 px-4" id="asignacion_peticion_guardar" data_url="{{ route('asignacion_peticion_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Asignar</button>
+                                    data_token="{{ csrf_token() }}">Asignar peticion</button>
                                 </div>
                             </div>
                             <hr>
@@ -579,7 +630,11 @@
                                             @foreach ($pqr->historialtareas as $historial)
                                                 <tr>
                                                     <td>{{ $historial->created_at }}</td>
-                                                    <td class="text-justify">{{ $historial->tarea->tarea }}</td>
+                                                    @if($historial->tarea)
+                                                        <td class="text-justify">{{ $historial->tarea->tarea }}</td>
+                                                    @else
+                                                        <td class="text-justify">ADMINISTRADOR</td>
+                                                    @endif
                                                     <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
                                                     <td class="text-justify">{{ $historial->historial }}</td>
                                                 </tr>
@@ -596,12 +651,76 @@
                                     <textarea class="form-control" rows="3" placeholder="" name="mensaje-historia-tarea"
                                         id="mensaje-historial-tarea" required></textarea>
                                 </div>
-                                <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4" id="guardarHistorialTarea" data_url="{{ route('historial_tarea_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar</button>
+                                <div class="col-12 col-md-12 form-group d-flex">
+                                    <button href="" class="btn btn-primary px-4" id="guardarHistorialTarea" data_url="{{ route('historial_tarea_guardar') }}"
+                                    data_token="{{ csrf_token() }}">Guardar Historial</button>
                                 </div>
                             </div>
                         </div>
+                        @if(sizeOf($pqr->anexos))
+                            <div class="rounded border m-3 p-2">
+                                <h5 class="">Historial de respuesta </h5>
+                                <div class="row d-flex px-12 p-3">
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-light" style="font-size: 0.8em;">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Fecha</th>
+                                                    <th scope="col">Empleado</th>
+                                                    <th scope="col">Tarea</th>
+                                                    {{-- <th scope="col">Estado</th> --}}
+                                                    <th scope="col">Descarga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pqr->anexos as $anexo)
+                                                    <tr>
+                                                        <td>{{ $anexo->created_at }}</td>
+                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
+                                                        {{-- <td class="text-justify">{{ $anexo->estado ? 'Activo' : 'Rechazado'  }}</td> --}}
+                                                        <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        @endif
+                        @if (((($pqr->peticiones->sum('estado_id') / $pqr->peticiones->count())/ 11) * 100) == 100 )
+                            <div class="rounded border m-3 p-2">
+                                <h5 class="mt-2">Proyectar</h5>
+                                <div class="col-12 d-flex row pqr-anexo">
+                                    <div class="my-2 col-12 d-flex justify-content-between">
+                                        <h6>Documento de respuesta</h6>
+                                    </div>
+                                    <div class="col-12 col-md-4 form-group">
+                                        <label for="titulo">Título anexo</label>
+                                        <input type="text" class="titulo form-control form-control-sm">
+                                    </div>
+                                    <div class="col-12 col-md-4 form-group">
+                                        <label for="descripcion">Descripción</label>
+                                        <input type="text" class="descripcion form-control form-control-sm">
+                                    </div>
+                                    <div class="col-12 col-md-4 form-group">
+                                        <label for="anexo">Anexo</label>
+                                        <input class="anexo form-control form-control-sm" type="file">
+                                    </div>
+                                    <div class="container-mensaje-historial-tarea form-group col-12">
+                                        <label for="" class="">Agregar Historial</label>
+                                        <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
+                                    </div>
+                                    <div class="row d-flex px-12 p-3"> 
+                                        <div class="col-12 col-md-12 form-group d-flex">
+                                            <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-anexo" data_url="{{ route('pqr_anexo_guardar') }}"
+                                            data_url2="{{ route('historial_tarea_guardar') }}" data_url3="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Enviar a revisión</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     @endif
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
@@ -614,6 +733,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-    <script src="{{ asset('js/intranet/generar_pqr/gestion_asignacion_peticion.js') }}"></script>
+    <script src="{{ asset('js/intranet/generar_pqr/gestion_asignacion_proyecta.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

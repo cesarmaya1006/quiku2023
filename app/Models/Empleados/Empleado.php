@@ -11,6 +11,7 @@ use App\Models\Empresas\Empresa;
 use App\Models\PQR\HistorialTarea;
 use App\Models\PQR\HistorialPeticion;
 use App\Models\PQR\HistorialAsignacion;
+use App\Models\PQR\PqrAnexo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -80,5 +81,11 @@ class Empleado extends Model
     {
         return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
     }
-    
+    //----------------------------------------------------------------------------------
+    public function pqranexos()
+    {
+        return $this->hasMany(PqrAnexo::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+
 }

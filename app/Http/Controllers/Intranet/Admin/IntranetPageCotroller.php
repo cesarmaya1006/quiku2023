@@ -9,6 +9,7 @@ use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\Consultas\Consulta;
 use App\Models\Denuncias\Denuncia;
 use App\Models\Felicitaciones\Felicitacion;
+use App\Models\PQR\AsignacionTarea;
 use App\Models\PQR\PQR;
 use App\Models\PQR\tipoPQR;
 use App\Models\SolicitudDatos\SolicitudDatos;
@@ -28,6 +29,7 @@ class IntranetPageCotroller extends Controller
     {
         $tipoPQR = tipoPQR::all();
         $usuario = Usuario::findOrFail(session('id_usuario'));
+        $tareas = AsignacionTarea::where('empleado_id', $usuario->id)->get();
         if (session('rol_id') == 6) {
             if ($usuario->persona->count() > 0) {
                 $pqrs = PQR::where('persona_id', session('id_usuario'))->get();
@@ -37,10 +39,10 @@ class IntranetPageCotroller extends Controller
                 }
             }
         } elseif (session('rol_id') == 5) {
-            if ($usuario->empleado->cargo_id == 2) {
-                $pqrs = PQR::where('estadospqr_id', '1')->get();
+            if ($usuario->empleado->cargo->id == 2) {
+                $pqrs = PQR::all();
             } else {
-                $pqrs = PQR::where('empleado_id', $usuario->id)->where('estadospqr_id', '1')->get();
+                $pqrs = PQR::where('empleado_id', $usuario->id)->get();
             }
         } elseif (session('rol_id') == 4) {
             $pqrs = PQR::where('empleado_id', session('id_usuario'))->get();
@@ -50,7 +52,7 @@ class IntranetPageCotroller extends Controller
             $pqrs = PQR::get();
         }
 
-        return view('intranet.index.index', compact('pqrs', 'usuario', 'tipoPQR'));
+        return view('intranet.index.index', compact('pqrs', 'usuario', 'tipoPQR', 'tareas'));
     }
 
     public function restablecer_password(ValidarPassword $request)
