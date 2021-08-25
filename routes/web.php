@@ -217,6 +217,8 @@ Route::group(['middleware' => 'auth'], function () {
             //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
             Route::get('wiku_norma/crear', [WikuController::class, 'crear_norma'])->name('wiku_norma-crear');
             Route::post('wiku_norma-guardar', [WikuController::class, 'guardar_norma'])->name('wiku_norma-guardar');
+            Route::get('wiku_norma/editar/{id}', [WikuController::class, 'editar_norma'])->name('wiku_norma-editar');
+            Route::get('wiku_norma/editar/{id}/area', [WikuController::class, 'norma_area'])->name('wiku_norma-area');
             //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
             Route::get('wiku/index_fuenteN', [WikuController::class, 'index_fuenteN'])->name('wiku-index_fuenteN');
             Route::get('wiku_fuente/crear', [WikuController::class, 'crear_fuente'])->name('wiku_fuenteN-crear');

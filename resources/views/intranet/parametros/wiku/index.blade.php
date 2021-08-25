@@ -6,7 +6,7 @@
 @endsection
 <!-- Pagina CSS -->
 @section('estilosHojas')
-    <link rel="stylesheet" href="{{ asset('css/intranet/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/intranet/normas/normas.css') }}">
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
@@ -81,28 +81,35 @@
                                                 <thead class="thead-inverse">
                                                     <tr>
                                                         <th class="text-center">Fuente</th>
-                                                        <th class="text-center">Número</th>
                                                         <th class="text-center">Fecha de Emisión</th>
                                                         <th class="text-center">Ente Emisor</th>
                                                         <th class="text-center">Artículo</th>
                                                         <th class="text-center">Fecha de entrada en vigencia</th>
                                                         <th class="text-center">Texto</th>
                                                         <th class="text-center">Descripción del articulo</th>
-                                                        <th></th>
+                                                        <th class="text-center">Área de conocimiento</th>
+                                                        <th class="text-center">Tema</th>
+                                                        <th class="text-center">Tema Específico</th>
+                                                        <th>Opciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($normas as $norma)
                                                         <tr>
                                                             <td>{{ $norma->documento->fuente }}</td>
+                                                            <td class="text-center">{{ $norma->documento->fecha }}</td>
+                                                            <td class="text-center">{{ $norma->documento->emisor }}</td>
+                                                            <td class="text-center">{{ $norma->articulo }}</td>
+                                                            <td class="text-center">{{ $norma->fecha }}</td>
+                                                            <td class="text-center">{{ $norma->texto }}</td>
+                                                            <td class="text-center">{{ $norma->descripcion }}</td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td><a href="{{ route('wiku_norma-editar', ['id' => $norma->id]) }}"
+                                                                    class="btn-accion-tabla tooltipsC text-info"
+                                                                    title="Editar"><i class="fa fa-edit"
+                                                                        aria-hidden="true"></i></a></td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

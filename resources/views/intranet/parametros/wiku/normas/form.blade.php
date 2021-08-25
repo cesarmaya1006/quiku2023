@@ -1,3 +1,36 @@
+<div class="row mt-3">
+    <div class="col-12 col-md-4 form-group">
+        <label class="requerido" for="wikuarea_id">Área de conocimiento</label>
+        <select class="form-control form-control-sm" name="wikuarea_id" id="wikuarea_id">
+            <option value="">--- Seleccione ---</option>
+            @foreach ($areas as $area)
+                <option value="{{ $area->id }}"
+                    {{ isset($norma) ? ($area->id == $norma->wikuarea_id ? 'selected' : '') : '' }}>
+                    {{ $area->area }}</option>
+            @endforeach
+        </select>
+        <small id="helpId" class="form-text text-muted">Fuente Emisor</small>
+    </div>
+    <div class="col-12 col-md-4 form-group d-flex flex-column">
+        <label class="requerido" for="articulo">Tema</label>
+        <span class="tema" id="tema">algo</span>
+        <small id="helpId" class="form-text text-muted">Artículo</small>
+    </div>
+    <div class="col-12 col-md-4 form-group d-flex flex-column">
+        <label class="requerido" for="articulo">tema Específico</label>
+        <span class="temaespecifico" id="temaespecifico">Lorem Ipsum es simplemente el texto de relleno de las imprentas
+            y archivos de texto. Lorem Ipsum
+            ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T.
+            persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que
+            logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto
+            de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s
+            con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente
+            con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem
+            Ipsum.</span>
+        <small id="helpId" class="form-text text-muted">Artículo</small>
+    </div>
+</div>
+<hr>
 <div class="row">
     <div class="col-12 col-md-5 form-group">
         <label for="fuente_id">Fuente emisora</label>

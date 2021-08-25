@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Intranet\Empresas;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\WikuArea;
 use App\Models\Admin\WikuDocument;
 use App\Models\Admin\WikuNorma;
 use Illuminate\Http\Request;
@@ -66,12 +67,25 @@ class WikuController extends Controller
     public function crear_norma()
     {
         $fuentes = WikuDocument::all();
-        return view('intranet.parametros.wiku.normas.crear', compact('fuentes'));
+        $areas = WikuArea::all();
+        return view('intranet.parametros.wiku.normas.crear', compact('fuentes', 'areas'));
     }
     public function guardar_norma(Request $request)
     {
         WikuNorma::create($request->all());
         return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Norma creada con exito.');
+    }
+    public function editar_norma($id)
+    {
+        $fuentes = WikuDocument::all();
+        $norma = WikuNorma::findOrFail($id);
+        $areas = WikuArea::all();
+        return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'areas'));
+    }
+    public function norma_area($id)
+    {
+        $norma = WikuNorma::findOrFail($id);
+        return view('intranet.parametros.wiku.normas.area', compact('norma'));
     }
     /**
      * Display the specified resource.

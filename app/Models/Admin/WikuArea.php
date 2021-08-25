@@ -6,20 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class WikuNorma extends Model
+class WikuArea extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'wikunormas';
+    protected $table = 'wikuareas';
     protected $guarded = [];
     //----------------------------------------------------------------------------------
-    public function documento()
+    public function normas()
     {
-        return $this->belongsTo(WikuDocument::class, 'fuente_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function area()
-    {
-        return $this->belongsTo(WikuArea::class, 'wikuarea_id', 'id');
+        return $this->hasMany(WikuNorma::class, 'wikuarea_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

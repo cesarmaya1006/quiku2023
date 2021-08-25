@@ -1,4 +1,6 @@
 $('table.display').DataTable({
+    "scrollX": true,
+    dom: 'Blfrtip',
     "columnDefs": [{
         "targets": 0
     }],
