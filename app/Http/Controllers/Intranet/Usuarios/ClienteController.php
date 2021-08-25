@@ -1239,7 +1239,6 @@ class ClienteController extends Controller
                     if ($no_null > $respuesta['no_null']) {
                         $respuesta['no_null'] = $no_null;
                         $respuesta['asignacion_id'] = $asignacion->id;
-<<<<<<< HEAD
                     }
                 }
             }
@@ -1254,22 +1253,6 @@ class ClienteController extends Controller
                     foreach ($persona->municipio->departamento->sedes as $sede) {
                         $sede_id = $sede->id;
                     }
-=======
-                    }
-                }
-            }
-        }
-        $asignacion_final = AsignacionParticular::findOrFail($respuesta['asignacion_id']);
-        if ($pqr->sede_id != null) {
-            if ($pqr->sede_id == $asignacion_final->sede_id) {
-                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $asignacion_final->sede_id)->get();
-            } else {
-                if ($pqr->persona_id != null) {
-                    $persona = Persona::findOrfail($pqr->persona_id);
-                    foreach ($persona->municipio->departamento->sedes as $sede) {
-                        $sede_id = $sede->id;
-                    }
->>>>>>> 0aea1fc81eab0b4337f3aae503378dcf6fad64fc
                     $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
                 } else {
                     $empresa = Empresa::findOrfail($pqr->empresa_id);
@@ -1284,7 +1267,6 @@ class ClienteController extends Controller
                 $persona = Persona::findOrfail($pqr->persona_id);
                 foreach ($persona->municipio->departamento->sedes as $sede) {
                     $sede_id = $sede->id;
-<<<<<<< HEAD
                 }
                 $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
             } else {
@@ -1293,16 +1275,6 @@ class ClienteController extends Controller
                     $sede_id = $sede->id;
                 }
                 $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
-=======
-                }
-                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
-            } else {
-                $empresa = Empresa::findOrfail($pqr->empresa_id);
-                foreach ($empresa->municipio->departamento->sedes as $sede) {
-                    $sede_id = $sede->id;
-                }
-                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
->>>>>>> 0aea1fc81eab0b4337f3aae503378dcf6fad64fc
             }
         }
         $max_pqr = 0;
