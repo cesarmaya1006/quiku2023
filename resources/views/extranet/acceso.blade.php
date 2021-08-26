@@ -24,7 +24,7 @@
                                     <div class="form-row">
                                         <div class="col-md-12 mb-3">
                                             <input type="text" class="form-control form-control-sm" id="usuario"
-                                                name="usuario" placeholder="usuario*" required>
+                                                name="usuario" placeholder="Usuario*" required>
                                         </div>
                                         <div class="col-md-12 mb-3">
                                             <input type="password" class="form-control form-control-sm" id="password"

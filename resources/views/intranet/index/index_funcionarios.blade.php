@@ -117,7 +117,7 @@
 
 </div>
 @if ($usuario->empleado)
-    @if ($usuario->empleado->cargo->id == 2)
+    @if ($usuario->empleado->cargo->id == 1)
         <hr>
         <div class="container-fluid" style="font-size: 0.8em;">
             <div class="row">
@@ -217,7 +217,7 @@
     @endif
 @endif
 @if ($usuario->empleado)
-    @if ($usuario->empleado->cargo->id != 2)
+    @if ($usuario->empleado->cargo->id != 1)
         <div class="container-fluid" style="font-size: 0.8em;">
             <div class="row">
                 <div class="col-12">

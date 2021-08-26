@@ -114,7 +114,7 @@ class Tabla_Usuarios extends Seeder
         DB::table('empleados')->insert([
             'id' => 5,
             'docutipos_id' => 1,
-            'cargo_id' => 1,
+            'cargo_id' => 2,
             'sede_id' => 1,
             'identificacion' => '90000001',
             'nombre1' => 'Juan',
@@ -144,7 +144,7 @@ class Tabla_Usuarios extends Seeder
         DB::table('empleados')->insert([
             'id' => 6,
             'docutipos_id' => 1,
-            'cargo_id' => 2,
+            'cargo_id' => 1,
             'sede_id' => 1,
             'identificacion' => '90000002',
             'nombre1' => 'Asignador',
@@ -175,7 +175,7 @@ class Tabla_Usuarios extends Seeder
             DB::table('empleados')->insert([
                 'id' => $i,
                 'docutipos_id' => 1,
-                'cargo_id' => 1,
+                'cargo_id' => 2,
                 'sede_id' => 1,
                 'identificacion' => '9000000' . $i,
                 'nombre1' => 'Empleado' . $i,
