@@ -1,35 +1,66 @@
-<div class="row mt-3">
-    <div class="col-12 col-md-4 form-group">
-        <label class="requerido" for="wikuarea_id">Área de conocimiento</label>
-        <select class="form-control form-control-sm" name="wikuarea_id" id="wikuarea_id">
-            <option value="">--- Seleccione ---</option>
-            @foreach ($areas as $area)
-                <option value="{{ $area->id }}"
-                    {{ isset($norma) ? ($area->id == $norma->wikuarea_id ? 'selected' : '') : '' }}>
-                    {{ $area->area }}</option>
-            @endforeach
-        </select>
-        <small id="helpId" class="form-text text-muted">Fuente Emisor</small>
-    </div>
-    <div class="col-12 col-md-4 form-group d-flex flex-column">
-        <label class="requerido" for="articulo">Tema</label>
-        <span class="tema" id="tema">algo</span>
-        <small id="helpId" class="form-text text-muted">Artículo</small>
-    </div>
-    <div class="col-12 col-md-4 form-group d-flex flex-column">
-        <label class="requerido" for="articulo">tema Específico</label>
-        <span class="temaespecifico" id="temaespecifico">Lorem Ipsum es simplemente el texto de relleno de las imprentas
-            y archivos de texto. Lorem Ipsum
-            ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T.
-            persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que
-            logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto
-            de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s
-            con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente
-            con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem
-            Ipsum.</span>
-        <small id="helpId" class="form-text text-muted">Artículo</small>
+<div class="row">
+    <div class="col-12">
+        @if (isset($norma))
+            <a href="{{ route('wiku_temaespecifico-index', ['id' => $norma->id, 'wiku' => 'norma']) }}"
+                class="btn btn-success btn-sombra btn-sm text-center pl-3 pr-3" style="font-size: 0.9em;"><i
+                    class="fas fa-plus-circle mr-2"></i> Añadir tema especifico</a>
+        @else
+            <a href="{{ route('wiku_temaespecifico-index', ['id' => '0', 'wiku' => 'norma']) }}"
+                class="btn btn-success btn-sombra btn-sm text-center pl-3 pr-3" style="font-size: 0.9em;"><i
+                    class="fas fa-plus-circle mr-2"></i> Añadir tema especifico</a>
+        @endif
     </div>
 </div>
+@if ($temasEspecifico->count() > 0)
+    <div class="row mt-3">
+        <div class="form-group col-12">
+            <label class="requerido" for="area_id">Área</label>
+            <select class="form-control form-control-sm" id="area_id" data_url="{{ route('cargar_temas') }}">
+                <option value="">---Seleccione---</option>
+                @foreach ($areas as $area)
+                    <option value="{{ $area->id }}"
+                        {{ isset($norma) ? ($area->id == $norma->temaEspecifico->tema_->area_id ? 'selected' : '') : '' }}>
+                        {{ $area->area }}</option>
+                @endforeach
+            </select>
+            <small id="helpId" class="form-text text-muted">Área</small>
+        </div>
+        <div class="form-group col-12">
+            <label class="requerido" for="tema_id">Tema</label>
+            <select class="form-control form-control-sm" id="tema_id" data_url="{{ route('cargar_temasespec') }}"
+                required>
+                @if (isset($norma))
+                    <option value="">---Seleccione---</option>
+                    @foreach ($norma->temaEspecifico->tema_->area->temas as $tema)
+                        <option value="{{ $tema->id }}"
+                            {{ isset($norma) ? ($tema->id == $norma->temaEspecifico->tema_id ? 'selected' : '') : '' }}>
+                            {{ $tema->tema }}</option>
+                    @endforeach
+                @else
+                    <option value="">Seleccione primero un área</option>
+                @endif
+            </select>
+            <small id="helpId" class="form-text text-muted">Tema</small>
+        </div>
+        <div class="form-group col-12">
+            <label class="requerido" for="wikutemaespecifico_id">Tema Específico</label>
+            <select class="form-control form-control-sm" name="wikutemaespecifico_id" id="wikutemaespecifico_id"
+                required>
+                @if (isset($norma))
+                    <option value="">---Seleccione---</option>
+                    @foreach ($norma->temaEspecifico->tema_->temasespecificos as $temaespecif)
+                        <option value="{{ $temaespecif->id }}"
+                            {{ isset($norma) ? ($temaespecif->id == $norma->wikutemaespecifico_id ? 'selected' : '') : '' }}>
+                            {{ $temaespecif->tema }}</option>
+                    @endforeach
+                @else
+                    <option value="">Seleccione primero un Tema</option>
+                @endif
+            </select>
+            <small id="helpId" class="form-text text-muted">Tema Específico</small>
+        </div>
+    </div>
+@endif
 <hr>
 <div class="row">
     <div class="col-12 col-md-5 form-group">

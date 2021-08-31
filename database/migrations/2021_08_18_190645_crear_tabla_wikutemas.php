@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaWikuareas extends Migration
+class CrearTablaWikutemas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CrearTablaWikuareas extends Migration
      */
     public function up()
     {
-        Schema::create('wikuareas', function (Blueprint $table) {
+        Schema::create('wikutemas', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->string('area', 255);
-            $table->string('tema', 255);
-            $table->longText('temaespecifico')->nullable();
+            $table->unsignedBigInteger('area_id');
+            $table->foreign('area_id', 'fk_area_temas')->references('id')->on('wikuareas')->onDelete('restrict')->onUpdate('restrict');
+            $table->longText('tema');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
@@ -31,6 +31,6 @@ class CrearTablaWikuareas extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wikuareas');
+        Schema::dropIfExists('wikutemas');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaWikucriterios extends Migration
+class CrearTablaWikutemaespecifico extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CrearTablaWikucriterios extends Migration
      */
     public function up()
     {
-        Schema::create('wikucriterios', function (Blueprint $table) {
+        Schema::create('wikutemaespecifico', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->string('autores', 255);
-            $table->longText('criterio_si')->nullable();
-            $table->longText('criterio_no')->nullable();
-            $table->longText('notas')->nullable();
+            $table->unsignedBigInteger('tema_id');
+            $table->foreign('tema_id', 'fk_tema_especifico')->references('id')->on('wikutemas')->onDelete('restrict')->onUpdate('restrict');
+            $table->longText('tema');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
@@ -32,6 +31,6 @@ class CrearTablaWikucriterios extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wikucriterios');
+        Schema::dropIfExists('wikutemaespecifico');
     }
 }

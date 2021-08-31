@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="row mt-3" style="font-size: 0.8em;">
                                         <div class="col-12">
-                                            <table class="table table-striped table-hover table-sm display">
+                                            <table class="table table-striped table-hover table-sm displayScroll">
                                                 <thead class="thead-inverse">
                                                     <tr>
                                                         <th class="text-center">Fuente</th>
@@ -90,6 +90,7 @@
                                                         <th class="text-center">Área de conocimiento</th>
                                                         <th class="text-center">Tema</th>
                                                         <th class="text-center">Tema Específico</th>
+                                                        <th>Criterios</th>
                                                         <th>Opciones</th>
                                                     </tr>
                                                 </thead>
@@ -103,9 +104,15 @@
                                                             <td class="text-center">{{ $norma->fecha }}</td>
                                                             <td class="text-center">{{ $norma->texto }}</td>
                                                             <td class="text-center">{{ $norma->descripcion }}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
+                                                            <td>{{ $norma->temaEspecifico->tema_->area->area }}</td>
+                                                            <td style="min-width:100px;">
+                                                                {{ $norma->temaEspecifico->tema_->tema }}</td>
+                                                            <td>
+                                                                {{ $norma->temaespecifico->tema }}</td>
+                                                            <td><a href="{{ route('wiku_criterios', ['id' => $norma->id]) }}"
+                                                                    class="btn-accion-tabla tooltipsC text-info"
+                                                                    title="Editar"><i class="fas fa-eye"
+                                                                        aria-hidden="true"></i> Ver</a> </td>
                                                             <td><a href="{{ route('wiku_norma-editar', ['id' => $norma->id]) }}"
                                                                     class="btn-accion-tabla tooltipsC text-info"
                                                                     title="Editar"><i class="fa fa-edit"
@@ -153,6 +160,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-
+    <script src="{{ asset('js/intranet/parametros/wiku.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

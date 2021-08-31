@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\WikuArea;
 use App\Models\Admin\WikuDocument;
 use App\Models\Admin\WikuNorma;
+use App\Models\Admin\WikuTema;
+use App\Models\Admin\WikuTemaEspecifico;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
@@ -67,8 +69,9 @@ class WikuController extends Controller
     public function crear_norma()
     {
         $fuentes = WikuDocument::all();
+        $temasEspecifico = WikuTemaEspecifico::all();
         $areas = WikuArea::all();
-        return view('intranet.parametros.wiku.normas.crear', compact('fuentes', 'areas'));
+        return view('intranet.parametros.wiku.normas.crear', compact('fuentes', 'temasEspecifico', 'areas'));
     }
     public function guardar_norma(Request $request)
     {
@@ -78,14 +81,171 @@ class WikuController extends Controller
     public function editar_norma($id)
     {
         $fuentes = WikuDocument::all();
-        $norma = WikuNorma::findOrFail($id);
+        $temasEspecifico = WikuTemaEspecifico::all();
         $areas = WikuArea::all();
-        return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'areas'));
+        $norma = WikuNorma::findOrFail($id);
+        return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'temasEspecifico', 'areas'));
     }
-    public function norma_area($id)
+    public function actualizar_norma(Request $request, $id)
+    {
+        WikuNorma::findOrFail($id)->update($request->all());
+        return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Norma actualizada con exito.');
+    }
+    public function cargar_temasespec(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return WikuTemaEspecifico::where('tema_id', $id)->get();
+        }
+    }
+    //*************************************************************************************************** */
+    public function volver_temaespecifico($id, $wiku)
+    {
+        if ($wiku == 'norma') {
+            if ($id == 0) {
+                $areas = WikuArea::all();
+                $fuentes = WikuDocument::all();
+                $temasEspecifico = WikuTemaEspecifico::all();
+                return view('intranet.parametros.wiku.normas.crear', compact('fuentes', 'temasEspecifico', 'areas'));
+            } else {
+                $fuentes = WikuDocument::all();
+                $norma = WikuNorma::findOrFail($id);
+                $areas = WikuArea::all();
+                return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'areas'));
+            }
+        }
+    }
+    public function index_temaespecifico($id, $wiku)
+    {
+        $temasEspecificos = WikuTemaEspecifico::all();
+        $temas = WikuTema::all();
+        return view('intranet.parametros.wiku.areas_temas.temasespecificos.index', compact('temasEspecificos', 'temas', 'id', 'wiku'));
+    }
+    public function crear_temaespecifico($id, $wiku)
+    {
+        $areas = WikuArea::all();
+        return view('intranet.parametros.wiku.areas_temas.temasespecificos.crear', compact('id', 'wiku', 'areas'));
+    }
+    public function guardar_temaespecifico(Request $request, $id, $wiku)
+    {
+        WikuTemaEspecifico::create($request->all());
+        $temasEspecificos = WikuTemaEspecifico::all();
+        $temas = WikuTema::all();
+        return redirect('admin/funcionario/wiku_temaespecifico/index/' . $id . '/' . $wiku)->with('mensaje', 'Tema Específico creada con éxito')->with('id')->with('wiku')->with('temasEspecificos')->with('temas');
+    }
+    public function editar_temaespecifico(Request $request, $id_especifico, $id, $wiku)
+    {
+        $areas = WikuArea::all();
+        $temaespecif = WikuTemaEspecifico::findOrFail($id_especifico);
+        return view('intranet.parametros.wiku.areas_temas.temasespecificos.editar', compact('areas', 'temaespecif', 'id', 'wiku'));
+    }
+    public function actualizar_temaespecifico(Request $request, $id_especifico, $id, $wiku)
+    {
+        WikuTemaEspecifico::findOrFail($id_especifico)->update($request->all());
+        $temas = WikuTema::all();
+        $areas = WikuArea::all();
+        return redirect('admin/funcionario/wiku_temaespecifico/index/' . $id . '/' . $wiku)->with('mensaje', 'Tema actualizada con éxito')->with('id')->with('wiku')->with('temasEspecificos')->with('temas');
+    }
+    public function cargar_temas(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return WikuTema::where('area_id', $id)->get();
+        }
+    }
+    //*************************************************************************************************** */
+    public function volver_tema($id, $wiku)
+    {
+        if ($wiku == 'norma') {
+            if ($id == 0) {
+                $temasEspecificos = WikuTemaEspecifico::all();
+                $temas = WikuTema::all();
+                return view('intranet.parametros.wiku.areas_temas.temasespecificos.index', compact('temasEspecificos', 'temas', 'id', 'wiku'));
+            } else {
+                $temasEspecificos = WikuTemaEspecifico::all();
+                $temas = WikuTema::all();
+                return view('intranet.parametros.wiku.areas_temas.temasespecificos.index', compact('temasEspecificos', 'temas', 'id', 'wiku'));
+            }
+        }
+    }
+    public function index_tema($id, $wiku)
+    {
+        $temas = WikuTema::all();
+        $areas = WikuArea::all();
+        return view('intranet.parametros.wiku.areas_temas.temas.index', compact('areas', 'temas', 'id', 'wiku'));
+    }
+    public function crear_tema($id, $wiku)
+    {
+        $areas = WikuArea::all();
+        return view('intranet.parametros.wiku.areas_temas.temas.crear', compact('id', 'wiku', 'areas'));
+    }
+    public function guardar_tema(Request $request, $id, $wiku)
+    {
+        WikuTema::create($request->all());
+        $areas = WikuArea::all();
+        $temas = WikuTema::all();
+        return redirect('admin/funcionario/wiku_tema/index/' . $id . '/' . $wiku)->with('mensaje', 'Tema creada con éxito')->with('id')->with('wiku')->with('areas')->with('temas');
+    }
+    public function editar_tema(Request $request, $id_tema, $id, $wiku)
+    {
+        $areas = WikuArea::all();
+        $tema = WikuTema::findOrFail($id_tema);
+        return view('intranet.parametros.wiku.areas_temas.temas.editar', compact('areas', 'tema', 'id', 'wiku'));
+    }
+    public function actualizar_tema(Request $request, $id_tema, $id, $wiku)
+    {
+        WikuTema::findOrFail($id_tema)->update($request->all());
+        $temas = WikuTema::all();
+        $areas = WikuArea::all();
+        return redirect('admin/funcionario/wiku_tema/index/' . $id . '/' . $wiku)->with('mensaje', 'Tema actualizada con éxito')->with('id')->with('wiku')->with('areas')->with('temas');
+    }
+    //*************************************************************************************************** */
+    public function volver_area($id, $wiku)
+    {
+        if ($wiku == 'norma') {
+            if ($id == 0) {
+                $temas = WikuTema::all();
+                $areas = WikuArea::all();
+                return view('intranet.parametros.wiku.areas_temas.temas.index', compact('areas', 'temas', 'id', 'wiku'));
+            } else {
+                $temas = WikuTema::all();
+                $areas = WikuArea::all();
+                return view('intranet.parametros.wiku.areas_temas.temas.index', compact('areas', 'temas', 'id', 'wiku'));
+            }
+        }
+    }
+    public function index_area($id, $wiku)
+    {
+        $areas = WikuArea::all();
+        return view('intranet.parametros.wiku.areas_temas.areas.index', compact('areas', 'id', 'wiku'));
+    }
+
+    public function crear_area($id, $wiku)
+    {
+        return view('intranet.parametros.wiku.areas_temas.areas.crear', compact('id', 'wiku'));
+    }
+    public function guardar_area(Request $request, $id, $wiku)
+    {
+        WikuArea::create($request->all());
+        $areas = WikuArea::all();
+        return redirect('admin/funcionario/wiku_area/index/' . $id . '/' . $wiku)->with('mensaje', 'Área creada con éxito')->with('id')->with('wiku')->with('areas');
+    }
+    public function editar_area(Request $request, $id_area, $id, $wiku)
+    {
+        $area = WikuArea::findOrFail($id_area);
+        return view('intranet.parametros.wiku.areas_temas.areas.editar', compact('area', 'id', 'wiku'));
+    }
+    public function actualizar_area(Request $request, $id_area, $id, $wiku)
+    {
+        WikuArea::findOrFail($id_area)->update($request->all());
+        $areas = WikuArea::all();
+        return redirect('admin/funcionario/wiku_area/index/' . $id . '/' . $wiku)->with('mensaje', 'Área actualizada con éxito')->with('id')->with('wiku')->with('areas');
+    }
+    //*************************************************************************************************** */
+    public function criterios($id)
     {
         $norma = WikuNorma::findOrFail($id);
-        return view('intranet.parametros.wiku.normas.area', compact('norma'));
+        return view('intranet.parametros.wiku.criterios.index', compact('norma'));
     }
     /**
      * Display the specified resource.

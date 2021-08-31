@@ -39,7 +39,8 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary btn-xs btn-sombra pl-4 pr-4">Guardar</button>
+                            <button type="submit" class="btn btn-primary btn-xs btn-sombra pl-4 pr-4"
+                                {{ $temasEspecifico->count() > 0 ? '' : 'disabled ' }}>{{ $temasEspecifico->count() > 0 ? 'Guardar' : 'Debe agregar primero un tema específico' }}</button>
                         </div>
                         <!-- /.card-footer -->
                     </form>
@@ -51,6 +52,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-
+    <script src="{{ asset('js/intranet/parametros/fuentes.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->

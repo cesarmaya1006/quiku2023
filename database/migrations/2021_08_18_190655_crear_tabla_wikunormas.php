@@ -26,8 +26,8 @@ class CrearTablaWikunormas extends Migration
             $table->string('seccion', 255)->nullable();
             $table->string('titulo', 255)->nullable();
             $table->string('capitulo', 255)->nullable();
-            $table->unsignedBigInteger('wikuarea_id')->nullable();
-            $table->foreign('wikuarea_id', 'fk_area_norma')->references('id')->on('wikuareas')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('wikutemaespecifico_id')->nullable();
+            $table->foreign('wikutemaespecifico_id', 'fk_temaespecifico_norma')->references('id')->on('wikutemaespecifico')->onDelete('restrict')->onUpdate('restrict');
             $table->bigInteger('destacado')->default(0);
             $table->timestamps();
             $table->charset = 'utf8';

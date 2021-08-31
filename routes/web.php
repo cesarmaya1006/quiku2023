@@ -223,7 +223,32 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('wiku_norma/crear', [WikuController::class, 'crear_norma'])->name('wiku_norma-crear');
             Route::post('wiku_norma-guardar', [WikuController::class, 'guardar_norma'])->name('wiku_norma-guardar');
             Route::get('wiku_norma/editar/{id}', [WikuController::class, 'editar_norma'])->name('wiku_norma-editar');
-            Route::get('wiku_norma/editar/{id}/area', [WikuController::class, 'norma_area'])->name('wiku_norma-area');
+            Route::put('wiku_norma-actualizar/{id}', [WikuController::class, 'actualizar_norma'])->name('wiku_norma-actualizar');
+            Route::get('cargar_temasespec', [WikuController::class, 'cargar_temasespec'])->name('cargar_temasespec');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            Route::get('wiku_volver_temaespecifico/{id}/{wiku}', [WikuController::class, 'volver_temaespecifico'])->name('wiku_volver_temaespecifico');
+            Route::get('wiku_temaespecifico/index/{id}/{wiku}', [WikuController::class, 'index_temaespecifico'])->name('wiku_temaespecifico-index');
+            Route::get('wiku_temaespecifico/crear/{id}/{wiku}', [WikuController::class, 'crear_temaespecifico'])->name('wiku_temaespecifico-crear');
+            Route::post('wiku_temaespecifico-guardar/{id}/{wiku}', [WikuController::class, 'guardar_temaespecifico'])->name('wiku_temaespecifico-guardar');
+            Route::get('wiku_temaespecifico/editar/{id_especifico}/{id}/{wiku}', [WikuController::class, 'editar_temaespecifico'])->name('wiku_temaespecifico-editar');
+            Route::put('wiku_temaespecifico-actualizar/{id_especifico}/{id}/{wiku}', [WikuController::class, 'actualizar_temaespecifico'])->name('wiku_temaespecifico-actualizar');
+            Route::get('cargar_temas', [WikuController::class, 'cargar_temas'])->name('cargar_temas');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            Route::get('wiku_volver_tema/{id}/{wiku}', [WikuController::class, 'volver_tema'])->name('wiku_volver_tema');
+            Route::get('wiku_tema/index/{id}/{wiku}', [WikuController::class, 'index_tema'])->name('wiku_tema-index');
+            Route::get('wiku_tema/crear/{id}/{wiku}', [WikuController::class, 'crear_tema'])->name('wiku_tema-crear');
+            Route::post('wiku_tema-guardar/{id}/{wiku}', [WikuController::class, 'guardar_tema'])->name('wiku_tema-guardar');
+            Route::get('wiku_tema/editar/{id_tema}/{id}/{wiku}', [WikuController::class, 'editar_tema'])->name('wiku_tema-editar');
+            Route::put('wiku_tema-actualizar/{id_tema}/{id}/{wiku}', [WikuController::class, 'actualizar_tema'])->name('wiku_tema-actualizar');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            Route::get('wiku_volver_area/{id}/{wiku}', [WikuController::class, 'volver_area'])->name('wiku_volver_area');
+            Route::get('wiku_area/index/{id}/{wiku}', [WikuController::class, 'index_area'])->name('wiku_area-index');
+            Route::get('wiku_area/crear/{id}/{wiku}', [WikuController::class, 'crear_area'])->name('wiku_area-crear');
+            Route::post('wiku_area-guardar/{id}/{wiku}', [WikuController::class, 'guardar_area'])->name('wiku_area-guardar');
+            Route::get('wiku_area/editar/{id_area}/{id}/{wiku}', [WikuController::class, 'editar_area'])->name('wiku_area-editar');
+            Route::put('wiku_area-actualizar/{id_area}/{id}/{wiku}', [WikuController::class, 'actualizar_area'])->name('wiku_area-actualizar');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            Route::get('wiku_norma-criterios/{id}', [WikuController::class, 'criterios'])->name('wiku_criterios');
             //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
             Route::get('wiku/index_fuenteN', [WikuController::class, 'index_fuenteN'])->name('wiku-index_fuenteN');
             Route::get('wiku_fuente/crear', [WikuController::class, 'crear_fuente'])->name('wiku_fuenteN-crear');
@@ -318,7 +343,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('generar', [ClienteController::class, 'generar'])->name('usuario-generar');
         Route::post('generar', [ClienteController::class, 'direccion'])->name('usuario-generar_direccion');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Nuevas Rutas 
+        // Nuevas Rutas
         Route::post('listado/gestionarPQR', [PQRController::class, 'gestionar_guardar_usuario'])->name('usuario_gestionar_pqr_guardar');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
