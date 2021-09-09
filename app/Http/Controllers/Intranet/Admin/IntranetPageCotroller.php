@@ -5,17 +5,9 @@ namespace App\Http\Controllers\Intranet\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidarPassword;
 use App\Models\Admin\Usuario;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
-use App\Models\Consultas\Consulta;
-use App\Models\Denuncias\Denuncia;
-use App\Models\Felicitaciones\Felicitacion;
 use App\Models\PQR\AsignacionTarea;
 use App\Models\PQR\PQR;
 use App\Models\PQR\tipoPQR;
-use App\Models\SolicitudDatos\SolicitudDatos;
-use App\Models\SolicitudDatos\SolicitudDatosAnexo;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
-use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Http\Request;
 
 class IntranetPageCotroller extends Controller
@@ -39,8 +31,9 @@ class IntranetPageCotroller extends Controller
                 }
             }
         } elseif (session('rol_id') == 5) {
-            if ($usuario->empleado->cargo->id == 2) {
+            if ($usuario->empleado->cargo->id == 1) {
                 $pqrs = PQR::all();
+                $pqrs = $pqrs->where("estado_creacion", 1);
             } else {
                 $pqrs = PQR::where('empleado_id', $usuario->id)->get();
             }

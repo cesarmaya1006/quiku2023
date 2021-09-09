@@ -77,7 +77,7 @@
                                             otro hecho</button>
                                     </div>
                                     <div class="form-group col-12 justificacion-motivo">
-                                        <label for="">Justificación</label>
+                                        <label for="">Solicitud</label>
                                         <input class="form-control" type="text" name="justificacion" id="justificacion"
                                             required>
                                     </div>

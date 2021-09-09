@@ -161,110 +161,112 @@
                         {{-- Fin Bloque header --}}
 
                         {{-- Inicio Bloque Tarjetas --}}
-                        <div class="col-12 d-flex flex-wrap rounded border justify-content-center my-2 p-2 ">
-                            <a href="" class="menu-radicado btn card-step verificado activo"
-                                data-content='menu-card-radicado'>
-                                <div class="">
-                                    <span style="font-size: 2.5em;">
-                                        <i class="far fa-file-alt"></i>
-                                    </span>
-                                    <h6>Radicacion de la PQR</h6>
-                                </div>
-                            </a>
-                            @if ($pqr->prorroga)
-                                <a href="" class="menu-prorroga btn card-step verificado"
-                                    data-content='menu-card-prorroga'>
+                        @if(!($pqr->tipo_pqr_id == 7 || $pqr->tipo_pqr_id == 9))
+                            <div class="col-12 d-flex flex-wrap rounded border justify-content-center my-2 p-2 ">
+                                <a href="" class="menu-radicado btn card-step verificado activo"
+                                    data-content='menu-card-radicado'>
                                     <div class="">
                                         <span style="font-size: 2.5em;">
-                                            <i class="fas fa-check"></i>
+                                            <i class="far fa-file-alt"></i>
                                         </span>
-                                        <h6>Prórroga</h6>
+                                        <h6>Radicacion de la PQR</h6>
                                     </div>
                                 </a>
-                            @endif
-                            @if ($aclaracionesMenu == 1)
-                                <a href="" class="menu-aclaracion btn card-step verificado "
-                                    data-content='menu-card-aclaraciones'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <h6>Aclaración y/o complementación</h6>
-                                    </div>
-                                </a>
-                            @elseif($aclaracionesMenu == 2)
-                                <a href="" class="menu-aclaracion btn card-step tramite"
-                                    data-content='menu-card-aclaraciones'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-hourglass-half"></i>
-                                        </span>
-                                        <h6>Aclaración y/o complementación</h6>
-                                    </div>
-                                </a>
-                            @endif
-                            @if ($respuestaMenu == 1 && $pqr->asignaciontareas->sum('estado_id') == 55 )
-                                <a href="" class="menu-respuesta btn card-step verificado"
-                                    data-content='menu-card-respuesta'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <h6>Respuesta PQR</h6>
-                                    </div>
-                                </a>
-                            @elseif($respuestaMenu == 2)
-                                <a href="" class="menu-respuesta btn card-step tramite"
-                                    data-content='menu-card-respuesta'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-hourglass-half"></i>
-                                        </span>
-                                        <h6>Respuesta PQR</h6>
-                                    </div>
-                                </a>
-                            @else
-                                <a href="" class="menu-respuesta btn card-step desativado"
-                                    data-content='menu-card-respuesta'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-hourglass-half"></i>
-                                        </span>
-                                        <h6>Respuesta PQR</h6>
-                                    </div>
-                                </a>
-                            @endif
-                            @if ($pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 8 || $pqr->estadospqr_id == 9)
-                                <a href="" class="menu-recurso btn card-step tramite" data-content='menu-card-recursos'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-hourglass-half"></i>
-                                        </span>
-                                        <h6>Recurso</h6>
-                                    </div>
-                                </a>
-                            @elseif($pqr->estadospqr_id == 10)
-                                <a href="" class="menu-recurso btn card-step verificado"
-                                    data-content='menu-card-recursos'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <h6>Recurso</h6>
-                                    </div>
-                                </a>
-                            @endif
-                            @if ($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10 )
-                                <a  href="{{ route('usuario-index') }}" class="menu-cierre btn card-step verificado" data-content = 'menu-salir-inicio'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="fas fa-check"></i>
-                                        </span>
-                                        <h6>Cierre del proceso de GESTION PQR</h6>
-                                    </div>
-                                </a>
-                            @endif
-                        </div>
+                                @if ($pqr->prorroga)
+                                    <a href="" class="menu-prorroga btn card-step verificado"
+                                        data-content='menu-card-prorroga'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Prórroga</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($aclaracionesMenu == 1)
+                                    <a href="" class="menu-aclaracion btn card-step verificado "
+                                        data-content='menu-card-aclaraciones'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Aclaración y/o complementación</h6>
+                                        </div>
+                                    </a>
+                                @elseif($aclaracionesMenu == 2)
+                                    <a href="" class="menu-aclaracion btn card-step tramite"
+                                        data-content='menu-card-aclaraciones'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-hourglass-half"></i>
+                                            </span>
+                                            <h6>Aclaración y/o complementación</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($respuestaMenu == 1 && $pqr->asignaciontareas->sum('estado_id') == 55 )
+                                    <a href="" class="menu-respuesta btn card-step verificado"
+                                        data-content='menu-card-respuesta'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Respuesta PQR</h6>
+                                        </div>
+                                    </a>
+                                @elseif($respuestaMenu == 2)
+                                    <a href="" class="menu-respuesta btn card-step tramite"
+                                        data-content='menu-card-respuesta'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-hourglass-half"></i>
+                                            </span>
+                                            <h6>Respuesta PQR</h6>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a href="" class="menu-respuesta btn card-step desativado"
+                                        data-content='menu-card-respuesta'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-hourglass-half"></i>
+                                            </span>
+                                            <h6>Respuesta PQR</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 8 || $pqr->estadospqr_id == 9)
+                                    <a href="" class="menu-recurso btn card-step tramite" data-content='menu-card-recursos'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-hourglass-half"></i>
+                                            </span>
+                                            <h6>Recurso</h6>
+                                        </div>
+                                    </a>
+                                @elseif($pqr->estadospqr_id == 10)
+                                    <a href="" class="menu-recurso btn card-step verificado"
+                                        data-content='menu-card-recursos'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Recurso</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                                @if ($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 10 )
+                                    <a  href="{{ route('usuario-index') }}" class="menu-cierre btn card-step verificado" data-content = 'menu-salir-inicio'>
+                                        <div class="">
+                                            <span style="font-size: 2.5em;">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                            <h6>Cierre del proceso de GESTION PQR</h6>
+                                        </div>
+                                    </a>
+                                @endif
+                            </div>
+                        @endif
                         {{-- Fin Bloque Tarjetas --}}
                         
                         {{-- Incio Bloque PQR --}}
@@ -311,7 +313,7 @@
                                                         <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}</p>
                                                     @endif
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Justificación:</strong> {{ $peticion->justificacion }}</p>
+                                                        <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->justificacion }}</p>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -364,6 +366,14 @@
                                                 <div class="row">
                                                     <div class="col-12">
                                                         <p class="text-justify"><strong>Tipo de irregularidad:</strong> {{ $peticion->irregularidad }}</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            @endif
+                                            @if($peticion->sugerencia)
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p class="text-justify"><strong>Sugerencia:</strong> {{ $peticion->sugerencia }}</p>
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -552,7 +562,7 @@
                                                                         data_token="{{ csrf_token() }}">Guardar aclaración</button>
                                                                     </div>
                                                                     <hr>
-                                                                    <p class="text-danger">Se recuerda que el tiempo maximo para dar respuesta a esta aclaracion es de 30 dias, despues de este tiempo la pqr se cerrara por vencimiento de terminos.</p>
+                                                                    <p class="text-danger">Se recuerda que el tiempo máximo para dar respuesta a esta aclaración es de 30 días, después de este tiempo la PQR se cerrara por vencimiento de términos.</p>
                                                                 </div>
                                                             </div>
                                                         @endif

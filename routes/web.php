@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
-use App\Models\SolicitudDatos\SolicitudDatos;
 use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\MenuController;
 use App\Http\Controllers\Intranet\Email\EmailController;
@@ -19,18 +18,9 @@ use App\Http\Controllers\Intranet\Admin\PermisoRolController;
 use App\Http\Controllers\Intranet\Funcionarios\PQRController;
 use App\Http\Controllers\Intranet\Usuarios\ClienteController;
 use App\Http\Controllers\Intranet\Admin\IntranetPageCotroller;
-use App\Http\Controllers\Intranet\Funcionarios\PQR_P_Controller;
-use App\Http\Controllers\Intranet\Funcionarios\PQR_Q_Controller;
-use App\Http\Controllers\Intranet\Funcionarios\PQR_R_Controller;
 use App\Http\Controllers\Intranet\Empresas\FuncionarioFController;
-use App\Http\Controllers\Intranet\Funcionarios\DenunciaController;
-use App\Http\Controllers\Intranet\Funcionarios\SugerenciaController;
 use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
-use App\Http\Controllers\Intranet\Funcionarios\FelicitacionController;
-use App\Http\Controllers\Intranet\Funcionarios\SolicitudDatosController;
 use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
-use App\Http\Controllers\Intranet\Funcionarios\ConceptoUOpinionController;
-use App\Http\Controllers\Intranet\Funcionarios\SolicitudDocInfoController;
 use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
 
 /*
@@ -226,57 +216,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('actualizar-datos', [FuncionarioController::class, 'editar'])->name('funcionario-editar');
         Route::post('actualizar-datos', [FuncionarioController::class, 'actualizar'])->name('funcionario-actualizar');
         Route::get('cambiar-password', [FuncionarioController::class, 'cambiar_password'])->name('funcionario-cambiar-password');
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        // Route::get('listado/gestionar_pqr_p/{id}', [PQR_P_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_p');
-        // Route::post('listado/gestionar_pqr_p', [PQR_P_Controller::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_p_guardar');
-        // Route::post('respuesta_recurso', [PQR_P_Controller::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
-        // Route::post('respuesta_recurso_anexos', [PQR_P_Controller::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');
-
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        // Route::get('listado/gestionar_pqr_q/{id}', [PQR_Q_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_q');
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        // Route::get('listado/gestionar_pqr_r/{id}', [PQR_R_Controller::class, 'gestionar'])->name('funcionario-gestionar_pqr_r');
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        // Route::get('listado/gestionarConceptoUOpinion/{id}', [ConceptoUOpinionController::class, 'gestionar'])->name('funcionario-gestionarConceptoUOpinion');
-        // Route::post('listado/gestionar_conceptoUOpinion', [ConceptoUOpinionController::class, 'gestionar_guardar'])->name('funcionario-gestionar_conceptoUOpinion_guardar');
-        // Route::post('prorroga_cuo', [ConceptoUOpinionController::class, 'prorroga_guardar'])->name('prorroga_guardar_cuo');
-        // Route::post('respuesta_recurso_cuo', [ConceptoUOpinionController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar_cuo');
-        // Route::post('respuesta_recurso_anexos_cuo', [ConceptoUOpinionController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar_cuo');
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        // Route::get('listado/gestionarFelicitacion/{id}', [FelicitacionController::class, 'gestionar'])->name('funcionario-gestionarFelicitacion');
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-        // Route::get('listado/gestionarDenuncia/{id}', [DenunciaController::class, 'gestionar'])->name('funcionario-gestionarDenuncia');
-        // Route::post('listado/gestionar_denuncia', [DenunciaController::class, 'gestionar_guardar'])->name('funcionario-gestionar_denuncia_guardar');
-        // Route::post('prorroga_d', [DenunciaController::class, 'prorroga_guardar'])->name('prorroga_guardar_d');
-        // Route::post('respuesta_recurso_d', [DenunciaController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar_d');
-        // Route::post('respuesta_recurso_anexos_d', [DenunciaController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar_d');
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Route::get('listado/gestionarSolicitudDatos/{id}', [SolicitudDatosController::class, 'gestionar'])->name('funcionario-gestionarSolicitudDatos');
-        // Route::post('listado/gestionar_solicitudDatos', [SolicitudDatosController::class, 'gestionar_guardar'])->name('funcionario-gestionar_solicitudDatos_guardar');
-        // Route::post('prorroga_sd', [SolicitudDatosController::class, 'prorroga_guardar'])->name('prorroga_guardar_sd');
-        // Route::post('respuesta_recurso_sd', [SolicitudDatosController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar_sd');
-        // Route::post('respuesta_recurso_anexos_sd', [SolicitudDatosController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar_sd');
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Route::get('listado/gestionarSolicitudDocumentos/{id}', [SolicitudDocInfoController::class, 'gestionar'])->name('funcionario-gestionarSolicitudDocumentos');
-        // Route::post('listado/gestionar_solicitudDocInfo', [SolicitudDocInfoController::class, 'gestionar_guardar'])->name('funcionario-gestionar_solicitudDocInfo_guardar');
-        // Route::post('prorroga_sdi', [SolicitudDocInfoController::class, 'prorroga_guardar'])->name('prorroga_guardar_sdi');
-        // Route::post('respuesta_recurso_sdi', [SolicitudDocInfoController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar_sdi');
-        // Route::post('respuesta_recurso_anexos_sdi', [SolicitudDocInfoController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar_sdi');
-
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        // Route::get('listado/gestionarSugerencia/{id}', [SugerenciaController::class, 'gestionar'])->name('funcionario-gestionarSugerencia');
+        Route::get('listado-usuarios', [FuncionarioController::class, 'listado_usuarios'])->name('funcionario-listado-usuarios');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('listado/gestionar_pqr/{id}', [PQRController::class, 'gestionar'])->name('funcionario-gestionar_pqr');
         Route::post('listado/gestionarqr', [PQRController::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_p_guardar');
         Route::post('respuesta_recurso', [PQRController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
         Route::post('respuesta_recurso_anexos', [PQRController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::post('asignacion', [PQRController::class, 'asignacion_guardar'])->name('asignacion_guardar');
         Route::post('asignacion_asignador', [PQRController::class, 'asignacion_asignador_guardar'])->name('asignacion_asignador_guardar');
         Route::post('historial', [PQRController::class, 'historial_guardar'])->name('historial_guardar');
@@ -296,10 +241,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cargar_funcionarios', [PQRController::class, 'cargar_funcionarios'])->name('cargar_funcionarios');
         Route::post('pqr_anexo', [PQRController::class, 'pqr_anexo_guardar'])->name('pqr_anexo_guardar');
         Route::post('cambiar_estado_tareas', [PQRController::class, 'cambiar_estado_tareas_guardar'])->name('cambiar_estado_tareas_guardar');
+        Route::get('cambiar-password-asistido/{id}', [ClienteController::class, 'cambiar_password_asistido'])->name('funcionario_cambiar_password_asistido');
     });
     //==================================================================================================================
-
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Route::group(['prefix' => 'usuario'], function () {
         Route::get('listado', [ClienteController::class, 'index'])->name('usuario-index');
         Route::get('generar', [ClienteController::class, 'generar'])->name('usuario-generar');
@@ -319,51 +263,32 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cargar_referencias', [ClienteController::class, 'cargar_referencias'])->name('cargar_referencias');
         //----------------------------------------------------------------------------------------------------------------
         Route::get('listado/gestionarPQR/{id}', [ClienteController::class, 'gestionar_PQR'])->name('usuario-gestionarPQR');
-        // Route::get('listado/gestionarPQR/{id}', [ClienteController::class, 'gestionar_PQR'])->name('usuario-gestionarPQR');
-        // Route::post('listado/gestionarPQR', [PQR_P_Controller::class, 'gestionar_guardar_usuario'])->name('usuario-gestionar_pqr_p_guardar');
         Route::post('recurso', [PQRController::class, 'recurso_guardar'])->name('recurso_guardar');
         Route::post('recurso_anexos', [PQRController::class, 'recurso_anexos_guardar'])->name('recurso_anexos_guardar');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
         Route::get('generarConceptoUOpinion', [ClienteController::class, 'generarConceptoUOpinion'])->name('usuario-generarConceptoUOpinion');
         Route::post('generarConceptoUOpinion', [ClienteController::class, 'generarConceptoUOpinion_guardar'])->name('usuario-generarConceptoUOpinion-guardar');
         Route::get('listado/gestionarConceptoUOpinion/{id}', [ClienteController::class, 'gestionar_conceptoUOpinion'])->name('usuario-gestionarConceptoUOpinion');
-        // Route::post('listado/gestionarConceptoUOpinion', [ConceptoUOpinionController::class, 'gestionar_guardar_usuario'])->name('usuario-gestionar_conceptoUOpinion_guardar');
-        // Route::post('recurso_cuo', [ConceptoUOpinionController::class, 'recurso_guardar'])->name('recurso_guardar_cuo');
-        // Route::post('recurso_anexos_cuo', [ConceptoUOpinionController::class, 'recurso_anexos_guardar'])->name('recurso_anexos_guardar_cuo');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('generarFelicitacion', [ClienteController::class, 'generarFelicitacion'])->name('usuario-generarFelicitacion');
         Route::post('generarFelicitacion', [ClienteController::class, 'generarFelicitacion_guardar'])->name('usuario-generarFelicitacion-guardar');
         Route::get('listado/gestionarFelicitaciones/{id}', [ClienteController::class, 'gestionar_felicitaciones'])->name('usuario-gestionarFelicitacion');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
         Route::get('gererarDenuncia', [ClienteController::class, 'gererarDenuncia'])->name('usuario-gererarDenuncia');
         Route::post('gererarDenuncia', [ClienteController::class, 'gererarDenuncia_guardar'])->name('usuario-gererarDenuncia-guardar');
         Route::get('listado/gestionarReporte/{id}', [ClienteController::class, 'gestionar_reporteDeIrregularidad'])->name('usuario-gestionarReporte');
-        // Route::post('listado/gestionarReporte', [DenunciaController::class, 'gestionar_guardar_usuario'])->name('usuario-gestionar_reporte_guardar');
-        // Route::post('recurso_d', [DenunciaController::class, 'recurso_guardar'])->name('recurso_guardar_d');
-        // Route::post('recurso_anexos_d', [DenunciaController::class, 'recurso_anexos_guardar'])->name('recurso_anexos_guardar_d');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
         Route::get('generarSolicitudDatos', [ClienteController::class, 'generarSolicitudDatos'])->name('usuario-generarSolicitudDatos');
         Route::post('generarSolicitudDatos', [ClienteController::class, 'generarSolicitudDatos_guardar'])->name('usuario-generarSolicitudDatos-guardar');
         Route::get('listado/gestionarSolicitudDatos/{id}', [ClienteController::class, 'gestionar_solicitudDatos'])->name('usuario-gestionarSolicitudDatos');
-        // Route::post('listado/gestionarSolicitudDatos', [SolicitudDatosController::class, 'gestionar_guardar_usuario'])->name('usuario-gestionar_solicitudDatos_guardar');
-        // Route::post('recurso_sd', [SolicitudDatosController::class, 'recurso_guardar'])->name('recurso_guardar_sd');
-        // Route::post('recurso_anexos_sd', [SolicitudDatosController::class, 'recurso_anexos_guardar'])->name('recurso_anexos_guardar_sd');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
         Route::get('generarSolicitudDocumentos', [ClienteController::class, 'generarSolicitudDocumentos'])->name('usuario-generarSolicitudDocumentos');
         Route::post('generarSolicitudDocumentos', [ClienteController::class, 'generarSolicitudDocumentos_guardar'])->name('usuario-generarSolicitudDocumentos-guardar');
         Route::get('listado/gestionarSolicitudDocInfo/{id}', [ClienteController::class, 'gestionar_solicitudDocInfo'])->name('usuario-gestionarSolicitudDocInfo');
-        // Route::post('listado/gestionarSolicitudDocInfo', [SolicitudDocInfoController::class, 'gestionar_guardar_usuario'])->name('usuario-gestionar_solicitudDocInfo_guardar');
-        // Route::post('recurso_sdi', [SolicitudDocInfoController::class, 'recurso_guardar'])->name('recurso_guardar_sdi');
-        // Route::post('recurso_anexos_sdi', [SolicitudDocInfoController::class, 'recurso_anexos_guardar'])->name('recurso_anexos_guardar_sdi');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('generarSugerencia', [ClienteController::class, 'generarSugerencia'])->name('usuario-generarSugerencia');
         Route::post('generarSugerencia', [ClienteController::class, 'generarSugerencia_guardar'])->name('usuario-generarSugerencia-guardar');
         Route::get('listado/gestionarSugerencia/{id}', [ClienteController::class, 'gestionar_sugerencia'])->name('usuario-gestionarsugerencia');
-
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::post('aclaracion_usuario', [PQRController::class, 'aclaracion_usuario_guardar'])->name('aclaracion_usuario_guardar');
         Route::post('aclaracion_anexos_usuario', [PQRController::class, 'aclaracion_anexos_usuario_guardar'])->name('aclaracion_anexos_usuario_guardar');
@@ -388,41 +313,18 @@ Route::group(['middleware' => 'auth'], function () {
     //Consultar ayuda
     Route::get('download/{id_tipo_pqr}/{id_pqr}', [ClienteController::class, 'download'])->name('download');
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //Descarga de pdf
-    Route::get('pqr_radicada_download/{id}', [EmailController::class, 'Pqr_Radicada_pdf'])->name('pqr_radicada_download');
-    Route::get('Pqr_Radicada_pdf_email/{id}', [EmailController::class, 'Pqr_Radicada_pdf_email'])->name('Pqr_Radicada_pdf_email');
+    Route::get('pqr_radicada_pdf/{id}', [EmailController::class, 'pqrRadicadaPdf'])->name('pqrRadicadaPdf');
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //guardar pdf PQR
     Route::get('pqr_pdf_guardar', [EmailController::class, 'pqr_pdf_guardar'])->name('pqr_pdf_guardar');
 });
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Route::get('pqr_radicada_pdf/{id}', [EmailController::class, 'pqrRadicadaPdf'])->name('pqrRadicadaPdf');
-Route::get('pqr_radicada_pdf_sd/{id}', [EmailController::class, 'pqrRadicadaPdfSd'])->name('pqrRadicadaPdfSd');
-Route::get('pqr_radicada_pdf_sfi/{id}', [EmailController::class, 'pqrRadicadaPdfSdi'])->name('pqrRadicadaPdfSdi');
-Route::get('pqr_radicada_pdf_cuo/{id}', [EmailController::class, 'pqrRadicadaPdfCuo'])->name('pqrRadicadaPdfCuo');
-Route::get('pqr_radicada_pdf_ri/{id}', [EmailController::class, 'pqrRadicadaPdfRi'])->name('pqrRadicadaPdfRi');
 Route::get('felicitacion_radicada_pdf/{id}', [EmailController::class, 'felicitacionRadicadaPdf'])->name('felicitacionRadicadaPdf');
 Route::get('sugerencia_radicada_pdf/{id}', [EmailController::class, 'sugerenciaRadicadaPdf'])->name('sugerenciaRadicadaPdf');
 Route::get('aclaracion_pdf/{id}', [EmailController::class, 'aclaracionPdf'])->name('aclaracionPdf');
-Route::get('aclaracion_pdf_sd/{id}', [EmailController::class, 'aclaracionPdfSd'])->name('aclaracionPdfSd');
-Route::get('aclaracion_pdf_sdi/{id}', [EmailController::class, 'aclaracionPdfSdi'])->name('aclaracionPdfSdi');
-Route::get('aclaracion_pdf_cuo/{id}', [EmailController::class, 'aclaracionPdfCuo'])->name('aclaracionPdfCuo');
-Route::get('aclaracion_pdf_ri/{id}', [EmailController::class, 'aclaracionPdfRi'])->name('aclaracionPdfRi');
 Route::get('constancia_aclaracion_pdf/{id}', [EmailController::class, 'constancia_aclaracionPdf'])->name('constancia_aclaracionPdf');
-Route::get('constancia_aclaracion_pdf_sd/{id}', [EmailController::class, 'constancia_aclaracionPdfSd'])->name('constancia_aclaracionPdfSd');
-Route::get('constancia_aclaracion_pdf_sdi/{id}', [EmailController::class, 'constancia_aclaracionPdfSdi'])->name('constancia_aclaracionPdfSdi');
-Route::get('constancia_aclaracion_pdf_cuo/{id}', [EmailController::class, 'constancia_aclaracionPdfCuo'])->name('constancia_aclaracionPdfCuo');
-Route::get('constancia_aclaracion_pdf_ri/{id}', [EmailController::class, 'constancia_aclaracionPdfRi'])->name('constancia_aclaracionPdfRi');
 Route::get('prorroga_pdf/{id}', [EmailController::class, 'prorrogaPdf'])->name('prorrogaPdf');
-Route::get('prorroga_pdf_sd/{id}', [EmailController::class, 'prorrogaPdfSd'])->name('prorrogaPdfSd');
-Route::get('prorroga_pdf_sdi/{id}', [EmailController::class, 'prorrogaPdfSdi'])->name('prorrogaPdfSdi');
-Route::get('prorroga_pdf_cuo/{id}', [EmailController::class, 'prorrogaPdfCuo'])->name('prorrogaPdfCuo');
-Route::get('prorroga_pdf_ri/{id}', [EmailController::class, 'prorrogaPdfRi'])->name('prorrogaPdfRi');
 Route::get('recurso_pdf/{id}', [EmailController::class, 'recursoPdf'])->name('recursoPdf');
-Route::get('asigacion_automatica/{id}', [PQR_P_Controller::class, 'asigacion_automatica'])->name('asigacion_automatica');
-Route::get('recurso_pdf_sd/{id}', [EmailController::class, 'recursoPdfSd'])->name('recursoPdfSd');
-Route::get('recurso_pdf_sdi/{id}', [EmailController::class, 'recursoPdfSdi'])->name('recursoPdfSdi');
-Route::get('recurso_pdf_cuo/{id}', [EmailController::class, 'recursoPdfCuo'])->name('recursoPdfCuo');
-Route::get('recurso_pdf_ri/{id}', [EmailController::class, 'recursoPdfRi'])->name('recursoPdfRi');
+Route::get('asigacion_automatica/{id}', [PQRController::class, 'asigacion_automatica'])->name('asigacion_automatica');

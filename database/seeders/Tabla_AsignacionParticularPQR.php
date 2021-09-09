@@ -16,15 +16,24 @@ class Tabla_AsignacionParticularPQR extends Seeder
     public function run()
     {
         $niveles = [
-            ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '1', 'sede_id' => '1', 'cargo_id' => '1'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '1', 'sede_id' => '1', 'cargo_id' => '2'],
             ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '2', 'sede_id' => '1', 'cargo_id' => '3'],
             ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '3', 'sede_id' => '1', 'cargo_id' => '4'],
-            ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '4', 'sede_id' => '1', 'cargo_id' => '1'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '4', 'sede_id' => '1', 'cargo_id' => '2'],
             ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '5', 'sede_id' => '1', 'cargo_id' => '3'],
             ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '6', 'sede_id' => '1', 'cargo_id' => '4'],
-            ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '7', 'sede_id' => '1', 'cargo_id' => '1'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '7', 'sede_id' => '1', 'cargo_id' => '2'],
             ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '8', 'sede_id' => '1', 'cargo_id' => '3'],
             ['tipo' => 'Permanente', 'prodserv' => 'Producto', 'cantidad' => '1', 'tipo_pqr_id' => '9', 'sede_id' => '1', 'cargo_id' => '4'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '1', 'sede_id' => '1', 'cargo_id' => '2'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '2', 'sede_id' => '1', 'cargo_id' => '3'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '3', 'sede_id' => '1', 'cargo_id' => '4'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '4', 'sede_id' => '1', 'cargo_id' => '2'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '5', 'sede_id' => '1', 'cargo_id' => '3'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '6', 'sede_id' => '1', 'cargo_id' => '4'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '7', 'sede_id' => '1', 'cargo_id' => '2'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '8', 'sede_id' => '1', 'cargo_id' => '3'],
+            ['tipo' => 'Permanente', 'prodserv' => 'Servicio', 'cantidad' => '1', 'tipo_pqr_id' => '9', 'sede_id' => '1', 'cargo_id' => '4'],
 
 
         ];

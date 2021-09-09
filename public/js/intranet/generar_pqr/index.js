@@ -2,35 +2,8 @@ window.addEventListener('DOMContentLoaded', function(){
     if (document.querySelector('#id')) {
         let tipoPqr = document.querySelector('#pqr_tipo').value
         let urlDescargaRadicado = ''
-        
-        switch (Number(tipoPqr)) {
-          case 1 :
-            urlDescargaRadicado = 'pqr_radicada_pdf'
-            break
-          case 2 :
-            urlDescargaRadicado = 'pqr_radicada_pdf'
-            break
-          case 3 :
-            urlDescargaRadicado = 'pqr_radicada_pdf'
-            break
-          case 4 :
-            urlDescargaRadicado = 'pqr_radicada_pdf_cuo'
-            break
-          case 5 :
-            urlDescargaRadicado = 'pqr_radicada_pdf_sd'
-            break
-          case 6 :
-            urlDescargaRadicado = 'pqr_radicada_pdf_ri'
-            break
-          case 7 :
-            urlDescargaRadicado = 'felicitacion_radicada_pdf'
-            break
-          case 8 :
-            urlDescargaRadicado = 'pqr_radicada_pdf_sfi'
-            break
-          case 9 :
-            urlDescargaRadicado = 'sugerencia_radicada_pdf'
-            break
+        if(tipoPqr){
+          urlDescargaRadicado = 'pqr_radicada_pdf'
         }
         swal({
             title: "Creada correctamente",
@@ -38,11 +11,11 @@ window.addEventListener('DOMContentLoaded', function(){
                 element: "a",
                 attributes: {
                   href: `/${urlDescargaRadicado}/${document.querySelector('#id').value}`,
-                  textContent: 'Descarga aquí'
+                  textContent: 'Descarga aquí',
+                  target : "_blank"
                 },
               },
             text: `Número de radicado ${document.querySelector('#radicado').value}`,
-            // text: `Fecha de radicado ${document.querySelector('#fecha_radicado').value}`,
             icon: 'success',
             button: 'Cerrar',
           });

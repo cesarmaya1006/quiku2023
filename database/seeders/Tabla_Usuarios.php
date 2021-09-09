@@ -55,7 +55,7 @@ class Tabla_Usuarios extends Seeder
         ]);
         //------------------------------------------------------
         DB::table('usuarios')->insert([
-            'usuario' => 'usuario1',
+            'usuario' => 'usuario',
             'password' => bcrypt('clave'),
             'camb_password' => '0',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -71,7 +71,7 @@ class Tabla_Usuarios extends Seeder
             'tipo_persona' => 2,
             'docutipos_id' => 1,
             'identificacion' => '10000001',
-            'email' => 'usuario1@gmail.com',
+            'email' => 'quiku2021@gmail.com',
             'estado' => 2,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
@@ -94,12 +94,12 @@ class Tabla_Usuarios extends Seeder
             'fecha_nacimiento' => '1995-11-05',
             'grupo_etnico' => '1',
             'discapacidad' => '0',
-            'email' => 'usuario1@gmail.com',
+            'email' => 'quiku2021@gmail.com',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         //------------------------------------------------------
         DB::table('usuarios')->insert([
-            'usuario' => 'empleado1',
+            'usuario' => 'asignador',
             'password' => bcrypt('clave'),
             'camb_password' => '0',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -116,20 +116,20 @@ class Tabla_Usuarios extends Seeder
             'docutipos_id' => 1,
             'cargo_id' => 1,
             'sede_id' => 1,
-            'identificacion' => '90000001',
-            'nombre1' => 'Juan',
-            'nombre2' => 'Carlos',
-            'apellido1' => 'Rojas',
+            'identificacion' => '90000002',
+            'nombre1' => 'Predeterminado',
+            'nombre2' => '',
+            'apellido1' => 'Predeterminado',
             'telefono_celu' => '3501112233',
             'direccion' => 'Calle de prueba 13',
             'genero' => 'Masculino',
             'fecha_nacimiento' => '1990-11-05',
-            'email' => 'empleado11@gmail.com',
+            'email' => 'asignador1|@gmail.com',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         //------------------------------------------------------
         DB::table('usuarios')->insert([
-            'usuario' => 'asignador',
+            'usuario' => 'empleado',
             'password' => bcrypt('clave'),
             'camb_password' => '0',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -146,15 +146,15 @@ class Tabla_Usuarios extends Seeder
             'docutipos_id' => 1,
             'cargo_id' => 2,
             'sede_id' => 1,
-            'identificacion' => '90000002',
-            'nombre1' => 'Asignador',
-            'nombre2' => '',
-            'apellido1' => 'Pqr',
+            'identificacion' => '90000001',
+            'nombre1' => 'Juan',
+            'nombre2' => 'Carlos',
+            'apellido1' => 'Rojas',
             'telefono_celu' => '3501112233',
             'direccion' => 'Calle de prueba 13',
             'genero' => 'Masculino',
             'fecha_nacimiento' => '1990-11-05',
-            'email' => 'asignador1|@gmail.com',
+            'email' => 'empleado11@gmail.com',
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         //------------------------------------------------------
@@ -267,7 +267,7 @@ class Tabla_Usuarios extends Seeder
         DB::table('empleados')->insert([
             'id' => 10,
             'docutipos_id' => 1,
-            'cargo_id' => 3,
+            'cargo_id' => 4,
             'sede_id' => 1,
             'identificacion' => '90000010',
             'nombre1' => 'Juliana',
@@ -391,7 +391,7 @@ class Tabla_Usuarios extends Seeder
         DB::table('empleados')->insert([
             'id' => 14,
             'docutipos_id' => 1,
-            'cargo_id' => 6,
+            'cargo_id' => 7,
             'sede_id' => 1,
             'identificacion' => '90000014',
             'nombre1' => 'José',
@@ -406,101 +406,5 @@ class Tabla_Usuarios extends Seeder
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         //------------------------------------------------------
-        // for ($i = 7; $i < 12; $i++) {
-        //     DB::table('usuarios')->insert([
-        //         'usuario' => 'empleado' . $i,
-        //         'password' => bcrypt('clave'),
-        //         'camb_password' => '0',
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-
-        //     DB::table('usuario_rol')->insert([
-        //         'rol_id' => 5,
-        //         'usuario_id' => $i,
-        //         'estado' => 1,
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-        //     DB::table('empleados')->insert([
-        //         'id' => $i,
-        //         'docutipos_id' => 1,
-        //         'cargo_id' => 1,
-        //         'sede_id' => 1,
-        //         'identificacion' => '9000000' . $i,
-        //         'nombre1' => 'Empleado' . $i,
-        //         'nombre2' => '',
-        //         'apellido1' => 'apellido' . $i,
-        //         'telefono_celu' => '35011122' . $i,
-        //         'direccion' => 'Calle de prueba ' . $i,
-        //         'genero' => 'Masculino',
-        //         'fecha_nacimiento' => '1990-11-05',
-        //         'email' => 'empleado' . $i . '@gmail.com',
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-        // }
-        //------------------------------------------------------
-        // for ($i = 12; $i < 17; $i++) {
-        //     DB::table('usuarios')->insert([
-        //         'usuario' => 'empleado' . $i,
-        //         'password' => bcrypt('clave'),
-        //         'camb_password' => '0',
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-
-        //     DB::table('usuario_rol')->insert([
-        //         'rol_id' => 5,
-        //         'usuario_id' => $i,
-        //         'estado' => 1,
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-        //     DB::table('empleados')->insert([
-        //         'id' => $i,
-        //         'docutipos_id' => 1,
-        //         'cargo_id' => 3,
-        //         'sede_id' => 1,
-        //         'identificacion' => '9000000' . $i,
-        //         'nombre1' => 'Empleado' . $i,
-        //         'nombre2' => '',
-        //         'apellido1' => 'apellido' . $i,
-        //         'telefono_celu' => '35011122' . $i,
-        //         'direccion' => 'Calle de prueba ' . $i,
-        //         'genero' => 'Masculino',
-        //         'fecha_nacimiento' => '1990-11-05',
-        //         'email' => 'empleado' . $i . '@gmail.com',
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-        // }
-        //------------------------------------------------------
-        // for ($i = 17; $i < 22; $i++) {
-        //     DB::table('usuarios')->insert([
-        //         'usuario' => 'empleado' . $i,
-        //         'password' => bcrypt('clave'),
-        //         'camb_password' => '0',
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-
-        //     DB::table('usuario_rol')->insert([
-        //         'rol_id' => 5,
-        //         'usuario_id' => $i,
-        //         'estado' => 1,
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-        //     DB::table('empleados')->insert([
-        //         'id' => $i,
-        //         'docutipos_id' => 1,
-        //         'cargo_id' => 4,
-        //         'sede_id' => 1,
-        //         'identificacion' => '9000000' . $i,
-        //         'nombre1' => 'Empleado' . $i,
-        //         'nombre2' => '',
-        //         'apellido1' => 'apellido' . $i,
-        //         'telefono_celu' => '35011122' . $i,
-        //         'direccion' => 'Calle de prueba ' . $i,
-        //         'genero' => 'Masculino',
-        //         'fecha_nacimiento' => '1990-11-05',
-        //         'email' => 'empleado' . $i . '@gmail.com',
-        //         'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        //     ]);
-        // }
-
     }
 }

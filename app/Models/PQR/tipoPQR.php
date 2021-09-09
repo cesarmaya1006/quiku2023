@@ -17,7 +17,6 @@ class tipoPQR extends Model
         return $this->hasMany(Motivo::class, 'tipo_pqr_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
     public function pqrs()
     {
         return $this->hasMany(PQR::class, 'tipo_pqr_id', 'id');

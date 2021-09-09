@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Intranet\Usuarios;
 
 use App\Models\PQR\PQR;
-use App\Mail\RI_Radicada;
-use App\Mail\SD_Radicada;
 use App\Models\PQR\Anexo;
 use App\Models\PQR\Hecho;
-use App\Mail\CUO_Radicada;
 use App\Mail\PQR_Radicada;
-use App\Mail\SDI_Radicada;
 use App\Models\Admin\Pais;
 use App\Models\PQR\Estado;
 use App\Models\PQR\tipoPQR;
@@ -19,41 +15,18 @@ use App\Models\Admin\Usuario;
 use App\Models\PQR\SubMotivo;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Productos\Marca;
-use App\Mail\SugerenciaRadicada;
 use App\Models\Personas\Persona;
 use App\Http\Requests\ValidarPqr;
 use App\Models\Admin\Departamento;
-use App\Models\Admin\DiasFestivos;
-use App\Models\Consultas\Consulta;
-use App\Models\Denuncias\Denuncia;
 use App\Models\Productos\Producto;
 use App\Models\Servicios\Servicio;
 use Barryvdh\DomPDF\Facade as PDF;
-use App\Mail\Felicitacion_Radicada;
 use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
 use App\Models\Productos\Referencia;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Support\Facades\Config;
-use App\Models\Denuncias\DenunciaAnexo;
-use App\Models\Denuncias\DenunciaHecho;
-use App\Models\Sugerencias\SugerenciaDoc;
-use App\Models\Felicitaciones\Felicitacion;
-use App\Models\Sugerencias\SugerenciaHecho;
-use App\Models\SolicitudDatos\SolicitudDatos;
-use App\Models\Denuncias\DenunciaIrregularidad;
-use App\Models\Felicitaciones\FelicitacionHecho;
 use App\Http\Controllers\Fechas\FechasController;
-use App\Models\SolicitudDatos\SolicitudDatosAnexo;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
-use App\Models\SolicitudDatos\SolicitudDatosSolicitud;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfoAnexo;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfoPeticion;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsulta;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaAnexo;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinionConsultaHecho;
 use App\Models\Empleados\Empleado;
 use App\Models\Empresas\Empresa;
 use App\Models\PQR\AsignacionParticular;
@@ -152,36 +125,44 @@ class ClienteController extends Controller
     public function generarPQR_guardar(ValidarPqr $request)
     {
         $tipo_pqr = tipoPQR::findOrFail($request['tipo_pqr_id']);
-        $diasLimite = $tipo_pqr['tiempos'];
-        $diaGeneracion = date("Y-m-d");
-        $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaPQR['persona_id'] = $usuario->id;
+            $validarInsert = PQR::where('persona_id', $usuario->id)->get();
         } else {
             $nuevaPQR['empresa_id'] = $usuario->id;
+            $validarInsert = PQR::where('empresa_id', $usuario->id)->get();
         }
-        $nuevaPQR['tipo_pqr_id'] = $request['tipo_pqr_id'];
-        $nuevaPQR['adquisicion'] = $request['adquisicion'];
-        $nuevaPQR['sede_id'] = $request['sede_id'];
-        $nuevaPQR['tipo'] = $request['tipo'];
-        $nuevaPQR['referencia_id'] = $request['referencia_id'];
-        $nuevaPQR['factura'] = $request['factura'];
-        $nuevaPQR['fecha_factura'] = $request['fecha_factura'];
-        if (isset($request['servicio_id'])) {
-            $nuevaPQR['servicio_id'] = $request['servicio_id'];
+        if($validarInsert->count()){
+            $insert = false;
+            $ultimoInsert = PQR::findOrFail($validarInsert[$validarInsert->count() - 1]->id);
+            $fechaActual = strtotime(date("Y-m-d H:i:s"));
+            $fechaUltimoInsert = strtotime($ultimoInsert['created_at']); 
+            $fechaUltimoInsert = strtotime ('+ 2 minute' , $fechaUltimoInsert); 
+            if($fechaUltimoInsert < $fechaActual){
+                $insert = true;
+            }
+        }else{
+            $insert = true;
         }
-        $nuevaPQR['fecha_generacion'] = date("Y-m-d");
-        $nuevaPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));
-        $estado = Estado::findOrFail(1);
-        $nuevaPQR['estadospqr_id'] = $estado['id'];
-        $nuevaPQR['tiempo_limite'] = $respuestaDias;
-        $pqr = PQR::create($nuevaPQR);
-        $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $pqr->id;
-        PQR::findOrFail($pqr->id)->update($pqr_rad);
-        $pqr = PQR::findOrFail($pqr->id);
-
-        return redirect('/usuario/generarPQR-motivos/' . $pqr->id);
+        if ($insert) {
+            $nuevaPQR['tipo_pqr_id'] = $request['tipo_pqr_id'];
+            $nuevaPQR['adquisicion'] = $request['adquisicion'];
+            $nuevaPQR['sede_id'] = $request['sede_id'];
+            $nuevaPQR['tipo'] = $request['tipo'];
+            $nuevaPQR['referencia_id'] = $request['referencia_id'];
+            $nuevaPQR['factura'] = $request['factura'];
+            $nuevaPQR['fecha_factura'] = $request['fecha_factura'];
+            if (isset($request['servicio_id'])) {
+                $nuevaPQR['servicio_id'] = $request['servicio_id'];
+            }
+            $pqr = PQR::create($nuevaPQR);
+            $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $pqr->id;
+            PQR::findOrFail($pqr->id)->update($pqr_rad);
+            $pqr = PQR::findOrFail($pqr->id);
+    
+            return redirect('/usuario/generarPQR-motivos/' . $pqr->id);
+        }
     }
 
     public function generarPQR_motivos($id)
@@ -240,6 +221,18 @@ class ClienteController extends Controller
         }
         $idPQR =  $request['pqr_id'];
         $pqr = PQR::findOrFail($idPQR);
+        if($pqr->estado_creacion == 0){
+            $tipo_pqr = tipoPQR::findOrFail($pqr['tipo_pqr_id']);
+            $diasLimite = $tipo_pqr['tiempos'];
+            $diaGeneracion = date("Y-m-d");
+            $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
+            $actualizarPQR['fecha_generacion'] = date("Y-m-d");
+            $actualizarPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));
+            $actualizarPQR["estado_creacion"] = 1;
+            $actualizarPQR['estadospqr_id'] = 1;
+            $actualizarPQR['tiempo_limite'] = $respuestaDias;
+            PQR::findOrFail($idPQR)->update($actualizarPQR);
+        }
         if ($pqr->persona_id != null) {
             $email = $pqr->persona->email;
         } else {
@@ -279,6 +272,7 @@ class ClienteController extends Controller
         $nuevaConcepto['estadospqr_id'] = $estado['id'];
         $nuevaConcepto['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaConcepto['tiempo_limite'] = $respuestaDias;
+        $nuevaConcepto["estado_creacion"] = 1;
         $concepto = PQR::create($nuevaConcepto);
 
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $concepto->id;
@@ -336,8 +330,9 @@ class ClienteController extends Controller
             $email = $concepto->empresa->email;
         }
         $id_pqr = $concepto->id;
+        $this->asigacion_automatica($id_pqr);
         if ($email) {
-            Mail::to($email)->send(new CUO_Radicada($id_pqr));
+            Mail::to($email)->send(new PQR_Radicada($id_pqr));
         }
         return redirect('/usuario/generar')->with('id', $concepto->id)->with('pqr_tipo', $concepto->tipo_pqr_id)->with('radicado', $concepto->radicado)->with('fecha_radicado', $concepto->created_at);
     }
@@ -367,6 +362,7 @@ class ClienteController extends Controller
         $nuevaFelicitacion['estadospqr_id'] = $estado['id'];
         $nuevaFelicitacion['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaFelicitacion['tiempo_limite'] = $respuestaDias;
+        $nuevaFelicitacion["estado_creacion"] = 1;
         $felicitacion = PQR::create($nuevaFelicitacion);
 
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $felicitacion->id;
@@ -392,7 +388,7 @@ class ClienteController extends Controller
         }
         $id_felicitacion = $felicitacion->id;
         if ($email) {
-            Mail::to($email)->send(new Felicitacion_Radicada($id_felicitacion));
+            Mail::to($email)->send(new PQR_Radicada($id_felicitacion));
         }
 
         return redirect('/usuario/generar')->with('id', $felicitacion->id)->with('pqr_tipo', $felicitacion->tipo_pqr_id)->with('radicado', $felicitacion->radicado)->with('fecha_radicado', $felicitacion->created_at);
@@ -423,6 +419,7 @@ class ClienteController extends Controller
         $nuevaDenuncia['estadospqr_id'] = $estado['id'];
         $nuevaDenuncia['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaDenuncia['tiempo_limite'] = $respuestaDias;
+        $nuevaDenuncia["estado_creacion"] = 1;
         $denuncia = PQR::create($nuevaDenuncia);
 
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $denuncia->id;
@@ -480,8 +477,9 @@ class ClienteController extends Controller
             $email = $denuncia->empresa->email;
         }
         $id_pqr = $denuncia->id;
+        $this->asigacion_automatica($id_pqr);
         if ($email) {
-            Mail::to($email)->send(new RI_Radicada($id_pqr));
+            Mail::to($email)->send(new PQR_Radicada($id_pqr));
         }
         return redirect('/usuario/generar')->with('id', $denuncia->id)->with('pqr_tipo', $denuncia->tipo_pqr_id)->with('radicado', $denuncia->radicado)->with('fecha_radicado', $denuncia->created_at);
     }
@@ -511,6 +509,7 @@ class ClienteController extends Controller
         $nuevaSolicitud['estadospqr_id'] = $estado['id'];
         $nuevaSolicitud['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
+        $nuevaSolicitud["estado_creacion"] = 1;
         $solicitudRad = PQR::create($nuevaSolicitud);
 
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitudRad->id;
@@ -560,8 +559,9 @@ class ClienteController extends Controller
             $email = $solicitudId->empresa->email;
         }
         $id_pqr = $solicitudId->id;
+        $this->asigacion_automatica($id_pqr);
         if ($email) {
-            Mail::to($email)->send(new SD_Radicada($id_pqr));
+            Mail::to($email)->send(new PQR_Radicada($id_pqr));
         }
         return redirect('/usuario/generar')->with('id', $solicitudId->id)->with('pqr_tipo', $solicitudId->tipo_pqr_id)->with('radicado', $solicitudId->radicado)->with('fecha_radicado', $solicitudId->created_at);
     }
@@ -590,6 +590,7 @@ class ClienteController extends Controller
         $nuevaSolicitud['estadospqr_id'] = $estado['id'];
         $nuevaSolicitud['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaSolicitud['tiempo_limite'] = $respuestaDias;
+        $nuevaSolicitud["estado_creacion"] = 1;
         $solicitud = PQR::create($nuevaSolicitud);
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $solicitud->id;
         PQR::findOrFail($solicitud->id)->update($pqr_rad);
@@ -638,8 +639,9 @@ class ClienteController extends Controller
             $email = $solicitud->empresa->email;
         }
         $id_pqr = $solicitud->id;
+        $this->asigacion_automatica($id_pqr);
         if ($email) {
-            Mail::to($email)->send(new SDI_Radicada($id_pqr));
+            Mail::to($email)->send(new PQR_Radicada($id_pqr));
         }
         return redirect('/usuario/generar')->with('id', $solicitud->id)->with('pqr_tipo', $solicitud->tipo_pqr_id)->with('radicado', $solicitud->radicado)->with('fecha_radicado', $solicitud->created_at);
     }
@@ -720,7 +722,7 @@ class ClienteController extends Controller
         }
         $id_sugerencia = $sugerencia->id;
         if ($email) {
-            Mail::to($email)->send(new SugerenciaRadicada($id_sugerencia));
+            Mail::to($email)->send(new PQR_Radicada($id_sugerencia));
         }
 
         return redirect('/usuario/generar')->with('id', $sugerencia->id)->with('pqr_tipo', $sugerencia->tipo_pqr_id)->with('radicado', $sugerencia->radicado)->with('fecha_radicado', $sugerencia->created_at);
@@ -740,12 +742,18 @@ class ClienteController extends Controller
         return view('intranet/password.index');
     }
 
+    public function cambiar_password_asistido($id)
+    {
+        $usuario = Usuario::findOrFail($id);
+        return view('intranet/funcionarios/listado_usuarios.cambio_password_asistido', compact('usuario'));
+    }
+
     public function crear_usuario()
     {
         $tipos_docu = Tipo_Docu::get();
         $paises = Pais::get();
         $departamentos = Departamento::get();
-        $usuario = Usuario::findorFail(session('id_usuario'));
+        $usuario = Usuario::findOrFail(session('id_usuario'));
         return view('intranet/crear_usuario_asistido.index', compact('usuario', 'tipos_docu', 'paises', 'departamentos'));
     }
 
@@ -876,7 +884,7 @@ class ClienteController extends Controller
                     foreach ($peticion->hechos as $hecho) {
                         $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                     }
-                    $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
+                    $contenido .= '<p>Solicitud: ' . $peticion->justificacion . '<p>';
                 }
                 break;
             case 2:
@@ -895,7 +903,7 @@ class ClienteController extends Controller
                     foreach ($peticion->hechos as $hecho) {
                         $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                     }
-                    $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
+                    $contenido .= '<p>Solicitud: ' . $peticion->justificacion . '<p>';
                 }
                 break;
             case 3:
@@ -914,7 +922,7 @@ class ClienteController extends Controller
                     foreach ($peticion->hechos as $hecho) {
                         $contenido .= '<p>Hecho: ' . $hecho->hecho . '<p>';
                     }
-                    $contenido .= '<p>Justificación: ' . $peticion->justificacion . '<p>';
+                    $contenido .= '<p>Solicitud: ' . $peticion->justificacion . '<p>';
                 }
                 break;
             case 4:
@@ -1234,7 +1242,7 @@ class ClienteController extends Controller
             }
             $resp .= '  ------ salto ---  ';
             if ($no_null > 0 && $coincidencia > 0) {
-                $resp .= 'no null->' . $no_null . '-conicidencia->' . $coincidencia . '   -   ASignacion->' . $asignacion->id . '   -   ';
+                $resp .= 'no null->' . $no_null . '-coincidencia->' . $coincidencia . '   -   Asignacion->' . $asignacion->id . '   -   ';
                 if ($coincidencia === $no_null) {
                     if ($no_null > $respuesta['no_null']) {
                         $respuesta['no_null'] = $no_null;
@@ -1243,10 +1251,26 @@ class ClienteController extends Controller
                 }
             }
         }
-        $asignacion_final = AsignacionParticular::findOrFail($respuesta['asignacion_id']);
-        if ($pqr->sede_id != null) {
-            if ($pqr->sede_id == $asignacion_final->sede_id) {
-                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $asignacion_final->sede_id)->get();
+        if ($respuesta['asignacion_id']) {
+            $asignacion_final = AsignacionParticular::findOrFail($respuesta['asignacion_id']);
+            if ($pqr->sede_id != null) {
+                if ($pqr->sede_id == $asignacion_final->sede_id) {
+                    $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $asignacion_final->sede_id)->get();
+                } else {
+                    if ($pqr->persona_id != null) {
+                        $persona = Persona::findOrfail($pqr->persona_id);
+                        foreach ($persona->municipio->departamento->sedes as $sede) {
+                            $sede_id = $sede->id;
+                        }
+                        $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
+                    } else {
+                        $empresa = Empresa::findOrfail($pqr->empresa_id);
+                        foreach ($empresa->municipio->departamento->sedes as $sede) {
+                            $sede_id = $sede->id;
+                        }
+                        $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
+                    }
+                }
             } else {
                 if ($pqr->persona_id != null) {
                     $persona = Persona::findOrfail($pqr->persona_id);
@@ -1262,30 +1286,14 @@ class ClienteController extends Controller
                     $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
                 }
             }
-        } else {
-            if ($pqr->persona_id != null) {
-                $persona = Persona::findOrfail($pqr->persona_id);
-                foreach ($persona->municipio->departamento->sedes as $sede) {
-                    $sede_id = $sede->id;
-                }
-                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
-            } else {
-                $empresa = Empresa::findOrfail($pqr->empresa_id);
-                foreach ($empresa->municipio->departamento->sedes as $sede) {
-                    $sede_id = $sede->id;
-                }
-                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
+            $max_pqr = 0;
+            foreach ($empleados as $empleado) {
+                $empleados_sel_max[] = ['cant' => $empleado->pqrs->count(), 'id' => $empleado->id];
             }
-        }
-        $max_pqr = 0;
-        foreach ($empleados as $empleado) {
-            $empleados_sel_max[] = ['cant' => $empleado->pqrs->count(), 'id' => $empleado->id];
-        }
-        $empleado_final = min($empleados_sel_max);
-        $pqr_act['empleado_id'] = $empleado_final['id'];
-        $pqr->update($pqr_act);
-
-
+            $empleado_final = min($empleados_sel_max);
+            $pqr_act['empleado_id'] = $empleado_final['id'];
+            $pqr->update($pqr_act);
+        } 
         // **************************************************************************************************** */
 
     }

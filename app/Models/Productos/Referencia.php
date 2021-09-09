@@ -19,7 +19,6 @@ class Referencia extends Model
         return $this->belongsTo(Marca::class, 'marca_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
     public function pqrs()
     {
         return $this->hasMany(PQR::class, 'referencia_id', 'id');

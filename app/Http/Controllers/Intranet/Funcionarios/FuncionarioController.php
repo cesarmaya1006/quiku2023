@@ -49,6 +49,20 @@ class FuncionarioController extends Controller
     {
         return view('intranet/password.index');
     }
+    
+    public function listado_usuarios()
+    {
+        $usuariosTotales = Usuario::all();
+        $usuarios = [];
+        foreach ($usuariosTotales as $usuario) {
+            if(sizeOf($usuario->roles) == 1){
+                if($usuario->roles[0]->id == 6){
+                    $usuarios[] = $usuario;
+                }
+            }
+        }
+        return view('intranet/funcionarios/listado_usuarios.index', compact('usuarios'));
+    }
     /**
      * Show the form for creating a new resource.
      *

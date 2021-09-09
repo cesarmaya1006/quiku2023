@@ -109,16 +109,6 @@
                                     Estado: <strong>{{ $pqr->estado->estado_funcionario }}</strong>
                                 </div>
                             </div>
-
-                            {{-- @foreach ($pqr->peticiones as $peticion)
-                                @php
-                                    $recursoValidacion += $peticion->recurso;
-                                    if ($plazoRecurso != $peticion->recurso_dias) {
-                                        $plazoRecurso += $peticion->recurso_dias;
-                                    }
-                                @endphp
-                            @endforeach --}}
-
                         </div>
                         @foreach ($pqr->peticiones as $key => $peticion)
                         <div class="col-12 peticion_general rounded border mb-3 p-3">
@@ -298,7 +288,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                    {{-- Fin bloque de hechos --}}
+                                {{-- Fin bloque de hechos --}}
                                 {{-- Incio bloque de Aclaraciones --}}
                                 @if(sizeOf($peticion->aclaraciones))
                                     <hr>
@@ -389,6 +379,9 @@
                                                         data_token="{{ csrf_token() }}">Guardar aclaración</button>
                                                 </div>
                                             </div>
+                                        @endif
+                                        @if(!$pqr->persona->email)
+                                            <p class="text-danger">El usuario no posee correo electrónico, se debe enviar la aclaración por medio físico.</p>
                                         @endif
                                     </div>
                                 @endif

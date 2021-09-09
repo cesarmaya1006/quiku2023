@@ -22,9 +22,7 @@
             <br>
             <p>Estimado Usuario. Se ha generado una prorroga a la solicitud elevada por usted.</p>
             <p>Puede descargar el resumen en formato pdf pegando el siguiente link en el navegador </p>
-            <p><a
-                    href="{{ route('prorrogaPdf', ['id' => $id_pqr]) }}">{{ route('prorrogaPdf', ['id' => $id_pqr]) }}</a>
-            </p>
+            <p><a href="{{ route('prorrogaPdf', ['id' => $id_pqr]) }}">Descargue aquí</a>
         </div>
         <div class="col-12">
             <p>Lo invitamos a ingresar a la plataforma Quiku y verificar el estado de sus Solicitudes en el siguiente

@@ -5,13 +5,14 @@ namespace App\Models\Empleados;
 use App\Models\PQR\PQR;
 use App\Models\Admin\Cargo;
 use App\Models\PQR\Peticion;
+use App\Models\PQR\PqrAnexo;
+use App\Models\Admin\Usuario;
 use App\Models\Empresas\Sede;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Empresas\Empresa;
 use App\Models\PQR\HistorialTarea;
 use App\Models\PQR\HistorialPeticion;
 use App\Models\PQR\HistorialAsignacion;
-use App\Models\PQR\PqrAnexo;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -65,16 +66,6 @@ class Empleado extends Model
     public function usuario()
     {
         return $this->hasOne(Usuario::class, 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function sugerencias()
-    {
-        return $this->hasMany(Sugerencia::class, 'empleado_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function solicitudDocInfo()
-    {
-        return $this->hasMany(SolicitudDocInfo::class, 'persona_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function empresa()

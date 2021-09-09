@@ -17,8 +17,8 @@ class Tabla_Cargos extends Seeder
     {
 
         $niveles = [
-            ['nivel_id' => '1', 'cargo' => 'Funcionario'],
             ['nivel_id' => '1', 'cargo' => 'Asignador PQR'],
+            ['nivel_id' => '1', 'cargo' => 'Funcionario'],
             ['nivel_id' => '1', 'cargo' => 'Director'],
             ['nivel_id' => '1', 'cargo' => 'Directora'],
             ['nivel_id' => '1', 'cargo' => 'Abogado'],

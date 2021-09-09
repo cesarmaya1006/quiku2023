@@ -138,6 +138,9 @@
                                     </strong>
                                 </div>
                             </div>
+                            @if(!$pqr->persona->email)
+                                <p class="text-danger">El usuario no posee correo electrónico, se debe enviar la prorroga por medio físico.</p>
+                            @endif
                         @endif
                         <div class="col-12 rounded border mb-3 p-2 pt-3">
                             <div class="row d-flex px-4"> 
@@ -239,7 +242,7 @@
                                                 <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}</p>
                                             @endif
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Justificación:</strong> {{ $peticion->justificacion }}</p>
+                                                <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->justificacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
