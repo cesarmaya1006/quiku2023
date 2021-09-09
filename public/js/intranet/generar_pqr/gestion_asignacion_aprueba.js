@@ -68,12 +68,12 @@ window.addEventListener('DOMContentLoaded', function(){
             dataAnexo.append('archivo', archivo);
             dataAnexo.append('idTarea', idTarea);
             dataAnexo.append('_token', token);
+            dataAnexo.append('apruebaRadica', 1);
             if (titulo != '' && archivo  && mensajeHistorial != '' && idPqr != '') {
                 let data = {
                     idTarea,
                     mensajeHistorial,
-                    idPqr,
-                    apruebaRadica: 1
+                    idPqr
                 }
                 $.ajax({
                     async:false,

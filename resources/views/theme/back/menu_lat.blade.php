@@ -20,6 +20,7 @@
                     <img src="{{ asset('imagenes/usuarios/' . session('foto')) }}" class="img-circle elevation-2" alt="User Image">
                 </div> -->
                 <div class="info">
+
                     <a href="#" class="d-block">
                         @if (session('rol_id') == 6)
                             @if ($usuario->persona)
@@ -33,7 +34,11 @@
                                 {{ $usuario->empleado->nombre1 . ' ' . $usuario->empleado->nombre2 }}<br>{{ ucwords($usuario->empleado->apellido1 . ' ' . $usuario->empleado->apellido2) }}
                             @endif
                         @endif
-                        <br>{{ session('rol_nombre') }}
+                        @if($usuario->empleado)
+                            <br>{{ $usuario->empleado->cargo->cargo }}
+                        @else
+                            <br>{{ session('rol_nombre') }}
+                        @endif
                     </a>
                 </div>
             </div>

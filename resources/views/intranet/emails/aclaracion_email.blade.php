@@ -22,7 +22,7 @@
             <br>
             <p>Estimado Usuario. Se ha generado una aclaración al respecto de una solicitud elevada por usted.</p>
             <p>Puede descargar el resumen en formato pdf pegando el siguiente link en el navegador </p>
-            <p>{{ route('aclaracionPdf', ['id' => $id_aclaracion]) }}</p>
+            <p><a href="{{ route('aclaracionPdf', ['id' => $id_aclaracion]) }}">Descargue aquí</a></p>
         </div>
         <div class="col-12">
             <p>Lo invitamos a ingresar a la plataforma Quiku y verificar el estado de sus Solicitudes en el siguiente

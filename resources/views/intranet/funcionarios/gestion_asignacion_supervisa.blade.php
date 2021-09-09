@@ -155,7 +155,7 @@
                                                 <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}</p>
                                             @endif
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Justificación:</strong> {{ $peticion->justificacion }}</p>
+                                                <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->justificacion }}</p>
                                             </div>
                                         </div>
                                         <hr>

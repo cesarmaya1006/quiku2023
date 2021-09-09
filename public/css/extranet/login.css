@@ -92,3 +92,9 @@ body {
     /* left: 0; */
     /* z-index: 1030; */
 }
+.ayudas p{
+    color: #333333!important;
+ }
+.ayudas h5{
+    font-weight: 600;
+} 

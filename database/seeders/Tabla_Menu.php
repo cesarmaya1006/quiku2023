@@ -62,13 +62,16 @@ class Tabla_Menu extends Seeder
             ['nombre' => 'Cambiar contraseña', 'menu_id' => '0', 'url' => 'funcionario/cambiar-password', 'orden' => '11', 'icono' => 'fas fa-key'],
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
-            ['nombre' => 'Parametros', 'menu_id' => '0', 'url' => '#', 'orden' => '12', 'icono' => 'fas fa-cogs'],
+            ['nombre' => 'Listado usuarios', 'menu_id' => '0', 'url' => 'funcionario/listado-usuarios', 'orden' => '12', 'icono' => 'fas fa-list-ul'],
+            // Menus  padre
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Parametros', 'menu_id' => '0', 'url' => '#', 'orden' => '13', 'icono' => 'fas fa-cogs'],
             //----------------------------------------------------------------------------------------------------------------------
             ['nombre' => 'Categorias', 'menu_id' => '21',  'url' => 'admin/categorias-index', 'orden' => '1',  'icono' => 'fas fa-list-ul'],
             ['nombre' => 'Productos', 'menu_id' => '21',  'url' => 'admin/productos-index', 'orden' => '2',  'icono' => 'fas fa-list-ul'],
             ['nombre' => 'Marcas', 'menu_id' => '21',  'url' => 'admin/marcas-index', 'orden' => '3',  'icono' => 'fas fa-list-ul'],
             ['nombre' => 'Referencias', 'menu_id' => '21',  'url' => 'admin/referencias-index', 'orden' => '4',  'icono' => 'fas fa-list-ul'],
-
+            //----------------------------------------------------------------------------------------------------------------------
         ];
 
         foreach ($menus as $menu) {

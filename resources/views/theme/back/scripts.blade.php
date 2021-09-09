@@ -5,12 +5,12 @@
 <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<script src="{{ asset('js/intranet/general/script-cm.js') }}"></script>
-<script src="{{ asset('js/intranet/general/general.js') }}"></script>
-<script src="{{ asset('js/intranet/general/mis_scripst.js') }}"></script>
 <script src="{{ asset('lte/dist/js/adminlte.js') }}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js"></script>
+<script src="{{ asset('js/intranet/general/script-cm.js') }}"></script>
+<script src="{{ asset('js/intranet/general/general.js') }}"></script>
+<script src="{{ asset('js/intranet/general/mis_scripst.js') }}"></script>
 <script src="{{ asset('js/intranet/general/generalprueba.js') }}"></script>

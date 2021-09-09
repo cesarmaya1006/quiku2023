@@ -39,13 +39,14 @@ class CrearTablaPqr extends Migration
             $table->boolean('prorroga')->default(0)->nullable();
             $table->bigInteger('prorroga_dias')->default(0)->nullable();
             $table->longText('prorroga_pdf')->nullable();
-            $table->date('fecha_generacion');
-            $table->date('fecha_radicado');
+            $table->date('fecha_generacion')->nullable();
+            $table->date('fecha_radicado')->nullable();
             $table->date('fecha_respuesta')->nullable();
             $table->bigInteger('tiempo_limite')->default(0);
             $table->unsignedBigInteger('estadospqr_id')->nullable();
             $table->boolean('estado_asignacion')->default(0)->nullable();
             $table->foreign('estadospqr_id', 'fk_estadospqr_pqr')->references('id')->on('estadospqr')->onDelete('restrict')->onUpdate('restrict');
+            $table->boolean('estado_creacion')->default(0)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

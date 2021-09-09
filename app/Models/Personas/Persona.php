@@ -7,8 +7,6 @@ use App\Models\Admin\Pais;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\PQR;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
-use App\Models\Sugerencias\Sugerencia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -23,7 +21,6 @@ class Persona extends Model
     {
         return $this->belongsTo(Tipo_Docu::class, 'docutipos_id', 'id');
     }
-    //==================================================================================
     //----------------------------------------------------------------------------------
     public function usuario()
     {
@@ -43,15 +40,5 @@ class Persona extends Model
     public function municipio()
     {
         return $this->belongsTo(Municipio::class, 'municipio_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function sugerencias()
-    {
-        return $this->hasMany(Sugerencia::class, 'persona_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function solicitudDocInfo()
-    {
-        return $this->hasMany(SolicitudDocInfo::class, 'persona_id', 'id');
     }
 }

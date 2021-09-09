@@ -23,8 +23,7 @@
             <p>Estimado Usuario. Hemos rebicido una solicitud con este correo para radicar un recurso sobre la peticion
                 que radico.</p>
             <p>Puede descargar el resumen en formato pdf pegando el siguiente link en el navegador </p>
-            <p><a
-                    href="{{ route('recursoPdf', ['id' => $id_recurso]) }}">{{ route('recursoPdf', ['id' => $id_recurso]) }}</a>
+            <p><a href="{{ route('recursoPdf', ['id' => $id_recurso]) }}">Descargue aquí</a>
             </p>
         </div>
         <div class="col-12">

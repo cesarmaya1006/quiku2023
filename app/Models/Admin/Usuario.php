@@ -29,7 +29,6 @@ class Usuario extends Authenticatable
     {
         return $this->belongsToMany(Rol::class, 'usuario_rol', 'usuario_id', 'rol_id');
     }
-    //----------------------------------------------------------------------------------
     //==================================================================================
     public function empleado()
     {

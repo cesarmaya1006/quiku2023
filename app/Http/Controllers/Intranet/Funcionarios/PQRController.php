@@ -1024,7 +1024,6 @@ class PQRController extends Controller
             }
         }
     }
-
     // Ajustes nuevos de tramite
 
 
