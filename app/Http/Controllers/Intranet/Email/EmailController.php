@@ -24,7 +24,7 @@ class EmailController extends Controller
         $pqr_radicada = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
         //$imagen = asset('imagenes/sistema/icono_sistema.png');
-        $fecha = $pqr_radicada->created_at;
+        $fecha = $pqr_radicada->fecha_generacion;
         $num_radicado = $pqr_radicada->radicado;
         if ($pqr_radicada->persona_id != null) {
             $nombre = $pqr_radicada->persona->nombre1 . ' ' . $pqr_radicada->persona->nombre2 . ' ' . $pqr_radicada->persona->apellido1 . ' ' . $pqr_radicada->persona->apellido2;

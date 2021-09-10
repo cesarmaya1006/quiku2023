@@ -380,7 +380,7 @@ class PQRController extends Controller
             $pqr = PQR::findOrFail($request['id']);
             foreach ($pqr->asignaciontareas as $tarea) {
                 $estadoTarea['estado_id'] = 6;
-                $asignacionTarea = AsignacionTarea::where('pqr_id',$pqr['id'])->where('tareas_id',$tarea->id)->get();
+                $asignacionTarea = AsignacionTarea::where('pqr_id',$pqr['id'])->where('tareas_id',$tarea->tareas_id)->get();
                 $asignacionTarea[0]->update($estadoTarea);
             }
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);

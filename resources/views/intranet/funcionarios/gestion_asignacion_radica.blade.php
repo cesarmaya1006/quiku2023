@@ -60,7 +60,7 @@
                                         Municipio : <strong>{{ $pqr->sede->municipio->municipio }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        Sede : <strong>{{ $pqr->sede->sede }}</strong>
+                                        Sede : <strong>{{ $pqr->sede->nombre }}</strong>
                                     </div>
                                 @endif
                                 @if ($pqr->tipo == 'Producto')
@@ -95,7 +95,7 @@
                                 @endif
                                 @if($pqr->fecha_radicado)
                                     <div class="col-12 col-md-6">
-                                        Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
+                                        Fecha de radicado: <strong>{{ $pqr->fecha_generacion }}</strong>
                                     </div>
                                 @endif
 
@@ -119,6 +119,30 @@
                                 @endif
                             </div>
                         </div>
+                        @if ($pqr->persona_id)
+                            @if (!$pqr->persona->email)
+                                <div class="col-12 rounded border border-danger mb-4 p-3">
+                                    <div class="row">
+                                        <h6 class="text-danger pl-2">el usuario no posee correo electrónico se debe enviar correo físico.</h6>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Nombre:</strong> {{ $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 }}
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Teléfono:</strong> {{ $pqr->persona->telefono_celu }}
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Dirección:</strong> {{ $pqr->persona->direccion }}
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Departatmento:</strong> {{ $pqr->persona->municipio->departamento->departamento }}
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Ciudad:</strong> {{ $pqr->persona->municipio->municipio }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
                         <div class="rounded border p-2">
                             <h5 class="">Respuesta </h5>
                             @if ($pqr->anexos)

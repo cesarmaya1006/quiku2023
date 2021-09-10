@@ -34,6 +34,7 @@
                                 <thead>
                                     <tr>
                                         <th>Num. Radicado</th>
+                                        <th>Fecha de creación</th>
                                         <th>Fecha de radicación</th>
                                         <th>Tipo de PQR</th>
                                         <th>Estado PQR</th>
@@ -47,6 +48,7 @@
                                         <tr>
                                             <td>{{ $pqr->radicado }}</td>
                                             <td>{{ $pqr->created_at }}</td>
+                                            <td>{{ $pqr->fecha_generacion }}</td>
                                             <td>{{ $pqr->tipoPqr->tipo }}</td>
                                             @if($pqr->estado)
                                                 <td>{{ $pqr->estado->estado_usuario }}</td>
@@ -58,9 +60,12 @@
                                             @else
                                                 <td></td>
                                             @endif
-                                            <td><a href="{{ route('pqrRadicadaPdf', $pqr->id) }}"
-                                                    class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
-                                                        class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a></td>
+                                            <td>
+                                                @if($pqr->fecha_generacion)
+                                                    <a href="{{ route('pqrRadicadaPdf', $pqr->id) }}"
+                                                        class="btn-accion-tabla eliminar tooltipsC" title="Descargar"><i
+                                                            class="fas fa-download text-primary btn-editar" aria-hidden="true"></i></a></td>
+                                                @endif
                                             <td>
                                                 @if ($pqr->peticiones->count() > 0)
                                                     <a href="{{ route('usuario-gestionarPQR', ['id' => $pqr->id]) }}"

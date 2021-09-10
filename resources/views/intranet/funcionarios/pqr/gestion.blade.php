@@ -99,7 +99,7 @@
                                     </div>
                                 @endif
                                 <div class="col-12 col-md-6">
-                                    Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
+                                    Fecha de radicado: <strong>{{ $pqr->fecha_generacion }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha estimada de respuesta:
@@ -110,6 +110,30 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($pqr->persona_id)
+                            @if (!$pqr->persona->email)
+                                <div class="col-12 rounded border border-danger mb-4 p-3">
+                                    <div class="row">
+                                        <h6 class="text-danger pl-2">el usuario no posee correo electrónico se debe enviar correo físico.</h6>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Nombre:</strong> {{ $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 }}
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Teléfono:</strong> {{ $pqr->persona->telefono_celu }}
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Dirección:</strong> {{ $pqr->persona->direccion }}
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Departatmento:</strong> {{ $pqr->persona->municipio->departamento->departamento }}
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <strong>Ciudad:</strong> {{ $pqr->persona->municipio->municipio }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
                         @foreach ($pqr->peticiones as $key => $peticion)
                         <div class="col-12 peticion_general rounded border mb-3 p-3">
                                 {{-- Inicio reasignacion petición --}}
@@ -380,9 +404,6 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        @if(!$pqr->persona->email)
-                                            <p class="text-danger">El usuario no posee correo electrónico, se debe enviar la aclaración por medio físico.</p>
-                                        @endif
                                     </div>
                                 @endif
                                     {{-- Fin bloque de Aclaraciones --}}
@@ -583,66 +604,133 @@
                                                 </div>
                                             </div>
                                             @php
-                                                $variableRecursoApelacion = false;
-                                                if (sizeOf($peticion->recursos) > 2) {
-                                                    if ($peticion->recursos[1]->respuestaRecurso) {
-                                                        $variableRecursoApelacion = true;
+                                                $numRecursos = $peticion->recursos->count();
+                                                $numRecursosRespuestas = 0;
+                                                $validadcion = false;
+                                                foreach ($peticion->recursos as $recurso) {
+                                                    if($recurso->respuestaRecurso){
+                                                        $numRecursosRespuestas ++;
                                                     }
+                                                }
+                                                if(($numRecursos - 1) == $numRecursosRespuestas ){
+                                                    $validadcion = true;
                                                 }
                                             @endphp
                                             @foreach ($peticion->recursos as $recurso)
                                                 @if (!$recurso->respuestaRecurso)
-                                                    <div class="row form-respuesta-recursos">
-                                                        <input class="id_recurso" type="hidden"
-                                                            value="{{ $recurso->id }}">
-                                                        <input class="tipo_reposicion_id" type="hidden"
-                                                            value="{{ $recurso->tipo_reposicion_id }}">
-                                                        <div class="row">
-                                                            <div class="col-12 col-md-6">
-                                                                <h6>Respuesta recurso de
-                                                                    {{ $recurso->tiporeposicion->tipo }}
-                                                                </h6>
-                                                            </div>
-                                                            <textarea type="text"
-                                                                class="form-control form-control-sm text-justify"
-                                                                disabled>{{ $recurso->recurso }}</textarea>
-                                                            <div class="col-12" id="anexosRespuestaRecursos">
-                                                                <div class="col-12 d-flex row anexoRespuestaRecurso"
-                                                                    id="anexoRespuestaRecurso">
-                                                                    <div
-                                                                        class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
-                                                                        <label for="titulo">Título anexo</label>
-                                                                        <input type="text"
-                                                                            class="form-control form-control-sm">
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
-                                                                        <label
-                                                                            for="descripcion">Descripción</label>
-                                                                        <input type="text"
-                                                                            class="form-control form-control-sm">
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
-                                                                        <label for="documentoRecurso">Anexos o
-                                                                            Pruebas</label>
-                                                                        <input
-                                                                            class="form-control form-control-sm"
-                                                                            type="file">
+                                                    @if ($recurso->tipo_reposicion_id == 3)
+                                                        <div class="row form-respuesta-recursos">
+                                                            <input class="id_recurso" type="hidden"
+                                                                value="{{ $recurso->id }}">
+                                                            <input class="tipo_reposicion_id" type="hidden"
+                                                                value="{{ $recurso->tipo_reposicion_id }}">
+                                                            <div class="row">
+                                                                <div class="col-12 col-md-6">
+                                                                    <h6>Respuesta recurso de
+                                                                        {{ $recurso->tiporeposicion->tipo }}
+                                                                    </h6>
+                                                                </div>
+                                                                <textarea type="text"
+                                                                    class="form-control form-control-sm text-justify"
+                                                                    disabled>{{ $recurso->recurso }}</textarea>
+                                                                <div class="col-12" id="anexosRespuestaRecursos">
+                                                                    <div class="col-12 d-flex row anexoRespuestaRecurso"
+                                                                        id="anexoRespuestaRecurso">
+                                                                        <div
+                                                                            class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
+                                                                            <label for="titulo">Título anexo</label>
+                                                                            <input type="text"
+                                                                                class="form-control form-control-sm">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
+                                                                            <label
+                                                                                for="descripcion">Descripción</label>
+                                                                            <input type="text"
+                                                                                class="form-control form-control-sm">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
+                                                                            <label for="documentoRecurso">Anexos o
+                                                                                Pruebas</label>
+                                                                            <input
+                                                                                class="form-control form-control-sm"
+                                                                                type="file">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            @if($validadcion)
+                                                                <div
+                                                                    class="card-footer d-flex guardarRespuestaRecurso mb-2">
+                                                                    <button type="" class="btn btn-primary px-4"
+                                                                        data_url="{{ route('respuesta_recurso_guardar') }}"
+                                                                        data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}"
+                                                                        data_token="{{ csrf_token() }}">Guardar
+                                                                        recurso</button>
+                                                                </div>
+                                                            @else
+                                                                <div
+                                                                    class="card-footer d-flex guardarRespuestaRecurso mb-2">
+                                                                    <button type="" class="btn btn-grey px-4 border" disabled>Guardar
+                                                                        recurso</button>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                        <div
-                                                            class="card-footer d-flex guardarRespuestaRecurso mb-2">
-                                                            <button type="" class="btn btn-primary px-4"
-                                                                data_url="{{ route('respuesta_recurso_guardar') }}"
-                                                                data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}"
-                                                                data_token="{{ csrf_token() }}">Guardar
-                                                                recurso</button>
+                                                        <hr class="mt-3">
+                                                    @else
+                                                        <div class="row form-respuesta-recursos">
+                                                            <input class="id_recurso" type="hidden"
+                                                                value="{{ $recurso->id }}">
+                                                            <input class="tipo_reposicion_id" type="hidden"
+                                                                value="{{ $recurso->tipo_reposicion_id }}">
+                                                            <div class="row">
+                                                                <div class="col-12 col-md-6">
+                                                                    <h6>Respuesta recurso de
+                                                                        {{ $recurso->tiporeposicion->tipo }}
+                                                                    </h6>
+                                                                </div>
+                                                                <textarea type="text"
+                                                                    class="form-control form-control-sm text-justify"
+                                                                    disabled>{{ $recurso->recurso }}</textarea>
+                                                                <div class="col-12" id="anexosRespuestaRecursos">
+                                                                    <div class="col-12 d-flex row anexoRespuestaRecurso"
+                                                                        id="anexoRespuestaRecurso">
+                                                                        <div
+                                                                            class="col-12 col-md-4 form-group titulo-anexoRespuestaRecurso">
+                                                                            <label for="titulo">Título anexo</label>
+                                                                            <input type="text"
+                                                                                class="form-control form-control-sm">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-12 col-md-4 form-group descripcion-anexoRespuestaRecurso">
+                                                                            <label
+                                                                                for="descripcion">Descripción</label>
+                                                                            <input type="text"
+                                                                                class="form-control form-control-sm">
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-12 col-md-4 form-group doc-anexoRespuestaRecurso">
+                                                                            <label for="documentoRecurso">Anexos o
+                                                                                Pruebas</label>
+                                                                            <input
+                                                                                class="form-control form-control-sm"
+                                                                                type="file">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="card-footer d-flex guardarRespuestaRecurso mb-2">
+                                                                <button type="" class="btn btn-primary px-4"
+                                                                    data_url="{{ route('respuesta_recurso_guardar') }}"
+                                                                    data_url_anexos="{{ route('respuesta_recurso_anexos_guardar') }}"
+                                                                    data_token="{{ csrf_token() }}">Guardar
+                                                                    recurso</button>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <hr class="mt-3">
+                                                        <hr class="mt-3">
+                                                    @endif
                                                 @endif
                                             @endforeach
                                         </div>

@@ -104,7 +104,7 @@
                                         Municipio : <strong>{{ $pqr->sede->municipio->municipio }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        Sede : <strong>{{ $pqr->sede->sede }}</strong>
+                                        Sede : <strong>{{ $pqr->sede->nombre }}</strong>
                                     </div>
                                 @endif
                                 @if ($pqr->tipo == 'Producto')
@@ -139,7 +139,7 @@
                                 @endif
                                 @if($pqr->fecha_radicado)
                                     <div class="col-12 col-md-6">
-                                        Fecha de radicado: <strong>{{ $pqr->fecha_radicado }}</strong>
+                                        Fecha de radicado: <strong>{{ $pqr->fecha_generacion }}</strong>
                                     </div>
                                 @endif
                                 <div class="col-12 col-md-6">
