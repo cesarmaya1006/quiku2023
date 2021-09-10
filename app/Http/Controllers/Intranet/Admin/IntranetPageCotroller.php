@@ -43,6 +43,8 @@ class IntranetPageCotroller extends Controller
             $pqrs = PQR::get();
         } elseif (session('rol_id') == 3) {
             $pqrs = PQR::get();
+        }else{
+            $pqrs = PQR::get();
         }
 
         return view('intranet.index.index', compact('pqrs', 'usuario', 'tipoPQR', 'tareas'));
