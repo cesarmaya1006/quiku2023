@@ -216,6 +216,56 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="container-fluid" style="font-size: 0.8em;">
+            <div class="row">
+                <div class="col-12">
+                    <h6>Listado de sugerencias y felicitaciones</h6>
+                </div>
+                <div class="col-12">
+                    <table class="table table-striped table-hover table-sm display">
+                        <thead class="thead-inverse">
+                            <tr>
+                                <th class="text-center" style="white-space:nowrap;">Estado</th>
+                                <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
+                                <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
+                                <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
+                                <th class="text-center" style="white-space:nowrap;">Cliente</th>
+                                <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                                <th class="text-center" style="white-space:nowrap;">Ver</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($pqrs as $pqr)
+                                @if ($pqr->empleado_id == null)
+                                    @if ($pqr->tipo_pqr_id == 7 || $pqr->tipo_pqr_id == 9)
+                                        <tr>
+                                            <td class="text-center" style="white-space:nowrap;">
+                                                {{ $pqr->empleado_id != null ? 'Asignada' : 'Sin Asignar' }}</td>
+                                            <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
+                                            <td class="text-center" style="white-space:nowrap;">{{ $pqr->radicado }}</td>
+                                            <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipoPqr->tipo }}
+                                            </td>
+                                            <td class="text-center" style="white-space:nowrap;">
+                                                {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
+                                            </td>
+                                            <td class="text-center" style="white-space:nowrap;">
+                                                {{ $pqr->prioridad->prioridad }}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('funcionario-gestionar-asignacion-asignador', ['id' => $pqr->id]) }}"
+                                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     @endif
 @endif
 @if ($usuario->empleado)

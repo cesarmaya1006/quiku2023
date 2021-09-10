@@ -124,7 +124,6 @@ class ClienteController extends Controller
 
     public function generarPQR_guardar(ValidarPqr $request)
     {
-        $tipo_pqr = tipoPQR::findOrFail($request['tipo_pqr_id']);
         $usuario = Usuario::findOrFail(session('id_usuario'));
         if ($usuario->persona) {
             $nuevaPQR['persona_id'] = $usuario->id;
@@ -157,8 +156,7 @@ class ClienteController extends Controller
                 $nuevaPQR['servicio_id'] = $request['servicio_id'];
             }
             $pqr = PQR::create($nuevaPQR);
-            $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $pqr->id;
-            PQR::findOrFail($pqr->id)->update($pqr_rad);
+
             $pqr = PQR::findOrFail($pqr->id);
     
             return redirect('/usuario/generarPQR-motivos/' . $pqr->id);
@@ -226,11 +224,12 @@ class ClienteController extends Controller
             $diasLimite = $tipo_pqr['tiempos'];
             $diaGeneracion = date("Y-m-d");
             $respuestaDias = FechasController::festivos($diasLimite, $diaGeneracion);
-            $actualizarPQR['fecha_generacion'] = date("Y-m-d");
+            $actualizarPQR['fecha_generacion'] = date("Y-m-d H:i:s");
             $actualizarPQR['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));
             $actualizarPQR["estado_creacion"] = 1;
             $actualizarPQR['estadospqr_id'] = 1;
             $actualizarPQR['tiempo_limite'] = $respuestaDias;
+            $actualizarPQR['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $pqr->id;
             PQR::findOrFail($idPQR)->update($actualizarPQR);
         }
         if ($pqr->persona_id != null) {
@@ -266,7 +265,7 @@ class ClienteController extends Controller
             $nuevaConcepto['empresa_id'] = $usuario->id;
         }
         $nuevaConcepto['sede_id'] = $request['sede_id'];
-        $nuevaConcepto['fecha_generacion'] = date("Y-m-d");
+        $nuevaConcepto['fecha_generacion'] = date("Y-m-d H:i:s");
         $nuevaConcepto['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
         $nuevaConcepto['estadospqr_id'] = $estado['id'];
@@ -356,7 +355,7 @@ class ClienteController extends Controller
             $nuevaFelicitacion['empresa_id'] = $usuario->id;
         }
         $nuevaFelicitacion['sede_id'] = $request['sede_id'];
-        $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d");
+        $nuevaFelicitacion['fecha_generacion'] = date("Y-m-d H:i:s");
         $nuevaFelicitacion['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(6);
         $nuevaFelicitacion['estadospqr_id'] = $estado['id'];
@@ -413,7 +412,7 @@ class ClienteController extends Controller
             $nuevaDenuncia['empresa_id'] = $usuario->id;
         }
         $nuevaDenuncia['sede_id'] = $request['sede_id'];
-        $nuevaDenuncia['fecha_generacion'] = date("Y-m-d");
+        $nuevaDenuncia['fecha_generacion'] = date("Y-m-d H:i:s");
         $nuevaDenuncia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
         $nuevaDenuncia['estadospqr_id'] = $estado['id'];
@@ -503,7 +502,7 @@ class ClienteController extends Controller
             $nuevaSolicitud['empresa_id'] = $usuario->id;
         }
         $nuevaSolicitud['sede_id'] = $request['sede_id'];
-        $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
+        $nuevaSolicitud['fecha_generacion'] = date("Y-m-d H:i:s");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
         $nuevaSolicitud['estadospqr_id'] = $estado['id'];
@@ -584,7 +583,7 @@ class ClienteController extends Controller
         } else {
             $nuevaSolicitud['empresa_id'] = $usuario->id;
         }
-        $nuevaSolicitud['fecha_generacion'] = date("Y-m-d");
+        $nuevaSolicitud['fecha_generacion'] = date("Y-m-d H:i:s");
         $nuevaSolicitud['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(1);
         $nuevaSolicitud['estadospqr_id'] = $estado['id'];
@@ -666,12 +665,13 @@ class ClienteController extends Controller
             $nuevaSugerencia['empresa_id'] = $usuario->id;
         }
         $nuevaSugerencia['sede_id'] = $request['sede_id'];
-        $nuevaSugerencia['fecha_generacion'] = date("Y-m-d");
+        $nuevaSugerencia['fecha_generacion'] = date("Y-m-d H:i:s");
         $nuevaSugerencia['fecha_radicado'] = date("Y-m-d", strtotime(date("Y-m-d") . "+ 1 days"));;
         $estado = Estado::findOrFail(6);
         $nuevaSugerencia['estadospqr_id'] = $estado['id'];
         $nuevaSugerencia['tipo_pqr_id'] = $tipo_pqr->id;
         $nuevaSugerencia['tiempo_limite'] = $respuestaDias;
+        $nuevaSugerencia["estado_creacion"] = 1;
         $sugerencia = PQR::create($nuevaSugerencia);
 
         $pqr_rad['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $sugerencia->id;
