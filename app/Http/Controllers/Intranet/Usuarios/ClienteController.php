@@ -247,9 +247,8 @@ class ClienteController extends Controller
 
     public function generarConceptoUOpinion()
     {
-        $usuario = Usuario::findOrFail(session('id_usuario'));
         $departamentos = Departamento::get();
-        return view('intranet.usuarios.crearConceptoUOpinion', compact('usuario', 'departamentos'));
+        return view('intranet.usuarios.crearConceptoUOpinion', compact('departamentos'));
     }
 
     public function generarConceptoUOpinion_guardar(Request $request)
