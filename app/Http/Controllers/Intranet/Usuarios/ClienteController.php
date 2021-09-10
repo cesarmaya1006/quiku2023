@@ -247,8 +247,9 @@ class ClienteController extends Controller
 
     public function generarConceptoUOpinion()
     {
+        $usuario = Usuario::findOrFail(session('id_usuario'));
         $departamentos = Departamento::get();
-        return view('intranet.usuarios.crearConceptoUOpinion', compact('departamentos'));
+        return view('intranet.usuarios.crearConceptoUOpinion', compact('usuario', 'departamentos'));
     }
 
     public function generarConceptoUOpinion_guardar(Request $request)
@@ -338,7 +339,7 @@ class ClienteController extends Controller
     public function generarFelicitacion()
     {
         $departamentos = Departamento::get();
-        return view('intranet.usuarios.crearFeclicitaciones', compact('departamentos'));
+        return view('intranet.usuarios.crearFelicitaciones', compact('departamentos'));
     }
 
     public function generarFelicitacion_guardar(Request $request)
