@@ -14,6 +14,6 @@ class WikuCriterio extends Model
     //----------------------------------------------------------------------------------
     public function normas()
     {
-        return $this->belongsToMany(Rol::class, 'usuario_rol', 'usuario_id', 'rol_id');
+        return $this->belongsToMany(WikuNorma::class, 'norma_id', 'rol_id');
     }
 }

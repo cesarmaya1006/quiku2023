@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Intranet\Empresas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\WikuArea;
+use App\Models\Admin\WikuCriterio;
 use App\Models\Admin\WikuDocument;
 use App\Models\Admin\WikuNorma;
+use App\Models\Admin\WikuPalabras;
 use App\Models\Admin\WikuTema;
 use App\Models\Admin\WikuTemaEspecifico;
+use App\Models\PQR\tipoPQR;
+use App\Models\Productos\Categoria;
+use App\Models\Servicios\Servicio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 
@@ -111,7 +116,8 @@ class WikuController extends Controller
                 $fuentes = WikuDocument::all();
                 $norma = WikuNorma::findOrFail($id);
                 $areas = WikuArea::all();
-                return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'areas'));
+                $temasEspecifico = WikuTemaEspecifico::all();
+                return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'areas', 'temasEspecifico'));
             }
         }
     }
@@ -242,11 +248,177 @@ class WikuController extends Controller
         return redirect('admin/funcionario/wiku_area/index/' . $id . '/' . $wiku)->with('mensaje', 'Área actualizada con éxito')->with('id')->with('wiku')->with('areas');
     }
     //*************************************************************************************************** */
-    public function criterios($id)
+
+    public function wiku_volver_criterios($id, $wiku)
+    {
+        if ($wiku == 'norma') {
+
+            $fuentes = WikuDocument::all();
+            $temasEspecifico = WikuTemaEspecifico::all();
+            $areas = WikuArea::all();
+            $norma = WikuNorma::findOrFail($id);
+            return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'temasEspecifico', 'areas'));
+        }
+    }
+    public function index_criterios($id, $wiku)
     {
         $norma = WikuNorma::findOrFail($id);
-        return view('intranet.parametros.wiku.criterios.index', compact('norma'));
+        $criterios = WikuCriterio::where('norma_id', $id)->get();
+        return view('intranet.parametros.wiku.criterios.index', compact('norma', 'criterios', 'wiku'));
     }
+    public function crear_criterios($id, $wiku)
+    {
+        return view('intranet.parametros.wiku.criterios.crear', compact('id', 'wiku'));
+    }
+    public function guardar_criterios(Request $request, $id, $wiku)
+    {
+        $nuevo_criterio = $request->all();
+        unset($nuevo_criterio['tipo_criterio']);
+        WikuCriterio::create($nuevo_criterio);
+        $norma = WikuNorma::findOrFail($id);
+        $criterios = WikuCriterio::where('norma_id', $id)->get();
+        return redirect('/admin/funcionario/wiku_criterios/index/' . $id . '/norma')->with('mensaje', 'Criterio creado con éxito')->with('norma')->with('criterios')->with('wiku');
+    }
+    public function editar_criterios($id_criterios, $id, $wiku)
+    {
+        $criterio = WikuCriterio::findOrFail($id_criterios);
+        return view('intranet.parametros.wiku.criterios.editar', compact('criterio', 'id', 'wiku'));
+    }
+    public function actualizar_criterios(Request $request, $id_criterios, $id, $wiku)
+    {
+        $nuevo_criterio = $request->all();
+        unset($nuevo_criterio['tipo_criterio']);
+        WikuCriterio::findOrFail($id_criterios)->update($nuevo_criterio);
+        $norma = WikuNorma::findOrFail($id);
+        $criterios = WikuCriterio::where('norma_id', $id)->get();
+        return redirect('/admin/funcionario/wiku_criterios/index/' . $id . '/norma')->with('mensaje', 'Criterio actualizado con éxito')->with('norma')->with('criterios')->with('wiku');
+    }
+    //*************************************************************************************************** */
+
+    public function wiku_volver_palabras($id, $wiku)
+    {
+        if ($wiku == 'norma') {
+
+            $fuentes = WikuDocument::all();
+            $temasEspecifico = WikuTemaEspecifico::all();
+            $areas = WikuArea::all();
+            $norma = WikuNorma::findOrFail($id);
+            return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'temasEspecifico', 'areas'));
+        }
+    }
+    public function index_palabras($id, $wiku)
+    {
+        $norma = WikuNorma::findOrFail($id);
+        /*$palabras = WikuPalabras::with('normas')->whereHas('normas', function ($q) use ($id) {
+            $q->where('wiku_norma_id', $id);
+        })->get();*/
+        $palabras = WikuPalabras::all();
+
+        return view('intranet.parametros.wiku.palabras.index', compact('norma', 'palabras', 'wiku'));
+    }
+    public function crear_palabras($id, $wiku)
+    {
+        return view('intranet.parametros.wiku.palabras.crear', compact('id', 'wiku'));
+    }
+    public function guardar_palabras(Request $request, $id, $wiku)
+    {
+
+        $palabras = WikuPalabras::with('normas')->whereHas('normas', function ($q) use ($id) {
+            $q->where('wiku_norma_id', $id);
+        })->get();
+        foreach ($palabras as $palabra) {
+            $palabras_norma[] = $palabra['id'];
+        }
+        $nueva_palabra = $request->all();
+        unset($nueva_palabra['norma_id']);
+        $palabraNueva = WikuPalabras::create($nueva_palabra);
+        $palabras_norma[] = $palabraNueva->id;
+        $norma = WikuNorma::findOrFail($id);
+        $norma->palabras()->sync($palabras_norma);
+        $palabras = WikuPalabras::all();
+        return redirect('/admin/funcionario/wiku_palabras/index/' . $id . '/norma')->with('mensaje', 'Palabra creada con éxito y asociada a la norma')->with('norma')->with('palabras')->with('wiku');
+    }
+    public function editar_palabras($id_palabras, $id, $wiku)
+    {
+        $palabra = WikuPalabras::findOrFail($id_palabras);
+        return view('intranet.parametros.wiku.palabras.editar', compact('palabra', 'id', 'wiku'));
+    }
+    public function actualizar_palabras(Request $request, $id_palabras, $id, $wiku)
+    {
+        $nueva_palabra = $request->all();
+        unset($nueva_palabra['norma_id']);
+        WikuPalabras::findOrFail($id_palabras)->update($nueva_palabra);
+        $norma = WikuNorma::findOrFail($id);
+        $palabras = WikuPalabras::all();
+        return redirect('/admin/funcionario/wiku_palabras/index/' . $id . '/norma')->with('mensaje', 'Palabra actualizada con éxito')->with('norma')->with('palabras')->with('wiku');
+    }
+    public function wiku_palabras_eliminar(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $palabra = WikuPalabras::findOrfail($id);
+            if ($palabra->normas->count() == 0) {
+                if (WikuPalabras::destroy($id)) {
+                    return response()->json(['mensaje' => 'ok']);
+                } else {
+                    return response()->json(['mensaje' => 'ng']);
+                }
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
+    }
+    public function adicionar_palabras(Request $request, $id_palabras, $id)
+    {
+        if ($request->ajax()) {
+            $palabra_ini = WikuPalabras::findOrfail($id_palabras);
+            $norma = WikuNorma::findOrFail($id);
+            $palabras = WikuPalabras::with('normas')->whereHas('normas', function ($q) use ($id) {
+                $q->where('wiku_norma_id', $id);
+            })->get();
+            foreach ($palabras as $palabra) {
+                $palabras_norma[] = $palabra['id'];
+            }
+            $palabras_norma[] = $palabra_ini->id;
+            $norma->palabras()->sync($palabras_norma);
+            return response()->json(['mensaje' => 'ok']);
+        } else {
+            abort(404);
+        }
+    }
+    public function restar_palabras(Request $request, $id_palabras, $id)
+    {
+        if ($request->ajax()) {
+            $normas = new WikuNorma();
+            $normas->find($id)->palabras()->detach($id_palabras);
+            return response()->json(['mensaje' => 'ok']);
+        } else {
+            abort(404);
+        }
+    }
+    //------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
+    public function wiku_volver_asociacion($id, $wiku)
+    {
+        if ($wiku == 'norma') {
+
+            $fuentes = WikuDocument::all();
+            $temasEspecifico = WikuTemaEspecifico::all();
+            $areas = WikuArea::all();
+            $norma = WikuNorma::findOrFail($id);
+            return view('intranet.parametros.wiku.normas.editar', compact('norma', 'fuentes', 'temasEspecifico', 'areas'));
+        }
+    }
+    public function crear_asociacion($id, $wiku)
+    {
+        $tipos_pqr = tipoPQR::get();
+        $categorias = Categoria::get();
+        $servicios = Servicio::get();
+        return view('intranet.parametros.wiku.asociacion.crear', compact('id', 'wiku', 'tipos_pqr', 'categorias', 'servicios',));
+    }
+    //------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
     /**
      * Display the specified resource.
      *

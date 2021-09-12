@@ -22,4 +22,13 @@ class WikuNorma extends Model
         return $this->belongsTo(WikuTemaEspecifico::class, 'wikutemaespecifico_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function criterios()
+    {
+        return $this->hasMany(WikuCriterio::class, 'norma_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function palabras()
+    {
+        return $this->belongsToMany(WikuPalabras::class, 'wikupalabrasnormas');
+    }
 }

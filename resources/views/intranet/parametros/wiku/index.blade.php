@@ -65,13 +65,13 @@
                                         <div class="col-12 col-md-3 text-md-right pl-2 pr-md-5">
                                             <a href="{{ route('wiku_norma-crear') }}"
                                                 class="btn btn-success btn-sm text-center pl-3 pr-3"
-                                                style="font-size: 0.9em;{{ $fuentes->count() == 0 ? 'opacity: 0.4; cursor: default;pointer-events: none;' : '' }}"><i
+                                                style="font-size: 0.8em;{{ $fuentes->count() == 0 ? 'opacity: 0.4; cursor: default;pointer-events: none;' : '' }}"><i
                                                     class="fas fa-plus-circle mr-2"></i> Nueva Norma</a>
                                         </div>
                                         <div class="col-12 col-md-4 text-md-right pl-2 pr-md-5">
                                             <a href="{{ route('wiku-index_fuenteN') }}"
                                                 class="btn btn-info btn-sm text-center pl-3 pr-3"
-                                                style="font-size: 0.9em;"><i class="fas fa-plus-circle mr-2"></i> Configurar
+                                                style="font-size: 0.8em;"><i class="fas fa-plus-circle mr-2"></i> Configurar
                                                 Fuentes Normativas</a>
                                         </div>
                                     </div>
@@ -85,12 +85,11 @@
                                                         <th class="text-center">Ente Emisor</th>
                                                         <th class="text-center">Artículo</th>
                                                         <th class="text-center">Fecha de entrada en vigencia</th>
-                                                        <th class="text-center">Texto</th>
+                                                        <th class="text-center">Texto Principal</th>
                                                         <th class="text-center">Descripción del articulo</th>
                                                         <th class="text-center">Área de conocimiento</th>
                                                         <th class="text-center">Tema</th>
                                                         <th class="text-center">Tema Específico</th>
-                                                        <th>Criterios</th>
                                                         <th>Opciones</th>
                                                     </tr>
                                                 </thead>
@@ -99,7 +98,8 @@
                                                         <tr>
                                                             <td>{{ $norma->documento->fuente }}</td>
                                                             <td class="text-center">{{ $norma->documento->fecha }}</td>
-                                                            <td class="text-center">{{ $norma->documento->emisor }}</td>
+                                                            <td class="text-center">{{ $norma->documento->emisor }}
+                                                            </td>
                                                             <td class="text-center">{{ $norma->articulo }}</td>
                                                             <td class="text-center">{{ $norma->fecha }}</td>
                                                             <td class="text-center">{{ $norma->texto }}</td>
@@ -107,16 +107,14 @@
                                                             <td>{{ $norma->temaEspecifico->tema_->area->area }}</td>
                                                             <td style="min-width:100px;">
                                                                 {{ $norma->temaEspecifico->tema_->tema }}</td>
-                                                            <td>
+                                                            <td style="min-width:150px;">
                                                                 {{ $norma->temaespecifico->tema }}</td>
-                                                            <td><a href="{{ route('wiku_criterios', ['id' => $norma->id]) }}"
-                                                                    class="btn-accion-tabla tooltipsC text-info"
-                                                                    title="Editar"><i class="fas fa-eye"
-                                                                        aria-hidden="true"></i> Ver</a> </td>
-                                                            <td><a href="{{ route('wiku_norma-editar', ['id' => $norma->id]) }}"
+                                                            <td class="d-flex">
+                                                                <a href="{{ route('wiku_norma-editar', ['id' => $norma->id]) }}"
                                                                     class="btn-accion-tabla tooltipsC text-info"
                                                                     title="Editar"><i class="fa fa-edit"
-                                                                        aria-hidden="true"></i></a></td>
+                                                                        aria-hidden="true"></i></a>
+                                                            </td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

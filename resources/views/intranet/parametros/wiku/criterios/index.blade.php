@@ -22,11 +22,15 @@
         <div class="card-header">
             <div class="row mb-3">
                 <div class="col-12 col-md-6 col-lg-6 text-md-left text-lg-left pl-2">
-                    <h5>Listado de criterios asociados a la norma</h5>
+                    <h5>Listado de criterios</h5>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 text-md-right text-lg-right pl-2 pr-md-5 pr-lg-5">
-                    <a href="{{ route('wiku-index') }}" class="btn btn-primary btn-xs btn-sm text-center pl-3 pr-3"
-                        style="font-size: 0.9em;"><i class="fas fa-reply mr-2"></i> Volver</a>
+                    <a href="{{ route('wiku_criterios-crear', ['id' => $norma->id, 'wiku' => $wiku]) }}"
+                        class="btn btn-success btn-xs text-center pl-3 pr-3 mr-4" style="font-size: 0.9em;"><i
+                            class="fas fa-plus-circle mr-2"></i> Nuevo criterio</a>
+                    <a href="{{ route('wiku_volver_criterios', ['id' => $norma->id, 'wiku' => $wiku]) }}"
+                        class="btn btn-primary btn-xs btn-sm text-center pl-3 pr-3" style="font-size: 0.9em;"><i
+                            class="fas fa-reply mr-2"></i> Volver</a>
                 </div>
             </div>
             <hr>
@@ -35,30 +39,35 @@
                     <table class="table table-striped table-hover table-sm display">
                         <thead class="thead-inverse">
                             <tr>
-                                <th>Fuente Normativa</th>
-                                <th>Número</th>
-                                <th>Fecha de Emisión</th>
-                                <th>Ente Emisor</th>
-                                <th>Descarga</th>
-                                <th>Opciones</th>
+                                <th class="text-center">Autor(es)</th>
+                                <th class="text-center" style="white-space:nowrap">Criterios jurídicos de aplicación</th>
+                                <th class="text-center" style="white-space:nowrap">Criterios jurídicos que definen la no
+                                    aplicación</th>
+                                <th class="text-center">Notas de vigencia</th>
+                                <th class="text-center">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($fuentes as $fuente)
+                            @foreach ($criterios as $criterio)
                                 <tr>
-                                    <td>{{ $fuente->fuente }}</td>
-                                    <td>{{ $fuente->numero }}</td>
-                                    <td>{{ $fuente->fecha }}</td>
-                                    <td>{{ $fuente->emisor }}</td>
-                                    <td class="text-center">
-                                        @if ($fuente->archivo != null)
-                                            <a href="{{ asset('documentos/wiku/fuentes/' . $fuente->archivo) }}"
-                                                target="_blank" rel="noopener noreferrer">Descarga</a>
-                                        @else
-                                            ---
-                                        @endif
+                                    <td>{{ $criterio->autores }}</td>
+                                    <td>{{ $criterio->criterio_si }}</td>
+                                    <td>{{ $criterio->criterio_no }}</td>
+                                    <td>{{ $criterio->notas }}</td>
+                                    <td>
+                                        <a href="{{ route('wiku_criterios-editar', ['id_criterios' => $criterio->id, 'id' => $norma->id, 'wiku' => $wiku]) }}"
+                                            class="btn-accion-tabla tooltipsC" title="Editar este registro">
+                                            <i class="fas fa-pen-square"></i>
+                                        </a>
+                                        <form action="{{ route('admin-rol-eliminar', ['id' => $criterio->id]) }}"
+                                            class="d-inline form-eliminar" method="POST">
+                                            @csrf @method("delete")
+                                            <button type="submit" class="btn-accion-tabla eliminar tooltipsC"
+                                                title="Eliminar este registro">
+                                                <i class="fa fa-fw fa-trash text-danger"></i>
+                                            </button>
+                                        </form>
                                     </td>
-                                    <td></td>
                                 </tr>
                             @endforeach
                         </tbody>
