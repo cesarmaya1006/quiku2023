@@ -2,6 +2,7 @@
 
 namespace App\Models\Productos;
 
+use App\Models\Admin\WikuAsociacion;
 use App\Models\PQR\PQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,4 +26,8 @@ class Referencia extends Model
         return $this->hasMany(PQR::class, 'referencia_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function asociacion_normas()
+    {
+        return $this->hasMany(WikuAsociacion::class, 'referencia_id', 'id');
+    }
 }

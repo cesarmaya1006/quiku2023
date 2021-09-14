@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\PQR\tipoPQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -30,5 +31,16 @@ class WikuNorma extends Model
     public function palabras()
     {
         return $this->belongsToMany(WikuPalabras::class, 'wikupalabrasnormas');
+    }
+    //----------------------------------------------------------------------------------
+    public function asociaciones()
+    {
+        return $this->hasMany(WikuAsociacion::class, 'wiku_norma_id', 'id');
+    }
+
+    //----------------------------------------------------------------------------------
+    public function asociaciontipopqr()
+    {
+        return $this->belongsToMany(tipoPQR::class, 'wikuasociaciones');
     }
 }

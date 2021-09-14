@@ -68,6 +68,9 @@ class Tabla_Menu extends Seeder
             ['nombre' => 'Productos', 'menu_id' => '21',  'url' => 'admin/productos-index', 'orden' => '2',  'icono' => 'fas fa-list-ul'],
             ['nombre' => 'Marcas', 'menu_id' => '21',  'url' => 'admin/marcas-index', 'orden' => '3',  'icono' => 'fas fa-list-ul'],
             ['nombre' => 'Referencias', 'menu_id' => '21',  'url' => 'admin/referencias-index', 'orden' => '4',  'icono' => 'fas fa-list-ul'],
+            // Menus  padre
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Wiku', 'menu_id' => '0',  'url' => 'funcionario/wiku-index', 'orden' => '1',  'icono' => 'fas fa-list-ul'],
 
         ];
 

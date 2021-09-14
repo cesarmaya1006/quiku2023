@@ -31,8 +31,8 @@
             <hr>
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('wiku_norma-guardar') }}" class="form-horizontal row" method="POST"
-                        autocomplete="off" enctype="multipart/form-data">
+                    <form action="{{ route('wiku_asociacion-guardar', ['id' => $id, 'wiku' => $wiku]) }}"
+                        class="form-horizontal row" method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         @method('post')
                         <div class="card-body">

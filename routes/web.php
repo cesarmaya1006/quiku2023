@@ -273,10 +273,18 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('wiku_volver_asociacion/{id}/{wiku}', [WikuController::class, 'wiku_volver_asociacion'])->name('wiku_volver_asociacion');
             Route::get('wiku/asociacion/crear/{id}/{wiku}', [WikuController::class, 'crear_asociacion'])->name('wiku_asociacion-crear');
             Route::post('wiku/asociacion-guardar/{id}/{wiku}', [WikuController::class, 'guardar_asociacion'])->name('wiku_asociacion-guardar');
+            Route::delete('wiku_asociacion/{id}', [WikuController::class, 'wiku_asociacion_eliminar'])->name('wiku_asociacion-eliminar');
         });
     });
     //==================================================================================================================
     Route::group(['prefix' => 'funcionario'], function () {
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //Wiku
+        Route::get('wiku-index', [WikuController::class, 'indexWiku'])->name('wiku_funcionario-index');
+        //----------------------------------------------------------------------------------------------------
+        Route::get('wiku-normas/index', [WikuController::class, 'indexWikuNormas'])->name('wiku_funcionario_norma_index');
+        //----------------------------------------------------------------------------------------------------
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('listado', [FuncionarioController::class, 'index'])->name('funcionario-index');
         Route::get('crear-usuario', [FuncionarioController::class, 'crear_usuario'])->name('funcionario-crear_usuario');
         Route::get('crear-usuario-creado/{id}', [FuncionarioController::class, 'usuario_creado'])->name('funcionario-usuario_creado');

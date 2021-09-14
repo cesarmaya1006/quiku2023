@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Intranet\Empresas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\WikuArea;
+use App\Models\Admin\WikuAsociacion;
 use App\Models\Admin\WikuCriterio;
 use App\Models\Admin\WikuDocument;
 use App\Models\Admin\WikuNorma;
@@ -417,6 +418,30 @@ class WikuController extends Controller
         $servicios = Servicio::get();
         return view('intranet.parametros.wiku.asociacion.crear', compact('id', 'wiku', 'tipos_pqr', 'categorias', 'servicios',));
     }
+    public function guardar_asociacion(Request $request, $id, $wiku)
+    {
+
+        if ($request['servicio_id'] == null) {
+            $request['prodserv'] = 'Producto';
+        } else {
+            $request['prodserv'] = 'Servicio';
+        }
+        $request['wiku_norma_id'] = $id;
+        WikuAsociacion::create($request->all());
+        return redirect('/admin/funcionario/wiku/asociacion/crear/' . $id . '/norma')->with('mensaje', 'Asociación actualizada con éxito')->with('norma')->with('palabras')->with('wiku');
+    }
+    public function wiku_asociacion_eliminar(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            if (WikuAsociacion::destroy($id)) {
+                return response()->json(['mensaje' => 'ok']);
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
+    }
     //------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------
     /**
@@ -425,9 +450,14 @@ class WikuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function indexWiku()
     {
-        //
+        return view('intranet.parametros.wiku.funcionario.index');
+    }
+    public function indexWikuNormas()
+    {
+        $normas = WikuNorma::all();
+        return view('intranet.parametros.wiku.funcionario.normas.index', compact('normas'));
     }
 
     /**

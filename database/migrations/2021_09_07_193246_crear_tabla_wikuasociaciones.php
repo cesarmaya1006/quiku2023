@@ -15,7 +15,6 @@ class CrearTablaWikuasociaciones extends Migration
     {
         Schema::create('wikuasociaciones', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->string('tipo');
             $table->string('prodserv');
             $table->unsignedBigInteger('tipo_pqr_id')->nullable();
             $table->foreign('tipo_pqr_id', 'fk_tipoPQR_asociacion')->references('id')->on('tipo_pqr')->onDelete('restrict')->onUpdate('restrict');

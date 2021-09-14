@@ -12,8 +12,8 @@ class WikuCriterio extends Model
     protected $table = 'wikucriterios';
     protected $guarded = [];
     //----------------------------------------------------------------------------------
-    public function normas()
+    public function norma()
     {
-        return $this->belongsToMany(WikuNorma::class, 'norma_id', 'rol_id');
+        return $this->belongsToMany(WikuNorma::class, 'norma_id', 'id');
     }
 }
