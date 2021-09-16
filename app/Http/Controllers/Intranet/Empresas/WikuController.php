@@ -452,7 +452,12 @@ class WikuController extends Controller
      */
     public function indexWiku()
     {
-        return view('intranet.parametros.wiku.funcionario.index');
+        $areas = WikuArea::all();
+        $fuentes = WikuDocument::all();
+        $tipos_pqr = tipoPQR::get();
+        $categorias = Categoria::get();
+        $servicios = Servicio::get();
+        return view('intranet.parametros.wiku.funcionario.index', compact('areas', 'fuentes', 'tipos_pqr', 'categorias', 'servicios'));
     }
     public function indexWikuNormas()
     {
@@ -460,37 +465,46 @@ class WikuController extends Controller
         return view('intranet.parametros.wiku.funcionario.normas.index', compact('normas'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function WikuBusquedaBasica(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $radio = $request['radio'];
+            $palabras = explode(" ", $request['query']);
+            foreach ($palabras as &$valor) {
+                $mParams[] = ['palabra', 'LIKE', $valor . '%'];
+            }
+            if (count($palabras) == 1) {
+                $wikuPalabras = WikuPalabras::where('palabra', 'LIKE',  '%' . $palabras[0] . '%')->get();
+            } else {
+                $wikuPalabras = WikuPalabras::Where(function ($query) use ($palabras) {
+                    foreach ($palabras as $palabra) {
+                        $query->orWhere('palabra', 'LIKE',  $palabra . '%');
+                    }
+                })->get();
+            }
+            //$wikuNormas = $wikuPalabras;
+            $ids = [];
+            foreach ($wikuPalabras as $wikuPalabra) {
+                $ids[] = $wikuPalabra->id;
+            }
+            if ($radio == 'todos' || $radio == 'Normas') {
+                $wikuNormas = WikuNorma::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area', 'documento')->whereHas('palabras', function ($q) use ($ids) {
+                    $q->whereIn('wiku_palabras_id', $ids);
+                })->get();
+            } else {
+                $wikuNormas = [];
+            }
+            //$wikuNormas = [count($palabras)];
+            return response()->json([$wikuNormas]);
+        } else {
+            abort(404);
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function cargar_normas(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if ($request->ajax()) {
+            $id = $request['id'];
+            return WikuNorma::where('id', $id)->get();
+        }
     }
 }

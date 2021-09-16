@@ -91,20 +91,20 @@
         <label class="requerido" for="producto_id">Productos</label>
         <select id="producto_id" class="form-control form-control-sm" name="producto_id"
             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}">
-            <option value="">---Seleccione una categoría---</option>
+            <option value="">---Seleccione primero una categoría---</option>
         </select>
     </div>
     <div class="form-group col-12 col-md-6 d-none" id="marcas">
         <label class="requerido" for="marca_id">Marcas</label>
         <select id="marca_id" class="form-control form-control-sm" name="marca_id"
             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}">
-            <option value="">---Seleccione un producto---</option>
+            <option value="">---Seleccione primero un producto---</option>
         </select>
     </div>
     <div class="form-group col-12 col-md-6 d-none" id="referencias">
         <label class="requerido" for="referencia_id">Referencias</label>
         <select id="referencia_id" class="form-control form-control-sm" name="referencia_id">
-            <option value="">---Seleccione una marca---</option>
+            <option value="">---Seleccione primero una marca---</option>
         </select>
     </div>
 </div>

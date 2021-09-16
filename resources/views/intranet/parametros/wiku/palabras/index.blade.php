@@ -49,10 +49,13 @@
                                     <td>{{ $palabra->palabra }}</td>
                                     <td class="text-center">
                                         @if ($palabra->normas->count() > 0)
-                                            <?php $esta = 0; ?>
+                                            <?php $esta = 0;
+                                            $esta1 = 0; ?>
                                             @foreach ($palabra->normas as $norma_p)
                                                 @if ($norma->id === $norma_p->id)
-                                                    <?php $esta = 1; ?>
+
+                                                    <?php $esta = 1;
+                                                    $esta1++; ?>
                                                 @endif
                                             @endforeach
                                             @if ($esta == 1)
@@ -86,13 +89,13 @@
                                             @endif
                                         @else
                                             <form
-                                                action="{{ route('wiku_palabras-restar', ['id_palabras' => $palabra->id, 'id' => $norma->id]) }}"
-                                                action_restar="{{ route('wiku_palabras-adicionar', ['id_palabras' => $palabra->id, 'id' => $norma->id]) }}"
-                                                class="d-inline form-restar" method="POST">
+                                                action="{{ route('wiku_palabras-adicionar', ['id_palabras' => $palabra->id, 'id' => $norma->id]) }}"
+                                                action_restar="{{ route('wiku_palabras-restar', ['id_palabras' => $palabra->id, 'id' => $norma->id]) }}"
+                                                class="d-inline form-adicionar" method="POST">
                                                 @csrf @method("post")
                                                 <button type="submit" class="btn-accion-tabla eliminar tooltipsC"
-                                                    title="Restar palabra">
-                                                    <i class="fa fa-minus-square text-danger" aria-hidden="true"></i>
+                                                    title="Asociar palabra">
+                                                    <i class="fa fa-plus-square text-success" aria-hidden="true"></i>
                                                 </button>
                                             </form>
                                         @endif
