@@ -16,14 +16,15 @@ class Tabla_TiposReposicion extends Seeder
     public function run()
     {
         $tipos = [
-            'Aclaración y/o corrección',
-            'Reposición',
-            'Apelación',
-            'Reposición y apelación',
+            ['tipo' => 'Aclaración y/o corrección', 'tiempos' => 10],
+            ['tipo' => 'Reposición', 'tiempos' => 10],
+            ['tipo' => 'Apelación', 'tiempos' => 10],
+            ['tipo' => 'Reposición y apelación', 'tiempos' => 10],
         ];
         foreach ($tipos as $key => $value) {
             DB::table('tipo_reposicion')->insert([
-                'tipo' => $value,
+                'tipo' => $value['tipo'],
+                'tiempos' => $value['tiempos'],
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             ]);
         }

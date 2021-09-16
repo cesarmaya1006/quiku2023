@@ -16,6 +16,7 @@ class CrearTablaTipoReposicion extends Migration
         Schema::create('tipo_reposicion', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
             $table->string('tipo', 255);
+            $table->bigInteger('tiempos')->default(0);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

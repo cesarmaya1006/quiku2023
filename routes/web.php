@@ -216,7 +216,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('actualizar-datos', [FuncionarioController::class, 'editar'])->name('funcionario-editar');
         Route::post('actualizar-datos', [FuncionarioController::class, 'actualizar'])->name('funcionario-actualizar');
         Route::get('cambiar-password', [FuncionarioController::class, 'cambiar_password'])->name('funcionario-cambiar-password');
-        Route::get('listado-usuarios', [FuncionarioController::class, 'listado_usuarios'])->name('funcionario-listado-usuarios');
+        Route::get('usuarios-listado', [FuncionarioController::class, 'listado_usuarios'])->name('funcionario-listado-usuarios');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('listado/gestionar_pqr/{id}', [PQRController::class, 'gestionar'])->name('funcionario-gestionar_pqr');
         Route::post('listado/gestionarqr', [PQRController::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_p_guardar');

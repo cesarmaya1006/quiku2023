@@ -10,6 +10,7 @@ use App\Models\PQR\Estado;
 use App\Models\Admin\Cargo;
 use App\Models\PQR\Recurso;
 use App\Models\PQR\Peticion;
+use App\Models\PQR\PqrAnexo;
 use Illuminate\Http\Request;
 use App\Models\PQR\Prioridad;
 use App\Models\PQR\Respuesta;
@@ -24,6 +25,7 @@ use App\Mail\ConstanciaAclaracion;
 use App\Models\Empleados\Empleado;
 use App\Models\PQR\DocRespRecurso;
 use App\Models\PQR\HistorialTarea;
+use App\Models\PQR\TipoReposicion;
 use App\Models\PQR\AsignacionTarea;
 use App\Http\Controllers\Controller;
 use App\Models\PQR\AclaracionAnexos;
@@ -36,7 +38,6 @@ use App\Mail\AclaracionComplementacion;
 use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\AsignacionParticular;
 use App\Http\Controllers\Fechas\FechasController;
-use App\Models\PQR\PqrAnexo;
 
 class PQRController extends Controller
 {
@@ -343,6 +344,7 @@ class PQRController extends Controller
     {
         if ($request->ajax()) {
             $plazoRecurso['recurso_dias'] = $request['plazo_recurso'];
+            $plazoRecurso['apelacion'] = $request['apelacion'];
             $pqr = PQR::findOrfail($request['idPqr']);
             $nuevoLimite = $pqr->tipoPqr->tiempos + $pqr['prorroga_dias'] + $request['plazo_recurso'];
             $respuestaDias = FechasController::festivos($nuevoLimite, $pqr['fecha_generacion']);
@@ -375,6 +377,11 @@ class PQRController extends Controller
             if($email){
                 Mail::to($email)->send(new RespuestaReposicion($id_recurso));
             }
+            $tipoReposicion = TipoReposicion::findOrFail($request['tipo_reposicion_id']);
+            $diasReposicion = $tipoReposicion->tiempos;
+            $fechaActual = date("Y-m-d H:i:s");
+            $respuestaDias = FechasController::festivos($diasReposicion, $fechaActual);
+            $pqrEstado['tiempo_limite'] = $respuestaDias;
             $pqrEstado['estadospqr_id'] = 8;
             PQR::findOrFail($request['id'])->update($pqrEstado);
             $pqr = PQR::findOrFail($request['id']);
@@ -631,6 +638,10 @@ class PQRController extends Controller
                 $respuesta = PqrAnexo::create($nuevo_documento);
 
                 $pqr = PQR::findOrfail($request["pqr_id"]);
+                $peticiones = Peticion::where('pqr_id', $pqr->id)->get();
+                if(sizeof($peticiones)){
+                    $pqr['recurso_dias'] = $peticiones[0]->recurso_dias;
+                }
                 $pqr_id = $pqr->id;
                 if ($pqr->persona_id != null) {
                     $email = $pqr->persona->email;
@@ -642,11 +653,11 @@ class PQRController extends Controller
                         Mail::to($email)->send(new RespuestaPQR($pqr_id));
                     }
                 }
-                if( ($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 4 ){
+                if( ($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5 ){
                     PQRController::actualizar_estados($pqr);
                 }
             }
-            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+            return response()->json(['mensaje' => 'ok', 'data' => $pqr]);
         } else {
             abort(404);
         }
@@ -655,7 +666,7 @@ class PQRController extends Controller
     static public function actualizar_estados($pqr){
         $cantPeticionRecurso = 0;
         $cantPericionRecursoRespuesta = 0;
-        $cantPericionRecursoRespuestaCerrar = 0;
+        $cantPeticionRecursoRespuestaCerrar = 0;
         $peticiones = $pqr->peticiones;
         foreach ($peticiones as $peticion) {
             if(sizeOf($peticion->recursos)){
@@ -665,7 +676,7 @@ class PQRController extends Controller
                         if($recurso->respuestarecurso){
                             $cantPericionRecursoRespuesta ++;
                             if($recurso->tipo_reposicion_id != 1){
-                                $cantPericionRecursoRespuestaCerrar ++;
+                                $cantPeticionRecursoRespuestaCerrar ++;
                             }
                         }
                     }
@@ -679,18 +690,28 @@ class PQRController extends Controller
                     }
                     if($cantRecursos == $cantRecursosRepuestas){
                         $cantPericionRecursoRespuesta += 1;
-                        $cantPericionRecursoRespuestaCerrar += 1;
+                        $cantPeticionRecursoRespuestaCerrar += 1;
                     }
                 }
             }
         }
-        if($cantPericionRecursoRespuestaCerrar == $peticiones->count()){
+        if($cantPeticionRecursoRespuestaCerrar == $peticiones->count()){
             $pqrEstado['estadospqr_id'] = 10; 
         }elseif($cantPeticionRecurso == $cantPericionRecursoRespuesta && $cantPeticionRecurso > 0 ){
-            $pqrEstado['estadospqr_id'] = 9; 
+            $pqrEstado['estadospqr_id'] = 9;
+            if($pqr['recurso_dias']){
+                $fechaActual = date("Y-m-d H:i:s");
+                $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
+                $pqrEstado['tiempo_limite'] = $respuestaDias;
+            }
         }elseif($cantPeticionRecurso == 0){
             if($pqr->peticiones->sum('recurso_dias')){
-                $pqrEstado['estadospqr_id'] = 7; 
+                $pqrEstado['estadospqr_id'] = 7;
+                if($pqr['recurso_dias']){
+                    $fechaActual = date("Y-m-d H:i:s");
+                    $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
+                    $pqrEstado['tiempo_limite'] = $respuestaDias;
+                }
             }else{
                 $pqrEstado['estadospqr_id'] = 6; 
             }

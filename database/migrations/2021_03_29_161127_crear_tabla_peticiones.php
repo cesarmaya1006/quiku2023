@@ -47,6 +47,7 @@ class CrearTablaPeticiones extends Migration
             $table->date('fecha_notificacion')->nullable();
             $table->longText('justificacion')->nullable();
             $table->boolean('aclaracion')->default(0)->nullable();
+            $table->boolean('apelacion')->default(0)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

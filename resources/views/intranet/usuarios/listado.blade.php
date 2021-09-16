@@ -55,7 +55,7 @@
                                             @else
                                                 <td>Borrador</td>
                                             @endif
-                                            @if($pqr->estado)
+                                            @if($pqr->estadospqr_id < 6)
                                                 <td>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</td>
                                             @else
                                                 <td></td>

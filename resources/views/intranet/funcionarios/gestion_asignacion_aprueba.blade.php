@@ -130,13 +130,26 @@
                                     </div>
                                 </div>
                                 <div class="col-12 row recurso-form">
-                                    <div class="col-12 col-md-5 form-group">
+                                    <div class="col-12 col-md-12 form-group">
                                         <label for="">Plazo recurso días hábiles:</label>
-                                        <input type="number" class="form-control plazo_recurso"
+                                        <input type="number" class="form-control plazo_recurso col-12 col-md-6"
                                         name="plazo_recurso" id="plazo_recurso" min="0"
                                         max="{{$pqr->tipoPqr->tiempos}}">
                                     </div>
-                                    <div class="col-12 col-md-6 form-group d-flex align-items-end">
+                                    <div class="col-12 col-md-6 mt-2">
+                                        <h6>¿Le procede recurso de apelación?</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex flex-row">
+                                        <div class="form-check mb-3 mr-4">
+                                            <input id="" name="apelacion" type="radio" class="form-check-input apelacion_check apelacion_si" value="1"/>
+                                            <label id="_label" class="form-check-label" for="">SI</label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input id="" name="apelacion" type="radio" class="form-check-input apelacion_check apelacion_no" value="0" checked/>
+                                            <label id="_label" class="form-check-label" for="">NO</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group d-flex align-items-end mt-4">
                                         <button href="" class="btn btn-primary mx-2 px-4" id="plazo_recurso_guardar" data_url="{{ route('plazo_recurso_guardar') }}"
                                         data_token="{{ csrf_token() }}">Guardar plazo recurso</button>
                                     </div>

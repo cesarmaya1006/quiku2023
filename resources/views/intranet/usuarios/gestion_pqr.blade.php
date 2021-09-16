@@ -142,10 +142,12 @@
                                         Fecha de radicado: <strong>{{ $pqr->fecha_generacion }}</strong>
                                     </div>
                                 @endif
-                                <div class="col-12 col-md-6">
-                                    Fecha estimada de respuesta:
-                                    <strong>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</strong>
-                                </div>
+                                @if($pqr->estadospqr_id < 6)
+                                    <div class="col-12 col-md-6">
+                                        Fecha estimada de respuesta:
+                                        <strong>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</strong>
+                                    </div>
+                                @endif
                                 <div class="col-12 col-md-6">
                                     Estado: <strong>{{ $pqr->estado->estado_usuario }}</strong>
                                 </div>
@@ -680,8 +682,10 @@
                                                                     <option value="1">Aclaración y/o corrección</option>
                                                                 @endif
                                                                 <option value="2">Reposición</option>
-                                                                <option value="3">Apelación</option>
-                                                                <option value="4">Reposición y apelación</option>
+                                                                @if($peticion->apelacion)
+                                                                    <option value="3">Apelación</option>
+                                                                    <option value="4">Reposición y apelación</option>
+                                                                @endif
                                                             </select>
                                                         </div>
                                                         <div class="col-12 col-md-6">

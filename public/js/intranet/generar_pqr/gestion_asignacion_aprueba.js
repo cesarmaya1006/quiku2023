@@ -240,9 +240,11 @@ window.addEventListener('DOMContentLoaded', function(){
             let url = e.target.getAttribute('data_url')
             let token = e.target.getAttribute('data_token')
             let plazo_recurso = document.querySelector('#plazo_recurso').value
+            let apelacion = document.querySelector('input[name="apelacion"]:checked').value
             if(plazo_recurso != ''){
                 let data = {
                     plazo_recurso,
+                    apelacion,
                     idPqr
                 }
                 $.ajax({
