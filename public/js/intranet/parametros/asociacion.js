@@ -1,6 +1,6 @@
 $(document).ready(function() {
     //==========================================================================
-    $('#tipo_pqr_id').on('change', function(event) {
+    $('#tipo_p_q_r_id').on('change', function(event) {
         const url_t = $(this).attr('data_url');
         const id = $(this).val();
         var data = {

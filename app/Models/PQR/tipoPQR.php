@@ -27,7 +27,7 @@ class tipoPQR extends Model
     //----------------------------------------------------------------------------------
     public function asociacion_normas()
     {
-        return $this->hasMany(WikuAsociacion::class, 'tipo_pqr_id', 'id');
+        return $this->hasMany(WikuAsociacion::class, 'tipo_p_q_r_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function asociacionnorma()

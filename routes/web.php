@@ -282,6 +282,8 @@ Route::group(['middleware' => 'auth'], function () {
         //Wiku
         Route::get('wiku-index', [WikuController::class, 'indexWiku'])->name('wiku_funcionario-index');
         Route::get('wiku-busqueda_basica', [WikuController::class, 'WikuBusquedaBasica'])->name('wiku_busqueda_basica');
+        Route::get('wiku-busqueda_avanzadaa', [WikuController::class, 'WikuBusquedaAvanzada'])->name('wiku_busqueda_avanzada');
+
         Route::get('cargar_normas', [WikuController::class, 'cargar_normas'])->name('cargar_normas');
         //----------------------------------------------------------------------------------------------------
         Route::get('wiku-normas/index', [WikuController::class, 'indexWikuNormas'])->name('wiku_funcionario_norma_index');

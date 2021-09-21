@@ -46,8 +46,8 @@
 <hr>
 <div class="row">
     <div class="form-group col-12 col-md-6 d-none" id="tipo_pqr">
-        <label class="requerido" for="tipo_pqr_id">Tipo de PQR</label>
-        <select id="tipo_pqr_id" class="form-control form-control-sm" name="tipo_pqr_id"
+        <label class="requerido" for="tipo_p_q_r_id">Tipo de PQR</label>
+        <select id="tipo_p_q_r_id" class="form-control form-control-sm" name="tipo_p_q_r_id"
             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}" required>
             <option value="">---Seleccione---</option>
             @foreach ($tipos_pqr as $tipo_pqr)

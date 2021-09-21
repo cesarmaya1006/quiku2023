@@ -22,7 +22,7 @@ class WikuAsociacion extends Model
     //----------------------------------------------------------------------------------
     public function tipopqr()
     {
-        return $this->hasMany(tipoPQR::class, 'id', 'tipo_pqr_id');
+        return $this->hasMany(tipoPQR::class, 'id', 'tipo_p_q_r_id');
     }
     //----------------------------------------------------------------------------------
     public function motivo_pqr()

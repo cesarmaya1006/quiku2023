@@ -39,8 +39,8 @@ class WikuNorma extends Model
     }
 
     //----------------------------------------------------------------------------------
-    public function asociaciontipopqr()
+    public function tipopqr()
     {
-        return $this->belongsToMany(tipoPQR::class, 'wikuasociaciones');
+        return $this->belongsToMany(tipoPQR::class, 'wikuasociaciones', 'tipo_p_q_r_id', 'id');
     }
 }

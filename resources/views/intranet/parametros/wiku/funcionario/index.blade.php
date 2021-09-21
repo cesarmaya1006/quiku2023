@@ -78,6 +78,22 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="row d-flex justify-content-star">
+                                <div class="col-12 mb-3">
+                                    <h6>Por tipo de wiku...</h6>
+                                </div>
+                                <div class="form-group col-12 col-md-4">
+                                    <label class="requerido" for="tipo_wiku">Categoria de Wiku</label>
+                                    <select class="form-control form-control-sm" id="tipo_wiku">
+                                        <option value="">---Seleccione Wiku---</option>
+                                        <option value="Argumentos">Argumentos</option>
+                                        <option value="Normas">Normas</option>
+                                        <option value="Jurisprudencias">Jurisprudencias</option>
+                                        <option value="Doctrinas">Doctrinas</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-12 mb-3">
                                     <h6>Por área, tema y tema específico...</h6>
@@ -135,11 +151,19 @@
                                 </div>
                                 <hr>
                                 <div class="col-12 mb-3">
-                                    <h6>Por servicio / producto..</h6>
+                                    <h6>Por asociación servicio / producto..</h6>
+                                </div>
+                                <div class="form-group col-12 col-md-4">
+                                    <label class="requerido" for="prod_serv">Producto / Servicio</label>
+                                    <select class="form-control form-control-sm" id="prod_serv">
+                                        <option value="">---Selecione---</option>
+                                        <option value="Producto">Producto</option>
+                                        <option value="Servicio">Servicio</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-12 col-md-4" id="tipo_pqr">
-                                    <label class="requerido" for="tipo_pqr_id">Tipo de PQR</label>
-                                    <select id="tipo_pqr_id" class="form-control form-control-sm" name="tipo_pqr_id"
+                                    <label class="requerido" for="tipo_p_q_r_id">Tipo de PQR</label>
+                                    <select id="tipo_p_q_r_id" class="form-control form-control-sm" name="tipo_p_q_r_id"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}"
                                         required>
                                         <option value="">---Seleccione---</option>
@@ -161,8 +185,8 @@
                                         <option value="">---Seleccione---</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4" id="servicios">
-                                    <label class="requerido" for="servicio_id">Servicios</label>
+                                <div class="form-group col-12 col-md-4 d-none" id="servicios">
+                                    <label for="servicio_id">Servicios</label>
                                     <select id="servicio_id" class="form-control form-control-sm" name="servicio_id">
                                         <option value="">---Seleccione un servcio---</option>
                                         @foreach ($servicios as $servicio)
@@ -170,7 +194,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4" id="categorias">
+                                <div class="form-group col-12 col-md-4 d-none" id="categorias">
                                     <label class="requerido" for="categoria_id">Categoría de producto</label>
                                     <select id="categoria_id" class="form-control form-control-sm"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_producto') }}"
@@ -181,25 +205,30 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4" id="productos">
+                                <div class="form-group col-12 col-md-4 d-none" id="productos">
                                     <label class="requerido" for="producto_id">Productos</label>
                                     <select id="producto_id" class="form-control form-control-sm" name="producto_id"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}">
                                         <option value="">---Seleccione primero una categoría---</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4" id="marcas">
+                                <div class="form-group col-12 col-md-4 d-none" id="marcas">
                                     <label class="requerido" for="marca_id">Marcas</label>
                                     <select id="marca_id" class="form-control form-control-sm" name="marca_id"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}">
                                         <option value="">---Seleccione primero un producto---</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4" id="referencias">
+                                <div class="form-group col-12 col-md-4 d-none" id="referencias">
                                     <label class="requerido" for="referencia_id">Referencias</label>
                                     <select id="referencia_id" class="form-control form-control-sm" name="referencia_id">
                                         <option value="">---Seleccione primero una marca---</option>
                                     </select>
+                                </div>
+                                <div class="form-group col-12 col-md-4 pl-4 d-flex align-items-end">
+                                    <button class="btn btn-primary btn-xs btn-sombra pl-5 pr-5 form-control-sm"
+                                        id="btn_buscar" onclick="busquedaAvanzada()"
+                                        data_url="{{ route('wiku_busqueda_avanzada') }}">Buscar</button>
                                 </div>
                             </div>
                         </div>
@@ -210,8 +239,7 @@
                             <div class="card card-primary collapsed-card card-mini-sombra">
                                 <div class="card-header">
                                     <div class="user-block">
-                                        <span class="username"><a href="#" id="tituloNoma">Jonathan Burke
-                                                Jr.</a></span>
+                                        <span class="username"><a href="#" id="tituloNoma"></a></span>
                                         <span class="description"></span>
                                     </div>
                                     <div class="card-tools">
@@ -270,5 +298,6 @@
 <!-- script hoja -->
 @section('scripts_pagina')
     <script src="{{ asset('js/intranet/parametros/busqueda.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 <!-- ************************************************************* -->
