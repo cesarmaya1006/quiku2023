@@ -377,8 +377,12 @@ class PQRController extends Controller
             if($email){
                 Mail::to($email)->send(new RespuestaReposicion($id_recurso));
             }
-            $tipoReposicion = TipoReposicion::findOrFail($request['tipo_reposicion_id']);
-            $diasReposicion = $tipoReposicion->tiempos;
+            if($request['dias']){
+                $diasReposicion = $request['dias'];
+            }else{
+                $tipoReposicion = TipoReposicion::findOrFail($request['tipo_reposicion_id']);
+                $diasReposicion = $tipoReposicion->tiempos;
+            }
             $fechaActual = date("Y-m-d H:i:s");
             $respuestaDias = FechasController::festivos($diasReposicion, $fechaActual);
             $pqrEstado['tiempo_limite'] = $respuestaDias;
@@ -434,7 +438,11 @@ class PQRController extends Controller
         if ($request->ajax()) {
             $nuevoRecurso['recurso_id'] = $request['recurso_id'];
             $nuevoRecurso['fecha'] = date("Y-m-d");
-            $nuevoRecurso['respuesta'] = 'respuesta';
+            if($request['respuesta']){
+                $nuevoRecurso['respuesta'] = $request['respuesta'];
+            }else{
+                $nuevoRecurso['respuesta'] = 'respuesta';
+            }
             $respuestaRecurso = RespRecurso::create($nuevoRecurso);
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
         } else {

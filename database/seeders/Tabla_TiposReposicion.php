@@ -19,7 +19,7 @@ class Tabla_TiposReposicion extends Seeder
             ['tipo' => 'Aclaración y/o corrección', 'tiempos' => 10],
             ['tipo' => 'Reposición', 'tiempos' => 10],
             ['tipo' => 'Apelación', 'tiempos' => 10],
-            ['tipo' => 'Reposición y apelación', 'tiempos' => 10],
+            ['tipo' => 'Reposición y apelación', 'tiempos' => 20],
         ];
         foreach ($tipos as $key => $value) {
             DB::table('tipo_reposicion')->insert([

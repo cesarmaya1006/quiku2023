@@ -87,55 +87,115 @@ window.addEventListener('DOMContentLoaded', function(){
         let idRecurso = contenedor.querySelector('.id_recurso').value
         let tipo_reposicion_id = contenedor.querySelector('.tipo_reposicion_id').value
         let resprecursos_id = 0
-        let data = {
-            recurso_id : idRecurso,
-            id: id_pqr,
-            tipo_reposicion_id
-        }
-        $.ajax({
-            async:false,
-            url: url,
-            type: 'POST',
-            headers: { 'X-CSRF-TOKEN': token },
-            data: data,
-            success: function(respuesta) {
-                // console.log(respuesta)
-                resprecursos_id = respuesta.data.id
-            },
-            error: function(error) {
-                console.log(error.responseJSON)
+        if(tipo_reposicion_id == 2){
+            if(contenedor.nextElementSibling.nextElementSibling.classList.contains('form-respuesta-recursos')){
+                let contenedorApelacion = contenedor.nextElementSibling.nextElementSibling
+                let idRecursoApelacion = contenedorApelacion.querySelector('.id_recurso').value
+                let tipo_reposicion_apelacion_id = contenedorApelacion.querySelector('.tipo_reposicion_id').value
+                swal("¿Se concede el recurso de apelación?", "Sí: se debe remitir al superior, No: se cierra la petición", {
+                    buttons: {
+                        definitiva: {
+                            text: "Sí",
+                            value: "si",
+                            className: "bg-primary",
+                        },
+                        parcial: {
+                            text: "No",
+                            value: "no",
+                            className: "bg-primary",
+                        },
+                        cancel: "Cancelar",
+                    },
+                  })
+                  .then((value) => {
+                    switch (value) {
+                      case "si":
+                        let data = {
+                            recurso_id : idRecurso,
+                            id: id_pqr,
+                            tipo_reposicion_id
+                        }
+                        guardar_recurso(data)
+                        break;
+                      case "no":
+                        let data1 = {
+                            recurso_id : idRecurso,
+                            id: id_pqr,
+                            tipo_reposicion_id
+                        }
+                        guardar_recurso(data1)
+
+                        let data2 = {
+                            recurso_id : idRecursoApelacion,
+                            id: id_pqr,
+                            tipo_reposicion_id: tipo_reposicion_apelacion_id,
+                            apelacionCierre: 1,
+                            respuesta: "Cierre automatico por recurso de reposicón"
+                        }
+                        guardar_recurso(data2)
+                        break;
+                   
+                      default:
+                    }
+                });
             }
-        });
-        let anexosRecursos = contenedor.querySelectorAll('.anexoRespuestaRecurso')
-        anexosRecursos.forEach(anexo => {
-            let titulo = anexo.querySelector('.titulo-anexoRespuestaRecurso input').value
-            let descripcion = anexo.querySelector('.descripcion-anexoRespuestaRecurso input').value
-            let archivo = anexo.querySelector('.doc-anexoRespuestaRecurso input').files[0]
-            let dataAnexo = new FormData();
-            dataAnexo.append('resprecursos_id', resprecursos_id);
-            dataAnexo.append('titulo', titulo);
-            dataAnexo.append('descripcion', descripcion);
-            dataAnexo.append('archivo', archivo);
-            dataAnexo.append('_token', token);
-            let urlAnexo = anexo.parentNode.parentNode.parentNode
-            urlAnexo =  urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
+        }else {
+            let data = {
+                recurso_id : idRecurso,
+                id: id_pqr,
+                tipo_reposicion_id
+            }
+            guardar_recurso(data)
+        }
+
+        function guardar_recurso(data){
             $.ajax({
                 async:false,
-                url: urlAnexo,
+                url: url,
                 type: 'POST',
                 headers: { 'X-CSRF-TOKEN': token },
-                data: dataAnexo,
-                processData: false, 
-                contentType: false,
+                data: data,
                 success: function(respuesta) {
                     // console.log(respuesta)
+                    resprecursos_id = respuesta.data.id
                 },
                 error: function(error) {
-                    console.log(error)
+                    console.log(error.responseJSON)
                 }
             });
-        })
-        location.reload();
+            if(!data.apelacionCierre){
+                let anexosRecursos = contenedor.querySelectorAll('.anexoRespuestaRecurso')
+                anexosRecursos.forEach(anexo => {
+                    let titulo = anexo.querySelector('.titulo-anexoRespuestaRecurso input').value
+                    let descripcion = anexo.querySelector('.descripcion-anexoRespuestaRecurso input').value
+                    let archivo = anexo.querySelector('.doc-anexoRespuestaRecurso input').files[0]
+                    let dataAnexo = new FormData();
+                    dataAnexo.append('resprecursos_id', resprecursos_id);
+                    dataAnexo.append('titulo', titulo);
+                    dataAnexo.append('descripcion', descripcion);
+                    dataAnexo.append('archivo', archivo);
+                    dataAnexo.append('_token', token);
+                    let urlAnexo = anexo.parentNode.parentNode.parentNode
+                    urlAnexo =  urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
+                    $.ajax({
+                        async:false,
+                        url: urlAnexo,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: dataAnexo,
+                        processData: false, 
+                        contentType: false,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                })
+            }
+            location.reload();
+        }
     }
 
     // Funcion para ocultar bloque aclaraciones
