@@ -16,6 +16,8 @@ return [
     //--------------------------------------------------------------------------------
     "folder_doc_respuestas" => public_path() . '/documentos/respuestas/ ',
     //--------------------------------------------------------------------------------
+    "folder_doc_fuentes" => public_path() . '/documentos/wiku/fuentes/ ',
+
     "folder_doc_tareas" => public_path() . '/documentos/tareas/ ',
     //--------------------------------------------------------------------------------
 ];
