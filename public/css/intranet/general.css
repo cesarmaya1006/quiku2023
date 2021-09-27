@@ -25,6 +25,20 @@ label.requerido:after {
     border-radius: 5px;
 }
 
+.card-mini-sombra {
+    -webkit-box-shadow: 3px 3px 1px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 3px 1px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 3px 1px 0px rgba(0, 0, 0, 0.75);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 30px;
+    border-radius: 2px;
+}
+
+.card-mini-sombra>.card-header {
+    border-top: 1px solid black;
+}
+
 .btn-accion-tabla {
     cursor: pointer;
     border: none;
@@ -75,11 +89,13 @@ label.requerido:after {
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.form-control:disabled, .form-control[readonly] {
+.form-control:disabled,
+.form-control[readonly] {
     background-color: #ced4da!important;
 }
 
-.sidebar-dark-warning .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-warning .nav-sidebar>.nav-item>.nav-link.active {
+.sidebar-dark-warning .nav-sidebar>.nav-item>.nav-link.active,
+.sidebar-light-warning .nav-sidebar>.nav-item>.nav-link.active {
     background-color: #3359fa;
     color: #ffffff;
 }
@@ -110,6 +126,7 @@ label.requerido:after {
     /* color: #3359fa; */
     background-color: #3359fa;
 }
+
 [class*=sidebar-dark-] .nav-sidebar>.nav-item.menu-open>.nav-link:hover {
     color: #3359fa;
     color: #ffffff;
@@ -119,6 +136,7 @@ label.requerido:after {
     background-color: rgba(51, 89, 250, 0.7);
     color: #ffffff;
 }
+
 [class*=sidebar-dark-] .nav-treeview>.nav-item>.nav-link.active:hover {
     background-color: rgba(51, 89, 250, 0.7);
     color: #ffffff;

@@ -837,80 +837,129 @@ class PQRController extends Controller
     }
     public function asigacion_automatica($id)
     {
+        $resp = '';
         $pqr = PQR::findOrFail($id);
         $asignaciones = AsignacionParticular::where('tipo', 'Permanente')->get();
-
+        // **************************************************************************************************** */
+        $resp = '';
+        $respuesta['no_null'] = 0;
+        $respuesta['asignacion_id'] = 0;
         foreach ($asignaciones as $asignacion) {
+            $resp .= '      id Asignacion = ' . $asignacion->id . '***';
             $coincidencia = 0;
             $no_null = 0;
             if ($asignacion->tipo_pqr_id != null) {
                 $no_null++;
+                $resp .= 'tipo pqr:';
                 if ($asignacion->tipo_pqr_id == $pqr->tipo_pqr_id) {
                     $coincidencia++;
+                    $resp .= 'tipo pqr';
                 }
             }
-            if ($asignacion->prodserv != null) {
-                $no_null++;
-                if ($asignacion->prodserv == $pqr->tipo) {
-                    $coincidencia++;
+            $resp .= ',';
+            if ($pqr->tipo != null) {
+                if ($asignacion->prodserv != null) {
+                    $no_null++;
+                    $resp .= 'producto serv:';
+                    if ($asignacion->prodserv == $pqr->tipo) {
+                        $coincidencia++;
+                        $resp .= 'producto serv';
+                    }
                 }
             }
+            $resp .= ',';
+
             if ($asignacion->motivo_id != null) {
                 $no_null++;
-                foreach ($pqr->peticiones as $peticion) {
-                    if ($asignacion->motivo_id == $peticion->motivo->motivo_id) {
-                        $coincidencia++;
+                $resp .= 'motivo:';
+                if ($pqr->peticiones->count() > 0) {
+                    foreach ($pqr->peticiones as $peticion) {
+                        if ($peticion->motivo_sub_id != null) {
+                            if ($asignacion->motivo_id == $peticion->motivo->motivo_id) {
+                                $coincidencia++;
+                                $resp .= 'motivo';
+                            }
+                        }
                     }
                 }
             }
+            $resp .= ',';
             if ($asignacion->motivo_sub_id != null) {
                 $no_null++;
-                foreach ($pqr->peticiones as $peticion) {
-                    if ($asignacion->motivo_id == $peticion->motivo->id) {
-                        $coincidencia++;
+                $resp .= 'sub motivo:';
+                if ($pqr->peticiones->count() > 0) {
+                    foreach ($pqr->peticiones as $peticion) {
+                        if ($peticion->motivo_sub_id != null) {
+                            if ($asignacion->motivo_sub_id == $peticion->motivo_sub_id) {
+                                $coincidencia++;
+                                $resp .= 'sub motivo';
+                            }
+                        }
                     }
                 }
             }
+            $resp .= ',';
+
             if ($pqr->servicio_id != null) {
                 if ($asignacion->servicio_id != null) {
                     $no_null++;
+                    $resp .= 'servicio:';
                     if ($asignacion->servicio_id == $pqr->servicio_id) {
                         $coincidencia++;
+                        $resp .= 'servicio';
                     }
                 }
             }
+            $resp .= ',';
             if ($pqr->referencia_id != null) {
                 if ($asignacion->categoria_id != null) {
                     $no_null++;
+                    $resp .= 'categoria:';
                     if ($asignacion->categoria_id == $pqr->referencia->marca->producto->categoria_id) {
                         $coincidencia++;
+                        $resp .= 'categoria';
                     }
                 }
+                $resp .= ',';
                 if ($asignacion->producto_id != null) {
                     $no_null++;
+                    $resp .= 'producto:';
                     if ($asignacion->producto_id == $pqr->referencia->marca->producto_id) {
                         $coincidencia++;
+                        $resp .= 'producto';
                     }
                 }
+                $resp .= ',';
                 if ($asignacion->marca_id != null) {
                     $no_null++;
+                    $resp .= 'marca:';
                     if ($asignacion->marca_id == $pqr->referencia->marca_id) {
                         $coincidencia++;
+                        $resp .= 'marca';
                     }
                 }
+                $resp .= ',';
                 if ($asignacion->referencia_id != null) {
                     $no_null++;
+                    $resp .= 'referencia:';
                     if ($asignacion->referencia_id == $pqr->referencia_id) {
                         $coincidencia++;
+                        $resp .= 'referencia';
                     }
                 }
+                $resp .= ',';
             }
             if ($asignacion->adquisicion != null) {
                 $no_null++;
-                if ($asignacion->adquisicion == $pqr->adquisicion) {
-                    $coincidencia++;
+                $resp .= 'adquisicion:';
+                if ($pqr->adquisicion != null) {
+                    if ($asignacion->adquisicion == $pqr->adquisicion) {
+                        $coincidencia++;
+                        $resp .= 'adquisicion';
+                    }
                 }
             }
+            $resp .= ',';
             if ($asignacion->palabra1 != null) {
                 $no_null++;
                 $encontrada = 0;
@@ -1007,51 +1056,62 @@ class PQRController extends Controller
                     }
                 }
             }
+            $resp .= '  ------ salto ---  ';
             if ($no_null > 0 && $coincidencia > 0) {
-                if (intval($coincidencia) === intval($no_null)) {
-                    if ($pqr->sede_id != null) {
-                        if ($pqr->sede_id == $asignacion->sede_id) {
-                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $asignacion->sede_id)->get();
-                        } else {
-                            if ($pqr->persona_id != null) {
-                                $persona = Persona::findOrfail($pqr->persona_id);
-                                foreach ($persona->municipio->departamento->sedes as $sede) {
-                                    $sede_id = $sede->id;
-                                }
-                                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
-                            } else {
-                                $empresa = Empresa::findOrfail($pqr->empresa_id);
-                                foreach ($empresa->municipio->departamento->sedes as $sede) {
-                                    $sede_id = $sede->id;
-                                }
-                                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
-                            }
-                        }
-                    } else {
-                        if ($pqr->persona_id != null) {
-                            $persona = Persona::findOrfail($pqr->persona_id);
-                            foreach ($persona->municipio->departamento->sedes as $sede) {
-                                $sede_id = $sede->id;
-                            }
-                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
-                        } else {
-                            $empresa = Empresa::findOrfail($pqr->empresa_id);
-                            foreach ($empresa->municipio->departamento->sedes as $sede) {
-                                $sede_id = $sede->id;
-                            }
-                            $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion->cargo_id)->where('sede_id', $sede_id)->get();
-                        }
+                $resp .= 'no null->' . $no_null . '-conicidencia->' . $coincidencia . '   -   ASignacion->' . $asignacion->id . '   -   ';
+                if ($coincidencia === $no_null) {
+                    if ($no_null > $respuesta['no_null']) {
+                        $respuesta['no_null'] = $no_null;
+                        $respuesta['asignacion_id'] = $asignacion->id;
                     }
-                    $max_pqr = 0;
-                    foreach ($empleados as $empleado) {
-                        $empleados_sel_max[] = ['cant' => $empleado->pqrs->count(), 'id' => $empleado->id];
-                    }
-                    $empleado_final = min($empleados_sel_max);
-                    $pqr_act['empleado_id'] = $empleado_final['id'];
-                    $pqr->update($pqr_act);
                 }
             }
         }
+        $asignacion_final = AsignacionParticular::findOrFail($respuesta['asignacion_id']);
+        if ($pqr->sede_id != null) {
+            if ($pqr->sede_id == $asignacion_final->sede_id) {
+                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $asignacion_final->sede_id)->get();
+            } else {
+                if ($pqr->persona_id != null) {
+                    $persona = Persona::findOrfail($pqr->persona_id);
+                    foreach ($persona->municipio->departamento->sedes as $sede) {
+                        $sede_id = $sede->id;
+                    }
+                    $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
+                } else {
+                    $empresa = Empresa::findOrfail($pqr->empresa_id);
+                    foreach ($empresa->municipio->departamento->sedes as $sede) {
+                        $sede_id = $sede->id;
+                    }
+                    $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
+                }
+            }
+        } else {
+            if ($pqr->persona_id != null) {
+                $persona = Persona::findOrfail($pqr->persona_id);
+                foreach ($persona->municipio->departamento->sedes as $sede) {
+                    $sede_id = $sede->id;
+                }
+                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
+            } else {
+                $empresa = Empresa::findOrfail($pqr->empresa_id);
+                foreach ($empresa->municipio->departamento->sedes as $sede) {
+                    $sede_id = $sede->id;
+                }
+                $empleados = Empleado::where('estado', 1)->where('cargo_id', $asignacion_final->cargo_id)->where('sede_id', $sede_id)->get();
+            }
+        }
+        $max_pqr = 0;
+        foreach ($empleados as $empleado) {
+            $empleados_sel_max[] = ['cant' => $empleado->pqrs->count(), 'id' => $empleado->id];
+        }
+        $empleado_final = min($empleados_sel_max);
+        $pqr_act['empleado_id'] = $empleado_final['id'];
+        $pqr->update($pqr_act);
+
+
+        // **************************************************************************************************** */
+
     }
     // Ajustes nuevos de tramite
 

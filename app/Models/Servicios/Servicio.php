@@ -24,4 +24,9 @@ class Servicio extends Model
         return $this->hasMany(AsignacionParticular::class, 'servicio_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function asociacion_normas()
+    {
+        return $this->hasMany(WikuAsociacion::class, 'servicio_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }
