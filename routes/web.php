@@ -289,7 +289,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('usuarios-listado', [FuncionarioController::class, 'listado_usuarios'])->name('funcionario-listado-usuarios');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('listado/gestionar_pqr/{id}', [PQRController::class, 'gestionar'])->name('funcionario-gestionar_pqr');
-        Route::post('listado/gestionarqr', [PQRController::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_p_guardar');
+        Route::post('listado/gestionarqr', [PQRController::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_guardar');
         Route::post('respuesta_recurso', [PQRController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
         Route::post('respuesta_recurso_anexos', [PQRController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');
         Route::post('asignacion', [PQRController::class, 'asignacion_guardar'])->name('asignacion_guardar');
