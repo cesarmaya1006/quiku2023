@@ -1,287 +1,149 @@
-{{-- <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-light" style="border: solid 1px blue;">
-                <div class="inner">
-                    <h3>{{ $pqrs->where('tipo_pqr_id', 1)->count() + $pqrs->where('tipo_pqr_id', 2)->count() +$pqrs->where('tipo_pqr_id', 3)->count() }}</h3>
-                    <p style="font-size: 0.8em">Peticiones, Quejas, Reclamos</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag text-primary"></i>
-                </div>
-                <a href="{{ route('funcionario-index') }}" class="small-box-footer text-primary"
-                    style="color: green;">Más info <i class="fas fa-arrow-circle-right text-white;"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-light" style="border: solid 1px green;">
-                <div class="inner">
-                    <h3>{{ $pqrs->where('tipo_pqr_id', 4)->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Consultas</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-stats-bars text-green"></i>
-                </div>
-                <a href="{{ route('funcionario-index') }}" class="small-box-footer text-success">Más info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-light" style="border: solid 1px yellow;">
-                <div class="inner">
-                    <h3>{{ $pqrs->where('tipo_pqr_id', 5)->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Solicitud de datos personales</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-person-add text-warning"></i>
-                </div>
-                <a href="{{ route('funcionario-index') }}" class="small-box-footer text-warning">Más info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-light" style="border: solid 1px red;">
-                <div class="inner">
-                    <h3>{{ $pqrs->where('tipo_pqr_id', 6)->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Reporte de irregularidades</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph text-danger"></i>
-                </div>
-                <a href="{{ route('funcionario-index') }}" class="small-box-footer text-danger">Más info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-light" style="border:  solid 1px pink">
-                <div class="inner">
-                    <h3>{{ $pqrs->where('tipo_pqr_id', 7)->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Felicitaciones</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph text-pink"></i>
-                </div>
-                <a href="{{ route('funcionario-index') }}" class="small-box-footer text-pink">Más info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-light" style="border: solid 1px teal">
-                <div class="inner">
-                    <h3>{{ $pqrs->where('tipo_pqr_id', 8)->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Solicitud de documentos o información</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph text-teal"></i>
-                </div>
-                <a href="{{ route('funcionario-index') }}" class="small-box-footer text-teal">Más info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-light" style="border: solid 1px indigo">
-                <div class="inner">
-                    <h3>{{ $pqrs->where('tipo_pqr_id', 9)->count() }}</h3>
-
-                    <p style="font-size: 0.8em">Sugerencias</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-pie-graph text-indigo"></i>
-                </div>
-                <a href="{{ route('funcionario-index') }}" class="small-box-footer text-indigo">Más info <i
-                        class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        <!-- ./col -->
-    </div>
-
-</div> --}}
 <div class="container-fluid">
     <div class="row">
         @if ($usuario->empleado->cargo->id != 1)
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12 ">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-primary"><i class="far fa-envelope"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs sin aceptar</span>
-                    <span class="info-box-number">{{ $pqrs->where('estado_asignacion', 0)->count() }}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px blue;">
+                    <div class="inner">
+                        <h3>{{ $pqrs->where('estado_asignacion', 0)->count() }}</h3>
+                        <p style="font-size: 0.8em">Sin aceptar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag text-primary"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-secondary"><i class="far fa-flag"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs activas</span>
-                    <span class="info-box-number">{{ $pqrs->where('estado_asignacion', 1)->where('estadospqr_id', '!=', 6)->where('estadospqr_id', '!=', 7)->where('estadospqr_id', '!=', 9)->where('estadospqr_id', '!=', 10)->count() }}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px green;">
+                    <div class="inner">
+                        <h3>{{ $pqrs->where('estado_asignacion', 1)->where('estadospqr_id', '!=', 6)->where('estadospqr_id', '!=', 7)->where('estadospqr_id', '!=', 9)->where('estadospqr_id', '!=', 10)->count() }}</h3>
+                        <p style="font-size: 0.8em">Aceptadas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars text-green"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-success"><i class="far fa-copy"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs supervisadas</span>
-                    <span class="info-box-number">{{$tareas->where('tareas_id', 1)->where('estado_id', '<', 11)->count()}}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px yellow;">
+                    <div class="inner">
+                        <h3>{{$tareas->where('tareas_id', 1)->where('estado_id', '<', 11)->count()}}</h3>
+                        <p style="font-size: 0.8em">En supervisión</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add text-warning"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-danger"><i class="far fa-star"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs proyectar</span>
-                    <span class="info-box-number">{{$tareas->where('tareas_id', 2)->where('estado_id', '<', 11)->count()}}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px red;">
+                    <div class="inner">
+                        <h3>{{$tareas->where('tareas_id', 2)->where('estado_id', '<', 11)->count()}}</h3>
+                        <p style="font-size: 0.8em">Por proyectar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-danger"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-warning"><i class="far fa-copy"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs revisar</span>
-                    <span class="info-box-number">{{$tareas->where('tareas_id', 3)->where('estado_id', '<', 11)->count()}}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px grey">
+                    <div class="inner">
+                        <h3>{{ $peticiones->count() }}</h3>
+                        <p style="font-size: 0.8em">Colaboraciones</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-grey"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-info"><i class="far fa-star"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs aprobar</span>
-                    <span class="info-box-number">{{$tareas->where('tareas_id', 4)->where('estado_id', '<', 11)->count()}}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border:  solid 1px pink">
+                    <div class="inner">
+                        <h3>{{$tareas->where('tareas_id', 3)->where('estado_id', '<', 11)->count()}}</h3>
+                        <p style="font-size: 0.8em">En revisión</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-pink"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-dark"><i class="far fa-copy"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs radicar</span>
-                    <span class="info-box-number">{{$tareas->where('tareas_id', 5)->where('estado_id', '<', 11)->count()}}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px teal">
+                    <div class="inner">
+                        <h3>{{$tareas->where('tareas_id', 4)->where('estado_id', '<', 11)->count()}}</h3>
+                        <p style="font-size: 0.8em">En aprobación</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-teal"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-primary"><i class="far fa-star"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs cerradas</span>
-                    <span class="info-box-number">{{$tareas->where('tareas_id', 5)->where('estado_id', 11)->count()}}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px indigo">
+                    <div class="inner">
+                        <h3>{{$tareas->where('tareas_id', 5)->where('estado_id', '<', 11)->count()}}</h3>
+                        <p style="font-size: 0.8em">En radicación</p>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-secondary"><i class="far fa-envelope"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Peticiones, Quejas, Reclamos</span>
-                    <span class="info-box-number">{{ $pqrs->where('tipo_pqr_id', 1)->count() + $pqrs->where('tipo_pqr_id', 2)->count() +$pqrs->where('tipo_pqr_id', 3)->count() }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-success"><i class="far fa-flag"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Consultas</span>
-                    <span class="info-box-number">{{ $pqrs->where('tipo_pqr_id', 4)->count() }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-danger"><i class="far fa-copy"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Solicitud de datos personales</span>
-                    <span class="info-box-number">{{ $pqrs->where('tipo_pqr_id', 5)->count() }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-warning"><i class="far fa-star"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Reporte de irregularidades</span>
-                    <span class="info-box-number">{{ $pqrs->where('tipo_pqr_id', 6)->count() }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-info" ><i class="far fa-copy"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Solicitud de documentos o información</span>
-                    <span class="info-box-number">{{ $pqrs->where('tipo_pqr_id', 8)->count() }}</span>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-indigo"></i>
                     </div>
                 </div>
             </div>
         @endif
         @if ($usuario->empleado->cargo->id == 1)
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12 ">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-primary"><i class="far fa-envelope"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs sin asignar</span>
-                    <span class="info-box-number">{{ $pqrs->where('empleado_id', null)->count() }}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px blue;">
+                    <div class="inner">
+                        <h3>{{ $pqrs->where('empleado_id', null)->count() }}</h3>
+                        <p style="font-size: 0.8em">Sin asignar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag text-primary"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-secondary"><i class="far fa-flag"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Pqrs asignadas</span>
-                    <span class="info-box-number">{{ $pqrs->where('empleado_id', '!=', null)->count() }}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px green;">
+                    <div class="inner">
+                        <h3>{{ $pqrs->where('empleado_id', '!=', null)->count() }}</h3>
+                        <p style="font-size: 0.8em">Asignadas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars text-green"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-dark"><i class="far fa-star"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Felicitaciones</span>
-                    <span class="info-box-number">{{ $pqrs->where('tipo_pqr_id', 7)->count() }}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px yellow;">
+                    <div class="inner">
+                        <h3>{{ $pqrs->where('tipo_pqr_id', 7)->count() }}</h3>
+                        <p style="font-size: 0.8em">Felicitaciones</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add text-warning"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 col-12">
-                <div class="info-box border">
-                    <span class="info-box-icon bg-gradient-primary"><i class="far fa-star"></i></span>
-                    <div class="info-box-content">
-                    <span class="info-box-text text-truncate d-inline-block" style="max-width: 150px;">Sugerencias</span>
-                    <span class="info-box-number">{{ $pqrs->where('tipo_pqr_id', 9)->count() }}</span>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px red;">
+                    <div class="inner">
+                        <h3>{{ $pqrs->where('tipo_pqr_id', 9)->count() }}</h3>
+                        <p style="font-size: 0.8em">Sugerencias</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-danger"></i>
                     </div>
                 </div>
             </div>
         @endif
     </div>
 </div>
+{{-- {{$peticiones}} --}}
 @if ($usuario->empleado)
     @if ($usuario->empleado->cargo->id == 1)
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs sin asignar</h3>
+                <h3 class="card-title font-weight-bold">Sin asignar</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -335,7 +197,7 @@
         </div>
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs asignadas</h3>
+                <h3 class="card-title font-weight-bold">Asignadas</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -387,7 +249,7 @@
         </div>
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de sugerencias y felicitaciones</h3>
+                <h3 class="card-title font-weight-bold">Sugerencias y felicitaciones</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -446,7 +308,7 @@
         {{-- Incio tabla sin aceptar --}}
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs sin aceptar</h3>
+                <h3 class="card-title font-weight-bold">Sin aceptar</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -496,7 +358,7 @@
         {{-- Incio tabla pqrs activas --}}
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs activas</h3>
+                <h3 class="card-title font-weight-bold">Aceptadas</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -547,7 +409,7 @@
         {{-- Tabla Supervisa --}}
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs supervisadas</h3>
+                <h3 class="card-title font-weight-bold">En supervisión</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -597,7 +459,7 @@
         {{-- Tabla Proyecta --}}
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs proyectar</h3>
+                <h3 class="card-title font-weight-bold">Por proyectar</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -664,10 +526,119 @@
                 </table>
             </div>
         </div>
+        {{-- Tabla Colaboración --}}
+        <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
+            @php
+                function dias_restantes($fecha_inicial,$fecha_final){
+                    $dias = (strtotime($fecha_inicial)-strtotime($fecha_final))/86400;
+                    $dias = abs($dias); 
+                    $dias = floor($dias);
+                    return $dias;
+                }
+
+                function dias_estado($fecha_inicial,$fecha_final, $estadoPQR){
+                    $totaldias = (strtotime($fecha_inicial)-strtotime($fecha_final))/86400;
+                    $totaldias = abs($totaldias); 
+                    $totaldias = floor($totaldias);
+                    $contdias = (strtotime(date('Y-m-d') )-strtotime($fecha_final))/86400;
+                    $contdias = abs($contdias); 
+                    $contdias = floor($contdias - 1 );
+                    $porcentaje = floor((($contdias) / $totaldias) * 100 );
+                    $respuesta = 0 ;
+                    if($porcentaje >= 30){
+                        $respuesta = 1;
+                    }elseif ($porcentaje > 0) {
+                        $respuesta = 2;
+                    }else {
+                        $respuesta = 3;
+                    }
+                    if($estadoPQR == 6 || $estadoPQR == 9 || $estadoPQR == 10){
+                        $respuesta = 4;
+                    }
+                    return $respuesta;
+                }
+            @endphp
+            <div class="card-header">
+                <h3 class="card-title font-weight-bold">Colaboraciones</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="display: none;">
+                <table class="table table-striped table-hover table-sm display">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Num. Radicado</th>
+                            <th>Fecha de radicación</th>
+                            <th>Tipo de PQR</th>
+                            <th>Tramite PQR</th>
+                            <th>Prioridad</th>
+                            <th>Estado PQR</th>
+                            <th>Petición PQR</th>
+                            <th>Plazo de respuesta (Días hábiles)</th>
+                            <th>Dias de vencimiento calendario</th>
+                            <th>Fecha estimada de respuesta</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($peticiones as $peticion)
+                            <tr>
+                                @php
+                                $fechaFinal = date('Y-m-d', strtotime($peticion->pqr->fecha_generacion . '+ ' . ($peticion->pqr->tiempo_limite) . ' days'));
+                                @endphp
+                                <td>{{ $peticion->pqr->radicado }}</td>
+                                <td>{{ $peticion->pqr->created_at }}</td>
+                                <td>{{ $peticion->pqr->tipoPqr->tipo }}</td>
+                                <td>{{ $peticion->pqr->estado->estado_funcionario }}</td>
+                                @if ($peticion->pqr->prioridad_id == 1)
+                                    <td class="bg-green">{{ $peticion->pqr->prioridad->prioridad}}</td>
+                                @elseif($peticion->pqr->prioridad_id == 2)
+                                    <td class="bg-yellow">{{ $peticion->pqr->prioridad->prioridad}}</td>
+                                @elseif($peticion->pqr->prioridad_id == 3)
+                                    <td class="bg-red">{{ $peticion->pqr->prioridad->prioridad}}</td>
+                                @endif
+                                @php
+                                    $diasEstado = dias_estado($peticion->pqr->fecha_radicado, $fechaFinal, $peticion->pqr->estado->id);
+                                @endphp
+                                @if ($diasEstado == 1)
+                                    <td class="bg-green" >
+                                        En terminos
+                                    </td>
+                                @elseif ($diasEstado == 2)
+                                    <td class="bg-yellow">
+                                        Proxima a vencer
+                                    </td>
+                                @elseif($diasEstado == 3)
+                                    <td class="bg-red">
+                                        Vencida
+                                    </td>
+                                @elseif($diasEstado == 4)
+                                    <td class="bg-blue">
+                                        Cerrado 
+                                    </td>
+                                @endif
+                                <td>{{ $peticion->estadopeticion->estado }} %</td>
+                                <td>{{ $peticion->pqr->tipoPqr->tiempos + $peticion->pqr->prorroga_dias + $peticion->recurso_dias }}</td>
+                                <td>{{ dias_restantes(date('Y-m-d'), $fechaFinal) }}</td>
+                                <td>{{ $fechaFinal }}</td>
+                                <td>
+                                    <a href="{{ route('funcionario-gestionar_pqr', ['id' => $peticion->pqr->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
         {{-- Tabla Revisa --}}
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs revisar</h3>
+                <h3 class="card-title font-weight-bold">En revisión</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -717,7 +688,7 @@
         {{-- Tabla Aprueba--}}
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs aprobar</h3>
+                <h3 class="card-title font-weight-bold">En aprobación</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -767,7 +738,7 @@
         {{-- Tabla Radica--}}
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs radicar</h3>
+                <h3 class="card-title font-weight-bold">En radicación</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -817,7 +788,7 @@
         {{-- Fin tablas de tareas --}}
         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
-                <h3 class="card-title font-weight-bold">Listado de Pqrs cerradas</h3>
+                <h3 class="card-title font-weight-bold">Cerradas</h3>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-plus"></i>
@@ -864,5 +835,6 @@
                 </table>
             </div>
         </div>
+
     @endif
 @endif

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Intranet\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidarPassword;
-use App\Models\Admin\Usuario;
-use App\Models\PQR\AsignacionTarea;
 use App\Models\PQR\PQR;
 use App\Models\PQR\tipoPQR;
+use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
+use App\Models\Admin\Usuario;
+use App\Models\PQR\AsignacionTarea;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ValidarPassword;
 
 class IntranetPageCotroller extends Controller
 {
@@ -46,8 +47,9 @@ class IntranetPageCotroller extends Controller
         }else{
             $pqrs = PQR::get();
         }
+        $peticiones = Peticion::where('empleado_id', session('id_usuario'))->where('estado_id', '<', 11 )->get();
 
-        return view('intranet.index.index', compact('pqrs', 'usuario', 'tipoPQR', 'tareas'));
+        return view('intranet.index.index', compact('pqrs', 'usuario', 'tipoPQR', 'tareas', 'peticiones'));
     }
 
     public function restablecer_password(ValidarPassword $request)

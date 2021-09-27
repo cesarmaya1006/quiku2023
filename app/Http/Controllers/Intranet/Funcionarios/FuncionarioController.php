@@ -10,16 +10,9 @@ use App\Models\PQR\Prioridad;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Personas\Persona;
 use App\Models\Admin\Departamento;
-use App\Models\Consultas\Consulta;
-use App\Models\Denuncias\Denuncia;
 use App\Models\Empleados\Empleado;
 use App\Http\Controllers\Controller;
-use App\Models\Sugerencias\Sugerencia;
-use App\Models\Felicitaciones\Felicitacion;
-use App\Models\SolicitudDatos\SolicitudDatos;
 use App\Http\Requests\ValidarRegistroAsistido;
-use App\Models\SolicitudesDocInfo\SolicitudDocInfo;
-use App\Models\ConceptosUOpiniones\ConceptoUOpinion;
 use App\Models\PQR\AsignacionEstado;
 use App\Models\PQR\Peticion;
 
