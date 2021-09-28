@@ -211,6 +211,11 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('wiku/index', [WikuController::class, 'index'])->name('wiku-index');
             Route::get('wiku/ver', [WikuController::class, 'ver'])->name('wiku-ver');
             //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            Route::get('wiku_argumento/crear', [WikuController::class, 'crear_argumento'])->name('wiku_argumento-crear');
+            Route::post('wiku_argumento-guardar', [WikuController::class, 'guardar_argumento'])->name('wiku_argumento-guardar');
+            Route::get('wiku_argumento/editar/{id}', [WikuController::class, 'editar_argumento'])->name('wiku_argumento-editar');
+            Route::put('wiku_argumento-actualizar/{id}', [WikuController::class, 'actualizar_argumento'])->name('wiku_argumento-actualizar');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
             Route::get('wiku_norma/crear', [WikuController::class, 'crear_norma'])->name('wiku_norma-crear');
             Route::post('wiku_norma-guardar', [WikuController::class, 'guardar_norma'])->name('wiku_norma-guardar');
             Route::get('wiku_norma/editar/{id}', [WikuController::class, 'editar_norma'])->name('wiku_norma-editar');
