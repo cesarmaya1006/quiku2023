@@ -16,4 +16,8 @@ class WikuPalabras extends Model
     {
         return $this->belongsToMany(WikuNorma::class, 'wikupalabrasnormas');
     }
+    public function argumentos()
+    {
+        return $this->belongsToMany(WikuArgumento::class, 'wikupalabrasargumentos');
+    }
 }

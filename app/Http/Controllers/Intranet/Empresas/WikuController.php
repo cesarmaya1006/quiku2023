@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Intranet\Empresas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\WikuArea;
+use App\Models\Admin\WikuArgumento;
 use App\Models\Admin\WikuAsociacion;
 use App\Models\Admin\WikuCriterio;
 use App\Models\Admin\WikuDocument;
@@ -29,7 +30,8 @@ class WikuController extends Controller
     {
         $fuentes = WikuDocument::all();
         $normas = WikuNorma::all();
-        return view('intranet.parametros.wiku.index', compact('normas', 'fuentes'));
+        $argumentos = WikuArgumento::all();
+        return view('intranet.parametros.wiku.index', compact('normas', 'fuentes', 'argumentos'));
     }
 
     public function index_fuenteN()
@@ -610,4 +612,34 @@ class WikuController extends Controller
             return WikuNorma::where('id', $id)->get();
         }
     }
+    //================================================================================================
+    //************************************************************************************************
+
+    public function crear_argumento()
+    {
+        $temasEspecifico = WikuTemaEspecifico::all();
+        $areas = WikuArea::all();
+        return view('intranet.parametros.wiku.argumentos.crear', compact('temasEspecifico', 'areas'));
+    }
+    public function guardar_argumento(Request $request)
+    {
+        WikuArgumento::create($request->all());
+        return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Argumento creado con exito.');
+    }
+    public function editar_argumento($id)
+    {
+        $temasEspecifico = WikuTemaEspecifico::all();
+        $areas = WikuArea::all();
+        $argumento = WikuArgumento::findOrFail($id);
+        return view('intranet.parametros.wiku.argumentos.editar', compact('argumento', 'temasEspecifico', 'areas'));
+    }
+    public function actualizar_argumento(Request $request, $id)
+    {
+        WikuArgumento::findOrFail($id)->update($request->all());
+        return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Argumento actualizado con exito.');
+    }
+
+    //************************************************************************************************
+    //================================================================================================
+
 }
