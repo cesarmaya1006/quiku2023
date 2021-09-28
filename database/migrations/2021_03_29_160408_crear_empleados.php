@@ -33,6 +33,9 @@ class CrearEmpleados extends Migration
             $table->string('genero', 20);
             $table->date('fecha_nacimiento');
             $table->string('email')->nullable();
+            $table->string('url', 255)->nullable();
+            $table->string('extension', 255)->nullable();
+            $table->double('peso')->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

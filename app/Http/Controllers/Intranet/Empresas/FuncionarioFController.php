@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Intranet\Empresas;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Empresa\ValidacionEmpleados;
 use App\Models\Admin\Area;
 use App\Models\Admin\Cargo;
-use App\Models\Admin\Departamento;
-use App\Models\Admin\Municipio;
 use App\Models\Admin\Nivel;
-use App\Models\Admin\Tipo_Docu;
-use App\Models\Admin\Usuario;
-use App\Models\Empleados\Empleado;
 use Illuminate\Http\Request;
+use App\Models\Admin\Usuario;
+use App\Models\Admin\Municipio;
+use App\Models\Admin\Tipo_Docu;
+use App\Models\Admin\Departamento;
+use App\Models\Empleados\Empleado;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
+use App\Http\Requests\Empresa\ValidacionEmpleados;
 
 class FuncionarioFController extends Controller
 {
@@ -73,6 +74,21 @@ class FuncionarioFController extends Controller
         $empleado_new['genero'] = $request['genero'];
         $empleado_new['fecha_nacimiento'] = $request['fecha_nacimiento'];
         $empleado_new['email'] = $request['email'];
+        if($request->hasFile("documento")){
+            $documentos = $request->allFiles();
+            $ruta = Config::get('constantes.folder_img_usuarios');
+            $ruta = trim($ruta);
+            $doc_subido = $documentos["documento"];
+            $tamaño = $doc_subido->getSize();
+            if ($tamaño > 0) {
+                $tamaño = $tamaño / 1000;
+            }
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $empleado_new['extension'] = $doc_subido->getClientOriginalExtension();
+            $empleado_new['peso'] = $tamaño;
+            $empleado_new['url'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+        } 
         Empleado::create($empleado_new);
         return redirect('admin/funcionario/funcionarios/index')->with('mensaje', 'Funcionario creado con exito');
     }
@@ -129,6 +145,21 @@ class FuncionarioFController extends Controller
         $empleado_new['genero'] = $request['genero'];
         $empleado_new['fecha_nacimiento'] = $request['fecha_nacimiento'];
         $empleado_new['email'] = $request['email'];
+        if($request->hasFile("documento")){
+            $documentos = $request->allFiles();
+            $ruta = Config::get('constantes.folder_img_usuarios');
+            $ruta = trim($ruta);
+            $doc_subido = $documentos["documento"];
+            $tamaño = $doc_subido->getSize();
+            if ($tamaño > 0) {
+                $tamaño = $tamaño / 1000;
+            }
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $empleado_new['extension'] = $doc_subido->getClientOriginalExtension();
+            $empleado_new['peso'] = $tamaño;
+            $empleado_new['url'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+        } 
         Empleado::findOrFail($id)->update($empleado_new);
         return redirect('admin/funcionario/funcionarios/index')->with('mensaje', 'Funcionario actualizado con exito');
     }

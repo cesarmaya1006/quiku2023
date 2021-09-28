@@ -218,7 +218,17 @@
             value="{{ old('email', $empleado->email ?? '') }}" required>
         <small id="helpId" class="form-text text-muted">Email</small>
     </div>
-
+    <div class="col-12 col-md-4 form-group">
+        <label for="documento">Firma digital</label>
+        <input class="documento form-control form-control-sm" type="file" name="documento">
+        <small id="helpId" class="form-text text-muted">Extesiones validas .png, .jpg</small>
+    </div>
+    @if(isset($empleado->url))
+        <label for="documento">Firma digital actual</label>
+        <div class="col-12 col-md-4 form-group">
+            <a href="{{ asset('documentos/usuarios/' . $empleado->url) }}" target="_blank" rel="noopener noreferrer">Ver Firma</a>
+        </div>
+    @endif
     @empty($empleado)
         <hr>
         <div class="col-12 mb-3">
