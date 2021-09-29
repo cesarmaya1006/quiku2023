@@ -301,6 +301,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('asignacion_asignador', [PQRController::class, 'asignacion_asignador_guardar'])->name('asignacion_asignador_guardar');
         Route::post('historial', [PQRController::class, 'historial_guardar'])->name('historial_guardar');
         Route::post('historial_tarea', [PQRController::class, 'historial_tarea_guardar'])->name('historial_tarea_guardar');
+        Route::post('historial_resuelve', [PQRController::class, 'historial_resuelve_guardar'])->name('historial_resuelve_guardar');
+        Route::post('historial_resuelve_eliminar', [PQRController::class, 'historial_resuelve_eliminar'])->name('historial_resuelve_eliminar');
         Route::post('historial_peticion', [PQRController::class, 'historial_peticion_guardar'])->name('historial_peticion_guardar');
         Route::post('asignacion_tarea', [PQRController::class, 'asignacion_tarea_guardar'])->name('asignacion_tarea_guardar');
         Route::post('asignacion_peticion', [PQRController::class, 'asignacion_peticion_guardar'])->name('asignacion_peticion_guardar');

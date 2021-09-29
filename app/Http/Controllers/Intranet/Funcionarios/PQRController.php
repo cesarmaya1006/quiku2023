@@ -38,6 +38,7 @@ use App\Mail\AclaracionComplementacion;
 use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\AsignacionParticular;
 use App\Http\Controllers\Fechas\FechasController;
+use App\Models\PQR\Resuelve;
 
 class PQRController extends Controller
 {
@@ -742,6 +743,30 @@ class PQRController extends Controller
             if($request['idTarea'] == 5){
                 AsignacionTarea::where('pqr_id',$request['idPqr'])->where('tareas_id', 1)->update($estado);
             }
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_resuelve_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve['pqr_id'] = $request['idPqr'];
+            $resuelve['empleado_id'] = session('id_usuario');
+            $resuelve['resuelve'] = $request['mensajeResuelve'];
+            $respuesta = Resuelve::create($resuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_resuelve_eliminar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve = Resuelve::findOrFail($request['value']);
+            $respuesta = $resuelve->delete();  
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
             abort(404);

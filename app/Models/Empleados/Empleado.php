@@ -6,6 +6,7 @@ use App\Models\PQR\PQR;
 use App\Models\Admin\Cargo;
 use App\Models\PQR\Peticion;
 use App\Models\PQR\PqrAnexo;
+use App\Models\PQR\Resuelve;
 use App\Models\Admin\Usuario;
 use App\Models\Empresas\Sede;
 use App\Models\Admin\Tipo_Docu;
@@ -78,5 +79,9 @@ class Empleado extends Model
         return $this->hasMany(PqrAnexo::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
-
+    public function resuelves()
+    {
+        return $this->hasMany(Resuelve::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }

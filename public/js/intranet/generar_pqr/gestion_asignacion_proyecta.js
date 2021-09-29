@@ -364,3 +364,65 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 })
 
+//Guardar resuelve  
+if(document.querySelector('.btn-pqr-resuelve')){
+    let btnResuelve = document.querySelector('.btn-pqr-resuelve')
+    btnResuelve.addEventListener('click', function(e){
+        e.preventDefault
+        let contenedorPadre = btnResuelve.parentElement.parentElement.parentElement
+        let url = e.target.getAttribute('data_url')
+        let token = e.target.getAttribute('data_token')
+        let mensajeResuelve = contenedorPadre.querySelector('.mensaje-resuelve').value
+        let idPqr = document.querySelector('#id_pqr').value
+        if (mensajeResuelve != '' && idPqr != '') {
+            let data = {
+                mensajeResuelve,
+                idPqr
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+    
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        }else{
+            alert('Debe diligenciar el campo del formulario')
+        }
+    })
+}
+
+//Eliminar resuelve  
+if(document.querySelectorAll('.eliminarResuelve')){
+    let btnEliminaResuelves = document.querySelectorAll('.eliminarResuelve')
+    btnEliminaResuelves.forEach(btnEliminar => {
+        btnEliminar.addEventListener('click', function(btn){
+            btn.preventDefault
+            let btnElim = btn.target
+            let url = btnElim.getAttribute('data_url')
+            let token = btnElim.getAttribute('data_token')
+            let value = btnElim.value
+            let data = {
+                value
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        })
+    })
+}

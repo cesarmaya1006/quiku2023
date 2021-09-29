@@ -716,6 +716,52 @@
                         @endif
                         @if (((($pqr->peticiones->sum('estado_id') / $pqr->peticiones->count())/ 11) * 100) == 100 )
                             <div class="rounded border m-3 p-2">
+                                <h5 class="mt-2">Resuelve</h5>
+                                @if(sizeof($pqr->resuelves))
+                                    <div class="row d-flex px-12 p-3">
+                                        <div class="col-12 table-responsive">
+                                            <table class="table table-light" style="font-size: 0.8em;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Fecha</th>
+                                                        <th scope="col">Empleado</th>
+                                                        <th scope="col">Resuelve</th>
+                                                        <th scope="col">Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($pqr->resuelves as $key=> $resuelve )
+                                                        <tr>
+                                                            <td>{{ $key + 1 }}</td>
+                                                            <td>{{ $resuelve->created_at }}</td>
+                                                            <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
+                                                            <td class="text-justify">{{ $resuelve->resuelve }}</td>
+                                                            <td class="text-justify">
+                                                                <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarResuelve" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}">Eliminar</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                @endif
+                                <div class="col-12 d-flex row">
+                                    <div class="container-mensaje-resuelve form-group col-12">
+                                        <label for="" class="">Nuevo resuelve</label>
+                                        <textarea class="form-control mensaje-resuelve" rows="3" placeholder="" required></textarea>
+                                    </div>
+                                    <div class="row d-flex px-12 p-3"> 
+                                        <div class="col-12 col-md-12 form-group d-flex">
+                                            <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-resuelve"
+                                            data_url="{{ route('historial_resuelve_guardar') }}"  data_token="{{ csrf_token() }}">Crear resuelve</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                            <div class="rounded border m-3 p-2">
                                 <h5 class="mt-2">Proyectar</h5>
                                 <div class="col-12 d-flex row pqr-anexo">
                                     <div class="my-2 col-12 d-flex justify-content-between">
