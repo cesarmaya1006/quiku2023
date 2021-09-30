@@ -725,7 +725,7 @@
                                             @if ($peticion->estadopeticion->estado == 100 || sizeOf($peticion->recursos))
                                                 <textarea type="text" class="form-control form-control-sm respuesta" rows="6" disabled>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
                                             @else
-                                                <textarea type="text" class="form-control form-control-sm respuesta" rows="6" max>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
+                                                <textarea type="text" class="form-control form-control-sm respuesta respuesta-editar " rows="6" max>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
                                             @endif
                                             @if(isset($peticion->respuesta->respuesta))
                                                 <input class="respuesta_anterior" type="hidden" value="{{ $peticion->respuesta->respuesta }}" data_url="{{ route('historial_peticion_guardar') }}">
@@ -1083,5 +1083,12 @@
 <!-- script hoja -->
 @section('scripts_pagina')
     <script src="{{ asset('js/intranet/generar_pqr/gestion.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.respuesta-editar').summernote()
+        });
+        
+    </script>
 @endsection
 <!-- ************************************************************* -->
