@@ -15,10 +15,10 @@ class CrearTablaWikupalabrasargumentos extends Migration
     {
         Schema::create('wikupalabrasargumentos', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->unsignedBigInteger('wikuargumento_id');
-            $table->foreign('wikuargumento_id', 'fk_argumento_palabra')->references('id')->on('wikuargumentos')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('wikuargpalabra_id');
-            $table->foreign('wikuargpalabra_id', 'fk_palabra_argumento')->references('id')->on('wikupalabrasclave')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('wiku_argumento_id');
+            $table->foreign('wiku_argumento_id', 'fk_argumento_palabra')->references('id')->on('wikuargumentos')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('wiku_palabras_id');
+            $table->foreign('wiku_palabras_id', 'fk_palabra_argumento')->references('id')->on('wikupalabrasclave')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

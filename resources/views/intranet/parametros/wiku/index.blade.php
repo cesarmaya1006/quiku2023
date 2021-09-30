@@ -90,12 +90,13 @@
                                                             {{ $argumento->publico ? 'Privado' : 'Publico' }}
                                                         </td>
                                                         <td class="text-center">
-                                                            @foreach ($argumento->autorInst as $autorInst)
-                                                                {{ $autorInst->institucion . ';' }}
-                                                            @endforeach
-                                                            @foreach ($argumento->autor as $autor)
-                                                                {{ $autor->nombre1 . ' ' . $autor->nombre2 . ' ' . $autor->apellido1 . ' ' . $autor->apellido2 . ';' }}
-                                                            @endforeach
+                                                            @if ($argumento->autorInst != null)
+                                                                {{ $argumento->autorInst->institucion . ';' }}
+                                                            @endif
+                                                            @if ($argumento->autor != null)
+                                                                {{ $argumento->autor->nombre1 . ' ' . $argumento->autor->nombre2 . ' ' . $argumento->autor->apellido1 . ' ' . $argumento->autor->apellido2 }}
+
+                                                            @endif
                                                         </td>
                                                         <td class="text-justify" style="min-width:100px;">
                                                             {{ $argumento->texto }}
@@ -113,7 +114,8 @@
                                                             {{ $argumento->temaespecifico->tema }}
                                                         </td>
                                                         <td class="d-flex">
-                                                            <a href="#" class="btn-accion-tabla tooltipsC text-info"
+                                                            <a href="{{ route('wiku_argumento-editar', ['id' => $argumento->id]) }}"
+                                                                class="btn-accion-tabla tooltipsC text-info"
                                                                 title="Editar"><i class="fa fa-edit"
                                                                     aria-hidden="true"></i></a>
                                                         </td>
