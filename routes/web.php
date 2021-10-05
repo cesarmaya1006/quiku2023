@@ -210,6 +210,7 @@ Route::group(['middleware' => 'auth'], function () {
             //Gestión de wiku
             Route::get('wiku/index', [WikuController::class, 'index'])->name('wiku-index');
             Route::get('wiku/ver', [WikuController::class, 'ver'])->name('wiku-ver');
+            Route::get('wikucargarargumentos', [WikuController::class, 'cargarArgumentos'])->name('wiku-cargarargumentos');
             //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
             Route::get('wiku_argumento/crear', [WikuController::class, 'crear_argumento'])->name('wiku_argumento-crear');
             Route::post('wiku_argumento-guardar', [WikuController::class, 'guardar_argumento'])->name('wiku_argumento-guardar');

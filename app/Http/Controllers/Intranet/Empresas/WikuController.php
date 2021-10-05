@@ -569,6 +569,15 @@ class WikuController extends Controller
         $normas = WikuNorma::all();
         return view('intranet.parametros.wiku.funcionario.normas.index', compact('normas'));
     }
+    public function cargarArgumentos(Request $request)
+    {
+        if ($request->ajax()) {
+            return WikuArgumento::all();
+        } else {
+            abort(404);
+        }
+    }
+    //-----------
 
     public function WikuBusquedaBasica(Request $request)
     {
@@ -592,15 +601,26 @@ class WikuController extends Controller
             foreach ($wikuPalabras as $wikuPalabra) {
                 $ids[] = $wikuPalabra->id;
             }
-            if ($radio == 'todos' || $radio == 'Normas') {
+            $wikuNormas = [];
+            $wikuArgumentos = [];
+            if ($radio == 'todos') {
                 $wikuNormas = WikuNorma::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area', 'documento')->whereHas('palabras', function ($q) use ($ids) {
                     $q->whereIn('wiku_palabras_id', $ids);
                 })->get();
-            } else {
-                $wikuNormas = [];
+                $wikuArgumentos = WikuArgumento::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
+                    $q->whereIn('wiku_palabras_id', $ids);
+                })->get();
+            } elseif ($radio == 'Normas') {
+                $wikuNormas = WikuNorma::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area', 'documento')->whereHas('palabras', function ($q) use ($ids) {
+                    $q->whereIn('wiku_palabras_id', $ids);
+                })->get();
+            } elseif ($radio == 'Argumentos') {
+                $wikuArgumentos = WikuArgumento::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
+                    $q->whereIn('wiku_palabras_id', $ids);
+                })->get();
             }
             //$wikuNormas = [count($palabras)];
-            return response()->json([$wikuNormas]);
+            return response()->json(['normas' => $wikuNormas, 'argumentos' => $wikuArgumentos]);
         } else {
             abort(404);
         }
@@ -611,7 +631,80 @@ class WikuController extends Controller
             $tipowiku = $request['tipowiku'];
             switch ($tipowiku) {
                 case 'Argumentos':
-                    # code...
+                    $area_id = $request['area_id'];
+                    $tema_id = $request['tema_id'];
+                    $wikutemaespecifico_id = $request['wikutemaespecifico_id'];
+                    $id = $request['id'];
+                    $fecha = $request['fecha'];
+                    $prod_serv = $request['prod_serv'];
+                    $tipo_p_q_r_id = $request['tipo_p_q_r_id'];
+                    $motivo_id = $request['motivo_id'];
+                    $motivo_sub_id = $request['motivo_sub_id'];
+                    $servicio_id = $request['servicio_id'];
+                    $categoria_id = $request['categoria_id'];
+                    $producto_id = $request['producto_id'];
+                    $marca_id = $request['marca_id'];
+                    $referencia_id = $request['referencia_id'];
+                    //=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=
+                    $query = WikuArgumento::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area', 'tipopqr', 'asociaciones');
+                    if ($tipo_p_q_r_id != null) {
+                        $query->whereHas('tipopqr', function ($q) use ($tipo_p_q_r_id) {
+                            $q->where('tipo_p_q_r_id', $tipo_p_q_r_id);
+                        });
+                    }
+                    if ($motivo_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($motivo_id) {
+                            $q->where('motivo_id', $motivo_id);
+                        });
+                    }
+                    if ($motivo_sub_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($motivo_sub_id) {
+                            $q->where('motivo_sub_id', $motivo_sub_id);
+                        });
+                    }
+                    if ($servicio_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($servicio_id) {
+                            $q->where('servicio_id', $servicio_id);
+                        });
+                    }
+                    if ($categoria_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($categoria_id) {
+                            $q->where('categoria_id', $categoria_id);
+                        });
+                    }
+                    if ($producto_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($producto_id) {
+                            $q->where('producto_id', $producto_id);
+                        });
+                    }
+                    if ($marca_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($marca_id) {
+                            $q->where('marca_id', $marca_id);
+                        });
+                    }
+                    if ($referencia_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($referencia_id) {
+                            $q->where('referencia_id', $referencia_id);
+                        });
+                    }
+                    $respuesta = $query->get();
+                    //=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=
+                    if ($area_id != null) {
+                        $respuesta = $respuesta->where('temaEspecifico.tema_.area_id', $area_id);
+                    }
+                    if ($tema_id != null) {
+                        $respuesta = $respuesta->where('temaEspecifico.tema_id', $tema_id);
+                    }
+                    if ($wikutemaespecifico_id != null) {
+                        $respuesta = $respuesta->where('wikutemaespecifico_id', $wikutemaespecifico_id);
+                    }
+                    if ($id != null) {
+                        $respuesta = $respuesta->where('id', $id);
+                    }
+                    if ($fecha != null) {
+                        $respuesta = $respuesta->where('fecha', '>', $fecha);
+                    }
+
                     break;
 
                 case 'Normas':
@@ -841,7 +934,7 @@ class WikuController extends Controller
         }
         $request['wiku_argumento_id'] = $id;
         WikuAsociacionArg::create($request->all());
-        return redirect('/admin/funcionario/wiku/asociacion/crear/' . $id . '/argumento')->with('mensaje', 'Asociación actualizada con éxito')->with('argumento')->with('palabras')->with('wiku');
+        return redirect('/admin/funcionario/wiku/argasociacion/crear/' . $id . '/argumento')->with('mensaje', 'Asociación actualizada con éxito')->with('argumento')->with('palabras')->with('wiku');
     }
     public function wiku_argasociacion_eliminar(Request $request, $id)
     {

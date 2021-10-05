@@ -23,7 +23,7 @@
                     <h5>Nueva asociación a la norma</h5>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 text-md-right text-lg-right pl-2 pr-md-5 pr-lg-5">
-                    <a href="{{ route('wiku_volver_asociacion', ['id' => $id, 'wiku' => $wiku]) }}"
+                    <a href="{{ route('wiku_argumento-editar', ['id' => $id]) }}"
                         class="btn btn-success btn-xs btn-sm text-center pl-3 pr-3" style="font-size: 0.9em;"><i
                             class="fas fa-reply mr-2"></i> Volver</a>
                 </div>
