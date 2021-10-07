@@ -49,16 +49,16 @@
                                         <label class="form-check-label">Todos</label>
                                     </div>
                                     <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radio1" value="Argumentos">
+                                        <label class="form-check-label">Argumentos</label>
+                                    </div>
+                                    <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radio1" value="Normas">
                                         <label class="form-check-label">Normas</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radio1" value="Jurisprudencias">
                                         <label class="form-check-label">Jurisprudencias</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radio1" value="Argumentos">
-                                        <label class="form-check-label">Argumentos</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="radio1" value="Normas">
@@ -84,7 +84,8 @@
                                 </div>
                                 <div class="form-group col-12 col-md-4">
                                     <label class="requerido" for="tipo_wiku">Categoria de Wiku</label>
-                                    <select class="form-control form-control-sm" id="tipo_wiku">
+                                    <select class="form-control form-control-sm" id="tipo_wiku"
+                                        data_url="{{ route('wiku-cargarargumentos') }}">
                                         <option value="">---Seleccione Wiku---</option>
                                         <option value="Argumentos">Argumentos</option>
                                         <option value="Normas">Normas</option>
@@ -94,11 +95,11 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-12 mb-3">
+                            <div class="row d-flex justify-content-center" id="cajaArea">
+                                <div class="col-12 mb-3 d-none cajaArea">
                                     <h6>Por área, tema y tema específico...</h6>
                                 </div>
-                                <div class="form-group col-12 col-md-4">
+                                <div class="form-group col-12 col-md-4  d-none cajaArea">
                                     <label for="area_id">Área</label>
                                     <select class="form-control form-control-sm" id="area_id"
                                         data_url="{{ route('cargar_temas') }}">
@@ -108,14 +109,14 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4">
+                                <div class="form-group col-12 col-md-4  d-none cajaArea">
                                     <label for="tema_id">Tema</label>
                                     <select class="form-control form-control-sm" id="tema_id"
                                         data_url="{{ route('cargar_temasespec') }}">
                                         <option value="">Seleccione primero un área</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4">
+                                <div class="form-group col-12 col-md-4  d-none cajaArea">
                                     <label for="wikutemaespecifico_id">Tema Específico</label>
                                     <select class="form-control form-control-sm" name="wikutemaespecifico_id"
                                         id="wikutemaespecifico_id">
@@ -123,12 +124,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <hr>
+                            <hr class="d-none cajaArea">
                             <div class="row">
-                                <div class="col-12 mb-3">
+                                <div class="col-12 mb-3 d-none seccionAreaTemas">
                                     <h6>Por fuente, artículo y fecha de entrada en vigencia...</h6>
                                 </div>
-                                <div class="col-12 col-md-5 form-group">
+                                <div class="col-12 col-md-5 form-group d-none seccionFuenteEmisora">
                                     <label for="fuente_id">Fuente emisora</label>
                                     <select class="form-control form-control-sm" name="fuente_id" id="fuente_id"
                                         data_url="{{ route('cargar_normas') }}">
@@ -138,22 +139,22 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="fuente_id">Artículo</label>
+                                <div class="col-12 col-md-5 form-group d-none seccionAreaTemas">
+                                    <label for="fuente_id" id="tituloID">Artículo</label>
                                     <select class="form-control form-control-sm" id="id">
                                         <option value="">Seleccione primero una Fuente Emisora</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-md-2 form-group">
+                                <div class="col-12 col-md-2 form-group d-none d-none seccionAreaTemas">
                                     <label for="fecha">Entrada en vigencia</label>
                                     <input type="date" class="form-control form-control-sm" name="fecha" id="fecha"
                                         max="{{ date('Y-m-d') }}">
                                 </div>
-                                <hr>
-                                <div class="col-12 mb-3">
+                                <hr class="d-none seccionAreaTemas">
+                                <div class="col-12 mb-3 d-none seccionProductosTipoPQR">
                                     <h6>Por asociación servicio / producto..</h6>
                                 </div>
-                                <div class="form-group col-12 col-md-4">
+                                <div class="form-group col-12 col-md-4  d-none seccionProductosTipoPQR">
                                     <label class="requerido" for="prod_serv">Producto / Servicio</label>
                                     <select class="form-control form-control-sm" id="prod_serv">
                                         <option value="">---Selecione---</option>
@@ -161,7 +162,7 @@
                                         <option value="Servicio">Servicio</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4" id="tipo_pqr">
+                                <div class="form-group col-12 col-md-4  d-none seccionProductosTipoPQR" id="tipo_pqr">
                                     <label class="requerido" for="tipo_p_q_r_id">Tipo de PQR</label>
                                     <select id="tipo_p_q_r_id" class="form-control form-control-sm" name="tipo_p_q_r_id"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}"
@@ -172,20 +173,20 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4" id="motivo_pqr">
+                                <div class="form-group col-12 col-md-4  d-none seccionProductosTipoPQR" id="motivo_pqr">
                                     <label class="requerido" for="motivo_id">Motivo de PQR</label>
                                     <select id="motivo_id" class="form-control form-control-sm" name="motivo_id"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}">
                                         <option value="">---Seleccione---</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4" id="sub_motivo_pqr">
+                                <div class="form-group col-12 col-md-4  d-none seccionProductosTipoPQR" id="sub_motivo_pqr">
                                     <label class="requerido" for="motivo_sub_id">Sub-Motivo de PQR</label>
                                     <select id="motivo_sub_id" class="form-control form-control-sm" name="motivo_sub_id">
                                         <option value="">---Seleccione---</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4 d-none" id="servicios">
+                                <div class="form-group col-12 col-md-4  d-none seccionProductosTipoPQR" id="servicios">
                                     <label for="servicio_id">Servicios</label>
                                     <select id="servicio_id" class="form-control form-control-sm" name="servicio_id">
                                         <option value="">---Seleccione un servcio---</option>
@@ -194,7 +195,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4 d-none" id="categorias">
+                                <div class="form-group col-12 col-md-4   d-none seccionProductosTipoPQR" id="categorias">
                                     <label class="requerido" for="categoria_id">Categoría de producto</label>
                                     <select id="categoria_id" class="form-control form-control-sm"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_producto') }}"
@@ -205,21 +206,21 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4 d-none" id="productos">
+                                <div class="form-group col-12 col-md-4   d-none seccionProductosTipoPQR" id="productos">
                                     <label class="requerido" for="producto_id">Productos</label>
                                     <select id="producto_id" class="form-control form-control-sm" name="producto_id"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}">
                                         <option value="">---Seleccione primero una categoría---</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4 d-none" id="marcas">
+                                <div class="form-group col-12 col-md-4   d-none seccionProductosTipoPQR" id="marcas">
                                     <label class="requerido" for="marca_id">Marcas</label>
                                     <select id="marca_id" class="form-control form-control-sm" name="marca_id"
                                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}">
                                         <option value="">---Seleccione primero un producto---</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-12 col-md-4 d-none" id="referencias">
+                                <div class="form-group col-12 col-md-4   d-none seccionProductosTipoPQR" id="referencias">
                                     <label class="requerido" for="referencia_id">Referencias</label>
                                     <select id="referencia_id" class="form-control form-control-sm" name="referencia_id">
                                         <option value="">---Seleccione primero una marca---</option>
