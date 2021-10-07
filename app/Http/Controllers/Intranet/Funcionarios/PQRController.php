@@ -752,6 +752,8 @@ class PQRController extends Controller
     public function historial_resuelve_guardar(Request $request)
     {
         if ($request->ajax()) {
+            $resuelves = Resuelve::where('pqr_id', $request['idPqr'])->get();
+            $resuelve['orden'] = $resuelves->count() + 1;
             $resuelve['pqr_id'] = $request['idPqr'];
             $resuelve['empleado_id'] = session('id_usuario');
             $resuelve['resuelve'] = $request['mensajeResuelve'];
@@ -766,7 +768,35 @@ class PQRController extends Controller
     {
         if ($request->ajax()) {
             $resuelve = Resuelve::findOrFail($request['value']);
-            $respuesta = $resuelve->delete();  
+            $index = $resuelve['orden'];
+            $pqr = $resuelve->pqr_id;
+            $respuesta = $resuelve->delete(); 
+            $resuelves = Resuelve::where('pqr_id', $pqr)->get(); 
+            foreach ($resuelves as $key => $resuel) {
+                if($index < $resuel['orden'] )
+                $orden['orden'] =  $resuel['orden'] - 1;
+                Resuelve::findOrFail($resuel->id)->update($orden);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+    public function historial_resuelve_editar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve['resuelve'] = $request['resuelveNuevo'];
+            $respuesta = Resuelve::findOrFail($request['value'])->update($resuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+    public function resuelve_orden_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve['orden'] = $request['orden'];
+            $respuesta = Resuelve::findOrFail($request['id'])->update($resuelve);
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
             abort(404);

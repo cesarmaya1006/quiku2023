@@ -20,6 +20,7 @@ class CrearTablaResuelves extends Migration
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_resuelve')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('resuelve')->nullable();
+            $table->integer('orden')->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
