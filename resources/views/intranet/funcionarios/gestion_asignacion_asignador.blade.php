@@ -599,7 +599,11 @@
                         @if (sizeOf($pqr->anexos))   
                             <div class="rounded border m-3 p-2 mb-4">
                                 <h5 class="">Historial de respuesta </h5>
-                                <div class="row d-flex px-12 p-3">
+                                <strong>
+                                    <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista previa</a>
+                                </strong>
+                                {{-- <div class="row d-flex px-12 p-3">
                                     <div class="col-12 table-responsive">
                                         <table class="table table-light" style="font-size: 0.8em;">
                                             <thead>
@@ -623,7 +627,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <hr>
+                                <hr> --}}
                             </div>
                         @endif
                     @endif

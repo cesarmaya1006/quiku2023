@@ -30,8 +30,12 @@
                     </div>
                     <div class="card-body">
                         <div class="rounded border p-2">
-                            <h5 class="">Historial de respuesta </h5>
-                            @if ($pqr->anexos)
+                            <h5 class="mb-3">Historial de respuesta </h5>
+                            <strong>
+                                <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-eye"></i> Vista previa</a>
+                            </strong>
+                            {{-- @if ($pqr->anexos)
                                 <div class="row d-flex px-12 p-3">
                                     <div class="col-12 table-responsive">
                                         <table class="table table-light" style="font-size: 0.8em;">
@@ -55,9 +59,9 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                @endif
-                            </div>
-                            <hr>
+                                </div>
+                                <hr>
+                            @endif --}}
                         </div>
                         <div class="rounded border p-2 mt-5">
                             <h5 class="">Historial de tareas</h5>

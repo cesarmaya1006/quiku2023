@@ -31,7 +31,11 @@
                     <div class="card-body">
                         <div class="rounded border p-2 mb-4">
                             <h5 class="">Historial de respuesta </h5>
-                            @if ($pqr->anexos)
+                            <strong>
+                                <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-eye"></i> Vista previa</a>
+                            </strong>
+                            {{-- @if ($pqr->anexos)
                                 <div class="row d-flex px-12 p-3">
                                     <div class="col-12 table-responsive">
                                         <table class="table table-light" style="font-size: 0.8em;">
@@ -40,7 +44,6 @@
                                                     <th scope="col">Fecha</th>
                                                     <th scope="col">Empleado</th>
                                                     <th scope="col">Tarea</th>
-                                                    {{-- <th scope="col">Estado</th> --}}
                                                     <th scope="col">Descarga</th>
                                                 </tr>
                                             </thead>
@@ -50,16 +53,15 @@
                                                         <td>{{ $anexo->created_at }}</td>
                                                         <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
                                                         <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                        {{-- <td class="text-justify">{{ $anexo->estado ? 'Activo' : 'Rechazado'  }}</td> --}}
                                                         <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
                                     </div>
-                                @endif
-                            </div>
-                            <hr>
+                                </div>
+                                <hr>
+                            @endif --}}
                         </div>
                         <div class="rounded border p-2">
                             <h5 class="">Historial de tareas</h5>
@@ -161,7 +163,7 @@
                         <h5 class="mt-2">Aprueba</h5>
                         <div class="m-3 p-2">
                             <div class="col-12 d-flex row pqr-anexo">
-                                <div class="my-2 col-12 d-flex justify-content-between">
+                                {{-- <div class="my-2 col-12 d-flex justify-content-between">
                                     <h6>Documento de respuesta</h6>
                                 </div>
                                 <div class="col-12 col-md-4 form-group">
@@ -175,7 +177,7 @@
                                 <div class="col-12 col-md-4 form-group">
                                     <label for="anexo">Anexo</label>
                                     <input class="anexo form-control form-control-sm" type="file">
-                                </div>
+                                </div> --}}
                                 <div class="container-mensaje-historial-tarea form-group col-12">
                                     <label for="" class="">Agregar Historial</label>
                                     <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>

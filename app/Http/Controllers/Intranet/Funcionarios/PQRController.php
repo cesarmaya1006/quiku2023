@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Mail\Prorroga;
 use App\Models\PQR\PQR;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\PQR\Tarea;
 use App\Mail\RespuestaPQR;
 use App\Models\PQR\Estado;
@@ -11,6 +12,7 @@ use App\Models\Admin\Cargo;
 use App\Models\PQR\Recurso;
 use App\Models\PQR\Peticion;
 use App\Models\PQR\PqrAnexo;
+use App\Models\PQR\Resuelve;
 use Illuminate\Http\Request;
 use App\Models\PQR\Prioridad;
 use App\Models\PQR\Respuesta;
@@ -38,7 +40,6 @@ use App\Mail\AclaracionComplementacion;
 use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\AsignacionParticular;
 use App\Http\Controllers\Fechas\FechasController;
-use App\Models\PQR\Resuelve;
 
 class PQRController extends Controller
 {
@@ -622,29 +623,29 @@ class PQRController extends Controller
     {
         if ($request->ajax()) {
             $documentos = $request->allFiles();
-            if ($request->hasFile('archivo')) {
-                $ruta = Config::get('constantes.folder_doc_tareas');
-                $ruta = trim($ruta);
-                $doc_subido = $documentos["archivo"];
-                $tamaño = $doc_subido->getSize();
-                if ($tamaño > 0) {
-                    $tamaño = $tamaño / 1000;
-                }
-                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                $nuevo_documento['pqr_id'] = $request["pqr_id"];
-                $nuevo_documento['titulo'] = $request["titulo"];
-                if ($request["descripcion"]) {
-                    $nuevo_documento['descripcion'] = $request["descripcion"];
-                } else {
-                    $nuevo_documento['descripcion'] = '';
-                }
-                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
-                $nuevo_documento['peso'] = $tamaño;
-                $nuevo_documento['url'] = $nombre_doc;
-                $nuevo_documento['tareas_id'] = $request["idTarea"];
-                $nuevo_documento['empleado_id'] = session('id_usuario');
-                $doc_subido->move($ruta, $nombre_doc);
-                $respuesta = PqrAnexo::create($nuevo_documento);
+            // if ($request->hasFile('archivo')) {
+                // $ruta = Config::get('constantes.folder_doc_tareas');
+                // $ruta = trim($ruta);
+                // $doc_subido = $documentos["archivo"];
+                // $tamaño = $doc_subido->getSize();
+                // if ($tamaño > 0) {
+                //     $tamaño = $tamaño / 1000;
+                // }
+                // $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                // $nuevo_documento['pqr_id'] = $request["pqr_id"];
+                // $nuevo_documento['titulo'] = $request["titulo"];
+                // if ($request["descripcion"]) {
+                //     $nuevo_documento['descripcion'] = $request["descripcion"];
+                // } else {
+                //     $nuevo_documento['descripcion'] = '';
+                // }
+                // $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                // $nuevo_documento['peso'] = $tamaño;
+                // $nuevo_documento['url'] = $nombre_doc;
+                // $nuevo_documento['tareas_id'] = $request["idTarea"];
+                // $nuevo_documento['empleado_id'] = session('id_usuario');
+                // $doc_subido->move($ruta, $nombre_doc);
+                // $respuesta = PqrAnexo::create($nuevo_documento);
 
                 $pqr = PQR::findOrfail($request["pqr_id"]);
                 $peticiones = Peticion::where('pqr_id', $pqr->id)->get();
@@ -665,7 +666,7 @@ class PQRController extends Controller
                 if( ($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5 ){
                     PQRController::actualizar_estados($pqr);
                 }
-            }
+            // }
             return response()->json(['mensaje' => 'ok', 'data' => $pqr]);
         } else {
             abort(404);
@@ -802,6 +803,23 @@ class PQRController extends Controller
             abort(404);
         }
     }
+
+    public function respuestaPQR($id)
+    {
+        $pqr = PQR::findOrFail($id);
+        $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        return view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves'));
+    }
+    public function descarga_respuestaPQR($id)
+    {
+        $pqr = PQR::findOrFail($id);
+        $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $pdf = PDF::loadView('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves'));
+        return $pdf->download( 'Respuesta-'. $pqr->radicado . '.pdf');
+    }
+
 
     public function cargar_tareas(Request $request)
     {

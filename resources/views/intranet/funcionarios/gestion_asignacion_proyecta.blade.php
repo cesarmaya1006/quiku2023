@@ -1110,10 +1110,14 @@
                             <div class="rounded border m-3 p-2">
                                 <h5 class="mt-2">Proyectar</h5>
                                 <div class="col-12 d-flex row pqr-anexo">
-                                    <div class="my-2 col-12 d-flex justify-content-between">
-                                        <h6>Documento de respuesta</h6>
+                                    <div class="my-2 col-12 d-flex">
+                                        <h6 class="mr-2">Documento de respuesta</h6>
+                                        <strong class="mx-2">
+                                            <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                                <i class="fas fa-eye"></i> Vista previa</a>
+                                        </strong>
                                     </div>
-                                    <div class="col-12 col-md-4 form-group">
+                                    {{-- <div class="col-12 col-md-4 form-group">
                                         <label for="titulo">Título anexo</label>
                                         <input type="text" class="titulo form-control form-control-sm">
                                     </div>
@@ -1124,7 +1128,7 @@
                                     <div class="col-12 col-md-4 form-group">
                                         <label for="anexo">Anexo</label>
                                         <input class="anexo form-control form-control-sm" type="file">
-                                    </div>
+                                    </div> --}}
                                     <div class="container-mensaje-historial-tarea form-group col-12">
                                         <label for="" class="">Agregar Historial</label>
                                         <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>

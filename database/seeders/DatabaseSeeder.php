@@ -56,6 +56,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_WikuTemas::class);
         $this->call(Tabla_WikuTemasEspecificos::class);
         $this->call(Tabla_WikuFuente::class);
+        $this->call(Tabla_numeracion::class);
     }
 
     protected function truncateTablas(array $tablas)

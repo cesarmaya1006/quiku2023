@@ -24,4 +24,9 @@ class Resuelve extends Model
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function numeracion()
+    {
+        return $this->belongsTo(Numeracion::class, 'orden', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }
