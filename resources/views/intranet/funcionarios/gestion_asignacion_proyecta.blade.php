@@ -723,28 +723,86 @@
                                             <table class="table table-light" style="font-size: 0.8em;">
                                                 <thead>
                                                     <tr>
-                                                        <th scope="col">#</th>
+                                                        <th scope="col">Orden</th>
                                                         <th scope="col">Fecha</th>
                                                         <th scope="col">Empleado</th>
                                                         <th scope="col">Resuelve</th>
                                                         <th scope="col">Opciones</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                @php
+                                                    $totalResuelves = $pqr->resuelves->count()
+                                                @endphp
+                                                <tbody class="orden-resuelve">
                                                     @foreach ($pqr->resuelves as $key=> $resuelve )
-                                                        <tr>
-                                                            <td>{{ $key + 1 }}</td>
+                                                        <tr >
+                                                            <td>{{ $resuelve->orden }}</td>
                                                             <td>{{ $resuelve->created_at }}</td>
                                                             <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                            <td class="text-justify">{{ $resuelve->resuelve }}</td>
+                                                            <td class="text-justify contenido-resuelve">{{ $resuelve->resuelve }}</td>
                                                             <td class="text-justify">
-                                                                <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarResuelve" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}">Eliminar</button>
+                                                                <div class="col-12 d-flex">
+                                                                    <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelve-i"></i></button>
+                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}"><i class="far fa-trash-alt"></i></button>
+                                                                </div>
                                                             </td>
                                                         </tr>
+
+                                                    @endforeach
+                                                </tbody>
+                                                <tbody  class="editar-orden-resuelve d-none">
+                                                    @foreach ($pqr->resuelves as $key=> $resuelve )
+                                                    <tr>
+                                                        <td class="td-orden">
+                                                            <select class="select-orden">
+                                                            @for ($i = 1; $i < $totalResuelves + 1; $i++)
+                                                                <option value="{{ $i }}"
+                                                                    {{ $i == $resuelve->orden ? 'selected' : '' }}>
+                                                                    {{ $i }}</option>
+                                                            @endfor
+                                                            </select>
+                                                        </td>
+                                                        <td>{{ $resuelve->created_at }}</td>
+                                                        <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
+                                                        <td class="text-justify contenido-resuelve">{{ $resuelve->resuelve }}</td>
+                                                        <td class="text-justify">
+                                                            <div class="col-12 d-flex">
+                                                                <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}" disabled><i class="fas fa-edit editarResuelve-i"></i></button>
+                                                                <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}" disabled><i class="far fa-trash-alt"></i></button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                            <div class="row d-flex px-12 p-3"> 
+                                                <div class="col-12 col-md-12 form-group d-flex">
+                                                    <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar">Ordenar</button>
+                                                    <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar-guardar d-none"
+                                                        data_url="{{ route('resuelve_orden_guardar') }}"  data_token="{{ csrf_token() }}"
+                                                    >Guardar</button>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <div class="modal fade bd-resuelve" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Editar resuelve</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <textarea class="form-control mensaje-resuelve-editar mt-2" rows="3" cols="40" placeholder="" required></textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary editarResuelveGuardar" data_url="{{ route('historial_resuelve_editar') }}"  data_token="{{ csrf_token() }}">Guardar</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                          </div>
                                     </div>
                                     <hr>
                                 @endif
@@ -752,7 +810,7 @@
                                     <div class="container-mensaje-resuelve form-group col-12 row">
                                         <label for="" class="col-10">Nuevo resuelve</label>
                                         {{-- Inicio btn Modal de busqueda --}}
-                                        <div class="col-1 row estado-peticion justify-content-end">
+                                        <div class="col-2 row estado-peticion justify-content-end">
                                             <button type="" class="btn btn-success btn-estado col-12 mx-2" data-toggle="modal" data-target="#buscar"><span style="font-size: 1em;"><i class="fas fa-search"></i> Wiku</span>
                                             </button>
                                         </div>
@@ -1052,10 +1110,14 @@
                             <div class="rounded border m-3 p-2">
                                 <h5 class="mt-2">Proyectar</h5>
                                 <div class="col-12 d-flex row pqr-anexo">
-                                    <div class="my-2 col-12 d-flex justify-content-between">
-                                        <h6>Documento de respuesta</h6>
+                                    <div class="my-2 col-12 d-flex">
+                                        <h6 class="mr-2">Documento de respuesta</h6>
+                                        <strong class="mx-2">
+                                            <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                                <i class="fas fa-eye"></i> Vista previa</a>
+                                        </strong>
                                     </div>
-                                    <div class="col-12 col-md-4 form-group">
+                                    {{-- <div class="col-12 col-md-4 form-group">
                                         <label for="titulo">Título anexo</label>
                                         <input type="text" class="titulo form-control form-control-sm">
                                     </div>
@@ -1066,7 +1128,7 @@
                                     <div class="col-12 col-md-4 form-group">
                                         <label for="anexo">Anexo</label>
                                         <input class="anexo form-control form-control-sm" type="file">
-                                    </div>
+                                    </div> --}}
                                     <div class="container-mensaje-historial-tarea form-group col-12">
                                         <label for="" class="">Agregar Historial</label>
                                         <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>

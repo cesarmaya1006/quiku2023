@@ -210,12 +210,28 @@ Route::group(['middleware' => 'auth'], function () {
             //Gestión de wiku
             Route::get('wiku/index', [WikuController::class, 'index'])->name('wiku-index');
             Route::get('wiku/ver', [WikuController::class, 'ver'])->name('wiku-ver');
+            Route::get('wikucargarargumentos', [WikuController::class, 'cargarArgumentos'])->name('wiku-cargarargumentos');
             //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
             Route::get('wiku_argumento/crear', [WikuController::class, 'crear_argumento'])->name('wiku_argumento-crear');
             Route::post('wiku_argumento-guardar', [WikuController::class, 'guardar_argumento'])->name('wiku_argumento-guardar');
             Route::get('wiku_argumento/editar/{id}', [WikuController::class, 'editar_argumento'])->name('wiku_argumento-editar');
             Route::put('wiku_argumento-actualizar/{id}', [WikuController::class, 'actualizar_argumento'])->name('wiku_argumento-actualizar');
-            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . .
+            Route::get('wiku_argcriterios/index/{id}/{wiku}', [WikuController::class, 'index_argcriterios'])->name('wiku_argcriterios-index');
+            Route::get('wiku_argcriterios/crear/{id}/{wiku}', [WikuController::class, 'crear_argcriterios'])->name('wiku_argcriterios-crear');
+            Route::post('wiku_argcriterios-guardar/{id}/{wiku}', [WikuController::class, 'guardar_argcriterios'])->name('wiku_argcriterios-guardar');
+            Route::get('wiku_argcriterios/editar/{id_criterios}/{id}/{wiku}', [WikuController::class, 'editar_argcriterios'])->name('wiku_argcriterios-editar');
+            Route::put('wiku_argcriterios-actualizar/{id_criterios}/{id}/{wiku}', [WikuController::class, 'actualizar_argcriterios'])->name('wiku_argcriterios-actualizar');
+            Route::delete('wiku_argcriterios/{id}', [WikuController::class, 'wiku_argcriterios_eliminar'])->name('wiku_argcriterios-eliminar');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . .
+            Route::get('wiku_argumento-cargarautori', [WikuController::class, 'cargarautori'])->name('wiku_argumento-cargarautori');
+            Route::get('wiku_argumento-cargarautor', [WikuController::class, 'cargarautor'])->name('wiku_argumento-cargarautor');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . .
+            Route::get('wiku/argasociacion/crear/{id}/{wiku}', [WikuController::class, 'crear_argasociacion'])->name('wiku_argasociacion-crear');
+            Route::post('wiku/argasociacion-guardar/{id}/{wiku}', [WikuController::class, 'guardar_argasociacion'])->name('wiku_argasociacion-guardar');
+            Route::delete('wiku_argasociacion/{id}', [WikuController::class, 'wiku_argasociacion_eliminar'])->name('wiku_argasociacion-eliminar');
+            //=====================================================================================================================
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . .
             Route::get('wiku_norma/crear', [WikuController::class, 'crear_norma'])->name('wiku_norma-crear');
             Route::post('wiku_norma-guardar', [WikuController::class, 'guardar_norma'])->name('wiku_norma-guardar');
             Route::get('wiku_norma/editar/{id}', [WikuController::class, 'editar_norma'])->name('wiku_norma-editar');
@@ -258,8 +274,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('wiku_palabras/editar/{id_palabras}/{id}/{wiku}', [WikuController::class, 'editar_palabras'])->name('wiku_palabras-editar');
             Route::put('wiku_palabras-actualizar/{id_palabras}/{id}/{wiku}', [WikuController::class, 'actualizar_palabras'])->name('wiku_palabras-actualizar');
             Route::delete('wiku_palabras/{id}', [WikuController::class, 'wiku_palabras_eliminar'])->name('wiku_palabras-eliminar');
-            Route::post('wiku_palabras/adicionar/{id_palabras}/{id}', [WikuController::class, 'adicionar_palabras'])->name('wiku_palabras-adicionar');
-            Route::post('wiku_palabras/restar/{id_palabras}/{id}', [WikuController::class, 'restar_palabras'])->name('wiku_palabras-restar');
+            Route::post('wiku_palabras/adicionar/{id_palabras}/{id}/{wiku}', [WikuController::class, 'adicionar_palabras'])->name('wiku_palabras-adicionar');
+            Route::post('wiku_palabras/restar/{id_palabras}/{id}/{wiku}', [WikuController::class, 'restar_palabras'])->name('wiku_palabras-restar');
             //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
             Route::get('wiku/index_fuenteN', [WikuController::class, 'index_fuenteN'])->name('wiku-index_fuenteN');
             Route::get('wiku_fuente/crear', [WikuController::class, 'crear_fuente'])->name('wiku_fuenteN-crear');
@@ -303,6 +319,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('historial_tarea', [PQRController::class, 'historial_tarea_guardar'])->name('historial_tarea_guardar');
         Route::post('historial_resuelve', [PQRController::class, 'historial_resuelve_guardar'])->name('historial_resuelve_guardar');
         Route::post('historial_resuelve_eliminar', [PQRController::class, 'historial_resuelve_eliminar'])->name('historial_resuelve_eliminar');
+        Route::post('historial_resuelve_editar', [PQRController::class, 'historial_resuelve_editar'])->name('historial_resuelve_editar');
+        Route::post('resuelve_orden', [PQRController::class, 'resuelve_orden_guardar'])->name('resuelve_orden_guardar');
         Route::post('historial_peticion', [PQRController::class, 'historial_peticion_guardar'])->name('historial_peticion_guardar');
         Route::post('asignacion_tarea', [PQRController::class, 'asignacion_tarea_guardar'])->name('asignacion_tarea_guardar');
         Route::post('asignacion_peticion', [PQRController::class, 'asignacion_peticion_guardar'])->name('asignacion_peticion_guardar');
@@ -317,6 +335,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cargar_cargos', [PQRController::class, 'cargar_cargos'])->name('cargar_cargos');
         Route::get('cargar_funcionarios', [PQRController::class, 'cargar_funcionarios'])->name('cargar_funcionarios');
         Route::post('pqr_anexo', [PQRController::class, 'pqr_anexo_guardar'])->name('pqr_anexo_guardar');
+        Route::get('respuestaPQR/{id}', [PQRController::class, 'respuestaPQR'])->name('respuestaPQR');
+        Route::get('descarga_respuestaPQR/{id}', [PQRController::class, 'descarga_respuestaPQR'])->name('descarga_respuestaPQR');
         Route::post('cambiar_estado_tareas', [PQRController::class, 'cambiar_estado_tareas_guardar'])->name('cambiar_estado_tareas_guardar');
         Route::get('cambiar-password-asistido/{id}', [ClienteController::class, 'cambiar_password_asistido'])->name('funcionario_cambiar_password_asistido');
     });

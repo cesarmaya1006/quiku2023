@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\PQR\tipoPQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -14,12 +15,12 @@ class WikuArgumento extends Model
     //----------------------------------------------------------------------------------
     public function autorInst()
     {
-        return $this->hasMany(WikuAutorInst::class, 'wikuautorinstitu_id', 'id');
+        return $this->belongsTo(WikuAutorInst::class, 'wikuautorinstitu_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function autor()
     {
-        return $this->hasMany(WikuAutor::class, 'wikuautores_id', 'id');
+        return $this->belongsTo(WikuAutor::class, 'wikuautores_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function temaEspecifico()
@@ -39,7 +40,7 @@ class WikuArgumento extends Model
     //----------------------------------------------------------------------------------
     public function asociaciones()
     {
-        return $this->hasMany(WikuAsociacionArg::class, 'wikuargumento_id', 'id');
+        return $this->hasMany(WikuAsociacionArg::class, 'wiku_argumento_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function tipopqr()

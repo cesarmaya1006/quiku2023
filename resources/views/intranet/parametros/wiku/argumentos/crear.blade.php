@@ -6,7 +6,7 @@
 @endsection
 <!-- Pagina CSS -->
 @section('estilosHojas')
-
+    <link rel="stylesheet" href="{{ asset('css/intranet/parametros/argumentos.css') }}">
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
@@ -47,10 +47,77 @@
             </div>
         </div>
     </div>
+    <!-- Modales -->
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="modalAutorInst" tabindex="-1" aria-labelledby="modalAutorInstLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAutorInstLabel">NUevo Autor Institucional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="institucion">Institución</label>
+                            <input type="text" class="form-control form-control-sm" name="institucion" id="institucion"
+                                aria-describedby="helpId" value="{{ old('institucion') }}" placeholder="" required>
+                            <small id="helpId" class="form-text text-muted">Nombre de la institución</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data_url="{{ route('wiku_argumento-cargarautori') }}"
+                        id="crearAutorInst" data-bs-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAutor" tabindex="-1" aria-labelledby="modalAutorLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAutorLabel">Nuevo Autor Institucional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="nombre1">Primer Nombre</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre1" id="nombre1"
+                                aria-describedby="helpId" value="{{ old('nombre1') }}" placeholder="" required>
+                        </div>
+                        <div class="col-11 form-group">
+                            <label for="nombre2">Segundo Nombre</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre2" id="nombre2"
+                                aria-describedby="helpId" value="{{ old('nombre2') }}" placeholder="" required>
+                        </div>
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="apellido1">Primer Apellido</label>
+                            <input type="text" class="form-control form-control-sm" name="apellido1" id="apellido1"
+                                aria-describedby="helpId" value="{{ old('apellido1') }}" placeholder="" required>
+                        </div>
+                        <div class="col-11 form-group">
+                            <label for="apellido2">Segundo Apellido</label>
+                            <input type="text" class="form-control form-control-sm" name="apellido2" id="apellido2"
+                                aria-describedby="helpId" value="{{ old('apellido2') }}" placeholder="" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data_url="{{ route('wiku_argumento-cargarautor') }}"
+                        id="crearAutor" data-bs-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/intranet/parametros/argumentos.js') }}"></script>
     <script src="{{ asset('js/intranet/parametros/fuentes.js') }}"></script>
 @endsection

@@ -2,6 +2,14 @@
 
 namespace App\Models\Admin;
 
+use App\Models\PQR\Motivo;
+use App\Models\PQR\SubMotivo;
+use App\Models\PQR\tipoPQR;
+use App\Models\Productos\Categoria;
+use App\Models\Productos\Marca;
+use App\Models\Productos\Producto;
+use App\Models\Productos\Referencia;
+use App\Models\Servicios\Servicio;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +62,6 @@ class WikuAsociacionArg extends Model
     //----------------------------------------------------------------------------------
     public function argumentos()
     {
-        return $this->belongsToMany(WikuArgumento::class, 'wikuargumento_id', 'id');
+        return $this->belongsToMany(WikuArgumento::class, 'wiku_argumento_id', 'id');
     }
 }

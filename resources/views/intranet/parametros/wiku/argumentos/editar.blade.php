@@ -10,7 +10,7 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Parametros - Fuentes Normas
+    Parametros - Fuentes Argumentos
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
@@ -20,7 +20,7 @@
         <div class="card-header">
             <div class="row mb-3">
                 <div class="col-12 col-md-6 col-lg-6 text-md-left text-lg-left pl-2">
-                    <h5>Editar Norma - {{ $norma->documento->fuente . ' - Art ' . $norma->articulo }}</h5>
+                    <h5>Editar Argumento</h5>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 text-md-right text-lg-right pl-2 pr-md-5 pr-lg-5">
                     <a href="{{ route('wiku-index') }}" class="btn btn-success btn-xs btn-sm text-center pl-3 pr-3"
@@ -29,8 +29,8 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <form action="{{ route('wiku_norma-actualizar', ['id' => $norma->id]) }}" class="form-horizontal row"
-                        method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <form action="{{ route('wiku_argumento-actualizar', ['id' => $argumento->id]) }}"
+                        class="form-horizontal row" method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="card-body">
@@ -40,7 +40,7 @@
                                         class="btn btn-primary btn-xs btn-sombra pl-4 pr-4">Actualizar</button>
                                 </div>
                             </div>
-                            @include('intranet.parametros.wiku.normas.formeditar')
+                            @include('intranet.parametros.wiku.argumentos.formeditar')
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer"></div>
@@ -72,7 +72,7 @@
                                     <h6>Criterios Juridicos Asociados</h6>
                                 </div>
                                 <div class="col-12 col-md-6 text-md-right pl-2">
-                                    <a href="{{ route('wiku_criterios-index', ['id' => $norma->id, 'wiku' => 'norma']) }}"
+                                    <a href="{{ route('wiku_argcriterios-index', ['id' => $argumento->id, 'wiku' => 'argumento']) }}"
                                         class="btn btn-info btn-xs text-center pl-3 pr-3" style="font-size: 0.9em;"><i
                                             class="fas fa-plus-circle mr-2"></i> Asociar criterio
                                         jurídico</a>
@@ -91,7 +91,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($norma->criterios as $criterio)
+                                            @foreach ($argumento->criterios as $criterio)
                                                 <tr>
                                                     <td>{{ $criterio->autores }}</td>
                                                     <td>{{ $criterio->criterio_si }}</td>
@@ -108,7 +108,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-12">
                     <div class="card card-outline card-primary collapsed-card">
@@ -128,7 +127,7 @@
                                     <h6>Palabras claves asociadas</h6>
                                 </div>
                                 <div class="col-12 col-md-6 text-md-right pl-2">
-                                    <a href="{{ route('wiku_palabras-index', ['id' => $norma->id, 'wiku' => 'norma']) }}"
+                                    <a href="{{ route('wiku_palabras-index', ['id' => $argumento->id, 'wiku' => 'argumento']) }}"
                                         class="btn btn-info btn-xs text-center pl-3 pr-3" style="font-size: 0.9em;"><i
                                             class="fas fa-plus-circle mr-2"></i> Asociar palabra clave</a>
                                 </div>
@@ -136,8 +135,8 @@
                             <div class="row">
                                 <div class="col-12" style="font-size: 0.8em;">
                                     <ul>
-                                        @if ($norma->palabras->count() > 0)
-                                            @foreach ($norma->palabras as $palabra)
+                                        @if ($argumento->palabras->count() > 0)
+                                            @foreach ($argumento->palabras as $palabra)
                                                 <li>{{ $palabra->palabra }}</li>
                                             @endforeach
                                         @endif
@@ -168,7 +167,7 @@
                                     <h6>Asociaciones al sistema</h6>
                                 </div>
                                 <div class="col-12 col-md-6 text-md-right pl-2">
-                                    <a href="{{ route('wiku_asociacion-crear', ['id' => $norma->id, 'wiku' => 'norma']) }}"
+                                    <a href="{{ route('wiku_argasociacion-crear', ['id' => $argumento->id, 'wiku' => 'argumento']) }}"
                                         class="btn btn-info btn-xs text-center pl-3 pr-3" style="font-size: 0.9em;"><i
                                             class="fas fa-plus-circle mr-2"></i> Nueva Asociación</a>
                                 </div>
@@ -191,13 +190,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($norma->asociaciones as $asociacion)
+                                            @foreach ($argumento->asociaciones as $asociacion)
                                                 <tr>
-                                                    <td class="text-center">{{ $asociacion->tipopqr[0]->tipo }}</td>
-                                                    <td class="text-center">{{ $asociacion->motivo_pqr[0]->motivo }}
+                                                    <td class="text-center">
+                                                        {{ count($asociacion->tipopqr) > 0 ? $asociacion->tipopqr[0]->tipo : '' }}
                                                     </td>
                                                     <td class="text-center">
-                                                        {{ $asociacion->submotivo_pqr[0]->sub_motivo }}
+                                                        {{ count($asociacion->motivo_pqr) > 0 ? $asociacion->motivo_pqr[0]->motivo : '' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ count($asociacion->submotivo_pqr) > 0 ? $asociacion->submotivo_pqr[0]->sub_motivo : '' }}
                                                     </td>
                                                     <td class="text-center">{{ $asociacion->prodserv }}</td>
                                                     <td class="text-center">
@@ -217,7 +219,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <form
-                                                            action="{{ route('wiku_asociacion-eliminar', ['id' => $asociacion->id]) }}"
+                                                            action="{{ route('wiku_argasociacion-eliminar', ['id' => $asociacion->id]) }}"
                                                             class="d-inline form-eliminar" method="POST">
                                                             @csrf @method("delete")
                                                             <button type="submit"
@@ -235,6 +237,72 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modales -->
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="modalAutorInst" tabindex="-1" aria-labelledby="modalAutorInstLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAutorInstLabel">NUevo Autor Institucional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="institucion">Institución</label>
+                            <input type="text" class="form-control form-control-sm" name="institucion" id="institucion"
+                                aria-describedby="helpId" value="{{ old('institucion') }}" placeholder="" required>
+                            <small id="helpId" class="form-text text-muted">Nombre de la institución</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data_url="{{ route('wiku_argumento-cargarautori') }}"
+                        id="crearAutorInst" data-bs-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAutor" tabindex="-1" aria-labelledby="modalAutorLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAutorLabel">Nuevo Autor Institucional</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="nombre1">Primer Nombre</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre1" id="nombre1"
+                                aria-describedby="helpId" value="{{ old('nombre1') }}" placeholder="" required>
+                        </div>
+                        <div class="col-11 form-group">
+                            <label for="nombre2">Segundo Nombre</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre2" id="nombre2"
+                                aria-describedby="helpId" value="{{ old('nombre2') }}" placeholder="" required>
+                        </div>
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="apellido1">Primer Apellido</label>
+                            <input type="text" class="form-control form-control-sm" name="apellido1" id="apellido1"
+                                aria-describedby="helpId" value="{{ old('apellido1') }}" placeholder="" required>
+                        </div>
+                        <div class="col-11 form-group">
+                            <label for="apellido2">Segundo Apellido</label>
+                            <input type="text" class="form-control form-control-sm" name="apellido2" id="apellido2"
+                                aria-describedby="helpId" value="{{ old('apellido2') }}" placeholder="" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data_url="{{ route('wiku_argumento-cargarautor') }}"
+                        id="crearAutor" data-bs-dismiss="modal">Guardar</button>
                 </div>
             </div>
         </div>

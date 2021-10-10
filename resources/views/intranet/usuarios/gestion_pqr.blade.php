@@ -748,7 +748,11 @@
                         @if ($peticion->respuesta)
                             <div class="rounded border p-2">
                                 <h4 class="mb-4">Respuesta PQR</h4>
-                                @if ($pqr->anexos)
+                                <strong class="mx-2">
+                                    <a href="{{ route('descarga_respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Descarga</a>
+                                </strong>
+                                {{-- @if ($pqr->anexos)
                                     @if (sizeOf($pqr->anexos->where('tareas_id', 4)) == 1)
                                         @php
                                             $respuesta = $pqr->anexos->where('tareas_id', '4')->last();
@@ -796,7 +800,7 @@
                                         </table>
                                     @endif
                                 @endif
-                                <hr>
+                                <hr> --}}
                             </div>
                         @endif
                         {{-- Fin Bloque respuesta PQR --}}
