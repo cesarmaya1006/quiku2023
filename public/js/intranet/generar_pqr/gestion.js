@@ -1,4 +1,9 @@
-window.addEventListener('DOMContentLoaded', function(){
+window.addEventListener('DOMContentLoaded', function() {
+    //================================================================
+
+
+    //================================================================
+
     const id_pqr = document.querySelector('.id_pqr').value
 
     // Funcion para reasignar petición
@@ -13,9 +18,9 @@ window.addEventListener('DOMContentLoaded', function(){
                 break;
         }
     });
-    
+
     // Carga de cargos en selector
-    if(document.querySelectorAll('.cargo')){
+    if (document.querySelectorAll('.cargo')) {
         const cargos = document.querySelectorAll('.cargo')
         cargos.forEach(cargo => {
             const url_t = cargo.getAttribute('data_url')
@@ -79,7 +84,8 @@ window.addEventListener('DOMContentLoaded', function(){
     btnRecursosGuardar.forEach(e => {
         e.addEventListener('click', guardarRespuestaRecurso)
     })
-    function guardarRespuestaRecurso(e){
+
+    function guardarRespuestaRecurso(e) {
         e.preventDefault()
         let contenedor = e.target.parentNode.parentNode
         let url = e.target.getAttribute('data_url')
@@ -87,70 +93,70 @@ window.addEventListener('DOMContentLoaded', function(){
         let idRecurso = contenedor.querySelector('.id_recurso').value
         let tipo_reposicion_id = contenedor.querySelector('.tipo_reposicion_id').value
         let resprecursos_id = 0
-        if(tipo_reposicion_id == 2){
-            if(contenedor.nextElementSibling.nextElementSibling.classList.contains('form-respuesta-recursos')){
+        if (tipo_reposicion_id == 2) {
+            if (contenedor.nextElementSibling.nextElementSibling.classList.contains('form-respuesta-recursos')) {
                 let contenedorApelacion = contenedor.nextElementSibling.nextElementSibling
                 let idRecursoApelacion = contenedorApelacion.querySelector('.id_recurso').value
                 let tipo_reposicion_apelacion_id = contenedorApelacion.querySelector('.tipo_reposicion_id').value
                 swal("¿Se concede el recurso de apelación?", "Sí: se debe remitir al superior, No: se cierra la petición", {
-                    buttons: {
-                        definitiva: {
-                            text: "Sí",
-                            value: "si",
-                            className: "bg-primary",
+                        buttons: {
+                            definitiva: {
+                                text: "Sí",
+                                value: "si",
+                                className: "bg-primary",
+                            },
+                            parcial: {
+                                text: "No",
+                                value: "no",
+                                className: "bg-primary",
+                            },
+                            cancel: "Cancelar",
                         },
-                        parcial: {
-                            text: "No",
-                            value: "no",
-                            className: "bg-primary",
-                        },
-                        cancel: "Cancelar",
-                    },
-                  })
-                  .then((value) => {
-                    switch (value) {
-                      case "si":
-                        let data = {
-                            recurso_id : idRecurso,
-                            id: id_pqr,
-                            tipo_reposicion_id
-                        }
-                        guardar_recurso(data)
-                        break;
-                      case "no":
-                        let data1 = {
-                            recurso_id : idRecurso,
-                            id: id_pqr,
-                            tipo_reposicion_id
-                        }
-                        guardar_recurso(data1)
+                    })
+                    .then((value) => {
+                        switch (value) {
+                            case "si":
+                                let data = {
+                                    recurso_id: idRecurso,
+                                    id: id_pqr,
+                                    tipo_reposicion_id
+                                }
+                                guardar_recurso(data)
+                                break;
+                            case "no":
+                                let data1 = {
+                                    recurso_id: idRecurso,
+                                    id: id_pqr,
+                                    tipo_reposicion_id
+                                }
+                                guardar_recurso(data1)
 
-                        let data2 = {
-                            recurso_id : idRecursoApelacion,
-                            id: id_pqr,
-                            tipo_reposicion_id: tipo_reposicion_apelacion_id,
-                            apelacionCierre: 1,
-                            respuesta: "Cierre automatico por recurso de reposicón"
+                                let data2 = {
+                                    recurso_id: idRecursoApelacion,
+                                    id: id_pqr,
+                                    tipo_reposicion_id: tipo_reposicion_apelacion_id,
+                                    apelacionCierre: 1,
+                                    respuesta: "Cierre automatico por recurso de reposicón"
+                                }
+                                guardar_recurso(data2)
+                                break;
+
+                            default:
                         }
-                        guardar_recurso(data2)
-                        break;
-                   
-                      default:
-                    }
-                });
+                    });
             }
-        }else {
+        } else {
             let data = {
-                recurso_id : idRecurso,
+                recurso_id: idRecurso,
                 id: id_pqr,
                 tipo_reposicion_id
             }
             guardar_recurso(data)
         }
 
-        function guardar_recurso(data){
+        function guardar_recurso(data) {
             $.ajax({
-                async:false,
+                async: false,
                 url: url,
                 type: 'POST',
                 headers: { 'X-CSRF-TOKEN': token },
@@ -163,7 +169,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     console.log(error.responseJSON)
                 }
             });
-            if(!data.apelacionCierre){
+            if (!data.apelacionCierre) {
                 let anexosRecursos = contenedor.querySelectorAll('.anexoRespuestaRecurso')
                 anexosRecursos.forEach(anexo => {
                     let titulo = anexo.querySelector('.titulo-anexoRespuestaRecurso input').value
@@ -176,14 +182,14 @@ window.addEventListener('DOMContentLoaded', function(){
                     dataAnexo.append('archivo', archivo);
                     dataAnexo.append('_token', token);
                     let urlAnexo = anexo.parentNode.parentNode.parentNode
-                    urlAnexo =  urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
+                    urlAnexo = urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
                     $.ajax({
-                        async:false,
+                        async: false,
                         url: urlAnexo,
                         type: 'POST',
                         headers: { 'X-CSRF-TOKEN': token },
                         data: dataAnexo,
-                        processData: false, 
+                        processData: false,
                         contentType: false,
                         success: function(respuesta) {
                             // console.log(respuesta)
@@ -213,26 +219,26 @@ window.addEventListener('DOMContentLoaded', function(){
 
     let verificacionAclaracion = document.querySelectorAll('.respuestaAclaracion')
     verificacionAclaracion.forEach(item => {
-        if(item.value == 1){
-            if(item.parentElement.querySelector('.aclaracion_check_si')){
-                item.parentElement.querySelector('.aclaracion_check_si').setAttribute('checked','')
-                item.parentElement.querySelector('.aclaracion_check_no').setAttribute('disabled','')
+        if (item.value == 1) {
+            if (item.parentElement.querySelector('.aclaracion_check_si')) {
+                item.parentElement.querySelector('.aclaracion_check_si').setAttribute('checked', '')
+                item.parentElement.querySelector('.aclaracion_check_no').setAttribute('disabled', '')
             }
-        }else{
-            if(item.parentElement.querySelector('.aclaracion_check_no')){
-                item.parentElement.querySelector('.aclaracion_check_no').setAttribute('checked','')
+        } else {
+            if (item.parentElement.querySelector('.aclaracion_check_no')) {
+                item.parentElement.querySelector('.aclaracion_check_no').setAttribute('checked', '')
                 item.parentElement.querySelector('.aclaracion').parentElement.classList.add('d-none')
             }
         }
     })
 
 
-    // Guardar aclaracion 
-    if(document.querySelector('.btn-aclaracion')){
+    // Guardar aclaracion
+    if (document.querySelector('.btn-aclaracion')) {
         let btnAclaraciones = document.querySelectorAll('.btn-aclaracion')
-        btnAclaraciones.forEach(btn=> btn.addEventListener('click', guardarAclaraciones))
+        btnAclaraciones.forEach(btn => btn.addEventListener('click', guardarAclaraciones))
 
-        function guardarAclaraciones(btn){
+        function guardarAclaraciones(btn) {
             btn.preventDefault()
             padreAclaracion = btn.target.parentElement.parentElement.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -240,7 +246,7 @@ window.addEventListener('DOMContentLoaded', function(){
             let tipoAclaracion = padreAclaracion.querySelector('.tipo_aclaracion').value
             let solicitudAclaracion = padreAclaracion.querySelector('.solicitud_aclaracion').value
             let id_peticion = padreAclaracion.querySelector('.id_peticion').value
-            if(tipoAclaracion != '' && solicitudAclaracion != ''){
+            if (tipoAclaracion != '' && solicitudAclaracion != '') {
                 let data = {
                     tipoAclaracion,
                     solicitudAclaracion,
@@ -253,25 +259,25 @@ window.addEventListener('DOMContentLoaded', function(){
                     data: data,
                     success: function(respuesta) {
                         location.reload();
-        
+
                     },
                     error: function(error) {
                         console.log(error)
                     }
                 });
-            }else{
+            } else {
                 alert('Debe diligenciar todos los campos del formulario')
             }
         }
     }
 
     // Inicio Función para generar varios anexos en una consulta con validación.
-    if(document.querySelectorAll('.crearAnexo').length){
+    if (document.querySelectorAll('.crearAnexo').length) {
         let btncrearAnexo = document.querySelectorAll('.crearAnexo')
         btncrearAnexo.forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
         let btnEliminarAnexo = document.querySelector('.eliminaranexoConsulta')
         btnEliminarAnexo.addEventListener('click', agregarEliminarAnexo)
-    
+
         function crearNuevoAnexo(e) {
             e.preventDefault()
             let consulta = e.target.parentNode.parentNode
@@ -282,13 +288,13 @@ window.addEventListener('DOMContentLoaded', function(){
             consulta.querySelector('.anexosConsulta').appendChild(nuevoAnexo)
             document.querySelectorAll('.eliminaranexoConsulta').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
         }
-    
+
         function agregarEliminarAnexo(e) {
             e.preventDefault()
             let consulta = e.target
             if (consulta.tagName === 'I') {
                 consulta = consulta.parentNode.parentNode.parentNode.parentNode
-            }else {
+            } else {
                 consulta = consulta.parentNode.parentNode.parentNode
             }
             if (consulta.querySelectorAll('.anexoconsulta').length >= 2) {
@@ -303,12 +309,12 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-    // Guardar respuesta 
-    if(document.querySelector('.btn-respuesta')){
+    // Guardar respuesta
+    if (document.querySelector('.btn-respuesta')) {
         let btnRespuestas = document.querySelectorAll('.btn-respuesta')
-        btnRespuestas.forEach(btn=> btn.addEventListener('click', guardarRespuestas))
+        btnRespuestas.forEach(btn => btn.addEventListener('click', guardarRespuestas))
 
-        function guardarRespuestas(btn){
+        function guardarRespuestas(btn) {
             btn.preventDefault()
             padreRespuesta = btn.target.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -317,48 +323,48 @@ window.addEventListener('DOMContentLoaded', function(){
             let respuesta = padreRespuesta.querySelector('.respuesta').value
             let id_peticion = padreRespuesta.parentElement.querySelector('.id_peticion').value
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
-            if(respuesta != ''){
-                  swal("Guardar la respúesta como:", {
-                    buttons: {
-                        definitiva: {
-                            text: "Definitiva",
-                            value: "definitiva",
-                            className: "bg-primary",
+            if (respuesta != '') {
+                swal("Guardar la respúesta como:", {
+                        buttons: {
+                            definitiva: {
+                                text: "Definitiva",
+                                value: "definitiva",
+                                className: "bg-primary",
+                            },
+                            parcial: {
+                                text: "Parcial",
+                                value: "parcial",
+                                className: "bg-primary",
+                            },
+                            cancel: "Cancelar",
                         },
-                        parcial: {
-                            text: "Parcial",
-                            value: "parcial",
-                            className: "bg-primary",
-                        },
-                        cancel: "Cancelar",
-                    },
-                  })
-                  .then((value) => {
-                    switch (value) {
-                      case "definitiva":
-                        let data = {
-                            respuesta,
-                            id_peticion,
-                            estado : 11
+                    })
+                    .then((value) => {
+                        switch (value) {
+                            case "definitiva":
+                                let data = {
+                                    respuesta,
+                                    id_peticion,
+                                    estado: 11
+                                }
+                                guardarRespuesta(data)
+                                break;
+
+
+                            case "parcial":
+                                let data1 = {
+                                    respuesta,
+                                    id_peticion
+                                }
+                                guardarRespuesta(data1)
+                                break;
+
+                            default:
                         }
-                        guardarRespuesta(data)
-                        break;
-                        
-                   
-                      case "parcial":
-                        let data1 = {
-                            respuesta,
-                            id_peticion
-                        }
-                        guardarRespuesta(data1)
-                        break;
-                   
-                      default:
-                    }
-                  });
+                    });
             }
-            
-            function guardarRespuesta(data){
+
+            function guardarRespuesta(data) {
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -378,7 +384,7 @@ window.addEventListener('DOMContentLoaded', function(){
                         let data = {
                             mensajeHistorial: `Respuesta anterior: "${respuesta_anterior.value}"`,
                             idPqr: id_pqr,
-                            idPeticion : id_peticion
+                            idPeticion: id_peticion
                         }
                         $.ajax({
                             url: url_respuesta_anterior,
@@ -393,11 +399,11 @@ window.addEventListener('DOMContentLoaded', function(){
                             }
                         });
                     }
-                    
+
                 }
             }
 
-            function guardarRespuestaAnexo(anexos, idrespuesta){
+            function guardarRespuestaAnexo(anexos, idrespuesta) {
                 anexos.forEach(anexo => {
                     let titulo = anexo.querySelector('.titulo').value
                     let descripcion = anexo.querySelector('.descripcion').value
@@ -410,12 +416,12 @@ window.addEventListener('DOMContentLoaded', function(){
                         dataAnexo.append('archivo', archivo);
                         dataAnexo.append('_token', token);
                         $.ajax({
-                            async:false,
+                            async: false,
                             url: url2,
                             type: 'POST',
                             headers: { 'X-CSRF-TOKEN': token },
                             data: dataAnexo,
-                            processData: false, 
+                            processData: false,
                             contentType: false,
                             success: function(respuesta) {
                                 // console.log(respuesta)
@@ -431,19 +437,19 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-    
-    // Guardar estado 
-    if(document.querySelector('.btn-estado')){
-        let btnEstados = document.querySelectorAll('.btn-estado')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
+    // Guardar estado
+    if (document.querySelector('.btn-estado')) {
+        let btnEstados = document.querySelectorAll('.btn-estado')
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
+
+        function guardarEstado(btn) {
             btn.preventDefault()
-            let btnE = btn.target 
+            let btnE = btn.target
             if (btnE.tagName === 'I') {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
                 btnE = btnE.parentElement.parentElement
-            }else {
+            } else {
                 padreEstado = btnE.parentElement.parentElement.parentElement
             }
             console.log(padreEstado)
@@ -458,7 +464,7 @@ window.addEventListener('DOMContentLoaded', function(){
             }
             if (estado == 11 && respuesta == '') {
                 alert('Para guardar el 100% debe agregar una respuesta antes')
-            }else{
+            } else {
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -466,7 +472,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     data: data,
                     success: function(respuesta) {
                         location.reload();
-        
+
                     },
                     error: function(error) {
                         console.log(error)
@@ -477,26 +483,26 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
     // Guardar estado recurso
-    if(document.querySelector('.btn-estado-recurso')){
+    if (document.querySelector('.btn-estado-recurso')) {
         let btnEstados = document.querySelectorAll('.btn-estado-recurso')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
+        function guardarEstado(btn) {
             btn.preventDefault()
-            let btnE = btn.target 
+            let btnE = btn.target
             if (btnE.tagName === 'I') {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
                 btnE = btnE.parentElement.parentElement
-            }else {
+            } else {
                 padreEstado = btnE.parentElement.parentElement.parentElement
             }
             let url = btnE.getAttribute('data_url')
             let token = btnE.getAttribute('data_token')
             let estado = padreEstado.querySelector('.estadoPeticion').value
             let id_peticion = padreEstado.parentElement.parentElement.parentElement.querySelector('.id_peticion').value
-            if(padreEstado.parentElement.parentElement.parentElement.querySelectorAll('.form-respuesta-recursos').length){
+            if (padreEstado.parentElement.parentElement.parentElement.querySelectorAll('.form-respuesta-recursos').length) {
                 alert('Debe responder todos los recursos de la petición')
-            }else{
+            } else {
                 let data = {
                     estado,
                     id_peticion
@@ -508,7 +514,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     data: data,
                     success: function(respuesta) {
                         location.reload();
-        
+
                     },
                     error: function(error) {
                         console.log(error)
@@ -519,10 +525,10 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
     // Guardar reasignar petición a funcionario
-    if(document.querySelectorAll('.reasignacion_peticion_guardar')){
+    if (document.querySelectorAll('.reasignacion_peticion_guardar')) {
         let reasignacionPeticiones = document.querySelectorAll('.reasignacion_peticion_guardar')
         reasignacionPeticiones.forEach(reasignacion => {
-            reasignacion.addEventListener('click', function(e){
+            reasignacion.addEventListener('click', function(e) {
                 e.preventDefault()
                 let padre = e.target.parentElement.parentElement.parentElement.parentElement.parentElement
                 let url = e.target.getAttribute('data_url')
@@ -534,10 +540,11 @@ window.addEventListener('DOMContentLoaded', function(){
                 let mensajeHistorial = padre.querySelector('.mensaje-historial-peticion').value
                 if (peticion == '' || cargo == '' || funcionario == '' || mensajeHistorial == '') {
                     alert("Debe dilegenciar todos los campos")
-                }else{
+                } else {
                     guardarReasignacionPeticion()
                 }
-                function guardarReasignacionPeticion (){
+
+                function guardarReasignacionPeticion() {
                     let data = {
                         peticion,
                         funcionario
@@ -576,11 +583,12 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-    //  Guardar Historial PQR-peticion  
-    if(document.querySelector('.guardarHistorialPeticion')){
+    //  Guardar Historial PQR-peticion
+    if (document.querySelector('.guardarHistorialPeticion')) {
         let HistorialPeticiones = document.querySelectorAll('.guardarHistorialPeticion')
         HistorialPeticiones.forEach(btn => btn.addEventListener('click', guardarHistorialPeticiones))
-        function guardarHistorialPeticiones(btn){
+
+        function guardarHistorialPeticiones(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -589,11 +597,11 @@ window.addEventListener('DOMContentLoaded', function(){
             let idPeticion = contenedorHisotrial.parentElement.querySelector('.id_peticion').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
-    
-            function guardarHistorialPeticion (){
+
+            function guardarHistorialPeticion() {
                 let data = {
                     mensajeHistorial,
                     idPqr: id_pqr,
@@ -612,7 +620,703 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                 });
             }
-        }   
+        }
     }
+
+    $("#query").keyup(function() {
+        const radio = $('input:radio[name=radio1]:checked').val();
+        const url_t = $(this).attr('data_url');
+        const query = $(this).val();
+        $html_ = '';
+        if (query != '') {
+            var data = {
+                "query": query,
+                "radio": radio,
+            };
+            $.ajax({
+                url: url_t,
+                type: 'GET',
+                data: data,
+                success: function(respuesta) {
+                    console.log(respuesta);
+                    $html_ = '';
+                    $.each(respuesta.argumentos, function(index, argumento) {
+                        $html_ += '<div class="col -12 col-md-10">';
+                        $html_ += '<div class="card card-success bg-legal1 collapsed-card card-mini-sombra">';
+                        $html_ += '<div class="card-header">';
+                        $html_ += '<div class="user-block">';
+                        $html_ += '<span class="username"><a href="#">Argumento</a></span>';
+                        $html_ += '<span class="description text-white" >' + argumento.tema_especifico.tema_.area['area'] + '->' + argumento.tema_especifico.tema_['tema'] + '->' + argumento.tema_especifico['tema'] + '</span>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-tools">';
+                        $html_ += '<button type="button" class="btn btn-tool" data-card-widget="collapse">';
+                        $html_ += '<i class="fas fa-plus"></i>';
+                        $html_ += '</button>';
+                        $html_ += '<button type="button" class="btn btn-tool" data-card-widget="remove">';
+                        $html_ += '<i class="fas fa-times"></i>';
+                        $html_ += '</button>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-body">';
+                        $html_ += '<div class="row">';
+                        $html_ += '<div class="col-12">';
+                        $html_ += '<p><strong>Texto:</strong></p>';
+                        $html_ += '<p class="textoCopiar">' + argumento['texto'] + '</p>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="row">';
+                        if (argumento.criterios.length > 0) {
+                            $html_ += '<hr>';
+                            $html_ += '<div class="row">';
+                            $html_ += '<div class="col-12"><h6>Criterios Juridicos</h6></div>';
+                            $html_ += '<div class="col-12 table-responsive" style="font-size:0.8em;">';
+                            $html_ += '<table class="table">';
+                            $html_ += '<thead>';
+                            $html_ += '<tr>';
+                            $html_ += '<th style="white-space:nowrap">Autor(es)</th>';
+                            $html_ += '<th style="white-space:nowrap">Criterios jurídicos de aplicación</th>';
+                            $html_ += '<th style="white-space:nowrap">Criterios jurídicos de no aplicación</th>';
+                            $html_ += '<th style="white-space:nowrap">Notas de la Vigencia</th>';
+                            $html_ += '</tr>';
+                            $html_ += '</thead>';
+                            $html_ += '<tbody>';
+                            $.each(argumento.criterios, function(index, criterio) {
+                                $html_ += '<tr>';
+                                $html_ += '<td style="white-space:nowrap">' + criterio['autores'] + '</td>';
+                                if (criterio['criterio_si'] != null) {
+                                    $html_ += '<td>' + criterio['criterio_si'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                if (criterio['criterio_no'] != null) {
+                                    $html_ += '<td>' + criterio['criterio_no'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                if (criterio['notas'] != null) {
+                                    $html_ += '<td>' + criterio['notas'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                $html_ += '</tr>';
+                            })
+                            $html_ += '</tbody>';
+                            $html_ += '</table>';
+                            $html_ += '</div>';
+                            $html_ += '</div>';
+                        } else {
+                            $html_ += '<div class="col-12 text-center"><p><strong>Sin criterios jurídicos</strong></p></div>';
+                        }
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-footer ">';
+                        $html_ += '<div class="row">';
+                        $html_ += '<div class="col-12">';
+                        $html_ += '<button class="btn btn-info btn-xs pl-4 pr-4 agregarTexto" onclick="cargarTextoW()">Agregar</button>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+
+                    });
+                    $.each(respuesta.normas, function(index, norma) {
+                        $html_ += '<div class="col -12 col-md-10">';
+                        $html_ += '<div class="card card-info collapsed-card card-mini-sombra">';
+                        $html_ += '<div class="card-header">';
+                        $html_ += '<div class="user-block">';
+                        $html_ += '<span class="username"><a href="#">Norma</a></span>';
+                        $html_ += '<span class="description text-white" >' + norma.tema_especifico.tema_.area['area'] + '->' + norma.tema_especifico.tema_['tema'] + '->' + norma.tema_especifico['tema'] + '->' + norma['articulo'] + '</span>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-tools">';
+                        $html_ += '<button type="button" class="btn btn-tool" data-card-widget="collapse">';
+                        $html_ += '<i class="fas fa-plus"></i>';
+                        $html_ += '</button>';
+                        $html_ += '<button type="button" class="btn btn-tool" data-card-widget="remove">';
+                        $html_ += '<i class="fas fa-times"></i>';
+                        $html_ += '</button>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-body">';
+                        $html_ += '<div class="row">';
+                        $html_ += '<div class="col-12">';
+                        $html_ += '<p><strong>Texto:</strong> ' + norma['texto'] + '</p>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="row">';
+                        if (norma.criterios.length > 0) {
+                            $html_ += '<hr>';
+                            $html_ += '<div class="row">';
+                            $html_ += '<div class="col-12"><h6>Criterios Juridicos</h6></div>';
+                            $html_ += '<div class="col-12 table-responsive" style="font-size:0.8em;">';
+                            $html_ += '<table class="table">';
+                            $html_ += '<thead>';
+                            $html_ += '<tr>';
+                            $html_ += '<th style="white-space:nowrap">Autor(es)</th>';
+                            $html_ += '<th style="white-space:nowrap">Criterios jurídicos de aplicación</th>';
+                            $html_ += '<th style="white-space:nowrap">Criterios jurídicos de no aplicación</th>';
+                            $html_ += '<th style="white-space:nowrap">Notas de la Vigencia</th>';
+                            $html_ += '</tr>';
+                            $html_ += '</thead>';
+                            $html_ += '<tbody>';
+                            $.each(norma.criterios, function(index, criterio) {
+                                $html_ += '<tr>';
+                                $html_ += '<td style="white-space:nowrap">' + criterio['autores'] + '</td>';
+                                if (criterio['criterio_si'] != null) {
+                                    $html_ += '<td>' + criterio['criterio_si'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                if (criterio['criterio_no'] != null) {
+                                    $html_ += '<td>' + criterio['criterio_no'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                if (criterio['notas'] != null) {
+                                    $html_ += '<td>' + criterio['notas'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                $html_ += '</tr>';
+                            })
+                            $html_ += '</tbody>';
+                            $html_ += '</table>';
+                            $html_ += '</div>';
+                            $html_ += '</div>';
+                        } else {
+                            $html_ += '<div class="col-12 text-center"><p><strong>Sin criterios jurídicos</strong></p></div>';
+                        }
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-footer ">';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+
+                    });
+                    $('#coleccionrespuesta').html($html_);
+
+                },
+                error: function() {
+
+                }
+            });
+        } else {
+            $('#coleccionrespuesta').html($html_);
+        }
+
+    });
+    //==========================================================================
+    $('#tipo_wiku').on('change', function(event) {
+        if ($(this).val() != '') {
+            $('.cajaArea').removeClass('d-none');
+            $('.seccionProductosTipoPQR').removeClass('d-none');
+            $('.seccionAreaTemas').removeClass('d-none');
+
+        } else {
+            $('.cajaArea').addClass('d-none');
+            $('.seccionProductosTipoPQR').addClass('d-none');
+            $('.seccionAreaTemas').addClass('d-none');
+
+
+        }
+        if ($(this).val() == 'Argumentos') {
+            $('.seccionFuenteEmisora').addClass('d-none');
+            //-*+-*+-*+-*+-*+-*+-*+-*+-*
+            const url_t = $(this).attr('data_url');
+            $.ajax({
+                url: url_t,
+                type: 'GET',
+                success: function(respuesta) {
+                    console.log(respuesta);
+                    respuesta_html = '';
+                    respuesta_html += '<option value="">---Seleccione---</option>';
+                    $.each(respuesta, function(index, item) {
+                        respuesta_html += '<option value="' + item['id'] + '">' + item['id'] + '</option>';
+                    });
+                    $('#id').html(respuesta_html);
+                    $('#tituloID').html('Por Id');
+                },
+                error: function() {
+
+                }
+            });
+            //-*+-*+-*+-*+-*+-*+-*+-*+-*
+
+        } else if ($(this).val() == 'Normas') {
+            $('.seccionFuenteEmisora').removeClass('d-none');
+            $('#tituloID').html('Artículo');
+        }
+    });
+    //==========================================================================
+    $('#area_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                respuesta_html = '';
+                if (id != '') {
+                    respuesta_html += '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html += '<option value="">Seleccione primero un área</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['tema'] + '</option>';
+                });
+                $('#tema_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#tema_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                respuesta_html = '';
+                if (id != '') {
+                    respuesta_html += '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html += '<option value="">Seleccione primero un tema</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['tema'] + '</option>';
+                });
+                $('#wikutemaespecifico_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#fuente_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                respuesta_html = '';
+                if (id != '') {
+                    respuesta_html += '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html += '<option value="">Seleccione primero una Fuente Emisora</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['articulo'] + '</option>';
+                });
+                $('#id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#tipo_p_q_r_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+
+                respuesta_html = '<option value="">---Seleccione---</option>';
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['motivo'] + '</option>';
+                });
+                $('#motivo_id').html(respuesta_html);
+                $('#motivo_sub_id').html('<option value="">---Seleccione un motivo---</option>');
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#motivo_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                respuesta_html = '<option value="">---Seleccione---</option>';
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['sub_motivo'] + '</option>';
+                });
+                $('#motivo_sub_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#categoria_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Elija primero una categoria</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['producto'] + '</option>';
+                });
+                $('#producto_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#producto_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Elija primero un producto</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['marca'] + '</option>';
+                });
+                $('#marca_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#marca_id').on('change', function(event) {
+        const url_t = $(this).attr('data_url');
+        const id = $(this).val();
+        var data = {
+            "id": id,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+
+                if (respuesta != '') {
+                    respuesta_html = '<option value="">---Seleccione---</option>';
+                } else {
+                    respuesta_html = '<option value="">Elija primero una marca</option>';
+                }
+                $.each(respuesta, function(index, item) {
+                    respuesta_html += '<option value="' + item['id'] + '">' + item['referencia'] + '</option>';
+                });
+                $('#referencia_id').html(respuesta_html);
+            },
+            error: function() {
+
+            }
+        });
+
+    });
+    //==========================================================================
+    $('#prod_serv').on('change', function(event) {
+        if ($(this).val() == 'Producto') {
+            $('#servicios').addClass('d-none');
+            $('#categorias').removeClass('d-none');
+            $('#productos').removeClass('d-none');
+            $('#marcas').removeClass('d-none');
+            $('#referencias').removeClass('d-none');
+        } else if ($(this).val() == 'Servicio') {
+            $('#servicios').removeClass('d-none');
+            $('#categorias').addClass('d-none');
+            $('#productos').addClass('d-none');
+            $('#marcas').addClass('d-none');
+            $('#referencias').addClass('d-none');
+        } else {
+            $('#servicios').addClass('d-none');
+            $('#categorias').addClass('d-none');
+            $('#productos').addClass('d-none');
+            $('#marcas').addClass('d-none');
+            $('#referencias').addClass('d-none');
+        }
+
+    });
+    //==========================================================================
 })
 
+function busquedaAvanzada() {
+    const url_t = $("#btn_buscar").attr('data_url');
+    const tipo_wiku = $('#tipo_wiku');
+    const area_id = $('#area_id');
+    const tema_id = $('#tema_id');
+    const wikutemaespecifico_id = $('#wikutemaespecifico_id');
+    const fuente_id = $('#fuente_id');
+    const id = $('#id');
+    const fecha = $('#fecha');
+    const prod_serv = $('#prod_serv');
+    const tipo_p_q_r_id = $('#tipo_p_q_r_id');
+    const motivo_id = $('#motivo_id');
+    const motivo_sub_id = $('#motivo_sub_id');
+    const servicio_id = $('#servicio_id');
+    const categoria_id = $('#categoria_id');
+    const producto_id = $('#producto_id');
+    const marca_id = $('#marca_id');
+    const referencia_id = $('#referencia_id');
+    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    const tipowiku = tipo_wiku.val();
+    if (tipowiku != '') {
+        var data = {
+            "tipowiku": tipowiku,
+            "area_id": area_id.val(),
+            "tema_id": tema_id.val(),
+            "wikutemaespecifico_id": wikutemaespecifico_id.val(),
+            "fuente_id": fuente_id.val(),
+            "id": id.val(),
+            "fecha": fecha.val(),
+            "prod_serv": prod_serv.val(),
+            "tipo_p_q_r_id": tipo_p_q_r_id.val(),
+            "motivo_id": motivo_id.val(),
+            "motivo_sub_id": motivo_sub_id.val(),
+            "servicio_id": servicio_id.val(),
+            "categoria_id": categoria_id.val(),
+            "producto_id": producto_id.val(),
+            "marca_id": marca_id.val(),
+            "referencia_id": referencia_id.val(),
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                console.log(respuesta);
+                $html_ = '';
+                if (tipowiku == 'Normas') {
+                    $.each(respuesta, function(index, norma) {
+                        console.log(norma);
+                        $html_ += '<div class="col -12 col-md-10">';
+                        $html_ += '<div class="card card-info collapsed-card card-mini-sombra">';
+                        $html_ += '<div class="card-header">';
+                        $html_ += '<div class="user-block">';
+                        $html_ += '<span class="username"><a href="#">Norma</a></span>';
+                        $html_ += '<span class="description text-white" >' + norma.tema_especifico.tema_.area['area'] + '->' + norma.tema_especifico.tema_['tema'] + '->' + norma.tema_especifico['tema'] + '->' + norma['articulo'] + '</span>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-tools">';
+                        $html_ += '<button type="button" class="btn btn-tool" data-card-widget="collapse">';
+                        $html_ += '<i class="fas fa-plus"></i>';
+                        $html_ += '</button>';
+                        $html_ += '<button type="button" class="btn btn-tool" data-card-widget="remove">';
+                        $html_ += '<i class="fas fa-times"></i>';
+                        $html_ += '</button>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-body">';
+                        $html_ += '<div class="row">';
+                        $html_ += '<div class="col-12">';
+                        $html_ += '<p><strong>Texto:</strong> ' + norma['texto'] + '</p>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="row">';
+                        if (norma.criterios.length > 0) {
+                            $html_ += '<hr>';
+                            $html_ += '<div class="row">';
+                            $html_ += '<div class="col-12"><h6>Criterios Juridicos</h6></div>';
+                            $html_ += '<div class="col-12 table-responsive" style="font-size:0.8em;">';
+                            $html_ += '<table class="table">';
+                            $html_ += '<thead>';
+                            $html_ += '<tr>';
+                            $html_ += '<th style="white-space:nowrap">Autor(es)</th>';
+                            $html_ += '<th style="white-space:nowrap">Criterios jurídicos de aplicación</th>';
+                            $html_ += '<th style="white-space:nowrap">Criterios jurídicos de no aplicación</th>';
+                            $html_ += '<th style="white-space:nowrap">Notas de la Vigencia</th>';
+                            $html_ += '</tr>';
+                            $html_ += '</thead>';
+                            $html_ += '<tbody>';
+                            $.each(norma.criterios, function(index, criterio) {
+                                $html_ += '<tr>';
+                                $html_ += '<td style="white-space:nowrap">' + criterio['autores'] + '</td>';
+                                if (criterio['criterio_si'] != null) {
+                                    $html_ += '<td>' + criterio['criterio_si'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                if (criterio['criterio_no'] != null) {
+                                    $html_ += '<td>' + criterio['criterio_no'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                if (criterio['notas'] != null) {
+                                    $html_ += '<td>' + criterio['notas'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                $html_ += '</tr>';
+                            })
+                            $html_ += '</tbody>';
+                            $html_ += '</table>';
+                            $html_ += '</div>';
+                            $html_ += '</div>';
+                        } else {
+                            $html_ += '<div class="col-12 text-center"><p><strong>Sin criterios jurídicos</strong></p></div>';
+                        }
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-footer ">';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+
+                    });
+                } else if (tipowiku == 'Argumentos') {
+                    $.each(respuesta, function(index, argumento) {
+                        $html_ += '<div class="col -12 col-md-10">';
+                        $html_ += '<div class="card card-success bg-legal1 collapsed-card card-mini-sombra">';
+                        $html_ += '<div class="card-header">';
+                        $html_ += '<div class="user-block">';
+                        $html_ += '<span class="username"><a href="#">Argumento</a></span>';
+                        $html_ += '<span class="description text-white" >' + argumento.tema_especifico.tema_.area['area'] + '->' + argumento.tema_especifico.tema_['tema'] + '->' + argumento.tema_especifico['tema'] + '</span>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-tools">';
+                        $html_ += '<button type="button" class="btn btn-tool" data-card-widget="collapse">';
+                        $html_ += '<i class="fas fa-plus"></i>';
+                        $html_ += '</button>';
+                        $html_ += '<button type="button" class="btn btn-tool" data-card-widget="remove">';
+                        $html_ += '<i class="fas fa-times"></i>';
+                        $html_ += '</button>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-body">';
+                        $html_ += '<div class="row">';
+                        $html_ += '<div class="col-12">';
+                        $html_ += '<p><strong>Texto:</strong> ' + argumento['texto'] + '</p>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="row">';
+                        if (argumento.criterios.length > 0) {
+                            $html_ += '<hr>';
+                            $html_ += '<div class="row">';
+                            $html_ += '<div class="col-12"><h6>Criterios Juridicos</h6></div>';
+                            $html_ += '<div class="col-12 table-responsive" style="font-size:0.8em;">';
+                            $html_ += '<table class="table">';
+                            $html_ += '<thead>';
+                            $html_ += '<tr>';
+                            $html_ += '<th style="white-space:nowrap">Autor(es)</th>';
+                            $html_ += '<th style="white-space:nowrap">Criterios jurídicos de aplicación</th>';
+                            $html_ += '<th style="white-space:nowrap">Criterios jurídicos de no aplicación</th>';
+                            $html_ += '<th style="white-space:nowrap">Notas de la Vigencia</th>';
+                            $html_ += '</tr>';
+                            $html_ += '</thead>';
+                            $html_ += '<tbody>';
+                            $.each(argumento.criterios, function(index, criterio) {
+                                $html_ += '<tr>';
+                                $html_ += '<td style="white-space:nowrap">' + criterio['autores'] + '</td>';
+                                if (criterio['criterio_si'] != null) {
+                                    $html_ += '<td>' + criterio['criterio_si'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                if (criterio['criterio_no'] != null) {
+                                    $html_ += '<td>' + criterio['criterio_no'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                if (criterio['notas'] != null) {
+                                    $html_ += '<td>' + criterio['notas'] + '</td>';
+                                } else {
+                                    $html_ += '<td class="text-center">---</td>';
+                                }
+                                $html_ += '</tr>';
+                            })
+                            $html_ += '</tbody>';
+                            $html_ += '</table>';
+                            $html_ += '</div>';
+                            $html_ += '</div>';
+                        } else {
+                            $html_ += '<div class="col-12 text-center"><p><strong>Sin criterios jurídicos</strong></p></div>';
+                        }
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '<div class="card-footer ">';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+
+                    });
+                }
+                $('#coleccionrespuesta').html($html_);
+
+            },
+            error: function() {
+
+            }
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'fantan datos de busqueda',
+            text: 'Debe elegir al menos una categoria de wiku'
+        })
+        tipo_wiku.focus();
+    }
+
+}
+
+function cargarTextoW() {
+    const bloqueRespuestaS = $(this).closest('respuesta-peticion');
+    //const textAreaR = bloqueRespuestaS.find('respuesta-editar').val();
+    $("#pruebaPegar").html(bloqueRespuestaS.attr('html'));
+}
