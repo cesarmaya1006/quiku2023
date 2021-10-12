@@ -1,9 +1,4 @@
 window.addEventListener('DOMContentLoaded', function() {
-    //================================================================
-
-
-    //================================================================
-
     const id_pqr = document.querySelector('.id_pqr').value
 
     // Funcion para reasignar petición
@@ -642,7 +637,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     $html_ = '';
                     $.each(respuesta.argumentos, function(index, argumento) {
                         $html_ += '<div class="col -12 col-md-10">';
-                        $html_ += '<div class="card card-success bg-legal1 collapsed-card card-mini-sombra">';
+                        $html_ += '<div class="resultado-busqueda card card-success bg-legal1 collapsed-card card-mini-sombra">';
                         $html_ += '<div class="card-header">';
                         $html_ += '<div class="user-block">';
                         $html_ += '<span class="username"><a href="#">Argumento</a></span>';
@@ -712,7 +707,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         $html_ += '<div class="card-footer ">';
                         $html_ += '<div class="row">';
                         $html_ += '<div class="col-12">';
-                        $html_ += '<button class="btn btn-info btn-xs pl-4 pr-4 agregarTexto" onclick="cargarTextoW()">Agregar</button>';
+                        $html_ += '<button class="btn btn-info btn-xs pl-4 pr-4 agregarTexto">Agregar</button>';
                         $html_ += '</div>';
                         $html_ += '</div>';
                         $html_ += '</div>';
@@ -795,7 +790,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
                     });
                     $('#coleccionrespuesta').html($html_);
-
+                    asignarBusqueda()
                 },
                 error: function() {
 
@@ -1315,8 +1310,19 @@ function busquedaAvanzada() {
 
 }
 
-function cargarTextoW() {
-    const bloqueRespuestaS = $(this).closest('respuesta-peticion');
-    //const textAreaR = bloqueRespuestaS.find('respuesta-editar').val();
-    $("#pruebaPegar").html(bloqueRespuestaS.attr('html'));
+function asignarBusqueda(){
+    let btnAgregarRespuestas = document.querySelectorAll('.agregarTexto')
+    btnAgregarRespuestas.forEach(btn => {
+        btn.addEventListener('click', agregarTexto)
+    })
+} 
+
+function agregarTexto(btn){
+    let btnRespuesta = btn.target 
+    let bloqueRespuesta = btnRespuesta.parentElement.parentElement.parentElement.parentElement
+    let respuesta = bloqueRespuesta.querySelector('.textoCopiar')
+    // console.log(respuesta)
+    let respuestaPeticion = bloqueRespuesta.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+    let bloqueEditable = respuestaPeticion.querySelector('.note-editable')
+    bloqueEditable.appendChild(respuesta)
 }
