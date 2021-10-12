@@ -125,9 +125,17 @@
             @foreach($pqr->peticiones as $key => $peticion)
             <tr>
                 <td>
-                    <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->justificacion }}"</p>
+                    @if($peticion->justificacion)
+                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->justificacion }}"</p>
+                    @elseif($peticion->descripcionsolicitud)
+                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->descripcionsolicitud }}"</p>
+                    @elseif($peticion->consulta)
+                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->consulta }}"</p>
+                    @elseif($peticion->irregularidad)
+                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->irregularidad }}"</p>
+                    @endif
                     <p>Respuesta:</p>
-                    <p>{{ $peticion->respuesta->respuesta}}</p>
+                    <p>{!! $peticion->respuesta->respuesta !!}</p>
                 </td>
             </tr>
             @endforeach
@@ -141,7 +149,7 @@
                     <h4 style="text-align: center;">RESUELVE</h4>
                     @foreach($resuelves as $key => $resuelve)
                         <p style="text-transform: capitalize;"><strong>{{$resuelve->numeracion->ordinal}} :</strong></p>
-                        <p>{{ $resuelve->resuelve }}</p>
+                        <p>{!! $resuelve->resuelve !!}</p>
                     @endforeach
                 </td>
             </tr>
@@ -158,6 +166,9 @@
                     @php
                         $aprueba = $pqr->asignaciontareas->where('tareas_id', 4)[3];
                     @endphp
+                    {{-- @if($aprueba->empleado->url)
+                        <img src="{{ asset('documentos/usuarios/' . $aprueba->empleado->url) }}" class="" alt="...">
+                    @endif --}}
                     <p>{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}</p>
                     <p>{{ $aprueba->empleado->cargo->cargo}}</p>
                 </td>

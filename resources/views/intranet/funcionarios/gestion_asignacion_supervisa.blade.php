@@ -358,7 +358,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 form-group">
-                                        <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ $peticion->respuesta->respuesta }}</textarea>
+                                        <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ strip_tags($peticion->respuesta->respuesta) }}</textarea>
                                     </div>
                                 </div>
                                 <hr>
@@ -478,7 +478,7 @@
                                                     <tr>
                                                         <td>{{ $historial->created_at }}</td>
                                                         <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                        <td class="text-justify">{{ $historial->historial }}</td>
+                                                        <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -488,7 +488,6 @@
                                 <hr>
                             </div>
                         @endforeach
-                        
                     </div> 
                     <!-- /.card-body -->
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">

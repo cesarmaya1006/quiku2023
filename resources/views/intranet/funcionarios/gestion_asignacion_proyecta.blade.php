@@ -438,7 +438,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 form-group">
-                                            <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ $peticion->respuesta->respuesta }}</textarea>
+                                            <textarea type="text" class="form-control form-control-sm respuesta" cols="10" disabled>{{ strip_tags($peticion->respuesta->respuesta) }}</textarea>
                                         </div>
                                     </div>
                                     <hr>
@@ -560,7 +560,7 @@
                                                     <tr>
                                                         <td>{{ $historial->created_at }}</td>
                                                         <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                        <td class="text-justify">{{ $historial->historial }}</td>
+                                                        <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -739,7 +739,7 @@
                                                             <td>{{ $resuelve->orden }}</td>
                                                             <td>{{ $resuelve->created_at }}</td>
                                                             <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                            <td class="text-justify contenido-resuelve">{{ $resuelve->resuelve }}</td>
+                                                            <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }}</td>
                                                             <td class="text-justify">
                                                                 <div class="col-12 d-flex">
                                                                     <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelve-i"></i></button>
@@ -764,7 +764,7 @@
                                                         </td>
                                                         <td>{{ $resuelve->created_at }}</td>
                                                         <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                        <td class="text-justify contenido-resuelve">{{ $resuelve->resuelve }}</td>
+                                                        <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }}</td>
                                                         <td class="text-justify">
                                                             <div class="col-12 d-flex">
                                                                 <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}" disabled><i class="fas fa-edit editarResuelve-i"></i></button>
@@ -811,7 +811,7 @@
                                         <label for="" class="col-10">Nuevo resuelve</label>
                                         {{-- Inicio btn Modal de busqueda --}}
                                         <div class="col-2 row estado-peticion justify-content-end">
-                                            <button type="" class="btn btn-success btn-estado col-12 mx-2" data-toggle="modal" data-target="#buscar"><span style="font-size: 1em;"><i class="fas fa-search"></i> Wiku</span>
+                                            <button type="" class="btn btn-success btn-estado col-12 mx-2 mb-2" data-toggle="modal" data-target="#buscar"><span style="font-size: 1em;"><i class="fas fa-search"></i> Wiku</span>
                                             </button>
                                         </div>
                                         {{-- Fin btn Modal de busqueda --}}
@@ -1117,18 +1117,6 @@
                                                 <i class="fas fa-eye"></i> Vista previa</a>
                                         </strong>
                                     </div>
-                                    {{-- <div class="col-12 col-md-4 form-group">
-                                        <label for="titulo">Título anexo</label>
-                                        <input type="text" class="titulo form-control form-control-sm">
-                                    </div>
-                                    <div class="col-12 col-md-4 form-group">
-                                        <label for="descripcion">Descripción</label>
-                                        <input type="text" class="descripcion form-control form-control-sm">
-                                    </div>
-                                    <div class="col-12 col-md-4 form-group">
-                                        <label for="anexo">Anexo</label>
-                                        <input class="anexo form-control form-control-sm" type="file">
-                                    </div> --}}
                                     <div class="container-mensaje-historial-tarea form-group col-12">
                                         <label for="" class="">Agregar Historial</label>
                                         <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
@@ -1155,5 +1143,11 @@
 <!-- script hoja -->
 @section('scripts_pagina')
     <script src="{{ asset('js/intranet/generar_pqr/gestion_asignacion_proyecta.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.mensaje-resuelve').summernote()
+        });
+    </script>
 @endsection
 <!-- ************************************************************* -->

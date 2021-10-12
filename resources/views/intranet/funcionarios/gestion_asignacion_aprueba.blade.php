@@ -163,21 +163,6 @@
                         <h5 class="mt-2">Aprueba</h5>
                         <div class="m-3 p-2">
                             <div class="col-12 d-flex row pqr-anexo">
-                                {{-- <div class="my-2 col-12 d-flex justify-content-between">
-                                    <h6>Documento de respuesta</h6>
-                                </div>
-                                <div class="col-12 col-md-4 form-group">
-                                    <label for="titulo">Título anexo</label>
-                                    <input type="text" class="titulo form-control form-control-sm">
-                                </div>
-                                <div class="col-12 col-md-4 form-group">
-                                    <label for="descripcion">Descripción</label>
-                                    <input type="text" class="descripcion form-control form-control-sm">
-                                </div>
-                                <div class="col-12 col-md-4 form-group">
-                                    <label for="anexo">Anexo</label>
-                                    <input class="anexo form-control form-control-sm" type="file">
-                                </div> --}}
                                 <div class="container-mensaje-historial-tarea form-group col-12">
                                     <label for="" class="">Agregar Historial</label>
                                     <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>

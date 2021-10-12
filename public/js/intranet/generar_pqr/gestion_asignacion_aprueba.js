@@ -58,32 +58,18 @@ window.addEventListener('DOMContentLoaded', function(){
             let url3 = e.target.getAttribute('data_url3')
             let token = e.target.getAttribute('data_token')
             let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
-            // let titulo = contenedorPadre.querySelector('.titulo').value
-            // let descripcion = contenedorPadre.querySelector('.descripcion').value
-            // let archivo = contenedorPadre.querySelector('.anexo').files[0]
-            let dataAnexo = new FormData();
-            dataAnexo.append('pqr_id', idPqr);
-            // dataAnexo.append('titulo', titulo);
-            // dataAnexo.append('descripcion', descripcion);
-            // dataAnexo.append('archivo', archivo);
-            dataAnexo.append('idTarea', idTarea);
-            dataAnexo.append('_token', token);
-            dataAnexo.append('apruebaRadica', 1);
-            // if (titulo != '' && archivo  && mensajeHistorial != '' && idPqr != '') {
             if (mensajeHistorial != '' && idPqr != '') {
                 let data = {
                     idTarea,
                     mensajeHistorial,
-                    idPqr
+                    idPqr,
+                    apruebaRadica : 1
                 }
                 $.ajax({
-                    async:false,
                     url: url,
                     type: 'POST',
                     headers: { 'X-CSRF-TOKEN': token },
-                    data: dataAnexo,
-                    processData: false, 
-                    contentType: false,
+                    data: data,
                     success: function(respuesta) {
                         // console.log(respuesta)
                     },

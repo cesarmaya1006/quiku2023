@@ -587,7 +587,7 @@
                                                 <div class="col-12 form-group">
                                                     <textarea type="text" class="form-control form-control-sm respuesta"
                                                     rows="5"
-                                                    readonly>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
+                                                    readonly>{{ isset($peticion->respuesta->respuesta) ? strip_tags($peticion->respuesta->respuesta) : '' }}</textarea>
                                                 </div>
                                             </div>
                                             @endif
@@ -745,62 +745,17 @@
                         {{-- Fin Bloque PQR --}}
 
                         {{-- Inicio Bloque respuesta PQR --}}
-                        @if ($peticion->respuesta)
+                        @if ($pqr->estadospqr_id > 5)
                             <div class="rounded border p-2">
                                 <h4 class="mb-4">Respuesta PQR</h4>
-                                <strong class="mx-2">
-                                    <a href="{{ route('descarga_respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
-                                        <i class="fas fa-eye"></i> Descarga</a>
-                                </strong>
-                                {{-- @if ($pqr->anexos)
-                                    @if (sizeOf($pqr->anexos->where('tareas_id', 4)) == 1)
-                                        @php
-                                            $respuesta = $pqr->anexos->where('tareas_id', '4')->last();
-                                        @endphp
-                                        @if($respuesta)
-                                            <div class="rounded border p-2 mt-3">
-                                                @if ($respuesta->estado == 1)
-                                                    @if($respuesta->extension == 'pdf')
-                                                        <iframe src="{{ asset('documentos/tareas/' . $respuesta->url) }}" frameborder="0" class="col-12" height="600"></iframe>
-                                                    @else
-                                                        <div class="col-12 ">
-                                                            <strong><a href="{{ asset('documentos/tareas/' . $respuesta->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
-                                                                    Descargar Respuesta</a></strong>
-                                                        </div>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                        @endif
-                                    @else
-                                        <table class="table table-light" style="font-size: 0.8em;">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Fecha</th>
-                                                    <th scope="col">Titulo</th>
-                                                    <th scope="col">Descripción</th>
-                                                    <th scope="col">Archivo</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($pqr->anexos as $respuesta)
-                                                    @if($respuesta->tareas_id == 4)
-                                                        <tr>
-                                                            <td>{{ $respuesta->created_at }}</td>
-                                                            <td>{{ $respuesta->titulo }}</td>
-                                                            <td>{{ $respuesta->descripcion }}</td>
-                                                            <td>
-                                                                <a href="{{ asset('documentos/tareas/' . $respuesta->url) }}"
-                                                                target="_blank"
-                                                                rel="noopener noreferrer">{{ $respuesta->titulo }}</a>
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @endif
-                                @endif
-                                <hr> --}}
+                                {{-- @if ($pqr->anexos->count() == 1) --}}
+                                    <strong class="mx-2">
+                                        <a href="{{ route('descarga_respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                            <i class="fas fa-file-download"></i> Descarga</a>
+                                    </strong>
+                                {{-- @endif --}}
+
+                                <hr>
                             </div>
                         @endif
                         {{-- Fin Bloque respuesta PQR --}}

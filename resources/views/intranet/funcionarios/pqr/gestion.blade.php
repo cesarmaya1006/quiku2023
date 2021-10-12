@@ -723,7 +723,8 @@
                                             {{-- Inicio Modal de busqueda --}}
                                         <div class="col-12 form-group mt-2">
                                             @if ($peticion->estadopeticion->estado == 100 || sizeOf($peticion->recursos))
-                                                <textarea type="text" class="form-control form-control-sm respuesta" rows="6" disabled>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
+                                                {{-- {!!$peticion->respuesta->respuesta!!} --}}
+                                                <textarea type="text" class="form-control form-control-sm respuesta" rows="6" disabled>{{ isset($peticion->respuesta->respuesta) ? strip_tags($peticion->respuesta->respuesta) : '' }}</textarea>
                                             @else
                                                 <textarea type="text" class="form-control form-control-sm respuesta respuesta-editar " rows="6" max>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
                                             @endif
@@ -1044,7 +1045,7 @@
                                                     <tr>
                                                         <td>{{ $historial->created_at }}</td>
                                                         <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                        <td class="text-justify">{{ $historial->historial }}</td>
+                                                        <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

@@ -342,7 +342,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12 form-group">
-                                            <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ $peticion->respuesta->respuesta }}</textarea>
+                                            <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ strip_tags($peticion->respuesta->respuesta) }}</textarea>
                                         </div>
                                     </div>
                                     <hr>
@@ -465,7 +465,7 @@
                                                         <tr>
                                                             <td>{{ $historial->created_at }}</td>
                                                             <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                            <td class="text-justify">{{ $historial->historial }}</td>
+                                                            <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -634,7 +634,7 @@
                                 <hr>
                                 <div class="p-2 mb-4">
                                     <h5 class="">Historial de respuesta </h5>
-                                    <div class="row d-flex px-12 p-3">
+                                    {{-- <div class="row d-flex px-12 p-3">
                                         <div class="col-12 table-responsive">
                                             <table class="table table-light" style="font-size: 0.8em;">
                                                 <thead>
@@ -642,7 +642,6 @@
                                                         <th scope="col">Fecha</th>
                                                         <th scope="col">Empleado</th>
                                                         <th scope="col">Tarea</th>
-                                                        {{-- <th scope="col">Estado</th> --}}
                                                         <th scope="col">Descarga</th>
                                                     </tr>
                                                 </thead>
@@ -652,7 +651,6 @@
                                                             <td>{{ $anexo->created_at }}</td>
                                                             <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
                                                             <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                            {{-- <td class="text-justify">{{ $anexo->estado ? 'Activo' : 'Rechazado'  }}</td> --}}
                                                             <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
                                                         </tr>
                                                     @endforeach
@@ -660,7 +658,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <hr>
+                                    <hr> --}}
                                 </div>
                             @endif
                         </div>
