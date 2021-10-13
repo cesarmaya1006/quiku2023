@@ -451,15 +451,15 @@
                                             @endif
                                             {{-- Inicio btn Modal de busqueda --}}
                                             <div class="col-1 row estado-peticion">
-                                                <button type="" class="btn btn-success btn-estado col-12 mx-2"
-                                                    data-toggle="modal" data-target="#buscar"><span
+                                                <button type="" class="btn btn-success col-12 mx-2"
+                                                    data-toggle="modal" data-target=".buscar-{{$key}}"><span
                                                         style="font-size: 1em;"><i class="fas fa-search"></i> Wiku</span>
                                                 </button>
                                             </div>
                                             {{-- Fin btn Modal de busqueda --}}
                                             {{-- Inicio Modal de busqueda --}}
-                                            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
-                                                aria-labelledby="myLargeModalLabel" aria-hidden="true" id="buscar">
+                                            <div class="modal fade buscar-{{$key}}" tabindex="-1" role="dialog" data-value="{{$key}}"
+                                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -539,7 +539,7 @@
                                                                                 <label for="query" class="mr-3"
                                                                                     style="white-space:nowrap">Busqueda
                                                                                     Básica</label>
-                                                                                <input type="text" class="form-control"
+                                                                                <input type="text" class="form-control query"
                                                                                     id="query" name="query"
                                                                                     data_url="{{ route('wiku_busqueda_basica') }}"
                                                                                     placeholder="Ingrese palabras de busqueda">
@@ -557,7 +557,7 @@
                                                                                     for="tipo_wiku">Categoria de
                                                                                     Wiku</label>
                                                                                 <select
-                                                                                    class="form-control form-control-sm"
+                                                                                    class="form-control form-control-sm tipo_wiku"
                                                                                     id="tipo_wiku">
                                                                                     <option value="">---Seleccione Wiku---
                                                                                     </option>
@@ -784,7 +784,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <hr>
-                                                                <div class="row justify-content-around"
+                                                                <div class="row justify-content-around coleccionrespuesta"
                                                                     id="coleccionrespuesta">
                                                                     <div class="col-md-6  d-none">
                                                                         <div
@@ -961,6 +961,7 @@
                                                 @endif
                                             @endif
                                         </div>
+                                    </div>
                                 @endif
                                 {{-- Fin bloque de respuesta peticion --}}
                                 {{-- Inicio bloque de respuesta recurso --}}
