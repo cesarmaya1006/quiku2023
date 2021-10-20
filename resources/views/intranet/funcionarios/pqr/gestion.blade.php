@@ -584,9 +584,9 @@
                                                                                     data_url="{{ route('cargar_temas') }}">
                                                                                     <option value="">---Seleccione---
                                                                                     </option>
-                                                                                    {{-- @foreach ($areas as $area)
+                                                                                    @foreach ($areas as $area)
                                                                                         <option value="{{ $area->id }}">{{ $area->area }}</option>
-                                                                                    @endforeach --}}
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group col-12 col-md-4">
@@ -626,9 +626,9 @@
                                                                                     data_url="{{ route('cargar_normas') }}">
                                                                                     <option value="">--- Seleccione ---
                                                                                     </option>
-                                                                                    {{-- @foreach ($fuentes as $fuente)
+                                                                                    @foreach ($fuentes as $fuente)
                                                                                         <option value="{{ $fuente->id }}">{{ $fuente->fuente }}</option>
-                                                                                    @endforeach --}}
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-12 col-md-5 form-group">
@@ -679,9 +679,9 @@
                                                                                     required>
                                                                                     <option value="">---Seleccione---
                                                                                     </option>
-                                                                                    {{-- @foreach ($tipos_pqr as $tipo_pqr)
+                                                                                    @foreach ($tipos_pqr as $tipo_pqr)
                                                                                         <option value="{{ $tipo_pqr->id }}">{{ $tipo_pqr->tipo }}</option>
-                                                                                    @endforeach --}}
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group col-12 col-md-4"
@@ -716,9 +716,9 @@
                                                                                     name="servicio_id">
                                                                                     <option value="">---Seleccione un
                                                                                         servcio---</option>
-                                                                                    {{-- @foreach ($servicios as $servicio)
+                                                                                    @foreach ($servicios as $servicio)
                                                                                         <option value="{{ $servicio->id }}">{{ $servicio->servicio }}</option>
-                                                                                    @endforeach --}}
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group col-12 col-md-4 d-none"
@@ -732,9 +732,9 @@
                                                                                     name="categoria_id">
                                                                                     <option value="">---Seleccione---
                                                                                     </option>
-                                                                                    {{-- @foreach ($categorias as $categoria)
+                                                                                    @foreach ($categorias as $categoria)
                                                                                         <option value="{{ $categoria->id }}">{{ $categoria->categoria }}</option>
-                                                                                    @endforeach --}}
+                                                                                    @endforeach
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group col-12 col-md-4 d-none"

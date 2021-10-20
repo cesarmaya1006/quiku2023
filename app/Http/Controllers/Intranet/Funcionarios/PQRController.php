@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Mail\Prorroga;
 use App\Models\PQR\PQR;
-use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\PQR\Tarea;
 use App\Mail\RespuestaPQR;
 use App\Models\PQR\Estado;
 use App\Models\Admin\Cargo;
 use App\Models\PQR\Recurso;
+use App\Models\PQR\tipoPQR;
 use App\Models\PQR\Peticion;
 use App\Models\PQR\PqrAnexo;
 use App\Models\PQR\Resuelve;
 use Illuminate\Http\Request;
 use App\Models\PQR\Prioridad;
 use App\Models\PQR\Respuesta;
+use App\Models\Admin\WikuArea;
 use App\Models\PQR\Aclaracion;
 use App\Models\PQR\DocRecurso;
 use App\Models\PQR\RespRecurso;
@@ -24,11 +25,15 @@ use App\Models\Personas\Persona;
 use App\Models\PQR\DocRespuesta;
 use App\Mail\RespuestaReposicion;
 use App\Mail\ConstanciaAclaracion;
+use App\Models\Admin\WikuDocument;
 use App\Models\Empleados\Empleado;
 use App\Models\PQR\DocRespRecurso;
 use App\Models\PQR\HistorialTarea;
 use App\Models\PQR\TipoReposicion;
+use App\Models\Servicios\Servicio;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\PQR\AsignacionTarea;
+use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
 use App\Models\PQR\AclaracionAnexos;
 use App\Models\PQR\AsignacionEstado;
@@ -53,7 +58,12 @@ class PQRController extends Controller
         $pqr = PQR::findOrFail($id);
         $estadoPrioridad = Prioridad::all();
         $estados = AsignacionEstado::all();
-        return view('intranet.funcionarios.pqr.gestion', compact('pqr', 'estadoPrioridad', 'estados'));
+        $areas = WikuArea::all();
+        $fuentes = WikuDocument::all();
+        $tipos_pqr = tipoPQR::get();
+        $categorias = Categoria::get();
+        $servicios = Servicio::get();
+        return view('intranet.funcionarios.pqr.gestion', compact('pqr', 'estadoPrioridad', 'estados', 'areas', 'fuentes', 'tipos_pqr', 'categorias', 'servicios'));
     }
 
     public function gestionar_guardar_usuario(Request $request)
