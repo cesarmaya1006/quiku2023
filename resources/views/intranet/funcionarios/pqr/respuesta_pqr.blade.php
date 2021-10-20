@@ -134,8 +134,10 @@
                     @elseif($peticion->irregularidad)
                         <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->irregularidad }}"</p>
                     @endif
-                    <p>Respuesta:</p>
-                    <p>{!! $peticion->respuesta->respuesta !!}</p>
+                    @if($peticion->respuesta)
+                        <p>Respuesta:</p>
+                        <p>{!! $peticion->respuesta->respuesta !!}</p>
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -166,9 +168,9 @@
                     @php
                         $aprueba = $pqr->asignaciontareas->where('tareas_id', 4)[3];
                     @endphp
-                    {{-- @if($aprueba->empleado->url)
-                        <img src="{{ asset('documentos/usuarios/' . $aprueba->empleado->url) }}" class="" alt="...">
-                    @endif --}}
+                    @if($firma && $firma != '') 
+                        <img src="{{ $firma }}" class="" alt="firma">
+                    @endif
                     <p>{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}</p>
                     <p>{{ $aprueba->empleado->cargo->cargo}}</p>
                 </td>

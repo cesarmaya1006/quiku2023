@@ -155,6 +155,9 @@ class Tabla_Usuarios extends Seeder
             'genero' => 'Masculino',
             'fecha_nacimiento' => '1990-11-05',
             'email' => 'empleado11@gmail.com',
+            'url' => '1634739891-firma.png',
+            'extension' => 'png',
+            'peso' => 2.46,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         //------------------------------------------------------

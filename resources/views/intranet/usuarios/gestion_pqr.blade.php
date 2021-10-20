@@ -748,14 +748,26 @@
                         @if ($pqr->estadospqr_id > 5)
                             <div class="rounded border p-2">
                                 <h4 class="mb-4">Respuesta PQR</h4>
-                                {{-- @if ($pqr->anexos->count() == 1) --}}
-                                    <strong class="mx-2">
-                                        <a href="{{ route('descarga_respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
-                                            <i class="fas fa-file-download"></i> Descarga</a>
-                                    </strong>
-                                {{-- @endif --}}
-
-                                <hr>
+                                <div class="col-12 table-responsive">
+                                    <table class="table table-light" style="font-size: 0.8em;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Fecha respuesta</th>
+                                                <th scope="col">Respuesta</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($pqr->anexos as $respuesta)
+                                                <tr>
+                                                    <td>{{ $respuesta->created_at }}</td>
+                                                    <td class="text-justify"><a href="{{ route('usuario_descarga_respuestaPQR', ['id' => $respuesta->id]) }}" target="_blank" rel="noopener noreferrer">
+                                                        <i class="fas fa-file-download"></i> Descarga</a></td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <hr class="mt-5">
+                                </div>
                             </div>
                         @endif
                         {{-- Fin Bloque respuesta PQR --}}

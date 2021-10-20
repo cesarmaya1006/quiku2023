@@ -337,6 +337,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('pqr_anexo', [PQRController::class, 'pqr_anexo_guardar'])->name('pqr_anexo_guardar');
         Route::get('respuestaPQR/{id}', [PQRController::class, 'respuestaPQR'])->name('respuestaPQR');
         Route::get('descarga_respuestaPQR/{id}', [PQRController::class, 'descarga_respuestaPQR'])->name('descarga_respuestaPQR');
+        Route::get('usuario_descarga_respuestaPQR/{id}', [PQRController::class, 'usuario_descarga_respuestaPQR'])->name('usuario_descarga_respuestaPQR');
         Route::post('cambiar_estado_tareas', [PQRController::class, 'cambiar_estado_tareas_guardar'])->name('cambiar_estado_tareas_guardar');
         Route::get('cambiar-password-asistido/{id}', [ClienteController::class, 'cambiar_password_asistido'])->name('funcionario_cambiar_password_asistido');
     });

@@ -626,7 +626,8 @@ class PQRController extends Controller
                     $pqr = PQR::findOrFail($request["idPqr"]);
                     $resuelves = Resuelve::where('pqr_id', $request["idPqr"])->orderBy('orden')->get();
                     $imagen = public_path('imagenes\sistema\icono_sistema.png');
-                    $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves'));
+                    $firma = public_path('documentos\usuarios\\' . $pqr->empleado->url);
+                    $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
                     $rPdf['pqr_id'] = $request["idPqr"];
                     $rPdf['tareas_id'] = $request["idTarea"];
                     $rPdf['empleado_id'] = session('id_usuario');
@@ -793,7 +794,8 @@ class PQRController extends Controller
         $pqr = PQR::findOrFail($id);
         $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        return view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves'));
+        $firma  = '';
+        return view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
     }
     
     public function descarga_respuestaPQR($id)
@@ -801,7 +803,16 @@ class PQRController extends Controller
         $pqr = PQR::findOrFail($id);
         $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        $pdf = PDF::loadView('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves'));
+        $firma  = '';
+        $pdf = PDF::loadView('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
+        return $pdf->download( 'Respuesta-'. $pqr->radicado . '.pdf');
+    }
+
+    public function usuario_descarga_respuestaPQR($id)
+    {
+        $respuesta = PqrAnexo::findOrFail($id);
+        $pqr =$respuesta->pqr;
+        $pdf = PDF::loadHTML($respuesta->respuesta);
         return $pdf->download( 'Respuesta-'. $pqr->radicado . '.pdf');
     }
 

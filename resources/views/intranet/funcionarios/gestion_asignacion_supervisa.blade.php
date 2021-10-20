@@ -562,7 +562,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($pqr->anexos)   
+                        @if (sizeOf($pqr->anexos))   
                             <div class="rounded border m-3 p-2 mb-4">
                                 <h5 class="mb-3">Historial de respuesta </h5>
                                 <strong>

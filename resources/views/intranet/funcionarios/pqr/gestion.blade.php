@@ -428,33 +428,33 @@
                                     <hr>
                                     <div class="row respuesta-peticion">
                                         <div class="col-12 row mb-2">
-                                            <div class="col-6 md-12">
+                                            <div class="col-12 col-md-5">
                                                 <h5>Respuesta petición</h5>
                                             </div>
+                                            <div class="col-12 col-md-7 row estado-peticion justify-content-end">
                                             @if ($pqr->estadospqr_id < 6)
-                                                <div class="col-5 row estado-peticion justify-content-end">
-                                                    <div class="col-2 d-flex mb-2">
+                                                    <div class="col-3 d-flex mb-2">
                                                         <h6>Avance:</h6>
                                                     </div>
-                                                    <select class="custom-select rounded-0 estadoPeticion col-4">
+                                                    <select class="custom-select rounded-0 estadoPeticion col-3">
                                                         @foreach ($estados as $estado)
                                                             <option value="{{ $estado->id }}"
                                                                 {{ $peticion->estadopeticion->id == $estado->id ? 'selected' : '' }}>
                                                                 {{ $estado->estado }} %</option>
                                                         @endforeach
                                                     </select>
-                                                    <button type="" class="btn btn-primary btn-estado col-2 mx-2"
+                                                    <button type="" class="btn btn-primary btn-estado col-3 mx-1"
                                                         data_url="{{ route('estado_guardar') }}"
                                                         data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i
                                                                 class="far fa-save"></i></span></button>
-                                                </div>
                                             @endif
-                                            {{-- Inicio btn Modal de busqueda --}}
-                                            <div class="col-1 row estado-peticion">
-                                                <button type="" class="btn btn-success col-12 mx-2"
-                                                    data-toggle="modal" data-target=".buscar-{{$key}}"><span
-                                                        style="font-size: 1em;"><i class="fas fa-search"></i> Wiku</span>
-                                                </button>
+                                                {{-- Inicio btn Modal de busqueda --}}
+                                                <div class="col-3 row estado-peticion">
+                                                    <button type="" class="btn btn-success col-12 mx-2"
+                                                        data-toggle="modal" data-target=".buscar-{{$key}}"><span
+                                                            style="font-size: 1em;"><i class="fas fa-search"></i> Wiku</span>
+                                                    </button>
+                                                </div>
                                             </div>
                                             {{-- Fin btn Modal de busqueda --}}
                                             {{-- Inicio Modal de busqueda --}}
@@ -864,13 +864,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- Inicio Modal de busqueda --}}
-                                            <div class="col-12 form-group mt-2">
+                                            {{-- Fin Modal de busqueda --}}
+                                            <div class="col-12 form-group mt-3">
                                                 @if ($peticion->estadopeticion->estado == 100 || sizeOf($peticion->recursos))
-                                                    {{-- {!!$peticion->respuesta->respuesta!!} --}}
-                                                    <textarea type="text" class="form-control form-control-sm respuesta"
-                                                        rows="6"
-                                                        disabled>{{ isset($peticion->respuesta->respuesta) ? strip_tags($peticion->respuesta->respuesta) : '' }}</textarea>
+                                                <div class="respuesta mt-2">
+                                                    {!!$peticion->respuesta->respuesta!!}
+                                                </div>
                                                 @else
                                                     <textarea type="text"
                                                         class="form-control form-control-sm respuesta respuesta-editar"
@@ -1249,10 +1248,5 @@
 @section('scripts_pagina')
     <script src="{{ asset('js/intranet/generar_pqr/gestion.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.respuesta-editar').summernote()
-        });
-    </script>
 @endsection
 <!-- ************************************************************* -->

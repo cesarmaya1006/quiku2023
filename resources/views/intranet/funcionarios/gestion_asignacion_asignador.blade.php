@@ -599,35 +599,26 @@
                         @if (sizeOf($pqr->anexos))   
                             <div class="rounded border m-3 p-2 mb-4">
                                 <h5 class="">Historial de respuesta </h5>
-                                <strong>
-                                    <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
-                                        <i class="fas fa-eye"></i> Vista previa</a>
-                                </strong>
-                                {{-- <div class="row d-flex px-12 p-3">
-                                    <div class="col-12 table-responsive">
-                                        <table class="table table-light" style="font-size: 0.8em;">
-                                            <thead>
+                                <div class="col-12 table-responsive">
+                                    <table class="table table-light" style="font-size: 0.8em;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Fecha respuesta</th>
+                                                <th scope="col">Respuesta</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($pqr->anexos as $respuesta)
                                                 <tr>
-                                                    <th scope="col">Fecha</th>
-                                                    <th scope="col">Empleado</th>
-                                                    <th scope="col">Tarea</th>
-                                                    <th scope="col">Descarga</th>
+                                                    <td>{{ $respuesta->created_at }}</td>
+                                                    <td class="text-justify"><a href="{{ route('usuario_descarga_respuestaPQR', ['id' => $respuesta->id]) }}" target="_blank" rel="noopener noreferrer">
+                                                        <i class="fas fa-file-download"></i> Descarga</a></td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($pqr->anexos as $anexo)
-                                                    <tr>
-                                                        <td>{{ $anexo->created_at }}</td>
-                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
-                                                        <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                        <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    <hr class="mt-5">
                                 </div>
-                                <hr> --}}
                             </div>
                         @endif
                     @endif
