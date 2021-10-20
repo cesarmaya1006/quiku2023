@@ -432,7 +432,7 @@
                                                 <h5>Respuesta petición</h5>
                                             </div>
                                             <div class="col-12 col-md-7 row estado-peticion justify-content-end">
-                                            @if ($pqr->estadospqr_id < 6)
+                                                @if ($pqr->estadospqr_id < 6)
                                                     <div class="col-3 d-flex mb-2">
                                                         <h6>Avance:</h6>
                                                     </div>
@@ -447,19 +447,21 @@
                                                         data_url="{{ route('estado_guardar') }}"
                                                         data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i
                                                                 class="far fa-save"></i></span></button>
-                                            @endif
+                                                @endif
                                                 {{-- Inicio btn Modal de busqueda --}}
                                                 <div class="col-3 row estado-peticion">
-                                                    <button type="" class="btn btn-success col-12 mx-2"
-                                                        data-toggle="modal" data-target=".buscar-{{$key}}"><span
-                                                            style="font-size: 1em;"><i class="fas fa-search"></i> Wiku</span>
+                                                    <button type="" class="btn btn-success col-12 mx-2" data-toggle="modal"
+                                                        data-target=".buscar-{{ $key }}"><span
+                                                            style="font-size: 1em;"><i class="fas fa-search"></i>
+                                                            Wiku</span>
                                                     </button>
                                                 </div>
                                             </div>
                                             {{-- Fin btn Modal de busqueda --}}
                                             {{-- Inicio Modal de busqueda --}}
-                                            <div class="modal fade buscar-{{$key}}" tabindex="-1" role="dialog" data-value="{{$key}}"
-                                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal fade buscar-{{ $key }}" tabindex="-1" role="dialog"
+                                                data-value="{{ $key }}" aria-labelledby="myLargeModalLabel"
+                                                aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -539,8 +541,9 @@
                                                                                 <label for="query" class="mr-3"
                                                                                     style="white-space:nowrap">Busqueda
                                                                                     Básica</label>
-                                                                                <input type="text" class="form-control query"
-                                                                                    id="query" name="query"
+                                                                                <input type="text"
+                                                                                    class="form-control query" id="query"
+                                                                                    name="query"
                                                                                     data_url="{{ route('wiku_busqueda_basica') }}"
                                                                                     placeholder="Ingrese palabras de busqueda">
                                                                             </div>
@@ -558,7 +561,8 @@
                                                                                     Wiku</label>
                                                                                 <select
                                                                                     class="form-control form-control-sm tipo_wiku"
-                                                                                    id="tipo_wiku">
+                                                                                    id="tipo_wiku"
+                                                                                    data_url="{{ route('wiku-cargarargumentos') }}">
                                                                                     <option value="">---Seleccione Wiku---
                                                                                     </option>
                                                                                     <option value="Argumentos">Argumentos
@@ -585,7 +589,9 @@
                                                                                     <option value="">---Seleccione---
                                                                                     </option>
                                                                                     @foreach ($areas as $area)
-                                                                                        <option value="{{ $area->id }}">{{ $area->area }}</option>
+                                                                                        <option
+                                                                                            value="{{ $area->id }}">
+                                                                                            {{ $area->area }}</option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -627,7 +633,10 @@
                                                                                     <option value="">--- Seleccione ---
                                                                                     </option>
                                                                                     @foreach ($fuentes as $fuente)
-                                                                                        <option value="{{ $fuente->id }}">{{ $fuente->fuente }}</option>
+                                                                                        <option
+                                                                                            value="{{ $fuente->id }}">
+                                                                                            {{ $fuente->fuente }}
+                                                                                        </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -680,7 +689,10 @@
                                                                                     <option value="">---Seleccione---
                                                                                     </option>
                                                                                     @foreach ($tipos_pqr as $tipo_pqr)
-                                                                                        <option value="{{ $tipo_pqr->id }}">{{ $tipo_pqr->tipo }}</option>
+                                                                                        <option
+                                                                                            value="{{ $tipo_pqr->id }}">
+                                                                                            {{ $tipo_pqr->tipo }}
+                                                                                        </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -717,7 +729,10 @@
                                                                                     <option value="">---Seleccione un
                                                                                         servcio---</option>
                                                                                     @foreach ($servicios as $servicio)
-                                                                                        <option value="{{ $servicio->id }}">{{ $servicio->servicio }}</option>
+                                                                                        <option
+                                                                                            value="{{ $servicio->id }}">
+                                                                                            {{ $servicio->servicio }}
+                                                                                        </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -733,7 +748,10 @@
                                                                                     <option value="">---Seleccione---
                                                                                     </option>
                                                                                     @foreach ($categorias as $categoria)
-                                                                                        <option value="{{ $categoria->id }}">{{ $categoria->categoria }}</option>
+                                                                                        <option
+                                                                                            value="{{ $categoria->id }}">
+                                                                                            {{ $categoria->categoria }}
+                                                                                        </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
@@ -775,9 +793,8 @@
                                                                             <div
                                                                                 class="form-group col-12 col-md-4 pl-4 d-flex align-items-end">
                                                                                 <button
-                                                                                    class="btn btn-primary btn-xs btn-sombra pl-5 pr-5 form-control-sm"
+                                                                                    class="btn btn-primary btn-xs btn-sombra pl-5 pr-5 form-control-sm busquedaAvanzada"
                                                                                     id="btn_buscar"
-                                                                                    onclick="busquedaAvanzada()"
                                                                                     data_url="{{ route('wiku_busqueda_avanzada') }}">Buscar</button>
                                                                             </div>
                                                                         </div>
@@ -867,9 +884,9 @@
                                             {{-- Fin Modal de busqueda --}}
                                             <div class="col-12 form-group mt-3">
                                                 @if ($peticion->estadopeticion->estado == 100 || sizeOf($peticion->recursos))
-                                                <div class="respuesta mt-2">
-                                                    {!!$peticion->respuesta->respuesta!!}
-                                                </div>
+                                                    <div class="respuesta mt-2">
+                                                        {!! $peticion->respuesta->respuesta !!}
+                                                    </div>
                                                 @else
                                                     <textarea type="text"
                                                         class="form-control form-control-sm respuesta respuesta-editar"

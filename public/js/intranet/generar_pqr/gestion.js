@@ -622,13 +622,13 @@ window.addEventListener('DOMContentLoaded', function() {
             tabsize: 2,
             height: 120,
             toolbar: [
-              ['font', ['bold', 'underline', 'italic', 'clear' ]],
-              ['color', ['color']],
-              ['para', ['ul', 'ol', 'paragraph']],
-              ['table', ['table']],
-              ['insert', ['link', 'picture']],
+                ['font', ['bold', 'underline', 'italic', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
             ]
-          })
+        })
     });
     //==========================================================================
     $(".query").keyup(function() {
@@ -1103,9 +1103,14 @@ window.addEventListener('DOMContentLoaded', function() {
         }
 
     });
+    $('.busquedaAvanzada').on('click', function() {
+        const url_t_1 = $(this).attr('data_url');
+        busquedaAvanzada(url_t_1);
+    });
     //==========================================================================
-    function busquedaAvanzada() {
-        const url_t = $("#btn_buscar").attr('data_url');
+    function busquedaAvanzada(url_t_1) {
+        //const url_t = $("#btn_buscar").attr('data_url');
+        const url_t = url_t_1;
         const tipo_wiku = $('#tipo_wiku');
         const area_id = $('#area_id');
         const tema_id = $('#tema_id');
@@ -1222,12 +1227,12 @@ window.addEventListener('DOMContentLoaded', function() {
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '</div>';
-    
+
                         });
                     } else if (tipowiku == 'Argumentos') {
                         $.each(respuesta, function(index, argumento) {
                             $html_ += '<div class="col -12 col-md-10">';
-                            $html_ += '<div class="card card-success bg-legal1 collapsed-card card-mini-sombra">';
+                            $html_ += '<div class="resultado-busqueda card card-success bg-legal1 collapsed-card card-mini-sombra">';
                             $html_ += '<div class="card-header">';
                             $html_ += '<div class="user-block">';
                             $html_ += '<span class="username"><a href="#">Argumento</a></span>';
@@ -1245,7 +1250,8 @@ window.addEventListener('DOMContentLoaded', function() {
                             $html_ += '<div class="card-body">';
                             $html_ += '<div class="row">';
                             $html_ += '<div class="col-12">';
-                            $html_ += '<p><strong>Texto:</strong> ' + argumento['texto'] + '</p>';
+                            $html_ += '<p><strong>Texto:</strong></p>';
+                            $html_ += '<p class="textoCopiar">' + argumento['texto'] + '</p>';
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '<div class="row">';
@@ -1297,14 +1303,14 @@ window.addEventListener('DOMContentLoaded', function() {
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '</div>';
-    
+
                         });
                     }
                     $('#coleccionrespuesta').html($html_);
-    
+
                 },
                 error: function() {
-    
+
                 }
             });
         } else {
@@ -1315,19 +1321,19 @@ window.addEventListener('DOMContentLoaded', function() {
             })
             tipo_wiku.focus();
         }
-    
+
     }
     //==========================================================================
 
-    function asignarBusqueda(){
+    function asignarBusqueda() {
         let btnAgregarRespuestas = document.querySelectorAll('.agregarTexto')
         btnAgregarRespuestas.forEach(btn => {
             btn.addEventListener('click', agregarTexto)
         })
-    } 
-    
-    function agregarTexto(btn){
-        let btnRespuesta = btn.target 
+    }
+
+    function agregarTexto(btn) {
+        let btnRespuesta = btn.target
         let bloqueRespuesta = btnRespuesta.parentElement.parentElement.parentElement.parentElement
         let numPeticion = bloqueRespuesta.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-value')
         let respuestaBusqueda = bloqueRespuesta.querySelector('.textoCopiar')
@@ -1335,16 +1341,16 @@ window.addEventListener('DOMContentLoaded', function() {
         let respuestaPeticion = bloqueRespuesta.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
         let bloqueEditable = respuestaPeticion.querySelector('.note-editable')
         let parrafosAnteriores = bloqueEditable.querySelectorAll('p')
-        if(parrafosAnteriores.length  == 1){
-            if(parrafosAnteriores[0].querySelector('br')){
+        if (parrafosAnteriores.length == 1) {
+            if (parrafosAnteriores[0].querySelector('br')) {
                 parrafosAnteriores[0].remove()
             }
         }
-    
+
         bloqueEditable.appendChild(respuestaCopia)
         let btnCerrar = document.querySelector(`.buscar-${numPeticion} .modal-header button`)
-        btnCerrar.click() 
-    
+        btnCerrar.click()
+
     }
 
 })
