@@ -195,14 +195,48 @@
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-three-jurisprudencia" role="tabpanel"
                                 aria-labelledby="custom-tabs-three-jurisprudencia-tab">
-                                Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus
-                                volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce
-                                nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue
-                                ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur
-                                eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur,
-                                ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex
-                                vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus.
-                                Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                                <div class="row d-flex justify-content-around">
+                                    <div class="col-12 col-md-4 text-md-left pl-2">
+                                        <h5>Listado de Jurispruencias actuales</h5>
+                                    </div>
+                                    <div class="col-12 col-md-3 text-md-right pl-2 pr-md-5">
+                                        <a href="{{ route('wiku_jurisprudencia-crear') }}"
+                                            class="btn btn-success btn-sm text-center pl-3 pr-3"
+                                            style="font-size: 0.8em;{{ $fuentes->count() == 0 ? 'opacity: 0.4; cursor: default;pointer-events: none;' : '' }}"><i
+                                                class="fas fa-plus-circle mr-2"></i> Nueva Jurisprudencia</a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3" style="font-size: 0.8em;">
+                                    <div class="col-12">
+                                        <table class="table table-striped table-hover table-sm displayScroll"
+                                            style="min-width: 100%;">
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th class="text-center">Ente Emisor</th>
+                                                    <th class="text-center">Sala o Sección</th>
+                                                    <th class="text-center">Sub-sala o subsección</th>
+                                                    <th class="text-center">N° radicado</th>
+                                                    <th class="text-center">Fecha de emisión</th>
+                                                    <th class="text-center">Magistrado</th>
+                                                    <th class="text-center">Demandante</th>
+                                                    <th class="text-center">Demandado</th>
+                                                    <th class="text-center">Texto</th>
+                                                    <th class="text-center">Descripción</th>
+                                                    <th class="text-center">Archivo</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($jurisprudencias as $jurisprudencia)
+                                                    <tr>
+                                                        <td>{{ $jurisprudencia->ente->ente }}</td>
+
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-three-doctrinas" role="tabpanel"
                                 aria-labelledby="custom-tabs-three-doctrinas-tab">

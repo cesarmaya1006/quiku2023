@@ -11,9 +11,15 @@ use App\Models\Admin\WikuAsociacionArg;
 use App\Models\Admin\WikuAutor;
 use App\Models\Admin\WikuAutorInst;
 use App\Models\Admin\WikuCriterio;
+use App\Models\Admin\WikuDemandado;
+use App\Models\Admin\WikuDemandante;
 use App\Models\Admin\WikuDocument;
+use App\Models\Admin\WikuEnteEmisor;
+use App\Models\Admin\WikuJurisprudencia;
+use App\Models\Admin\WikuMagistrado;
 use App\Models\Admin\WikuNorma;
 use App\Models\Admin\WikuPalabras;
+use App\Models\Admin\WikuSala;
 use App\Models\Admin\WikuTema;
 use App\Models\Admin\WikuTemaEspecifico;
 use App\Models\PQR\tipoPQR;
@@ -35,7 +41,8 @@ class WikuController extends Controller
         $fuentes = WikuDocument::all();
         $normas = WikuNorma::all();
         $argumentos = WikuArgumento::with('autorInst', 'autor')->get();
-        return view('intranet.parametros.wiku.index', compact('normas', 'fuentes', 'argumentos'));
+        $jurisprudencias = WikuJurisprudencia::all();
+        return view('intranet.parametros.wiku.index', compact('normas', 'fuentes', 'argumentos', 'jurisprudencias'));
     }
 
     public function index_fuenteN()
@@ -138,6 +145,41 @@ class WikuController extends Controller
                     'autores',
                     'temasEspecifico',
                     'areas'
+                ));
+            } else {
+                $temasEspecifico = WikuTemaEspecifico::all();
+                $areas = WikuArea::all();
+                $autoresInst = WikuAutorInst::all();
+                $autores = WikuAutor::all();
+                $argumento = WikuArgumento::findOrFail($id);
+                return view('intranet.parametros.wiku.argumentos.editar', compact(
+                    'argumento',
+                    'autoresInst',
+                    'autores',
+                    'areas',
+                    'temasEspecifico'
+                ));
+            }
+        } elseif ($wiku == 'jurisprudencia') {
+            if ($id == 0) {
+                $entes = WikuEnteEmisor::all();
+                $magistrados = WikuMagistrado::all();
+                $demandantes = WikuDemandante::all();
+                $demandados = WikuDemandado::all();
+
+                $temasEspecifico = WikuTemaEspecifico::all();
+                $areas = WikuArea::all();
+                $autoresInst = WikuAutorInst::all();
+                $autores = WikuAutor::all();
+                return view('intranet.parametros.wiku.jurisprudencias.crear', compact(
+                    'entes',
+                    'magistrados',
+                    'demandantes',
+                    'demandados',
+                    'temasEspecifico',
+                    'areas',
+                    'autoresInst',
+                    'autores'
                 ));
             } else {
                 $temasEspecifico = WikuTemaEspecifico::all();
@@ -949,5 +991,39 @@ class WikuController extends Controller
         }
     }
     //------------------------------------------------------------------------------------------
+    //================================================================================================
+    //************************************************************************************************
 
+    public function crear_jurisprudencia()
+    {
+        $entes = WikuEnteEmisor::all();
+        $magistrados = WikuMagistrado::all();
+        $demandantes = WikuDemandante::all();
+        $demandados = WikuDemandado::all();
+
+        $temasEspecifico = WikuTemaEspecifico::all();
+        $areas = WikuArea::all();
+        return view('intranet.parametros.wiku.jurisprudencias.crear', compact(
+            'entes',
+            'temasEspecifico',
+            'areas',
+            'magistrados',
+            'demandantes',
+            'demandados'
+        ));
+    }
+    public function cargarente(Request $request)
+    {
+        if ($request->ajax()) {
+            WikuEnteEmisor::create($request->all());
+            return WikuEnteEmisor::get();
+        }
+    }
+    public function cargarSalas(Request $request)
+    {
+        if ($request->ajax()) {
+
+            return WikuSala::where('ente_id', $request['ente_id'])->get();
+        }
+    }
 }

@@ -208,6 +208,20 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('funcionarios-cargar_cargos', [FuncionarioFController::class, 'cargar_cargos'])->name('funcionarios_funcionarios-cargar_cargos');
             // ------------------------------------------------------------------------------------
             //Gestión de wiku
+            //=====================================================================================================================
+            //Jurisprudencia
+            Route::get('wiku_jurisprudencia/crear', [WikuController::class, 'crear_jurisprudencia'])->name('wiku_jurisprudencia-crear');
+            Route::post('wiku_jurisprudencia-guardar', [WikuController::class, 'guardar_jurisprudencia'])->name('wiku_jurisprudencia-guardar');
+            Route::get('wiku_jurisprudencia/editar/{id}', [WikuController::class, 'editar_jurisprudencia'])->name('wiku_jurisprudencia-editar');
+            Route::put('wiku_jurisprudencia-actualizar/{id}', [WikuController::class, 'actualizar_jurisprudencia'])->name('wiku_jurisprudencia-actualizar');
+
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            Route::get('wikucargarsalas', [WikuController::class, 'cargarSalas'])->name('wiku-cargarsalas');
+            Route::get('wikucargarsubsalas', [WikuController::class, 'cargarsubsalas'])->name('wiku-cargarsubsalas');
+            Route::get('wiku_jurisprudencia-cargarente', [WikuController::class, 'cargarente'])->name('wiku_jurisprudencia-cargarente');
+            Route::get('wiku_jurisprudencia-cargarente', [WikuController::class, 'cargarente'])->name('wiku_jurisprudencia-cargarente');
+            // ------------------------------------------------------------------------------------
+            // ------------------------------------------------------------------------------------
             Route::get('wiku/index', [WikuController::class, 'index'])->name('wiku-index');
             Route::get('wiku/ver', [WikuController::class, 'ver'])->name('wiku-ver');
             Route::get('wikucargarargumentos', [WikuController::class, 'cargarArgumentos'])->name('wiku-cargarargumentos');
