@@ -8,11 +8,15 @@ use App\Models\Admin\WikuArgCriterio;
 use App\Models\Admin\WikuArgumento;
 use App\Models\Admin\WikuAsociacion;
 use App\Models\Admin\WikuAsociacionArg;
+use App\Models\Admin\WikuAsociacionDoc;
+use App\Models\Admin\WikuAsociacionJur;
 use App\Models\Admin\WikuAutor;
 use App\Models\Admin\WikuAutorInst;
 use App\Models\Admin\WikuCriterio;
 use App\Models\Admin\WikuDemandado;
 use App\Models\Admin\WikuDemandante;
+use App\Models\Admin\WikuDocCritero;
+use App\Models\Admin\WikuDoctrina;
 use App\Models\Admin\WikuDocument;
 use App\Models\Admin\WikuEnteEmisor;
 use App\Models\Admin\WikuJurisprudencia;
@@ -20,6 +24,7 @@ use App\Models\Admin\WikuMagistrado;
 use App\Models\Admin\WikuNorma;
 use App\Models\Admin\WikuPalabras;
 use App\Models\Admin\WikuSala;
+use App\Models\Admin\WikuSubsala;
 use App\Models\Admin\WikuTema;
 use App\Models\Admin\WikuTemaEspecifico;
 use App\Models\PQR\tipoPQR;
@@ -42,7 +47,8 @@ class WikuController extends Controller
         $normas = WikuNorma::all();
         $argumentos = WikuArgumento::with('autorInst', 'autor')->get();
         $jurisprudencias = WikuJurisprudencia::all();
-        return view('intranet.parametros.wiku.index', compact('normas', 'fuentes', 'argumentos', 'jurisprudencias'));
+        $doctrinas = WikuDoctrina::all();
+        return view('intranet.parametros.wiku.index', compact('normas', 'fuentes', 'argumentos', 'jurisprudencias', 'doctrinas'));
     }
 
     public function index_fuenteN()
@@ -189,6 +195,32 @@ class WikuController extends Controller
                 $argumento = WikuArgumento::findOrFail($id);
                 return view('intranet.parametros.wiku.argumentos.editar', compact(
                     'argumento',
+                    'autoresInst',
+                    'autores',
+                    'areas',
+                    'temasEspecifico'
+                ));
+            }
+        } elseif ($wiku == 'doctrina') {
+            if ($id == 0) {
+                $temasEspecifico = WikuTemaEspecifico::all();
+                $areas = WikuArea::all();
+                $autoresInst = WikuAutorInst::all();
+                $autores = WikuAutor::all();
+                return view('intranet.parametros.wiku.doctrinas.crear', compact(
+                    'autoresInst',
+                    'autores',
+                    'temasEspecifico',
+                    'areas'
+                ));
+            } else {
+                $temasEspecifico = WikuTemaEspecifico::all();
+                $areas = WikuArea::all();
+                $autoresInst = WikuAutorInst::all();
+                $autores = WikuAutor::all();
+                $doctrina = WikuDoctrina::findOrFail($id);
+                return view('intranet.parametros.wiku.doctrinas.editar', compact(
+                    'doctrina',
                     'autoresInst',
                     'autores',
                     'areas',
@@ -420,6 +452,14 @@ class WikuController extends Controller
             $argumento = WikuArgumento::findOrFail($id);
             $palabras = WikuPalabras::all();
             return view('intranet.parametros.wiku.palabras.index', compact('argumento', 'palabras', 'wiku'));
+        } elseif ($wiku == 'jurisprudencia') {
+            $jurisprudencia = WikuJurisprudencia::findOrFail($id);
+            $palabras = WikuPalabras::all();
+            return view('intranet.parametros.wiku.palabras.index', compact('jurisprudencia', 'palabras', 'wiku'));
+        } elseif ($wiku == 'doctrina') {
+            $doctrina = WikuDoctrina::findOrFail($id);
+            $palabras = WikuPalabras::all();
+            return view('intranet.parametros.wiku.palabras.index', compact('doctrina', 'palabras', 'wiku'));
         }
     }
     public function crear_palabras($id, $wiku)
@@ -458,6 +498,36 @@ class WikuController extends Controller
             $argumento->palabras()->sync($palabras_argumento);
             $palabras = WikuPalabras::all();
             return redirect('/admin/funcionario/wiku_palabras/index/' . $id . '/argumento')->with('mensaje', 'Palabra creada con éxito y asociada al argumento')->with('argumento')->with('palabras')->with('wiku');
+        } elseif ($wiku == 'jurisprudencia') {
+            $palabras = WikuPalabras::with('jurisprudencias')->whereHas('jurisprudencias', function ($q) use ($id) {
+                $q->where('wiku_jurisprudencia_id', $id);
+            })->get();
+            foreach ($palabras as $palabra) {
+                $palabras_jurisprudencia[] = $palabra['id'];
+            }
+            $nueva_palabra = $request->all();
+            unset($nueva_palabra['norma_id']);
+            $palabraNueva = WikuPalabras::create($nueva_palabra);
+            $palabras_jurisprudencia[] = $palabraNueva->id;
+            $jurisprudencia = WikuJurisprudencia::findOrFail($id);
+            $jurisprudencia->palabras()->sync($palabras_jurisprudencia);
+            $palabras = WikuPalabras::all();
+            return redirect('/admin/funcionario/wiku_palabras/index/' . $id . '/jurisprudencia')->with('mensaje', 'Palabra creada con éxito y asociada a la jurisprudencia')->with('jurisprudencia')->with('palabras')->with('wiku');
+        } elseif ($wiku == 'doctrina') {
+            $palabras = WikuPalabras::with('doctrinas')->whereHas('doctrinas', function ($q) use ($id) {
+                $q->where('wiku_doctrina_id', $id);
+            })->get();
+            foreach ($palabras as $palabra) {
+                $palabras_doctrina[] = $palabra['id'];
+            }
+            $nueva_palabra = $request->all();
+            unset($nueva_palabra['norma_id']);
+            $palabraNueva = WikuPalabras::create($nueva_palabra);
+            $palabras_doctrina[] = $palabraNueva->id;
+            $doctrina = WikuDoctrina::findOrFail($id);
+            $doctrina->palabras()->sync($palabras_doctrina);
+            $palabras = WikuPalabras::all();
+            return redirect('/admin/funcionario/wiku_palabras/index/' . $id . '/doctrina')->with('mensaje', 'Palabra creada con éxito y asociada a la doctrina')->with('doctrina')->with('palabras')->with('wiku');
         }
     }
     public function editar_palabras($id_palabras, $id, $wiku)
@@ -478,13 +548,21 @@ class WikuController extends Controller
             $argumento = WikuArgumento::findOrFail($id);
             $palabras = WikuPalabras::all();
             return redirect('/admin/funcionario/wiku_palabras/index/' . $id . '/argumento')->with('mensaje', 'Palabra actualizada con éxito')->with('argumento')->with('palabras')->with('wiku');
+        } elseif ($wiku == 'jurisprudencia') {
+            $jurisprudencia = WikuJurisprudencia::findOrFail($id);
+            $palabras = WikuPalabras::all();
+            return redirect('/admin/funcionario/wiku_palabras/index/' . $id . '/jurisprudencia')->with('mensaje', 'Palabra actualizada con éxito')->with('jurisprudencia')->with('palabras')->with('wiku');
+        } elseif ($wiku == 'doctrina') {
+            $doctrina = WikuDoctrina::findOrFail($id);
+            $palabras = WikuPalabras::all();
+            return redirect('/admin/funcionario/wiku_palabras/index/' . $id . '/doctrina')->with('mensaje', 'Palabra actualizada con éxito')->with('doctrina')->with('palabras')->with('wiku');
         }
     }
     public function wiku_palabras_eliminar(Request $request, $id)
     {
         if ($request->ajax()) {
             $palabra = WikuPalabras::findOrfail($id);
-            if ($palabra->normas->count() == 0 && $palabra->argumentos->count() == 0) {
+            if ($palabra->normas->count() == 0 && $palabra->argumentos->count() == 0 && $palabra->jurisprudencias->count() == 0 && $palabra->doctrinas->count() == 0) {
                 if (WikuPalabras::destroy($id)) {
                     return response()->json(['mensaje' => 'ok']);
                 } else {
@@ -524,6 +602,30 @@ class WikuController extends Controller
                 $palabras_norma[] = $palabra_ini->id;
                 $argumento->palabras()->sync($palabras_norma);
                 return response()->json(['mensaje' => 'ok']);
+            } elseif ($wiku == 'jurisprudencia') {
+                $palabra_ini = WikuPalabras::findOrfail($id_palabras);
+                $jurisprudencia = WikuJurisprudencia::findOrFail($id);
+                $palabras = WikuPalabras::with('jurisprudencias')->whereHas('jurisprudencias', function ($q) use ($id) {
+                    $q->where('wiku_jurisprudencia_id', $id);
+                })->get();
+                foreach ($palabras as $palabra) {
+                    $palabras_juris[] = $palabra['id'];
+                }
+                $palabras_juris[] = $palabra_ini->id;
+                $jurisprudencia->palabras()->sync($palabras_juris);
+                return response()->json(['mensaje' => 'ok']);
+            } elseif ($wiku == 'doctrina') {
+                $palabra_ini = WikuPalabras::findOrfail($id_palabras);
+                $doctrina = WikuDoctrina::findOrFail($id);
+                $palabras = WikuPalabras::with('doctrinas')->whereHas('doctrinas', function ($q) use ($id) {
+                    $q->where('wiku_doctrina_id', $id);
+                })->get();
+                foreach ($palabras as $palabra) {
+                    $palabras_doc[] = $palabra['id'];
+                }
+                $palabras_doc[] = $palabra_ini->id;
+                $doctrina->palabras()->sync($palabras_doc);
+                return response()->json(['mensaje' => 'ok']);
             }
         } else {
             abort(404);
@@ -539,6 +641,14 @@ class WikuController extends Controller
             } elseif ($wiku == 'argumento') {
                 $argumentos = new WikuArgumento();
                 $argumentos->find($id)->palabras()->detach($id_palabras);
+                return response()->json(['mensaje' => 'ok']);
+            } elseif ($wiku == 'jurisprudencia') {
+                $jurisprudencias = new WikuJurisprudencia();
+                $jurisprudencias->find($id)->palabras()->detach($id_palabras);
+                return response()->json(['mensaje' => 'ok']);
+            } elseif ($wiku == 'doctrina') {
+                $doctrinas = new WikuDoctrina();
+                $doctrinas->find($id)->palabras()->detach($id_palabras);
                 return response()->json(['mensaje' => 'ok']);
             }
         } else {
@@ -604,7 +714,12 @@ class WikuController extends Controller
         $tipos_pqr = tipoPQR::get();
         $categorias = Categoria::get();
         $servicios = Servicio::get();
-        return view('intranet.parametros.wiku.funcionario.index', compact('areas', 'fuentes', 'tipos_pqr', 'categorias', 'servicios'));
+        $entes = WikuEnteEmisor::get();
+        $magistrados = WikuMagistrado::get();
+        $demandantes = WikuDemandante::get();
+        $demandados = WikuDemandado::get();
+        $anno = date('Y');
+        return view('intranet.parametros.wiku.funcionario.index', compact('areas', 'fuentes', 'tipos_pqr', 'categorias', 'servicios', 'entes', 'magistrados', 'demandantes', 'demandados', 'anno'));
     }
     public function indexWikuNormas()
     {
@@ -645,11 +760,19 @@ class WikuController extends Controller
             }
             $wikuNormas = [];
             $wikuArgumentos = [];
+            $wikuJurisprudencias = [];
+            $wikuDoctrinas = [];
             if ($radio == 'todos') {
                 $wikuNormas = WikuNorma::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area', 'documento')->whereHas('palabras', function ($q) use ($ids) {
                     $q->whereIn('wiku_palabras_id', $ids);
                 })->get();
                 $wikuArgumentos = WikuArgumento::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
+                    $q->whereIn('wiku_palabras_id', $ids);
+                })->get();
+                $wikuJurisprudencias = WikuJurisprudencia::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
+                    $q->whereIn('wiku_palabras_id', $ids);
+                })->get();
+                $wikuDoctrinas = WikuDoctrina::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
                     $q->whereIn('wiku_palabras_id', $ids);
                 })->get();
             } elseif ($radio == 'Normas') {
@@ -660,9 +783,17 @@ class WikuController extends Controller
                 $wikuArgumentos = WikuArgumento::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
                     $q->whereIn('wiku_palabras_id', $ids);
                 })->get();
+            } elseif ($radio == 'jurisprudencias') {
+                $wikuJurisprudencias = WikuJurisprudencia::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
+                    $q->whereIn('wiku_palabras_id', $ids);
+                })->get();
+            } elseif ($radio == 'doctrinas') {
+                $wikuDoctrinas = WikuDoctrina::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereHas('palabras', function ($q) use ($ids) {
+                    $q->whereIn('wiku_palabras_id', $ids);
+                })->get();
             }
             //$wikuNormas = [count($palabras)];
-            return response()->json(['normas' => $wikuNormas, 'argumentos' => $wikuArgumentos]);
+            return response()->json(['normas' => $wikuNormas, 'argumentos' => $wikuArgumentos, 'jurisprudencias' => $wikuJurisprudencias, 'doctrinas' => $wikuDoctrinas]);
         } else {
             abort(404);
         }
@@ -830,11 +961,225 @@ class WikuController extends Controller
                     break;
 
                 case 'Jurisprudencias':
-                    # code...
+                    $area_id = $request['area_id'];
+                    $tema_id = $request['tema_id'];
+                    $wikutemaespecifico_id = $request['wikutemaespecifico_id'];
+                    $id = $request['id'];
+                    $fecha = $request['fecha'];
+                    $prod_serv = $request['prod_serv'];
+                    $tipo_p_q_r_id = $request['tipo_p_q_r_id'];
+                    $motivo_id = $request['motivo_id'];
+                    $motivo_sub_id = $request['motivo_sub_id'];
+                    $servicio_id = $request['servicio_id'];
+                    $categoria_id = $request['categoria_id'];
+                    $producto_id = $request['producto_id'];
+                    $marca_id = $request['marca_id'];
+                    $referencia_id = $request['referencia_id'];
+                    $ente_id = $request['ente_id'];
+                    $sala_id = $request['sala_id'];
+                    $subsala_id = $request['subsala_id'];
+                    $magistrado_id = $request['magistrado_id'];
+                    $demandante_id = $request['demandante_id'];
+                    $demandado_id = $request['demandado_id'];
+                    //=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=
+                    $query = WikuJurisprudencia::with(
+                        'palabras',
+                        'criterios',
+                        'subsala.sala',
+                        'subsala',
+                        'temaEspecifico',
+                        'temaEspecifico.tema_',
+                        'temaEspecifico.tema_.area',
+                        'tipopqr',
+                        'asociaciones'
+                    );
+                    if ($tipo_p_q_r_id != null) {
+                        $query->whereHas('tipopqr', function ($q) use ($tipo_p_q_r_id) {
+                            $q->where('tipo_p_q_r_id', $tipo_p_q_r_id);
+                        });
+                    }
+                    if ($motivo_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($motivo_id) {
+                            $q->where('motivo_id', $motivo_id);
+                        });
+                    }
+                    if ($motivo_sub_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($motivo_sub_id) {
+                            $q->where('motivo_sub_id', $motivo_sub_id);
+                        });
+                    }
+                    if ($servicio_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($servicio_id) {
+                            $q->where('servicio_id', $servicio_id);
+                        });
+                    }
+                    if ($categoria_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($categoria_id) {
+                            $q->where('categoria_id', $categoria_id);
+                        });
+                    }
+                    if ($producto_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($producto_id) {
+                            $q->where('producto_id', $producto_id);
+                        });
+                    }
+                    if ($marca_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($marca_id) {
+                            $q->where('marca_id', $marca_id);
+                        });
+                    }
+                    if ($referencia_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($referencia_id) {
+                            $q->where('referencia_id', $referencia_id);
+                        });
+                    }
+                    $respuesta = $query->get();
+                    //=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=
+                    if ($area_id != null) {
+                        $respuesta = $respuesta->where('temaEspecifico.tema_.area_id', $area_id);
+                    }
+                    if ($tema_id != null) {
+                        $respuesta = $respuesta->where('temaEspecifico.tema_id', $tema_id);
+                    }
+                    if ($wikutemaespecifico_id != null) {
+                        $respuesta = $respuesta->where('wikutemaespecifico_id', $wikutemaespecifico_id);
+                    }
+                    if ($ente_id != null) {
+                        $respuesta = $respuesta->where('subsala.sala.ente_id', $ente_id);
+                    }
+                    if ($sala_id != null) {
+                        $respuesta = $respuesta->where('subsala.sala_id', $sala_id);
+                    }
+                    if ($subsala_id != null) {
+                        $respuesta = $respuesta->where('subsala_id', $subsala_id);
+                    }
+                    if ($id != null) {
+                        $respuesta = $respuesta->where('id', $id);
+                    }
+                    if ($fecha != null) {
+                        $respuesta = $respuesta->where('fecha', '>', $fecha);
+                    }
+                    if ($magistrado_id != null) {
+                        $respuesta = $respuesta->where('magistrado_id', $magistrado_id);
+                    }
+                    if ($demandante_id != null) {
+                        $respuesta = $respuesta->where('demandante_id', $demandante_id);
+                    }
+                    if ($demandado_id != null) {
+                        $respuesta = $respuesta->where('demandado_id', $demandado_id);
+                    }
                     break;
 
-                default:
-                    # code...
+                case 'Doctrinas':
+                    $area_id = $request['area_id'];
+                    $tema_id = $request['tema_id'];
+                    $wikutemaespecifico_id = $request['wikutemaespecifico_id'];
+                    $fecha = $request['fecha'];
+                    $tipo_p_q_r_id = $request['tipo_p_q_r_id'];
+                    $motivo_id = $request['motivo_id'];
+                    $motivo_sub_id = $request['motivo_sub_id'];
+                    $servicio_id = $request['servicio_id'];
+                    $categoria_id = $request['categoria_id'];
+                    $producto_id = $request['producto_id'];
+                    $marca_id = $request['marca_id'];
+                    $referencia_id = $request['referencia_id'];
+                    $tipo = $request['tipo'];
+                    $titulo = $request['titulo'];
+                    $anno = $request['anno'];
+                    $mes = $request['mes'];
+                    $ciudad = $request['ciudad'];
+                    $editorial = $request['editorial'];
+                    $revista = $request['revista'];
+                    $url = $request['url'];
+                    //=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=
+                    $query = WikuDoctrina::with(
+                        'palabras',
+                        'criterios',
+                        'temaEspecifico',
+                        'temaEspecifico.tema_',
+                        'temaEspecifico.tema_.area',
+                        'tipopqr',
+                        'asociaciones'
+                    );
+                    if ($tipo_p_q_r_id != null) {
+                        $query->whereHas('tipopqr', function ($q) use ($tipo_p_q_r_id) {
+                            $q->where('tipo_p_q_r_id', $tipo_p_q_r_id);
+                        });
+                    }
+                    if ($motivo_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($motivo_id) {
+                            $q->where('motivo_id', $motivo_id);
+                        });
+                    }
+                    if ($motivo_sub_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($motivo_sub_id) {
+                            $q->where('motivo_sub_id', $motivo_sub_id);
+                        });
+                    }
+                    if ($servicio_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($servicio_id) {
+                            $q->where('servicio_id', $servicio_id);
+                        });
+                    }
+                    if ($categoria_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($categoria_id) {
+                            $q->where('categoria_id', $categoria_id);
+                        });
+                    }
+                    if ($producto_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($producto_id) {
+                            $q->where('producto_id', $producto_id);
+                        });
+                    }
+                    if ($marca_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($marca_id) {
+                            $q->where('marca_id', $marca_id);
+                        });
+                    }
+                    if ($referencia_id != null) {
+                        $query->whereHas('asociaciones', function ($q) use ($referencia_id) {
+                            $q->where('referencia_id', $referencia_id);
+                        });
+                    }
+                    $respuesta = $query->get();
+                    //=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=
+                    if ($area_id != null) {
+                        $respuesta = $respuesta->where('temaEspecifico.tema_.area_id', $area_id);
+                    }
+                    if ($tema_id != null) {
+                        $respuesta = $respuesta->where('temaEspecifico.tema_id', $tema_id);
+                    }
+                    if ($wikutemaespecifico_id != null) {
+                        $respuesta = $respuesta->where('wikutemaespecifico_id', $wikutemaespecifico_id);
+                    }
+                    if ($fecha != null) {
+                        $fechaComoEntero = strtotime($fecha);
+                        $respuesta = $respuesta->where('anno', date("Y", $fechaComoEntero))->where('mes', date("m", $fechaComoEntero))->where('dia', date("d", $fechaComoEntero));
+                    }
+                    if ($tipo != null) {
+                        $respuesta = $respuesta->where('tipo', $tipo);
+                    }
+                    if ($titulo != null) {
+                        $respuesta = $respuesta->where('titulo', $titulo);
+                    }
+                    if ($anno != null) {
+                        $respuesta = $respuesta->where('anno', $anno);
+                    }
+                    if ($mes != null) {
+                        $respuesta = $respuesta->where('mes', $mes);
+                    }
+                    if ($ciudad != null) {
+                        $respuesta = $respuesta->where('ciudad', $ciudad);
+                    }
+                    if ($editorial != null) {
+                        $respuesta = $respuesta->where('editorial', $editorial);
+                    }
+                    if ($revista != null) {
+                        $respuesta = $respuesta->where('revista', $revista);
+                    }
+                    if ($url != null) {
+                        $respuesta = $respuesta->where('url', $url);
+                    }
                     break;
             }
             return response()->json($respuesta);
@@ -847,6 +1192,20 @@ class WikuController extends Controller
         if ($request->ajax()) {
             $id = $request['id'];
             return WikuNorma::where('id', $id)->get();
+        }
+    }
+    public function cargar_salas(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return WikuSala::where('ente_id', $id)->get();
+        }
+    }
+    public function cargar_subsalas(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $_GET['id'];
+            return WikuSubsala::where('sala_id', $id)->get();
         }
     }
     //================================================================================================
@@ -1026,4 +1385,288 @@ class WikuController extends Controller
             return WikuSala::where('ente_id', $request['ente_id'])->get();
         }
     }
+
+    public function crearSala(Request $request)
+    {
+        if ($request->ajax()) {
+            WikuSala::create($request->all());
+            return WikuSala::where('ente_id', $request['ente_id'])->get();
+        }
+    }
+    public function cargarsubsalas(Request $request)
+    {
+        if ($request->ajax()) {
+
+            return WikuSubsala::where('sala_id', $request['sala_id'])->get();
+        }
+    }
+    public function crearSubSala(Request $request)
+    {
+        if ($request->ajax()) {
+            WikuSubsala::create($request->all());
+            return WikuSubsala::where('sala_id', $request['sala_id'])->get();
+        }
+    }
+    public function crearMagistrado(Request $request)
+    {
+        if ($request->ajax()) {
+            WikuMagistrado::create($request->all());
+            return WikuMagistrado::get();
+        }
+    }
+    public function crearDemandante(Request $request)
+    {
+        if ($request->ajax()) {
+            WikuDemandante::create($request->all());
+            return WikuDemandante::get();
+        }
+    }
+    public function crearDemandado(Request $request)
+    {
+        if ($request->ajax()) {
+            WikuDemandado::create($request->all());
+            return WikuDemandado::get();
+        }
+    }
+    public function guardar_jurisprudencia(Request $request)
+    {
+        $nuevajurisprudencia = $request->all();
+
+        if ($request->hasFile('archivo')) {
+            unset($nuevajurisprudencia['archivo']);
+            $ruta = Config::get('constantes.folder_doc_fuentes');
+            $ruta = trim($ruta);
+            $doc_subido = $request->archivo;
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $nueva_fuente['archivo'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+            $nuevajurisprudencia['archivo'] = $nombre_doc;
+        }
+        WikuJurisprudencia::create($nuevajurisprudencia);
+        return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Jurisprudencia creada con exito.');
+    }
+    public function editar_jurisprudencia($id)
+    {
+        $entes = WikuEnteEmisor::all();
+        $magistrados = WikuMagistrado::all();
+        $demandantes = WikuDemandante::all();
+        $demandados = WikuDemandado::all();
+
+        $temasEspecifico = WikuTemaEspecifico::all();
+        $areas = WikuArea::all();
+        $jurisprudencia = WikuJurisprudencia::findOrFail($id);
+        return view('intranet.parametros.wiku.jurisprudencias.editar', compact(
+            'entes',
+            'temasEspecifico',
+            'areas',
+            'magistrados',
+            'demandantes',
+            'demandados',
+            'jurisprudencia'
+        ));
+    }
+    public function actualizar_jurisprudencia(Request $request, $id)
+    {
+        $nuevajurisprudencia = $request->all();
+
+        if ($request->hasFile('archivo')) {
+            unset($nuevajurisprudencia['archivo']);
+            $ruta = Config::get('constantes.folder_doc_fuentes');
+            $ruta = trim($ruta);
+            $doc_subido = $request->archivo;
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $nueva_fuente['archivo'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+            $nuevajurisprudencia['archivo'] = $nombre_doc;
+        }
+        WikuJurisprudencia::findOrFail($id)->update($nuevajurisprudencia);
+        return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Jurisprudencia actualizada con exito.');
+    }
+    //================================================================================================
+    public function crear_jurasociacion($id, $wiku)
+    {
+        $tipos_pqr = tipoPQR::get();
+        $categorias = Categoria::get();
+        $servicios = Servicio::get();
+        return view('intranet.parametros.wiku.jurasociacion.crear', compact('id', 'wiku', 'tipos_pqr', 'categorias', 'servicios',));
+    }
+    public function guardar_jurasociacion(Request $request, $id, $wiku)
+    {
+
+        if ($request['servicio_id'] == null) {
+            $request['prodserv'] = 'Producto';
+        } else {
+            $request['prodserv'] = 'Servicio';
+        }
+        $request['wiku_jurisprudencia_id'] = $id;
+        WikuAsociacionJur::create($request->all());
+        return redirect('/admin/funcionario/wiku/jurasociacion/crear/' . $id . '/jurisprudencia')->with('mensaje', 'Asociación actualizada con éxito')->with('argumento')->with('palabras')->with('wiku');
+    }
+    public function wiku_jurasociacion_eliminar(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            if (WikuAsociacionJur::destroy($id)) {
+                return response()->json(['mensaje' => 'ok']);
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
+    }
+    //------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------
+    //================================================================================================
+    //************************************************************************************************
+
+    public function crear_doctrina()
+    {
+        $temasEspecifico = WikuTemaEspecifico::all();
+        $areas = WikuArea::all();
+        $autoresInst = WikuAutorInst::all();
+        $autores = WikuAutor::all();
+        return view('intranet.parametros.wiku.doctrinas.crear', compact(
+            'temasEspecifico',
+            'areas',
+            'autoresInst',
+            'autores'
+        ));
+    }
+    public function guardar_doctrina(Request $request)
+    {
+        unset($request['autortipo']);
+        $fecha = strtotime($request['fecha']);
+        $request['anno'] = date("Y", $fecha);
+        $request['mes'] = date("m", $fecha);
+        $request['dia'] = date("d", $fecha);
+        unset($request['fecha']);
+        if ($request->hasFile('archivo')) {
+            $ruta = Config::get('constantes.folder_doc_fuentes');
+            $ruta = trim($ruta);
+            $doc_subido = $request->archivo;
+            unset($request['archivo']);
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $nueva_fuente['archivo'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+            $request['archivo'] = $nombre_doc;
+        }
+        WikuDoctrina::create($request->all());
+        return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Doctrina creada con exito.');
+    }
+    public function editar_doctrina(Request $request, $id)
+    {
+        $temasEspecifico = WikuTemaEspecifico::all();
+        $areas = WikuArea::all();
+        $autoresInst = WikuAutorInst::all();
+        $autores = WikuAutor::all();
+        $doctrina = WikuDoctrina::findOrFail($id);
+        return view('intranet.parametros.wiku.doctrinas.editar', compact(
+            'temasEspecifico',
+            'areas',
+            'autoresInst',
+            'autores',
+            'doctrina'
+        ));
+    }
+    public function actualizar_doctrina(Request $request, $id)
+    {
+        $nuevadoctrina = $request->all();
+        unset($nuevadoctrina['autortipo']);
+        $fecha = strtotime($request['fecha']);
+        $nuevadoctrina['anno'] = date("Y", $fecha);
+        $nuevadoctrina['mes'] = date("m", $fecha);
+        $nuevadoctrina['dia'] = date("d", $fecha);
+        unset($nuevadoctrina['fecha']);
+        if ($request->hasFile('archivo')) {
+            unset($nuevadoctrina['archivo']);
+            $ruta = Config::get('constantes.folder_doc_fuentes');
+            $ruta = trim($ruta);
+            $doc_subido = $request->archivo;
+            $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+            $nueva_fuente['archivo'] = $nombre_doc;
+            $doc_subido->move($ruta, $nombre_doc);
+            $nuevadoctrina['archivo'] = $nombre_doc;
+        }
+        WikuDoctrina::findOrFail($id)->update($nuevadoctrina);
+        return redirect('admin/funcionario/wiku/index')->with('mensaje', 'Doctrina actualizada con exito.');
+    }
+    //************************************************************************************************
+    public function index_doccriterios($id, $wiku)
+    {
+        $doctrina = WikuDoctrina::findOrFail($id);
+        $criterios = WikuDocCritero::where('doctrina_id', $id)->get();
+        return view('intranet.parametros.wiku.doccriterios.index', compact('doctrina', 'criterios', 'wiku'));
+    }
+    public function crear_doccriterios($id, $wiku)
+    {
+        return view('intranet.parametros.wiku.doccriterios.crear', compact('id', 'wiku'));
+    }
+    public function guardar_doccriterios(Request $request, $id, $wiku)
+    {
+        $nuevo_criterio = $request->all();
+        unset($nuevo_criterio['tipo_criterio']);
+        WikuDocCritero::create($nuevo_criterio);
+        $doctrina = WikuDoctrina::findOrFail($id);
+        $criterios = WikuDocCritero::where('doctrina_id', $id)->get();
+        return redirect('/admin/funcionario/wiku_doccriterios/index/' . $id . '/doctrina')->with('mensaje', 'Criterio creado con éxito')->with('doctrina')->with('criterios')->with('wiku');
+    }
+    public function editar_doccriterios($id_criterios, $id, $wiku)
+    {
+        $criterio = WikuDocCritero::findOrFail($id_criterios);
+        return view('intranet.parametros.wiku.doccriterios.editar', compact('criterio', 'id', 'wiku'));
+    }
+    public function actualizar_doccriterios(Request $request, $id_criterios, $id, $wiku)
+    {
+        $nuevo_criterio = $request->all();
+        unset($nuevo_criterio['tipo_criterio']);
+        WikuDocCritero::findOrFail($id_criterios)->update($nuevo_criterio);
+        $doctrina = WikuDoctrina::findOrFail($id);
+        $criterios = WikuDocCritero::where('doctrina_id', $id)->get();
+        return redirect('/admin/funcionario/wiku_doccriterios/index/' . $id . '/doctrina')->with('mensaje', 'Criterio actualizado con éxito')->with('doctrina')->with('criterios')->with('wiku');
+    }
+    public function wiku_doccriterios_eliminar(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            if (WikuDocCritero::destroy($id)) {
+                return response()->json(['mensaje' => 'ok']);
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
+    }
+    //================================================================================================
+    public function crear_docasociacion($id, $wiku)
+    {
+        $tipos_pqr = tipoPQR::get();
+        $categorias = Categoria::get();
+        $servicios = Servicio::get();
+        return view('intranet.parametros.wiku.docasociacion.crear', compact('id', 'wiku', 'tipos_pqr', 'categorias', 'servicios',));
+    }
+    public function guardar_docasociacion(Request $request, $id, $wiku)
+    {
+
+        if ($request['servicio_id'] == null) {
+            $request['prodserv'] = 'Producto';
+        } else {
+            $request['prodserv'] = 'Servicio';
+        }
+        $request['wiku_doctrina_id'] = $id;
+        WikuAsociacionDoc::create($request->all());
+        return redirect('/admin/funcionario/wiku/docasociacion/crear/' . $id . '/doctrina')->with('mensaje', 'Asociación actualizada con éxito')->with('wiku');
+    }
+    public function wiku_docasociacion_eliminar(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            if (WikuAsociacionDoc::destroy($id)) {
+                return response()->json(['mensaje' => 'ok']);
+            } else {
+                return response()->json(['mensaje' => 'ng']);
+            }
+        } else {
+            abort(404);
+        }
+    }
+    //------------------------------------------------------------------------------------------
 }

@@ -28,6 +28,9 @@ class CrearTablaWikuJurisprudencia extends Migration
             $table->foreign('demandado_id', 'fk_demandado_jurisprudencia')->references('id')->on('wikudemandado')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('wikutemaespecifico_id')->nullable();
             $table->foreign('wikutemaespecifico_id', 'fk_temaespecifico_jurisprudencia')->references('id')->on('wikutemaespecifico')->onDelete('restrict')->onUpdate('restrict');
+            $table->longText('texto');
+            $table->longText('descripcion')->nullable();
+            $table->bigInteger('destacado')->default(0);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

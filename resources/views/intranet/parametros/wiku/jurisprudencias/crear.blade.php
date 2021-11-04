@@ -75,7 +75,7 @@
         </div>
     </div>
     <!-- . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
-    <!-- Modal -->
+    <!-- Modal salas-->
     <div class="modal fade" id="modalSala" tabindex="-1" aria-labelledby="modalSalaLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -88,7 +88,6 @@
                             <label id="labelEnte" class="requerido" for="enteSala_id">Ente Emisor</label>
                             <select class="form-control form-control-sm enteClass" id="enteSala_id" name="enteSala_id"
                                 data_url="{{ route('wiku-cargarsalas') }}">
-                                <option value="">---Seleccione---</option>
                                 @foreach ($entes as $ente)
                                     <option value="{{ $ente->id }}">
                                         {{ $ente->ente }}
@@ -105,12 +104,133 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data_url="{{ route('wiku_jurisprudencia-cargarente') }}"
+                    <button type="button" class="btn btn-primary" data_url="{{ route('wiku_jurisprudencia-cargarsala') }}"
                         id="crearSala" data-bs-dismiss="modal">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
+    <!-- . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalSubSala" tabindex="-1" aria-labelledby="modalSubSalaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSubSalaLabel">Nueva Sub Sala</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="subsala">Sub sala</label>
+                            <input type="text" class="form-control form-control-sm" name="subsala" id="subsala"
+                                aria-describedby="helpId" value="{{ old('subsala') }}" placeholder="" required>
+                            <small id="helpId" class="form-text text-muted">Nombre de la sub-sala</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                        data_url="{{ route('wiku_jurisprudencia-cargarsubsala') }}" id="crearSubSala"
+                        data-bs-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalMagistrado" tabindex="-1" aria-labelledby="modalMagistradoLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMagistradoLabel">Nuevo Magistrado</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="nombre1">Primer Nombre</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre1" id="nombre1"
+                                aria-describedby="helpId" value="{{ old('nombre1') }}" placeholder="" required>
+                        </div>
+                        <div class="col-11 form-group">
+                            <label for="nombre2">Segundo Nombre</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre2" id="nombre2"
+                                aria-describedby="helpId" value="{{ old('nombre2') }}" placeholder="">
+                        </div>
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="apellido1">Primer Apellido</label>
+                            <input type="text" class="form-control form-control-sm" name="apellido1" id="apellido1"
+                                aria-describedby="helpId" value="{{ old('apellido1') }}" placeholder="" required>
+                        </div>
+                        <div class="col-11 form-group">
+                            <label for="apellido2">Segundo Apellido</label>
+                            <input type="text" class="form-control form-control-sm" name="apellido2" id="apellido2"
+                                aria-describedby="helpId" value="{{ old('apellido2') }}" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                        data_url="{{ route('wiku_jurisprudencia-crearmagistrado') }}" id="crearMagistrado"
+                        data-bs-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalDemandante" tabindex="-1" aria-labelledby="modalDemandanteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDemandanteLabel">Nuevo Demandante</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="demandante">Demandante</label>
+                            <input type="text" class="form-control form-control-sm" name="demandante" id="demandante"
+                                aria-describedby="helpId" value="{{ old('demandante') }}" placeholder="" required>
+                            <small id="helpId" class="form-text text-muted">Nombre del demandante</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                        data_url="{{ route('wiku_jurisprudencia-creardemandante') }}" id="crearDemandante"
+                        data-bs-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
+    <!-- Modal -->
+    <div class="modal fade" id="modalDemandado" tabindex="-1" aria-labelledby="modalDemandadoLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDemandadoLabel">Nuevo Demandado</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-11 form-group">
+                            <label class="requerido" for="demandado">Demandado</label>
+                            <input type="text" class="form-control form-control-sm" name="demandado" id="demandado"
+                                aria-describedby="helpId" value="{{ old('demandado') }}" placeholder="" required>
+                            <small id="helpId" class="form-text text-muted">Nombre del demandado</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                        data_url="{{ route('wiku_jurisprudencia-creardemandado') }}" id="crearDemandado"
+                        data-bs-dismiss="modal">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- . . . . . . .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .-->
 @endsection
 <!-- ************************************************************* -->

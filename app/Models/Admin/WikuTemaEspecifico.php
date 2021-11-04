@@ -22,6 +22,11 @@ class WikuTemaEspecifico extends Model
         return $this->hasMany(WikuArgumento::class, 'wikutemaespecifico_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function doctrinas()
+    {
+        return $this->hasMany(WikuDoctrina::class, 'wikutemaespecifico_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
     public function jusrisprudencias()
     {

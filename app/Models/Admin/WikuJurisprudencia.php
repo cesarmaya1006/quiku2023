@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\PQR\tipoPQR;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -55,6 +56,21 @@ class WikuJurisprudencia extends Model
     public function jurisprudencias()
     {
         return $this->hasMany(WikuJurisprudencia::class, 'jurisprudencia2_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function palabras()
+    {
+        return $this->belongsToMany(WikuPalabras::class, 'wikupalabrasjuris');
+    }
+    //----------------------------------------------------------------------------------
+    public function asociaciones()
+    {
+        return $this->hasMany(WikuAsociacionJur::class, 'wiku_jurisprudencia_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function tipopqr()
+    {
+        return $this->belongsToMany(tipoPQR::class, 'wikujurisasociaciones', 'tipo_p_q_r_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }
