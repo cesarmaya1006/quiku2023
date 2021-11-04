@@ -206,6 +206,15 @@
                                         <option value="">Seleccione primero una Sala</option>
                                     </select>
                                 </div>
+                                <div class="col-12 col-md-1 form-group seccionEnteJurisprudencia d-none">
+                                    <label for="annoj">Año desde</label>
+                                    <select class="form-control form-control-sm" id="annoj" name="annoj" required>
+                                        <option value="">Seleccione</option>
+                                        @for ($i = $anno; $i >= 1950; $i -= 1)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
                                 <!-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++   -->
                                 <div class="col-12 col-md-5 form-group d-none seccionFuenteEmisora">
                                     <label for="fuente_id">Fuente emisora</label>

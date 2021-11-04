@@ -981,6 +981,8 @@ class WikuController extends Controller
                     $magistrado_id = $request['magistrado_id'];
                     $demandante_id = $request['demandante_id'];
                     $demandado_id = $request['demandado_id'];
+                    $annoj = $request['annoj'];
+
                     //=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=.=
                     $query = WikuJurisprudencia::with(
                         'palabras',
@@ -1055,6 +1057,9 @@ class WikuController extends Controller
                     }
                     if ($id != null) {
                         $respuesta = $respuesta->where('id', $id);
+                    }
+                    if ($annoj != null) {
+                        $respuesta = $respuesta->where('fecha', '>=', $annoj . '-01-01');
                     }
                     if ($fecha != null) {
                         $respuesta = $respuesta->where('fecha', '>', $fecha);
@@ -1182,6 +1187,8 @@ class WikuController extends Controller
                     }
                     break;
             }
+
+
             return response()->json($respuesta);
         } else {
             abort(404);

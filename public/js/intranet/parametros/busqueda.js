@@ -381,7 +381,7 @@ $(document).ready(function() {
             $('.tituloID').addClass('d-none');
 
             $('#tituloSec2').html('Por Ente, Sala, Sub-Sala y fecha de entrada en vigencia...');
-            $('#tituloFecha').html('Entrada en vigencia');
+            $('#tituloFecha').html('Fecha de la sentencia');
         } else if ($(this).val() == 'Doctrinas') {
             $('.seccionDoctrina').removeClass('d-none');
             $('.seccionEnteJurisprudencia').addClass('d-none');
@@ -724,22 +724,23 @@ function busquedaAvanzada() {
     const ente_id = $('#ente_id');
     const sala_id = $('#sala_id');
     const subsala_id = $('#subsala_id');
-    const magistrado_id = $('magistrado_id');
-    const demandante_id = $('demandante_id');
-    const demandado_id = $('demandado_id');
-    const tipo = $('tipo');
-    const titulo = $('titulo');
-    const anno = $('anno');
-    const mes = $('mes');
-    const ciudad = $('ciudad');
-    const editorial = $('editorial');
-    const revista = $('revista');
-    const url = $('url');
+    const magistrado_id = $('#magistrado_id');
+    const demandante_id = $('#demandante_id');
+    const demandado_id = $('#demandado_id');
+    const tipo = $('#tipo');
+    const titulo = $('#titulo');
+    const anno = $('#anno');
+    const annoj = $('#annoj');
+    const mes = $('#mes');
+    const ciudad = $('#ciudad');
+    const editorial = $('#editorial');
+    const revista = $('#revista');
+    const url = $('#url');
     //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    const tipowiku = tipo_wiku.val();
-    if (tipowiku != '') {
+    const tipowiku_val = tipo_wiku.val();
+    if (tipowiku_val != '') {
         var data = {
-            "tipowiku": tipowiku,
+            "tipowiku": tipowiku_val,
             "area_id": area_id.val(),
             "tema_id": tema_id.val(),
             "wikutemaespecifico_id": wikutemaespecifico_id.val(),
@@ -764,6 +765,7 @@ function busquedaAvanzada() {
             "tipo": tipo.val(),
             "titulo": titulo.val(),
             "anno": anno.val(),
+            "annoj": annoj.val(),
             "mes": mes.val(),
             "ciudad": ciudad.val(),
             "editorial": editorial.val(),
@@ -777,7 +779,7 @@ function busquedaAvanzada() {
             success: function(respuesta) {
                 console.log(respuesta);
                 $html_ = '';
-                if (tipowiku == 'Normas') {
+                if (tipowiku_val == 'Normas') {
                     $.each(respuesta, function(index, norma) {
                         $html_ += '<div class="col -12 col-md-10">';
                         $html_ += '<div class="card card-info collapsed-card card-mini-sombra">';
@@ -852,7 +854,7 @@ function busquedaAvanzada() {
                         $html_ += '</div>';
 
                     });
-                } else if (tipowiku == 'Argumentos') {
+                } else if (tipowiku_val == 'Argumentos') {
                     $.each(respuesta, function(index, argumento) {
                         $html_ += '<div class="col -12 col-md-10">';
                         $html_ += '<div class="card card-success bg-legal1 collapsed-card card-mini-sombra">';
@@ -927,7 +929,7 @@ function busquedaAvanzada() {
                         $html_ += '</div>';
 
                     });
-                } else if (tipowiku == 'Jurisprudencias') {
+                } else if (tipowiku_val == 'Jurisprudencias') {
                     $.each(respuesta, function(index, jurisprudencia) {
                         $html_ += '<div class="col -12 col-md-10">';
                         $html_ += '<div class="card card-warning bg-legal1 collapsed-card card-mini-sombra">';
@@ -1002,7 +1004,7 @@ function busquedaAvanzada() {
                         $html_ += '</div>';
 
                     });
-                } else if (tipowiku == 'Doctrinas') {
+                } else if (tipowiku_val == 'Doctrinas') {
                     $.each(respuesta, function(index, doctrina) {
                         $html_ += '<div class="col -12 col-md-10">';
                         $html_ += '<div class="card card-primary bg-legal1 collapsed-card card-mini-sombra">';
