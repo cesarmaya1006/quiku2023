@@ -638,16 +638,29 @@
                                         <table class="table table-light" style="font-size: 0.8em;">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Fecha respuesta</th>
-                                                    <th scope="col">Respuesta</th>
+                                                    <th scope="col">Fecha</th>
+                                                    <th scope="col">Empleado</th>
+                                                    <th scope="col">Tarea</th>
+                                                    <th scope="col">Tipo</th>
+                                                    <th scope="col">Descarga</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($pqr->anexos as $respuesta)
+                                                @foreach ($pqr->anexos as $anexo)
                                                     <tr>
-                                                        <td>{{ $respuesta->created_at }}</td>
-                                                        <td class="text-justify"><a href="{{ route('usuario_descarga_respuestaPQR', ['id' => $respuesta->id]) }}" target="_blank" rel="noopener noreferrer">
-                                                            <i class="fas fa-file-download"></i> Descarga</a></td>
+                                                        <td>{{ $anexo->created_at }}</td>
+                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
+                                                        @if($anexo->tipo_respuesta == 0)
+                                                            <td>Respuesta PQR</td>
+                                                        @elseif($anexo->tipo_respuesta == 1)
+                                                            <td>Respuesta aclaración</td>
+                                                        @elseif($anexo->tipo_respuesta == 2)
+                                                            <td>Respuesta reposición</td>
+                                                        @elseif($anexo->tipo_respuesta == 3)
+                                                            <td>Respuesta apelación</td>
+                                                        @endif
+                                                        <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

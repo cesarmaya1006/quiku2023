@@ -37,7 +37,6 @@ use App\Models\Productos\Categoria;
 use App\Http\Controllers\Controller;
 use App\Models\PQR\AclaracionAnexos;
 use App\Models\PQR\AsignacionEstado;
-use App\Models\PQR\EstadoAsignacion;
 use Illuminate\Support\Facades\Mail;
 use App\Models\PQR\HistorialPeticion;
 use Illuminate\Support\Facades\Config;
@@ -45,6 +44,7 @@ use App\Mail\AclaracionComplementacion;
 use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\AsignacionParticular;
 use App\Http\Controllers\Fechas\FechasController;
+use App\Models\PQR\ResuelveRecurso;
 
 class PQRController extends Controller
 {
@@ -450,12 +450,20 @@ class PQRController extends Controller
         if ($request->ajax()) {
             $nuevoRecurso['recurso_id'] = $request['recurso_id'];
             $nuevoRecurso['fecha'] = date("Y-m-d");
-            if($request['respuesta']){
-                $nuevoRecurso['respuesta'] = $request['respuesta'];
-            }else{
-                $nuevoRecurso['respuesta'] = 'respuesta';
-            }
+            $nuevoRecurso['respuesta'] = $request['respuesta'];
             $respuestaRecurso = RespRecurso::create($nuevoRecurso);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_recurso_actualizar(Request $request)
+    {
+        if ($request->ajax()) {
+            $nuevoRecurso['respuesta'] = $request['respuesta'];
+            RespRecurso::findOrFail($request['recurso_id'])->update($nuevoRecurso);
+            $respuestaRecurso = RespRecurso::findOrfail($request['recurso_id']);
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRecurso]);
         } else {
             abort(404);
@@ -476,7 +484,8 @@ class PQRController extends Controller
                 }
                 $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
                 $nuevo_documento['resprecursos_id'] = $request["resprecursos_id"];
-                $nuevo_documento['titulo'] = $request["titulo"];
+                // $nuevo_documento['titulo'] = $request["titulo"];
+                $nuevo_documento['titulo'] = "Anexo";
                 if ($request["descripcion"]) {
                     $nuevo_documento['descripcion'] = $request["descripcion"];
                 } else {
@@ -489,6 +498,60 @@ class PQRController extends Controller
                 $respuesta = DocRespRecurso::create($nuevo_documento);
             }
 
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_recurso_anexos_actualizar(Request $request)
+    {
+        if ($request->ajax()) {
+            $documentos = $request->allFiles();
+            if ($request->hasFile('archivo')) {
+                $ruta = Config::get('constantes.folder_doc_respuestas');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["archivo"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['resprecursos_id'] = $request["resprecursos_id"];
+                // $nuevo_documento['titulo'] = $request["titulo"];
+                $nuevo_documento['titulo'] = "Anexo";
+                if ($request["descripcion"]) {
+                    $nuevo_documento['descripcion'] = $request["descripcion"];
+                } else {
+                    $nuevo_documento['descripcion'] = '';
+                }
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+                $respuesta = DocRespRecurso::create($nuevo_documento);
+            }
+
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function pqr_estado_recurso_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            if($request['tipo_reposicion_id'] == 1){
+                $pqrEstado['recurso_aclaracion'] = 1;
+            }elseif($request['tipo_reposicion_id'] == 2){
+                $pqrEstado['recurso_reposicion'] = 1;
+            }elseif($request['tipo_reposicion_id'] == 3){
+                $pqrEstado['recurso_apelacion'] = 1;
+            }elseif($request['tipo_reposicion_id'] == 4){
+                $pqrEstado['recurso_reposicion'] = 1;
+                $pqrEstado['recurso_apelacion'] = 1;
+            }
+            $respuesta = PQR::findOrFail($request['id'])->update($pqrEstado);
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
             abort(404);
@@ -634,11 +697,18 @@ class PQRController extends Controller
         if ($request->ajax()) {
                 if($request["idTarea"] == 4){
                     $pqr = PQR::findOrFail($request["idPqr"]);
-                    $resuelves = Resuelve::where('pqr_id', $request["idPqr"])->orderBy('orden')->get();
+                    $tipo_respuesta = $request["tipo_respuesta"]; 
                     $imagen = public_path('imagenes\sistema\icono_sistema.png');
                     $firma = public_path('documentos\usuarios\\' . $pqr->empleado->url);
-                    $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
+                    if($tipo_respuesta == 1 || $tipo_respuesta == 2 || $tipo_respuesta == 3 ){
+                        $resuelves = ResuelveRecurso::where('pqr_id', $request["idPqr"])->where('tipo_reposicion_id', $tipo_respuesta)->orderBy('orden')->get();
+                        $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr_recurso', compact('pqr', 'imagen', 'resuelves', 'firma', 'tipo_respuesta'));
+                    }else{
+                        $resuelves = Resuelve::where('pqr_id', $request["idPqr"])->orderBy('orden')->get();
+                        $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
+                    }
                     $rPdf['pqr_id'] = $request["idPqr"];
+                    $rPdf['tipo_respuesta'] = $request["tipo_respuesta"];
                     $rPdf['tareas_id'] = $request["idTarea"];
                     $rPdf['empleado_id'] = session('id_usuario');
                     $rrr = PqrAnexo::create($rPdf);
@@ -660,7 +730,30 @@ class PQRController extends Controller
                     }
                 }
                 if( ($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5 ){
-                    PQRController::actualizar_estados($pqr);
+                    if($pqr->peticiones->sum('recurso_dias')){
+                        if($tipo_respuesta == 1){
+                            $pqrEstado['estadospqr_id'] = 9;
+                            $fechaActual = date("Y-m-d H:i:s");
+                            $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
+                            $pqrEstado['tiempo_limite'] = $respuestaDias;
+                        }elseif($tipo_respuesta == 2){
+                            if($pqr->recurso_apelacion){
+                                $pqrEstado['estadospqr_id'] = 8;
+                                $fechaActual = date("Y-m-d H:i:s");
+                                $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
+                                $pqrEstado['tiempo_limite'] = $respuestaDias;
+                            }else{
+                                $pqrEstado['estadospqr_id'] = 10; 
+                            }
+                        }elseif($tipo_respuesta == 3){
+                            $pqrEstado['estadospqr_id'] = 10; 
+                        }else{
+                            $pqrEstado['estadospqr_id'] = 7; 
+                        }
+                    }else{
+                        $pqrEstado['estadospqr_id'] = 6; 
+                    }
+                    PQR::findOrFail($pqr->id)->update($pqrEstado);
                 }
             return response()->json(['mensaje' => 'ok', 'data' => $rPdf]);
         } else {
@@ -668,76 +761,29 @@ class PQRController extends Controller
         }
     }
 
-    static public function actualizar_estados($pqr){
-        $cantPeticionRecurso = 0;
-        $cantPericionRecursoRespuesta = 0;
-        $cantPeticionRecursoRespuestaCerrar = 0;
-        $peticiones = $pqr->peticiones;
-        foreach ($peticiones as $peticion) {
-            if(sizeOf($peticion->recursos)){
-                $cantPeticionRecurso += 1;
-                if(sizeOf($peticion->recursos) == 1){
-                    foreach ($peticion->recursos as $recurso) {
-                        if($recurso->respuestarecurso){
-                            $cantPericionRecursoRespuesta ++;
-                            if($recurso->tipo_reposicion_id != 1){
-                                $cantPeticionRecursoRespuestaCerrar ++;
-                            }
-                        }
-                    }
-                }else {
-                    $cantRecursos = sizeOf($peticion->recursos);
-                    $cantRecursosRepuestas = 0;
-                    foreach ($peticion->recursos as $recurso) {
-                        if($recurso->respuestarecurso){
-                            $cantRecursosRepuestas ++;
-                        }
-                    }
-                    if($cantRecursos == $cantRecursosRepuestas){
-                        $cantPericionRecursoRespuesta += 1;
-                        $cantPeticionRecursoRespuestaCerrar += 1;
-                    }
-                }
-            }
-        }
-        if($cantPeticionRecursoRespuestaCerrar == $peticiones->count()){
-            $pqrEstado['estadospqr_id'] = 10; 
-        }elseif($cantPeticionRecurso == $cantPericionRecursoRespuesta && $cantPeticionRecurso > 0 ){
-            $pqrEstado['estadospqr_id'] = 9;
-            if($pqr['recurso_dias']){
-                $fechaActual = date("Y-m-d H:i:s");
-                $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
-                $pqrEstado['tiempo_limite'] = $respuestaDias;
-            }
-        }elseif($cantPeticionRecurso == 0){
-            if($pqr->peticiones->sum('recurso_dias')){
-                $pqrEstado['estadospqr_id'] = 7;
-                if($pqr['recurso_dias']){
-                    $fechaActual = date("Y-m-d H:i:s");
-                    $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
-                    $pqrEstado['tiempo_limite'] = $respuestaDias;
-                }
-            }else{
-                $pqrEstado['estadospqr_id'] = 6; 
-            }
-        }
-        $respuesta = PQR::findOrFail($pqr->id)->update($pqrEstado);
-        return $respuesta;
-    }
-
     public function cambiar_estado_tareas_guardar(Request $request)
     {
         if ($request->ajax()) {
-            if($request['estado']){
-                $estado['estado_id'] = $request['estado'];
-                $tarea = $request['idTarea'] - 1;
+            $pqr = PQR::findOrFail($request['idPqr']);
+            if($request['tipo_respuesta'] == 2 && $pqr->recurso_apelacion && $request['idTarea'] == 5){
+                foreach ($pqr->asignaciontareas as $tarea) {
+                    $estadoTarea['estado_id'] = 6;
+                    $asignacionTarea = AsignacionTarea::where('pqr_id',$pqr['id'])->where('tareas_id',$tarea->tareas_id)->get();
+                    $asignacionTarea[0]->update($estadoTarea);
+                }
+                $respuesta = 'ok';
             }else{
-                $estado['estado_id'] = 11;
-                $tarea = $request['idTarea'];
-            }
-            $respuesta = AsignacionTarea::where('pqr_id',$request['idPqr'])->where('tareas_id',$tarea)->update($estado);
-            if($request['idTarea'] == 5){
-                AsignacionTarea::where('pqr_id',$request['idPqr'])->where('tareas_id', 1)->update($estado);
+                if($request['estado']){
+                    $estado['estado_id'] = $request['estado'];
+                    $tarea = $request['idTarea'] - 1;
+                }else{
+                    $estado['estado_id'] = 11;
+                    $tarea = $request['idTarea'];
+                }
+                $respuesta = AsignacionTarea::where('pqr_id',$request['idPqr'])->where('tareas_id',$tarea)->update($estado);
+                if($request['idTarea'] == 5){
+                    AsignacionTarea::where('pqr_id',$request['idPqr'])->where('tareas_id', 1)->update($estado);
+                }
             }
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
@@ -778,6 +824,7 @@ class PQRController extends Controller
             abort(404);
         }
     }
+
     public function historial_resuelve_editar(Request $request)
     {
         if ($request->ajax()) {
@@ -788,6 +835,7 @@ class PQRController extends Controller
             abort(404);
         }
     }
+
     public function resuelve_orden_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -847,6 +895,74 @@ class PQRController extends Controller
             $id = $_GET['id'];
             return Empleado::where('cargo_id', $id)->get();
         }
+    }
+    
+    public function historial_resuelve_recurso_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelves = ResuelveRecurso::where('pqr_id', $request['idPqr'])->where('tipo_reposicion_id', $request['tipoRecurso'])->get();
+            $resuelve['orden'] = $resuelves->count() + 1;
+            $resuelve['pqr_id'] = $request['idPqr'];
+            $resuelve['empleado_id'] = session('id_usuario');
+            $resuelve['resuelve'] = $request['mensajeResuelve'];
+            $resuelve['tipo_reposicion_id'] = $request['tipoRecurso'];
+            $respuesta = ResuelveRecurso::create($resuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_resuelve_recurso_eliminar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve = ResuelveRecurso::findOrFail($request['value']);
+            $index = $resuelve['orden'];
+            $pqr = $resuelve->pqr_id;
+            $tipo = $resuelve->tipo_reposicion_id;
+            $respuesta = $resuelve->delete(); 
+            $resuelves = ResuelveRecurso::where('pqr_id', $pqr)->where('tipo_reposicion_id', $tipo)->get(); 
+            foreach ($resuelves as $key => $resuel) {
+                if($index < $resuel['orden'] )
+                $orden['orden'] =  $resuel['orden'] - 1;
+                ResuelveRecurso::findOrFail($resuel->id)->update($orden);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $resuelves]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_resuelve_recurso_editar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve['resuelve'] = $request['resuelveNuevo'];
+            $respuesta = ResuelveRecurso::findOrFail($request['value'])->update($resuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function resuelve_orden_recurso_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve['orden'] = $request['orden'];
+            $respuesta = ResuelveRecurso::findOrFail($request['id'])->update($resuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuestaPQRRecurso($id, $tipo_recurso)
+    {
+        $pqr = PQR::findOrFail($id);
+        $resuelves = ResuelveRecurso::where('pqr_id', $id)->where('tipo_reposicion_id', $tipo_recurso)->orderBy('orden')->get();
+        $tipo_respuesta = $tipo_recurso;
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $firma  = '';
+        return view('intranet.funcionarios.pqr.respuesta_pqr_recurso', compact('pqr', 'imagen', 'resuelves', 'firma', 'tipo_respuesta'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models\PQR;
 
+use App\Models\PQR\ResuelveRecurso;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,5 +16,9 @@ class Numeracion extends Model
     public function numeracion()
     {
         return $this->belongsTo(Resuelve::class, 'orden', 'id');
+    }
+    public function numeracionrecursos()
+    {
+        return $this->belongsTo(ResuelveRecurso::class, 'orden', 'id');
     }
 }

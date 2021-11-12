@@ -157,112 +157,133 @@ window.addEventListener('DOMContentLoaded', function(){
     }
     // Fin bloque para la funcion de aclaraciones
     
-    // Incio función para ocultar bloque de recursos
-    let verificacionRecurso = document.querySelectorAll('.respuestaProcedeRecurso')
-    verificacionRecurso.forEach(item => {
-        if(item.value == 1){
-            if(item.parentElement.querySelector('.recurso_procede_no')){
-                item.parentElement.querySelector('.recurso_procede_no').setAttribute('checked','')
-                item.parentElement.querySelector('.form-recursos').classList.add('d-none')
+    // Incio función para ocultar bloque de recursos    
+    let radioRecursos = document.querySelectorAll('.recurso_procede_check') 
+    radioRecursos.forEach(radio => {
+        radio.addEventListener('change', function(e){
+        let recursos = document.querySelectorAll('.form-recursos')
+        let btnGuardarRecursos = document.querySelector('.guardarRecurso')
+            if(e.target.value == 1){
+                recursos.forEach(recurso => {
+                    recurso.classList.remove('d-none');
+                })
+                btnGuardarRecursos.classList.remove('d-none');
+            }else {
+                recursos.forEach(recurso => {
+                    recurso.classList.add('d-none');
+                })
+                btnGuardarRecursos.classList.add('d-none');
             }
-        }
+        })
     })
-    
-    $('.recurso_procede_check').on('change', function(e) {
-        let padre = e.target.parentNode.parentNode.parentNode
-        switch (e.target.value) {
-            case '1':
-                padre.querySelector('.form-recursos').classList.remove('d-none');
-                break;
-            case '0':
-                padre.querySelector('.form-recursos').classList.add('d-none');
-                break;
-            }
-    });
     // Fin función para ocultar bloque de recursos
 
     // Inicio función para guardar recurso
     if(document.querySelectorAll('.btn-recurso')){
-
-        let btnRecursosGuardar = document.querySelectorAll('.btn-recurso')
-        btnRecursosGuardar.forEach(e => {
-            e.addEventListener('click', guardarRecurso)
-        })
+        let btnRecursosGuardar = document.querySelector('.btn-recurso')
+        btnRecursosGuardar.addEventListener('click', guardarRecurso)
+    
         function guardarRecurso(e){
             e.preventDefault()
-            let contenedor = e.target.parentNode.parentNode
             let url = e.target.getAttribute('data_url')
             let url2 = e.target.getAttribute('data_url_anexos')
+            let url3 = e.target.getAttribute('data_url_estado')
             let token = e.target.getAttribute('data_token')
-            let tipo_reposicion = contenedor.querySelector('.tipo_reposicion').value
-            let respuestaRecurso = contenedor.querySelector('.respuestaRecurso').value
-            let idPeticionRecurso = contenedor.querySelector('.id_peticionRecurso').value
-            let anexos = contenedor.querySelectorAll('.anexoconsulta')
-            if(tipo_reposicion != '' && respuestaRecurso != ''){
-                if(tipo_reposicion == 4){
-                    let data = {
-                        peticion_id : idPeticionRecurso,
-                        tipo_reposicion_id : 2,
-                        recurso : respuestaRecurso,
-                        id: id_pqr
-                    }
-                    $.ajax({
-                        async:false,
-                        url: url,
-                        type: 'POST',
-                        headers: { 'X-CSRF-TOKEN': token },
-                        data: data,
-                        success: function(respuesta) {
-                            // console.log(respuesta)
-                            guardarRespuestaAnexo(anexos, respuesta)
-                        },
-                        error: function(error) {
-                            console.log(error)
-                        }
-                    });
-
-                    let data2 = {
-                        peticion_id : idPeticionRecurso,
-                        tipo_reposicion_id : 3,
-                        recurso : respuestaRecurso,
-                        id: id_pqr
-                    }
-                    $.ajax({
-                        async:false,
-                        url: url,
-                        type: 'POST',
-                        headers: { 'X-CSRF-TOKEN': token },
-                        data: data2,
-                        success: function(respuesta) {
-                            // console.log(respuesta)
-                            guardarRespuestaAnexo(anexos, respuesta)
-                        },
-                        error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                }else{
-                    let data = {
-                        peticion_id : idPeticionRecurso,
-                        tipo_reposicion_id : tipo_reposicion,
-                        recurso : respuestaRecurso,
-                        id: id_pqr
-                    }
-                    $.ajax({
-                        async:false,
-                        url: url,
-                        type: 'POST',
-                        headers: { 'X-CSRF-TOKEN': token },
-                        data: data,
-                        success: function(respuesta) {
-                            // console.log(respuesta)
-                            guardarRespuestaAnexo(anexos, respuesta)
-                        },
-                        error: function(error) {
-                            console.log(error)
-                        }
-                    });
+            let tipo_reposicion = document.querySelector('.tipo_reposicion').value
+            let respuestaRecurso = document.querySelectorAll('.respuestaRecurso')
+            let dataActualizar = {
+                tipo_reposicion_id : tipo_reposicion,
+                id: id_pqr
+            }
+            $.ajax({
+                async:false,
+                url: url3,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: dataActualizar,
+                success: function(respuesta) {
+                    // console.log(respuesta)
+                },
+                error: function(error) {
+                    console.log(error)
                 }
+            });
+
+            if(tipo_reposicion){
+                respuestaRecurso.forEach(item => {
+                    if(item.value != ''){
+                        let respuesta = item.value
+                        let contenedor = item.parentElement.parentElement.parentElement.parentElement
+                        let idPeticionRecurso = contenedor.querySelector('.id_peticionRecurso').value
+                        let anexos = contenedor.querySelectorAll('.anexoconsulta')
+                        if(tipo_reposicion == 4){
+                            let data = {
+                                peticion_id : idPeticionRecurso,
+                                tipo_reposicion_id : 2,
+                                recurso : respuesta,
+                                id: id_pqr
+                            }
+                            $.ajax({
+                                async:false,
+                                url: url,
+                                type: 'POST',
+                                headers: { 'X-CSRF-TOKEN': token },
+                                data: data,
+                                success: function(respuesta) {
+                                    // console.log(respuesta)
+                                    guardarRespuestaAnexo(anexos, respuesta)
+                                },
+                                error: function(error) {
+                                    console.log(error)
+                                }
+                            });
+        
+                            let data2 = {
+                                peticion_id : idPeticionRecurso,
+                                tipo_reposicion_id : 3,
+                                recurso : respuesta,
+                                id: id_pqr
+                            }
+                            $.ajax({
+                                async:false,
+                                url: url,
+                                type: 'POST',
+                                headers: { 'X-CSRF-TOKEN': token },
+                                data: data2,
+                                success: function(respuesta) {
+                                    // console.log(respuesta)
+                                    guardarRespuestaAnexo(anexos, respuesta)
+                                },
+                                error: function(error) {
+                                    console.log(error)
+                                }
+                            });
+                        }else{
+                            let data = {
+                                peticion_id : idPeticionRecurso,
+                                tipo_reposicion_id : tipo_reposicion,
+                                recurso : respuesta,
+                                id: id_pqr
+                            }
+                            $.ajax({
+                                async:false,
+                                url: url,
+                                type: 'POST',
+                                headers: { 'X-CSRF-TOKEN': token },
+                                data: data,
+                                success: function(respuesta) {
+                                    // console.log(respuesta)
+                                    guardarRespuestaAnexo(anexos, respuesta)
+                                },
+                                error: function(error) {
+                                    console.log(error)
+                                }
+                            });
+                        }
+                    }
+                })
+            }else{
+                alert('Debe seleccionar un tipo de recurso')
             }
 
             function guardarRespuestaAnexo(anexos, idrespuesta){

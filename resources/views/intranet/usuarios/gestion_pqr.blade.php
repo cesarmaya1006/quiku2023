@@ -276,18 +276,64 @@
                         <div class="rounded border mb-3 p-2 ">
                             {{-- Inicio bloque prorroga --}}
                             @if ($pqr->prorroga_dias)
-                            <div class="menu-card-prorroga menu-card d-none rounded border mb-3 p-2 ">
-                                <div class="col-12 col-md-6">
-                                    Días de prórroga: <strong>{{ $pqr->prorroga_dias }} </strong>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <strong><a href="{{ route('prorrogaPdf', ['id' => $pqr->id]) }}" target="_blank"
-                                        rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
-                                        Descargar Radicado Prórroga</a></strong>
+                                <div class="menu-card-prorroga menu-card d-none rounded border mb-3 p-2 ">
+                                    <div class="col-12 col-md-6">
+                                        Días de prórroga: <strong>{{ $pqr->prorroga_dias }} </strong>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <strong><a href="{{ route('prorrogaPdf', ['id' => $pqr->id]) }}" target="_blank"
+                                            rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i>
+                                            Descargar Radicado Prórroga</a></strong>
                                     </div>
                                 </div>
                             @endif
                             {{-- Fin bloque prorroga --}}
+
+                            {{-- Incio bloque pregunta recurso --}}
+                            @if($pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 9 )
+                                <div class="rounded border mb-3 p-2 menu-card-recursos d-none">
+                                    <div class="col-12 col-md-6">
+                                        <h6>¿Desea interponer un recurso?</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex flex-row">
+                                        <div class="form-check mb-3 mr-4">
+                                            <input id="" name="check-recurso-procede-form"
+                                                type="radio"
+                                                class="form-check-input recurso_procede_check recurso_procede_si"
+                                                value="1" />
+                                            <label id="_label" class="form-check-label" for="">SI</label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input id="" name="check-recurso-procede-form"
+                                                type="radio"
+                                                class="form-check-input recurso_procede_check recurso_procede_no"
+                                                value="0" checked />
+                                            <label id="_label" class="form-check-label" for="">NO</label>
+                                        </div>
+                                    </div>
+                                    <div class="row form-recursos d-none">
+                                        <div class="row">
+                                            <div class="form-group col-12 col-md-12 titulo-recurso">
+                                                <div class="col-12 d-flex justify-content-between">
+                                                    <label for="">Tipo de recurso</label>
+                                                </div>
+                                                <select class="custom-select rounded-0 tipo_reposicion requerido">
+                                                    <option value="">--Seleccione--</option>
+                                                    @if(!sizeOf($peticion->recursos))
+                                                        <option value="1">Aclaración y/o corrección</option>
+                                                    @endif
+                                                    <option value="2">Reposición</option>
+                                                    @if($peticion->apelacion)
+                                                        <option value="3">Apelación</option>
+                                                        <option value="4">Reposición y apelación</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            {{-- Fin bloque bloque pregunta recurso --}}
 
                             {{-- Incio bloque peticiones --}}
                             <div class="peticiones">
@@ -633,9 +679,9 @@
                                                 <h6>Respuesta petición</h6>
                                             </div>
                                             <div class="col-12 form-group">
-                                                <textarea type="text" class="form-control form-control-sm respuesta"
-                                                    rows="5"
-                                                    readonly>{{ isset($peticion->respuesta->respuesta) ? $peticion->respuesta->respuesta : '' }}</textarea>
+                                                @if(isset($peticion->respuesta->respuesta))
+                                                    {!! $peticion->respuesta->respuesta !!}
+                                                @endif
                                             </div>
                                             @php
                                                 $valiRecurso = 0;
@@ -649,45 +695,10 @@
                                                 }  
                                             @endphp
                                             @if (sizeOf($peticion->recursos) == 0 || ($valiRecurso && sizeOf($peticion->recursos) == 1 ))
-                                                <div class="col-12 col-md-6">
-                                                    <h6>¿Desea interponer un recurso?</h6>
-                                                </div>
-                                                <div class="col-12 col-md-6 d-flex flex-row">
-                                                    <div class="form-check mb-3 mr-4">
-                                                        <input id="" name="check-recurso-procede-form{{ $key + 1 }}"
-                                                            type="radio"
-                                                            class="form-check-input recurso_procede_check recurso_procede_si"
-                                                            value="1" />
-                                                        <label id="_label" class="form-check-label" for="">SI</label>
-                                                    </div>
-                                                    <div class="form-check mb-3">
-                                                        <input id="" name="check-recurso-procede-form{{ $key + 1 }}"
-                                                            type="radio"
-                                                            class="form-check-input recurso_procede_check recurso_procede_no"
-                                                            value="0" checked />
-                                                        <label id="_label" class="form-check-label" for="">NO</label>
-                                                    </div>
-                                                </div>
-                                                <div class="row form-recursos">
+                                                <div class="row form-recursos d-none">
                                                     <input class="id_peticionRecurso" type="hidden"
                                                         value="{{ $peticion->id }}">
-                                                        <div class="row">
-                                                            <div class="form-group col-12 col-md-12 titulo-recurso">
-                                                                <div class="col-12 d-flex justify-content-between">
-                                                                    <label for="">Tipo de recurso</label>
-                                                                </div>
-                                                            <select class="custom-select rounded-0 tipo_reposicion requerido">
-                                                                <option value="">--Seleccione--</option>
-                                                                @if(!sizeOf($peticion->recursos))
-                                                                    <option value="1">Aclaración y/o corrección</option>
-                                                                @endif
-                                                                <option value="2">Reposición</option>
-                                                                @if($peticion->apelacion)
-                                                                    <option value="3">Apelación</option>
-                                                                    <option value="4">Reposición y apelación</option>
-                                                                @endif
-                                                            </select>
-                                                        </div>
+                                                    <div class="row">
                                                         <div class="col-12 col-md-6">
                                                             <h6>Recurso</h6>
                                                         </div>
@@ -727,12 +738,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="card-footer d-flex guardarRecurso">
-                                                        <button type="" class="btn btn-primary px-4 btn-recurso"
-                                                            data_url="{{ route('recurso_guardar') }}"
-                                                            data_url_anexos="{{ route('recurso_anexos_guardar') }}"
-                                                            data_token="{{ csrf_token() }}">Guardar recurso</button>
-                                                    </div>
                                                 </div>
                                             @endif
                                         </div>
@@ -743,6 +748,16 @@
                             {{-- Incio bloque peticiones --}}
                         </div>
                         {{-- Fin Bloque PQR --}}
+                        
+                        {{-- Inicio Bloque btn guardar recursos --}}
+                        <div class="justify-content-center guardarRecurso rounded border p-2 my-3 d-none">
+                            <button type="" class="btn btn-primary px-4 btn-recurso"
+                                data_url="{{ route('recurso_guardar') }}"
+                                data_url_anexos="{{ route('recurso_anexos_guardar') }}"
+                                data_url_estado="{{ route('pqr_estado_recurso_guardar') }}"
+                                data_token="{{ csrf_token() }}">Guardar recursos</button>
+                        </div>
+                        {{-- Fin Bloque btn guardar recursos --}}
 
                         {{-- Inicio Bloque respuesta PQR --}}
                         @if ($pqr->estadospqr_id > 5)
@@ -753,6 +768,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Fecha respuesta</th>
+                                                <th scope="col">Tipo</th>
                                                 <th scope="col">Respuesta</th>
                                             </tr>
                                         </thead>
@@ -760,6 +776,15 @@
                                             @foreach ($pqr->anexos as $respuesta)
                                                 <tr>
                                                     <td>{{ $respuesta->created_at }}</td>
+                                                    @if($respuesta->tipo_respuesta == 0)
+                                                        <td>Respuesta PQR</td>
+                                                    @elseif($respuesta->tipo_respuesta == 1)
+                                                        <td>Respuesta aclaración</td>
+                                                    @elseif($respuesta->tipo_respuesta == 2)
+                                                        <td>Respuesta reposición</td>
+                                                    @elseif($respuesta->tipo_respuesta == 3)
+                                                        <td>Respuesta apelación</td>
+                                                    @endif
                                                     <td class="text-justify"><a href="{{ route('usuario_descarga_respuestaPQR', ['id' => $respuesta->id]) }}" target="_blank" rel="noopener noreferrer">
                                                         <i class="fas fa-file-download"></i> Descarga</a></td>
                                                 </tr>

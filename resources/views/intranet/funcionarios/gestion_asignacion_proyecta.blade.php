@@ -497,8 +497,9 @@
                                                             <th scope="col">Recurso</th>
                                                             <th scope="col">Documentos recurso</th>
                                                             <th scope="col">Fecha respuesta recurso</th>
-                                                            <th scope="col">Descripción</th>
-                                                            <th scope="col">Documentos respuesta recurso</th>
+                                                            <th scope="col">Respuesta recurso</th>
+                                                            <th scope="col">Descripción archvio</th>
+                                                            <th scope="col">Documento respuesta recurso</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -524,10 +525,17 @@
                                                                     <td></td>
                                                                 @endif
                                                                 @if ($recurso->respuestarecurso)
-                                                                    <td>{{ $recurso->respuestarecurso->respuesta }}</td>
+                                                                    <td>{{ strip_tags($recurso->respuestarecurso->respuesta) }}</td>
                                                                 @else
                                                                     <td></td>
                                                                 @endif
+                                                                <td>
+                                                                    @if ($recurso->respuestarecurso)
+                                                                        @foreach ($recurso->respuestarecurso->documentos as $anexoRespuesta)
+                                                                            {{ strip_tags($anexoRespuesta->descripcion) }}
+                                                                        @endforeach
+                                                                    @endif
+                                                                </td>
                                                                 <td>
                                                                     @if ($recurso->respuestarecurso)
                                                                         @foreach ($recurso->respuestarecurso->documentos as $anexoRespuesta)
@@ -695,7 +703,7 @@
                                                     <th scope="col">Fecha</th>
                                                     <th scope="col">Empleado</th>
                                                     <th scope="col">Tarea</th>
-                                                    {{-- <th scope="col">Estado</th> --}}
+                                                    <th scope="col">Tipo</th>
                                                     <th scope="col">Descarga</th>
                                                 </tr>
                                             </thead>
@@ -705,7 +713,15 @@
                                                         <td>{{ $anexo->created_at }}</td>
                                                         <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
                                                         <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                        {{-- <td class="text-justify">{{ $anexo->estado ? 'Activo' : 'Rechazado'  }}</td> --}}
+                                                        @if($anexo->tipo_respuesta == 0)
+                                                            <td>Respuesta PQR</td>
+                                                        @elseif($anexo->tipo_respuesta == 1)
+                                                            <td>Respuesta aclaración</td>
+                                                        @elseif($anexo->tipo_respuesta == 2)
+                                                            <td>Respuesta reposición</td>
+                                                        @elseif($anexo->tipo_respuesta == 3)
+                                                            <td>Respuesta apelación</td>
+                                                        @endif
                                                         <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
                                                     </tr>
                                                 @endforeach
@@ -717,121 +733,280 @@
                             </div>
                         @endif
                         @if (((($pqr->peticiones->sum('estado_id') / $pqr->peticiones->count())/ 11) * 100) == 100 )
-                            <div class="rounded border m-3 p-2">
-                                <h5 class="mt-2">Resuelve</h5>
-                                @if(sizeof($pqr->resuelves))
-                                    <div class="row d-flex px-12 p-3">
-                                        <div class="col-12 table-responsive">
-                                            <table class="table table-light" style="font-size: 0.8em;">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Orden</th>
-                                                        <th scope="col">Fecha</th>
-                                                        <th scope="col">Empleado</th>
-                                                        <th scope="col">Resuelve</th>
-                                                        <th scope="col">Opciones</th>
-                                                    </tr>
-                                                </thead>
-                                                @php
-                                                    $totalResuelves = $pqr->resuelves->count()
-                                                @endphp
-                                                <tbody class="orden-resuelve">
-                                                    @foreach ($pqr->resuelves as $key=> $resuelve )
-                                                        <tr >
-                                                            <td>{{ $resuelve->orden }}</td>
+                            @if($pqr->estadospqr_id < 6)
+                                <div class="rounded border m-3 p-2">
+                                    <h5 class="mt-2">Resuelve</h5>
+                                    @if(sizeof($pqr->resuelves))
+                                        <div class="row d-flex px-12 p-3">
+                                            <div class="col-12 table-responsive">
+                                                <table class="table table-light" style="font-size: 0.8em;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Orden</th>
+                                                            <th scope="col">Fecha</th>
+                                                            <th scope="col">Empleado</th>
+                                                            <th scope="col">Resuelve</th>
+                                                            <th scope="col">Opciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @php
+                                                        $totalResuelves = $pqr->resuelves->count()
+                                                    @endphp
+                                                    <tbody class="orden-resuelve">
+                                                        @foreach ($pqr->resuelves as $key=> $resuelve )
+                                                            <tr >
+                                                                <td>{{ $resuelve->orden }}</td>
+                                                                <td>{{ $resuelve->created_at }}</td>
+                                                                <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
+                                                                <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }} <input type="hidden" value="{{$resuelve->resuelve}}"></td>
+                                                                <td class="text-justify">
+                                                                    <div class="col-12 d-flex">
+                                                                        <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelveRecurso-i"></i></button>
+                                                                        <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}"><i class="far fa-trash-alt"></i></button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+                                                        @endforeach
+                                                    </tbody>
+                                                    <tbody  class="editar-orden-resuelve d-none">
+                                                        @foreach ($pqr->resuelves as $key=> $resuelve )
+                                                        <tr>
+                                                            <td class="td-orden">
+                                                                <select class="select-orden">
+                                                                @for ($i = 1; $i < $totalResuelves + 1; $i++)
+                                                                    <option value="{{ $i }}"
+                                                                        {{ $i == $resuelve->orden ? 'selected' : '' }}>
+                                                                        {{ $i }}</option>
+                                                                @endfor
+                                                                </select>
+                                                            </td>
                                                             <td>{{ $resuelve->created_at }}</td>
                                                             <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                            <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }} <input type="hidden" value="{{$resuelve->resuelve}}"></td>
+                                                            <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }}</td>
                                                             <td class="text-justify">
                                                                 <div class="col-12 d-flex">
-                                                                    <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelve-i"></i></button>
-                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}"><i class="far fa-trash-alt"></i></button>
+                                                                    <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}" disabled><i class="fas fa-edit editarResuelve-i"></i></button>
+                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}" disabled><i class="far fa-trash-alt"></i></button>
                                                                 </div>
                                                             </td>
                                                         </tr>
-
-                                                    @endforeach
-                                                </tbody>
-                                                <tbody  class="editar-orden-resuelve d-none">
-                                                    @foreach ($pqr->resuelves as $key=> $resuelve )
-                                                    <tr>
-                                                        <td class="td-orden">
-                                                            <select class="select-orden">
-                                                            @for ($i = 1; $i < $totalResuelves + 1; $i++)
-                                                                <option value="{{ $i }}"
-                                                                    {{ $i == $resuelve->orden ? 'selected' : '' }}>
-                                                                    {{ $i }}</option>
-                                                            @endfor
-                                                            </select>
-                                                        </td>
-                                                        <td>{{ $resuelve->created_at }}</td>
-                                                        <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                        <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }}</td>
-                                                        <td class="text-justify">
-                                                            <div class="col-12 d-flex">
-                                                                <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}" disabled><i class="fas fa-edit editarResuelve-i"></i></button>
-                                                                <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}" disabled><i class="far fa-trash-alt"></i></button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                            <div class="row d-flex px-12 p-3"> 
-                                                <div class="col-12 col-md-12 form-group d-flex">
-                                                    <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar">Ordenar</button>
-                                                    <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar-guardar d-none"
-                                                        data_url="{{ route('resuelve_orden_guardar') }}"  data_token="{{ csrf_token() }}"
-                                                    >Guardar</button>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <div class="row d-flex px-12 p-3"> 
+                                                    <div class="col-12 col-md-12 form-group d-flex">
+                                                        <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar">Ordenar</button>
+                                                        <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar-guardar d-none"
+                                                            data_url="{{ route('resuelve_orden_guardar') }}"  data_token="{{ csrf_token() }}"
+                                                        >Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade bd-resuelve" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Editar resuelve</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <textarea class="form-control mensaje-resuelve-editar mt-2" rows="3" cols="40" placeholder="" required></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary editarResuelveGuardar" data_url="{{ route('historial_resuelve_editar') }}"  data_token="{{ csrf_token() }}">Guardar</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal fade bd-resuelve" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Editar resuelve</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                      <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                  </div>
-                                                  <div class="modal-body">
-                                                    <textarea class="form-control mensaje-resuelve-editar mt-2" rows="3" cols="40" placeholder="" required></textarea>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary editarResuelveGuardar" data_url="{{ route('historial_resuelve_editar') }}"  data_token="{{ csrf_token() }}">Guardar</button>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                  </div>
-                                                </div>
-                                            </div>
-                                          </div>
-                                    </div>
-                                    <hr>
-                                @endif
-                                <div class="col-12 d-flex row">
-                                    <div class="container-mensaje-resuelve form-group col-12 row">
-                                        <label for="" class="col-10">Nuevo resuelve</label>
-                                        <textarea class="form-control mensaje-resuelve mt-2" rows="3" placeholder="" required></textarea>
-                                    </div>
+                                        <hr>
+                                    @endif
+                                    <div class="col-12 d-flex row">
+                                        <div class="container-mensaje-resuelve form-group col-12 row">
+                                            <label for="" class="col-10">Nuevo resuelve</label>
+                                            <textarea class="form-control mensaje-resuelve mt-2" rows="3" placeholder="" required></textarea>
+                                        </div>
 
-                                    <div class="row d-flex px-12 p-3"> 
-                                        <div class="col-12 col-md-12 form-group d-flex">
-                                            <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-resuelve"
-                                            data_url="{{ route('historial_resuelve_guardar') }}"  data_token="{{ csrf_token() }}">Crear resuelve</button>
+                                        <div class="row d-flex px-12 p-3"> 
+                                            <div class="col-12 col-md-12 form-group d-flex">
+                                                <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-resuelve"
+                                                data_url="{{ route('historial_resuelve_guardar') }}"  data_token="{{ csrf_token() }}">Crear resuelve</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>    
+                            @else
+                                <div class="rounded border m-3 p-2">
+                                    <h5 class="mt-2">Resuelve Recurso</h5>
+                                    @php
+                                        if($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1))){
+                                            $recursosRevision = $pqr->resuelvesrecursos->where('tipo_reposicion_id', 1);
+                                        }elseif($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2))){
+                                            $recursosRevision = $pqr->resuelvesrecursos->where('tipo_reposicion_id', 2);
+                                        }elseif ($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3))) {
+                                            $recursosRevision = $pqr->resuelvesrecursos->where('tipo_reposicion_id', 3);
+                                        }else{
+                                            $recursosRevision = 0;
+                                        }
+                                    @endphp
+                                    @if(sizeof($recursosRevision))
+                                        <div class="row d-flex px-12 p-3">
+                                            <div class="col-12 table-responsive">
+                                                <table class="table table-light" style="font-size: 0.8em;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Orden</th>
+                                                            <th scope="col">Fecha</th>
+                                                            <th scope="col">Empleado</th>
+                                                            <th scope="col">Resuelve</th>
+                                                            <th scope="col">Opciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @php
+                                                        $totalResuelves = $recursosRevision->count()
+                                                    @endphp
+                                                    <tbody class="orden-resuelve">
+                                                        @foreach ($recursosRevision as $key=> $resuelve )
+                                                            <tr >
+                                                                <td>{{ $resuelve->orden }}</td>
+                                                                <td>{{ $resuelve->created_at }}</td>
+                                                                <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
+                                                                <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }} <input type="hidden" value="{{$resuelve->resuelve}}"></td>
+                                                                <td class="text-justify">
+                                                                    <div class="col-12 d-flex">
+                                                                        <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelveRecurso-i"></i></button>
+                                                                        <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelveRecurso py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_recurso_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}"><i class="far fa-trash-alt"></i></button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+                                                        @endforeach
+                                                    </tbody>
+                                                    <tbody  class="editar-orden-resuelve d-none">
+                                                        @foreach ($recursosRevision as $key=> $resuelve )
+                                                        <tr>
+                                                            <td class="td-orden">
+                                                                <select class="select-orden">
+                                                                @for ($i = 1; $i < $totalResuelves + 1; $i++)
+                                                                    <option value="{{ $i }}"
+                                                                        {{ $i == $resuelve->orden ? 'selected' : '' }}>
+                                                                        {{ $i }}</option>
+                                                                @endfor
+                                                                </select>
+                                                            </td>
+                                                            <td>{{ $resuelve->created_at }}</td>
+                                                            <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
+                                                            <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }}</td>
+                                                            <td class="text-justify">
+                                                                <div class="col-12 d-flex">
+                                                                    <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}" disabled><i class="fas fa-edit editarResuelveRecurso-i"></i></button>
+                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelveRecurso py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_recurso_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}" disabled><i class="far fa-trash-alt"></i></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <div class="row d-flex px-12 p-3"> 
+                                                    <div class="col-12 col-md-12 form-group d-flex">
+                                                        <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar-recurso">Ordenar</button>
+                                                        <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar-recurso-guardar d-none"
+                                                            data_url="{{ route('resuelve_orden_recurso_guardar') }}"  data_token="{{ csrf_token() }}"
+                                                        >Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal fade bd-resuelve" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Editar resuelve</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <textarea class="form-control mensaje-resuelve-editar mt-2" rows="3" cols="40" placeholder="" required></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary editarResuelveRecursoGuardar" data_url="{{ route('historial_resuelve_recurso_editar') }}"  data_token="{{ csrf_token() }}">Guardar</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    <div class="col-12 d-flex row">
+                                        <div class="container-mensaje-resuelve form-group col-12 row">
+                                            <label for="" class="col-10">Nuevo resuelve</label>
+                                            <textarea class="form-control mensaje-resuelve mt-2" rows="3" placeholder="" required></textarea>
+                                        </div>
+                                        @if($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1)))
+                                            <input class="resuelve-recurso_tipo" type="hidden" value="1">
+                                        @endif
+                                        @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)))
+                                            <input class="resuelve-recurso_tipo" type="hidden" value="2">
+                                        @endif
+                                        @if($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3)))
+                                            <input class="resuelve-recurso_tipo" type="hidden" value="3">
+                                        @endif
+                                        <div class="row d-flex px-12 p-3"> 
+                                            <div class="col-12 col-md-12 form-group d-flex">
+                                                <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-resuelve-recurso"
+                                                data_url="{{ route('historial_resuelve_recurso_guardar') }}"  data_token="{{ csrf_token() }}">Crear resuelve</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif    
                             <div class="rounded border m-3 p-2">
                                 <h5 class="mt-2">Proyectar</h5>
                                 <div class="col-12 d-flex row pqr-anexo">
-                                    <div class="my-2 col-12 d-flex">
-                                        <h6 class="mr-2">Documento de respuesta</h6>
-                                        <strong class="mx-2">
-                                            <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
-                                                <i class="fas fa-eye"></i> Vista previa</a>
-                                        </strong>
-                                    </div>
+                                    @if(sizeOf($pqr->anexos) == 0)
+                                        <div class="my-2 col-12 d-flex">
+                                            <h6 class="mr-2">Documento de respuesta</h6>
+                                            <strong class="mx-2">
+                                                <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                                    <i class="fas fa-eye"></i> Vista previa</a>
+                                            </strong>
+                                        </div>
+                                    @endif
+                                    @if($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1)))
+                                        <div class="my-2 col-12 d-flex">
+                                            <h6 class="mr-2">Documento de respuesta aclaración</h6>
+                                            <strong class="mx-2">
+                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '1']) }}" target="_blank" rel="noopener noreferrer">
+                                                    <i class="fas fa-eye"></i> Vista previa </a>
+                                            </strong>
+                                        </div>
+                                    @endif
+                                    @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)))
+                                        <div class="my-2 col-12 d-flex">
+                                            <h6 class="mr-2">Documento de respuesta reposición</h6>
+                                            <strong class="mx-2">
+                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '2']) }}" target="_blank" rel="noopener noreferrer">
+                                                    <i class="fas fa-eye"></i> Vista previa</a>
+                                            </strong>
+                                        </div>
+                                    @endif
+                                    @php
+                                        $verificacion = ($pqr->recurso_aclaracion + $pqr->recurso_reposicion + $pqr->recurso_apelacion) -  sizeOf($pqr->anexos->where('tipo_respuesta', '!=', 0));
+                                    @endphp
+                                    @if($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3)) && $verificacion == 1 )
+                                        <div class="my-2 col-12 d-flex">
+                                            <h6 class="mr-2">Documento de respuesta apelación</h6>
+                                            <strong class="mx-2">
+                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '3']) }}" target="_blank" rel="noopener noreferrer">
+                                                    <i class="fas fa-eye"></i> Vista previa</a>
+                                            </strong>
+                                        </div>
+                                    @endif
                                     <div class="container-mensaje-historial-tarea form-group col-12">
                                         <label for="" class="">Agregar Historial</label>
                                         <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>

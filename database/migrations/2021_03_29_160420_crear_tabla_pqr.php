@@ -47,6 +47,9 @@ class CrearTablaPqr extends Migration
             $table->boolean('estado_asignacion')->default(0)->nullable();
             $table->foreign('estadospqr_id', 'fk_estadospqr_pqr')->references('id')->on('estadospqr')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('estado_creacion')->default(0)->nullable();
+            $table->boolean('recurso_aclaracion')->default(0);
+            $table->boolean('recurso_reposicion')->default(0);
+            $table->boolean('recurso_apelacion')->default(0);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

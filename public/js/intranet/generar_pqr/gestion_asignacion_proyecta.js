@@ -289,6 +289,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     headers: { 'X-CSRF-TOKEN': token },
                     data: data,
                     success: function(respuesta) {
+                        // console.log(respuesta)
                         window.location = "/admin/index"
                     },
                     error: function(error) {
@@ -530,6 +531,202 @@ window.addEventListener('DOMContentLoaded', function(){
         })
 
     }
+
+//==========================================================================
+
+//Guardar resuelve  recurso
+if(document.querySelector('.btn-pqr-resuelve-recurso')){
+    let btnResuelve = document.querySelector('.btn-pqr-resuelve-recurso')
+    btnResuelve.addEventListener('click', function(e){
+        e.preventDefault
+        let contenedorPadre = btnResuelve.parentElement.parentElement.parentElement
+        let url = e.target.getAttribute('data_url')
+        let token = e.target.getAttribute('data_token')
+        let mensajeResuelve = contenedorPadre.querySelector('.mensaje-resuelve').value
+        let tipoRecurso = contenedorPadre.querySelector('.resuelve-recurso_tipo').value
+        let idPqr = document.querySelector('#id_pqr').value
+        if (mensajeResuelve != '' && idPqr != '') {
+            let data = {
+                mensajeResuelve,
+                idPqr,
+                tipoRecurso
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+    
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        }else{
+            alert('Debe diligenciar el campo del formulario')
+        }
+    })
+}
+
+// Eliminar resuelve recurso
+if(document.querySelectorAll('.eliminarResuelveRecurso')){
+    let btnEliminaResuelves = document.querySelectorAll('.eliminarResuelveRecurso')
+    btnEliminaResuelves.forEach(btnEliminar => {
+        btnEliminar.addEventListener('click', function(btn){
+            btn.preventDefault
+            let btnElim = btn.target
+            if (!btnElim.classList.contains('.eliminarResuelveRecurso')) {
+                btnElim = btnElim.parentNode
+            }
+            let url = btnElim.getAttribute('data_url')
+            let token = btnElim.getAttribute('data_token')
+            let value = btnElim.value
+            let data = {
+                value
+            }
+            swal({
+                title: "¿Desea eliminar recurso?",
+                icon: "warning",
+                buttons: ["No", "Si"],
+                dangerMode: true,
+            })
+            .then((value) => {
+                if (value) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data,
+                        success: function(respuesta) {
+                            // setTimeout(function(){
+                                location.reload();
+                            // }, 3000);
+                        },
+                        error: function(error) {
+                        }
+                    });
+                }
+            });
+        })
+    })
+}
+
+// Editar resuelve  
+if(document.querySelectorAll('.editarResuelveRecurso')){
+    let resuelves = document.querySelectorAll('.editarResuelveRecurso')
+    resuelves.forEach(resuelve => {
+        resuelve.addEventListener('click', editarResuelve)
+    })
+    function editarResuelve(resuelve){
+        let resuelveBtn = resuelve.target
+        if (resuelveBtn.classList.contains('editarResuelveRecurso-i')) {
+            resuelveBtn = resuelve.target.parentNode
+        }else {
+            resuelveBtn = resuelve.target
+        }
+        let tdResuelve = resuelveBtn.parentElement.parentElement.parentElement
+        let contenidoAnteriorResuelve = tdResuelve.querySelector('.contenido-resuelve input').value
+        let valueResuelve = tdResuelve.querySelector('.editarResuelveRecurso').value
+        let modalResuelveEditar = document.querySelector('.bd-resuelve')
+        let textareaResuelveEditar = modalResuelveEditar.querySelector('.note-editable')
+        let btnGuardarResuelve = modalResuelveEditar.querySelector('.editarResuelveRecursoGuardar')
+        textareaResuelveEditar.innerHTML = contenidoAnteriorResuelve
+        btnGuardarResuelve.value = valueResuelve
+    }
+}
+
+//Guardar Editar resuelve  
+if(document.querySelector('.editarResuelveRecursoGuardar')){
+    let btnResuelve = document.querySelector('.editarResuelveRecursoGuardar')
+    btnResuelve.addEventListener('click', function(resuelve){
+        resuelve.preventDefault()
+        let url = resuelve.target.getAttribute('data_url')
+        let token = resuelve.target.getAttribute('data_token')
+        let contenidoResuelve = resuelve.target.parentElement.parentElement
+        let resuelveNuevo = contenidoResuelve.querySelector('.mensaje-resuelve-editar').value
+        let value = contenidoResuelve.querySelector('.editarResuelveRecursoGuardar').value
+        let data = {
+            value,
+            resuelveNuevo
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            headers: { 'X-CSRF-TOKEN': token },
+            data: data,
+            success: function(respuesta) {
+                location.reload();
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+    })
+}
+
+//Editar orden resuelve  
+if(document.querySelector('.btn-ordenar-recurso')){
+    let btnOrdenar = document.querySelector('.btn-ordenar-recurso')
+    btnOrdenar.addEventListener('click', function(btn){
+        btn.preventDefault()
+        let orden = document.querySelector('.orden-resuelve')
+        let ordenEditar = document.querySelector('.editar-orden-resuelve')
+        let btnGuardar = document.querySelector('.btn-ordenar-recurso-guardar')
+        if (orden.classList.contains('d-none')) {
+            orden.classList.remove('d-none')
+            ordenEditar.classList.add('d-none')
+            btnGuardar.classList.add('d-none')
+        }else{
+            btnGuardar.classList.remove('d-none')
+            ordenEditar.classList.remove('d-none')
+            orden.classList.add('d-none')
+        }
+    })
+}
+
+// Guardar orden resuelve  
+if(document.querySelector('.btn-ordenar-recurso-guardar')){
+    let btnGuardarOrden = document.querySelector('.btn-ordenar-recurso-guardar')
+    btnGuardarOrden.addEventListener('click', function(btn){
+        btn.preventDefault()
+        let url = btn.target.getAttribute('data_url')
+        let token = btn.target.getAttribute('data_token')
+        let ordenEditar = document.querySelector('.editar-orden-resuelve')
+        let trs = ordenEditar.querySelectorAll('tr')
+        let dataOrden = []
+        trs.forEach((tr, key) => {
+            dataOrden.push(tr.querySelector('.select-orden').value)
+        })
+        dataOrden.forEach((orden, key )=>{
+            let index = key + 1
+            if(index != dataOrden.find(item => item == index)){
+                alert("¡Error! El consecutivo de orden no puede estar duplicado.")
+            }
+        })
+        trs.forEach((tr) => {
+            let data = {
+                orden : tr.querySelector('.select-orden').value,
+                id : tr.querySelector('.editarResuelveRecurso').value
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    // console.log(respuesta)
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        })
+        location.reload();
+    })
+
+}
 
 //==========================================================================
     $(document).ready(function() {

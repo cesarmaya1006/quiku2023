@@ -14,6 +14,7 @@ use App\Models\Personas\Persona;
 use App\Models\Empleados\Empleado;
 use App\Models\PQR\HistorialTarea;
 use App\Models\Servicios\Servicio;
+use App\Models\PQR\ResuelveRecurso;
 use App\Models\Productos\Referencia;
 use App\Models\PQR\HistorialPeticion;
 use Illuminate\Database\Eloquent\Model;
@@ -109,6 +110,11 @@ class PQR extends Model
     public function resuelves()
     {
         return $this->hasMany(Resuelve::class, 'pqr_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function resuelvesrecursos()
+    {
+        return $this->hasMany(ResuelveRecurso::class, 'pqr_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

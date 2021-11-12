@@ -31,10 +31,33 @@
                     <div class="card-body">
                         <div class="rounded border p-2">
                             <h5 class="mb-3">Historial de respuesta </h5>
-                            <strong>
-                                <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
-                                    <i class="fas fa-eye"></i> Vista previa</a>
-                            </strong>
+                            @if(sizeOf($pqr->anexos) == 0)
+                                <strong>
+                                    <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista previa</a>
+                                </strong>
+                            @endif
+                            @if($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1)))
+                                <strong>
+                                    <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '1']) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista aclaración</a>
+                                </strong>
+                            @endif
+                            @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)))
+                                <strong>
+                                    <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '2']) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista reposición</a>
+                                </strong>
+                            @endif
+                            @php
+                                $verificacion = ($pqr->recurso_aclaracion + $pqr->recurso_reposicion + $pqr->recurso_apelacion) -  sizeOf($pqr->anexos->where('tipo_respuesta', '!=', 0));
+                            @endphp
+                            @if($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3)) && $verificacion == 1)
+                                <strong>
+                                    <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '3']) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista apelación</a>
+                                </strong>
+                            @endif
                             {{-- @if ($pqr->anexos)
                                 <div class="row d-flex px-12 p-3">
                                     <div class="col-12 table-responsive">

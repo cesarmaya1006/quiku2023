@@ -57,13 +57,15 @@ window.addEventListener('DOMContentLoaded', function(){
             let url2 = e.target.getAttribute('data_url2')
             let url3 = e.target.getAttribute('data_url3')
             let token = e.target.getAttribute('data_token')
+            let tipo_respuesta = document.querySelector('.tipo_respuesta').value
             let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
             if (mensajeHistorial != '' && idPqr != '') {
                 let data = {
                     idTarea,
                     mensajeHistorial,
                     idPqr,
-                    apruebaRadica : 1
+                    apruebaRadica : 1,
+                    tipo_respuesta
                 }
                 $.ajax({
                     url: url,
@@ -104,8 +106,21 @@ window.addEventListener('DOMContentLoaded', function(){
                 let data2 = {
                     idTarea: "5",
                     mensajeHistorial: 'Radicada automaticamente.',
-                    idPqr
+                    idPqr,
+                    tipo_respuesta
                 }
+                $.ajax({
+                    url: url2,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data2,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
                 $.ajax({
                     url: url3,
                     type: 'POST',
@@ -113,6 +128,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     data: data2,
                     success: function(respuesta) {
                         window.location = "/admin/index"
+                        // console.log(respuesta)
                     },
                     error: function(error) {
                         console.log(error.responseJSON)

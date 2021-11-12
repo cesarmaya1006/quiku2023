@@ -219,12 +219,12 @@
         <small id="helpId" class="form-text text-muted">Email</small>
     </div>
     <div class="col-12 col-md-4 form-group">
-        <label for="documento">Firma digital</label>
+        <label for="documento">Firma electrónica</label>
         <input class="documento form-control form-control-sm" type="file" name="documento">
         <small id="helpId" class="form-text text-muted">Extesiones validas .png, .jpg</small>
     </div>
     @if(isset($empleado->url))
-        <label for="documento">Firma digital actual</label>
+        <label for="documento">Firma electrónica actual</label>
         <div class="col-12 col-md-4 form-group">
             <a href="{{ asset('documentos/usuarios/' . $empleado->url) }}" target="_blank" rel="noopener noreferrer">Ver Firma</a>
         </div>

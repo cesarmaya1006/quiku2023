@@ -22,6 +22,7 @@ class CrearTablaPqrAnexos extends Migration
             $table->unsignedBigInteger('tareas_id')->nullable();
             $table->foreign('tareas_id', 'fk_tarea_asignancion_pqr_anexo')->references('id')->on('tareas')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('respuesta')->nullable();
+            $table->bigInteger('tipo_respuesta')->default(0);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

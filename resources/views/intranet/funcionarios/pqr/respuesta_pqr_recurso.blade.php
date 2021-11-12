@@ -103,7 +103,7 @@
             <tr>
                 <td>
                     <p>Referencia: {{ $pqr->num_radicado }}</p>
-                    <p>Asunto: Respuesta a su petición.</p>
+                    <p>Asunto: Respuesta a su recurso.</p>
                 </td>
             </tr>
             <tr>
@@ -125,18 +125,35 @@
             @foreach($pqr->peticiones as $key => $peticion)
             <tr>
                 <td>
-                    @if($peticion->justificacion)
-                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->justificacion }}"</p>
-                    @elseif($peticion->descripcionsolicitud)
-                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->descripcionsolicitud }}"</p>
-                    @elseif($peticion->consulta)
-                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->consulta }}"</p>
-                    @elseif($peticion->irregularidad)
-                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $peticion->irregularidad }}"</p>
-                    @endif
-                    @if($peticion->respuesta)
-                        <p>Respuesta:</p>
-                        <p>{!! $peticion->respuesta->respuesta !!}</p>
+                    @php
+                        $recurso = $peticion->recursos->where('tipo_reposicion_id', $tipo_respuesta);  
+                        if(sizeOf($recurso)){
+                            if($tipo_respuesta == 1){
+                                $recursoContent = $recurso[0];
+                            }elseif($tipo_respuesta == 2){
+                                if($pqr->recurso_aclaracion){
+                                    $recursoContent = $recurso[1];
+                                }else{
+                                    $recursoContent = $recurso[0];
+                                }
+                            }elseif($tipo_respuesta == 3){
+                                $contador = $pqr->recurso_aclaracion + $pqr->recurso_reposicion;
+                                if($contador == 2){
+                                    $recursoContent = $recurso[2];
+                                }elseif($contador == 1){
+                                    $recursoContent = $recurso[1];
+                                }else{
+                                    $recursoContent = $recurso[0];
+                                }
+                            }
+                        }
+                    @endphp
+                    @if(sizeOf($recurso))
+                        <p><strong>Solicitud {{$key + 1}}: </strong> "{{ $recursoContent->recurso }}"</p>
+                        @if($recursoContent->respuestarecurso)
+                            <p>Respuesta:</p>
+                            <p>{!! $recursoContent->respuestarecurso->respuesta !!}</p>
+                        @endif
                     @endif
                 </td>
             </tr>

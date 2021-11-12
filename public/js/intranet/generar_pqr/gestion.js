@@ -87,87 +87,116 @@ window.addEventListener('DOMContentLoaded', function() {
         let token = e.target.getAttribute('data_token')
         let idRecurso = contenedor.querySelector('.id_recurso').value
         let tipo_reposicion_id = contenedor.querySelector('.tipo_reposicion_id').value
-        let resprecursos_id = 0
-        if (tipo_reposicion_id == 2) {
-            if (contenedor.nextElementSibling.nextElementSibling.classList.contains('form-respuesta-recursos')) {
-                let contenedorApelacion = contenedor.nextElementSibling.nextElementSibling
-                let idRecursoApelacion = contenedorApelacion.querySelector('.id_recurso').value
-                let tipo_reposicion_apelacion_id = contenedorApelacion.querySelector('.tipo_reposicion_id').value
-                swal("¿Se concede el recurso de apelación?", "Sí: se debe remitir al superior, No: se cierra la petición", {
-                        buttons: {
-                            definitiva: {
-                                text: "Sí",
-                                value: "si",
-                                className: "bg-primary",
-                            },
-                            parcial: {
-                                text: "No",
-                                value: "no",
-                                className: "bg-primary",
-                            },
-                            cancel: "Cancelar",
-                        },
-                    })
-                    .then((value) => {
-                        switch (value) {
-                            case "si":
-                                let data = {
-                                    recurso_id: idRecurso,
-                                    id: id_pqr,
-                                    tipo_reposicion_id
-                                }
-                                guardar_recurso(data)
-                                break;
-                            case "no":
-                                let data1 = {
-                                    recurso_id: idRecurso,
-                                    id: id_pqr,
-                                    tipo_reposicion_id
-                                }
-                                guardar_recurso(data1)
-
-                                let data2 = {
-                                    recurso_id: idRecursoApelacion,
-                                    id: id_pqr,
-                                    tipo_reposicion_id: tipo_reposicion_apelacion_id,
-                                    apelacionCierre: 1,
-                                    respuesta: "Cierre automatico por recurso de reposicón"
-                                }
-                                guardar_recurso(data2)
-                                break;
-
-                            default:
-                        }
-                    });
-            }
-        } else {
-            let data = {
-                recurso_id: idRecurso,
-                id: id_pqr,
-                tipo_reposicion_id
-            }
-            guardar_recurso(data)
-        }
-
-        function guardar_recurso(data) {
-            $.ajax({
-                async: false,
-                url: url,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    // console.log(respuesta)
-                    resprecursos_id = respuesta.data.id
-                },
-                error: function(error) {
-                    console.log(error.responseJSON)
+        let respuesta = contenedor.querySelector('.titulo-anexoRespuestaRecurso textArea').value
+        if(respuesta == ''){
+            alert('La respuesta al recurso esta vacia.')
+        }else{
+            let resprecursos_id = 0
+                let data = {
+                    recurso_id: idRecurso,
+                    id: id_pqr,
+                    tipo_reposicion_id,
+                    respuesta: respuesta
                 }
-            });
-            if (!data.apelacionCierre) {
+                guardar_recurso(data)
+    
+            function guardar_recurso(data) {
+                $.ajax({
+                    async: false,
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                        resprecursos_id = respuesta.data.id
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+                if (!data.apelacionCierre) {
+                    let anexosRecursos = contenedor.querySelectorAll('.anexoRespuestaRecurso')
+                    anexosRecursos.forEach(anexo => {
+                        let titulo = anexo.querySelector('.titulo-anexoRespuestaRecurso textArea').value
+                        let descripcion = anexo.querySelector('.descripcion-anexoRespuestaRecurso input').value
+                        let archivo = anexo.querySelector('.doc-anexoRespuestaRecurso input').files[0]
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('resprecursos_id', resprecursos_id);
+                        dataAnexo.append('titulo', titulo);
+                        dataAnexo.append('descripcion', descripcion);
+                        dataAnexo.append('archivo', archivo);
+                        dataAnexo.append('_token', token);
+                        let urlAnexo = anexo.parentNode.parentNode.parentNode
+                        urlAnexo = urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
+                        if(archivo){
+                            $.ajax({
+                                async: false,
+                                url: urlAnexo,
+                                type: 'POST',
+                                headers: { 'X-CSRF-TOKEN': token },
+                                data: dataAnexo,
+                                processData: false,
+                                contentType: false,
+                                success: function(respuesta) {
+                                    // console.log(respuesta)
+                                },
+                                error: function(error) {
+                                    console.log(error)
+                                }
+                            });
+                        }
+                    })
+                }
+                location.reload();
+            }
+        }
+    }
+
+    // Funcion para actualizar recurso petición
+    let btnRecursosActualizar = document.querySelectorAll('.actualizarRespuestaRecurso button')
+    btnRecursosActualizar.forEach(e => {
+        e.addEventListener('click', actualizarRespuestaRecurso)
+    })
+
+    function actualizarRespuestaRecurso(e) {
+        e.preventDefault()
+        let contenedor = e.target.parentNode.parentNode
+        let url = e.target.getAttribute('data_url')
+        let token = e.target.getAttribute('data_token')
+        let idRecurso = contenedor.querySelector('.id_recurso').value
+        let tipo_reposicion_id = contenedor.querySelector('.tipo_reposicion_id').value
+        let respuesta = contenedor.querySelector('.titulo-anexoRespuestaRecurso textArea').value
+        if(respuesta == ''){
+            alert('La respuesta al recurso esta vacia.')
+        }else{
+            let resprecursos_id = 0
+                let data = {
+                    recurso_id: idRecurso,
+                    id: id_pqr,
+                    tipo_reposicion_id,
+                    respuesta: respuesta
+                }
+                guardar_recurso(data)
+    
+            function guardar_recurso(data) {
+                $.ajax({
+                    async: false,
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                        resprecursos_id = respuesta.data.id
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
                 let anexosRecursos = contenedor.querySelectorAll('.anexoRespuestaRecurso')
                 anexosRecursos.forEach(anexo => {
-                    let titulo = anexo.querySelector('.titulo-anexoRespuestaRecurso input').value
+                    let titulo = anexo.querySelector('.titulo-anexoRespuestaRecurso textArea').value
                     let descripcion = anexo.querySelector('.descripcion-anexoRespuestaRecurso input').value
                     let archivo = anexo.querySelector('.doc-anexoRespuestaRecurso input').files[0]
                     let dataAnexo = new FormData();
@@ -177,25 +206,27 @@ window.addEventListener('DOMContentLoaded', function() {
                     dataAnexo.append('archivo', archivo);
                     dataAnexo.append('_token', token);
                     let urlAnexo = anexo.parentNode.parentNode.parentNode
-                    urlAnexo = urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
-                    $.ajax({
-                        async: false,
-                        url: urlAnexo,
-                        type: 'POST',
-                        headers: { 'X-CSRF-TOKEN': token },
-                        data: dataAnexo,
-                        processData: false,
-                        contentType: false,
-                        success: function(respuesta) {
-                            // console.log(respuesta)
-                        },
-                        error: function(error) {
-                            console.log(error)
-                        }
-                    });
+                    urlAnexo = urlAnexo.querySelector('.actualizarRespuestaRecurso button').getAttribute('data_url_anexos')
+                    if(archivo){
+                        $.ajax({
+                            async: false,
+                            url: urlAnexo,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false,
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
                 })
+                location.reload();
             }
-            location.reload();
         }
     }
 
@@ -494,8 +525,28 @@ window.addEventListener('DOMContentLoaded', function() {
             let token = btnE.getAttribute('data_token')
             let estado = padreEstado.querySelector('.estadoPeticion').value
             let id_peticion = padreEstado.parentElement.parentElement.parentElement.querySelector('.id_peticion').value
-            if (padreEstado.parentElement.parentElement.parentElement.querySelectorAll('.form-respuesta-recursos').length) {
-                alert('Debe responder todos los recursos de la petición')
+            if (padreEstado.parentElement.parentElement.parentElement.querySelector('.validacion_recurso')) {
+                if (padreEstado.parentElement.parentElement.parentElement.querySelector('.validacion_recurso').value == 0) {
+                    alert('Debe responder el recursos de la petición')
+                }else{
+                    let data = {
+                        estado,
+                        id_peticion
+                    }
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data,
+                        success: function(respuesta) {
+                            location.reload();
+    
+                        },
+                        error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }
             } else {
                 let data = {
                     estado,
@@ -619,6 +670,20 @@ window.addEventListener('DOMContentLoaded', function() {
     //==========================================================================
     $(document).ready(function() {
         $('.respuesta-editar').summernote({
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['font', ['bold', 'underline', 'italic', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
+            ]
+        })
+    });
+    //==========================================================================
+    $(document).ready(function() {
+        $('.titulo-anexoRespuestaRecurso textArea').summernote({
             tabsize: 2,
             height: 120,
             toolbar: [
@@ -796,6 +861,11 @@ window.addEventListener('DOMContentLoaded', function() {
                         $html_ += '</div>';
                         $html_ += '</div>';
                         $html_ += '<div class="card-footer ">';
+                        $html_ += '<div class="row">';
+                        $html_ += '<div class="col-12">';
+                        $html_ += '<button class="btn btn-info btn-xs pl-4 pr-4 agregarTexto">Agregar</button>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
                         $html_ += '</div>';
                         $html_ += '</div>';
                         $html_ += '</div>';
@@ -1224,6 +1294,11 @@ window.addEventListener('DOMContentLoaded', function() {
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '<div class="card-footer ">';
+                            $html_ += '<div class="row">';
+                            $html_ += '<div class="col-12">';
+                            $html_ += '<button class="btn btn-info btn-xs pl-4 pr-4 agregarTexto">Agregar</button>';
+                            $html_ += '</div>';
+                            $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '</div>';
@@ -1300,6 +1375,11 @@ window.addEventListener('DOMContentLoaded', function() {
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '<div class="card-footer ">';
+                            $html_ += '<div class="row">';
+                            $html_ += '<div class="col-12">';
+                            $html_ += '<button class="btn btn-info btn-xs pl-4 pr-4 agregarTexto">Agregar</button>';
+                            $html_ += '</div>';
+                            $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '</div>';
@@ -1307,6 +1387,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         });
                     }
                     $('#coleccionrespuesta').html($html_);
+                    asignarBusqueda()
 
                 },
                 error: function() {

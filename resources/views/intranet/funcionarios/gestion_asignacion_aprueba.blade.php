@@ -31,10 +31,37 @@
                     <div class="card-body">
                         <div class="rounded border p-2 mb-4">
                             <h5 class="">Historial de respuesta </h5>
-                            <strong>
-                                <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
-                                    <i class="fas fa-eye"></i> Vista previa</a>
-                            </strong>
+                            @if(sizeOf($pqr->anexos) == 0)
+                                <strong>
+                                    <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista previa</a>
+                                </strong>
+                                <input class="tipo_respuesta" type="hidden" value="0">
+                            @endif
+                            @if($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1)))
+                                <strong>
+                                    <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '1']) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista aclaración</a>
+                                </strong>
+                                <input class="tipo_respuesta" type="hidden" value="1">
+                            @endif
+                            @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)))
+                                <strong>
+                                    <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '2']) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista reposición</a>
+                                </strong>
+                                <input class="tipo_respuesta" type="hidden" value="2">
+                            @endif
+                            @php
+                                $verificacion = ($pqr->recurso_aclaracion + $pqr->recurso_reposicion + $pqr->recurso_apelacion) -  sizeOf($pqr->anexos->where('tipo_respuesta', '!=', 0));
+                            @endphp
+                            @if($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3)) && $verificacion == 1)
+                                <strong>
+                                    <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '3']) }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="fas fa-eye"></i> Vista apelación</a>
+                                </strong>
+                                <input class="tipo_respuesta" type="hidden" value="3">
+                            @endif
                             {{-- @if ($pqr->anexos)
                                 <div class="row d-flex px-12 p-3">
                                     <div class="col-12 table-responsive">
@@ -168,11 +195,18 @@
                                     <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
                                 </div>
                                 <div class="row d-flex px-12 p-3"> 
+                                    {{-- @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)) && $pqr->recurso_apelacion)
+                                        <div class="form-check row mb-2">
+                                            <input class="form-check-input concede_recurso_apelacion" type="checkbox" >
+                                            <label class="form-check-label">¿Se concede el recurso de apelación?</label>
+                                        </div>
+                                    @endif --}}
                                     <div class="col-12 col-md-12 form-group d-flex">
                                         <button href="" class="btn btn-danger px-4 btn-pqr-aprueba-regresa" data_url="{{ route('historial_tarea_guardar') }}" data_url2="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Regresar a revisión</button>
                                         @if ($pqr->persona->email)
                                             <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-aprueba-radica" data_url="{{ route('pqr_anexo_guardar') }}" data_url2="{{ route('historial_tarea_guardar') }}" data_url3="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Aprobar y radicar</button>
-                                        @else
+                                            
+                                            @else
                                             <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-aprueba" data_url="{{ route('pqr_anexo_guardar') }}" data_url2="{{ route('historial_tarea_guardar') }}" data_url3="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Aprobar y enviar a radicar</button>
                                         @endif
                                     </div>

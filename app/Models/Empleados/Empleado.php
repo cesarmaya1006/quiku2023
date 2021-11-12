@@ -14,6 +14,7 @@ use App\Models\Empresas\Empresa;
 use App\Models\PQR\HistorialTarea;
 use App\Models\PQR\HistorialPeticion;
 use App\Models\PQR\HistorialAsignacion;
+use App\Models\PQR\ResuelveRecurso;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -82,6 +83,11 @@ class Empleado extends Model
     public function resuelves()
     {
         return $this->hasMany(Resuelve::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function resuelvesrecurso()
+    {
+        return $this->hasMany(ResuelveRecurso::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

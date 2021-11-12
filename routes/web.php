@@ -311,16 +311,21 @@ Route::group(['middleware' => 'auth'], function () {
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('listado/gestionar_pqr/{id}', [PQRController::class, 'gestionar'])->name('funcionario-gestionar_pqr');
         Route::post('listado/gestionarqr', [PQRController::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_guardar');
-        Route::post('respuesta_recurso', [PQRController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
+        Route::post('respuesta_recurso_guardar', [PQRController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
+        Route::post('respuesta_recurso_actualizar', [PQRController::class, 'respuesta_recurso_actualizar'])->name('respuesta_recurso_actualizar');
         Route::post('respuesta_recurso_anexos', [PQRController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');
         Route::post('asignacion', [PQRController::class, 'asignacion_guardar'])->name('asignacion_guardar');
         Route::post('asignacion_asignador', [PQRController::class, 'asignacion_asignador_guardar'])->name('asignacion_asignador_guardar');
         Route::post('historial', [PQRController::class, 'historial_guardar'])->name('historial_guardar');
         Route::post('historial_tarea', [PQRController::class, 'historial_tarea_guardar'])->name('historial_tarea_guardar');
         Route::post('historial_resuelve', [PQRController::class, 'historial_resuelve_guardar'])->name('historial_resuelve_guardar');
+        Route::post('historial_resuelve_recurso', [PQRController::class, 'historial_resuelve_recurso_guardar'])->name('historial_resuelve_recurso_guardar');
         Route::post('historial_resuelve_eliminar', [PQRController::class, 'historial_resuelve_eliminar'])->name('historial_resuelve_eliminar');
+        Route::post('historial_resuelve_recurso_eliminar', [PQRController::class, 'historial_resuelve_recurso_eliminar'])->name('historial_resuelve_recurso_eliminar');
         Route::post('historial_resuelve_editar', [PQRController::class, 'historial_resuelve_editar'])->name('historial_resuelve_editar');
+        Route::post('historial_resuelve_recurso_editar', [PQRController::class, 'historial_resuelve_recurso_editar'])->name('historial_resuelve_recurso_editar');
         Route::post('resuelve_orden', [PQRController::class, 'resuelve_orden_guardar'])->name('resuelve_orden_guardar');
+        Route::post('resuelve_orden_recurso', [PQRController::class, 'resuelve_orden_recurso_guardar'])->name('resuelve_orden_recurso_guardar');
         Route::post('historial_peticion', [PQRController::class, 'historial_peticion_guardar'])->name('historial_peticion_guardar');
         Route::post('asignacion_tarea', [PQRController::class, 'asignacion_tarea_guardar'])->name('asignacion_tarea_guardar');
         Route::post('asignacion_peticion', [PQRController::class, 'asignacion_peticion_guardar'])->name('asignacion_peticion_guardar');
@@ -336,6 +341,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cargar_funcionarios', [PQRController::class, 'cargar_funcionarios'])->name('cargar_funcionarios');
         Route::post('pqr_anexo', [PQRController::class, 'pqr_anexo_guardar'])->name('pqr_anexo_guardar');
         Route::get('respuestaPQR/{id}', [PQRController::class, 'respuestaPQR'])->name('respuestaPQR');
+        Route::get('respuestaPQRRecurso/{id}/{tipo_recurso}', [PQRController::class, 'respuestaPQRRecurso'])->name('respuestaPQRRecurso');
         Route::get('descarga_respuestaPQR/{id}', [PQRController::class, 'descarga_respuestaPQR'])->name('descarga_respuestaPQR');
         Route::get('usuario_descarga_respuestaPQR/{id}', [PQRController::class, 'usuario_descarga_respuestaPQR'])->name('usuario_descarga_respuestaPQR');
         Route::post('cambiar_estado_tareas', [PQRController::class, 'cambiar_estado_tareas_guardar'])->name('cambiar_estado_tareas_guardar');
@@ -363,6 +369,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('listado/gestionarPQR/{id}', [ClienteController::class, 'gestionar_PQR'])->name('usuario-gestionarPQR');
         Route::post('recurso', [PQRController::class, 'recurso_guardar'])->name('recurso_guardar');
         Route::post('recurso_anexos', [PQRController::class, 'recurso_anexos_guardar'])->name('recurso_anexos_guardar');
+        Route::post('pqr_estado_recurso', [PQRController::class, 'pqr_estado_recurso_guardar'])->name('pqr_estado_recurso_guardar');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         Route::get('generarConceptoUOpinion', [ClienteController::class, 'generarConceptoUOpinion'])->name('usuario-generarConceptoUOpinion');
         Route::post('generarConceptoUOpinion', [ClienteController::class, 'generarConceptoUOpinion_guardar'])->name('usuario-generarConceptoUOpinion-guardar');
