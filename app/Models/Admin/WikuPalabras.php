@@ -20,4 +20,13 @@ class WikuPalabras extends Model
     {
         return $this->belongsToMany(WikuArgumento::class, 'wikupalabrasargumentos');
     }
+    public function jurisprudencias()
+    {
+        return $this->belongsToMany(WikuJurisprudencia::class, 'wikupalabrasjuris');
+    }
+
+    public function doctrinas()
+    {
+        return $this->belongsToMany(WikuDoctrina::class, 'wikupalabrasdoc');
+    }
 }

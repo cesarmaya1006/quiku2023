@@ -6,20 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class WikuAutor extends Model
+class WikuEnteEmisor extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'wikuautores';
+    protected $table = 'wikuenteemisor';
     protected $guarded = [];
     //----------------------------------------------------------------------------------
-    public function argumentos()
+    public function salas()
     {
-        return $this->hasMany(WikuArgumento::class, 'wikuautores_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
-    public function doctrinas()
-    {
-        return $this->hasMany(WikuDoctrina::class, 'wikuautores_id', 'id');
+        return $this->hasMany(WikuSala::class, 'ente_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

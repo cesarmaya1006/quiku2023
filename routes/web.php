@@ -208,6 +208,46 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('funcionarios-cargar_cargos', [FuncionarioFController::class, 'cargar_cargos'])->name('funcionarios_funcionarios-cargar_cargos');
             // ------------------------------------------------------------------------------------
             //Gestión de wiku
+            //=====================================================================================================================
+            //Doctrinas
+            Route::get('wiku_doctrina/crear', [WikuController::class, 'crear_doctrina'])->name('wiku_doctrina-crear');
+            Route::post('wiku_doctrina-guardar', [WikuController::class, 'guardar_doctrina'])->name('wiku_doctrina-guardar');
+            Route::get('wiku_doctrina/editar/{id}', [WikuController::class, 'editar_doctrina'])->name('wiku_doctrina-editar');
+            Route::put('wiku_doctrina-actualizar/{id}', [WikuController::class, 'actualizar_doctrina'])->name('wiku_doctrina-actualizar');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . .
+            Route::get('wiku_doccriterios/index/{id}/{wiku}', [WikuController::class, 'index_doccriterios'])->name('wiku_doccriterios-index');
+            Route::get('wiku_doccriterios/crear/{id}/{wiku}', [WikuController::class, 'crear_doccriterios'])->name('wiku_doccriterios-crear');
+            Route::post('wiku_doccriterios-guardar/{id}/{wiku}', [WikuController::class, 'guardar_doccriterios'])->name('wiku_doccriterios-guardar');
+            Route::get('wiku_doccriterios/editar/{id_criterios}/{id}/{wiku}', [WikuController::class, 'editar_doccriterios'])->name('wiku_doccriterios-editar');
+            Route::put('wiku_doccriterios-actualizar/{id_criterios}/{id}/{wiku}', [WikuController::class, 'actualizar_doccriterios'])->name('wiku_doccriterios-actualizar');
+            Route::delete('wiku_doccriterios/{id}', [WikuController::class, 'wiku_doccriterios_eliminar'])->name('wiku_doccriterios-eliminar');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . .
+            Route::get('wiku/docasociacion/crear/{id}/{wiku}', [WikuController::class, 'crear_docasociacion'])->name('wiku_docasociacion-crear');
+            Route::post('wiku/docasociacion-guardar/{id}/{wiku}', [WikuController::class, 'guardar_docasociacion'])->name('wiku_docasociacion-guardar');
+            Route::delete('wiku_docasociacion/{id}', [WikuController::class, 'wiku_docasociacion_eliminar'])->name('wiku_docasociacion-eliminar');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . .
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            //Jurisprudencia
+            Route::get('wiku_jurisprudencia/crear', [WikuController::class, 'crear_jurisprudencia'])->name('wiku_jurisprudencia-crear');
+            Route::post('wiku_jurisprudencia-guardar', [WikuController::class, 'guardar_jurisprudencia'])->name('wiku_jurisprudencia-guardar');
+            Route::get('wiku_jurisprudencia/editar/{id}', [WikuController::class, 'editar_jurisprudencia'])->name('wiku_jurisprudencia-editar');
+            Route::put('wiku_jurisprudencia-actualizar/{id}', [WikuController::class, 'actualizar_jurisprudencia'])->name('wiku_jurisprudencia-actualizar');
+
+            // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+            Route::get('wikucargarsalas', [WikuController::class, 'cargarSalas'])->name('wiku-cargarsalas');
+            Route::get('wikucargarsubsalas', [WikuController::class, 'cargarsubsalas'])->name('wiku-cargarsubsalas');
+            Route::get('wiku_jurisprudencia-cargarente', [WikuController::class, 'cargarente'])->name('wiku_jurisprudencia-cargarente');
+            Route::get('wiku_jurisprudencia-cargarsala', [WikuController::class, 'crearSala'])->name('wiku_jurisprudencia-cargarsala');
+            Route::get('wiku_jurisprudencia-cargarsubsala', [WikuController::class, 'crearSubSala'])->name('wiku_jurisprudencia-cargarsubsala');
+            Route::get('wiku_jurisprudencia-crearmagistrado', [WikuController::class, 'crearMagistrado'])->name('wiku_jurisprudencia-crearmagistrado');
+            Route::get('wiku_jurisprudencia-creardemandante', [WikuController::class, 'crearDemandante'])->name('wiku_jurisprudencia-creardemandante');
+            Route::get('wiku_jurisprudencia-creardemandado', [WikuController::class, 'crearDemandado'])->name('wiku_jurisprudencia-creardemandado');
+            //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . .
+            Route::get('wiku/jurasociacion/crear/{id}/{wiku}', [WikuController::class, 'crear_jurasociacion'])->name('wiku_jurasociacion-crear');
+            Route::post('wiku/jurasociacion-guardar/{id}/{wiku}', [WikuController::class, 'guardar_jurasociacion'])->name('wiku_jurasociacion-guardar');
+            Route::delete('wiku_jurasociacion/{id}', [WikuController::class, 'wiku_jurasociacion_eliminar'])->name('wiku_jurasociacion-eliminar');
+            // ------------------------------------------------------------------------------------
+            // ------------------------------------------------------------------------------------
             Route::get('wiku/index', [WikuController::class, 'index'])->name('wiku-index');
             Route::get('wiku/ver', [WikuController::class, 'ver'])->name('wiku-ver');
             Route::get('wikucargarargumentos', [WikuController::class, 'cargarArgumentos'])->name('wiku-cargarargumentos');
@@ -296,6 +336,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('wiku-busqueda_avanzadaa', [WikuController::class, 'WikuBusquedaAvanzada'])->name('wiku_busqueda_avanzada');
 
         Route::get('cargar_normas', [WikuController::class, 'cargar_normas'])->name('cargar_normas');
+        Route::get('cargar_salas', [WikuController::class, 'cargar_salas'])->name('cargar_salas');
+        Route::get('cargar_subsalas', [WikuController::class, 'cargar_subsalas'])->name('cargar_subsalas');
         //----------------------------------------------------------------------------------------------------
         Route::get('wiku-normas/index', [WikuController::class, 'indexWikuNormas'])->name('wiku_funcionario_norma_index');
         //----------------------------------------------------------------------------------------------------

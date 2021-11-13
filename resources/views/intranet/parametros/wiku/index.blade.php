@@ -195,18 +195,192 @@
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-three-jurisprudencia" role="tabpanel"
                                 aria-labelledby="custom-tabs-three-jurisprudencia-tab">
-                                Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus
-                                volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce
-                                nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue
-                                ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur
-                                eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur,
-                                ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex
-                                vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus.
-                                Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                                <div class="row d-flex justify-content-around">
+                                    <div class="col-12 col-md-4 text-md-left pl-2">
+                                        <h5>Listado de Jurispruencias actuales</h5>
+                                    </div>
+                                    <div class="col-12 col-md-3 text-md-right pl-2 pr-md-5">
+                                        <a href="{{ route('wiku_jurisprudencia-crear') }}"
+                                            class="btn btn-success btn-sm text-center pl-3 pr-3"
+                                            style="font-size: 0.8em;{{ $fuentes->count() == 0 ? 'opacity: 0.4; cursor: default;pointer-events: none;' : '' }}"><i
+                                                class="fas fa-plus-circle mr-2"></i> Nueva Jurisprudencia</a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3" style="font-size: 0.8em;">
+                                    <div class="col-12">
+                                        <table class="table table-striped table-hover table-sm displayScroll"
+                                            style="min-width: 100%;">
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th class="text-center">Ente Emisor</th>
+                                                    <th class="text-center">Sala o Sección</th>
+                                                    <th class="text-center">Sub-sala o subsección</th>
+                                                    <th class="text-center">N° radicado</th>
+                                                    <th class="text-center">Fecha de emisión</th>
+                                                    <th class="text-center">Magistrado</th>
+                                                    <th class="text-center">Demandante</th>
+                                                    <th class="text-center">Demandado</th>
+                                                    <th class="text-center">Texto</th>
+                                                    <th class="text-center">Descripción</th>
+                                                    <th class="text-center">Archivo</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($jurisprudencias as $jurisprudencia)
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            {{ $jurisprudencia->subsala->sala->ente->ente }}</td>
+                                                        <td class="text-center">
+                                                            {{ $jurisprudencia->subsala->sala->sala }}</td>
+                                                        <td class="text-center">
+                                                            {{ $jurisprudencia->subsala->subsala }}</td>
+                                                        <td class="text-center">{{ $jurisprudencia->radicado }}</td>
+                                                        <td class="text-center">
+                                                            {{ $jurisprudencia->fecha != null ? $jurisprudencia->fecha : '---' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $jurisprudencia->magistrado->nombre1 . ' ' . $jurisprudencia->magistrado->nombre2 . ' ' . $jurisprudencia->magistrado->apellido1 . ' ' . $jurisprudencia->magistrado->apellido2 }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $jurisprudencia->demandante ? $jurisprudencia->demandante->demandante : '' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $jurisprudencia->texto }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $jurisprudencia->descripcion ? $jurisprudencia->descripcion : '' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $jurisprudencia->demandado ? $jurisprudencia->demandado->demandado : '' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $jurisprudencia->archivo != null ? $jurisprudencia->archivo : '---' }}
+                                                        </td>
+                                                        <td class="d-flex">
+                                                            <a href="{{ route('wiku_jurisprudencia-editar', ['id' => $jurisprudencia->id]) }}"
+                                                                class="btn-accion-tabla tooltipsC text-info"
+                                                                title="Editar"><i class="fa fa-edit"
+                                                                    aria-hidden="true"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="custom-tabs-three-doctrinas" role="tabpanel"
                                 aria-labelledby="custom-tabs-three-doctrinas-tab">
-                                Texto Doctrinas
+                                <div class="row d-flex justify-content-around">
+                                    <div class="col-12 col-md-4 text-md-left pl-2">
+                                        <h5>Listado de Doctrinas actuales</h5>
+                                    </div>
+                                    <div class="col-12 col-md-3 text-md-right pl-2 pr-md-5">
+                                        <a href="{{ route('wiku_doctrina-crear') }}"
+                                            class="btn btn-success btn-sm text-center pl-3 pr-3"
+                                            style="font-size: 0.8em;{{ $fuentes->count() == 0 ? 'opacity: 0.4; cursor: default;pointer-events: none;' : '' }}"><i
+                                                class="fas fa-plus-circle mr-2"></i> Nueva Doctrina</a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3" style="font-size: 0.8em;">
+                                    <div class="col-12">
+                                        <table class="table table-striped table-hover table-sm displayScroll"
+                                            style="min-width: 100%;">
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th class="text-center">Id</th>
+                                                    <th class="text-center">Tipo de publicación</th>
+                                                    <th class="text-center">Título</th>
+                                                    <th class="text-center">Descripción</th>
+                                                    <th class="text-center">Año</th>
+                                                    <th class="text-center">Mes</th>
+                                                    <th class="text-center">Dia</th>
+                                                    <th class="text-center">Cuidad</th>
+                                                    <th class="text-center">Editorial</th>
+                                                    <th class="text-center">Nombre de revista</th>
+                                                    <th class="text-center">Url</th>
+                                                    <th class="text-center">Autor(es)</th>
+                                                    <th class="text-center">Cita</th>
+                                                    <th class="text-center">Páginas</th>
+                                                    <th class="text-center">Área de conocimiento</th>
+                                                    <th class="text-center">Tema</th>
+                                                    <th class="text-center">Tema Específico</th>
+                                                    <th class="text-center">Archivo</th>
+                                                    <th>Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($doctrinas as $doctrina)
+                                                    <tr>
+                                                        <td class="text-center">{{ $doctrina->id }}</td>
+                                                        <td class="text-center">{{ $doctrina->tipo }}</td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->titulo != null ? $doctrina->titulo : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->descripcion != null ? $doctrina->descripcion : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->anno != null ? $doctrina->anno : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->mes != null ? $doctrina->mes : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->dia != null ? $doctrina->dia : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->ciudad != null ? $doctrina->ciudad : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->editorial != null ? $doctrina->editorial : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->revista != null ? $doctrina->revista : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->url != null ? $doctrina->url : '---' }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if ($doctrina->autorInst != null)
+                                                                {{ $doctrina->autorInst->institucion . ';' }}
+                                                            @endif
+                                                            @if ($doctrina->autor != null)
+                                                                {{ $doctrina->autor->nombre1 . ' ' . $doctrina->autor->nombre2 . ' ' . $doctrina->autor->apellido1 . ' ' . $doctrina->autor->apellido2 }}
+
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->texto }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->paginas != null ? $doctrina->paginas : '---' }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $doctrina->temaEspecifico->tema_->area->area }}
+                                                        </td>
+                                                        <td style="min-width:100px;">
+                                                            {{ $doctrina->temaEspecifico->tema_->tema }}
+                                                        </td>
+                                                        <td style="min-width:150px;">
+                                                            {{ $doctrina->temaespecifico->tema }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $doctrina->archivo != null ? $doctrina->archivo : '---' }}
+                                                        </td>
+                                                        <td class="d-flex">
+                                                            <a href="{{ route('wiku_doctrina-editar', ['id' => $doctrina->id]) }}"
+                                                                class="btn-accion-tabla tooltipsC text-info"
+                                                                title="Editar"><i class="fa fa-edit"
+                                                                    aria-hidden="true"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

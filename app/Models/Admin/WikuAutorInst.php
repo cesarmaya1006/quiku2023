@@ -17,4 +17,9 @@ class WikuAutorInst extends Model
         return $this->hasMany(WikuArgumento::class, 'wikuautorinstitu_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function doctrinas()
+    {
+        return $this->hasMany(WikuDoctrina::class, 'wikuautorinstitu_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }
