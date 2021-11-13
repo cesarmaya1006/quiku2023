@@ -737,7 +737,7 @@ class PQRController extends Controller
                             $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
                             $pqrEstado['tiempo_limite'] = $respuestaDias;
                         }elseif($tipo_respuesta == 2){
-                            if($pqr->recurso_apelacion){
+                            if($pqr->recurso_apelacion && $request["concedeRecursoApelacion"] == "true"){
                                 $pqrEstado['estadospqr_id'] = 8;
                                 $fechaActual = date("Y-m-d H:i:s");
                                 $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
@@ -765,7 +765,7 @@ class PQRController extends Controller
     {
         if ($request->ajax()) {
             $pqr = PQR::findOrFail($request['idPqr']);
-            if($request['tipo_respuesta'] == 2 && $pqr->recurso_apelacion && $request['idTarea'] == 5){
+            if($request['tipo_respuesta'] == 2 && $pqr->recurso_apelacion && $request['idTarea'] == 5 && $request["concedeRecursoApelacion"] == "true"){
                 foreach ($pqr->asignaciontareas as $tarea) {
                     $estadoTarea['estado_id'] = 6;
                     $asignacionTarea = AsignacionTarea::where('pqr_id',$pqr['id'])->where('tareas_id',$tarea->tareas_id)->get();

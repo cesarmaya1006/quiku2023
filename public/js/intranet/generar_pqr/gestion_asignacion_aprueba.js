@@ -58,6 +58,10 @@ window.addEventListener('DOMContentLoaded', function(){
             let url3 = e.target.getAttribute('data_url3')
             let token = e.target.getAttribute('data_token')
             let tipo_respuesta = document.querySelector('.tipo_respuesta').value
+            let concedeRecursoApelacion = false
+            if(document.querySelector('.concede_recurso_apelacion')){
+                concedeRecursoApelacion = document.querySelector('.concede_recurso_apelacion').checked
+            }
             let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
             if (mensajeHistorial != '' && idPqr != '') {
                 let data = {
@@ -65,7 +69,8 @@ window.addEventListener('DOMContentLoaded', function(){
                     mensajeHistorial,
                     idPqr,
                     apruebaRadica : 1,
-                    tipo_respuesta
+                    tipo_respuesta,
+                    concedeRecursoApelacion
                 }
                 $.ajax({
                     url: url,
@@ -107,7 +112,8 @@ window.addEventListener('DOMContentLoaded', function(){
                     idTarea: "5",
                     mensajeHistorial: 'Radicada automaticamente.',
                     idPqr,
-                    tipo_respuesta
+                    tipo_respuesta,
+                    concedeRecursoApelacion
                 }
                 $.ajax({
                     url: url2,

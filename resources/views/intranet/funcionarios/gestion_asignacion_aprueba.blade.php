@@ -194,13 +194,13 @@
                                     <label for="" class="">Agregar Historial</label>
                                     <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
                                 </div>
-                                <div class="row d-flex px-12 p-3"> 
-                                    {{-- @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)) && $pqr->recurso_apelacion)
-                                        <div class="form-check row mb-2">
+                                <div class="row d-flex px-12 p-2"> 
+                                    @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)) && $pqr->recurso_apelacion)
+                                        <div class="form-check row mb-3">
                                             <input class="form-check-input concede_recurso_apelacion" type="checkbox" >
                                             <label class="form-check-label">¿Se concede el recurso de apelación?</label>
                                         </div>
-                                    @endif --}}
+                                    @endif
                                     <div class="col-12 col-md-12 form-group d-flex">
                                         <button href="" class="btn btn-danger px-4 btn-pqr-aprueba-regresa" data_url="{{ route('historial_tarea_guardar') }}" data_url2="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Regresar a revisión</button>
                                         @if ($pqr->persona->email)
