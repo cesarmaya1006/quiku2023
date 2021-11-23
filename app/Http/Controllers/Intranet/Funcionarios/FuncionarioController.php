@@ -171,6 +171,27 @@ class FuncionarioController extends Controller
         return view('intranet.funcionarios.gestion_asignacion_radica', compact('pqr', 'estadoPrioridad', 'estados'));
     }
 
+    public function registro()
+    {
+        $tipos_docu = Tipo_Docu::get();
+        $paises = Pais::get();
+        $departamentos = Departamento::get();
+        $usuario = Usuario::findorFail(session('id_usuario'));
+        return view('intranet.funcionarios.tutela.registro', compact('usuario', 'tipos_docu', 'paises', 'departamentos'));
+    }
+
+    public function listado()
+    {
+        return view('intranet.funcionarios.tutela.listado');
+    }
+
+    public function gestion()
+    {
+        return view('intranet.funcionarios.tutela.gestion');
+    }
+
+
+
     /**
      * Display the specified resource.
      *

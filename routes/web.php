@@ -23,6 +23,7 @@ use App\Http\Controllers\Intranet\Empresas\WikuController;
 use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
 use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
 use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
+use App\Http\Controllers\Intranet\Funcionarios\TutelaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +83,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('index/gestionarAsignacionRevisa/{id}', [FuncionarioController::class, 'gestionar_asignacion_revisa'])->name('funcionario-gestionar-asignacion-revisa');
         Route::get('index/gestionarAsignacionAprueba/{id}', [FuncionarioController::class, 'gestionar_asignacion_aprueba'])->name('funcionario-gestionar-asignacion-aprueba');
         Route::get('index/gestionarAsignacionRadica/{id}', [FuncionarioController::class, 'gestionar_asignacion_radica'])->name('funcionario-gestionar-asignacion-radica');
+        Route::get('registro', [FuncionarioController::class, 'registro'])->name('funcionario-registro');
+        Route::get('listado', [FuncionarioController::class, 'listado'])->name('funcionario-listado');
+        Route::get('gestion', [FuncionarioController::class, 'gestion'])->name('funcionario-gestion');
         // Rutas Index
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'adminSistema'], function () {
@@ -329,7 +333,10 @@ Route::group(['middleware' => 'auth'], function () {
     });
     //==================================================================================================================
     Route::group(['prefix' => 'funcionario'], function () {
-        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+        Route::post('crear_auto_admisorio', [TutelaController::class, 'crear_auto_admisorio'])->name('crear_auto_admisorio');//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Route::get('auto_admisorio_complemento', [TutelaController::class, 'auto_admisorio_complemento'])->name('auto_admisorio_complemento');//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
         //Wiku
         Route::get('wiku-index', [WikuController::class, 'indexWiku'])->name('wiku_funcionario-index');
         Route::get('wiku-busqueda_basica', [WikuController::class, 'WikuBusquedaBasica'])->name('wiku_busqueda_basica');

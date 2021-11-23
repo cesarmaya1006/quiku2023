@@ -48,10 +48,8 @@ class Tabla_Menu extends Seeder
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
             ['nombre' => 'Cambiar contraseña', 'menu_id' => '12', 'url' => 'usuario/cambiar-password', 'orden' => '4', 'icono' => 'fas fa-key'],
-            // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
-            //----------------------------------------------------------------------------------------------------------------------
-            //Menus funcionario
+            //Menus padre
             ['nombre' => 'Listado PQR', 'menu_id' => '0', 'url' => 'funcionario/listado', 'orden' => '8', 'icono' => 'fas fa-question-circle'],
             //----------------------------------------------------------------------------------------------------------------------
             ['nombre' => 'Crear usuario asistido', 'menu_id' => '0', 'url' => 'funcionario/crear-usuario', 'orden' => '9', 'icono' => 'fas fa-user-plus'],
@@ -74,6 +72,15 @@ class Tabla_Menu extends Seeder
             // Menus  padre
             //----------------------------------------------------------------------------------------------------------------------
             ['nombre' => 'Wiku', 'menu_id' => '0',  'url' => 'funcionario/wiku-index', 'orden' => '1',  'icono' => 'fas fa-list-ul'],
+            // Menus padre
+            ['nombre' => 'Tutelas', 'menu_id' => '0', 'url' => '#', 'orden' => '14', 'icono' => 'fas fa-chalkboard-teacher'],
+            //----------------------------------------------------------------------------------------------------------------------
+            // Menus hijos
+            //----------------------------------------------------------------------------------------------------------------------
+            ['nombre' => 'Registro', 'menu_id' => '28',  'url' => 'admin/registro', 'orden' => '1',  'icono' => 'fas fa-plus-square'],
+            ['nombre' => 'Listado', 'menu_id' => '28',  'url' => 'admin/listado', 'orden' => '2',  'icono' => 'far fa-list-alt'],
+            ['nombre' => 'Gestión', 'menu_id' => '28',  'url' => 'admin/gestion', 'orden' => '3',  'icono' => 'fas fa-grip-horizontal'],
+            //----------------------------------------------------------------------------------------------------------------------
 
         ];
 
