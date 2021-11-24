@@ -6,6 +6,7 @@ use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\MenuController;
 use App\Http\Controllers\Intranet\Email\EmailController;
 use App\Http\Controllers\Extranet\ExtranetPageController;
+use App\Http\Controllers\Intranet\Admin\AnaliticaController;
 use App\Http\Controllers\Intranet\Admin\MenuRolController;
 use App\Http\Controllers\Intranet\Admin\PermisoController;
 use App\Http\Controllers\Intranet\Admin\UsuarioController;
@@ -325,6 +326,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('wiku/asociacion/crear/{id}/{wiku}', [WikuController::class, 'crear_asociacion'])->name('wiku_asociacion-crear');
             Route::post('wiku/asociacion-guardar/{id}/{wiku}', [WikuController::class, 'guardar_asociacion'])->name('wiku_asociacion-guardar');
             Route::delete('wiku_asociacion/{id}', [WikuController::class, 'wiku_asociacion_eliminar'])->name('wiku_asociacion-eliminar');
+
+            // Gestion de analitica
+            Route::get('analitica/index', [AnaliticaController::class, 'index'])->name('analitica-index');
+            Route::get('analitica/tipoPQR', [AnaliticaController::class, 'tipoPQR'])->name('analitica-tipoPQR');
         });
     });
     //==================================================================================================================

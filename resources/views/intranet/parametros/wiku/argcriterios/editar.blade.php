@@ -10,7 +10,7 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Parametros - Criterios
+    Parametros - Criterios Argumentos
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
@@ -20,7 +20,7 @@
         <div class="card-header">
             <div class="row mb-3">
                 <div class="col-12 col-md-6 col-lg-6 text-md-left text-lg-left pl-2">
-                    <h5>Editar Criterio</h5>
+                    <h5>Editar Criterio Argumento</h5>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6 text-md-right text-lg-right pl-2 pr-md-5 pr-lg-5">
                     <a href="{{ route('wiku_criterios-index', ['id' => $id, 'wiku' => $wiku]) }}"
@@ -31,12 +31,12 @@
             <div class="row">
                 <div class="col-12">
                     <form
-                        action="{{ route('wiku_criterios-actualizar', ['id_criterios' => $criterio->id, 'id' => $id, 'wiku' => $wiku]) }}"
+                        action="{{ route('wiku_argcriterios-actualizar', ['id_criterios' => $criterio->id, 'id' => $id, 'wiku' => $wiku]) }}"
                         class="form-horizontal row" method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="card-body">
-                            @include('intranet.parametros.wiku.criterios.form')
+                            @include('intranet.parametros.wiku.argcriterios.form')
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">

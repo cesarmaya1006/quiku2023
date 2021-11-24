@@ -55,6 +55,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('wiku-index') }}">Wiku</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('analitica-index') }}">Analitica</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

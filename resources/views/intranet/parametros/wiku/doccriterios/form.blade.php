@@ -13,14 +13,14 @@
                     <input class="form-check-input" type="radio" name="tipo_criterio" id="tipo_criterio1" value="si"
                         {{ isset($criterio) ? ($criterio->criterio_si != null ? 'checked' : '') : 'checked' }}>
                     <label class="form-check-label" for="tipo_criterio1">
-                        Criterios jurídicos de aplicación del artículo
+                        Criterios jurídicos de aplicación de la doctrina
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="tipo_criterio" id="tipo_criterio2" value="no"
                         {{ isset($criterio) ? ($criterio->criterio_no != null ? 'checked' : '') : '' }}>
                     <label class="form-check-label" for="tipo_criterio2">
-                        Criterios jurídicos que definen la no aplicación del artículo
+                        Criterios jurídicos que definen la no aplicación de la doctrina
                     </label>
                 </div>
                 <div class="form-check">
@@ -35,10 +35,10 @@
     </div>
     <div class="col-12 col-md-6 form-group {{ isset($criterio) ? ($criterio->criterio_si == null ? 'd-none' : '') : '' }}"
         id="requerido_si">
-        <label class="requerido" for="criterio_si">Criterios jurídicos de aplicación del artículo</label>
+        <label class="requerido" for="criterio_si">Criterios jurídicos de aplicación de la doctrina</label>
         <textarea name="criterio_si" id="criterio_si" class="form-control form-control-sm" cols="30" rows="5"
             style="resize: none;" required>{{ old('criterio_si', $criterio->criterio_si ?? '') }}</textarea>
-        <small id="helpId" class="form-text text-muted">Criterios jurídicos de aplicación del artículo</small>
+        <small id="helpId" class="form-text text-muted">Criterios jurídicos de aplicación de la doctrina</small>
     </div>
     <div class="col-12 col-md-6 form-group {{ isset($criterio) ? ($criterio->criterio_no == null ? 'd-none' : '') : 'd-none' }}"
         id="requerido_no">
