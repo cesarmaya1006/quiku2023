@@ -42,7 +42,7 @@ class AnaliticaController extends Controller
     {
         if ($request->ajax()) {
             $tiempomedio = [];
-            if ($request['busqueda' == 'tipopqr']) {
+            if ($request['busqueda'] == 'tipopqr') {
                 $tiposPqr = tipoPQR::get();
                 foreach ($tiposPqr as $tipoPqr) {
                     $pqrs = PQR::where('tipo_pqr_id', $tipoPqr->id)->get();
@@ -59,27 +59,28 @@ class AnaliticaController extends Controller
                         $tiempomedio[] = ['y' => 0, 'label' => $tipoPqr->tipo];
                     }
                 }
-            } else if ($request['busqueda' == 'motivos']) {
+            } else if ($request['busqueda'] == 'motivos') {
                 $motivos = Motivo::get();
                 foreach ($motivos as $motivo) {
                     $pqrs = PQR::get();
-
-                    /*$pqrs = PQR::with('normas')->whereHas('normas', function ($q) use ($id) {
-                        $q->where('wiku_norma_id', $id);
+                    $pqrs = PQR::with('peticiones')->whereHas('peticiones.motivo', function ($q) use ($motivo) {
+                        $q->where('motivo_id', $motivo->id);
                     })->get();
+
+
                     $cantidadDias = [];
                     foreach ($pqrs as $pqr) {
+
                         $fechaAntigua  = $pqr->fecha_radicado;
                         $fechaReciente = $pqr->fecha_respuesta;
                         $cantidadDias[] = $fechaAntigua->diffInDays($fechaReciente);
                     }
                     $mediadias = collect($cantidadDias);
                     if ($mediadias->median() > 0) {
-                        $tiempomedio[] = ['y' => $mediadias->median(), 'label' => $tipoPqr->tipo];
+                        $tiempomedio[] = ['y' => $mediadias->median(), 'label' => $motivo->motivo];
                     } else {
-                        $tiempomedio[] = ['y' => 0, 'label' => $tipoPqr->tipo];
+                        $tiempomedio[] = ['y' => 0, 'label' => $motivo->motivo];
                     }
-                    */
                 }
             }
             return response()->json(

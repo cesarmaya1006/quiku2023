@@ -11,15 +11,16 @@ $(document).ready(function() {
         };
         if (busqueda == 'tipopqr') {
             var titulo = 'Tiempo medio de respuesta por tipo de PQR';
+            var tipo = 'column'
         } else if (busqueda == 'motivos') {
             var titulo = 'Tiempo medio de respuesta por motivo de PQR';
+            var tipo = 'pie'
         }
         $.ajax({
             url: url_t,
             type: 'GET',
             data: data,
             success: function(respuesta) {
-                console.log(respuesta);
                 var dataPoints = [];
                 var chart = new CanvasJS.Chart("analiticaAjax", {
                     title: {
@@ -27,7 +28,7 @@ $(document).ready(function() {
                     },
                     animationEnabled: true,
                     data: [{
-                        type: "column",
+                        type: tipo,
                         dataPoints: respuesta,
                     }]
                 });
