@@ -63,7 +63,7 @@
                 </td>
                 <td style="width: 75%;">
                     <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 16pt;">
-                        <h3>Sistema Quiku</h3>
+                        <h5 style="color: #3359fa;">Sistema Quiku</h5>
                     </div>
                 </td>
             </tr>
@@ -200,10 +200,12 @@
             <tr>
                 <td>
                     <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 0.8em;">
-                        <p>
-                            <strong>Este documento se ha generado automáticamente a través de Quiku.</strong><img
-                                src="{{ $imagen }}" alt="" style="width: 100%;max-width: 30px;">
-                        </p>
+                        <p><strong>57-1-7229497   www.mglasociados.com   Carrera 13 # 76-12 Of. 301 y Carrera 5 # 16-14 Of. 803   3208380622</strong></p>
+                            {{-- <strong>Este documento se ha generado automáticamente a través de Quiku.</strong> --}}
+                            {{-- <strong>Este documento se ha generado automáticamente a través de Quiku.</strong> --}}
+                            {{-- <strong>Este documento se ha generado automáticamente a través de Quiku.</strong> --}}
+                            {{-- <strong>Este documento se ha generado automáticamente a través de Quiku.</strong> --}}
+                            {{-- <img src="{{ $imagen }}" alt="" style="width: 100%;max-width: 30px;"> --}}
                     </div>
                 </td>
             </tr>

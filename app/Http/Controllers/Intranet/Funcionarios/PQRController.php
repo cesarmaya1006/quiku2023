@@ -698,7 +698,7 @@ class PQRController extends Controller
                 if($request["idTarea"] == 4){
                     $pqr = PQR::findOrFail($request["idPqr"]);
                     $tipo_respuesta = $request["tipo_respuesta"]; 
-                    $imagen = public_path('imagenes\sistema\icono_sistema.png');
+                    $imagen = public_path('imagenes\sistema\logo_mgl.png');
                     $firma = public_path('documentos\usuarios\\' . $pqr->empleado->url);
                     if($tipo_respuesta == 1 || $tipo_respuesta == 2 || $tipo_respuesta == 3 ){
                         $resuelves = ResuelveRecurso::where('pqr_id', $request["idPqr"])->where('tipo_reposicion_id', $tipo_respuesta)->orderBy('orden')->get();
@@ -851,7 +851,7 @@ class PQRController extends Controller
     {
         $pqr = PQR::findOrFail($id);
         $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
-        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $imagen = public_path('imagenes\sistema\logo_mgl.png');
         $firma  = '';
         return view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
     }
@@ -860,7 +860,7 @@ class PQRController extends Controller
     {
         $pqr = PQR::findOrFail($id);
         $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
-        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $imagen = public_path('imagenes\sistema\logo_mgl.png');
         $firma  = '';
         $pdf = PDF::loadView('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
         return $pdf->download( 'Respuesta-'. $pqr->radicado . '.pdf');
@@ -960,7 +960,7 @@ class PQRController extends Controller
         $pqr = PQR::findOrFail($id);
         $resuelves = ResuelveRecurso::where('pqr_id', $id)->where('tipo_reposicion_id', $tipo_recurso)->orderBy('orden')->get();
         $tipo_respuesta = $tipo_recurso;
-        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $imagen = public_path('imagenes\sistema\logo_mgl.png');
         $firma  = '';
         return view('intranet.funcionarios.pqr.respuesta_pqr_recurso', compact('pqr', 'imagen', 'resuelves', 'firma', 'tipo_respuesta'));
     }

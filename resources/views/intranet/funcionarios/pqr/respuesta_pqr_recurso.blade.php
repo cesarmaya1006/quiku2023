@@ -63,7 +63,7 @@
                 </td>
                 <td style="width: 75%;">
                     <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 16pt;">
-                        <h3>Sistema Quiku</h3>
+                        <h5 style="color: #3359fa;">Sistema Quiku</h5>
                     </div>
                 </td>
             </tr>
@@ -218,8 +218,15 @@
                 <td>
                     <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 0.8em;">
                         <p>
-                            <strong>Este documento se ha generado automáticamente a través de Quiku.</strong><img
-                                src="{{ $imagen }}" alt="" style="width: 100%;max-width: 30px;">
+                           <strong>57-1-7229497</strong>
+                            <strong>www.mglasociados.com</strong>
+                            <strong>Carrera 13 # 76-12 Of. 301 y Carrera 5 # 16-14 Of. 803</strong>
+                            <strong>3208380622</strong>
+                            {{-- <strong>Este documento se ha generado automáticamente a través de Quiku.</strong> --}}
+                            {{-- <strong>Este documento se ha generado automáticamente a través de Quiku.</strong> --}}
+                            {{-- <strong>Este documento se ha generado automáticamente a través de Quiku.</strong> --}}
+                            {{-- <strong>Este documento se ha generado automáticamente a través de Quiku.</strong> --}}
+                            {{-- <img src="{{ $imagen }}" alt="" style="width: 100%;max-width: 30px;"> --}}
                         </p>
                     </div>
                 </td>
