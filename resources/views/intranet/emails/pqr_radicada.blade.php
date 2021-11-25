@@ -56,7 +56,7 @@
         <table>
             <tr>
                 <td style="width: 25%;text-align: center;">
-                    <img src="{{ $imagen }}" alt="" style="width: 100%;max-width: 70px;">
+                    <img src="{{ $imagen2 }}" alt="" style="width: 100%;max-width: 70px;">
                     <p>{{ $imagen }}</p>
                     <p>{{ $imagen2 }}</p>
                 </td>
