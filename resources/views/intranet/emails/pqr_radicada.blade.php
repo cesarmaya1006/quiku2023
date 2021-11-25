@@ -58,6 +58,7 @@
                 <td style="width: 25%;text-align: center;">
                     <img src="{{ $imagen }}" alt="" style="width: 100%;max-width: 70px;">
                     <p>{{ $imagen }}</p>
+                    <p>{{ $imagen2 }}</p>
                 </td>
                 <td style="width: 75%;">
                     <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 22pt;">
@@ -68,7 +69,7 @@
         </table>
     </header>
 
-    <main>
+    {{-- <main>
         <table>
             <tr>
                 <td>
@@ -324,7 +325,7 @@
                 </tr>
             @endif
         </table>
-    </main>
+    </main> --}}
     <footer>
         <table>
             <tr>

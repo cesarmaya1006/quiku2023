@@ -23,7 +23,7 @@ class EmailController extends Controller
     {
         $pqr_radicada = PQR::findOrFail($id);
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        //$imagen = asset('imagenes/sistema/icono_sistema.png');
+        $imagen2 = asset('imagenes/sistema/icono_sistema.png');
         $fecha = $pqr_radicada->fecha_generacion;
         $num_radicado = $pqr_radicada->radicado;
         if ($pqr_radicada->persona_id != null) {
@@ -40,7 +40,7 @@ class EmailController extends Controller
             $tipo_doc = $pqr_radicada->empresa->tipos_docu->tipo_id;
         }
         $tipo_pqr_id = $pqr_radicada->tipo_pqr_id;
-        $pdf = PDF::loadView('intranet.emails.pqr_radicada', compact('pqr_radicada', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'tipo_pqr_id'));
+        $pdf = PDF::loadView('intranet.emails.pqr_radicada', compact('pqr_radicada', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'tipo_pqr_id', 'imagen2'));
 
         return $pdf->download('PQR Radicada.pdf');
     }
