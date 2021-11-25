@@ -22,8 +22,8 @@ class EmailController extends Controller
     public function pqrRadicadaPdf($id)
     {
         $pqr_radicada = PQR::findOrFail($id);
-        $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        $imagen2 = asset('imagenes/sistema/icono_sistema.png');
+        // $imagen = public_path('imagenes\sistema\logo_mgl.png.png');
+        $imagen = asset('imagenes/sistema/logo_mgl.png.png'); //url_servidor
         $fecha = $pqr_radicada->fecha_generacion;
         $num_radicado = $pqr_radicada->radicado;
         if ($pqr_radicada->persona_id != null) {
@@ -40,7 +40,7 @@ class EmailController extends Controller
             $tipo_doc = $pqr_radicada->empresa->tipos_docu->tipo_id;
         }
         $tipo_pqr_id = $pqr_radicada->tipo_pqr_id;
-        $pdf = PDF::loadView('intranet.emails.pqr_radicada', compact('pqr_radicada', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'tipo_pqr_id', 'imagen2'));
+        $pdf = PDF::loadView('intranet.emails.pqr_radicada', compact('pqr_radicada', 'imagen', 'nombre', 'tipo_doc', 'identificacion', 'email', 'num_radicado', 'fecha', 'tipo_pqr_id'));
 
         return $pdf->download('PQR Radicada.pdf');
     }
@@ -48,8 +48,10 @@ class EmailController extends Controller
     public function aclaracionPdf($id)
     {
         $aclaracion = Aclaracion::findOrFail($id);
-        $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        $firma = public_path('imagenes\sistema\firma.png');
+        // $imagen = public_path('imagenes\sistema\logo_mgl.png.png');
+        // $firma = public_path('imagenes\sistema\firma.png');
+        $imagen = asset('imagenes/sistema/logo_mgl.png.png'); //url_servidor
+        $firma = asset('imagenes/sistema/firma.png'); //url_servidor
         $fecha = $aclaracion->fecha_radicado;
         $num_radicado = $aclaracion->radicado;
         if ($aclaracion->peticion->pqr->persona_id != null) {
@@ -72,7 +74,8 @@ class EmailController extends Controller
     public function constancia_aclaracionPdf($id)
     {
         $aclaracion = Aclaracion::findOrFail($id);
-        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        // $imagen = public_path('imagenes\sistema\logo_mgl.png.png');
+        $imagen = asset('imagenes/sistema/logo_mgl.png.png'); //url_servidor
         $fecha = $aclaracion->fecha_radicado;
         $num_radicado = $aclaracion->radicado;
         if ($aclaracion->peticion->pqr->persona_id != null) {
@@ -95,8 +98,10 @@ class EmailController extends Controller
     public function prorrogaPdf($id)
     {
         $pqr = PQR::findOrFail($id);
-        $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        $firma = public_path('imagenes\sistema\firma.png');
+        // $imagen = public_path('imagenes\sistema\logo_mgl.png.png');
+        // $firma = public_path('imagenes\sistema\firma.png');
+        $imagen = asset('imagenes/sistema/logo_mgl.png.png'); //url_servidor
+        $firma = asset('imagenes/sistema/firma.png'); //url_servidor
         $fecha = date('Y-m-d H:i:s');
         $num_radicado = $pqr->radicado;
         $cant_dias = $pqr->prorroga_dias;
@@ -121,7 +126,8 @@ class EmailController extends Controller
     public function recursoPdf($id)
     {
         $recurso = Recurso::findOrFail($id);
-        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        // $imagen = public_path('imagenes\sistema\logo_mgl.png.png');
+        $imagen = asset('imagenes/sistema/logo_mgl.png.png'); //url_servidor
         $fecha = date('Y-m-d H:i:s');
         $num_radicado = $recurso->radicado;
         if ($recurso->persona_id != null) {
