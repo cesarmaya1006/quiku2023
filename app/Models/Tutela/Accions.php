@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class AutoAdmisorio extends Model
+class Accions extends Model
 {
     use HasFactory, Notifiable;
-    protected $table = 'auto_admisorio';
+    protected $table = 'accionante_accionado';
     protected $guarded = [];
 }

@@ -69,6 +69,7 @@ Route::get('/cargar_sedes', [ExtranetPageController::class, 'cargar_sedes'])->na
 Route::get('/registro_final_pn', [ExtranetPageController::class, 'registro_final_pn'])->name('registro_final_pn');
 Route::get('/pruebamail', [ExtranetPageController::class, 'pruebamail'])->name('pruebamail');
 
+
 //---------------------------------------------------------------------------------
 Route::group(['middleware' => 'auth'], function () {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -333,9 +334,19 @@ Route::group(['middleware' => 'auth'], function () {
     });
     //==================================================================================================================
     Route::group(['prefix' => 'funcionario'], function () {
-        
-        Route::post('crear_auto_admisorio', [TutelaController::class, 'crear_auto_admisorio'])->name('crear_auto_admisorio');//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Route::get('auto_admisorio_complemento', [TutelaController::class, 'auto_admisorio_complemento'])->name('auto_admisorio_complemento');//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        Route::get('/cargar_nombre_despachos', [TutelaController::class, 'cargar_nombre_despachos'])->name('cargar_nombre_despachos');
+        Route::get('/cargar_ubicacion_despachos', [TutelaController::class, 'cargar_ubicacion_despachos'])->name('cargar_ubicacion_despachos');
+        Route::post('crear_auto_admisorio', [TutelaController::class, 'crear_auto_admisorio'])->name('crear_auto_admisorio');
+        Route::post('update_auto_admisorio', [TutelaController::class, 'update_auto_admisorio'])->name('update_auto_admisorio');
+        Route::post('crear_accion', [TutelaController::class, 'crear_accion'])->name('crear_accion');
+        Route::post('crear_motivos_tutela', [TutelaController::class, 'crear_motivos_tutela'])->name('crear_motivos_tutela');
+        Route::post('crear_anexo_tutela', [TutelaController::class, 'crear_anexo_tutela'])->name('crear_anexo_tutela');
+        Route::get('auto_admisorio_complemento/{id}', [TutelaController::class, 'auto_admisorio_complemento'])->name('auto_admisorio_complemento');
+        Route::post('crear_hechos_tutela', [TutelaController::class, 'crear_hechos_tutela'])->name('crear_hechos_tutela');
+        Route::post('crear_pretensiones_tutela', [TutelaController::class, 'crear_pretensiones_tutela'])->name('crear_pretensiones_tutela');
+        Route::post('crear_argumentos_tutela', [TutelaController::class, 'crear_argumentos_tutela'])->name('crear_argumentos_tutela');
+        Route::post('crear_pruebas_tutela', [TutelaController::class, 'crear_pruebas_tutela'])->name('crear_pruebas_tutela');
         // Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
         //Wiku
         Route::get('wiku-index', [WikuController::class, 'indexWiku'])->name('wiku_funcionario-index');

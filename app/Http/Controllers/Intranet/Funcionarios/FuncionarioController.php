@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Intranet\Funcionarios;
 
 use App\Models\PQR\PQR;
 use App\Models\Admin\Pais;
+use App\Models\PQR\Peticion;
 use Illuminate\Http\Request;
 use App\Models\Admin\Usuario;
 use App\Models\PQR\Prioridad;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Personas\Persona;
+use App\Models\Tutela\Despachos;
 use App\Models\Admin\Departamento;
 use App\Models\Empleados\Empleado;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidarRegistroAsistido;
 use App\Models\PQR\AsignacionEstado;
-use App\Models\PQR\Peticion;
+use App\Http\Requests\ValidarRegistroAsistido;
 
 class FuncionarioController extends Controller
 {

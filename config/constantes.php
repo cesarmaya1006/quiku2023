@@ -21,4 +21,10 @@ return [
     "folder_doc_tareas" => public_path() . '/documentos/tareas/ ',
     //--------------------------------------------------------------------------------
     "folder_img_usuarios" => public_path() . '/documentos/usuarios/ ',
+    //--------------------------------------------------------------------------------
+    "folder_auto_admisorios" => public_path() . '/documentos/autoadmisorios/ ',
+    //--------------------------------------------------------------------------------
+    "folder_tutelas" => public_path() . '/documentos/tutelas/ ',
+    //--------------------------------------------------------------------------------
+    "folder_tutelas_pruebas" => public_path() . '/documentos/tutelaspruebas/ ',
 ];

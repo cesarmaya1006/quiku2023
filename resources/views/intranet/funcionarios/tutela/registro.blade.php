@@ -45,34 +45,31 @@
                                             <div class="col-12 col-md-6 form-group"><label class="requerido" for="">Radicado</label>
                                                 <input class="form-control radicado" type="text" required>
                                             </div>
-                                            <div class="col-12 col-md-6 form-group" id="cajajurisdiccion_id">
+                                            <div class="col-12 col-md-6 form-group cajajurisdiccion">
                                                 <label class="requerido" for="">Jurisdiccion</label>
-                                                <select id="jurisdiccion_id" class="custom-select rounded-0 jurisdiccion_id">
+                                                <select class="custom-select rounded-0 jurisdiccion" data_url="{{ route('cargar_nombre_despachos') }}">
                                                     <option value="">--Seleccione--</option>
+                                                    <option value="CONSEJO SUPERIOR DE LA JUDICATURA">CONSEJO SUPERIOR DE LA JUDICATURA</option>
+                                                    <option value="CONSTITUCIONAL">CONSTITUCIONAL</option>
+                                                    <option value="CONTENCIOSO ADMINISTRATIVO">CONTENCIOSO ADMINISTRATIVO</option>
+                                                    <option value="DISCIPLINARIA">DISCIPLINARIA</option>
+                                                    <option value="ORDINARIA">ORDINARIA</option>
                                                 </select>
                                             </div>
-                                            <div class="col-12 col-md-6 form-group" id="cajajuzgado_id">
+                                            <div class="col-12 col-md-6 form-group cajajuzgado">
                                                 <label class="requerido" for="">Juzgado</label>
-                                                <select id="juzgado_id" class="custom-select rounded-0 juzgado_id">
+                                                <select class="custom-select rounded-0 juzgado" data_url="{{ route('cargar_ubicacion_despachos') }}">
                                                     <option value="">--Seleccione--</option>
                                                 </select>
                                             </div> 
-                                            <div class="col-12 col-md-6 form-group" id="cajadepartamento"><label class="requerido"
-                                                    for="">Departamento</label>
-                                                <select class="custom-select rounded-0 departamentos departamento_id" id="departamentos"
-                                                    data_url="{{ route('cargar_municipios') }}">
+                                            <div class="col-12 col-md-6 form-group cajadepartamento"><label class="requerido" for="">Departamento</label>
+                                                <select class="custom-select rounded-0 departamento">
                                                     <option value="">--Seleccione--</option>
-                                                    @foreach ($departamentos as $departamento)
-                                                        <option value="{{ $departamento->id }}">
-                                                            {{ $departamento->departamento }}
-                                                        </option>
-                                                    @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-12 col-md-6 form-group" id="cajamunicipio_id"><label class="requerido"
+                                            <div class="col-12 col-md-6 form-group cajamunicipio"><label class="requerido"
                                                     for="">Municipio</label>
-                                                <select class="custom-select rounded-0 municipio_id" data_url="{{ route('cargar_sedes') }}"
-                                                    id="municipio_id">
+                                                <select class="custom-select rounded-0 municipio">
                                                     <option value="">--Seleccione--</option>
                                                 </select>
                                             </div>
@@ -96,7 +93,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <label class="requerido" for="nombreApellido_juez">Nombre y apellido</label>
-                                                <input type="text" class="form-control lcapital nombreApellido_juez" id="nombreApellido_juez"
+                                                <input type="text" class="form-control lcapital nombreApellido_juez"
                                                     placeholder="Nombre y apellido" name="nombreApellido_juez" required>
                                             </div>
                                             <div class="form-group col-md-6">
@@ -107,18 +104,18 @@
                                                                 aria-hidden="true" data-bs-toggle="modal"
                                                                 data-bs-target="#staticBackdrop"></i></button>
                                                     </div>
-                                                    <input type="text" class="form-control readonly direccion_juez" id="direccion_juez"
+                                                    <input type="text" class="form-control readonly direccion_juez"
                                                         placeholder="Dirección" required>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="requerido" for="telefono_fijo_juez">Teléfono Juzgado</label>
-                                                <input type="text" class="form-control telefono_fijo_juez" id="telefono_fijo_juez"
+                                                <input type="text" class="form-control telefono_fijo_juez"
                                                     placeholder="Teléfono fijo">
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label class="requerido" for="email_juez">Correo electrónico</label>
-                                                <input type="email" class="form-control email_juez" id="email_juez" placeholder="Correo electrónico" required>
+                                                <input type="email" class="form-control email_juez" placeholder="Correo electrónico" required>
                                             </div>
                                         </div>
                                     </div>
@@ -136,30 +133,27 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label class="requerido" for="">Días</label>
-                                                <input type="number" class="form-control cantidad_dias" id="cantidad_dias" required>
+                                                <input type="number" class="form-control cantidad_dias" required>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="requerido" for="">Horas</label>
-                                                <input type="time" class="form-control cantidad_horas" id="cantidad_horas" required>
+                                                <input type="time" class="form-control cantidad_horas" required>
                                             </div>
-                                            <div class="col-12 d-flex row anexo">
+                                            <div class="col-12 d-flex row bolque-anexo-admisorio">
                                                 <div class="col-12 titulo-anexo d-flex justify-content-between">
                                                     <h6>Cargar auto admisorio</h6>
                                                 </div>
-                                                <div class="col-12 col-md-4 form-group titulo-anexo">
+                                                <div class="col-12 col-md-4 form-group titulo-anexo-admisorio">
                                                     <label for="titulo">Título archivo</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="titulo">
+                                                    <input type="text" class="form-control form-control-sm">
                                                 </div>
-                                                <div class="col-12 col-md-4 form-group descripcion-anexo">
+                                                <div class="col-12 col-md-4 form-group descripcion-anexo-admisorio">
                                                     <label for="descripcion">Descripción archivo</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="descripcion">
+                                                    <input type="text" class="form-control form-control-sm">
                                                 </div>
-                                                <div class="col-12 col-md-4 form-group doc-anexo">
+                                                <div class="col-12 col-md-4 form-group archivo-admisorio">
                                                     <label for="documentos">Archivo</label>
-                                                    <input class="form-control form-control-sm" type="file"
-                                                        id="documentos">
+                                                    <input class="form-control form-control-sm" type="file">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 d-flex flex-row mt-3">
@@ -224,8 +218,8 @@
                                                             <select class="form-control form-control-sm tipo_rol_accion"
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
-                                                                <option value="1">Accionante</option>
-                                                                <option value="2">Accionado</option>
+                                                                <option value="Accionante">Accionante</option>
+                                                                <option value="Accionado">Accionado</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-6 mt-3">
@@ -233,8 +227,8 @@
                                                             <select class="form-control form-control-sm tipo_persona_accion"
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
-                                                                <option value="1">Persona Jurídica</option>
-                                                                <option value="2">Persona natural</option>
+                                                                <option value="Persona natura">Persona natural</option>
+                                                                <option value="Persona Jurídica">Persona Jurídica</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-6 mt-3">
@@ -263,7 +257,7 @@
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label class="" for="email_accion">Correo electrónico</label>
-                                                            <input type="email" class="form-control email_accion" id="email_accion" placeholder="Correo electrónico" required>
+                                                            <input type="email" class="form-control correo_accion" placeholder="Correo electrónico" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label class="" for="direccion_accion">Dirección</label>
@@ -273,19 +267,19 @@
                                                                             aria-hidden="true" data-bs-toggle="modal"
                                                                             data-bs-target="#staticBackdrop"></i></button>
                                                                 </div>
-                                                                <input type="text" class="form-control readonly direccion_accion" id="direccion_accion"
+                                                                <input type="text" class="form-control readonly direccion_accion"
                                                                     placeholder="Dirección" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label class ="" for="telefono_accion">Teléfono</label>
-                                                            <input type="text" class="form-control telefono_accion" id="telefono_accion"
+                                                            <input type="text" class="form-control telefono_accion"
                                                                 placeholder="Teléfono">
                                                         </div>
                                                         <h6 class="font-weight-bold my-3">Datos apoderado</h6>
                                                         <div class="form-group col-md-12">
                                                             <label class="" for="nombreApellido_apoderado">Nombre y apellido</label>
-                                                            <input type="text" class="form-control lcapital nombreApellido_apoderado" id="nombreApellido_apoderado"
+                                                            <input type="text" class="form-control lcapital nombreApellido_apoderado"
                                                                 placeholder="Nombre y apellido" name="nombreApellido_apoderado" required>
                                                         </div>
                                                         <div class="form-group col-md-6 mt-3">
@@ -311,7 +305,7 @@
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label class="" for="email_apoderado">Correo electrónico</label>
-                                                            <input type="email" class="form-control email_apoderado" id="email_apoderado" placeholder="Correo electrónico" required>
+                                                            <input type="email" class="form-control correo_apoderado" placeholder="Correo electrónico" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label class="" for="direccion_apoderado">Dirección</label>
@@ -321,13 +315,13 @@
                                                                             aria-hidden="true" data-bs-toggle="modal"
                                                                             data-bs-target="#staticBackdrop"></i></button>
                                                                 </div>
-                                                                <input type="text" class="form-control readonly direccion_apoderado" id="direccion_apoderado"
+                                                                <input type="text" class="form-control readonly direccion_apoderado"
                                                                     placeholder="Dirección" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="telefono_apoderado">Teléfono</label>
-                                                            <input type="text" class="form-control telefono_apoderado" id="telefono_apoderado"
+                                                            <input type="text" class="form-control telefono_apoderado"
                                                                 placeholder="Teléfono">
                                                         </div>
                                                         <hr>
@@ -342,7 +336,67 @@
                                 </div>
                                 <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
                                     <div class="card-header">
-                                        <h3 class="card-title font-weight-bold">Tutela</h3>
+                                        <h3 class="card-title font-weight-bold">Tutela - Motivos</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="display: none;">
+                                        <div class="form-row">                                            
+                                            <div class="col-12 d-flex row motivos">
+                                                <div class="col-12 bloque_motivos">
+                                                    <div class="col-12 d-flex row contenido_motivo">
+                                                        <div class="col-12 d-flex justify-content-between">
+                                                            <h6></h6>
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_motivo"><i
+                                                                    class="fas fa-minus-circle"></i></button>
+                                                        </div>
+                                                        <div class="form-group col-12 col-md-6">
+                                                            <div class="col-12 d-flex justify-content-between">
+                                                                <label class="requerido" for="">Motivo</label>
+                                                            </div>
+                                                            <select class="custom-select rounded-0 motivo_tutela">
+                                                                <option value="">--Seleccione--</option>
+                                                                <option value="Motivo 1">Motivo 1</option>
+                                                                <option value="Motivo 2">Motivo 2</option>
+                                                                <option value="Motivo 3">Motivo 3</option>
+                                                                <option value="Motivo 4">Motivo 4</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-12 col-md-6">
+                                                            <label for="motivo_sub_tutela">Sub - Motivo</label>
+                                                            <select class="custom-select rounded-0 motivo_sub_tutela">
+                                                                <option value="">--Seleccione--</option>
+                                                                <option value="Sub 1">Sub 1</option>
+                                                                <option value="Sub 2">Sub 2</option>
+                                                                <option value="Sub 3">Sub 3</option>
+                                                                <option value="Sub 4">Sub 4</option>
+                                                            </select>
+                                                        </div>  
+                                                        <div class="col-12 col-md-6 form-group">
+                                                            <label for="tipo_tutela">¿Su Tutela es sobre un producto o servicio?</label>
+                                                            <select class="custom-select rounded-0 tipo_tutela" required>
+                                                                <option value="">--Seleccione--</option>
+                                                                <option value="Producto">Producto</option>
+                                                                <option value="Servicio">Servicio</option>
+                                                            </select>
+                                                        </div> 
+                                                        <hr>                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-end flex-row mb-3">
+                                                <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearMotivo"><i class="fa fa-plus-circle mr-2 crearMotivo" aria-hidden="true"></i> Añadir otro Motivo</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Tutela - Anexos</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-plus"></i>
@@ -351,58 +405,38 @@
                                     </div>
                                     <div class="card-body" style="display: none;">
                                         <div class="form-row">
-                                            <div class="form-group col-12 col-md-6">
-                                                <div class="col-12 d-flex justify-content-between">
-                                                    <label class="requerido" for="">Motivo</label>
-                                                </div>
-                                                <select id="motivo_id" class="custom-select rounded-0 motivo_id">
-                                                    <option value="">--Seleccione--</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-12 col-md-6">
-                                                <label for="motivo_sub_id">Sub - Motivo</label>
-                                                <select name="motivo_sub_id"
-                                                    class="custom-select rounded-0 motivo_sub_id">
-                                                    <option value="">--Seleccione--</option>
-                                                </select>
-                                            </div>  
-                                            <div class="col-12 col-md-6 form-group">
-                                                <label for="tipo">¿Su Tutela es sobre un producto o servicio?</label>
-                                                <select name="tipo" id="tipo" class="custom-select rounded-0" required>
-                                                    <option value="Producto">Producto</option>
-                                                    <option value="Servicio">Servicio</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-12 d-flex row anexo">
-                                                <div class="col-12 titulo-anexo d-flex justify-content-between">
-                                                    <h6>Cargar tutela</h6>
-                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_accion"><i class="fas fa-minus-circle"></i></button>
-                                                </div>
-                                                <div class="col-12 col-md-4 form-group titulo-anexo">
-                                                    <label for="titulo">Título archivo</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="titulo">
-                                                </div>
-                                                <div class="col-12 col-md-4 form-group descripcion-anexo">
-                                                    <label for="descripcion">Descripción archivo</label>
-                                                    <input type="text" class="form-control form-control-sm"
-                                                        id="descripcion">
-                                                </div>
-                                                <div class="col-12 col-md-4 form-group doc-anexo">
-                                                    <label for="documentos">Archivo</label>
-                                                    <input class="form-control form-control-sm" type="file"
-                                                        id="documentos">
+                                            <div class="col-12 d-flex row anexos">
+                                                <div class="col-12 bloque_anexos">
+                                                    <div class="col-12 d-flex row contenido_anexo">
+                                                        <div class="col-12 d-flex justify-content-between">
+                                                            <h6>Anexo</h6>
+                                                            <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_anexo"><i class="fas fa-minus-circle"></i></button>
+                                                        </div>
+                                                        <div class="col-12 col-md-4 form-group titulo-anexo">
+                                                            <label for="titulo">Título archivo</label>
+                                                            <input type="text" class="form-control form-control-sm">
+                                                        </div>
+                                                        <div class="col-12 col-md-4 form-group descripcion-anexo">
+                                                            <label for="descripcion">Descripción archivo</label>
+                                                            <input type="text" class="form-control form-control-sm">
+                                                        </div>
+                                                        <div class="col-12 col-md-4 form-group anexo">
+                                                            <label for="documentos">Archivo</label>
+                                                            <input class="form-control form-control-sm" type="file">
+                                                        </div>
+                                                    </div>
+                                                    <hr>
                                                 </div>
                                             </div>
                                             <div class="col-12 d-flex justify-content-end flex-row mb-3">
-                                                <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAccion"><i class="fa fa-plus-circle mr-2 crearAccion" aria-hidden="true"></i> Añadir otro archivo</button>
+                                                <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"><i class="fa fa-plus-circle mr-2 crearAnexo" aria-hidden="true"></i> Añadir otro anexo</button>
                                             </div>                          
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-2 mb-3 pl-4 d-flex justify-content-end">
-                                <button type="button" class="btn btn-primary pl-5 pr-5 btn-auto-admisorio" data_url="{{ route('crear_auto_admisorio') }}" data_url2="{{ route('crear_auto_admisorio') }}" data_token="{{ csrf_token() }}" >Crear</button>
+                                <button type="button" class="btn btn-primary pl-5 pr-5 btn-auto-admisorio" data_url="{{ route('crear_auto_admisorio') }}" data_url1="{{ route('update_auto_admisorio') }}" data_url2="{{ route('crear_accion') }}" data_url3="{{ route('crear_motivos_tutela') }}"  data_url4="{{ route('crear_anexo_tutela') }}" data_token="{{ csrf_token() }}" >Crear</button>
                             </div>
                         </div>
                     </div>
