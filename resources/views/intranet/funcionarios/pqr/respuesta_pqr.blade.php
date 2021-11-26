@@ -148,6 +148,7 @@
                 $aprueba = $pqr->asignaciontareas->where('tareas_id', 4)[3];
             @endphp
             @if($firma && $firma != '') 
+                {{ $firma }}
                 <img src="{{ $firma }}" class="firma" style="line-height: 0.5px;" alt="firma">
             @else
                 <p style="font-style: italic;">* Espacio para estanpar firma electrónica</p>
