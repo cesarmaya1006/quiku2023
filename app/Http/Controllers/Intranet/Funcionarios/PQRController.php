@@ -701,7 +701,7 @@ class PQRController extends Controller
                     // $imagen = public_path('imagenes\sistema\logo_mgl.png');
                     // $firma = public_path('documentos\usuarios\\' . $pqr->empleado->url);
                     $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
-                    $firma = asset('documentos\usuarios\\' . $pqr->empleado->url); //url_servidor
+                    $firma = asset('documentos/usuarios/' . $pqr->empleado->url); //url_servidor
                     if($tipo_respuesta == 1 || $tipo_respuesta == 2 || $tipo_respuesta == 3 ){
                         $resuelves = ResuelveRecurso::where('pqr_id', $request["idPqr"])->where('tipo_reposicion_id', $tipo_respuesta)->orderBy('orden')->get();
                         $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr_recurso', compact('pqr', 'imagen', 'resuelves', 'firma', 'tipo_respuesta'));
