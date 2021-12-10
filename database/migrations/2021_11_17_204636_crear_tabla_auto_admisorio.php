@@ -22,16 +22,13 @@ class CrearTablaAutoAdmisorio extends Migration
             $table->foreign('empleado_asignado_id', 'fk_empleado_asignado_tutela')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('prioridad_id')->default(2)->nullable();
             $table->foreign('prioridad_id', 'fk_prioridades_tutelas')->references('id')->on('prioridades')->onDelete('restrict')->onUpdate('restrict');
-            $table->timestamp('fecha_generacion')->nullable();
-            $table->date('fecha_radicado')->nullable();
+            $table->timestamp('fecha_radicado')->nullable();
             // Primer Bloque
             $table->text('radicado', 255)->nullable();
             $table->text('jurisdiccion', 255)->nullable();
             $table->text('juzgado', 255)->nullable();
             $table->string('departamento', 255)->nullable();
             $table->string('municipio', 255)->nullable();
-            // $table->unsignedBigInteger('municipio_id')->nullable();
-            // $table->foreign('municipio_id', 'fk_municipios_admisorio')->references('id')->on('municipio')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha_notificacion')->nullable();
             // Segundo Bloque
             $table->string('nombre_juez', 255)->nullable();
@@ -50,13 +47,11 @@ class CrearTablaAutoAdmisorio extends Migration
             $table->text('text_medida_cautelar')->nullable();
             $table->bigInteger('dias_medida_cautelar')->default(0)->nullable();
             $table->text('horas_medida_cautelar', 255)->nullable();
-
             //Bloque estados    
             $table->bigInteger('tiempo_limite')->default(0);
-            // $table->unsignedBigInteger('porcentaje_id')->default(0)->nullable();
-            // $table->foreign('porcentaje_id', 'fk_porcentaje_tutela')->references('id')->on('asignancion_estados')->onDelete('restrict')->onUpdate('restrict');
-            // $table->unsignedBigInteger('estadostutela_id')->nullable();
-            // $table->foreign('estadostutela_id', 'fk_estados_tutela')->references('id')->on('estadospqr')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('estadostutela_id')->nullable();
+            $table->foreign('estadostutela_id', 'fk_estados_tutela')->references('id')->on('estadostutela')->onDelete('restrict')->onUpdate('restrict');
+            $table->boolean('estado_asignacion')->default(0)->nullable();
             $table->boolean('estado_creacion')->default(0)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';

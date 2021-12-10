@@ -154,10 +154,70 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Tutela - Motivos</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="display: none;">
+                                        <div class="form-row">                                            
+                                            <div class="col-12 d-flex row motivos">
+                                                <div class="col-12 bloque_motivos">
+                                                    <div class="col-12 d-flex row contenido_motivo">
+                                                        <div class="col-12 d-flex justify-content-between">
+                                                            <h6></h6>
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_motivo"><i
+                                                                    class="fas fa-minus-circle"></i></button>
+                                                        </div>
+                                                        <div class="form-group col-12 col-md-6">
+                                                            <div class="col-12 d-flex justify-content-between">
+                                                                <label class="requerido" for="">Motivo</label>
+                                                            </div>
+                                                            <select class="custom-select rounded-0 motivo_tutela">
+                                                                <option value="">--Seleccione--</option>
+                                                                <option value="Motivo 1">Motivo 1</option>
+                                                                <option value="Motivo 2">Motivo 2</option>
+                                                                <option value="Motivo 3">Motivo 3</option>
+                                                                <option value="Motivo 4">Motivo 4</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-12 col-md-6">
+                                                            <label for="motivo_sub_tutela">Sub - Motivo</label>
+                                                            <select class="custom-select rounded-0 motivo_sub_tutela">
+                                                                <option value="">--Seleccione--</option>
+                                                                <option value="Sub 1">Sub 1</option>
+                                                                <option value="Sub 2">Sub 2</option>
+                                                                <option value="Sub 3">Sub 3</option>
+                                                                <option value="Sub 4">Sub 4</option>
+                                                            </select>
+                                                        </div>  
+                                                        <div class="col-12 col-md-6 form-group">
+                                                            <label for="tipo_tutela">¿Su Tutela es sobre un producto o servicio?</label>
+                                                            <select class="custom-select rounded-0 tipo_tutela" required>
+                                                                <option value="">--Seleccione--</option>
+                                                                <option value="Producto">Producto</option>
+                                                                <option value="Servicio">Servicio</option>
+                                                            </select>
+                                                        </div> 
+                                                        <hr>                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 d-flex justify-content-end flex-row mb-3">
+                                                <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearMotivo"><i class="fa fa-plus-circle mr-2 crearMotivo" aria-hidden="true"></i> Añadir otro Motivo</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mt-3 mb-3 pl-4 d-flex justify-content-end">
                                 <input class="auto_admisorio_id" type="hidden" value="{{ $id }}">
-                                <button type="button" class="btn btn-primary pl-5 pr-5 btn-complemento-tutela" data_url="{{ route('crear_hechos_tutela') }}" data_url1="{{ route('crear_pretensiones_tutela') }}" data_url2="{{ route('crear_argumentos_tutela') }}" data_url3="{{ route('crear_pruebas_tutela') }}" data_token="{{ csrf_token() }}" >Guardar</button>
+                                <button type="button" class="btn btn-primary pl-5 pr-5 btn-complemento-tutela" data_url="{{ route('crear_hechos_tutela') }}" data_url1="{{ route('crear_pretensiones_tutela') }}" data_url2="{{ route('crear_argumentos_tutela') }}" data_url3="{{ route('crear_pruebas_tutela') }}" data_url4="{{ route('crear_motivos_tutela') }}" data_url5="{{ route('update_tutela') }}"  data_token="{{ csrf_token() }}" >Guardar</button>
                             </div>
                         </div>
                     </div>

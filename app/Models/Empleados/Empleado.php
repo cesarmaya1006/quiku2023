@@ -15,6 +15,14 @@ use App\Models\PQR\HistorialTarea;
 use App\Models\PQR\HistorialPeticion;
 use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\ResuelveRecurso;
+use App\Models\Tutela\AutoAdmisorio;
+use App\Models\Tutela\HechosTutela;
+use App\Models\Tutela\HistorialHecho;
+use App\Models\Tutela\HistorialPretension;
+use App\Models\Tutela\HistorialTareas;
+use App\Models\Tutela\PretensionesTutela;
+use App\Models\Tutela\ResuelveTutela;
+use App\Models\Tutela\TutelaRespuesta;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -60,6 +68,11 @@ class Empleado extends Model
         return $this->hasMany(HistorialTarea::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function historialTareasTutela()
+    {
+        return $this->hasMany(HistorialTareas::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     public function historialpeticiones()
     {
         return $this->hasMany(HistorialPeticion::class, 'empleado_id', 'id');
@@ -85,9 +98,49 @@ class Empleado extends Model
         return $this->hasMany(Resuelve::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function resuelvesTutela()
+    {
+        return $this->hasMany(ResuelveTutela::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     public function resuelvesrecurso()
     {
         return $this->hasMany(ResuelveRecurso::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function tutelaregistro()
+    {
+        return $this->hasMany(AutoAdmisorio::class, 'empleado_rigistro_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function tutelaasignacion()
+    {
+        return $this->hasMany(AutoAdmisorio::class, 'empleado_asignado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function respuestasTutela()
+    {
+        return $this->hasMany(TutelaRespuesta::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function hechosTutela()
+    {
+        return $this->hasMany(HechosTutela::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function pretensionesTutela()
+    {
+        return $this->hasMany(PretensionesTutela::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function historialHechosTutela()
+    {
+        return $this->hasMany(HistorialHecho::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function historialPretensionesTutela()
+    {
+        return $this->hasMany(HistorialPretension::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

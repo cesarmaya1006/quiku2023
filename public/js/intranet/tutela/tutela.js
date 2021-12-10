@@ -48,43 +48,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     // Fin Función para generar varios accions.
     // ---------------------------------------------------------------------------------------------------------
-    // Inicio Función para generar varias tutelas.
-    let btncrearMotivo = document.querySelector('.crearMotivo')
-    btncrearMotivo.addEventListener('click', crearNuevoMotivo)
-    let btnEliminarMotivos = document.querySelectorAll('.eliminar_contenido_motivo')
-    btnEliminarMotivos.forEach(btn => {
-        btn.addEventListener('click', agregarEliminarMotivo)
-    })
-
-    function crearNuevoMotivo(e) {
-        e.preventDefault()
-        let containerMotivo = e.target.parentNode.parentNode
-        let nuevoMotivo = containerMotivo.querySelectorAll('.contenido_motivo')[0].cloneNode(true)
-        containerMotivo.querySelector('.bloque_motivos').appendChild(nuevoMotivo)
-        document.querySelectorAll('.eliminar_contenido_motivo').forEach(item => item.addEventListener('click', agregarEliminarMotivo))
-    }
-
-    function agregarEliminarMotivo(e) {
-        e.preventDefault()
-        let bloqueMotivo = e.target
-        if (bloqueMotivo.tagName === 'I') {
-            bloqueMotivo = bloqueMotivo.parentNode.parentNode.parentNode
-        }else {
-            bloqueMotivo = bloqueMotivo.parentNode.parentNode
-        }
-        if (document.querySelectorAll('.contenido_motivo').length >= 2) {
-            let idMotivo = e.target
-            if (idMotivo.tagName === 'I') {
-                idMotivo = idMotivo.parentNode.parentNode.parentNode
-            } else {
-                idMotivo = idMotivo.parentNode.parentNode
-            }
-            idMotivo.remove()
-        }
-    }
-    // Fin Función para generar varias tutelas.
-    // ---------------------------------------------------------------------------------------------------------
-    // Inicio Función para generar varios anexos tutelas.
+      // Inicio Función para generar varios anexos tutelas.
     let btncrearAnexo = document.querySelector('.crearAnexo')
     btncrearAnexo.addEventListener('click', crearNuevoAnexo)
     let btnEliminarAnexos = document.querySelectorAll('.eliminar_contenido_anexo')
@@ -133,7 +97,6 @@ window.addEventListener('DOMContentLoaded', function () {
             let url1 = e.target.getAttribute('data_url1')
             let url2 = e.target.getAttribute('data_url2')
             let url3 = e.target.getAttribute('data_url3')
-            let url4 = e.target.getAttribute('data_url4')
             let token = e.target.getAttribute('data_token')
             let radicado = contenedorPadre.querySelector('.radicado').value
             let departamento = contenedorPadre.querySelector('.departamento').value
@@ -189,7 +152,6 @@ window.addEventListener('DOMContentLoaded', function () {
                         cargarArchivoAdmisorio(dataAnexo)
                     }
                     crearAccion(respuesta.data.id)
-                    crearMotivo(respuesta.data.id)
                     crearAnexo(respuesta.data.id)
                     window.location = `/funcionario/auto_admisorio_complemento/${respuesta.data.id}`
                 },
@@ -272,34 +234,6 @@ window.addEventListener('DOMContentLoaded', function () {
                 })
             }
 
-            function crearMotivo(id){
-                let motivos = contenedorPadre.querySelectorAll('.contenido_motivo')
-                motivos.forEach(motivo => {
-                    let motivo_tutela = motivo.querySelector('.motivo_tutela').value
-                    let sub_motivo_tutela = motivo.querySelector('.motivo_sub_tutela').value
-                    let tipo_tutela = motivo.querySelector('.tipo_tutela').value
-    
-                    let data = {
-                        motivo_tutela,
-                        sub_motivo_tutela,
-                        tipo_tutela,
-                        id
-    
-                    }
-                    $.ajax({
-                        url: url3,
-                        type: 'POST',
-                        headers: { 'X-CSRF-TOKEN': token },
-                        data: data,
-                        success: function(respuesta) {
-                            // console.log(respuesta)
-                        },
-                        error: function(error) {
-                            console.log(error.responseJSON)
-                        }
-                    });
-                })
-            }
             function crearAnexo(id){
                 let anexos = contenedorPadre.querySelectorAll('.contenido_anexo')
                 anexos.forEach(anexo => {
@@ -315,7 +249,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     if(archivo_anexo){
                         $.ajax({
                             async:false,
-                            url: url4,
+                            url: url3,
                             type: 'POST',
                             headers: { 'X-CSRF-TOKEN': token },
                             data: dataAnexo,
@@ -331,8 +265,6 @@ window.addEventListener('DOMContentLoaded', function () {
                     }
                 })
             }
-            
-
         })
     }
     //Fin guardar auto admisorio  

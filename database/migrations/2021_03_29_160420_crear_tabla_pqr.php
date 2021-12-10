@@ -43,8 +43,8 @@ class CrearTablaPqr extends Migration
             $table->date('fecha_radicado')->nullable();
             $table->date('fecha_respuesta')->nullable();
             $table->bigInteger('tiempo_limite')->default(0);
-            $table->unsignedBigInteger('estadospqr_id')->nullable();
             $table->boolean('estado_asignacion')->default(0)->nullable();
+            $table->unsignedBigInteger('estadospqr_id')->nullable();
             $table->foreign('estadospqr_id', 'fk_estadospqr_pqr')->references('id')->on('estadospqr')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('estado_creacion')->default(0)->nullable();
             $table->boolean('recurso_aclaracion')->default(0);

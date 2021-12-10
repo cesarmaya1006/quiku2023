@@ -149,114 +149,199 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     // Fin Función para generar varios anexos pruebas.
     // --------------------------------------------------------------------------------------------------------------------
- // Inicio guardar auto admisorio  
- if(document.querySelector('.btn-complemento-tutela')){
-    let btnGuardarComplemento = document.querySelector('.btn-complemento-tutela')
-    btnGuardarComplemento.addEventListener('click', function(e){
-        e.preventDefault
-        let contenedorPadre = document.querySelector('.form_auto_admisorio_complemento')
-        let url = e.target.getAttribute('data_url')
-        let url1 = e.target.getAttribute('data_url1')
-        let url2 = e.target.getAttribute('data_url2')
-        let url3 = e.target.getAttribute('data_url3')
-        let token = e.target.getAttribute('data_token')
-        let auto_admisorio_id = contenedorPadre.querySelector('.auto_admisorio_id').value
+    // Inicio Función para generar varias tutelas.
+    let btncrearMotivo = document.querySelector('.crearMotivo')
+    btncrearMotivo.addEventListener('click', crearNuevoMotivo)
+    let btnEliminarMotivos = document.querySelectorAll('.eliminar_contenido_motivo')
+    btnEliminarMotivos.forEach(btn => {
+        btn.addEventListener('click', agregarEliminarMotivo)
+    })
 
-        let hechos = contenedorPadre.querySelectorAll('.contenido_hecho')
-        hechos.forEach(item => {
-            let hecho = item.querySelector('.hecho').value
-            let data = {
-                auto_admisorio_id,
-                hecho
-            }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    // console.log(respuesta)
-                },
-                error: function(error) {
-                    console.log(error.responseJSON)
-                }
-            });
-        })
+    function crearNuevoMotivo(e) {
+        e.preventDefault()
+        let containerMotivo = e.target.parentNode.parentNode
+        let nuevoMotivo = containerMotivo.querySelectorAll('.contenido_motivo')[0].cloneNode(true)
+        containerMotivo.querySelector('.bloque_motivos').appendChild(nuevoMotivo)
+        document.querySelectorAll('.eliminar_contenido_motivo').forEach(item => item.addEventListener('click', agregarEliminarMotivo))
+    }
 
-        let pretensiones = contenedorPadre.querySelectorAll('.contenido_pretension')
-        pretensiones.forEach(item => {
-            let pretension = item.querySelector('.pretension').value
-            let data = {
-                auto_admisorio_id,
-                pretension
+    function agregarEliminarMotivo(e) {
+        e.preventDefault()
+        let bloqueMotivo = e.target
+        if (bloqueMotivo.tagName === 'I') {
+            bloqueMotivo = bloqueMotivo.parentNode.parentNode.parentNode
+        }else {
+            bloqueMotivo = bloqueMotivo.parentNode.parentNode
+        }
+        if (document.querySelectorAll('.contenido_motivo').length >= 2) {
+            let idMotivo = e.target
+            if (idMotivo.tagName === 'I') {
+                idMotivo = idMotivo.parentNode.parentNode.parentNode
+            } else {
+                idMotivo = idMotivo.parentNode.parentNode
             }
-            $.ajax({
-                url: url1,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    // console.log(respuesta)
-                },
-                error: function(error) {
-                    console.log(error.responseJSON)
-                }
-            });
-        })
-  
-        let argumentos = contenedorPadre.querySelectorAll('.contenido_argumento')
-        argumentos.forEach(item => {
-            let argumento = item.querySelector('.argumento').value
-            let data = {
-                auto_admisorio_id,
-                argumento
-            }
-            $.ajax({
-                url: url2,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    // console.log(respuesta)
-                },
-                error: function(error) {
-                    console.log(error.responseJSON)
-                }
-            });
-        })
+            idMotivo.remove()
+        }
+    }
+    // Fin Función para generar varias tutelas.
+    // ---------------------------------------------------------------------------------------------------------
 
-        let anexos = contenedorPadre.querySelectorAll('.contenido_anexo')
-        anexos.forEach(anexo => {
-            let titulo_anexo = anexo.querySelector('.titulo-anexo input').value
-            let descripcion_anexo = anexo.querySelector('.descripcion-anexo input').value
-            let archivo_anexo = anexo.querySelector('.anexo input').files[0]
-            let dataAnexo = new FormData();
-            dataAnexo.append('titulo', titulo_anexo);
-            dataAnexo.append('descripcion', descripcion_anexo);
-            dataAnexo.append('archivo_anexo', archivo_anexo);
-            dataAnexo.append('id', auto_admisorio_id);
-            dataAnexo.append('_token', token);
-            if(archivo_anexo){
+ 
+ 
+    // Inicio guardar auto admisorio  
+    if(document.querySelector('.btn-complemento-tutela')){
+        let btnGuardarComplemento = document.querySelector('.btn-complemento-tutela')
+        btnGuardarComplemento.addEventListener('click', function(e){
+            e.preventDefault
+            let contenedorPadre = document.querySelector('.form_auto_admisorio_complemento')
+            let url = e.target.getAttribute('data_url')
+            let url1 = e.target.getAttribute('data_url1')
+            let url2 = e.target.getAttribute('data_url2')
+            let url3 = e.target.getAttribute('data_url3')
+            let url4 = e.target.getAttribute('data_url4')
+            let url5 = e.target.getAttribute('data_url5')
+            let token = e.target.getAttribute('data_token')
+            let auto_admisorio_id = contenedorPadre.querySelector('.auto_admisorio_id').value
+
+            let hechos = contenedorPadre.querySelectorAll('.contenido_hecho')
+            hechos.forEach(item => {
+                let hecho = item.querySelector('.hecho').value
+                let data = {
+                    auto_admisorio_id,
+                    hecho
+                }
                 $.ajax({
-                    async:false,
-                    url: url3,
+                    url: url,
                     type: 'POST',
                     headers: { 'X-CSRF-TOKEN': token },
-                    data: dataAnexo,
-                    processData: false, 
-                    contentType: false,
+                    data: data,
                     success: function(respuesta) {
                         // console.log(respuesta)
                     },
                     error: function(error) {
-                        console.log(error)
+                        console.log(error.responseJSON)
                     }
                 });
+            })
+
+            let pretensiones = contenedorPadre.querySelectorAll('.contenido_pretension')
+            pretensiones.forEach(item => {
+                let pretension = item.querySelector('.pretension').value
+                let data = {
+                    auto_admisorio_id,
+                    pretension
+                }
+                $.ajax({
+                    url: url1,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            })
+    
+            let argumentos = contenedorPadre.querySelectorAll('.contenido_argumento')
+            argumentos.forEach(item => {
+                let argumento = item.querySelector('.argumento').value
+                let data = {
+                    auto_admisorio_id,
+                    argumento
+                }
+                $.ajax({
+                    url: url2,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            })
+
+            let anexos = contenedorPadre.querySelectorAll('.contenido_anexo')
+            anexos.forEach(anexo => {
+                let titulo_anexo = anexo.querySelector('.titulo-anexo input').value
+                let descripcion_anexo = anexo.querySelector('.descripcion-anexo input').value
+                let archivo_anexo = anexo.querySelector('.anexo input').files[0]
+                let dataAnexo = new FormData();
+                dataAnexo.append('titulo', titulo_anexo);
+                dataAnexo.append('descripcion', descripcion_anexo);
+                dataAnexo.append('archivo_anexo', archivo_anexo);
+                dataAnexo.append('id', auto_admisorio_id);
+                dataAnexo.append('_token', token);
+                if(archivo_anexo){
+                    $.ajax({
+                        async:false,
+                        url: url3,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: dataAnexo,
+                        processData: false, 
+                        contentType: false,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error)
+                        }
+                    });
+                }
+            })
+
+            let motivos = contenedorPadre.querySelectorAll('.contenido_motivo')
+            motivos.forEach(motivo => {
+                let motivo_tutela = motivo.querySelector('.motivo_tutela').value
+                let sub_motivo_tutela = motivo.querySelector('.motivo_sub_tutela').value
+                let tipo_tutela = motivo.querySelector('.tipo_tutela').value
+
+                let data = {
+                    motivo_tutela,
+                    sub_motivo_tutela,
+                    tipo_tutela,
+                    id: auto_admisorio_id
+
+                }
+                $.ajax({
+                    url: url4,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            })
+
+            let data = {
+                id: auto_admisorio_id,
             }
+            $.ajax({
+                url: url5,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    // console.log(respuesta)
+                },
+                error: function(error) {
+                    console.log(error.responseJSON)
+                }
+            });
+
+            window.location = `/admin/gestion/`
         })
-        window.location = `/admin/gestion/`
-    })
-}
-//Fin guardar auto admisorio complemento 
+    }
+    //Fin guardar auto admisorio complemento 
 
 })

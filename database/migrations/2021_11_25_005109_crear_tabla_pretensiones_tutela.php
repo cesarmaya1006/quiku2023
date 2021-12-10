@@ -17,6 +17,10 @@ class CrearTablaPretensionesTutela extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('auto_admisorio_id');
             $table->foreign('auto_admisorio_id', 'fk_auto_admisorio_pretensiones')->references('id')->on('auto_admisorio')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->foreign('empleado_id', 'fk_empleado_pretenciones')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('estado_id')->default(1)->nullable();
+            $table->foreign('estado_id', 'fk_estados_pretenciones_tutela')->references('id')->on('asignacion_estados_tutela')->onDelete('restrict')->onUpdate('restrict'); 
             $table->longText('pretension');
             $table->timestamps();
             $table->charset = 'utf8';

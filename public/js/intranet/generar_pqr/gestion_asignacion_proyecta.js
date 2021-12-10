@@ -131,6 +131,7 @@ window.addEventListener('DOMContentLoaded', function(){
             let token = e.target.getAttribute('data_token')
             let peticion = document.querySelector('#peticion').value
             let funcionario = document.querySelector('#funcionario').value
+            let cargo = document.querySelector('#cargo').value
             if (peticion == '' || cargo == '' || funcionario == '' ) {
                 alert("Debe dilegenciar todos los campos del formulario")
             }else{

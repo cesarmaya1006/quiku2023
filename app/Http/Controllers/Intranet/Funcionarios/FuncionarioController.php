@@ -16,6 +16,10 @@ use App\Models\Empleados\Empleado;
 use App\Http\Controllers\Controller;
 use App\Models\PQR\AsignacionEstado;
 use App\Http\Requests\ValidarRegistroAsistido;
+use App\Models\Tutela\AsignacionTarea;
+use App\Models\Tutela\AutoAdmisorio;
+use App\Models\Tutela\HechosTutela;
+use App\Models\Tutela\PretensionesTutela;
 
 class FuncionarioController extends Controller
 {
@@ -31,6 +35,7 @@ class FuncionarioController extends Controller
         $estados = AsignacionEstado::get();
         return view('intranet.funcionarios.listado_pqr', compact('pqr', 'peticiones', 'estados'));
     }
+
     public function crear_usuario()
     {
         $tipos_docu = Tipo_Docu::get();
@@ -125,6 +130,7 @@ class FuncionarioController extends Controller
         $pqr = PQR::findorFail($id);
         return view('intranet.funcionarios.gestion_asignacion', compact('pqr', 'estados'));
     }
+
     public function gestionar_asignacion_asignador($id)
     {
         $estados = AsignacionEstado::all();
@@ -183,14 +189,32 @@ class FuncionarioController extends Controller
 
     public function listado()
     {
-        return view('intranet.funcionarios.tutela.listado');
+        $tutelas = AutoAdmisorio::where('empleado_rigistro_id', session('id_usuario'))->get();
+        return view('intranet.funcionarios.tutela.listado', compact('tutelas'));
     }
 
     public function gestion()
     {
-        return view('intranet.funcionarios.tutela.gestion');
+        $tutelas = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->get();
+        $sin_aceptar = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->where('estado_asignacion', 0)->get();
+        $aceptadas = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->where('estado_asignacion', 1)->get();
+        $supervisadas = AsignacionTarea::where('tareas_id', 1)->where('estado_id', '<', 11)->get();
+        $proyectadas = AsignacionTarea::where('tareas_id', 2)->where('estado_id', '<', 11)->get();
+        $revisiones = AsignacionTarea::where('tareas_id', 3)->where('estado_id', '<', 11)->get();
+        $aprovadas = AsignacionTarea::where('tareas_id', 4)->where('estado_id', '<', 11)->get();
+        $hechos = HechosTutela::where('empleado_id', session('id_usuario'))->where('estado_id', '!=', 11)->get();
+        $pretensiones = PretensionesTutela::where('empleado_id', session('id_usuario'))->where('estado_id', '!=', 11)->get();
+        return view('intranet.funcionarios.tutela.gestion', compact('tutelas', 'sin_aceptar', 'aceptadas', 'supervisadas', 'proyectadas', 'revisiones', 'aprovadas','hechos', 'pretensiones'));
     }
 
+    public function gestionar_asignacion_tutela($id)
+    {
+        // $estados = AsignacionEstado::all();
+        $tutela = AutoAdmisorio::findorFail($id);
+        // return view('intranet.funcionarios.tutela_tareas.gestion_asignacion', compact('tutela', 'estados'));
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion', compact('tutela'));
+    }
+    // gestionar_asignacion_tutela
 
 
     /**

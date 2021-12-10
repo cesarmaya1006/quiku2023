@@ -24,6 +24,7 @@ use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
 use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
 use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
 use App\Http\Controllers\Intranet\Funcionarios\TutelaController;
+use App\Models\Tutela\TutelaRespuesta;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,8 +86,32 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('index/gestionarAsignacionAprueba/{id}', [FuncionarioController::class, 'gestionar_asignacion_aprueba'])->name('funcionario-gestionar-asignacion-aprueba');
         Route::get('index/gestionarAsignacionRadica/{id}', [FuncionarioController::class, 'gestionar_asignacion_radica'])->name('funcionario-gestionar-asignacion-radica');
         Route::get('registro', [FuncionarioController::class, 'registro'])->name('funcionario-registro');
-        Route::get('listado', [FuncionarioController::class, 'listado'])->name('funcionario-listado');
-        Route::get('gestion', [FuncionarioController::class, 'gestion'])->name('funcionario-gestion');
+        Route::get('listado', [FuncionarioController::class, 'listado'])->name('tutela-listado');
+        Route::get('listado/tutela/{id}', [TutelaController::class, 'vista_tutela'])->name('vista_tutela');
+        Route::get('gestion', [FuncionarioController::class, 'gestion'])->name('tutela-gestion');
+        Route::get('gestionar_asignacion_tutela/{id}', [FuncionarioController::class, 'gestionar_asignacion_tutela'])->name('gestionar_asignacion_tutela');
+        Route::post('historial', [TutelaController::class, 'historial_tutela_guardar'])->name('historial_tutela_guardar');
+        Route::post('asignacion', [TutelaController::class, 'asignacion_tutela_guardar'])->name('asignacion_tutela_guardar');
+        Route::post('historial_tarea_tutela', [TutelaController::class, 'historial_tarea_tutela_guardar'])->name('historial_tarea_tutela_guardar');
+        Route::get('gestionarAsignacionSupervisaTutela/{id}', [TutelaController::class, 'gestionar_asignacion_supervisa_tutela'])->name('gestionar-asignacion-supervisa_tutela');
+        Route::get('gestionarAsignacionProyectaTutela/{id}', [TutelaController::class, 'gestionar_asignacion_proyecta_tutela'])->name('gestionar-asignacion-proyecta_tutela');
+        Route::post('prioridad', [TutelaController::class, 'prioridad_tutela_guardar'])->name('prioridad_tutela_guardar');
+        Route::post('estado_hecho', [TutelaController::class, 'estado_hecho_guardar'])->name('estado_hecho_guardar');
+        Route::post('estado_pretension', [TutelaController::class, 'estado_pretension_guardar'])->name('estado_pretension_guardar');
+        Route::post('asignacion_hecho', [TutelaController::class, 'asignacion_hecho_guardar'])->name('asignacion_hecho_guardar');
+        Route::post('asignacion_pretension', [TutelaController::class, 'asignacion_pretension_guardar'])->name('asignacion_pretension_guardar');
+        Route::post('historial_hecho', [TutelaController::class, 'historial_hecho_guardar'])->name('historial_hecho_guardar');
+        Route::post('historial_pretension', [TutelaController::class, 'historial_pretension_guardar'])->name('historial_pretension_guardar');
+        Route::get('gestionar_tutela/{id}', [TutelaController::class, 'gestionar_tutela'])->name('gestionar_tutela');
+        Route::post('respuesta_hecho', [TutelaController::class, 'respuesta_hecho_guardar'])->name('respuesta_hecho_guardar');
+        Route::post('respuesta_hecho_anexo', [TutelaController::class, 'respuesta_hecho_anexo_guardar'])->name('respuesta_hecho_anexo_guardar');
+        Route::post('respuesta_pretension', [TutelaController::class, 'respuesta_pretension_guardar'])->name('respuesta_pretension_guardar');
+        Route::post('respuesta_pretension_anexo', [TutelaController::class, 'respuesta_pretension_anexo_guardar'])->name('respuesta_pretension_anexo_guardar');
+        Route::post('relacion_respuesta_pretension', [TutelaController::class, 'relacion_respuesta_pretension_guardar'])->name('relacion_respuesta_pretension_guardar');
+        Route::get('respuestaTutela/{id}', [TutelaController::class, 'respuestaTutela'])->name('respuestaTutela');
+        Route::post('historial_resuelve_tutela', [TutelaController::class, 'historial_resuelve_tutela_guardar'])->name('historial_resuelve_tutela_guardar');
+        Route::post('tutela_respuesta_guardar', [TutelaController::class, 'tutela_respuesta_guardar_guardar'])->name('tutela_respuesta_guardar_guardar');
+        Route::post('cambiar_estado_tutela_tareas', [TutelaController::class, 'cambiar_estado_tareas_tutela_guardar'])->name('cambiar_estado_tareas_tutela_guardar');
         // Rutas Index
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'adminSistema'], function () {
@@ -339,6 +364,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/cargar_ubicacion_despachos', [TutelaController::class, 'cargar_ubicacion_despachos'])->name('cargar_ubicacion_despachos');
         Route::post('crear_auto_admisorio', [TutelaController::class, 'crear_auto_admisorio'])->name('crear_auto_admisorio');
         Route::post('update_auto_admisorio', [TutelaController::class, 'update_auto_admisorio'])->name('update_auto_admisorio');
+        Route::post('update_tutela', [TutelaController::class, 'update_tutela'])->name('update_tutela');
         Route::post('crear_accion', [TutelaController::class, 'crear_accion'])->name('crear_accion');
         Route::post('crear_motivos_tutela', [TutelaController::class, 'crear_motivos_tutela'])->name('crear_motivos_tutela');
         Route::post('crear_anexo_tutela', [TutelaController::class, 'crear_anexo_tutela'])->name('crear_anexo_tutela');
@@ -347,6 +373,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('crear_pretensiones_tutela', [TutelaController::class, 'crear_pretensiones_tutela'])->name('crear_pretensiones_tutela');
         Route::post('crear_argumentos_tutela', [TutelaController::class, 'crear_argumentos_tutela'])->name('crear_argumentos_tutela');
         Route::post('crear_pruebas_tutela', [TutelaController::class, 'crear_pruebas_tutela'])->name('crear_pruebas_tutela');
+        Route::post('asignacion_tarea_tutela', [TutelaController::class, 'asignacion_tarea_tutela_guardar'])->name('asignacion_tarea_tutela_guardar');
         // Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
         //Wiku
         Route::get('wiku-index', [WikuController::class, 'indexWiku'])->name('wiku_funcionario-index');

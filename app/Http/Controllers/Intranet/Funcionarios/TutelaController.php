@@ -2,19 +2,39 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
+use App\Models\PQR\tipoPQR;
+use App\Models\Tutela\Tarea;
 use Illuminate\Http\Request;
+use App\Models\PQR\Prioridad;
+use App\Models\Admin\WikuArea;
 use App\Models\Tutela\Accions;
 use App\Models\Tutela\Acccions;
 use App\Models\Tutela\Despachos;
-use App\Http\Controllers\Controller;
+use App\Models\Admin\WikuDocument;
+use App\Models\Servicios\Servicio;
 use App\Models\Tutela\AnexoTutela;
-use App\Models\Tutela\ArgumentosTutela;
-use App\Models\Tutela\AutoAdmisorio;
+use App\Models\Productos\Categoria;
 use App\Models\Tutela\HechosTutela;
+use App\Http\Controllers\Controller;
+use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\MotivosTutela;
-use App\Models\Tutela\PretensionesTutela;
 use App\Models\Tutela\PruebasTutela;
+use App\Models\Tutela\HistorialHecho;
+use App\Models\Tutela\AsignacionTarea;
+use App\Models\Tutela\HistorialTareas;
 use Illuminate\Support\Facades\Config;
+use App\Models\Tutela\ArgumentosTutela;
+use App\Models\Tutela\AsignacionEstados;
+use App\Models\Tutela\DocRespuestaHecho;
+use App\Models\Tutela\DocRespuestaPretension;
+use App\Models\Tutela\PretensionesTutela;
+use App\Models\Tutela\HistorialAsignacion;
+use App\Models\Tutela\HistorialPretension;
+use App\Models\Tutela\RelacionPretension;
+use App\Models\Tutela\RespuestaHechos;
+use App\Models\Tutela\RespuestaPretensiones;
+use App\Models\Tutela\ResuelveTutela;
+use App\Models\Tutela\Tarea as TutelaTarea;
 
 class TutelaController extends Controller
 {
@@ -23,6 +43,18 @@ class TutelaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function gestionar_tutela($id)
+    {
+        $areas = WikuArea::all();
+        $fuentes = WikuDocument::all();
+        $tipos_pqr = tipoPQR::get();
+        $categorias = Categoria::get();
+        $servicios = Servicio::get();
+        $tutela = AutoAdmisorio::findorFail($id);
+        $estados = AsignacionEstados::all();
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_colaboracion', compact('tutela', 'estados', 'areas', 'fuentes', 'tipos_pqr', 'servicios', 'categorias'));
+    }
+
     public function auto_admisorio_complemento($id)
     {
         return view('intranet.funcionarios.tutela.registro_complemento', compact('id'));
@@ -32,9 +64,7 @@ class TutelaController extends Controller
     {
         if ($request->ajax()) {
             $nuevo_auto_admisorio['empleado_rigistro_id'] = session('id_usuario');
-            $nuevo_auto_admisorio['empleado_asignado_id'] = session('id_usuario');
-            // $nuevo_auto_admisorio['fecha_generacion'] = $request['fecha_generacion'];
-            // $nuevo_auto_admisorio['fecha_radicado'] = $request['fecha_radicado'];
+            $nuevo_auto_admisorio['estadostutela_id'] = 1;
             $nuevo_auto_admisorio['radicado'] = $request['radicado'];
             $nuevo_auto_admisorio['jurisdiccion'] = $request['jurisdiccion'];
             $nuevo_auto_admisorio['juzgado'] = $request['juzgado'];
@@ -84,6 +114,20 @@ class TutelaController extends Controller
                 $doc_subido->move($ruta, $nombre_doc);
                 $repuesta = AutoAdmisorio::findOrFail($request["id"])->update($nuevo_auto_admisorio);
             }
+            return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function update_tutela(Request $request)
+    {
+        if ($request->ajax()) {
+            $update_tutela['empleado_asignado_id'] = session('id_usuario');
+            $update_tutela['fecha_radicado'] = date("Y-m-d H:i:s");
+            $update_tutela['estado_creacion'] = 1;
+            $update_tutela['estadostutela_id'] = 2;
+            $repuesta = AutoAdmisorio::findOrFail($request["id"])->update($update_tutela);
             return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
         } else {
             abort(404);
@@ -225,6 +269,417 @@ class TutelaController extends Controller
         }
     }
 
+    public function historial_tutela_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['auto_admisorio_id'] = $request['idAuto'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['mensajeHistorial'];
+            $historial = HistorialAsignacion::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function asignacion_tutela_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionData['estado_asignacion'] = (int)$request['confirmacionAsignacion'];
+            if( $asignacionData['estado_asignacion'] == 0){
+                $asignacionData['empleado_asignado_id'] = null;
+                $estado = AutoAdmisorio::findOrFail($request['idAuto'])->update($asignacionData);
+            }else{
+                $asignacionData['estadostutela_id'] = 3;
+                $estado = AutoAdmisorio::findOrFail($request['idAuto'])->update($asignacionData);
+                $tareas = Tarea::all();
+                $validarTareas = AsignacionTarea::where('auto_admisorio_id', $request['idAuto'])->get();
+                if(!sizeOf($validarTareas)){
+                    foreach ($tareas as $value) {
+                        $asignacionTarea['auto_admisorio_id'] = $request['idAuto'];
+                        $asignacionTarea['empleado_id'] = session('id_usuario');
+                        $asignacionTarea['tareas_id'] = $value['id'];
+                        $asignacionTarea['estado_id'] = 1;
+                        AsignacionTarea::create($asignacionTarea);
+                    }
+                }
+            }
+            $asignacionHistorial['auto_admisorio_id'] = $request['idAuto'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['mensajeAsignacion'];
+            $historial = HistorialAsignacion::create($asignacionHistorial);
+
+            $respuesta['estado'] = $estado;
+            $respuesta['historial'] = $historial;
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function asignacion_tarea_tutela_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionTarea['empleado_id'] = (int)$request['funcionario'];
+            $tareas = AsignacionTarea::where('auto_admisorio_id', $request['idAuto'])->where('tareas_id', $request['tarea'])->get();
+            foreach ($tareas as $tarea) {
+                $id = $tarea->id;
+            }
+            $tareaActualizar = AsignacionTarea::findOrFail($id)->update($asignacionTarea);
+            return response()->json(['mensaje' => 'ok', 'data' => $tareaActualizar]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_tarea_tutela_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['auto_admisorio_id'] = $request['idAuto'];
+            if($request['idTarea']){
+                $asignacionHistorial['tareas_tutela_id'] = $request['idTarea'];
+            }
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['mensajeHistorial'];
+            $historial = HistorialTareas::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function gestionar_asignacion_supervisa_tutela($id)
+    {
+        $estados = AsignacionEstados::all();
+        $tutela = AutoAdmisorio::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_supervisa', compact('tutela', 'estadoPrioridad', 'estados'));
+        // return view('intranet.funcionarios.tutela.gestion_asignacion_supervisa', compact('pqr', 'estadoPrioridad', 'estados'));
+    }
+
+    public function gestionar_asignacion_proyecta_tutela($id)
+    {
+        $estados = AsignacionEstados::all();
+        $tutela = AutoAdmisorio::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_proyecta', compact('tutela', 'estadoPrioridad', 'estados'));
+        // return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_proyecta', compact('pqr', 'estadoPrioridad', 'estados'));
+    }
+
+    public function prioridad_tutela_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $prioridad['prioridad_id'] = (int)$request['prioridad'];
+            $tutelaActualizar = AutoAdmisorio::findOrFail($request['idAuto'])->update($prioridad);
+            return response()->json(['mensaje' => 'ok', 'data' => $tutelaActualizar]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function estado_hecho_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $nuevoEstado['estado_id'] = $request["estado"];
+            $hecho = HechosTutela::findOrFail($request['id_hecho'])->update($nuevoEstado);
+            return response()->json(['mensaje' => 'ok', 'data' => $hecho]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function estado_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $nuevoEstado['estado_id'] = $request["estado"];
+            $pretension = PretensionesTutela::findOrFail($request['id_pretension'])->update($nuevoEstado);
+            return response()->json(['mensaje' => 'ok', 'data' => $pretension]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function asignacion_hecho_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHecho['empleado_id'] = (int)$request['funcionario'];
+            $hechoActualizar = HechosTutela::findOrFail($request['hecho'])->update($asignacionHecho);
+            return response()->json(['mensaje' => 'ok', 'data' => $hechoActualizar]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function asignacion_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionPretension['empleado_id'] = (int)$request['funcionario'];
+            $pretensionActualizar = PretensionesTutela::findOrFail($request['pretension'])->update($asignacionPretension);
+            return response()->json(['mensaje' => 'ok', 'data' => $pretensionActualizar]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_hecho_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['auto_admisorio_id'] = $request['idAuto'];
+            $asignacionHistorial['hechos_tutela_id'] = $request['idHecho'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['mensajeHistorial'];
+            $historial = HistorialHecho::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['auto_admisorio_id'] = $request['idAuto'];
+            $asignacionHistorial['pretensiones_tutela_id'] = $request['idPretension'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['mensajeHistorial'];
+            $historial = HistorialPretension::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_hecho_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $respuestaValidacion = RespuestaHechos::where('hechos_tutela_id', $request["id_hecho"])->get();
+            if(!sizeOf($respuestaValidacion)){
+                $respuesta['hechos_tutela_id'] = $request["id_hecho"];
+                $respuesta['fecha'] = date("Y-m-d");
+                $respuesta['respuesta'] = $request["respuesta"];
+                $respuestaHecho = RespuestaHechos::create($respuesta);
+                $id_respuesta = $respuestaHecho['id'];
+            }else{
+                $respuesta['respuesta'] = $request["respuesta"];
+                $id_respuesta = $respuestaValidacion[0]['id'];
+                $respuestaHecho = RespuestaHechos::findOrFail($id_respuesta)->update($respuesta);
+            }
+            if( $request["estado"]){
+                $nuevoEstado['estado_id'] = $request["estado"];
+                HechosTutela::findOrFail($request['id_hecho'])->update($nuevoEstado);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_hecho_anexo_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $documentos = $request->allFiles();
+            if ($request->hasFile('archivo')) {
+                $ruta = Config::get('constantes.folder_hechos');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["archivo"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['respuesta_hechos_id'] = $request["respuesta_hechos_id"];
+                $nuevo_documento['titulo'] = $request["titulo"];
+                if ($request["descripcion"]) {
+                    $nuevo_documento['descripcion'] = $request["descripcion"];
+                } else {
+                    $nuevo_documento['descripcion'] = '';
+                }
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+                $respuesta = DocRespuestaHecho::create($nuevo_documento);
+            }
+
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $respuesta['auto_admisorio_id'] = $request["id_auto"];
+            $respuesta['respuesta'] = $request["respuesta"];
+            $respuesta['fecha'] = date("Y-m-d");
+            $respuestaHecho = RespuestaPretensiones::create($respuesta);
+            $id_respuesta = $respuestaHecho['id'];
+            return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_pretension_anexo_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $documentos = $request->allFiles();
+            if ($request->hasFile('archivo')) {
+                $ruta = Config::get('constantes.folder_hechos');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["archivo"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['respuesta_pretensiones_id'] = $request["respuesta_pretensiones_id"];
+                $nuevo_documento['titulo'] = $request["titulo"];
+                if ($request["descripcion"]) {
+                    $nuevo_documento['descripcion'] = $request["descripcion"];
+                } else {
+                    $nuevo_documento['descripcion'] = '';
+                }
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+                $respuesta = DocRespuestaPretension::create($nuevo_documento);
+            }
+
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function relacion_respuesta_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $relacion['auto_admisorio_id'] = $request["id_auto"];
+            $relacion['pretension_tutela_id'] = $request["id_pretension"];
+            $relacion['respuesta_pretensiones_id'] = $request["id_respuesta"];
+            $respuestaRelacion = RelacionPretension::create($relacion);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuestaTutela($id)
+    {
+        // $pqr = PQR::findOrFail($id);
+        // $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
+        // $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        // $firma  = '';
+        // return view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('pqr', 'imagen', 'resuelves', 'firma'));
+    }
+
+    public function tutela_respuesta_guardar(Request $request)
+    {
+        // if ($request->ajax()) {
+        //         if($request["idTarea"] == 4){
+        //             $pqr = PQR::findOrFail($request["idPqr"]);
+        //             $tipo_respuesta = $request["tipo_respuesta"]; 
+        //             $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        //             $firma = public_path('documentos\usuarios\\' . $pqr->empleado->url);
+        //             if($tipo_respuesta == 1 || $tipo_respuesta == 2 || $tipo_respuesta == 3 ){
+        //                 $resuelves = ResuelveRecurso::where('pqr_id', $request["idPqr"])->where('tipo_reposicion_id', $tipo_respuesta)->orderBy('orden')->get();
+        //                 $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr_recurso', compact('pqr', 'imagen', 'resuelves', 'firma', 'tipo_respuesta'));
+        //             }else{
+        //                 $resuelves = Resuelve::where('pqr_id', $request["idPqr"])->orderBy('orden')->get();
+        //                 $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
+        //             }
+        //             $rPdf['pqr_id'] = $request["idPqr"];
+        //             $rPdf['tipo_respuesta'] = $request["tipo_respuesta"];
+        //             $rPdf['tareas_id'] = $request["idTarea"];
+        //             $rPdf['empleado_id'] = session('id_usuario');
+        //             $rrr = PqrAnexo::create($rPdf);
+        //         }
+        //         $pqr = PQR::findOrfail($request["idPqr"]);
+        //         $peticiones = Peticion::where('pqr_id', $pqr->id)->get();
+        //         if(sizeof($peticiones)){
+        //             $pqr['recurso_dias'] = $peticiones[0]->recurso_dias;
+        //         }
+        //         $pqr_id = $pqr->id;
+        //         if ($pqr->persona_id != null) {
+        //             $email = $pqr->persona->email;
+        //         }elseif($pqr->empresa_id != null){
+        //             $email = $pqr->empresa->email;
+        //         } 
+        //         if($request["idTarea"] == 4 && $request["apruebaRadica"] ){
+        //             if($email){
+        //                 Mail::to($email)->send(new RespuestaPQR($pqr_id));
+        //             }
+        //         }
+        //         if( ($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5 ){
+        //             if($pqr->peticiones->sum('recurso_dias')){
+        //                 if($tipo_respuesta == 1){
+        //                     $pqrEstado['estadospqr_id'] = 9;
+        //                     $fechaActual = date("Y-m-d H:i:s");
+        //                     $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
+        //                     $pqrEstado['tiempo_limite'] = $respuestaDias;
+        //                 }elseif($tipo_respuesta == 2){
+        //                     if($pqr->recurso_apelacion && $request["concedeRecursoApelacion"] == "true"){
+        //                         $pqrEstado['estadospqr_id'] = 8;
+        //                         $fechaActual = date("Y-m-d H:i:s");
+        //                         $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
+        //                         $pqrEstado['tiempo_limite'] = $respuestaDias;
+        //                     }else{
+        //                         $pqrEstado['estadospqr_id'] = 10; 
+        //                     }
+        //                 }elseif($tipo_respuesta == 3){
+        //                     $pqrEstado['estadospqr_id'] = 10; 
+        //                 }else{
+        //                     $pqrEstado['estadospqr_id'] = 7; 
+        //                 }
+        //             }else{
+        //                 $pqrEstado['estadospqr_id'] = 6; 
+        //             }
+        //             PQR::findOrFail($pqr->id)->update($pqrEstado);
+        //         }
+        //     return response()->json(['mensaje' => 'ok', 'data' => $rPdf]);
+        // } else {
+        //     abort(404);
+        // }
+    }
+
+    public function cambiar_estado_tareas_tutela_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            if($request['estado']){
+                $estado['estado_id'] = $request['estado'];
+                $tarea = $request['idTarea'] - 1;
+            }else{
+                $estado['estado_id'] = 11;
+                $tarea = $request['idTarea'];
+            }
+            $respuesta = AsignacionTarea::where('auto_admisorio_id',$request['idAuto'])->where('tareas_id',$tarea)->update($estado);
+            if($request['idTarea'] == 5){
+                AsignacionTarea::where('auto_admisorio_id',$request['idAuto'])->where('tareas_id', 1)->update($estado);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+
+    public function historial_resuelve_tutela_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelves = ResuelveTutela::where('auto_admisorio_id', $request['idAuto'])->get();
+            $resuelve['orden'] = $resuelves->count() + 1;
+            $resuelve['auto_admisorio_id'] = $request['idAuto'];
+            $resuelve['empleado_id'] = session('id_usuario');
+            $resuelve['resuelve'] = $request['mensajeResuelve'];
+            $respuesta = ResuelveTutela::create($resuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
 
     public function cargar_nombre_despachos(Request $request)
     {
@@ -240,5 +695,11 @@ class TutelaController extends Controller
             $id = $_GET['id'];
             return Despachos::findOrfail($id);
         }
+    }
+
+    public function vista_tutela($id)
+    {
+        $tutela = AutoAdmisorio::findOrfail($id);
+        return view('intranet.funcionarios.tutela.vista', compact('tutela'));
     }
 }

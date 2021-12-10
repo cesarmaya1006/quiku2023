@@ -27,4 +27,8 @@ return [
     "folder_tutelas" => public_path() . '/documentos/tutelas/ ',
     //--------------------------------------------------------------------------------
     "folder_tutelas_pruebas" => public_path() . '/documentos/tutelaspruebas/ ',
+    //--------------------------------------------------------------------------------
+    "folder_hechos" => public_path() . '/documentos/tutelas/hechos/ ',
+    //--------------------------------------------------------------------------------
+    "folder_pretensiones" => public_path() . '/documentos/tutelas/pretensiones/ ',
 ];
