@@ -34,7 +34,8 @@ use App\Models\Tutela\RelacionPretension;
 use App\Models\Tutela\RespuestaHechos;
 use App\Models\Tutela\RespuestaPretensiones;
 use App\Models\Tutela\ResuelveTutela;
-use App\Models\Tutela\Tarea as TutelaTarea;
+use App\Models\Tutela\TutelaRespuesta;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class TutelaController extends Controller
 {
@@ -71,7 +72,7 @@ class TutelaController extends Controller
             $nuevo_auto_admisorio['departamento'] = $request['departamento'];
             $nuevo_auto_admisorio['municipio'] = $request['municipio'];
             $nuevo_auto_admisorio['fecha_notificacion'] = $request['fecha_notificacion'];
-        
+
             $nuevo_auto_admisorio['nombre_juez'] = $request['nombreApellido_juez'];
             $nuevo_auto_admisorio['direccion_juez'] = $request['direccion_juez'];
             $nuevo_auto_admisorio['telefono_juez'] = $request['telefono_fijo_juez'];
@@ -366,6 +367,30 @@ class TutelaController extends Controller
         // return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_proyecta', compact('pqr', 'estadoPrioridad', 'estados'));
     }
 
+    public function gestionar_asignacion_revisa_tutela($id)
+    {
+        $estados = AsignacionEstados::all();
+        $tutela = AutoAdmisorio::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_revisa', compact('tutela', 'estadoPrioridad', 'estados'));
+    }
+
+    public function gestionar_asignacion_aprueba_tutela($id)
+    {
+        $estados = AsignacionEstados::all();
+        $tutela = AutoAdmisorio::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_aprueba', compact('tutela', 'estadoPrioridad', 'estados'));
+    }
+
+    public function gestionar_asignacion_radica_tutela($id)
+    {
+        $estados = AsignacionEstados::all();
+        $tutela = AutoAdmisorio::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_radica', compact('tutela', 'estadoPrioridad', 'estados'));
+    }
+
     public function prioridad_tutela_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -567,82 +592,64 @@ class TutelaController extends Controller
         }
     }
 
-    public function respuestaTutela($id)
+    public function respuesta_tutela($id)
     {
-        // $pqr = PQR::findOrFail($id);
-        // $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
-        // $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        // $firma  = '';
-        // return view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('pqr', 'imagen', 'resuelves', 'firma'));
+        $tutela = AutoAdmisorio::findOrFail($id);
+        $resuelves =ResuelveTutela::where('auto_admisorio_id', $id)->orderBy('orden')->get();
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $firma  = '';
+        return view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('tutela', 'imagen', 'resuelves', 'firma'));
+    }
+
+    public function descarga_respuesta_tutela($id)
+    {
+        $respuesta = TutelaRespuesta::findOrFail($id);
+        $tutela =$respuesta->tutela;
+        $pdf = PDF::loadHTML($respuesta->respuesta);
+        return $pdf->download( 'Respuesta-'. $tutela->radicado . '.pdf');
     }
 
     public function tutela_respuesta_guardar(Request $request)
     {
-        // if ($request->ajax()) {
-        //         if($request["idTarea"] == 4){
-        //             $pqr = PQR::findOrFail($request["idPqr"]);
-        //             $tipo_respuesta = $request["tipo_respuesta"]; 
-        //             $imagen = public_path('imagenes\sistema\icono_sistema.png');
-        //             $firma = public_path('documentos\usuarios\\' . $pqr->empleado->url);
-        //             if($tipo_respuesta == 1 || $tipo_respuesta == 2 || $tipo_respuesta == 3 ){
-        //                 $resuelves = ResuelveRecurso::where('pqr_id', $request["idPqr"])->where('tipo_reposicion_id', $tipo_respuesta)->orderBy('orden')->get();
-        //                 $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr_recurso', compact('pqr', 'imagen', 'resuelves', 'firma', 'tipo_respuesta'));
-        //             }else{
-        //                 $resuelves = Resuelve::where('pqr_id', $request["idPqr"])->orderBy('orden')->get();
-        //                 $rPdf['respuesta'] = view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
-        //             }
-        //             $rPdf['pqr_id'] = $request["idPqr"];
-        //             $rPdf['tipo_respuesta'] = $request["tipo_respuesta"];
-        //             $rPdf['tareas_id'] = $request["idTarea"];
-        //             $rPdf['empleado_id'] = session('id_usuario');
-        //             $rrr = PqrAnexo::create($rPdf);
-        //         }
-        //         $pqr = PQR::findOrfail($request["idPqr"]);
-        //         $peticiones = Peticion::where('pqr_id', $pqr->id)->get();
-        //         if(sizeof($peticiones)){
-        //             $pqr['recurso_dias'] = $peticiones[0]->recurso_dias;
-        //         }
-        //         $pqr_id = $pqr->id;
-        //         if ($pqr->persona_id != null) {
-        //             $email = $pqr->persona->email;
-        //         }elseif($pqr->empresa_id != null){
-        //             $email = $pqr->empresa->email;
-        //         } 
-        //         if($request["idTarea"] == 4 && $request["apruebaRadica"] ){
-        //             if($email){
-        //                 Mail::to($email)->send(new RespuestaPQR($pqr_id));
-        //             }
-        //         }
-        //         if( ($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5 ){
-        //             if($pqr->peticiones->sum('recurso_dias')){
-        //                 if($tipo_respuesta == 1){
-        //                     $pqrEstado['estadospqr_id'] = 9;
-        //                     $fechaActual = date("Y-m-d H:i:s");
-        //                     $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
-        //                     $pqrEstado['tiempo_limite'] = $respuestaDias;
-        //                 }elseif($tipo_respuesta == 2){
-        //                     if($pqr->recurso_apelacion && $request["concedeRecursoApelacion"] == "true"){
-        //                         $pqrEstado['estadospqr_id'] = 8;
-        //                         $fechaActual = date("Y-m-d H:i:s");
-        //                         $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
-        //                         $pqrEstado['tiempo_limite'] = $respuestaDias;
-        //                     }else{
-        //                         $pqrEstado['estadospqr_id'] = 10; 
-        //                     }
-        //                 }elseif($tipo_respuesta == 3){
-        //                     $pqrEstado['estadospqr_id'] = 10; 
-        //                 }else{
-        //                     $pqrEstado['estadospqr_id'] = 7; 
-        //                 }
-        //             }else{
-        //                 $pqrEstado['estadospqr_id'] = 6; 
-        //             }
-        //             PQR::findOrFail($pqr->id)->update($pqrEstado);
-        //         }
-        //     return response()->json(['mensaje' => 'ok', 'data' => $rPdf]);
-        // } else {
-        //     abort(404);
-        // }
+        if ($request->ajax()) {
+            if($request["idTarea"] == 4){
+                $tutela = AutoAdmisorio::findOrFail($request["idAuto"]);
+                $imagen = public_path('imagenes\sistema\logo_mgl.png');
+                $firma = public_path('documentos\usuarios\\' . $tutela->empleadoasignado->url);
+                // $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
+                // $firma = asset('documentos/usuarios/' . $tutela->empleado->url); //url_servidor
+                $resuelves = ResuelveTutela::where('auto_admisorio_id', $request["idAuto"])->orderBy('orden')->get();
+                $rPdf['respuesta'] = view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('tutela', 'imagen', 'resuelves', 'firma'));
+                $rPdf['auto_admisorio_id'] = $request["idAuto"];
+                $rPdf['tipo_respuesta'] = $request["tipo_respuesta"];
+                $rPdf['tareas_id'] = $request["idTarea"];
+                $rPdf['empleado_id'] = session('id_usuario');
+                $rrr = TutelaRespuesta::create($rPdf);
+            }
+            $tutela = AutoAdmisorio::findOrfail($request["idAuto"]);
+            // $peticiones = Peticion::where('pqr_id', $pqr->id)->get();
+            // if(sizeof($peticiones)){
+            //     $pqr['recurso_dias'] = $peticiones[0]->recurso_dias;
+            // }
+            // $pqr_id = $pqr->id;
+            // if ($pqr->persona_id != null) {
+            //     $email = $pqr->persona->email;
+            // }elseif($pqr->empresa_id != null){
+            //     $email = $pqr->empresa->email;
+            // } 
+            if($request["idTarea"] == 4 && $request["apruebaRadica"] ){
+                // if($email){
+                //     Mail::to($email)->send(new RespuestaPQR($pqr_id));
+                // }
+            }
+            if( ($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5 ){
+                $tutelaEstado['estadostutela_id'] = 4;
+                AutoAdmisorio::findOrFail($tutela->id)->update($tutelaEstado);
+            }
+        return response()->json(['mensaje' => 'ok', 'data' => $rPdf]);
+    } else {
+        abort(404);
+    }
     }
 
     public function cambiar_estado_tareas_tutela_guardar(Request $request)

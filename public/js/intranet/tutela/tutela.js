@@ -107,7 +107,9 @@ window.addEventListener('DOMContentLoaded', function () {
             let direccion_juez = contenedorPadre.querySelector('.direccion_juez').value
             let telefono_fijo_juez = contenedorPadre.querySelector('.telefono_fijo_juez').value
             let correo_juez = contenedorPadre.querySelector('.email_juez').value
-            let fecha_notificacion = contenedorPadre.querySelector('.fecha_notificacion').value
+            let fecha_notificacion_dias = contenedorPadre.querySelector('.fecha_notificacion').value
+            let fecha_notificacion_horas = contenedorPadre.querySelector('.fecha_notificacion_horas').value
+            let fecha_notificacion = `${fecha_notificacion_dias} ${fecha_notificacion_horas}`
             let cantidad_dias = contenedorPadre.querySelector('.cantidad_dias').value
             let cantidad_horas = contenedorPadre.querySelector('.cantidad_horas').value
             let titulo_anexo_admisorio = contenedorPadre.querySelector('.titulo-anexo-admisorio input').value
@@ -140,7 +142,6 @@ window.addEventListener('DOMContentLoaded', function () {
                 dias_medida_cautelar,
                 horas_medida_cautelar
             }
-     
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -339,4 +340,63 @@ window.addEventListener('DOMContentLoaded', function () {
         });
     });
     // --------------------------------------------------------------------------------------------------------------------
+    // Funcion para cargar tiempos terminos
+    document.querySelector('.selectorTiempoTermino').addEventListener('change', function(selector){
+        let contenedorPadre = selector.target.parentElement.parentElement
+        let dias = contenedorPadre.querySelector('.content-dias')
+        let horas = contenedorPadre.querySelector('.content-horas')
+        if(selector.target.value == 0){
+            if(!dias.classList.contains('d-none')){
+                dias.classList.add('d-none')
+            }
+            if(!horas.classList.contains('d-none')){
+                horas.classList.add('d-none')
+            }
+        }else if(selector.target.value == 1) {
+            if(dias.classList.contains('d-none')){
+                dias.classList.remove('d-none')
+            }
+            if(!horas.classList.contains('d-none')){
+                horas.classList.add('d-none')
+            }
+            
+        }else if(selector.target.value == 2){
+            if(!dias.classList.contains('d-none')){
+                dias.classList.add('d-none')
+            }
+            if(horas.classList.contains('d-none')){
+                horas.classList.remove('d-none')
+            }
+        }
+    })
+
+    // Funcion para cargar tiempos terminos
+    document.querySelector('.selectorTiempoMedida').addEventListener('change', function(selector){
+        let contenedorPadre = selector.target.parentElement.parentElement
+        let dias = contenedorPadre.querySelector('.content-dias')
+        let horas = contenedorPadre.querySelector('.content-horas')
+        if(selector.target.value == 0){
+            if(!dias.classList.contains('d-none')){
+                dias.classList.add('d-none')
+            }
+            if(!horas.classList.contains('d-none')){
+                horas.classList.add('d-none')
+            }
+        }else if(selector.target.value == 1) {
+            if(dias.classList.contains('d-none')){
+                dias.classList.remove('d-none')
+            }
+            if(!horas.classList.contains('d-none')){
+                horas.classList.add('d-none')
+            }
+            
+        }else if(selector.target.value == 2){
+            if(!dias.classList.contains('d-none')){
+                dias.classList.add('d-none')
+            }
+            if(horas.classList.contains('d-none')){
+                horas.classList.remove('d-none')
+            }
+        }
+    })
 })

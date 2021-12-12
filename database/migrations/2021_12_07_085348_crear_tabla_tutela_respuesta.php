@@ -20,7 +20,7 @@ class CrearTablaTutelaRespuesta extends Migration
             $table->unsignedBigInteger('empleado_id')->nullable();
             $table->foreign('empleado_id', 'fk_empleado_tutela_respuesta')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('tareas_id')->nullable();
-            $table->foreign('tareas_id', 'fk_tarea_asignancion_tutela_respuest')->references('id')->on('tareas')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('tareas_id', 'fk_tarea_asignancion_tutela_respuesta')->references('id')->on('tareas')->onDelete('restrict')->onUpdate('restrict');
             $table->longText('respuesta')->nullable();
             $table->bigInteger('tipo_respuesta')->default(0);
             $table->timestamps();

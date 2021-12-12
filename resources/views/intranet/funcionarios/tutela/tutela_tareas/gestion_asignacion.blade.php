@@ -202,7 +202,7 @@
                                     @endforeach  
                                 </div>
                             </div>
-                            @if(sizeOf($tutela->anexostutela))
+                            @if(sizeOf($tutela->anexosTutela))
                                 <div class="menu-card">
                                     <div class="col-12 row mb-2">
                                         <div class="col-6">
@@ -381,17 +381,19 @@
                                     </table>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row d-flex px-12 p-3"> 
-                                <div class="container-mensaje-historial form-group col-12">
-                                    <label for="" class="">Agregar Historial</label>
-                                    <textarea class="form-control mensaje-historial" rows="3" placeholder="" required></textarea>
+                            @if($tutela->estadostutela_id != 4)
+                                <hr>
+                                <div class="row d-flex px-12 p-3"> 
+                                    <div class="container-mensaje-historial form-group col-12">
+                                        <label for="" class="">Agregar Historial</label>
+                                        <textarea class="form-control mensaje-historial" rows="3" placeholder="" required></textarea>
+                                    </div>
+                                    <div class="col-12 col-md-12 form-group d-flex">
+                                        <button href="" class="btn btn-primary px-4 guardarHistorial" data_url="{{ route('historial_tutela_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar historial</button>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-12 form-group d-flex">
-                                    <button href="" class="btn btn-primary px-4 guardarHistorial" data_url="{{ route('historial_tutela_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar historial</button>
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     @endif
                     <input class="id_auto_admisorio" type="hidden" value="{{ $tutela->id }}">
@@ -444,30 +446,32 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <hr>
-                            <h5 class="">Asignación tareas</h5>
-                            <div class="row d-flex px-4"> 
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Tarea</label>
-                                    <select class="custom-select rounded-0 tarea" required="" data_url="{{ route('cargar_tareas') }}"></select>
+                            @if($tutela->estadostutela_id != 4)
+                                <hr>
+                                <h5 class="">Asignación tareas</h5>
+                                <div class="row d-flex px-4"> 
+                                    <div class="col-12 col-md-5 form-group">
+                                        <label for="">Tarea</label>
+                                        <select class="custom-select rounded-0 tarea" required="" data_url="{{ route('cargar_tareas') }}"></select>
+                                    </div>
+                                    <div class="col-12 col-md-5 form-group">
+                                        <label for="">Cargo</label>
+                                        <select class="custom-select rounded-0 cargo" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
+                                            <option value="">--Seleccione--</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-5 form-group">
+                                        <label for="">Funcionario</label>
+                                        <select class="custom-select rounded-0 funcionario" required="">
+                                            <option value="">--Seleccione--</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group d-flex align-items-end">
+                                        <button href="" class="btn btn-primary py-2 px-3 asignacion_tarea_guardar" data_url="{{ route('asignacion_tarea_tutela_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar asignación</button>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Cargo</label>
-                                    <select class="custom-select rounded-0 cargo" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
-                                        <option value="">--Seleccione--</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-5 form-group">
-                                    <label for="">Funcionario</label>
-                                    <select class="custom-select rounded-0 funcionario" required="">
-                                        <option value="">--Seleccione--</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-6 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary py-2 px-3 asignacion_tarea_guardar" data_url="{{ route('asignacion_tarea_tutela_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar asignación</button>
-                                </div>
-                            </div>
+                            @endif
                             <hr>
                             <h5 class="">Historial tareas</h5>
                             <div class="col-12 table-responsive">
@@ -496,17 +500,19 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <hr>
-                            <div class="row d-flex px-12 p-3"> 
-                                <div class="container-mensaje-historial-tarea form-group col-12">
-                                    <label for="" class="">Agregar Historial</label>
-                                    <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
+                            @if($tutela->estadostutela_id != 4)
+                                <hr>
+                                <div class="row d-flex px-12 p-3"> 
+                                    <div class="container-mensaje-historial-tarea form-group col-12">
+                                        <label for="" class="">Agregar Historial</label>
+                                        <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
+                                    </div>
+                                    <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
+                                        <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialTarea" data_url="{{ route('historial_tarea_tutela_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar</button>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialTarea" data_url="{{ route('historial_tarea_tutela_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar</button>
-                                </div>
-                            </div>
+                            @endif
 
                             @if(sizeOf($tutela->respuestas))   
                                 <hr>
@@ -524,21 +530,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($tutela->respuestas as $anexo)
+                                                @foreach ($tutela->respuestas as $respuesta)
                                                     <tr>
-                                                        <td>{{ $anexo->created_at }}</td>
-                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
-                                                        <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                        @if($anexo->tipo_respuesta == 0)
-                                                            <td>Respuesta PQR</td>
-                                                        @elseif($anexo->tipo_respuesta == 1)
-                                                            <td>Respuesta aclaración</td>
-                                                        @elseif($anexo->tipo_respuesta == 2)
-                                                            <td>Respuesta reposición</td>
-                                                        @elseif($anexo->tipo_respuesta == 3)
-                                                            <td>Respuesta apelación</td>
-                                                        @endif
-                                                        <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                                        <td>{{ $respuesta->created_at }}</td>
+                                                        <td class="text-justify">{{ $respuesta->empleado->nombre1 }} {{ $respuesta->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">{{ $respuesta->tarea->tarea }}</td>
+                                                        <td>Respuesta tutlea</td>
+                                                        <td class="text-justify"><a href="{{ route('descarga_respuesta_tutela', ['id' => $respuesta->id]) }}" target="_blank" rel="noopener noreferrer">
+                                                            <i class="fas fa-file-download"></i> Descarga</a></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>

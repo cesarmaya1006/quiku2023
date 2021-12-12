@@ -680,7 +680,7 @@
                     @if (((($tutela->hechos->sum('estado_id') / $tutela->hechos->count())/ 11) * 100) == 100 )  
                         @if (((($tutela->pretensiones->sum('estado_id') / $tutela->pretensiones->count())/ 11) * 100) == 100 )  
                             <div class="rounded border m-3 p-2 px-4">
-                                <h5 class="mt-2">Resuelve</h5>
+                                <h5 class="mt-2">Hechos de la defensa</h5>
                                 @if(sizeof($tutela->resuelves))
                                     <div class="row d-flex px-12 p-3">
                                         <div class="col-12 table-responsive">
@@ -690,7 +690,7 @@
                                                         <th scope="col">Orden</th>
                                                         <th scope="col">Fecha</th>
                                                         <th scope="col">Empleado</th>
-                                                        <th scope="col">Resuelve</th>
+                                                        <th scope="col">Hecho de defensa</th>
                                                         <th scope="col">Opciones</th>
                                                     </tr>
                                                 </thead>
@@ -772,13 +772,13 @@
                                 @endif
                                 <div class="col-12 d-flex row">
                                     <div class="container-mensaje-resuelve form-group col-12 row">
-                                        <label for="" class="col-10">Nuevo resuelve</label>
+                                        <label for="" class="col-10">Nuevo hecho</label>
                                         <textarea class="form-control mensaje-resuelve mt-2" rows="3" placeholder="" required></textarea>
                                     </div>
                                     <div class="row d-flex px-12 p-1"> 
                                         <div class="col-12 col-md-12 form-group d-flex">
                                             <button href="" class="btn btn-primary mx-2 px-4 btn-tutela-resuelve"
-                                            data_url="{{ route('historial_resuelve_tutela_guardar') }}"  data_token="{{ csrf_token() }}">Crear resuelve</button>
+                                            data_url="{{ route('historial_resuelve_tutela_guardar') }}"  data_token="{{ csrf_token() }}">Crear hecho</button>
                                         </div>
                                     </div>
                                 </div>
@@ -794,7 +794,7 @@
                                     <div class="my-2 col-12 d-flex">
                                         <h6 class="mr-2">Documento de respuesta</h6>
                                         <strong class="mx-2">
-                                            <a href="{{ route('respuestaTutela', ['id' => $tutela->id]) }}" target="_blank" rel="noopener noreferrer">
+                                            <a href="{{ route('respuesta_tutela', ['id' => $tutela->id]) }}" target="_blank" rel="noopener noreferrer">
                                                 <i class="fas fa-eye"></i> Vista previa</a>
                                         </strong>
                                     </div>

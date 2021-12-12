@@ -73,9 +73,13 @@
                                                     <option value="">--Seleccione--</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-4">
                                                 <label class="requerido" for="fecha">Fecha de notificación</label>
                                                 <input type="date" class="form-control fecha_notificacion" id="fecha_notificacion" required>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label class="requerido" for="">Hora de notificación</label>
+                                                <input type="time" class="form-control fecha_notificacion_horas" required>
                                             </div>                               
                                         </div>
                                     </div>
@@ -94,7 +98,7 @@
                                             <div class="form-group col-md-12">
                                                 <label class="requerido" for="nombreApellido_juez">Nombre y apellido</label>
                                                 <input type="text" class="form-control lcapital nombreApellido_juez"
-                                                    placeholder="Nombre y apellido" name="nombreApellido_juez" required>
+                                                    placeholder="Nombre y apellido" name="nombreApellido_juez" required readonly>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="requerido" for="direccion_juez">Dirección Juzgado</label>
@@ -105,17 +109,17 @@
                                                                 data-bs-target="#staticBackdrop"></i></button>
                                                     </div>
                                                     <input type="text" class="form-control readonly direccion_juez"
-                                                        placeholder="Dirección" required>
+                                                        placeholder="Dirección" required readonly>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label class="requerido" for="telefono_fijo_juez">Teléfono Juzgado</label>
                                                 <input type="text" class="form-control telefono_fijo_juez"
-                                                    placeholder="Teléfono fijo">
+                                                    placeholder="Teléfono fijo" readonly>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <label class="requerido" for="email_juez">Correo electrónico</label>
-                                                <input type="email" class="form-control email_juez" placeholder="Correo electrónico" required>
+                                                <input type="email" class="form-control email_juez" placeholder="Correo electrónico" required readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -131,13 +135,23 @@
                                     </div>
                                     <div class="card-body" style="display: none;">
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label class="requerido" for="">Días</label>
-                                                <input type="number" class="form-control cantidad_dias" required>
+                                            <div class="col-12 col-md-6 form-group selectorTiempoTermino">
+                                                <label class="requerido" for="">Selector tiempo terminos</label>
+                                                <select class="custom-select rounded-0 selector">
+                                                    <option value="">--Seleccione--</option>
+                                                    <option value="1">Días</option>
+                                                    <option value="2">Horas</option>
+                                                </select>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <label class="requerido" for="">Horas</label>
-                                                <input type="time" class="form-control cantidad_horas" required>
+                                            <div class="row tiempo-terminos">
+                                                <div class="form-group col-md-12 content-dias d-none">
+                                                    <label class="requerido" for="">Días</label>
+                                                    <input type="number" class="form-control cantidad_dias" required>
+                                                </div>
+                                                <div class="form-group col-md-12 content-horas d-none">
+                                                    <label class="requerido" for="">Horas</label>
+                                                    <input type="number" class="form-control cantidad_horas" required>
+                                                </div>
                                             </div>
                                             <div class="col-12 d-flex row bolque-anexo-admisorio">
                                                 <div class="col-12 titulo-anexo d-flex justify-content-between">
@@ -180,13 +194,23 @@
                                                 </div>
                                                 <h6 class="mt-3 font-weight-bold mb-3">Plazo medida cautelar</h6>
                                                 <div class="form-group row">
-                                                    <div class="form-group col-md-6">
-                                                        <label class="" for="">Días</label>
-                                                        <input type="number" class="form-control medidaCautelar-dias">
+                                                    <div class="col-12 col-md-6 form-group selectorTiempoMedida">
+                                                        <label class="requerido" for="">Selector tiempo medida cautelar</label>
+                                                        <select class="custom-select rounded-0 selector">
+                                                            <option value="">--Seleccione--</option>
+                                                            <option value="1">Días</option>
+                                                            <option value="2">Horas</option>
+                                                        </select>
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label class="" for="">Horas</label>
-                                                        <input type="time" class="form-control medidaCautelar-horas">
+                                                    <div class="row tiempo-medida col-12 col-md-6">
+                                                        <div class="form-group col-md-6 content-dias d-none">
+                                                            <label class="" for="">Días</label>
+                                                            <input type="number" class="form-control medidaCautelar-dias">
+                                                        </div>
+                                                        <div class="form-group col-md-6 content-horas d-none">
+                                                            <label class="" for="">Horas</label>
+                                                            <input type="number" class="form-control medidaCautelar-horas">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

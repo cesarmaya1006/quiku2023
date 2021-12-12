@@ -89,28 +89,28 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-lg-3 col-6">
+                <div class="col-lg-3 col-6">
                     <div class="small-box bg-light" style="border: solid 1px teal">
                         <div class="inner">
-                            <h3>{{$tareas->where('tareas_id', 4)->where('estado_id', '<', 11)->count()}}</h3>
+                            <h3>{{ $aprobadas->count() }}</h3>
                             <p style="font-size: 0.8em">En aprobación</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph text-teal"></i>
                         </div>
                     </div>
-                </div> --}}
-                {{-- <div class="col-lg-3 col-6">
+                </div>
+                <div class="col-lg-3 col-6">
                     <div class="small-box bg-light" style="border: solid 1px indigo">
                         <div class="inner">
-                            <h3>{{$tareas->where('tareas_id', 5)->where('estado_id', '<', 11)->count()}}</h3>
+                            <h3>{{ $radicadas->count() }}</h3>
                             <p style="font-size: 0.8em">En radicación</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-pie-graph text-indigo"></i>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             {{-- @endif --}}
             {{-- @if ($usuario->empleado->cargo->id == 1)
                 <div class="col-lg-3 col-6">
@@ -274,7 +274,7 @@
                                 {{ $supervisada->tutela->prioridad->prioridad }}
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('gestionar-asignacion-supervisa_tutela', ['id' => $supervisada->tutela->id]) }}"
+                                <a href="{{ route('gestionar_asignacion_supervisa_tutela', ['id' => $supervisada->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                             </td>
@@ -339,7 +339,7 @@
                                 -----
                             </td>
                             <td class="text-center">
-                                <a href="{{ route('gestionar-asignacion-proyecta_tutela', ['id' => $proyecta->tutela->id]) }}"
+                                <a href="{{ route('gestionar_asignacion_proyecta_tutela', ['id' => $proyecta->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                             </td>
@@ -598,7 +598,7 @@
                                 </td>
                             @endif --}}
                             <td class="text-center">
-                                <a href="{{ route('gestionar-asignacion-proyecta_tutela', ['id' => $revision->tutela->id]) }}"
+                                <a href="{{ route('gestionar_asignacion_revisa_tutela', ['id' => $revision->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                             </td>
@@ -623,37 +623,48 @@
                 <thead class="thead-inverse">
                     <tr>
                         <th class="text-center" style="white-space:nowrap;">Fecha radica usuario</th>
-                        <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
+                        <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
-                        <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
-                        <th class="text-center" style="white-space:nowrap;">Cliente</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($tareas as $tarea)
-                        @if ($tarea->tareas_id == 4 && $tarea->estado_id != 11 && sizeOf(($tarea->pqr->asignaciontareas->where('tareas_id', $tarea->tareas_id -1 ))->where('estado_id', 11)))
-                                <tr>
-                                    <td class="text-center" style="white-space:nowrap;">{{ $pqr->fecha_radicado }}</td>
-                                    <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
-                                    <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->radicado }}</td>
-                                    <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipoPqr->tipo }}
-                                    </td>
-                                    <td class="text-center" style="white-space:nowrap;">
-                                        {{ $tarea->pqr->persona_id != null ? $tarea->pqr->persona->nombre1 . ' ' . $tarea->pqr->persona->nombre2 . ' ' . $tarea->pqr->persona->apellido1 . ' ' . $tarea->pqr->persona->apellido2 : $tarea->pqr->empresa->nombre1 . ' ' . $tarea->pqr->empresa->nombre2 . ' ' . $tarea->pqr->empresa->apellido1 . ' ' . $tarea->pqr->empresa->apellido2 }}
-                                    </td>
-                                    <td class="text-center" style="white-space:nowrap;">
-                                        {{ $tarea->pqr->prioridad->prioridad }}
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{{ route('funcionario-gestionar-asignacion-aprueba', ['id' => $tarea->pqr->id]) }}"
-                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
-                                    </td>
-                                </tr>
-                        @endif
-                    @endforeach --}}
+                    @foreach ($aprobadas as $aprobar)
+                        <tr>
+                            <td class="text-center" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_radicado }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $aprobar->tutela->estado->estado_funcionario }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $aprobar->tutela->radicado }}</td>
+                            </td>
+                            <td class="text-center" style="white-space:nowrap;">
+                                {{ $aprobar->tutela->prioridad->prioridad }}
+                            </td>
+                            {{-- @php
+                                $porcentaje = 0;
+                                foreach ($tarea->pqr->peticiones as $key => $peticion) {
+                                    $porcentaje += $peticion->estadopeticion->estado;
+                                }
+                            @endphp --}}
+                            {{-- @if ( $porcentaje / $tarea->pqr->peticiones->count() == 100)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                </td>
+                            @elseif($porcentaje / $tarea->pqr->peticiones->count() == 0 )
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                </td>
+                            @else
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                </td>
+                            @endif --}}
+                            <td class="text-center">
+                                <a href="{{ route('gestionar_asignacion_aprueba_tutela', ['id' => $aprobar->tutela->id]) }}"
+                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -673,37 +684,48 @@
                 <thead class="thead-inverse">
                     <tr>
                         <th class="text-center" style="white-space:nowrap;">Fecha radica usuario</th>
-                        <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
+                        <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
-                        <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
-                        <th class="text-center" style="white-space:nowrap;">Cliente</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($tareas as $tarea)
-                        @if ($tarea->tareas_id == 5 && $tarea->estado_id != 11 && sizeOf(($tarea->pqr->asignaciontareas->where('tareas_id', $tarea->tareas_id -1 ))->where('estado_id', 11)))
-                                <tr>
-                                    <td class="text-center" style="white-space:nowrap;">{{ $pqr->fecha_radicado }}</td>
-                                    <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
-                                    <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->radicado }}</td>
-                                    <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipoPqr->tipo }}
-                                    </td>
-                                    <td class="text-center" style="white-space:nowrap;">
-                                        {{ $tarea->pqr->persona_id != null ? $tarea->pqr->persona->nombre1 . ' ' . $tarea->pqr->persona->nombre2 . ' ' . $tarea->pqr->persona->apellido1 . ' ' . $tarea->pqr->persona->apellido2 : $tarea->pqr->empresa->nombre1 . ' ' . $tarea->pqr->empresa->nombre2 . ' ' . $tarea->pqr->empresa->apellido1 . ' ' . $tarea->pqr->empresa->apellido2 }}
-                                    </td>
-                                    <td class="text-center" style="white-space:nowrap;">
-                                        {{ $tarea->pqr->prioridad->prioridad }}
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{{ route('funcionario-gestionar-asignacion-radica', ['id' => $tarea->pqr->id]) }}"
-                                            class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                                class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
-                                    </td>
-                                </tr>
-                        @endif
-                    @endforeach --}}
+                    @foreach ($radicadas as $radicar)
+                        <tr>
+                            <td class="text-center" style="white-space:nowrap;">{{ $radicar->tutela->fecha_radicado }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $radicar->tutela->estado->estado_funcionario }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $radicar->tutela->radicado }}</td>
+                            </td>
+                            <td class="text-center" style="white-space:nowrap;">
+                                {{ $radicar->tutela->prioridad->prioridad }}
+                            </td>
+                            {{-- @php
+                                $porcentaje = 0;
+                                foreach ($tarea->pqr->peticiones as $key => $peticion) {
+                                    $porcentaje += $peticion->estadopeticion->estado;
+                                }
+                            @endphp --}}
+                            {{-- @if ( $porcentaje / $tarea->pqr->peticiones->count() == 100)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                </td>
+                            @elseif($porcentaje / $tarea->pqr->peticiones->count() == 0 )
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                </td>
+                            @else
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                </td>
+                            @endif --}}
+                            <td class="text-center">
+                                <a href="{{ route('gestionar_asignacion_radica_tutela', ['id' => $radicar->tutela->id]) }}"
+                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -722,38 +744,27 @@
             <table class="table table-striped table-hover table-sm display">
                 <thead class="thead-inverse">
                     <tr>
-                        <th class="text-center" style="white-space:nowrap;">Fecha radica usuario</th>
-                        <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha radica Funcionario</th>
+                        <th class="text-center" style="white-space:nowrap;">Estado</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
-                        <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
-                        <th class="text-center" style="white-space:nowrap;">Cliente</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($pqrs as $pqr)
-                        @if (($pqr->estadospqr_id == 6 || $pqr->estadospqr_id == 7 || $pqr->estadospqr_id == 9 || $pqr->estadospqr_id == 10 ) && $pqr->asignaciontareas->sum('estado_id') == 55)
-                            <tr>
-                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->fecha_radicado }}</td>
-                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
-                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->radicado }}</td>
-                                <td class="text-center" style="white-space:nowrap;">{{ $pqr->tipoPqr->tipo }}
-                                </td>
-                                <td class="text-center" style="white-space:nowrap;">
-                                    {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
-                                </td>
-                                <td class="text-center" style="white-space:nowrap;">
-                                    {{ $pqr->prioridad->prioridad }}
-                                </td>
-                                <td>
-                                    <a href="{{ route('funcionario-gestionar-asignacion', ['id' => $pqr->id]) }}"
-                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach --}}
+                    @foreach ($cerradas as $tutela)
+                        <tr>
+                            <td class="text-center" style="white-space:nowrap;">{{ $tutela->created_at }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $tutela->estado->estado_funcionario }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $tutela->radicado }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $tutela->prioridad->prioridad }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('gestionar_asignacion_tutela', ['id' => $tutela->id]) }}"
+                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
