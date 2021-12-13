@@ -68,9 +68,10 @@ class TutelaController extends Controller
             $nuevo_auto_admisorio['estadostutela_id'] = 1;
             $nuevo_auto_admisorio['radicado'] = $request['radicado'];
             $nuevo_auto_admisorio['jurisdiccion'] = $request['jurisdiccion'];
-            $nuevo_auto_admisorio['juzgado'] = $request['juzgado'];
-            $nuevo_auto_admisorio['departamento'] = $request['departamento'];
-            $nuevo_auto_admisorio['municipio'] = $request['municipio'];
+            $despacho =  Despachos::findOrFail($request["juzgado"]);
+            $nuevo_auto_admisorio['juzgado'] = $despacho['nombre_despacho'];
+            $nuevo_auto_admisorio['departamento'] = $despacho['departamento'];
+            $nuevo_auto_admisorio['municipio'] = $despacho['municipio'];
             $nuevo_auto_admisorio['fecha_notificacion'] = $request['fecha_notificacion'];
 
             $nuevo_auto_admisorio['nombre_juez'] = $request['nombreApellido_juez'];

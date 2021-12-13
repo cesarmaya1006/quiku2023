@@ -85,12 +85,16 @@
                                     <h5>Términos</h5>
                                 </div>
                                 <div class="row px-2">
-                                    <div class="col-12">
-                                        <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_termino }}</p>
-                                    </div>
-                                    <div class="col-12">
-                                        <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_termino }}</p>
-                                    </div>
+                                    @if($tutela->dias_termino)
+                                        <div class="col-12">
+                                            <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_termino }}</p>
+                                        </div>
+                                    @endif
+                                    @if($tutela->horas_termino)
+                                        <div class="col-12">
+                                            <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_termino }}</p>
+                                        </div>
+                                    @endif
                                     @if ($tutela->url_admisorio)
                                     <div class="row">
                                         <div class="col-12">
@@ -125,12 +129,16 @@
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Descripción:</strong> {{ $tutela->text_medida_cautelar }}</p>
                                             </div>
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_medida_cautelar }}</p>
-                                            </div>
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_medida_cautelar }}</p>
-                                            </div>
+                                            @if($tutela->dias_medida_cautelar)
+                                                <div class="col-12">
+                                                    <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_medida_cautelar }}</p>
+                                                </div>
+                                            @endif
+                                            @if($tutela->horas_medida_cautelar)
+                                                <div class="col-12">
+                                                    <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_medida_cautelar }}</p>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                     @endif
@@ -145,9 +153,15 @@
                                     @foreach ( $tutela->accions as $accion)
                                         <div class="col-12 row">
                                             <div class="col-6">
-                                                <div class="col-12 mb-3">
-                                                    <h6 class="pl-4">Accionante</h6>
-                                                </div>
+                                                @if($accion->tipo_accion == 'Accionante')
+                                                    <div class="col-12 mb-3">
+                                                        <h6 class="pl-4">Accionante</h6>
+                                                    </div>
+                                                @else
+                                                    <div class="col-12 mb-3">
+                                                        <h6 class="pl-4">Accionado</h6>
+                                                    </div>
+                                                @endif
                                                 <div class="col-12">
                                                     <p class="text-justify"><strong>Nombre:</strong> {{ $accion->nombres_accion }}  {{ $accion->apellidos_accion }}</p>
                                                 </div>
@@ -254,6 +268,52 @@
                                         </div>
                                         <div class="col-12">
                                             <p class="text-justify">{{ $hecho->hecho }}</p>
+                                            @if ($hecho->respuesta->respuesta)
+                                                <hr>
+                                                <div class="respuesta mt-2">
+                                                    <h6>Respuesta</h6>
+                                                    {!! $hecho->respuesta->respuesta !!}
+                                                </div>
+                                                <hr>
+                                                @if (isset($hecho->respuesta))
+                                                    @if (sizeOf($hecho->respuesta->documentos))
+                                                        <div class="row respuestaAnexos">
+                                                            <div class="col-12">
+                                                                <div class="col-12">
+                                                                    <h6>Anexos respuesta hecho</h6>
+                                                                </div>
+                                                                <div class="col-12 table-responsive">
+                                                                    <table class="table table-light" style="font-size: 0.8em;">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Nombre</th>
+                                                                                <th scope="col">Descripción</th>
+                                                                                <th scope="col">Archivo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach ($hecho->respuesta->documentos as $anexo)
+                                                                                <tr>
+                                                                                    <td class="text-justify">
+                                                                                        {{ $anexo->titulo }}
+                                                                                    </td>
+                                                                                    <td class="text-justify">
+                                                                                        {{ $anexo->descripcion }}
+                                                                                    </td>
+                                                                                    <td><a href="{{ asset('documentos/tutelas/hechos/' . $anexo->url) }}"
+                                                                                            target="_blank"
+                                                                                            rel="noopener noreferrer">Descargar</a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endif
+                                            @endif
                                         </div>
                                     </div>
                                  @endforeach  

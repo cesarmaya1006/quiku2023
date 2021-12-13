@@ -52,6 +52,10 @@
         .mb-6{ margin-bottom: 6%; }
         .mt-3{ margin-top: 3%; }
         .firma{ max-width: 100px; max-height: 80px; margin-top: 3%; }
+        .tabla table, .tabla th, .tabla td { border: 1px solid black; border-collapse: collapse;}
+        .p-negro { line-height: .3; }
+            
+}
 
     </style>
 
@@ -79,17 +83,19 @@
             <p>E. S. D.</p>
         </div>
         <div>
+            @php
+                $accionantes = $tutela->accions->where('tipo_accion', 'Accionante');
+                $contadorAccionates = 0;
+                $accionado = $tutela->accions->where('tipo_accion', 'Accionado')->first();
+            @endphp
             <p>Ref. Acción de tutela de: 
-                @foreach ($tutela->accions as $key => $accion)
-                @if($key < 2)
-                    {{$accion->nombres_accion}} {{$accion->apellidos_accion}}
-                @endif
+            @foreach ($accionantes as $key => $accionante)
+                <strong>{{$accionante->nombres_accion}} {{$accionante->apellidos_accion}}, </strong>
             @endforeach 
-            contra (accionado - si son más de dos coger dos y agregar “y otros”)</p>
+            contra <strong>{{$accionado->nombres_accion}} {{$accionado->apellidos_accion}}. </strong></p>
             <p>Radicación N° {{$tutela->radicado}}</p>
             <p>Respetado Señor Juez (a): {{$tutela->nombre_juez}}</p>
-            <p>
-                (nombre apoderado accionado – Debe ser tomado de una tabla paramétrica en el momento de aprobación), mayor de edad, con domicilio en la Ciudad de Bogotá, D.C., identificado con la Cédula de Ciudadanía N° 1.018.417.398 de Bogotá D. C., Abogado en ejercicio, titular de la Tarjeta Profesional N° 249.746 del Consejo Superior de la Judicatura, en mi calidad de Apoderado de la Parte demandada, esto es, de la sociedad MEDIMÁS EPS SAS, según poder que me fuera concedido por el señor LEONARDO LÓPEZ AMAYA quien actúa Apoderado General de MEDIMÁS EPS SAS (Campo dentro de la misma tabla paramétrica), ante Usted acudo y en ejercicio del Poder conferido, para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.
+            <p>Juliana Morad Acero, mayor de edad, con domicilio en la ciudad de Bogotá, D.C., identificada con la Cédula de Ciudadanía N° 1.018.417.398 de Bogotá D. C., en calidad de representante legal de MGL Y ASOCIADOS S.A.S., ante Usted acudo para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.
             </p>
         </div>
         <div>
@@ -112,8 +118,9 @@
             @endforeach
         </div>
         <div>
-            <h4 style="text-align: center;">III.  PRONUNCIAMIENTO FRENTE A LAS PRETENSIONES</h4>
+            <h4 style="text-align: center;">III.  FUNDAMENTOS Y RAZONES DE DERECHO</h4>
             @foreach($tutela->respuestasPretensiones as $key => $respuesta)
+                <h4>Prestensión(es)</h4>
                 @foreach($respuesta->relacion as $key => $relacion)
                     <p style="text-transform: capitalize;">{{$relacion->pretension->pretension}}</p>
                 @endforeach
@@ -121,13 +128,29 @@
                 <p> {!! $respuesta->respuesta !!}</p>
             @endforeach
         </div>
-        <div>
+        <div class="tabla">
             <h4 style="text-align: center;">IV.  PRUEBAS APORTADAS CON LA CONTESTACIÓN</h4>
-            <table class="table table-light"  style="font-size: 0.8em;" >
+            <ol>
+                @foreach ($tutela->hechos as $key => $hecho)
+                    @foreach ($hecho->respuesta->documentos as $key => $anexo)
+                        <li>
+                            <p class="text-justify">{{ $anexo->titulo }}</p>
+                        </li>
+                    @endforeach
+                @endforeach
+                @foreach ($tutela->respuestasPretensiones as $key => $respuesta)
+                    @foreach ($respuesta->documentos as $key => $anexo)
+                        <li>
+                            <p class="text-justify">{{ $anexo->titulo }}</p>
+                        </li>
+                    @endforeach
+            @endforeach
+            </ol>
+            {{-- <table class="table table-light"  style="font-size: 0.8em;" >
                 <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Descripción</th>
+                        <th scope="col">NOMBRE</th>
+                        <th scope="col">DESCRIPCIÓN</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -152,7 +175,7 @@
                         @endforeach
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
         </div>
         <div>
             <h4 style="text-align: center;">V.  ANEXOS</h4>
@@ -160,7 +183,7 @@
         </div>
         <div>
             <h4 style="text-align: center;">VI.  NOTIFICACIONES</h4>
-            <p style="text-transform: capitalize;">La dirección de (nombre de cliente) en la (dirección cliente), o al correo electrónico (correo electrónico cliente)</p>
+            <p style="text-transform: capitalize;">La dirección de MGL y Asociados S.A.S. en la ciudad de Bogotá en la carrera 13 # 76-12 piso 4, o al correo electrónico dlopez@mglasociados.com</p>
         </div>
         <div>
             <p>Del Señor (a) Juez,</p>
@@ -173,12 +196,14 @@
                 $aprueba = $tutela->asignaciontareas->where('tareas_id', 4)[3];
             @endphp
             @if($firma && $firma != '') 
-                <img src="{{ $firma }}" class="" alt="firma">
+                <img src="{{ $firma }}" class="firma" alt="firma">
             @else
                 <p style="font-style: italic;">* Espacio para estanpar firma electrónica</p>
             @endif
-            <p style="font-weight: bold;">{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}</p>
-            <p>{{ $aprueba->empleado->cargo->cargo}}</p>
+            <p style="font-weight: bold;">Juliana Morad Acero</p>
+            <p class="p-negro">C.C. 1.018.417.398</p>
+            <p class="p-negro">Representante Legal</p>
+            <p class="p-negro">MGL y Asociados S.A.S.</p>
         </div>
     </main>
     <footer>

@@ -302,7 +302,7 @@
                         <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
-                        <th class="text-center" style="white-space:nowrap;">Estado Peticiones</th>
+                        <th class="text-center" style="white-space:nowrap;">Estado Proceso</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -312,32 +312,44 @@
                             <td class="text-center" style="white-space:nowrap;">{{ $proyecta->tutela->fecha_radicado }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $proyecta->tutela->estado->estado_funcionario }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $proyecta->tutela->radicado }}</td>
-                            </td>
-                            <td class="text-center" style="white-space:nowrap;">
-                                {{ $proyecta->tutela->prioridad->prioridad }}
-                            </td>
-                            {{-- @php
-                                $porcentaje = 0;
-                                foreach ($tarea->pqr->peticiones as $key => $peticion) {
-                                    $porcentaje += $peticion->estadopeticion->estado;
-                                }
-                            @endphp --}}
-                            {{-- @if ( $porcentaje / $tarea->pqr->peticiones->count() == 100)
-                                <td class="text-center bg-success" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                            @if($proyecta->tutela->prioridad_id == 1)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $proyecta->tutela->prioridad->prioridad }}
                                 </td>
-                            @elseif($porcentaje / $tarea->pqr->peticiones->count() == 0 )
+                            @elseif($proyecta->tutela->prioridad_id == 2)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $proyecta->tutela->prioridad->prioridad }}
+                                </td>
+                            @else
                                 <td class="text-center bg-danger" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                    {{ $proyecta->tutela->prioridad->prioridad }}
+                                </td>
+                            @endif
+                            @php
+                                $porcentaje = 0;
+                                $totalColaboraciones = 0;
+                                foreach ($proyecta->tutela->hechos as $key => $hecho) {
+                                    $porcentaje += $hecho->estadohecho->estado;
+                                    $totalColaboraciones ++;
+                                }
+                                foreach ($proyecta->tutela->pretensiones as $key => $pretension) {
+                                    $porcentaje += $pretension->estadopretension->estado;
+                                    $totalColaboraciones ++;
+                                }
+                            @endphp 
+                            @if ( $porcentaje / $totalColaboraciones == 100)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ round($porcentaje / $totalColaboraciones) }}%
+                                </td>
+                            @elseif($porcentaje / $totalColaboraciones == 0 )
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ round($porcentaje / $totalColaboraciones) }}%
                                 </td>
                             @else
                                 <td class="text-center bg-warning" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                    {{ round($porcentaje / $totalColaboraciones) }}%
                                 </td>
-                            @endif --}}
-                            <td>
-                                -----
-                            </td>
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_proyecta_tutela', ['id' => $proyecta->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -351,36 +363,6 @@
     </div>
     {{-- Tabla Colaboración --}}
     <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
-        {{-- @php
-            function dias_restantes($fecha_inicial,$fecha_final){
-                $dias = (strtotime($fecha_inicial)-strtotime($fecha_final))/86400;
-                $dias = abs($dias); 
-                $dias = floor($dias);
-                return $dias;
-            }
-
-            function dias_estado($fecha_inicial,$fecha_final, $estadoPQR){
-                $totaldias = (strtotime($fecha_inicial)-strtotime($fecha_final))/86400;
-                $totaldias = abs($totaldias); 
-                $totaldias = floor($totaldias);
-                $contdias = (strtotime(date('Y-m-d') )-strtotime($fecha_final))/86400;
-                $contdias = abs($contdias); 
-                $contdias = floor($contdias - 1 );
-                $porcentaje = floor((($contdias) / $totaldias) * 100 );
-                $respuesta = 0 ;
-                if($porcentaje >= 30){
-                    $respuesta = 1;
-                }elseif ($porcentaje > 0) {
-                    $respuesta = 2;
-                }else {
-                    $respuesta = 3;
-                }
-                if($estadoPQR == 6 || $estadoPQR == 9 || $estadoPQR == 10){
-                    $respuesta = 4;
-                }
-                return $respuesta;
-            }
-        @endphp --}}
         <div class="card-header">
             <h3 class="card-title font-weight-bold">Colaboraciones</h3>
             <div class="card-tools">
@@ -394,71 +376,35 @@
             <table class="table table-striped table-hover table-sm display">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>Num. Radicado</th>
-                        <th>Fecha de radicación</th>
-                        <th>Tipo de PQR</th>
-                        <th>Tramite PQR</th>
-                        <th>Prioridad</th>
-                        <th>Estado PQR</th>
-                        <th>Petición PQR</th>
-                        <th>Plazo de respuesta (Días hábiles)</th>
-                        <th>Dias de vencimiento calendario</th>
-                        <th>Fecha estimada de respuesta</th>
-                        <th>Ver</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha radica usuario</th>
+                        <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
+                        <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
+                        <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                        <th class="text-center" style="white-space:nowrap;">Estado Hecho</th>
+                        <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($hechos as $hecho)
                         <tr>
-                            {{-- @php
-                            $fechaFinal = date('Y-m-d', strtotime($peticion->pqr->fecha_generacion . '+ ' . ($peticion->pqr->tiempo_limite) . ' days'));
-                            @endphp
-                            <td>{{ $peticion->pqr->radicado }}</td>
-                            <td>{{ $peticion->pqr->created_at }}</td>
-                            <td>{{ $peticion->pqr->tipoPqr->tipo }}</td>
-                            <td>{{ $peticion->pqr->estado->estado_funcionario }}</td>
-                            @if ($peticion->pqr->prioridad_id == 1)
-                                <td class="bg-green">{{ $peticion->pqr->prioridad->prioridad}}</td>
-                            @elseif($peticion->pqr->prioridad_id == 2)
-                                <td class="bg-yellow">{{ $peticion->pqr->prioridad->prioridad}}</td>
-                            @elseif($peticion->pqr->prioridad_id == 3)
-                                <td class="bg-red">{{ $peticion->pqr->prioridad->prioridad}}</td>
-                            @endif
-                            @php
-                                $diasEstado = dias_estado($peticion->pqr->fecha_radicado, $fechaFinal, $peticion->pqr->estado->id);
-                            @endphp
-                            @if ($diasEstado == 1)
-                                <td class="bg-green" >
-                                    En terminos
+                            <td class="text-center" style="white-space:nowrap;">{{ $hecho->tutela->fecha_radicado }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $hecho->tutela->estado->estado_funcionario }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $hecho->tutela->radicado }}</td>
+                            @if($hecho->tutela->prioridad_id == 1)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $hecho->tutela->prioridad->prioridad }}
                                 </td>
-                            @elseif ($diasEstado == 2)
-                                <td class="bg-yellow">
-                                    Proxima a vencer
+                            @elseif($hecho->tutela->prioridad_id == 2)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $hecho->tutela->prioridad->prioridad }}
                                 </td>
-                            @elseif($diasEstado == 3)
-                                <td class="bg-red">
-                                    Vencida
-                                </td>
-                            @elseif($diasEstado == 4)
-                                <td class="bg-blue">
-                                    Cerrado 
+                            @else
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $hecho->tutela->prioridad->prioridad }}
                                 </td>
                             @endif
-                            <td>{{ $peticion->estadopeticion->estado }} %</td>
-                            <td>{{ $peticion->pqr->tipoPqr->tiempos + $peticion->pqr->prorroga_dias + $peticion->recurso_dias }}</td>
-                            <td>{{ dias_restantes(date('Y-m-d'), $fechaFinal) }}</td>
-                            <td>{{ $fechaFinal }}</td> --}}
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $hecho->estadohecho->estado }} %</td>
+                            <td class="text-center">
                                 <a href="{{ route('gestionar_tutela', ['id' => $hecho->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
@@ -472,71 +418,35 @@
             <table class="table table-striped table-hover table-sm display">
                 <thead class="thead-inverse">
                     <tr>
-                        <th>Num. Radicado</th>
-                        <th>Fecha de radicación</th>
-                        <th>Tipo de PQR</th>
-                        <th>Tramite PQR</th>
-                        <th>Prioridad</th>
-                        <th>Estado PQR</th>
-                        <th>Petición PQR</th>
-                        <th>Plazo de respuesta (Días hábiles)</th>
-                        <th>Dias de vencimiento calendario</th>
-                        <th>Fecha estimada de respuesta</th>
-                        <th>Ver</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha radica usuario</th>
+                        <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
+                        <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
+                        <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                        <th class="text-center" style="white-space:nowrap;">Estado Pretensión</th>
+                        <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($pretensiones as $pretension)
                         <tr>
-                            {{-- @php
-                            $fechaFinal = date('Y-m-d', strtotime($peticion->pqr->fecha_generacion . '+ ' . ($peticion->pqr->tiempo_limite) . ' days'));
-                            @endphp
-                            <td>{{ $peticion->pqr->radicado }}</td>
-                            <td>{{ $peticion->pqr->created_at }}</td>
-                            <td>{{ $peticion->pqr->tipoPqr->tipo }}</td>
-                            <td>{{ $peticion->pqr->estado->estado_funcionario }}</td>
-                            @if ($peticion->pqr->prioridad_id == 1)
-                                <td class="bg-green">{{ $peticion->pqr->prioridad->prioridad}}</td>
-                            @elseif($peticion->pqr->prioridad_id == 2)
-                                <td class="bg-yellow">{{ $peticion->pqr->prioridad->prioridad}}</td>
-                            @elseif($peticion->pqr->prioridad_id == 3)
-                                <td class="bg-red">{{ $peticion->pqr->prioridad->prioridad}}</td>
-                            @endif
-                            @php
-                                $diasEstado = dias_estado($peticion->pqr->fecha_radicado, $fechaFinal, $peticion->pqr->estado->id);
-                            @endphp
-                            @if ($diasEstado == 1)
-                                <td class="bg-green" >
-                                    En terminos
+                            <td class="text-center" style="white-space:nowrap;">{{ $pretension->tutela->fecha_radicado }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $pretension->tutela->estado->estado_funcionario }}</td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $pretension->tutela->radicado }}</td>
+                            @if($pretension->tutela->prioridad_id == 1)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $pretension->tutela->prioridad->prioridad }}
                                 </td>
-                            @elseif ($diasEstado == 2)
-                                <td class="bg-yellow">
-                                    Proxima a vencer
+                            @elseif($pretension->tutela->prioridad_id == 2)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $pretension->tutela->prioridad->prioridad }}
                                 </td>
-                            @elseif($diasEstado == 3)
-                                <td class="bg-red">
-                                    Vencida
-                                </td>
-                            @elseif($diasEstado == 4)
-                                <td class="bg-blue">
-                                    Cerrado 
+                            @else
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $pretension->tutela->prioridad->prioridad }}
                                 </td>
                             @endif
-                            <td>{{ $peticion->estadopeticion->estado }} %</td>
-                            <td>{{ $peticion->pqr->tipoPqr->tiempos + $peticion->pqr->prorroga_dias + $peticion->recurso_dias }}</td>
-                            <td>{{ dias_restantes(date('Y-m-d'), $fechaFinal) }}</td>
-                            <td>{{ $fechaFinal }}</td> --}}
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
+                            <td class="text-center" style="white-space:nowrap;">{{ $pretension->estadopretension->estado }} %</td>
+                            <td class="text-center">
                                 <a href="{{ route('gestionar_tutela', ['id' => $pretension->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
@@ -574,29 +484,19 @@
                             <td class="text-center" style="white-space:nowrap;">{{ $revision->tutela->fecha_radicado }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $revision->tutela->estado->estado_funcionario }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $revision->tutela->radicado }}</td>
-                            </td>
-                            <td class="text-center" style="white-space:nowrap;">
-                                {{ $revision->tutela->prioridad->prioridad }}
-                            </td>
-                            {{-- @php
-                                $porcentaje = 0;
-                                foreach ($tarea->pqr->peticiones as $key => $peticion) {
-                                    $porcentaje += $peticion->estadopeticion->estado;
-                                }
-                            @endphp --}}
-                            {{-- @if ( $porcentaje / $tarea->pqr->peticiones->count() == 100)
-                                <td class="text-center bg-success" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                            @if($revision->tutela->prioridad_id == 1)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $revision->tutela->prioridad->prioridad }}
                                 </td>
-                            @elseif($porcentaje / $tarea->pqr->peticiones->count() == 0 )
-                                <td class="text-center bg-danger" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                            @elseif($revision->tutela->prioridad_id == 2)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $revision->tutela->prioridad->prioridad }}
                                 </td>
                             @else
-                                <td class="text-center bg-warning" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $revision->tutela->prioridad->prioridad }}
                                 </td>
-                            @endif --}}
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_revisa_tutela', ['id' => $revision->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -635,29 +535,19 @@
                             <td class="text-center" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_radicado }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $aprobar->tutela->estado->estado_funcionario }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $aprobar->tutela->radicado }}</td>
-                            </td>
-                            <td class="text-center" style="white-space:nowrap;">
-                                {{ $aprobar->tutela->prioridad->prioridad }}
-                            </td>
-                            {{-- @php
-                                $porcentaje = 0;
-                                foreach ($tarea->pqr->peticiones as $key => $peticion) {
-                                    $porcentaje += $peticion->estadopeticion->estado;
-                                }
-                            @endphp --}}
-                            {{-- @if ( $porcentaje / $tarea->pqr->peticiones->count() == 100)
-                                <td class="text-center bg-success" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                            @if($aprobar->tutela->prioridad_id == 1)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $aprobar->tutela->prioridad->prioridad }}
                                 </td>
-                            @elseif($porcentaje / $tarea->pqr->peticiones->count() == 0 )
-                                <td class="text-center bg-danger" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                            @elseif($aprobar->tutela->prioridad_id == 2)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $aprobar->tutela->prioridad->prioridad }}
                                 </td>
                             @else
-                                <td class="text-center bg-warning" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $aprobar->tutela->prioridad->prioridad }}
                                 </td>
-                            @endif --}}
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_aprueba_tutela', ['id' => $aprobar->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -696,29 +586,19 @@
                             <td class="text-center" style="white-space:nowrap;">{{ $radicar->tutela->fecha_radicado }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $radicar->tutela->estado->estado_funcionario }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $radicar->tutela->radicado }}</td>
-                            </td>
-                            <td class="text-center" style="white-space:nowrap;">
-                                {{ $radicar->tutela->prioridad->prioridad }}
-                            </td>
-                            {{-- @php
-                                $porcentaje = 0;
-                                foreach ($tarea->pqr->peticiones as $key => $peticion) {
-                                    $porcentaje += $peticion->estadopeticion->estado;
-                                }
-                            @endphp --}}
-                            {{-- @if ( $porcentaje / $tarea->pqr->peticiones->count() == 100)
-                                <td class="text-center bg-success" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                            @if($radicar->tutela->prioridad_id == 1)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $radicar->tutela->prioridad->prioridad }}
                                 </td>
-                            @elseif($porcentaje / $tarea->pqr->peticiones->count() == 0 )
-                                <td class="text-center bg-danger" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                            @elseif($radicar->tutela->prioridad_id == 2)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $radicar->tutela->prioridad->prioridad }}
                                 </td>
                             @else
-                                <td class="text-center bg-warning" style="white-space:nowrap;">
-                                    {{ $porcentaje / $tarea->pqr->peticiones->count() }}%
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $radicar->tutela->prioridad->prioridad }}
                                 </td>
-                            @endif --}}
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_radica_tutela', ['id' => $radicar->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -747,7 +627,6 @@
                         <th class="text-center" style="white-space:nowrap;">Fecha radica Funcionario</th>
                         <th class="text-center" style="white-space:nowrap;">Estado</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
-                        <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -757,7 +636,6 @@
                             <td class="text-center" style="white-space:nowrap;">{{ $tutela->created_at }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $tutela->estado->estado_funcionario }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $tutela->radicado }}</td>
-                            <td class="text-center" style="white-space:nowrap;">{{ $tutela->prioridad->prioridad }}</td>
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_tutela', ['id' => $tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i

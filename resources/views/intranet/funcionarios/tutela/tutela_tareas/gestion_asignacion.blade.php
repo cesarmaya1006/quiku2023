@@ -74,6 +74,94 @@
                                 </div>
                             </div>
                         </div>
+                        @if($tutela->estadostutela_id == 4)
+                            {{-- Inicio Bloque Tarjetas --}}
+                            <div class="col-12 d-flex flex-wrap rounded border justify-content-center my-2 p-2 ">
+                                <a href="" class="menu-radicado btn card-step verificado activo"
+                                    data-content='menu-card-radicado'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="far fa-file-alt"></i>
+                                        </span>
+                                        <h6>Registro Sentencia 1ra Instancia</h6>
+                                    </div>
+                                </a>
+                                <a href="" class="menu-prorroga btn card-step desativado"
+                                    data-content='menu-card-prorroga'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="far fa-file-alt"></i>
+                                        </span>
+                                        <h6>Recurso de Impugnación</h6>
+                                    </div>
+                                </a>
+                                <a href="" class="menu-aclaracion btn card-step desativado "
+                                    data-content='menu-card-aclaraciones'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="far fa-file-alt"></i>
+                                        </span>
+                                        <h6>Registro Sentencia 2ra Instancia</h6>
+                                    </div>
+                                </a>
+                                <a href="" class="menu-aclaracion btn card-step desativado "
+                                    data-content='menu-card-aclaraciones'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="far fa-file-alt"></i>
+                                        </span>
+                                        <h6>Registro Sentencia de Revisión</h6>
+                                    </div>
+                                </a>
+                                <a href="" class="menu-aclaracion btn card-step desativado "
+                                    data-content='menu-card-aclaraciones'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="far fa-file-alt"></i>
+                                        </span>
+                                        <h6>Registro de Desacato</h6>
+                                    </div>
+                                </a>
+                                <a href="" class="menu-aclaracion btn card-step desativado "
+                                    data-content='menu-card-aclaraciones'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="far fa-file-alt"></i>
+                                        </span>
+                                        <h6>Respuesta Desacato</h6>
+                                    </div>
+                                </a>
+                                <a href="" class="menu-aclaracion btn card-step desativado "
+                                    data-content='menu-card-aclaraciones'>
+                                    <div class="">
+                                        <span style="font-size: 2.5em;">
+                                            <i class="far fa-file-alt"></i>
+                                        </span>
+                                        <h6>Decisión Desacato</h6>
+                                    </div>
+                                </a>
+                            </div>
+                            {{-- Fin Bloque Tarjetas --}}
+                            <div class="col-12 rounded border mb-3 p-2">
+                                <div class="row d-flex px-4"> 
+                                    <div class="col-12 col-md-5 form-group mt-2">
+                                        <label for="">Seleccionar nuevo proceso</label>
+                                        <select class="custom-select rounded-0">
+                                            <option value="">Registro Sentencia 1ra Instancia</option>
+                                            <option value="">Recurso de Impugnación</option>
+                                            <option value="">Registro Sentencia 2ra Instancia</option>
+                                            <option value="">Registro Sentencia de Revisión</option>
+                                            <option value="">Registro de Desacato</option>
+                                            <option value="">Respuesta Desacato</option>
+                                            <option value="">Decisión Desacato</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group d-flex align-items-end">
+                                        <button href="" class="btn btn-primary py-2 px-3" >Iniciar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         <div class="col-12 rounded border mb-3 p-2">
                             <div class="menu-card">
                                 <div class="col-12 mt-2">
@@ -84,12 +172,16 @@
                                     <h5>Términos</h5>
                                 </div>
                                 <div class="row px-2">
-                                    <div class="col-12">
-                                        <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_termino }}</p>
-                                    </div>
-                                    <div class="col-12">
-                                        <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_termino }}</p>
-                                    </div>
+                                    @if($tutela->dias_termino)
+                                        <div class="col-12">
+                                            <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_termino }}</p>
+                                        </div>
+                                    @endif
+                                    @if($tutela->horas_termino)
+                                        <div class="col-12">
+                                            <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_termino }}</p>
+                                        </div>
+                                    @endif
                                     @if ($tutela->url_admisorio)
                                     <div class="row">
                                         <div class="col-12">
@@ -124,12 +216,16 @@
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Descripción:</strong> {{ $tutela->text_medida_cautelar }}</p>
                                             </div>
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_medida_cautelar }}</p>
-                                            </div>
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_medida_cautelar }}</p>
-                                            </div>
+                                            @if($tutela->dias_medida_cautelar)
+                                                <div class="col-12">
+                                                    <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_medida_cautelar }}</p>
+                                                </div>
+                                            @endif
+                                            @if($tutela->horas_medida_cautelar)
+                                                <div class="col-12">
+                                                    <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_medida_cautelar }}</p>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                     @endif
@@ -144,9 +240,15 @@
                                     @foreach ( $tutela->accions as $accion)
                                         <div class="col-12 row">
                                             <div class="col-6">
-                                                <div class="col-12 mb-3">
-                                                    <h6 class="pl-4">Accionante</h6>
-                                                </div>
+                                                @if($accion->tipo_accion == 'Accionante')
+                                                    <div class="col-12 mb-3">
+                                                        {{-- <h6 class="pl-4">Accionante</h6> --}}
+                                                    </div>
+                                                @else
+                                                    <div class="col-12 mb-3">
+                                                        <h6 class="pl-4">Accionado</h6>
+                                                    </div>
+                                                @endif
                                                 <div class="col-12">
                                                     <p class="text-justify"><strong>Nombre:</strong> {{ $accion->nombres_accion }}  {{ $accion->apellidos_accion }}</p>
                                                 </div>
@@ -254,6 +356,54 @@
                                         <div class="col-12">
                                             <p class="text-justify">{{ $hecho->hecho }}</p>
                                         </div>
+                                        @if ($hecho->respuesta)
+                                            @if ($hecho->respuesta->respuesta)
+                                                <hr>
+                                                <div class="respuesta mt-2">
+                                                    <h6>Respuesta</h6>
+                                                    {!! $hecho->respuesta->respuesta !!}
+                                                </div>
+                                                <hr>
+                                                @if (isset($hecho->respuesta))
+                                                    @if (sizeOf($hecho->respuesta->documentos))
+                                                        <div class="row respuestaAnexos">
+                                                            <div class="col-12">
+                                                                <div class="col-12">
+                                                                    <h6>Anexos respuesta hecho</h6>
+                                                                </div>
+                                                                <div class="col-12 table-responsive">
+                                                                    <table class="table table-light" style="font-size: 0.8em;">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Nombre</th>
+                                                                                <th scope="col">Descripción</th>
+                                                                                <th scope="col">Archivo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach ($hecho->respuesta->documentos as $anexo)
+                                                                                <tr>
+                                                                                    <td class="text-justify">
+                                                                                        {{ $anexo->titulo }}
+                                                                                    </td>
+                                                                                    <td class="text-justify">
+                                                                                        {{ $anexo->descripcion }}
+                                                                                    </td>
+                                                                                    <td><a href="{{ asset('documentos/tutelas/hechos/' . $anexo->url) }}"
+                                                                                            target="_blank"
+                                                                                            rel="noopener noreferrer">Descargar</a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endif
+                                            @endif
+                                        @endif
                                     </div>
                                  @endforeach  
                             </div>
