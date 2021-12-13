@@ -251,7 +251,7 @@
                                                             <select class="form-control form-control-sm tipo_persona_accion"
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
-                                                                <option value="Persona natura">Persona natural</option>
+                                                                <option value="Persona natura">Persona Natural</option>
                                                                 <option value="Persona Jurídica">Persona Jurídica</option>
                                                             </select>
                                                         </div>
