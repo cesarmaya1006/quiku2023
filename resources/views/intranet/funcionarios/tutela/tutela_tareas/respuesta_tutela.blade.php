@@ -92,7 +92,7 @@
             @foreach ($accionantes as $key => $accionante)
                 <strong>{{$accionante->nombres_accion}} {{$accionante->apellidos_accion}}, </strong>
             @endforeach 
-            contra <strong>{{$accionado->nombres_accion}} {{$accionado->apellidos_accion}}. </strong></p>
+            contra <strong>Wilson Ruiz. </strong></p>
             <p>Radicación N° {{$tutela->radicado}}</p>
             <p>Respetado Señor Juez (a): {{$tutela->nombre_juez}}</p>
             <p>Juliana Morad Acero, mayor de edad, con domicilio en la ciudad de Bogotá, D.C., identificada con la Cédula de Ciudadanía N° 1.018.417.398 de Bogotá D. C., en calidad de representante legal de MGL Y ASOCIADOS S.A.S., ante Usted acudo para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.

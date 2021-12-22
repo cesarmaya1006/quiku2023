@@ -867,7 +867,9 @@
                                                     <div class="col-12 form-group mt-3">
                                                         @if ($hecho->estadohecho->estado == 100)
                                                             <div class="respuesta mt-2">
-                                                                {!! $hecho->respuesta->respuesta !!}
+                                                                @if($hecho->respuesta)
+                                                                    {!! $hecho->respuesta->respuesta !!}
+                                                                @endif
                                                             </div>
                                                         @else
                                                             <textarea type="text"
@@ -875,6 +877,7 @@
                                                                 rows="6"
                                                                 max>{{ isset($hecho->respuesta->respuesta) ? $hecho->respuesta->respuesta : '' }}</textarea>
                                                         @endif
+                                                        
                                                         @if (isset($hecho->respuesta->respuesta))
                                                             <input class="respuesta_anterior" type="hidden"
                                                                 value="{{ $hecho->respuesta->respuesta }}"
