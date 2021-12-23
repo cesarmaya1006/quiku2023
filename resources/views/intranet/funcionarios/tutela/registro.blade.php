@@ -195,7 +195,7 @@
                                                 <h6 class="mt-3 font-weight-bold mb-3">Plazo medida cautelar</h6>
                                                 <div class="form-group row">
                                                     <div class="col-12 col-md-6 form-group selectorTiempoMedida">
-                                                        <label class="requerido" for="">Selector tiempo medida cautelar</label>
+                                                        <label class="" for="">Selector tiempo medida cautelar</label>
                                                         <select class="custom-select rounded-0 selector">
                                                             <option value="">--Seleccione--</option>
                                                             <option value="1">Días</option>
@@ -219,7 +219,7 @@
                                 </div>
                                 <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
                                     <div class="card-header">
-                                        <h3 class="card-title font-weight-bold">Accionante o accionado</h3>
+                                        <h3 class="card-title font-weight-bold">Accionantes</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-plus"></i>
@@ -232,26 +232,18 @@
                                                 <div class="col-12 bloque_accions">
                                                     <div class="col-12 d-flex row contenido_accion">
                                                         <div class="col-12 d-flex justify-content-between">
-                                                            <h6>Accionante/Accionado</h6>
+                                                            <h6>Accionante</h6>
                                                             <button type="button"
                                                                 class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_accion"><i
                                                                     class="fas fa-minus-circle"></i></button>
                                                         </div>
-                                                        <div class="form-group col-md-6 mt-3">
-                                                            <label class="requerido" for="tipo_rol_accion">Tipo</label>
-                                                            <select class="form-control form-control-sm tipo_rol_accion"
-                                                                required>
-                                                                <option value="">--Seleccione un tipo--</option>
-                                                                <option value="Accionante">Accionante</option>
-                                                                <option value="Accionado">Accionado</option>
-                                                            </select>
-                                                        </div>
+                                                        <input type="hidden" class="tipo_rol_accion" value="Accionante" >
                                                         <div class="form-group col-md-6 mt-3">
                                                             <label class="requerido" for="tipo_persona_accion">Tipo persona</label>
                                                             <select class="form-control form-control-sm tipo_persona_accion"
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
-                                                                <option value="Persona natura">Persona Natural</option>
+                                                                <option value="Persona Natural">Persona Natural</option>
                                                                 <option value="Persona Jurídica">Persona Jurídica</option>
                                                             </select>
                                                         </div>
@@ -267,18 +259,22 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        <div class="form-group col-md-6 mt-3">
+
+                                                        <div class="form-group col-md-6">
                                                             <label class="requerido" for="identificacion_accion">Número de documento</label>
                                                             <input type="text" class="form-control form-control-sm identificacion_accion" placeholder="Número documento" required>
                                                         </div>
+
                                                         <div class="col-12 col-md-6 form-group">
                                                             <label class="requerido" for="nombres_accion">Nombres</label>
                                                             <input type="text" class="form-control form-control-sm nombres_accion">
                                                         </div>
+
                                                         <div class="col-12 col-md-6 form-group">
                                                             <label class="" for="titulo">Apellidos</label>
                                                             <input type="text" class="form-control form-control-sm apellidos_accion">
                                                         </div>
+
                                                         <div class="form-group col-md-6">
                                                             <label class="" for="email_accion">Correo electrónico</label>
                                                             <input type="email" class="form-control correo_accion" placeholder="Correo electrónico" required>

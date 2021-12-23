@@ -212,6 +212,7 @@ class TutelaController extends Controller
         if ($request->ajax()) {
             $nuevo_hecho['auto_admisorio_id'] = $request['auto_admisorio_id'];
             $nuevo_hecho['hecho'] = $request['hecho'];
+            $nuevo_hecho['consecutivo'] = $request['consecutivo'];
             $repuesta = HechosTutela::create($nuevo_hecho);
             return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
         } else {
@@ -224,6 +225,7 @@ class TutelaController extends Controller
         if ($request->ajax()) {
             $nuevo_pretension['auto_admisorio_id'] = $request['auto_admisorio_id'];
             $nuevo_pretension['pretension'] = $request['pretension'];
+            $nuevo_pretension['consecutivo'] = $request['consecutivo'];
             $repuesta = PretensionesTutela::create($nuevo_pretension);
             return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
         } else {

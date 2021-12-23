@@ -204,11 +204,12 @@ window.addEventListener('DOMContentLoaded', function () {
             let auto_admisorio_id = contenedorPadre.querySelector('.auto_admisorio_id').value
 
             let hechos = contenedorPadre.querySelectorAll('.contenido_hecho')
-            hechos.forEach(item => {
+            hechos.forEach((item, key) => {
                 let hecho = item.querySelector('.hecho').value
                 let data = {
                     auto_admisorio_id,
-                    hecho
+                    hecho,
+                    consecutivo: key + 1
                 }
                 $.ajax({
                     url: url,
@@ -225,11 +226,12 @@ window.addEventListener('DOMContentLoaded', function () {
             })
 
             let pretensiones = contenedorPadre.querySelectorAll('.contenido_pretension')
-            pretensiones.forEach(item => {
+            pretensiones.forEach((item, key) => {
                 let pretension = item.querySelector('.pretension').value
                 let data = {
                     auto_admisorio_id,
-                    pretension
+                    pretension,
+                    consecutivo: key + 1
                 }
                 $.ajax({
                     url: url1,

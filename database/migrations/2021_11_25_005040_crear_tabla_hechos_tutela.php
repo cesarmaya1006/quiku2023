@@ -22,6 +22,7 @@ class CrearTablaHechosTutela extends Migration
             $table->unsignedBigInteger('estado_id')->default(1)->nullable();
             $table->foreign('estado_id', 'fk_estados_hechos_tutela')->references('id')->on('asignacion_estados_tutela')->onDelete('restrict')->onUpdate('restrict'); 
             $table->longText('hecho');
+            $table->integer('consecutivo');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

@@ -7,6 +7,10 @@ window.addEventListener('DOMContentLoaded', function () {
     btnEliminarAccions.forEach(btn => {
         btn.addEventListener('click', agregarEliminarAccion)
     })
+    let selectorTipo = document.querySelectorAll('.tipo_persona_accion')
+    selectorTipo.forEach(tipo => {
+        tipo.addEventListener('change', tipo_persona)
+    })
 
     function crearNuevoAccion(e) {
         e.preventDefault()
@@ -26,6 +30,7 @@ window.addEventListener('DOMContentLoaded', function () {
         nuevoAccion.querySelector('.telefono_apoderado').value = ''
         containerAccion.querySelector('.bloque_accions').appendChild(nuevoAccion)
         document.querySelectorAll('.eliminar_contenido_accion').forEach(item => item.addEventListener('click', agregarEliminarAccion))
+        document.querySelectorAll('.tipo_persona_accion').forEach(item => item.addEventListener('change', tipo_persona))
     }
 
     function agregarEliminarAccion(e) {
@@ -46,6 +51,22 @@ window.addEventListener('DOMContentLoaded', function () {
             idAccion.remove()
         }
     }
+
+    function tipo_persona(tipo){
+        let bloquePadre = tipo.target.parentElement.parentElement
+        let tipoPersona = tipo.target.value
+        if(tipoPersona == 'Persona Jurídica'){
+            bloquePadre.querySelector('.apellidos_accion').parentElement.classList.add('d-none')
+            bloquePadre.querySelector('.identificacion_accion').parentElement.querySelector('label').textContent = 'Nit'
+            bloquePadre.querySelector('.nombres_accion').parentElement.querySelector('label').textContent = 'Razón social'
+        }else{
+            bloquePadre.querySelector('.apellidos_accion').parentElement.classList.remove('d-none')
+            bloquePadre.querySelector('.identificacion_accion').parentElement.querySelector('label').textContent = 'Número de documento'
+            bloquePadre.querySelector('.nombres_accion').parentElement.querySelector('label').textContent = 'Nombres'
+        }
+    }
+
+
     // Fin Función para generar varios accions.
     // ---------------------------------------------------------------------------------------------------------
       // Inicio Función para generar varios anexos tutelas.
@@ -142,129 +163,133 @@ window.addEventListener('DOMContentLoaded', function () {
                 dias_medida_cautelar,
                 horas_medida_cautelar
             }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    dataAnexo.append('id', respuesta.data.id);
-                    if(archivo_anexo_admisorio){
-                        cargarArchivoAdmisorio(dataAnexo)
-                    }
-                    crearAccion(respuesta.data.id)
-                    crearAnexo(respuesta.data.id)
-                    window.location = `/funcionario/auto_admisorio_complemento/${respuesta.data.id}`
-                },
-                error: function(error) {
-                    console.log(error.responseJSON)
-                }
-            });
-
-            function cargarArchivoAdmisorio(datos){
+            if(radicado == '' || jurisdiccion == '' || juzgado == '' || departamento == '' || municipio == '' || fecha_notificacion == '' || fecha_notificacion_horas == '' || nombreApellido_juez == '' || direccion_juez == '' || telefono_fijo_juez == '' || correo_juez == '' ){
+                alert('Debe diligenciar todos los campos requeridos') 
+            }else{
                 $.ajax({
-                    async:false,
-                    url: url1,
+                    url: url,
                     type: 'POST',
                     headers: { 'X-CSRF-TOKEN': token },
-                    data: datos,
-                    processData: false, 
-                    contentType: false,
+                    data: data,
                     success: function(respuesta) {
-                        // console.log(respuesta)
+                        dataAnexo.append('id', respuesta.data.id);
+                        if(archivo_anexo_admisorio){
+                            cargarArchivoAdmisorio(dataAnexo)
+                        }
+                        crearAccion(respuesta.data.id)
+                        crearAnexo(respuesta.data.id)
+                        window.location = `/funcionario/auto_admisorio_complemento/${respuesta.data.id}`
                     },
                     error: function(error) {
-                        console.log(error)
+                        console.log(error.responseJSON)
                     }
                 });
-            }
 
-            function crearAccion(id){
-                let accions = contenedorPadre.querySelectorAll('.contenido_accion')
-                accions.forEach(accion => {
-                    let tipo_accion = accion.querySelector('.tipo_rol_accion').value
-                    let tipo_persona_accion = accion.querySelector('.tipo_persona_accion').value
-                    let docutipos_id_accion = accion.querySelector('.docutipos_id_accion').value
-                    let numero_documento_accion = accion.querySelector('.identificacion_accion').value
-                    let nombres_accion = accion.querySelector('.nombres_accion').value
-                    let apellidos_accion = accion.querySelector('.apellidos_accion').value
-                    let correo_accion = accion.querySelector('.correo_accion').value
-                    let direccion_accion = accion.querySelector('.direccion_accion').value
-                    let telefono_accion = accion.querySelector('.telefono_accion').value
-    
-                    let nombre_apoderado = accion.querySelector('.nombreApellido_apoderado').value
-                    let docutipos_id_apoderado = accion.querySelector('.docutipos_id_apoderado').value
-                    let numero_documento_apoderado = accion.querySelector('.identificacion_apoderado').value
-                    let tarjeta_profesional_apoderado = accion.querySelector('.tarjetaProfesional_apoderado').value
-                    let correo_apoderado = accion.querySelector('.correo_apoderado').value
-                    let direccion_apoderado = accion.querySelector('.direccion_apoderado').value
-                    let telefono_apoderado = accion.querySelector('.telefono_apoderado').value
-    
-                    let data = {
-                        tipo_accion,
-                        tipo_persona_accion,
-                        docutipos_id_accion,
-                        numero_documento_accion,
-                        nombres_accion,
-                        apellidos_accion,
-                        correo_accion,
-                        direccion_accion,
-                        telefono_accion,
-                        nombre_apoderado,
-                        docutipos_id_apoderado,
-                        numero_documento_apoderado,
-                        tarjeta_profesional_apoderado,
-                        correo_apoderado,
-                        direccion_apoderado,
-                        telefono_apoderado,
-                        id
-    
-                    }
+                function cargarArchivoAdmisorio(datos){
                     $.ajax({
-                        url: url2,
+                        async:false,
+                        url: url1,
                         type: 'POST',
                         headers: { 'X-CSRF-TOKEN': token },
-                        data: data,
+                        data: datos,
+                        processData: false, 
+                        contentType: false,
                         success: function(respuesta) {
                             // console.log(respuesta)
                         },
                         error: function(error) {
-                            console.log(error.responseJSON)
+                            console.log(error)
                         }
                     });
-                })
-            }
+                }
 
-            function crearAnexo(id){
-                let anexos = contenedorPadre.querySelectorAll('.contenido_anexo')
-                anexos.forEach(anexo => {
-                    let titulo_anexo = anexo.querySelector('.titulo-anexo input').value
-                    let descripcion_anexo = anexo.querySelector('.descripcion-anexo input').value
-                    let archivo_anexo = anexo.querySelector('.anexo input').files[0]
-                    let dataAnexo = new FormData();
-                    dataAnexo.append('titulo', titulo_anexo);
-                    dataAnexo.append('descripcion', descripcion_anexo);
-                    dataAnexo.append('archivo_anexo', archivo_anexo);
-                    dataAnexo.append('id', id);
-                    dataAnexo.append('_token', token);
-                    if(archivo_anexo){
+                function crearAccion(id){
+                    let accions = contenedorPadre.querySelectorAll('.contenido_accion')
+                    accions.forEach(accion => {
+                        let tipo_accion = accion.querySelector('.tipo_rol_accion').value
+                        let tipo_persona_accion = accion.querySelector('.tipo_persona_accion').value
+                        let docutipos_id_accion = accion.querySelector('.docutipos_id_accion').value
+                        let numero_documento_accion = accion.querySelector('.identificacion_accion').value
+                        let nombres_accion = accion.querySelector('.nombres_accion').value
+                        let apellidos_accion = accion.querySelector('.apellidos_accion').value
+                        let correo_accion = accion.querySelector('.correo_accion').value
+                        let direccion_accion = accion.querySelector('.direccion_accion').value
+                        let telefono_accion = accion.querySelector('.telefono_accion').value
+        
+                        let nombre_apoderado = accion.querySelector('.nombreApellido_apoderado').value
+                        let docutipos_id_apoderado = accion.querySelector('.docutipos_id_apoderado').value
+                        let numero_documento_apoderado = accion.querySelector('.identificacion_apoderado').value
+                        let tarjeta_profesional_apoderado = accion.querySelector('.tarjetaProfesional_apoderado').value
+                        let correo_apoderado = accion.querySelector('.correo_apoderado').value
+                        let direccion_apoderado = accion.querySelector('.direccion_apoderado').value
+                        let telefono_apoderado = accion.querySelector('.telefono_apoderado').value
+        
+                        let data = {
+                            tipo_accion,
+                            tipo_persona_accion,
+                            docutipos_id_accion,
+                            numero_documento_accion,
+                            nombres_accion,
+                            apellidos_accion,
+                            correo_accion,
+                            direccion_accion,
+                            telefono_accion,
+                            nombre_apoderado,
+                            docutipos_id_apoderado,
+                            numero_documento_apoderado,
+                            tarjeta_profesional_apoderado,
+                            correo_apoderado,
+                            direccion_apoderado,
+                            telefono_apoderado,
+                            id
+        
+                        }
                         $.ajax({
-                            async:false,
-                            url: url3,
+                            url: url2,
                             type: 'POST',
                             headers: { 'X-CSRF-TOKEN': token },
-                            data: dataAnexo,
-                            processData: false, 
-                            contentType: false,
+                            data: data,
                             success: function(respuesta) {
                                 // console.log(respuesta)
                             },
                             error: function(error) {
-                                console.log(error)
+                                console.log(error.responseJSON)
                             }
                         });
-                    }
-                })
+                    })
+                }
+
+                function crearAnexo(id){
+                    let anexos = contenedorPadre.querySelectorAll('.contenido_anexo')
+                    anexos.forEach(anexo => {
+                        let titulo_anexo = anexo.querySelector('.titulo-anexo input').value
+                        let descripcion_anexo = anexo.querySelector('.descripcion-anexo input').value
+                        let archivo_anexo = anexo.querySelector('.anexo input').files[0]
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('titulo', titulo_anexo);
+                        dataAnexo.append('descripcion', descripcion_anexo);
+                        dataAnexo.append('archivo_anexo', archivo_anexo);
+                        dataAnexo.append('id', id);
+                        dataAnexo.append('_token', token);
+                        if(archivo_anexo){
+                            $.ajax({
+                                async:false,
+                                url: url3,
+                                type: 'POST',
+                                headers: { 'X-CSRF-TOKEN': token },
+                                data: dataAnexo,
+                                processData: false, 
+                                contentType: false,
+                                success: function(respuesta) {
+                                    // console.log(respuesta)
+                                },
+                                error: function(error) {
+                                    console.log(error)
+                                }
+                            });
+                        }
+                    })
+                }
             }
         })
     }
@@ -399,4 +424,5 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     })
+
 })
