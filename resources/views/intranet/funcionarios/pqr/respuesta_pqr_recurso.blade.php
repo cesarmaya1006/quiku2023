@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Respuesta</title>
     <style>
+
         @page {
-            margin: 1cm 0cm;
+            margin: 0cm 0cm;
             font-family: Arial;
         }
 
         body {
             margin: 3cm 2cm 2cm;
-            font-size: 10pt;
         }
 
         header {
@@ -22,7 +22,7 @@
             top: 0cm;
             left: 0cm;
             right: 0cm;
-            height: 2cm;
+            height: 3cm;
             color: rgb(0, 0, 0);
             text-align: center;
             line-height: 30px;
@@ -30,18 +30,18 @@
 
         footer {
             position: fixed;
-            bottom: -1.3cm;
+            bottom: 0cm;
             left: 0cm;
             right: 0cm;
-            height: 2cm;
+            height: 3cm;
             color: rgb(0, 0, 0);
             text-align: center;
             line-height: 35px;
-            padding-bottom: 5px;
+            padding-bottom: 2px;
         }
-
+        
         p {
-            line-height: 15px;
+            font-size: 12pt;
             text-align: justify;
         }
 
@@ -49,21 +49,24 @@
             width: 90%;
             margin: auto;
         }
-
+        .p-azul {
+            font-size: 13px;
+            color: #3359fa;
+            line-height: .5;
+        }
     </style>
-
 </head>
 
 <body>
-    <header>
+    <header  style="margin-top: 30px">
         <table>
             <tr>
-                <td style="width: 25%;text-align: center;">
-                    <img src="{{ $imagen }}" alt="" style="width: 100%;max-width: 70px;">
+                <td style="width: 40%;text-align: center;">
+                    <img src="{{ $imagen }}" alt="" style="width: 100%;max-width: 150px;">
                 </td>
-                <td style="width: 75%;">
+                <td style="width: 60%;">
                     <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 16pt;">
-                        <h3>Sistema Quiku</h3>
+                        <h5 style="color: #3359fa;">Sistema Quiku</h5>
                     </div>
                 </td>
             </tr>
@@ -212,15 +215,16 @@
             </tr>
         </table>
     </main>
+
     <footer>
         <table>
             <tr>
                 <td>
-                    <div style=" width: 100%;text-align: center;font-weight: bold;font-size: 0.8em;">
-                        <p>
-                            <strong>Este documento se ha generado automáticamente a través de Quiku.</strong><img
-                                src="{{ $imagen }}" alt="" style="width: 100%;max-width: 30px;">
-                        </p>
+                    <div style="footer width: 100%;text-align: center;font-weight: bold;font-size: 0.6em;">
+                        <p class="p-azul">57-1-7229497</p>
+                        <p class="p-azul">www.mglasociados.com</p>
+                        <p class="p-azul">Carrera 13 # 76-12 Of. 301 y Carrera 5 # 16-14 Of. 803</p>
+                        <p class="p-azul">3208380622</p>
                     </div>
                 </td>
             </tr>
