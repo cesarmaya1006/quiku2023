@@ -46,7 +46,7 @@
                                                 <div class="col-12 bloque_hecho">
                                                     <div class="col-12 d-flex row contenido_hecho">
                                                         <div class="title-hecho d-flex justify-content-between mt-2">
-                                                            <h6 class="">Hecho</h5>
+                                                            <label class="requerido h6">Hecho</label>
                                                             <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_hechos"><i class="fas fa-minus-circle eliminar_contenido_hechos"></i></button>
                                                         </div>
                                                         <input class="form-control mt-2 hecho" type="text" required>
@@ -74,7 +74,7 @@
                                                 <div class="col-12 bloque_pretension">
                                                     <div class="col-12 d-flex row contenido_pretension">
                                                         <div class="title-pretension d-flex justify-content-between mt-2">
-                                                            <h6 class="">Pretensión</h5>
+                                                            <label class="requerido h6">Pretensión</label>
                                                             <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_pretensiones"><i class="fas fa-minus-circle eliminar_contenido_pretensiones"></i></button>
                                                         </div>
                                                         <input class="form-control mt-2 pretension" type="text" required>
@@ -102,7 +102,7 @@
                                                 <div class="col-12 bloque_argumento">
                                                     <div class="col-12 d-flex row contenido_argumento">
                                                         <div class="title-argumento d-flex justify-content-between mt-2">
-                                                            <h6 class="">Argumento</h5>
+                                                            <label class="h6">Argumento</label>
                                                             <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_argumentos"><i class="fas fa-minus-circle eliminar_contenido_argumentos"></i></button>
                                                         </div>
                                                         <input class="form-control mt-2 argumento" type="text" required>
@@ -130,7 +130,7 @@
                                                 <div class="col-12 bloque_anexos">
                                                     <div class="col-12 d-flex row contenido_anexo">
                                                         <div class="col-12 d-flex justify-content-between">
-                                                            <h6>Prueba</h6>
+                                                            <label class="h6">Prueba</label>
                                                             <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_anexo"><i class="fas fa-minus-circle"></i></button>
                                                         </div>
                                                         <div class="col-12 col-md-4 form-group titulo-anexo">
@@ -176,7 +176,7 @@
                                                         </div>
                                                         <div class="form-group col-12 col-md-6">
                                                             <div class="col-12 d-flex justify-content-between">
-                                                                <label class="requerido" for="">Motivo</label>
+                                                                <label class="h6" for="">Motivo</label>
                                                             </div>
                                                             <select class="custom-select rounded-0 motivo_tutela">
                                                                 <option value="">--Seleccione--</option>
@@ -188,7 +188,7 @@
                                                         </div>
                                                         <div class="form-group col-12 col-md-6">
                                                             <label for="motivo_sub_tutela">Sub - Motivo</label>
-                                                            <select class="custom-select rounded-0 motivo_sub_tutela">
+                                                            <select class="custom-select rounded-0 motivo_sub_tutela h6">
                                                                 <option value="">--Seleccione--</option>
                                                                 <option value="Sub 1">Sub 1</option>
                                                                 <option value="Sub 2">Sub 2</option>
@@ -198,7 +198,7 @@
                                                         </div>  
                                                         <div class="col-12 col-md-6 form-group">
                                                             <label for="tipo_tutela">¿Su Tutela es sobre un producto o servicio?</label>
-                                                            <select class="custom-select rounded-0 tipo_tutela" required>
+                                                            <select class="custom-select rounded-0 tipo_tutela h6">
                                                                 <option value="">--Seleccione--</option>
                                                                 <option value="Producto">Producto</option>
                                                                 <option value="Servicio">Servicio</option>

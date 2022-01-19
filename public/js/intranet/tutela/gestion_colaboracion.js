@@ -207,14 +207,14 @@ window.addEventListener('DOMContentLoaded', function() {
             }else {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
             }
+            let id_respuesta = padreEstado.querySelector('.id_respuesta').value
             let url = btnE.getAttribute('data_url')
             let token = btnE.getAttribute('data_token')
             let estado = padreEstado.querySelector('.estadoHecho').value
             let respuesta = padreEstado.querySelector('.respuesta').value
-            let id_hecho = padreEstado.querySelector('.id_hecho').value
             let data = {
                 estado,
-                id_hecho
+                id_respuesta
             }
             if (estado == 11 && respuesta == '') {
                 alert('Para guardar el 100% debe agregar una respuesta antes')
@@ -354,54 +354,37 @@ window.addEventListener('DOMContentLoaded', function() {
 
     // Guardar respuesta hechos
     if (document.querySelector('.btn-respuesta-hecho')) {
-        let btnRespuestas = document.querySelectorAll('.btn-respuesta-hecho')
-        btnRespuestas.forEach(btn => btn.addEventListener('click', guardarRespuestas))
+        let btnRespuesta = document.querySelector('.btn-respuesta-hecho')
+        btnRespuesta.addEventListener('click', guardarRespuesta)
 
-        function guardarRespuestas(btn) {
+        function guardarRespuesta(btn) {
             btn.preventDefault()
             padreRespuesta = btn.target.parentElement
             let url = btn.target.getAttribute('data_url')
             let url2 = btn.target.getAttribute('data_url2')
+            let url3 = btn.target.getAttribute('data_url3')
+            let url4 = btn.target.getAttribute('data_url4')
             let token = btn.target.getAttribute('data_token')
+            let hechosContent = padreRespuesta.querySelector('.bloque-seleccion-hechos')
+            let hechos = hechosContent.querySelectorAll('.select-hecho')
+            let estado = padreRespuesta.querySelector('.estadoHecho').value
             let respuesta = padreRespuesta.querySelector('.respuesta').value
-            let id_hecho = padreRespuesta.parentElement.parentElement.querySelector('.id_hecho').value
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
-            if (respuesta != '') {
-                swal("Guardar la respúesta como:", {
-                        buttons: {
-                            definitiva: {
-                                text: "Definitiva",
-                                value: "definitiva",
-                                className: "bg-primary",
-                            },
-                            parcial: {
-                                text: "Parcial",
-                                value: "parcial",
-                                className: "bg-primary",
-                            },
-                            cancel: "Cancelar",
-                        },
-                    })
-                    .then((value) => {
-                        switch (value) {
-                            case "definitiva":
-                                let data = {
-                                    respuesta,
-                                    id_hecho,
-                                    estado: 11
-                                }
-                                guardarRespuesta(data)
-                                break;
-                            case "parcial":
-                                let data1 = {
-                                    respuesta,
-                                    id_hecho
-                                }
-                                guardarRespuesta(data1)
-                                break;
-                            default:
-                        }
-                    });
+            validacionHechos = false 
+            hechos.forEach(hecho => {
+                if(hecho.checked == true){
+                    validacionHechos = true
+                }
+            })
+            if (respuesta != '' && estado > 1 && validacionHechos) {
+                let data1 = {
+                    respuesta,
+                    id_auto,
+                    estado
+                }
+                guardarRespuesta(data1)
+            }else {
+                alert('Debe seleccionar los hechos ydiligenciar los campos de respuesta y avance')
             }
 
             function guardarRespuesta(data) {
@@ -412,35 +395,12 @@ window.addEventListener('DOMContentLoaded', function() {
                     data: data,
                     success: function(respuesta) {
                         guardarRespuestaAnexo(anexos, respuesta)
+                        guardarRelacionRespuesta(respuesta)
                     },
                     error: function(error) {
                         console.log(error)
                     }
                 });
-                if (padreRespuesta.querySelector('.respuesta_anterior')) {
-                    let respuesta_anterior = padreRespuesta.querySelector('.respuesta_anterior')
-                    let url_respuesta_anterior = respuesta_anterior.getAttribute('data_url')
-                    if (respuesta != respuesta_anterior) {
-                        let data = {
-                            mensajeHistorial: `Respuesta anterior: "${respuesta_anterior.value}"`,
-                            idAuto: id_auto,
-                            idHecho: id_hecho
-                        }
-                        $.ajax({
-                            url: url_respuesta_anterior,
-                            type: 'POST',
-                            headers: { 'X-CSRF-TOKEN': token },
-                            data: data,
-                            success: function(respuesta) {
-                                // console.log(respuesta)
-                            },
-                            error: function(error) {
-                                console.log(error.responseJSON)
-                            }
-                        });
-                    }
-
-                }
             }
 
             function guardarRespuestaAnexo(anexos, idrespuesta) {
@@ -472,128 +432,373 @@ window.addEventListener('DOMContentLoaded', function() {
                         });
                     }
                 })
-                location.reload();
             }
+
+            function guardarRelacionRespuesta(idrespuesta){
+                hechos.forEach(hecho => {
+                    if(hecho.checked){
+                        let data = {
+                            estado,
+                            id_hecho : hecho.value,
+                            id_auto,
+                            id_respuesta: idrespuesta.data
+                        }
+                        $.ajax({
+                            url: url3,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: data,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+
+                        $.ajax({
+                            url: url4,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: data,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                    
+                })
+            location.reload();
+            }
+
         }
     }
 
-        // Guardar respuesta hechos
-        if (document.querySelector('.btn-respuesta-pretension')) {
-            let btnRespuesta = document.querySelector('.btn-respuesta-pretension')
-            btnRespuesta.addEventListener('click', guardarRespuesta)
+    // Guardar asignacion de hecho desde respuesta
+    if(document.querySelector('.btn-respuesta-hecho-asignar')){
+        let btnEstados = document.querySelectorAll('.btn-respuesta-hecho-asignar')
+        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+
+        function guardarEstado(btn){
+            btn.preventDefault()
+            let btnE = btn.target 
+            let contenedorPadre = btnE.parentElement.parentElement
+            let url = btnE.getAttribute('data_url')
+            let url2 = btnE.getAttribute('data_url2')
+            let token = btnE.getAttribute('data_token')
+            let id_hecho = contenedorPadre.querySelector('.respuesta-hecho-asignar').value
+            let id_respuesta = contenedorPadre.querySelector('.id_respuesta').value
+            let estado = contenedorPadre.querySelector('.estado_actual').value
+            let data = {
+                id_hecho,
+                id_auto,
+                id_respuesta,
+                estado
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    // console.log(respuesta)
     
-            function guardarRespuesta(btn) {
-                btn.preventDefault()
-                padreRespuesta = btn.target.parentElement
-                let url = btn.target.getAttribute('data_url')
-                let url2 = btn.target.getAttribute('data_url2')
-                let url3 = btn.target.getAttribute('data_url3')
-                let url4 = btn.target.getAttribute('data_url4')
-                let token = btn.target.getAttribute('data_token')
-                let pretensionesContent = padreRespuesta.querySelector('.bloque-seleccion-pretensiones')
-                let pretensiones = pretensionesContent.querySelectorAll('.select-pretension')
-                let estado = padreRespuesta.querySelector('.estadoPretension').value
-                let respuesta = padreRespuesta.querySelector('.respuesta').value
-                let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
-                if (respuesta != '') {
-                    let data1 = {
-                        respuesta,
-                        id_auto
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+            $.ajax({
+                url: url2,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+    
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        }
+    }
+
+    // Guardar respuesta pretensiones
+    if (document.querySelector('.btn-respuesta-pretension')) {
+        let btnRespuesta = document.querySelector('.btn-respuesta-pretension')
+        btnRespuesta.addEventListener('click', guardarRespuesta)
+
+        function guardarRespuesta(btn) {
+            btn.preventDefault()
+            padreRespuesta = btn.target.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let url2 = btn.target.getAttribute('data_url2')
+            let url3 = btn.target.getAttribute('data_url3')
+            let url4 = btn.target.getAttribute('data_url4')
+            let token = btn.target.getAttribute('data_token')
+            let pretensionesContent = padreRespuesta.querySelector('.bloque-seleccion-pretensiones')
+            let pretensiones = pretensionesContent.querySelectorAll('.select-pretension')
+            let estado = padreRespuesta.querySelector('.estadoPretension').value
+            let respuesta = padreRespuesta.querySelector('.respuesta').value
+            let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
+            if (respuesta != '') {
+                let data1 = {
+                    respuesta,
+                    id_auto,
+                    estado
+                }
+                guardarRespuesta(data1)
+            }
+            
+            function guardarRespuesta(data) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        guardarRespuestaAnexo(anexos, respuesta)
+                        guardarRelacionRespuesta(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
                     }
-                    guardarRespuesta(data1)
-                }
-                
-                function guardarRespuesta(data) {
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        headers: { 'X-CSRF-TOKEN': token },
-                        data: data,
-                        success: function(respuesta) {
-                            guardarRespuestaAnexo(anexos, respuesta)
-                            guardarRelacionRespuesta(respuesta)
-                        },
-                        error: function(error) {
-                            console.log(error)
-                        }
-                    });
-                }
-    
-                function guardarRespuestaAnexo(anexos, idrespuesta) {
-                    anexos.forEach(anexo => {
-                        let titulo = anexo.querySelector('.titulo').value
-                        let descripcion = anexo.querySelector('.descripcion').value
-                        let archivo = anexo.querySelector('.documento').files[0]
-                        if (archivo) {
-                            let dataAnexo = new FormData();
-                            dataAnexo.append('respuesta_pretensiones_id', idrespuesta.data);
-                            dataAnexo.append('titulo', titulo);
-                            dataAnexo.append('descripcion', descripcion);
-                            dataAnexo.append('archivo', archivo);
-                            dataAnexo.append('_token', token);
-                            $.ajax({
-                                async: false,
-                                url: url2,
-                                type: 'POST',
-                                headers: { 'X-CSRF-TOKEN': token },
-                                data: dataAnexo,
-                                processData: false,
-                                contentType: false,
-                                success: function(respuesta) {
-                                    // console.log(respuesta)
-                                },
-                                error: function(error) {
-                                    console.log(error)
-                                }
-                            });
-                        }
-                    })
-                }
+                });
+            }
 
-                function guardarRelacionRespuesta(idrespuesta){
-                    pretensiones.forEach(pretension => {
-                        if(pretension.checked){
-                            let data = {
-                                estado,
-                                id_pretension : pretension.value,
-                                id_auto,
-                                id_respuesta: idrespuesta.data
+            function guardarRespuestaAnexo(anexos, idrespuesta) {
+                anexos.forEach(anexo => {
+                    let titulo = anexo.querySelector('.titulo').value
+                    let descripcion = anexo.querySelector('.descripcion').value
+                    let archivo = anexo.querySelector('.documento').files[0]
+                    if (archivo) {
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('respuesta_pretensiones_id', idrespuesta.data);
+                        dataAnexo.append('titulo', titulo);
+                        dataAnexo.append('descripcion', descripcion);
+                        dataAnexo.append('archivo', archivo);
+                        dataAnexo.append('_token', token);
+                        $.ajax({
+                            async: false,
+                            url: url2,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false,
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
                             }
-                            $.ajax({
-                                url: url3,
-                                type: 'POST',
-                                headers: { 'X-CSRF-TOKEN': token },
-                                data: data,
-                                success: function(respuesta) {
-                                    // console.log(respuesta)
-                                },
-                                error: function(error) {
-                                    console.log(error)
-                                }
-                            });
+                        });
+                    }
+                })
+            }
 
-                            $.ajax({
-                                url: url4,
-                                type: 'POST',
-                                headers: { 'X-CSRF-TOKEN': token },
-                                data: data,
-                                success: function(respuesta) {
-                                    // console.log(respuesta)
-                                },
-                                error: function(error) {
-                                    console.log(error)
-                                }
-                            });
+            function guardarRelacionRespuesta(idrespuesta){
+                pretensiones.forEach(pretension => {
+                    if(pretension.checked){
+                        let data = {
+                            estado,
+                            id_pretension : pretension.value,
+                            id_auto,
+                            id_respuesta: idrespuesta.data
                         }
-                        
-                    })
+                        $.ajax({
+                            url: url3,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: data,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
 
-                location.reload();
+                        $.ajax({
+                            url: url4,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: data,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                    
+                })
+
+            location.reload();
+            }
+
+        }
+    }
+
+    // Eliminar respuesta hecho
+    if(document.querySelectorAll('.eliminarHecho')){
+        let btnsEliminarHecho =document.querySelectorAll('.eliminarHecho')
+        btnsEliminarHecho.forEach(btn => {
+            btn.addEventListener('click', eliminarAsigancionHecho)
+        })
+
+        function eliminarAsigancionHecho (btn){
+            let btnEH = btn.target
+            if (btnEH.tagName === 'I') {
+                btnEH = btnEH.parentNode
+            }
+            let contenedorPadre = btnEH.parentElement
+            let hecho_id = contenedorPadre.querySelector('.id_relacion_hecho').value
+            let url = btnEH.getAttribute('data_url')
+            let token = btnEH.getAttribute('data_token')
+            let data = {
+                hecho_id
+            }
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        }
+    }
+
+    // Guardar respuesta hechos editar
+    if (document.querySelectorAll('.btn-respuesta-hecho-editar')) {
+        let btnRespuesta = document.querySelectorAll('.btn-respuesta-hecho-editar')
+        btnRespuesta.forEach(btn => {
+            btn.addEventListener('click', guardarRespuesta)
+        })
+
+        function guardarRespuesta(btn) {
+            btn.preventDefault()
+            padreRespuesta = btn.target.parentElement.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let url2 = btn.target.getAttribute('data_url2')
+            let url3 = btn.target.getAttribute('data_url3')
+            let token = btn.target.getAttribute('data_token')
+            let estado = padreRespuesta.querySelector('.estadoHecho').value
+            let respuesta = padreRespuesta.querySelector('.respuesta').value
+            let id_respuesta = padreRespuesta.querySelector('.id_respuesta').value
+            let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
+            if (respuesta != '') {
+                let data1 = {
+                    respuesta,
+                    id_respuesta,
+                    estado
+                }
+                guardarRespuesta(data1)
+            }
+            function guardarRespuesta(data) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        guardarRespuestaAnexo(anexos, id_respuesta)
+                        guardarEstado()
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function guardarRespuestaAnexo(anexos, idrespuesta) {
+                anexos.forEach(anexo => {
+                    let titulo = anexo.querySelector('.titulo').value
+                    let descripcion = anexo.querySelector('.descripcion').value
+                    let archivo = anexo.querySelector('.documento').files[0]
+                    if (archivo) {
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('respuesta_hechos_id', idrespuesta);
+                        dataAnexo.append('titulo', titulo);
+                        dataAnexo.append('descripcion', descripcion);
+                        dataAnexo.append('archivo', archivo);
+                        dataAnexo.append('_token', token);
+                        $.ajax({
+                            async: false,
+                            url: url2,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false,
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                })
+            }
+
+            function guardarEstado(idrespuesta){
+                let data = {
+                    estado,
+                    id_respuesta
                 }
 
+                $.ajax({
+                    url: url3,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+                location.reload();
+            }
+
+        }
+    }
+
+    // Funcion check multiple hechos
+    if(document.querySelectorAll('.check-todos-hechos')){
+        let checkTodos = document.querySelectorAll('.check-todos-hechos')
+        checkTodos.forEach(check => {
+            check.addEventListener('input', seleccionMultiple)
+        })
+
+        function seleccionMultiple(btn){
+            let check = btn.target
+            let contenedorPadre = check.parentElement.parentElement
+            let selectores = contenedorPadre.querySelectorAll('.select-hecho')
+            if(check.checked){
+                selectores.forEach(selector => {
+                    selector.checked = true
+                })
+            }else{
+                selectores.forEach(selector => {
+                    selector.checked = false
+                })
             }
         }
-
+    }
 
     //==========================================================================
     $(document).ready(function() {

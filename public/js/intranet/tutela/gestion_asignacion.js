@@ -121,6 +121,7 @@ window.addEventListener('DOMContentLoaded', function(){
             let token = e.target.getAttribute('data_token')
             let confirmacionAsignacion = document.querySelector('.confirmacion-asignacion').value
             let mensajeAsignacion = document.querySelector('.mensaje-asignacion').value
+            let asignados = document.querySelector('.asignados').value
             if(confirmacionAsignacion == '0' ){
                 if (mensajeAsignacion == '') {
                     alert("debe agregar un mensaje")
@@ -132,12 +133,18 @@ window.addEventListener('DOMContentLoaded', function(){
                 guardarAsignacion()
             }
             function guardarAsignacion (){
+                let reAsignacion = false
+                if(asignados == '1'){
+                    reAsignacion = confirm('¿Desea asignarse todos los hechos y pretenciones?')
+                }else {
+                    reAsignacion = true
+                }
                 let data = {
                     confirmacionAsignacion,
                     mensajeAsignacion,
-                    idAuto
+                    idAuto,
+                    reAsignacion
                 }
-                console.log(url)
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -154,7 +161,6 @@ window.addEventListener('DOMContentLoaded', function(){
                         console.log(error.responseJSON)
                     }
                 });
-
             }
         })
     }

@@ -4,8 +4,8 @@ namespace App\Models\Tutela;
 
 use App\Models\Empleados\Empleado;
 use App\Models\Tutela\AutoAdmisorio;
+use App\Models\Tutela\RelacionHecho;
 use App\Models\Tutela\HistorialHecho;
-use App\Models\Tutela\RespuestaHechos;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tutela\AsignacionEstados;
 use Illuminate\Notifications\Notifiable;
@@ -27,11 +27,6 @@ class HechosTutela extends Model
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    public function respuesta()
-    {
-        return $this->hasOne(RespuestaHechos::class, 'hechos_tutela_id', 'id');
-    }
-    //----------------------------------------------------------------------------------
     public function historialHechos()
     {
         return $this->hasMany(HistorialHecho::class, 'hechos_tutela_id', 'id');
@@ -40,6 +35,11 @@ class HechosTutela extends Model
     public function estadohecho()
     {
         return $this->belongsTo(AsignacionEstados::class, 'estado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function relacionesHechos()
+    {
+        return $this->hasMany(RelacionHecho::class, 'hecho_tutela_id', 'id');
     }
     //----------------------------------------------------------------------------------
 

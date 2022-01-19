@@ -3,8 +3,10 @@
 namespace App\Models\Tutela;
 
 use App\Models\Tutela\AsignacionTarea;
+use App\Models\Tutela\RespuestaHechos;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Tutela\RespuestaPretensiones;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AsignacionEstados extends Model
@@ -23,9 +25,19 @@ class AsignacionEstados extends Model
        return $this->hasMany(HechosTutela::class, 'estado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function estadosrespuestahechos()
+    {
+       return $this->hasMany(RespuestaHechos::class, 'estado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     public function estadospretensiones()
     {
        return $this->hasMany(PretensionesTutela::class, 'estado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function estadosrespuestapretensiones()
+    {
+       return $this->hasMany(RespuestaPretensiones::class, 'estado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

@@ -186,8 +186,6 @@ window.addEventListener('DOMContentLoaded', function () {
     // Fin Función para generar varias tutelas.
     // ---------------------------------------------------------------------------------------------------------
 
- 
- 
     // Inicio guardar auto admisorio  
     if(document.querySelector('.btn-complemento-tutela')){
         let btnGuardarComplemento = document.querySelector('.btn-complemento-tutela')
@@ -202,117 +200,150 @@ window.addEventListener('DOMContentLoaded', function () {
             let url5 = e.target.getAttribute('data_url5')
             let token = e.target.getAttribute('data_token')
             let auto_admisorio_id = contenedorPadre.querySelector('.auto_admisorio_id').value
-
+            let validacion = false
             let hechos = contenedorPadre.querySelectorAll('.contenido_hecho')
-            hechos.forEach((item, key) => {
-                let hecho = item.querySelector('.hecho').value
-                let data = {
-                    auto_admisorio_id,
-                    hecho,
-                    consecutivo: key + 1
+            hechos.forEach(hecho => {
+                if(!hecho.querySelector('.hecho').value){
+                    validacion = true
                 }
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON)
-                    }
-                });
             })
-
             let pretensiones = contenedorPadre.querySelectorAll('.contenido_pretension')
-            pretensiones.forEach((item, key) => {
-                let pretension = item.querySelector('.pretension').value
-                let data = {
-                    auto_admisorio_id,
-                    pretension,
-                    consecutivo: key + 1
+            pretensiones.forEach(pretension => {
+                if(!pretension.querySelector('.pretension').value){
+                    validacion = true
                 }
-                $.ajax({
-                    url: url1,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON)
-                    }
-                });
             })
-    
-            let argumentos = contenedorPadre.querySelectorAll('.contenido_argumento')
-            argumentos.forEach(item => {
-                let argumento = item.querySelector('.argumento').value
-                let data = {
-                    auto_admisorio_id,
-                    argumento
-                }
-                $.ajax({
-                    url: url2,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON)
+            if(validacion){
+                alert('los hechos y argumentos son campos obligatorios.')
+            }else{
+                hechos.forEach((item, key) => {
+                    let hecho = item.querySelector('.hecho').value
+                    let data = {
+                        auto_admisorio_id,
+                        hecho,
+                        consecutivo: key + 1
                     }
-                });
-            })
-
-            let anexos = contenedorPadre.querySelectorAll('.contenido_anexo')
-            anexos.forEach(anexo => {
-                let titulo_anexo = anexo.querySelector('.titulo-anexo input').value
-                let descripcion_anexo = anexo.querySelector('.descripcion-anexo input').value
-                let archivo_anexo = anexo.querySelector('.anexo input').files[0]
-                let dataAnexo = new FormData();
-                dataAnexo.append('titulo', titulo_anexo);
-                dataAnexo.append('descripcion', descripcion_anexo);
-                dataAnexo.append('archivo_anexo', archivo_anexo);
-                dataAnexo.append('id', auto_admisorio_id);
-                dataAnexo.append('_token', token);
-                if(archivo_anexo){
                     $.ajax({
-                        async:false,
-                        url: url3,
+                        url: url,
                         type: 'POST',
                         headers: { 'X-CSRF-TOKEN': token },
-                        data: dataAnexo,
-                        processData: false, 
-                        contentType: false,
+                        data: data,
                         success: function(respuesta) {
                             // console.log(respuesta)
                         },
                         error: function(error) {
-                            console.log(error)
+                            console.log(error.responseJSON)
                         }
                     });
-                }
-            })
+                })
 
-            let motivos = contenedorPadre.querySelectorAll('.contenido_motivo')
-            motivos.forEach(motivo => {
-                let motivo_tutela = motivo.querySelector('.motivo_tutela').value
-                let sub_motivo_tutela = motivo.querySelector('.motivo_sub_tutela').value
-                let tipo_tutela = motivo.querySelector('.tipo_tutela').value
+                pretensiones.forEach((item, key) => {
+                    let pretension = item.querySelector('.pretension').value
+                    let data = {
+                        auto_admisorio_id,
+                        pretension,
+                        consecutivo: key + 1
+                    }
+                    $.ajax({
+                        url: url1,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error.responseJSON)
+                        }
+                    });
+                })
+        
+                let argumentos = contenedorPadre.querySelectorAll('.contenido_argumento')
+                argumentos.forEach(item => {
+                    let argumento = item.querySelector('.argumento').value
+                    if(argumento != ''){
+                        let data = {
+                            auto_admisorio_id,
+                            argumento
+                        }
+                        $.ajax({
+                            url: url2,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: data,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error.responseJSON)
+                            }
+                        });
+                    }
+                })
+
+                let anexos = contenedorPadre.querySelectorAll('.contenido_anexo')
+                anexos.forEach(anexo => {
+                    let titulo_anexo = anexo.querySelector('.titulo-anexo input').value
+                    let descripcion_anexo = anexo.querySelector('.descripcion-anexo input').value
+                    let archivo_anexo = anexo.querySelector('.anexo input').files[0]
+                    let dataAnexo = new FormData();
+                    dataAnexo.append('titulo', titulo_anexo);
+                    dataAnexo.append('descripcion', descripcion_anexo);
+                    dataAnexo.append('archivo_anexo', archivo_anexo);
+                    dataAnexo.append('id', auto_admisorio_id);
+                    dataAnexo.append('_token', token);
+                    if(archivo_anexo){
+                        $.ajax({
+                            async:false,
+                            url: url3,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false, 
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                })
+
+                let motivos = contenedorPadre.querySelectorAll('.contenido_motivo')
+                motivos.forEach(motivo => {
+                    let motivo_tutela = motivo.querySelector('.motivo_tutela').value
+                    let sub_motivo_tutela = motivo.querySelector('.motivo_sub_tutela').value
+                    let tipo_tutela = motivo.querySelector('.tipo_tutela').value
+                    if(motivo_tutela != ''){
+                        let data = {
+                            motivo_tutela,
+                            sub_motivo_tutela,
+                            tipo_tutela,
+                            id: auto_admisorio_id
+    
+                        }
+                        $.ajax({
+                            url: url4,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: data,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error.responseJSON)
+                            }
+                        });
+                    }
+                })
 
                 let data = {
-                    motivo_tutela,
-                    sub_motivo_tutela,
-                    tipo_tutela,
-                    id: auto_admisorio_id
-
+                    id: auto_admisorio_id,
                 }
                 $.ajax({
-                    url: url4,
+                    url: url5,
                     type: 'POST',
                     headers: { 'X-CSRF-TOKEN': token },
                     data: data,
@@ -323,25 +354,10 @@ window.addEventListener('DOMContentLoaded', function () {
                         console.log(error.responseJSON)
                     }
                 });
-            })
 
-            let data = {
-                id: auto_admisorio_id,
+                window.location = `/admin/gestion`
             }
-            $.ajax({
-                url: url5,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    // console.log(respuesta)
-                },
-                error: function(error) {
-                    console.log(error.responseJSON)
-                }
-            });
 
-            window.location = `/admin/gestion/`
         })
     }
     //Fin guardar auto admisorio complemento 

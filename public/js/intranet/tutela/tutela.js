@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // Fin Función para generar varios accions.
     // ---------------------------------------------------------------------------------------------------------
-      // Inicio Función para generar varios anexos tutelas.
+    // Inicio Función para generar varios anexos tutelas.
     let btncrearAnexo = document.querySelector('.crearAnexo')
     btncrearAnexo.addEventListener('click', crearNuevoAnexo)
     let btnEliminarAnexos = document.querySelectorAll('.eliminar_contenido_anexo')
@@ -163,7 +163,27 @@ window.addEventListener('DOMContentLoaded', function () {
                 dias_medida_cautelar,
                 horas_medida_cautelar
             }
-            if(radicado == '' || jurisdiccion == '' || juzgado == '' || departamento == '' || municipio == '' || fecha_notificacion == '' || fecha_notificacion_horas == '' || nombreApellido_juez == '' || direccion_juez == '' || telefono_fijo_juez == '' || correo_juez == '' ){
+
+            let selectorTerminos = document.querySelector('.selectorTiempoTermino .selector').value
+            let terminosTiempo
+            if(selectorTerminos == 1){
+                terminosTiempo = document.querySelector('.cantidad_dias').value
+            }else if(selectorTerminos == 2){
+                terminosTiempo = document.querySelector('.cantidad_horas').value
+            }
+            
+            let accionantes = document.querySelectorAll('.bloque_accions .contenido_accion')
+            let validacionAccionantes = false
+            accionantes.forEach(accionante => {
+                let tipo_persona = accionante.querySelector('.tipo_persona_accion').value
+                let tipo_documento = accionante.querySelector('.docutipos_id_accion').value
+                let identificacion = accionante.querySelector('.identificacion_accion').value
+                let nombres = accionante.querySelector('.nombres_accion').value
+                if( tipo_persona == '' || tipo_documento == '' || identificacion == '' || nombres == ''  ){
+                    validacionAccionantes = true
+                }
+            })
+            if(radicado == '' || jurisdiccion == '' || juzgado == '' || departamento == '' || municipio == '' || fecha_notificacion == '' || fecha_notificacion_horas == '' || nombreApellido_juez == '' || direccion_juez == '' || telefono_fijo_juez == '' || correo_juez == '' || selectorTerminos == '' || terminosTiempo == '' || validacionAccionantes){
                 alert('Debe diligenciar todos los campos requeridos') 
             }else{
                 $.ajax({
@@ -394,7 +414,6 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     })
-
     // Funcion para cargar tiempos terminos
     document.querySelector('.selectorTiempoMedida').addEventListener('change', function(selector){
         let contenedorPadre = selector.target.parentElement.parentElement

@@ -169,17 +169,25 @@ window.addEventListener('DOMContentLoaded', function(){
             let padreContenedor = e.target.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
             let token = e.target.getAttribute('data_token')
-            let hecho = padreContenedor.querySelector('.hecho').value
             let funcionario = padreContenedor.querySelector('.funcionario').value
             let cargo = padreContenedor.querySelector('.cargo').value
-            if (hecho == '' || cargo == '' || funcionario == '' ) {
+            let hechos = document.querySelectorAll('.select-hecho')
+            let hechosAsignar = []
+            hechos.forEach(hecho => {
+                if(hecho.checked){
+                    hechosAsignar.push(hecho)
+                }
+            })            
+            if (hechosAsignar.length == 0 || cargo == '' || funcionario == '' ) {
                 alert("Debe dilegenciar todos los campos del formulario")
             }else{
-                guardarAsignacionPeticion()
+                hechosAsignar.forEach(hecho => {
+                    guardarAsignacionPeticion(hecho.value)
+                })
             }
-            function guardarAsignacionPeticion (){
+            function guardarAsignacionPeticion (value){
                 let data = {
-                    hecho,
+                    hecho: value,
                     funcionario,
                     idAuto
                 }
@@ -207,17 +215,26 @@ window.addEventListener('DOMContentLoaded', function(){
             let padreContenedor = e.target.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
             let token = e.target.getAttribute('data_token')
-            let pretension = padreContenedor.querySelector('.pretension').value
+            // let pretension = padreContenedor.querySelector('.pretension').value
             let funcionario = padreContenedor.querySelector('.funcionario').value
             let cargo = padreContenedor.querySelector('.cargo').value
-            if (pretension == '' || cargo == '' || funcionario == '' ) {
+            let pretensiones = document.querySelectorAll('.select-pretension')
+            let pretensionesAsignar = []
+            pretensiones.forEach(pretension => {
+                if(pretension.checked){
+                    pretensionesAsignar.push(pretension)
+                }
+            })            
+            if (pretensionesAsignar.length == 0 || cargo == '' || funcionario == '' ) {
                 alert("Debe dilegenciar todos los campos del formulario")
             }else{
-                guardarAsignacionPeticion()
+                pretensionesAsignar.forEach(pretension => {
+                    guardarAsignacionPeticion(pretension.value)
+                })
             }
-            function guardarAsignacionPeticion (){
+            function guardarAsignacionPeticion (value){
                 let data = {
-                    pretension,
+                    pretension: value,
                     funcionario,
                     idAuto
                 }
@@ -612,5 +629,51 @@ window.addEventListener('DOMContentLoaded', function(){
             ]
           })
     });
+
+    // Funcion check multiple hechos
+    if(document.querySelectorAll('.check-todos-hechos')){
+        let checkTodos = document.querySelectorAll('.check-todos-hechos')
+        checkTodos.forEach(check => {
+            check.addEventListener('input', seleccionMultiple)
+        })
+
+        function seleccionMultiple(btn){
+            let check = btn.target
+            let contenedorPadre = check.parentElement.parentElement
+            let selectores = contenedorPadre.querySelectorAll('.select-hecho')
+            if(check.checked){
+                selectores.forEach(selector => {
+                    selector.checked = true
+                })
+            }else{
+                selectores.forEach(selector => {
+                    selector.checked = false
+                })
+            }
+        }
+    }
+
+    // Funcion check multiple pretensiones
+    if(document.querySelectorAll('.check-todos-pretensiones')){
+        let checkTodos = document.querySelectorAll('.check-todos-pretensiones')
+        checkTodos.forEach(check => {
+            check.addEventListener('input', seleccionMultiple)
+        })
+
+        function seleccionMultiple(btn){
+            let check = btn.target
+            let contenedorPadre = check.parentElement.parentElement
+            let selectores = contenedorPadre.querySelectorAll('.select-pretension')
+            if(check.checked){
+                selectores.forEach(selector => {
+                    selector.checked = true
+                })
+            }else{
+                selectores.forEach(selector => {
+                    selector.checked = false
+                })
+            }
+        }
+    }
 })
 

@@ -48,7 +48,7 @@ class CrearTablaAutoAdmisorio extends Migration
             $table->bigInteger('dias_medida_cautelar')->default(0)->nullable();
             $table->bigInteger('horas_medida_cautelar')->default(0)->nullable();
             //Bloque estados    
-            $table->bigInteger('tiempo_limite')->default(0);
+            $table->dateTime('fecha_limite')->nullable();
             $table->unsignedBigInteger('estadostutela_id')->nullable();
             $table->foreign('estadostutela_id', 'fk_estados_tutela')->references('id')->on('estadostutela')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('estado_asignacion')->default(0)->nullable();

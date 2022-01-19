@@ -22,142 +22,94 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            {{-- @if ($usuario->empleado->cargo->id != 1) --}}
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px blue;">
-                        <div class="inner">
-                            <h3>{{ $sin_aceptar->count() }}</h3>
-                            <p style="font-size: 0.8em">Sin aceptar</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag text-primary"></i>
-                        </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px blue;">
+                    <div class="inner">
+                        <h3>{{ $sin_aceptar->count() }}</h3>
+                        <p style="font-size: 0.8em">Sin aceptar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag text-primary"></i>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px green;">
-                        <div class="inner">
-                            <h3>{{ $aceptadas->count() }}</h3>
-                            <p style="font-size: 0.8em">Aceptadas</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars text-green"></i>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px green;">
+                    <div class="inner">
+                        <h3>{{ $aceptadas->count() }}</h3>
+                        <p style="font-size: 0.8em">Aceptadas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars text-green"></i>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px yellow;">
-                        <div class="inner">
-                            <h3>{{ $supervisadas->count() }}</h3>
-                            <p style="font-size: 0.8em">En supervisión</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add text-warning"></i>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px yellow;">
+                    <div class="inner">
+                        <h3>{{ $supervisadas->count() }}</h3>
+                        <p style="font-size: 0.8em">En supervisión</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add text-warning"></i>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px red;">
-                        <div class="inner">
-                            <h3>{{ $proyectadas->count() }}</h3>
-                            <p style="font-size: 0.8em">Por proyectar</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph text-danger"></i>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px red;">
+                    <div class="inner">
+                        <h3>{{ $proyectadas->count() }}</h3>
+                        <p style="font-size: 0.8em">Por proyectar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-danger"></i>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px grey">
-                        <div class="inner">
-                            <h3>{{ $hechos->count() + $pretensiones->count() }}</h3>
-                            <p style="font-size: 0.8em">Colaboraciones</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph text-grey"></i>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px grey">
+                    <div class="inner">
+                        <h3>{{ $hechos->count() + $pretensiones->count() }}</h3>
+                        <p style="font-size: 0.8em">Colaboraciones</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-grey"></i>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border:  solid 1px pink">
-                        <div class="inner">
-                            <h3>{{ $revisiones->count() }}</h3>
-                            <p style="font-size: 0.8em">En revisión</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph text-pink"></i>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border:  solid 1px pink">
+                    <div class="inner">
+                        <h3>{{ $revisiones->count() }}</h3>
+                        <p style="font-size: 0.8em">En revisión</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-pink"></i>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px teal">
-                        <div class="inner">
-                            <h3>{{ $aprobadas->count() }}</h3>
-                            <p style="font-size: 0.8em">En aprobación</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph text-teal"></i>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px teal">
+                    <div class="inner">
+                        <h3>{{ $aprobadas->count() }}</h3>
+                        <p style="font-size: 0.8em">En aprobación</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-teal"></i>
                     </div>
                 </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px indigo">
-                        <div class="inner">
-                            <h3>{{ $radicadas->count() }}</h3>
-                            <p style="font-size: 0.8em">En radicación</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph text-indigo"></i>
-                        </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-light" style="border: solid 1px indigo">
+                    <div class="inner">
+                        <h3>{{ $radicadas->count() }}</h3>
+                        <p style="font-size: 0.8em">En radicación</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph text-indigo"></i>
                     </div>
                 </div>
-            {{-- @endif --}}
-            {{-- @if ($usuario->empleado->cargo->id == 1)
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px blue;">
-                        <div class="inner">
-                            <h3>{{ $pqrs->where('empleado_id', null)->count() }}</h3>
-                            <p style="font-size: 0.8em">Sin asignar</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag text-primary"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px green;">
-                        <div class="inner">
-                            <h3>{{ $pqrs->where('empleado_id', '!=', null)->count() }}</h3>
-                            <p style="font-size: 0.8em">Asignadas</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars text-green"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px yellow;">
-                        <div class="inner">
-                            <h3>{{ $pqrs->where('tipo_pqr_id', 7)->count() }}</h3>
-                            <p style="font-size: 0.8em">Felicitaciones</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add text-warning"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="small-box bg-light" style="border: solid 1px red;">
-                        <div class="inner">
-                            <h3>{{ $pqrs->where('tipo_pqr_id', 9)->count() }}</h3>
-                            <p style="font-size: 0.8em">Sugerencias</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph text-danger"></i>
-                        </div>
-                    </div>
-                </div>
-            @endif --}}
+            </div>
         </div>
     </div>
     {{-- Incio tabla sin aceptar --}}
@@ -178,6 +130,7 @@
                         <th class="text-center" style="white-space:nowrap;">Estado</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -188,7 +141,26 @@
                                 <td class="text-center" style="white-space:nowrap;">{{ $tutela->created_at }}</td>
                                 <td class="text-center" style="white-space:nowrap;">{{ $tutela->estado->estado_funcionario }}</td>
                                 <td class="text-center" style="white-space:nowrap;">{{ $tutela->radicado }}</td>
-                                <td class="text-center" style="white-space:nowrap;">{{ $tutela->prioridad->prioridad }}</td>
+                                @if($tutela->prioridad_id == 1)
+                                    <td class="text-center bg-warning" style="white-space:nowrap;">
+                                        {{ $tutela->prioridad->prioridad }}
+                                    </td>
+                                @elseif($tutela->prioridad_id == 2)
+                                    <td class="text-center bg-success" style="white-space:nowrap;">
+                                        {{ $tutela->prioridad->prioridad }}
+                                    </td>
+                                @else
+                                    <td class="text-center bg-danger" style="white-space:nowrap;">
+                                        {{ $tutela->prioridad->prioridad }}
+                                    </td>
+                                @endif
+                                @if ( strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                    <td class="text-center bg-danger" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
+                                @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) < 172800)
+                                    <td class="text-center bg-warning" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
+                                @else
+                                    <td class="text-center bg-success" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
+                                @endif
                                 <td class="text-center">
                                     <a href="{{ route('gestionar_asignacion_tutela', ['id' => $tutela->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -219,6 +191,7 @@
                         <th class="text-center" style="white-space:nowrap;">Estado</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -229,7 +202,26 @@
                             <td class="text-center" style="white-space:nowrap;">{{ $tutela->created_at }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $tutela->estado->estado_funcionario }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $tutela->radicado }}</td>
-                            <td class="text-center" style="white-space:nowrap;">{{ $tutela->prioridad->prioridad }}</td>
+                            @if($tutela->prioridad_id == 1)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $tutela->prioridad->prioridad }}
+                                </td>
+                            @elseif($tutela->prioridad_id == 2)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $tutela->prioridad->prioridad }}
+                                </td>
+                            @else
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $tutela->prioridad->prioridad }}
+                                </td>
+                            @endif
+                            @if ( strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) < 172800)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
+                            @else
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_tutela', ['id' => $tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -261,6 +253,7 @@
                         <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -270,9 +263,26 @@
                             <td class="text-center" style="white-space:nowrap;">{{ $supervisada->tutela->fecha_radicado }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $supervisada->tutela->estado->estado_funcionario }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $supervisada->tutela->radicado }}</td>
-                            <td class="text-center" style="white-space:nowrap;">
-                                {{ $supervisada->tutela->prioridad->prioridad }}
-                            </td>
+                            @if($supervisada->tutela->prioridad_id == 1)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">
+                                    {{ $supervisada->tutela->prioridad->prioridad }}
+                                </td>
+                            @elseif($supervisada->tutela->prioridad_id == 2)
+                                <td class="text-center bg-success" style="white-space:nowrap;">
+                                    {{ $supervisada->tutela->prioridad->prioridad }}
+                                </td>
+                            @else
+                                <td class="text-center bg-danger" style="white-space:nowrap;">
+                                    {{ $supervisada->tutela->prioridad->prioridad }}
+                                </td>
+                            @endif
+                            @if ( strtotime(date('Y-m-d', strtotime($supervisada->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $supervisada->tutela->fecha_limite }}</td>
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($supervisada->tutela->fecha_limite))) < 172800)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $supervisada->tutela->fecha_limite }}</td>
+                            @else
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $supervisada->tutela->fecha_limite }}</td>
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_supervisa_tutela', ['id' => $supervisada->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -303,6 +313,7 @@
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                         <th class="text-center" style="white-space:nowrap;">Estado Proceso</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -350,6 +361,13 @@
                                     {{ round($porcentaje / $totalColaboraciones) }}%
                                 </td>
                             @endif
+                            @if ( strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $proyecta->tutela->fecha_limite }}</td>
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))) < 172800)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $proyecta->tutela->fecha_limite }}</td>
+                            @else
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $proyecta->tutela->fecha_limite }}</td>
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_proyecta_tutela', ['id' => $proyecta->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -381,6 +399,7 @@
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                         <th class="text-center" style="white-space:nowrap;">Estado Hecho</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -403,7 +422,20 @@
                                     {{ $hecho->tutela->prioridad->prioridad }}
                                 </td>
                             @endif
-                            <td class="text-center" style="white-space:nowrap;">{{ $hecho->estadohecho->estado }} %</td>
+                            @if ( $hecho->estadohecho->estado >= 66)
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $hecho->estadohecho->estado }} %</td>
+                            @elseif( $hecho->estadohecho->estado <= 33 )
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $hecho->estadohecho->estado }} %</td>
+                            @else
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $hecho->estadohecho->estado }} %</td>
+                            @endif
+                            @if ( strtotime(date('Y-m-d', strtotime($hecho->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $hecho->tutela->fecha_limite }}</td>
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($hecho->tutela->fecha_limite))) < 172800)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $hecho->tutela->fecha_limite }}</td>
+                            @else
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $hecho->tutela->fecha_limite }}</td>
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_tutela', ['id' => $hecho->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -423,6 +455,7 @@
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                         <th class="text-center" style="white-space:nowrap;">Estado Pretensión</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -445,7 +478,20 @@
                                     {{ $pretension->tutela->prioridad->prioridad }}
                                 </td>
                             @endif
-                            <td class="text-center" style="white-space:nowrap;">{{ $pretension->estadopretension->estado }} %</td>
+                            @if ( $pretension->estadopretension->estado >= 66)
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $pretension->estadopretension->estado }} %</td>
+                            @elseif( $pretension->estadopretension->estado <= 33 )
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $pretension->estadopretension->estado }} %</td>
+                            @else
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $pretension->estadopretension->estado }} %</td>
+                            @endif
+                            @if ( strtotime(date('Y-m-d', strtotime($pretension->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $pretension->tutela->fecha_limite }}</td>
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($pretension->tutela->fecha_limite))) < 172800)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $pretension->tutela->fecha_limite }}</td>
+                            @else
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $pretension->tutela->fecha_limite }}</td>
+                            @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_tutela', ['id' => $pretension->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -475,6 +521,7 @@
                         <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -497,6 +544,13 @@
                                     {{ $revision->tutela->prioridad->prioridad }}
                                 </td>
                             @endif
+                            @if ( strtotime(date('Y-m-d', strtotime($revision->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $revision->tutela->fecha_limite }}</td>
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($revision->tutela->fecha_limite))) < 172800)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $revision->tutela->fecha_limite }}</td>
+                            @else
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $revision->tutela->fecha_limite }}</td>
+                        @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_revisa_tutela', ['id' => $revision->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
@@ -526,6 +580,7 @@
                         <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -547,6 +602,13 @@
                                 <td class="text-center bg-danger" style="white-space:nowrap;">
                                     {{ $aprobar->tutela->prioridad->prioridad }}
                                 </td>
+                            @endif
+                            @if ( strtotime(date('Y-m-d', strtotime($aprobar->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_limite }}</td>
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($aprobar->tutela->fecha_limite))) < 172800)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_limite }}</td>
+                            @else
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_limite }}</td>
                             @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_aprueba_tutela', ['id' => $aprobar->tutela->id]) }}"
@@ -577,6 +639,7 @@
                         <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
                         <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                         <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                         <th class="text-center" style="white-space:nowrap;">Ver</th>
                     </tr>
                 </thead>
@@ -598,6 +661,13 @@
                                 <td class="text-center bg-danger" style="white-space:nowrap;">
                                     {{ $radicar->tutela->prioridad->prioridad }}
                                 </td>
+                            @endif
+                            @if ( strtotime(date('Y-m-d', strtotime($radicar->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $radicar->tutela->fecha_limite }}</td>
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($radicar->tutela->fecha_limite))) < 172800)
+                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $radicar->tutela->fecha_limite }}</td>
+                            @else
+                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $radicar->tutela->fecha_limite }}</td>
                             @endif
                             <td class="text-center">
                                 <a href="{{ route('gestionar_asignacion_radica_tutela', ['id' => $radicar->tutela->id]) }}"

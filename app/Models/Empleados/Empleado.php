@@ -19,6 +19,8 @@ use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\HechosTutela;
 use App\Models\Tutela\HistorialHecho;
 use App\Models\Tutela\HistorialPretension;
+use App\Models\Tutela\HistorialRespuestaHecho;
+use App\Models\Tutela\HistorialRespuestaPretension;
 use App\Models\Tutela\HistorialTareas;
 use App\Models\Tutela\PretensionesTutela;
 use App\Models\Tutela\ResuelveTutela;
@@ -141,6 +143,16 @@ class Empleado extends Model
     public function historialPretensionesTutela()
     {
         return $this->hasMany(HistorialPretension::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function historialRespuestaHechosTutela()
+    {
+        return $this->hasMany(HistorialRespuestaHecho::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function historialRespuestaPretensionesTutela()
+    {
+        return $this->hasMany(HistorialRespuestaPretension::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

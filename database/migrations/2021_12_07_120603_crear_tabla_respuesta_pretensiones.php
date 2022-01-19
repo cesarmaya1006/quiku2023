@@ -19,6 +19,8 @@ class CrearTablaRespuestaPretensiones extends Migration
             $table->foreign('auto_admisorio_id', 'fk_auto_admisorio_rp')->references('id')->on('auto_admisorio')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha');
             $table->longText('respuesta')->nullable();
+            $table->unsignedBigInteger('estado_id')->default(1)->nullable();
+            $table->foreign('estado_id', 'fk_estados_respuesta_pretensiones_tutela')->references('id')->on('asignacion_estados_tutela')->onDelete('restrict')->onUpdate('restrict'); 
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

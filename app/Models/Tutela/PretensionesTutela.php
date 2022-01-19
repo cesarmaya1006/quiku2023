@@ -41,4 +41,5 @@ class PretensionesTutela extends Model
     {
         return $this->hasMany(RelacionPretension::class, 'pretension_tutela_id', 'id');
     }
+    //----------------------------------------------------------------------------------
 }

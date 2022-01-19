@@ -72,6 +72,9 @@
                                 <div class="col-12 col-md-6">
                                     Prioridad : <strong>{{ $tutela->prioridad->prioridad }}</strong>
                                 </div>
+                                <div class="col-12 col-md-6">
+                                    Fecha límite: <strong>{{ $tutela->fecha_limite }}</strong>
+                                </div>
                             </div>
                         </div>
                         <hr style="border-top: solid 4px black">
@@ -153,15 +156,6 @@
                                     @foreach ( $tutela->accions as $accion)
                                         <div class="col-12 row">
                                             <div class="col-6">
-                                                @if($accion->tipo_accion == 'Accionante')
-                                                    <div class="col-12 mb-3">
-                                                        <h6 class="pl-4">Accionante</h6>
-                                                    </div>
-                                                @else
-                                                    <div class="col-12 mb-3">
-                                                        <h6 class="pl-4">Accionado</h6>
-                                                    </div>
-                                                @endif
                                                 <div class="col-12">
                                                     <p class="text-justify"><strong>Nombre:</strong> {{ $accion->nombres_accion }}  {{ $accion->apellidos_accion }}</p>
                                                 </div>
@@ -268,52 +262,6 @@
                                         </div>
                                         <div class="col-12">
                                             <p class="text-justify">{{ $hecho->hecho }}</p>
-                                            @if ($hecho->respuesta->respuesta)
-                                                <hr>
-                                                <div class="respuesta mt-2">
-                                                    <h6>Respuesta</h6>
-                                                    {!! $hecho->respuesta->respuesta !!}
-                                                </div>
-                                                <hr>
-                                                @if (isset($hecho->respuesta))
-                                                    @if (sizeOf($hecho->respuesta->documentos))
-                                                        <div class="row respuestaAnexos">
-                                                            <div class="col-12">
-                                                                <div class="col-12">
-                                                                    <h6>Anexos respuesta hecho</h6>
-                                                                </div>
-                                                                <div class="col-12 table-responsive">
-                                                                    <table class="table table-light" style="font-size: 0.8em;">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">Nombre</th>
-                                                                                <th scope="col">Descripción</th>
-                                                                                <th scope="col">Archivo</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach ($hecho->respuesta->documentos as $anexo)
-                                                                                <tr>
-                                                                                    <td class="text-justify">
-                                                                                        {{ $anexo->titulo }}
-                                                                                    </td>
-                                                                                    <td class="text-justify">
-                                                                                        {{ $anexo->descripcion }}
-                                                                                    </td>
-                                                                                    <td><a href="{{ asset('documentos/tutelas/hechos/' . $anexo->url) }}"
-                                                                                            target="_blank"
-                                                                                            rel="noopener noreferrer">Descargar</a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                @endif
-                                            @endif
                                         </div>
                                     </div>
                                  @endforeach  
@@ -512,46 +460,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- @if (sizeOf($pqr->anexos))   
-                        <div class="rounded border m-3 p-2 mb-4">
-                            <h5 class="mb-3">Historial de respuesta </h5>
-                            <div class="row d-flex px-12 p-3">
-                                <div class="col-12 table-responsive">
-                                    <table class="table table-light" style="font-size: 0.8em;">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Fecha</th>
-                                                <th scope="col">Empleado</th>
-                                                <th scope="col">Tarea</th>
-                                                <th scope="col">Tipo</th>
-                                                <th scope="col">Descarga</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pqr->anexos as $anexo)
-                                                <tr>
-                                                    <td>{{ $anexo->created_at }}</td>
-                                                    <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
-                                                    <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                    @if($anexo->tipo_respuesta == 0)
-                                                        <td>Respuesta PQR</td>
-                                                    @elseif($anexo->tipo_respuesta == 1)
-                                                        <td>Respuesta aclaración</td>
-                                                    @elseif($anexo->tipo_respuesta == 2)
-                                                        <td>Respuesta reposición</td>
-                                                    @elseif($anexo->tipo_respuesta == 3)
-                                                        <td>Respuesta apelación</td>
-                                                    @endif
-                                                    <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-                    @endif --}}
                     <input class="id_auto" type="hidden" value="{{ $tutela->id }}">
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{ route('tutela-gestion') }}" class="btn btn-danger mx-2 px-4">Regresar</a>

@@ -10,8 +10,10 @@ use App\Models\Tutela\AnexoTutela;
 use App\Models\Tutela\HechosTutela;
 use App\Models\Tutela\MotivosTutela;
 use App\Models\Tutela\PruebasTutela;
+use App\Models\Tutela\RelacionHecho;
 use App\Models\Tutela\ResuelveTutela;
 use App\Models\Tutela\HistorialTareas;
+use App\Models\Tutela\RespuestaHechos;
 use App\Models\Tutela\ArgumentosTutela;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -110,6 +112,16 @@ class AutoAdmisorio extends Model
     public function respuestasPretensiones()
     {
         return $this->hasMany(RespuestaPretensiones::class, 'auto_admisorio_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function relacioneshechos()
+    {
+        return $this->hasMany(RelacionHecho::class, 'auto_admisorio_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function respuestasHechos()
+    {
+        return $this->hasMany(RespuestaHechos::class, 'auto_admisorio_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function resuelves()

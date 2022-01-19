@@ -15,10 +15,12 @@ class CrearTablaRespuestaHechos extends Migration
     {
         Schema::create('respuesta_hechos', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->unsignedBigInteger('hechos_tutela_id');
-            $table->foreign('hechos_tutela_id', 'fk_hechos_tutela_respuesta')->references('id')->on('hechos_tutela')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('auto_admisorio_id');
+            $table->foreign('auto_admisorio_id', 'fk_auto_admisorio_rh')->references('id')->on('auto_admisorio')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha');
             $table->longText('respuesta')->nullable();
+            $table->unsignedBigInteger('estado_id')->default(1)->nullable();
+            $table->foreign('estado_id', 'fk_estados_repuesta_hechos_tutela')->references('id')->on('asignacion_estados_tutela')->onDelete('restrict')->onUpdate('restrict'); 
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

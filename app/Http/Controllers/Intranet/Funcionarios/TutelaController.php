@@ -13,29 +13,30 @@ use App\Models\Tutela\Despachos;
 use App\Models\Admin\WikuDocument;
 use App\Models\Servicios\Servicio;
 use App\Models\Tutela\AnexoTutela;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\Productos\Categoria;
 use App\Models\Tutela\HechosTutela;
 use App\Http\Controllers\Controller;
 use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\MotivosTutela;
 use App\Models\Tutela\PruebasTutela;
+use App\Models\Tutela\RelacionHecho;
 use App\Models\Tutela\HistorialHecho;
+use App\Models\Tutela\ResuelveTutela;
 use App\Models\Tutela\AsignacionTarea;
 use App\Models\Tutela\HistorialTareas;
+use App\Models\Tutela\RespuestaHechos;
+use App\Models\Tutela\TutelaRespuesta;
 use Illuminate\Support\Facades\Config;
 use App\Models\Tutela\ArgumentosTutela;
 use App\Models\Tutela\AsignacionEstados;
 use App\Models\Tutela\DocRespuestaHecho;
-use App\Models\Tutela\DocRespuestaPretension;
 use App\Models\Tutela\PretensionesTutela;
+use App\Models\Tutela\RelacionPretension;
 use App\Models\Tutela\HistorialAsignacion;
 use App\Models\Tutela\HistorialPretension;
-use App\Models\Tutela\RelacionPretension;
-use App\Models\Tutela\RespuestaHechos;
 use App\Models\Tutela\RespuestaPretensiones;
-use App\Models\Tutela\ResuelveTutela;
-use App\Models\Tutela\TutelaRespuesta;
-use Barryvdh\DomPDF\Facade as PDF;
+use App\Models\Tutela\DocRespuestaPretension;
 
 class TutelaController extends Controller
 {
@@ -79,8 +80,16 @@ class TutelaController extends Controller
             $nuevo_auto_admisorio['telefono_juez'] = $request['telefono_fijo_juez'];
             $nuevo_auto_admisorio['correo_juez'] = $request['correo_juez'];
 
+
             $nuevo_auto_admisorio['dias_termino'] = $request['cantidad_dias'];
             $nuevo_auto_admisorio['horas_termino'] = $request['cantidad_horas'];
+            if($request['cantidad_dias']){
+                $nuevo_auto_admisorio['fecha_limite'] = strtotime ( "+{$request['cantidad_dias']} days" , strtotime ($request['fecha_notificacion']) );
+                $nuevo_auto_admisorio['fecha_limite'] = date ( 'Y-m-d H:i:s' , $nuevo_auto_admisorio['fecha_limite']); 
+            }else{
+                $nuevo_auto_admisorio['fecha_limite'] = strtotime ( "+{$request['cantidad_horas']} hour" , strtotime ($request['fecha_notificacion']) );
+                $nuevo_auto_admisorio['fecha_limite'] = date ( 'Y-m-d H:i:s' , $nuevo_auto_admisorio['fecha_limite']); 
+            }
 
             $nuevo_auto_admisorio['medida_cautelar'] = $request['medida_cautelar'];
             if($request['medida_cautelar']){
@@ -307,6 +316,20 @@ class TutelaController extends Controller
                         AsignacionTarea::create($asignacionTarea);
                     }
                 }
+                if($request['reAsignacion'] === "true"){
+                    $hechos =  HechosTutela::where('auto_admisorio_id', $request['idAuto'])->get();
+                    foreach ($hechos as $hecho) {
+                        $id = $hecho['id'];
+                        $hechoActualizar['empleado_id'] = session('id_usuario');
+                        HechosTutela::findOrFail($id)->update($hechoActualizar); 
+                    }
+                    $pretensiones =  PretensionesTutela::where('auto_admisorio_id', $request['idAuto'])->get();
+                    foreach ($pretensiones as $pretension) {
+                        $id = $pretension['id'];
+                        $pretensionActualizar['empleado_id'] = session('id_usuario');
+                        PretensionesTutela::findOrFail($id)->update($pretensionActualizar); 
+                    }
+                }
             }
             $asignacionHistorial['auto_admisorio_id'] = $request['idAuto'];
             $asignacionHistorial['empleado_id'] = session('id_usuario');
@@ -477,26 +500,76 @@ class TutelaController extends Controller
         }
     }
 
+    public function respuesta_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $respuesta['auto_admisorio_id'] = $request["id_auto"];
+            $respuesta['respuesta'] = $request["respuesta"];
+            $respuesta['estado_id'] = $request["estado"];
+            $respuesta['fecha'] = date("Y-m-d");
+            $respuestaHecho = RespuestaPretensiones::create($respuesta);
+            $id_respuesta = $respuestaHecho['id'];
+            return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function respuesta_hecho_guardar(Request $request)
     {
         if ($request->ajax()) {
-            $respuestaValidacion = RespuestaHechos::where('hechos_tutela_id', $request["id_hecho"])->get();
-            if(!sizeOf($respuestaValidacion)){
-                $respuesta['hechos_tutela_id'] = $request["id_hecho"];
-                $respuesta['fecha'] = date("Y-m-d");
-                $respuesta['respuesta'] = $request["respuesta"];
-                $respuestaHecho = RespuestaHechos::create($respuesta);
-                $id_respuesta = $respuestaHecho['id'];
-            }else{
-                $respuesta['respuesta'] = $request["respuesta"];
-                $id_respuesta = $respuestaValidacion[0]['id'];
-                $respuestaHecho = RespuestaHechos::findOrFail($id_respuesta)->update($respuesta);
-            }
-            if( $request["estado"]){
-                $nuevoEstado['estado_id'] = $request["estado"];
-                HechosTutela::findOrFail($request['id_hecho'])->update($nuevoEstado);
-            }
+            $respuesta['auto_admisorio_id'] = $request["id_auto"];
+            $respuesta['respuesta'] = $request["respuesta"];
+            $respuesta['estado_id'] = $request["estado"];
+            $respuesta['fecha'] = date("Y-m-d");
+            $respuestaHecho = RespuestaHechos::create($respuesta);
+            $id_respuesta = $respuestaHecho['id'];
             return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_hecho_editar_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $respuestaActualizada['respuesta'] = $request['respuesta'];
+            $respuestaActualizada['estado_id'] = $request['estado'];
+            $respuesta = RespuestaHechos::findOrFail($request['id_respuesta'])->update($respuestaActualizada);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_pretension_anexo_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $documentos = $request->allFiles();
+            if ($request->hasFile('archivo')) {
+                $ruta = Config::get('constantes.folder_pretensiones');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["archivo"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['respuesta_pretensiones_id'] = $request["respuesta_pretensiones_id"];
+                $nuevo_documento['titulo'] = $request["titulo"];
+                if ($request["descripcion"]) {
+                    $nuevo_documento['descripcion'] = $request["descripcion"];
+                } else {
+                    $nuevo_documento['descripcion'] = '';
+                }
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+                $respuesta = DocRespuestaPretension::create($nuevo_documento);
+            }
+
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
             abort(404);
         }
@@ -535,48 +608,58 @@ class TutelaController extends Controller
         }
     }
 
-    public function respuesta_pretension_guardar(Request $request)
+    public function relacion_respuesta_hecho_guardar(Request $request)
     {
         if ($request->ajax()) {
-            $respuesta['auto_admisorio_id'] = $request["id_auto"];
-            $respuesta['respuesta'] = $request["respuesta"];
-            $respuesta['fecha'] = date("Y-m-d");
-            $respuestaHecho = RespuestaPretensiones::create($respuesta);
-            $id_respuesta = $respuestaHecho['id'];
-            return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
+            $relacion['auto_admisorio_id'] = $request["id_auto"];
+            $relacion['hecho_tutela_id'] = $request["id_hecho"];
+            $relacion['respuesta_hechos_id'] = $request["id_respuesta"];
+            $respuestaRelacion = RelacionHecho::create($relacion);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
         } else {
             abort(404);
         }
     }
 
-    public function respuesta_pretension_anexo_guardar(Request $request)
+    public function estado_respuesta_hecho_guardar(Request $request)
     {
         if ($request->ajax()) {
-            $documentos = $request->allFiles();
-            if ($request->hasFile('archivo')) {
-                $ruta = Config::get('constantes.folder_hechos');
-                $ruta = trim($ruta);
-                $doc_subido = $documentos["archivo"];
-                $tamaño = $doc_subido->getSize();
-                if ($tamaño > 0) {
-                    $tamaño = $tamaño / 1000;
-                }
-                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
-                $nuevo_documento['respuesta_pretensiones_id'] = $request["respuesta_pretensiones_id"];
-                $nuevo_documento['titulo'] = $request["titulo"];
-                if ($request["descripcion"]) {
-                    $nuevo_documento['descripcion'] = $request["descripcion"];
-                } else {
-                    $nuevo_documento['descripcion'] = '';
-                }
-                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
-                $nuevo_documento['peso'] = $tamaño;
-                $nuevo_documento['url'] = $nombre_doc;
-                $doc_subido->move($ruta, $nombre_doc);
-                $respuesta = DocRespuestaPretension::create($nuevo_documento);
+            $hechos = RelacionHecho::where('respuesta_hechos_id', $request["id_respuesta"])->get();
+            foreach ($hechos as $hecho) {
+                $nuevoEstado['estado_id'] = $request["estado"];
+                $respuesta = HechosTutela::findOrFail($hecho['hecho_tutela_id'])->update($nuevoEstado);
             }
-
+            $nuevoEstado['estado_id'] = $request["estado"];
+            $respuesta = RespuestaHechos::findOrFail($request['id_respuesta'])->update($nuevoEstado);
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function eliminar_respuesta_hecho_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $relacionHecho = RelacionHecho::where('hecho_tutela_id', $request["hecho_id"])->get();
+            $relacionHecho = $relacionHecho[0];
+            $respuestaHechos = RespuestaHechos::findOrFail($relacionHecho['respuesta_hechos_id']);
+            if(sizeOf($respuestaHechos->relacion) == 1 ){
+                RelacionHecho::where('hecho_tutela_id', $request["hecho_id"])->delete();
+                $anexos = DocRespuestaHecho::where('respuesta_hechos_id', $respuestaHechos['id'])->get();
+                if(sizeOf($anexos)){
+                    foreach ($anexos as $anexo) {
+                        DocRespuestaHecho::where('respuesta_hechos_id', $anexo['id'])->delete();
+                    }
+                }
+                RespuestaHechos::findOrFail($relacionHecho['respuesta_hechos_id'])->delete();
+                $nuevoEstado['estado_id'] = 1;
+                HechosTutela::findOrFail($relacionHecho['hecho_tutela_id'])->update($nuevoEstado);
+            }else {
+                RelacionHecho::where('hecho_tutela_id', $request["hecho_id"])->delete();
+                $nuevoEstado['estado_id'] = 1;
+                HechosTutela::findOrFail($relacionHecho['hecho_tutela_id'])->update($nuevoEstado);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => 'ok']);
         } else {
             abort(404);
         }
@@ -590,6 +673,22 @@ class TutelaController extends Controller
             $relacion['respuesta_pretensiones_id'] = $request["id_respuesta"];
             $respuestaRelacion = RelacionPretension::create($relacion);
             return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function estado_respuesta_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $pretensiones = RelacionPretension::where('respuesta_pretensiones_id', $request["id_respuesta"])->get();
+            foreach ($pretensiones as $pretension) {
+                $nuevoEstado['estado_id'] = $request["estado"];
+                PretensionesTutela::findOrFail($pretension['pretension_tutela_id'])->update($nuevoEstado);
+            }
+            $nuevoEstado['estado_id'] = $request["estado"];
+            $respuesta = RespuestaPretensiones::findOrFail($request['id_respuesta'])->update($nuevoEstado);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
             abort(404);
         }
