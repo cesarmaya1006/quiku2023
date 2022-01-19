@@ -10,7 +10,7 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Parametros - Analitica
+    Parametros - Analitica pos volumen
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
@@ -35,16 +35,17 @@
                         <option value="area">Áreas</option>
                         <option value="line">Lineas</option>
                         <option value="column">Barras</option>
+                        <option value="pie">Torta de datos</option>
                     </select>
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="form-check col-12 mb-5">
-                    <h4>Analítica por tiempos medios de respuesta</h4>
+                    <h4>Analítica por volumen de Tutelas</h4>
                 </div>
                 <div class="form-check col-12 col-md-2">
                     <input class="form-check-input check_clase" type="checkbox" value="" id="tipopqrCheck">
-                    <label class="form-check-label" for="tipopqrCheck">Tipo de Tutela</label>
+                    <label class="form-check-label" for="tipopqrCheck">Tipo de Tutelas</label>
                 </div>
                 <div class="form-check col-12 col-md-2">
                     <input class="form-check-input check_clase" type="checkbox" value="" id="motivoCheck">
@@ -82,7 +83,7 @@
             <hr>
             <div class="row">
                 <div class="form-group col-12 col-md-6 d-none" id="tipo_pqr">
-                    <label class="requerido" for="tipo_p_q_r_id">Tipo de Tutela</label>
+                    <label class="requerido" for="tipo_p_q_r_id">Tipo de Tutelas</label>
                     <select id="tipo_p_q_r_id" class="form-control form-control-sm" name="tipo_p_q_r_id"
                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}" required>
                         <option value="">---Seleccione---</option>
@@ -92,14 +93,14 @@
                     </select>
                 </div>
                 <div class="form-group col-12 col-md-6 d-none" id="motivo_pqr">
-                    <label class="requerido" for="motivo_id">Motivo de Tutela</label>
+                    <label class="requerido" for="motivo_id">Motivo de Tutelas</label>
                     <select id="motivo_id" class="form-control form-control-sm" name="motivo_id"
                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}">
                         <option value="">---Seleccione---</option>
                     </select>
                 </div>
                 <div class="form-group col-12 col-md-6 d-none" id="sub_motivo_pqr">
-                    <label class="requerido" for="motivo_sub_id">Sub-Motivo de Tutela</label>
+                    <label class="requerido" for="motivo_sub_id">Sub-Motivo de Tutelas</label>
                     <select id="motivo_sub_id" class="form-control form-control-sm" name="motivo_sub_id">
                         <option value="">---Seleccione---</option>
                     </select>
@@ -146,8 +147,8 @@
                 </div>
             </div>
             <hr>
-            <div class="row mb-3 cajasAnaliticas d-none">
-                <div class="col-12">
+            <div class="row mb-3 cajasAnaliticas d-none" id="containerAnalitica">
+                <div class="col-12 d-none" id="caja1">
                     <div id="analiticaAjax" style="height: 370px; max-width: auto; margin: 0px auto;"></div>
                 </div>
             </div>
@@ -174,7 +175,7 @@
             </div>
         </div>
     </div>
-    <input type="hidden" name="cargarGraficos" id="cargarGraficos" data_url="{{ route('analitica-tipoPQR') }}">
+    <input type="hidden" name="cargarGraficos" id="cargarGraficos" data_url="{{ route('analitica-cantidad_cargar') }}">
     <input type="hidden" name="graficoExcel" id="graficoExcel" data_url="{{ asset('imagenes/sistema/excel.png') }}">
 
 @endsection
@@ -183,6 +184,6 @@
 @section('scripts_pagina')
     <script src="{{ asset('js/canvas/jquery-1.11.1.min.js') }}"></script>
     <script src="{{ asset('js/canvas/jquery.canvasjs.min.js') }}"></script>
-    <script src="{{ asset('js/intranet/analitica/analitica.js') }}"></script>
+    <script src="{{ asset('js/intranet/analitica/cantidad.js') }}"></script>
 @endsection
 <!-- ************************************************************* -->
