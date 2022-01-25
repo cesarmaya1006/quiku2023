@@ -2,6 +2,7 @@
 
 namespace App\Models\Tutela;
 
+use App\Models\Empleados\Empleado;
 use App\Models\Tutela\AutoAdmisorio;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tutela\AsignacionEstados;
@@ -40,6 +41,11 @@ class RespuestaPretensiones extends Model
     public function historial()
     {
         return $this->hasMany(HistorialRespuestaPretension::class, 'respuesta_pretension_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Tutela;
 
+use App\Models\Empleados\Empleado;
 use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\RelacionHecho;
 use Illuminate\Database\Eloquent\Model;
@@ -42,4 +43,10 @@ class RespuestaHechos extends Model
         return $this->hasMany(HistorialRespuestaHecho::class, 'respuesta_hecho_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }
+

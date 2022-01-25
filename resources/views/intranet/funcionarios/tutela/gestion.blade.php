@@ -154,9 +154,9 @@
                                         {{ $tutela->prioridad->prioridad }}
                                     </td>
                                 @endif
-                                @if ( strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                                @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))))
                                     <td class="text-center bg-danger" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
-                                @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) < 172800)
+                                @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) > (-172800))
                                     <td class="text-center bg-warning" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
                                 @else
                                     <td class="text-center bg-success" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
@@ -215,9 +215,9 @@
                                     {{ $tutela->prioridad->prioridad }}
                                 </td>
                             @endif
-                            @if ( strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                            @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))))
                                 <td class="text-center bg-danger" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
-                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) < 172800)
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($tutela->fecha_limite))) > (-172800))
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
                             @else
                                 <td class="text-center bg-success" style="white-space:nowrap;">{{ $tutela->fecha_limite }}</td>
@@ -276,9 +276,9 @@
                                     {{ $supervisada->tutela->prioridad->prioridad }}
                                 </td>
                             @endif
-                            @if ( strtotime(date('Y-m-d', strtotime($supervisada->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                            @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($supervisada->tutela->fecha_limite))))
                                 <td class="text-center bg-danger" style="white-space:nowrap;">{{ $supervisada->tutela->fecha_limite }}</td>
-                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($supervisada->tutela->fecha_limite))) < 172800)
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($supervisada->tutela->fecha_limite))) > (-172800))
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $supervisada->tutela->fecha_limite }}</td>
                             @else
                                 <td class="text-center bg-success" style="white-space:nowrap;">{{ $supervisada->tutela->fecha_limite }}</td>
@@ -361,9 +361,9 @@
                                     {{ round($porcentaje / $totalColaboraciones) }}%
                                 </td>
                             @endif
-                            @if ( strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                            @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))))
                                 <td class="text-center bg-danger" style="white-space:nowrap;">{{ $proyecta->tutela->fecha_limite }}</td>
-                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))) < 172800)
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))) > (-172800))
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $proyecta->tutela->fecha_limite }}</td>
                             @else
                                 <td class="text-center bg-success" style="white-space:nowrap;">{{ $proyecta->tutela->fecha_limite }}</td>
@@ -429,9 +429,9 @@
                             @else
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $hecho->estadohecho->estado }} %</td>
                             @endif
-                            @if ( strtotime(date('Y-m-d', strtotime($hecho->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                            @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($hecho->tutela->fecha_limite))))
                                 <td class="text-center bg-danger" style="white-space:nowrap;">{{ $hecho->tutela->fecha_limite }}</td>
-                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($hecho->tutela->fecha_limite))) < 172800)
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($hecho->tutela->fecha_limite))) > (-172800))
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $hecho->tutela->fecha_limite }}</td>
                             @else
                                 <td class="text-center bg-success" style="white-space:nowrap;">{{ $hecho->tutela->fecha_limite }}</td>
@@ -485,9 +485,9 @@
                             @else
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $pretension->estadopretension->estado }} %</td>
                             @endif
-                            @if ( strtotime(date('Y-m-d', strtotime($pretension->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                            @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($pretension->tutela->fecha_limite))))
                                 <td class="text-center bg-danger" style="white-space:nowrap;">{{ $pretension->tutela->fecha_limite }}</td>
-                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($pretension->tutela->fecha_limite))) < 172800)
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($pretension->tutela->fecha_limite))) > (-172800))
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $pretension->tutela->fecha_limite }}</td>
                             @else
                                 <td class="text-center bg-success" style="white-space:nowrap;">{{ $pretension->tutela->fecha_limite }}</td>
@@ -503,69 +503,10 @@
             </table>
         </div>
     </div>
-    {{-- Tabla Revisa --}}
+    {{-- Tabla Revisa Aprueba--}}
     <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
         <div class="card-header">
-            <h3 class="card-title font-weight-bold">En revisión</h3>
-            <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-plus"></i>
-                </button>
-            </div>
-        </div>
-        <div class="card-body" style="display: none;">
-            <table class="table table-striped table-hover table-sm display">
-                <thead class="thead-inverse">
-                    <tr>
-                        <th class="text-center" style="white-space:nowrap;">Fecha radica usuario</th>
-                        <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
-                        <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
-                        <th class="text-center" style="white-space:nowrap;">Prioridad</th>
-                        <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
-                        <th class="text-center" style="white-space:nowrap;">Ver</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($revisiones as $revision)
-                        <tr>
-                            <td class="text-center" style="white-space:nowrap;">{{ $revision->tutela->fecha_radicado }}</td>
-                            <td class="text-center" style="white-space:nowrap;">{{ $revision->tutela->estado->estado_funcionario }}</td>
-                            <td class="text-center" style="white-space:nowrap;">{{ $revision->tutela->radicado }}</td>
-                            @if($revision->tutela->prioridad_id == 1)
-                                <td class="text-center bg-warning" style="white-space:nowrap;">
-                                    {{ $revision->tutela->prioridad->prioridad }}
-                                </td>
-                            @elseif($revision->tutela->prioridad_id == 2)
-                                <td class="text-center bg-success" style="white-space:nowrap;">
-                                    {{ $revision->tutela->prioridad->prioridad }}
-                                </td>
-                            @else
-                                <td class="text-center bg-danger" style="white-space:nowrap;">
-                                    {{ $revision->tutela->prioridad->prioridad }}
-                                </td>
-                            @endif
-                            @if ( strtotime(date('Y-m-d', strtotime($revision->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
-                                <td class="text-center bg-danger" style="white-space:nowrap;">{{ $revision->tutela->fecha_limite }}</td>
-                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($revision->tutela->fecha_limite))) < 172800)
-                                <td class="text-center bg-warning" style="white-space:nowrap;">{{ $revision->tutela->fecha_limite }}</td>
-                            @else
-                                <td class="text-center bg-success" style="white-space:nowrap;">{{ $revision->tutela->fecha_limite }}</td>
-                        @endif
-                            <td class="text-center">
-                                <a href="{{ route('gestionar_asignacion_revisa_tutela', ['id' => $revision->tutela->id]) }}"
-                                    class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
-                                        class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-    {{-- Tabla Aprueba--}}
-    <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
-        <div class="card-header">
-            <h3 class="card-title font-weight-bold">En aprobación</h3>
+            <h3 class="card-title font-weight-bold">En revisión y aprobación</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-plus"></i>
@@ -603,15 +544,15 @@
                                     {{ $aprobar->tutela->prioridad->prioridad }}
                                 </td>
                             @endif
-                            @if ( strtotime(date('Y-m-d', strtotime($aprobar->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                            @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($aprobar->tutela->fecha_limite))))
                                 <td class="text-center bg-danger" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_limite }}</td>
-                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($aprobar->tutela->fecha_limite))) < 172800)
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($aprobar->tutela->fecha_limite))) > (-172800))
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_limite }}</td>
                             @else
                                 <td class="text-center bg-success" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_limite }}</td>
                             @endif
                             <td class="text-center">
-                                <a href="{{ route('gestionar_asignacion_aprueba_tutela', ['id' => $aprobar->tutela->id]) }}"
+                                <a href="{{ route('gestionar_asignacion_revisa_aprueba_tutela', ['id' => $aprobar->tutela->id]) }}"
                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                             </td>
@@ -662,9 +603,9 @@
                                     {{ $radicar->tutela->prioridad->prioridad }}
                                 </td>
                             @endif
-                            @if ( strtotime(date('Y-m-d', strtotime($radicar->tutela->fecha_limite))) >= strtotime(date('Y-m-d')))
+                            @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($radicar->tutela->fecha_limite))))
                                 <td class="text-center bg-danger" style="white-space:nowrap;">{{ $radicar->tutela->fecha_limite }}</td>
-                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($radicar->tutela->fecha_limite))) < 172800)
+                            @elseif( strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($radicar->tutela->fecha_limite))) > (-172800))
                                 <td class="text-center bg-warning" style="white-space:nowrap;">{{ $radicar->tutela->fecha_limite }}</td>
                             @else
                                 <td class="text-center bg-success" style="white-space:nowrap;">{{ $radicar->tutela->fecha_limite }}</td>
