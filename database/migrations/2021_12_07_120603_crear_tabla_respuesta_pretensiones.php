@@ -21,6 +21,8 @@ class CrearTablaRespuestaPretensiones extends Migration
             $table->longText('respuesta')->nullable();
             $table->unsignedBigInteger('estado_id')->default(1)->nullable();
             $table->foreign('estado_id', 'fk_estados_respuesta_pretensiones_tutela')->references('id')->on('asignacion_estados_tutela')->onDelete('restrict')->onUpdate('restrict'); 
+            $table->unsignedBigInteger('empleado_id')->nullable();
+            $table->foreign('empleado_id', 'fk_empleado_respuesta_pretension')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

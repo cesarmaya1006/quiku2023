@@ -370,6 +370,358 @@
                                 </div>
                             </div>
 
+                            @if(sizeOf($tutela->respuestasHechos))
+                                <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 1em;">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Respuestas hechos</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="display: none;">
+                                        @if(sizeOf($tutela->hechos))
+                                            <div class="col-12 row mb-2">
+                                                @if(sizeOf($tutela->respuestasHechos))
+                                                    @foreach ($tutela->respuestasHechos as $key => $respuesta)
+                                                        <div class="rounded border my-3 p-3">
+                                                            <div class="col-12 col-md-12 mt-2 mb-4">
+                                                                <h5>Respuesta #{{$key + 1}}</h5>
+                                                            </div>
+
+                                                            @if($respuesta->estado_id != 11)
+                                                                <div class="row col-12">
+                                                                    <div class="col-12 col-md-4 form-group">
+                                                                        <label for="">Cargo</label>
+                                                                        <select class="custom-select rounded-0 cargo" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-4 form-group">
+                                                                        <label for="">Funcionario</label>
+                                                                        <select class="custom-select rounded-0 funcionario" required="">
+                                                                            <option value="">--Seleccione--</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-4 form-group d-flex align-items-end">
+                                                                        <button href="" class="btn btn-primary px-4 reasignacion_hecho_guardar" data_url="{{ route('asignacion_hecho_guardar') }}" data_url2="{{ route('respuesta_hecho_editar_guardar') }}"
+                                                                        data_token="{{ csrf_token() }}">Asignar hecho</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+                                                            @foreach ($respuesta->relacion as $relacion)
+                                                                <div class="row">
+                                                                    <div class="my-2 col-11">
+                                                                        <strong class="">#{{ $relacion->hecho->consecutivo }} Hecho: </strong>{{$relacion->hecho->hecho}}
+                                                                    </div>
+                                                                    @if($respuesta->estado_id != 11)
+                                                                        <div class="col-1">
+                                                                            <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho" data_url="{{ route('eliminar_respuesta_hecho_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
+                                                                            <input class="id_relacion_hecho" type="hidden" value="{{ $relacion->hecho->id }}">
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            @endforeach
+                                                            <div class="row respuesta-hecho">
+                                                                <div class="col-12 row mt-4 mb-2 ">
+                                                                    <div class="col-12 col-md-5">
+                                                                        <h6 class="font-weight-bold">Respuesta hecho</h6>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-7 row estado-hecho justify-content-end">
+                                                                        <input class="estado_actual" type="hidden" value="{{ $respuesta->estado_id }}">
+                                                                        @if ($tutela->estadostutela_id < 4)
+                                                                            <div class="col-9 row estado-hecho justify-content-end">
+                                                                                <div class="col-3 d-flex mb-2">
+                                                                                    <h6>Avance:</h6>
+                                                                                </div>
+                                                                                <select class="custom-select rounded-0 estadoHecho col-4">
+                                                                                    @foreach ($estados as $estado)
+                                                                                        <option value="{{ $estado->id }}"
+                                                                                        {{ $respuesta->estadorepuestahecho->id == $estado->id ? 'selected' : '' }}>
+                                                                                        {{ $estado->estado }} %</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                                <button type="" class="btn btn-primary btn-estado-hecho col-2 mx-2"
+                                                                                    data_url="{{ route('estado_respuesta_hecho_guardar') }}"
+                                                                                    data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-12 form-group mt-3">
+                                                                        <div class="respuesta mt-2">
+                                                                            @if($respuesta->respuesta)
+                                                                                {!! $respuesta->respuesta !!}
+                                                                            @endif
+                                                                        </div>
+                                                                        <input class="id_respuesta" type="hidden" value="{{ $respuesta->id }}">
+                                                                    </div>
+                                                                    @if (isset($respuesta))
+                                                                        @if (sizeOf($respuesta->documentos))
+                                                                            <hr class="my-4">
+                                                                            <div class="row respuestaAnexos">
+                                                                                <div class="col-12">
+                                                                                    <div class="col-12">
+                                                                                        <h6>Anexos respuesta</h6>
+                                                                                    </div>
+                                                                                    <div class="col-12 table-responsive">
+                                                                                        <table class="table table-light" style="font-size: 0.8em;">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th scope="col">Nombre</th>
+                                                                                                    <th scope="col">Descripción</th>
+                                                                                                    <th scope="col">Archivo</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                @foreach ($respuesta->documentos as $anexo)
+                                                                                                    <tr>
+                                                                                                        <td class="text-justify">
+                                                                                                            {{ $anexo->titulo }}
+                                                                                                        </td>
+                                                                                                        <td class="text-justify">
+                                                                                                            {{ $anexo->descripcion }}
+                                                                                                        </td>
+                                                                                                        <td><a href="{{ asset('documentos/tutelas/hechos/' . $anexo->url) }}"
+                                                                                                                target="_blank"
+                                                                                                                rel="noopener noreferrer">Descargar</a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                @endforeach
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+                                                                    @endif
+                                                                    @if (isset($respuesta))
+                                                                        @if (sizeOf($respuesta->historial))
+                                                                            <hr class="mt-3">
+                                                                            <h6 class="">Historial de respuestas</h6>
+                                                                            <div class="row d-flex px-12 p-3">
+                                                                                <div class="col-12 table-responsive">
+                                                                                    <table class="table table-light" style="font-size: 0.8em;">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th scope="col">Fecha</th>
+                                                                                                <th scope="col">Empleado</th>
+                                                                                                <th scope="col">Historial</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($respuesta->historial as $historial)
+                                                                                                <tr>
+                                                                                                    <td>{{ $historial->created_at }}</td>
+                                                                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
+                                                                                                    <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
+                                                                                                </tr>
+                                                                                            @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+                                                                        <hr class="mt-3">
+                                                                        <div class="row d-flex px-12 p-3 mensaje-respuesta-hecho"> 
+                                                                            <input class="id_respuesta_hecho" type="hidden" value="{{ $respuesta->id }}">
+                                                                            <div class="container-mensaje-historial form-group col-12">
+                                                                                <label for="" class="">Agregar Historial de respuesta</label>
+                                                                                <textarea class="form-control mensaje-historial-respuesta-hecho" rows="3" placeholder="" required></textarea>
+                                                                            </div>
+                                                                            <div class="col-12 col-md-12 form-group d-flex">
+                                                                                <button href="" class="btn btn-primary px-4 guardarHistorialRespuestaHecho" data_url="{{ route('historial_respuesta_hecho_guardar') }}"
+                                                                                data_token="{{ csrf_token() }}">Guardar historial</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>    
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if(sizeOf($tutela->respuestasPretensiones))
+                                <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 1em;">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Respuestas pretensiones</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="display: none;">
+                                        @if(sizeOf($tutela->hechos))
+                                            <div class="col-12 row mb-2">
+                                                @if(sizeOf($tutela->respuestasPretensiones))
+                                                    @foreach ($tutela->respuestasPretensiones as $key => $respuesta)
+                                                        <div class="rounded border my-3 p-3">
+                                                            <div class="col-12 col-md-12 mt-2 mb-4">
+                                                                <h5>Respuesta #{{$key + 1}}</h5>
+                                                            </div>
+
+                                                            @if($respuesta->estado_id != 11)
+                                                                <div class="row col-12">
+                                                                    <div class="col-12 col-md-4 form-group">
+                                                                        <label for="">Cargo</label>
+                                                                        <select class="custom-select rounded-0 cargo" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-4 form-group">
+                                                                        <label for="">Funcionario</label>
+                                                                        <select class="custom-select rounded-0 funcionario" required="">
+                                                                            <option value="">--Seleccione--</option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-4 form-group d-flex align-items-end">
+                                                                        <button href="" class="btn btn-primary px-4 reasignacion_pretension_guardar" data_url="{{ route('asignacion_pretension_guardar') }}" data_url2="{{ route('respuesta_pretension_editar_guardar') }}"
+                                                                        data_token="{{ csrf_token() }}">Asignar pretensión</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+
+                                                            @foreach ($respuesta->relacion as $relacion)
+                                                                <div class="row">
+                                                                    <div class="my-2 col-11">
+                                                                        <strong class="">#{{ $relacion->pretension->consecutivo }} Pretensión: </strong>{{$relacion->pretension->pretension}}
+                                                                    </div>
+                                                                    @if($respuesta->estado_id != 11)
+                                                                        <div class="col-1">
+                                                                            <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension" data_url="{{ route('eliminar_respuesta_pretension_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
+                                                                            <input class="id_relacion_pretension" type="hidden" value="{{ $relacion->pretension->id }}">
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            @endforeach
+                                                            <div class="row respuesta-pretension">
+                                                                <div class="col-12 row mt-4 mb-2 ">
+                                                                    <div class="col-12 col-md-5">
+                                                                        <h6 class="font-weight-bold">Respuesta pretensión</h6>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-7 row estado-pretension justify-content-end">
+                                                                        <input class="estado_actual" type="hidden" value="{{ $respuesta->estado_id }}">
+                                                                        @if ($tutela->estadostutela_id < 4)
+                                                                            <div class="col-9 row estado-pretension justify-content-end">
+                                                                                <div class="col-3 d-flex mb-2">
+                                                                                    <h6>Avance:</h6>
+                                                                                </div>
+                                                                                <select class="custom-select rounded-0 estadoPretension col-4">
+                                                                                    @foreach ($estados as $estado)
+                                                                                        <option value="{{ $estado->id }}"
+                                                                                        {{ $respuesta->estadorespuestapretension->id == $estado->id ? 'selected' : '' }}>
+                                                                                        {{ $estado->estado }} %</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                                <button type="" class="btn btn-primary btn-estado-pretension col-2 mx-2"
+                                                                                    data_url="{{ route('estado_respuesta_pretension_guardar') }}"
+                                                                                    data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="col-12 form-group mt-3">
+                                                                        <div class="respuesta mt-2">
+                                                                            @if($respuesta->respuesta)
+                                                                                {!! $respuesta->respuesta !!}
+                                                                            @endif
+                                                                        </div>
+                                                                        <input class="id_respuesta" type="hidden" value="{{ $respuesta->id }}">
+                                                                    </div>
+                                                                    @if (isset($respuesta))
+                                                                        @if (sizeOf($respuesta->documentos))
+                                                                            <hr class="my-4">
+                                                                            <div class="row respuestaAnexos">
+                                                                                <div class="col-12">
+                                                                                    <div class="col-12">
+                                                                                        <h6>Anexos respuesta</h6>
+                                                                                    </div>
+                                                                                    <div class="col-12 table-responsive">
+                                                                                        <table class="table table-light" style="font-size: 0.8em;">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th scope="col">Nombre</th>
+                                                                                                    <th scope="col">Descripción</th>
+                                                                                                    <th scope="col">Archivo</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                @foreach ($respuesta->documentos as $anexo)
+                                                                                                    <tr>
+                                                                                                        <td class="text-justify">
+                                                                                                            {{ $anexo->titulo }}
+                                                                                                        </td>
+                                                                                                        <td class="text-justify">
+                                                                                                            {{ $anexo->descripcion }}
+                                                                                                        </td>
+                                                                                                        <td><a href="{{ asset('documentos/tutelas/pretensiones/' . $anexo->url) }}"
+                                                                                                                target="_blank"
+                                                                                                                rel="noopener noreferrer">Descargar</a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                @endforeach
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+                                                                    @endif
+                                                                    @if (isset($respuesta))
+                                                                        @if (sizeOf($respuesta->historial))
+                                                                            <hr class="mt-3">
+                                                                            <h6 class="">Historial de respuestas</h6>
+                                                                            <div class="row d-flex px-12 p-3">
+                                                                                <div class="col-12 table-responsive">
+                                                                                    <table class="table table-light" style="font-size: 0.8em;">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <th scope="col">Fecha</th>
+                                                                                                <th scope="col">Empleado</th>
+                                                                                                <th scope="col">Historial</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($respuesta->historial as $historial)
+                                                                                                <tr>
+                                                                                                    <td>{{ $historial->created_at }}</td>
+                                                                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
+                                                                                                    <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
+                                                                                                </tr>
+                                                                                            @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+                                                                        <hr class="mt-3">
+                                                                        <div class="row d-flex px-12 p-3 mensaje-respuesta-pretension"> 
+                                                                            <input class="id_respuesta_pretension" type="hidden" value="{{ $respuesta->id }}">
+                                                                            <div class="container-mensaje-historial form-group col-12">
+                                                                                <label for="" class="">Agregar Historial de respuesta</label>
+                                                                                <textarea class="form-control mensaje-historial-respuesta-pretension" rows="3" placeholder="" required></textarea>
+                                                                            </div>
+                                                                            <div class="col-12 col-md-12 form-group d-flex">
+                                                                                <button href="" class="btn btn-primary px-4 guardarHistorialRespuestaPretension" data_url="{{ route('historial_respuesta_pretension_guardar') }}"
+                                                                                data_token="{{ csrf_token() }}">Guardar historial</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>    
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+
                             <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 1em;">
                                 <div class="card-header">
                                     <h3 class="card-title font-weight-bold">Historial hechos</h3>
@@ -388,26 +740,15 @@
                                             <div class="rounded border my-3">
                                                 <div class="col-12 row my-3">
                                                     <div class="col-6 mb-3">
-                                                        <h5 class="pl-4">Hecho # {{$key + 1}}</h5>
+                                                        <h5 class="pl-4">Hecho # {{$hecho->consecutivo}}</h5>
                                                     </div>
                                                     <div class="col-6 row estado-hecho justify-content-end pb-3">
                                                         <div class="col-2 d-flex mb-2">
-                                                            <h6>Avance:</h6>
+                                                            <h6>Avance: {{$hecho->estadohecho->estado}} %</h6>
                                                         </div>
-                                                        <select class="custom-select rounded-0 estadoHecho col-4">
-                                                            @foreach ($estados as $estado)
-                                                                <option value="{{ $estado->id }}"
-                                                                {{ $hecho->estadohecho->id == $estado->id ? 'selected' : '' }}>
-                                                                {{ $estado->estado }} %</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <button type="" class="btn btn-primary btn-estado-hecho col-2 mx-2"
-                                                            data_url="{{ route('estado_hecho_guardar') }}"
-                                                            data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
                                                     </div>
                                                     <div class="col-12">
                                                         <p class="text-justify">{{ $hecho->hecho }}</p>
-                                                        <input class="id_hecho" type="hidden" value="{{$hecho->id}}">
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -470,26 +811,15 @@
                                             <div class="rounded border my-3">
                                                 <div class="col-12 row my-3">
                                                     <div class="col-6 mb-3">
-                                                        <h5 class="pl-4">Pretensión # {{$key + 1}}</h5>
+                                                        <h5 class="pl-4">Pretensión # {{$pretension->consecutivo}}</h5>
                                                     </div>
                                                     <div class="col-6 row estado-pretension justify-content-end pb-3">
                                                         <div class="col-2 d-flex mb-2">
-                                                            <h6>Avance:</h6>
+                                                            <h6>Avance: {{$pretension->estadopretension->estado}} %</h6>
                                                         </div>
-                                                        <select class="custom-select rounded-0 estadoPretension col-4">
-                                                            @foreach ($estados as $estado)
-                                                                <option value="{{ $estado->id }}"
-                                                                {{ $pretension->estadopretension->id == $estado->id ? 'selected' : '' }}>
-                                                                {{ $estado->estado }} %</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <button type="" class="btn btn-primary btn-estado-pretension col-2 mx-2"
-                                                            data_url="{{ route('estado_pretension_guardar') }}"
-                                                            data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
                                                     </div>
                                                     <div class="col-12">
                                                         <p class="text-justify">{{ $pretension->pretension }}</p>
-                                                        <input class="id_pretension" type="hidden" value="{{$pretension->id}}">
                                                     </div>
                                                 </div>
                                                 <h6 class="">Historial pretensión</h6>
@@ -556,13 +886,13 @@
                                                 @foreach ($tutela->hechos as $key=> $hecho)
                                                     <tr>
                                                         @if($hecho->empleado)
-                                                            <td class="bg-success">{{$key + 1}}</td>
-                                                            <td class="bg-success">{{$hecho->empleado->nombre1 }} {{$hecho->empleado->apellido1}}</td>
-                                                            <td class="bg-success">{{$hecho->estadohecho->estado}}%</td>
+                                                            <td class="text-success font-weight-bold">{{$key + 1}}</td>
+                                                            <td class="text-success font-weight-bold">{{$hecho->empleado->nombre1 }} {{$hecho->empleado->apellido1}}</td>
+                                                            <td class="text-success font-weight-bold">{{$hecho->estadohecho->estado}}%</td>
                                                         @else    
-                                                            <td class="bg-danger">{{$key + 1}}</td>
-                                                            <td class="bg-danger">Sin asignar</td>
-                                                            <td class="bg-danger">{{$hecho->estadohecho->estado}}%</td>
+                                                            <td class="text-danger font-weight-bold">{{$key + 1}}</td>
+                                                            <td class="text-danger font-weight-bold">Sin asignar</td>
+                                                            <td class="text-danger font-weight-bold">{{$hecho->estadohecho->estado}}%</td>
                                                         @endif
                                                     </tr>
                                                 @endforeach
@@ -579,8 +909,13 @@
                                             </div>
                                             @foreach ( $tutela->hechos as $key => $hecho)
                                                     <div class="form-check form-check-inline">
-                                                        <input type="checkbox" class="form-check-input select-hecho" value="{{$hecho->id}}">
-                                                        <label class="form-check-label"><strong>#{{$hecho->consecutivo}}</strong></label>
+                                                        @if ($hecho->estadohecho->estado == 0)
+                                                            <input type="checkbox" class="form-check-input select-hecho" value="{{$hecho->id}}">
+                                                            <label class="form-check-label"><strong>#{{$hecho->consecutivo}}</strong></label>
+                                                        @else
+                                                            <input type="checkbox" class="form-check-input select-hecho" disabled>
+                                                            <label class="form-check-label"><strong>#{{$hecho->consecutivo}}</strong></label>
+                                                        @endif
                                                     </div>
                                             @endforeach 
                                         </div>
@@ -626,13 +961,13 @@
                                                 @foreach ($tutela->pretensiones as $key=> $pretension)
                                                     <tr>
                                                         @if($pretension->empleado)
-                                                            <td class="bg-success">{{$key + 1}}</td>
-                                                            <td class="bg-success">{{$pretension->empleado->nombre1 }} {{$pretension->empleado->apellido1}}</td>
-                                                            <td class="bg-success">{{$pretension->estadopretension->estado }}%</td>
+                                                            <td class="text-success font-weight-bold">{{$key + 1}}</td>
+                                                            <td class="text-success font-weight-bold">{{$pretension->empleado->nombre1 }} {{$pretension->empleado->apellido1}}</td>
+                                                            <td class="text-success font-weight-bold">{{$pretension->estadopretension->estado }}%</td>
                                                         @else    
-                                                            <td class="bg-danger">{{$key + 1}}</td>
-                                                            <td class="bg-danger">Sin asignar</td>
-                                                            <td class="bg-success">{{$pretension->estadopretension->estado }}%</td>
+                                                            <td class="text-danger font-weight-bold">{{$key + 1}}</td>
+                                                            <td class="text-danger font-weight-bold">Sin asignar</td>
+                                                            <td class="text-danger font-weight-bold">{{$pretension->estadopretension->estado }}%</td>
                                                         @endif
                                                     </tr>
                                                 @endforeach
@@ -649,8 +984,13 @@
                                             </div>
                                             @foreach ( $tutela->pretensiones as $key => $pretension)
                                                 <div class="form-check form-check-inline">
-                                                    <input type="checkbox" class="form-check-input select-pretension" value="{{$pretension->id}}">
-                                                    <label class="form-check-label"><strong>#{{$pretension->consecutivo}}</strong></label>
+                                                    @if ($pretension->estadopretension->estado == 0)
+                                                        <input type="checkbox" class="form-check-input select-pretension" value="{{$pretension->id}}">
+                                                        <label class="form-check-label"><strong>#{{$pretension->consecutivo}}</strong></label>
+                                                    @else
+                                                        <input type="checkbox" class="form-check-input select-pretension" disabled>
+                                                        <label class="form-check-label"><strong>#{{$pretension->consecutivo}}</strong></label>
+                                                    @endif
                                                 </div>
                                             @endforeach 
                                         </div>

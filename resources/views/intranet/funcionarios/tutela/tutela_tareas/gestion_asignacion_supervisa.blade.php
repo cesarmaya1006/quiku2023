@@ -373,6 +373,7 @@
                                     <tr>
                                         <th scope="col">Hecho #</th>
                                         <th scope="col">Funcionario</th>
+                                        <th scope="col">Porcentaje</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -384,6 +385,7 @@
                                             @else    
                                                 <td>Sin asignar</td>
                                             @endif
+                                            <td class="">{{$hecho->estadohecho->estado }}%</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -399,6 +401,7 @@
                                     <tr>
                                         <th scope="col">Pretensión #</th>
                                         <th scope="col">Funcionario</th>
+                                        <th scope="col">Porcentaje</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -410,6 +413,7 @@
                                             @else    
                                                 <td>Sin asignar</td>
                                             @endif
+                                            <td class="">{{$pretension->estadopretension->estado }}%</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -37,6 +37,8 @@ use App\Models\Tutela\HistorialAsignacion;
 use App\Models\Tutela\HistorialPretension;
 use App\Models\Tutela\RespuestaPretensiones;
 use App\Models\Tutela\DocRespuestaPretension;
+use App\Models\Tutela\HistorialRespuestaHecho;
+use App\Models\Tutela\HistorialRespuestaPretension;
 
 class TutelaController extends Controller
 {
@@ -381,7 +383,6 @@ class TutelaController extends Controller
         $tutela = AutoAdmisorio::findorFail($id);
         $estadoPrioridad = Prioridad::all();
         return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_supervisa', compact('tutela', 'estadoPrioridad', 'estados'));
-        // return view('intranet.funcionarios.tutela.gestion_asignacion_supervisa', compact('pqr', 'estadoPrioridad', 'estados'));
     }
 
     public function gestionar_asignacion_proyecta_tutela($id)
@@ -390,23 +391,14 @@ class TutelaController extends Controller
         $tutela = AutoAdmisorio::findorFail($id);
         $estadoPrioridad = Prioridad::all();
         return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_proyecta', compact('tutela', 'estadoPrioridad', 'estados'));
-        // return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_proyecta', compact('pqr', 'estadoPrioridad', 'estados'));
     }
 
-    public function gestionar_asignacion_revisa_tutela($id)
+    public function gestionar_asignacion_revisa_aprueba_tutela($id)
     {
         $estados = AsignacionEstados::all();
         $tutela = AutoAdmisorio::findorFail($id);
         $estadoPrioridad = Prioridad::all();
-        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_revisa', compact('tutela', 'estadoPrioridad', 'estados'));
-    }
-
-    public function gestionar_asignacion_aprueba_tutela($id)
-    {
-        $estados = AsignacionEstados::all();
-        $tutela = AutoAdmisorio::findorFail($id);
-        $estadoPrioridad = Prioridad::all();
-        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_aprueba', compact('tutela', 'estadoPrioridad', 'estados'));
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_asignacion_revisa_aprueba', compact('tutela', 'estadoPrioridad', 'estados'));
     }
 
     public function gestionar_asignacion_radica_tutela($id)
@@ -486,6 +478,19 @@ class TutelaController extends Controller
         }
     }
 
+    public function historial_respuesta_hecho_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['respuesta_hecho_id'] = $request['respuesta_hecho_id'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['historial'];
+            $historial = HistorialRespuestaHecho::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function historial_pretension_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -500,15 +505,29 @@ class TutelaController extends Controller
         }
     }
 
+    public function historial_respuesta_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['respuesta_pretension_id'] = $request['respuesta_pretension_id'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['historial'];
+            $historial = HistorialRespuestaPretension::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function respuesta_pretension_guardar(Request $request)
     {
         if ($request->ajax()) {
             $respuesta['auto_admisorio_id'] = $request["id_auto"];
             $respuesta['respuesta'] = $request["respuesta"];
             $respuesta['estado_id'] = $request["estado"];
+            $respuesta['empleado_id'] = session('id_usuario');
             $respuesta['fecha'] = date("Y-m-d");
-            $respuestaHecho = RespuestaPretensiones::create($respuesta);
-            $id_respuesta = $respuestaHecho['id'];
+            $respuestaPretension = RespuestaPretensiones::create($respuesta);
+            $id_respuesta = $respuestaPretension['id'];
             return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
         } else {
             abort(404);
@@ -521,6 +540,7 @@ class TutelaController extends Controller
             $respuesta['auto_admisorio_id'] = $request["id_auto"];
             $respuesta['respuesta'] = $request["respuesta"];
             $respuesta['estado_id'] = $request["estado"];
+            $respuesta['empleado_id'] = session('id_usuario');
             $respuesta['fecha'] = date("Y-m-d");
             $respuestaHecho = RespuestaHechos::create($respuesta);
             $id_respuesta = $respuestaHecho['id'];
@@ -530,11 +550,33 @@ class TutelaController extends Controller
         }
     }
 
+    public function respuesta_pretension_editar_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            if($request['respuesta']){
+                $respuestaActualizada['respuesta'] = $request['respuesta'];
+                $respuestaActualizada['estado_id'] = $request['estado'];
+            }
+            if($request['funcionario']){
+                $respuestaActualizada['empleado_id'] = $request['funcionario'];
+            }
+            $respuesta = RespuestaPretensiones::findOrFail($request['id_respuesta'])->update($respuestaActualizada);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function respuesta_hecho_editar_guardar(Request $request)
     {
         if ($request->ajax()) {
-            $respuestaActualizada['respuesta'] = $request['respuesta'];
-            $respuestaActualizada['estado_id'] = $request['estado'];
+            if($request['respuesta']){
+                $respuestaActualizada['respuesta'] = $request['respuesta'];
+                $respuestaActualizada['estado_id'] = $request['estado'];
+            }
+            if($request['funcionario']){
+                $respuestaActualizada['empleado_id'] = $request['funcionario'];
+            }
             $respuesta = RespuestaHechos::findOrFail($request['id_respuesta'])->update($respuestaActualizada);
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
@@ -651,6 +693,12 @@ class TutelaController extends Controller
                         DocRespuestaHecho::where('respuesta_hechos_id', $anexo['id'])->delete();
                     }
                 }
+                $historiales = HistorialRespuestaHecho::where('respuesta_hecho_id', $respuestaHechos['id'])->get();
+                if(sizeOf($historiales)){
+                    foreach ($historiales as $historial) {
+                        HistorialRespuestaHecho::where('respuesta_hecho_id', $historial['id'])->delete();
+                    }
+                }
                 RespuestaHechos::findOrFail($relacionHecho['respuesta_hechos_id'])->delete();
                 $nuevoEstado['estado_id'] = 1;
                 HechosTutela::findOrFail($relacionHecho['hecho_tutela_id'])->update($nuevoEstado);
@@ -694,6 +742,40 @@ class TutelaController extends Controller
         }
     }
 
+    public function eliminar_respuesta_pretension_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $relacionPretension = RelacionPretension::where('pretension_tutela_id', $request["pretension_id"])->get();
+            $relacionPretension = $relacionPretension[0];
+            $respuestaPretensiones = RespuestaPretensiones::findOrFail($relacionPretension['respuesta_pretensiones_id']);
+            if(sizeOf($respuestaPretensiones->relacion) == 1 ){
+                RelacionPretension::where('pretension_tutela_id', $request["pretension_id"])->delete();
+                $anexos = DocRespuestaPretension::where('respuesta_pretensiones_id', $respuestaPretensiones['id'])->get();
+                if(sizeOf($anexos)){
+                    foreach ($anexos as $anexo) {
+                        DocRespuestaPretension::where('respuesta_pretensiones_id', $anexo['id'])->delete();
+                    }
+                }
+                $historiales = HistorialRespuestaPretension::where('respuesta_pretension_id', $respuestaPretensiones['id'])->get();
+                if(sizeOf($historiales)){
+                    foreach ($historiales as $historial) {
+                        HistorialRespuestaPretension::where('respuesta_pretension_id', $historial['id'])->delete();
+                    }
+                }
+                RespuestaPretensiones::findOrFail($relacionPretension['respuesta_pretensiones_id'])->delete();
+                $nuevoEstado['estado_id'] = 1;
+                PretensionesTutela::findOrFail($relacionPretension['pretension_tutela_id'])->update($nuevoEstado);
+            }else {
+                RelacionPretension::where('pretension_tutela_id', $request["pretension_id"])->delete();
+                $nuevoEstado['estado_id'] = 1;
+                PretensionesTutela::findOrFail($relacionPretension['pretension_tutela_id'])->update($nuevoEstado);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => 'ok']);
+        } else {
+            abort(404);
+        }
+    }
+
     public function respuesta_tutela($id)
     {
         $tutela = AutoAdmisorio::findOrFail($id);
@@ -726,7 +808,7 @@ class TutelaController extends Controller
                 $rPdf['tipo_respuesta'] = $request["tipo_respuesta"];
                 $rPdf['tareas_id'] = $request["idTarea"];
                 $rPdf['empleado_id'] = session('id_usuario');
-                $rrr = TutelaRespuesta::create($rPdf);
+                // $rrr = TutelaRespuesta::create($rPdf);
             }
             $tutela = AutoAdmisorio::findOrfail($request["idAuto"]);
             // $peticiones = Peticion::where('pqr_id', $pqr->id)->get();

@@ -236,6 +236,49 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Guardar estado pretensiones
+    if(document.querySelector('.btn-estado-pretension')){
+        let btnEstados = document.querySelectorAll('.btn-estado-pretension')
+        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+
+        function guardarEstado(btn){
+            btn.preventDefault()
+            let btnE = btn.target 
+            if (btnE.tagName === 'I') {
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+                btnE = btnE.parentElement.parentElement
+            }else {
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
+            }
+            let id_respuesta = padreEstado.querySelector('.id_respuesta').value
+            let url = btnE.getAttribute('data_url')
+            let token = btnE.getAttribute('data_token')
+            let estado = padreEstado.querySelector('.estadoPretension').value
+            let respuesta = padreEstado.querySelector('.respuesta').value
+            let data = {
+                estado,
+                id_respuesta
+            }
+            if (estado == 11 && respuesta == '') {
+                alert('Para guardar el 100% debe agregar una respuesta antes')
+            } else {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+        
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+        }
+    }
+
     //  Guardar Historial tutela - hecho  
     if(document.querySelector('.guardarHistorialHecho')){
         let HistorialHecho = document.querySelectorAll('.guardarHistorialHecho')
@@ -275,6 +318,44 @@ window.addEventListener('DOMContentLoaded', function() {
         }   
     }
 
+    //  Guardar Historial tutela - respuesta hecho  
+    if(document.querySelector('.guardarHistorialRespuestaHecho')){
+        let HistorialHecho = document.querySelectorAll('.guardarHistorialRespuestaHecho')
+        HistorialHecho.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaHecho))
+        function guardarHistorialRespuestaHecho(btn){
+            btn.preventDefault()
+            let contenedorHisotrial = btn.target.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let token = btn.target.getAttribute('data_token')
+            let mensajeHistorial = contenedorHisotrial.querySelector('.mensaje-historial-respuesta-hecho').value
+            let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_hecho').value
+            if (mensajeHistorial == '') {
+                alert("Debe agregar un historial")
+            }else{
+                guardarHistorialPeticion()
+            }
+    
+            function guardarHistorialPeticion (){
+                let data = {
+                    historial: mensajeHistorial,
+                    respuesta_hecho_id: idRespuesta
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+        }   
+    }
+
     //  Guardar Historial tutela - pretension  
     if(document.querySelector('.guardarHistorialPretension')){
         let HistorialPretension = document.querySelectorAll('.guardarHistorialPretension')
@@ -297,6 +378,44 @@ window.addEventListener('DOMContentLoaded', function() {
                     mensajeHistorial,
                     idAuto: id_auto,
                     idPretension
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+        }   
+    }
+
+    //  Guardar Historial tutela - respuesta pretension  
+    if(document.querySelector('.guardarHistorialRespuestaPretension')){
+        let HistorialPretension = document.querySelectorAll('.guardarHistorialRespuestaPretension')
+        HistorialPretension.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaPretension))
+        function guardarHistorialRespuestaPretension(btn){
+            btn.preventDefault()
+            let contenedorHisotrial = btn.target.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let token = btn.target.getAttribute('data_token')
+            let mensajeHistorial = contenedorHisotrial.querySelector('.mensaje-historial-respuesta-pretension').value
+            let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_pretension').value
+            if (mensajeHistorial == '') {
+                alert("Debe agregar un historial")
+            }else{
+                guardarHistorialPeticion()
+            }
+    
+            function guardarHistorialPeticion (){
+                let data = {
+                    historial: mensajeHistorial,
+                    respuesta_pretension_id: idRespuesta
                 }
                 $.ajax({
                     url: url,
@@ -384,7 +503,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
                 guardarRespuesta(data1)
             }else {
-                alert('Debe seleccionar los hechos ydiligenciar los campos de respuesta y avance')
+                alert('Debe seleccionar los hechos y diligenciar los campos de respuesta y avance')
             }
 
             function guardarRespuesta(data) {
@@ -545,15 +664,23 @@ window.addEventListener('DOMContentLoaded', function() {
             let estado = padreRespuesta.querySelector('.estadoPretension').value
             let respuesta = padreRespuesta.querySelector('.respuesta').value
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
-            if (respuesta != '') {
+            validacionPretensiones = false 
+            pretensiones.forEach(pretension => {
+                if(pretension.checked == true){
+                    validacionPretensiones = true
+                }
+            })
+            if (respuesta != '' && estado > 1 && validacionPretensiones) {
                 let data1 = {
                     respuesta,
                     id_auto,
                     estado
                 }
                 guardarRespuesta(data1)
+            }else {
+                alert('Debe seleccionar las pretensiones y diligenciar los campos de respuesta y avance')
             }
-            
+
             function guardarRespuesta(data) {
                 $.ajax({
                     url: url,
@@ -638,10 +765,59 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                     
                 })
-
             location.reload();
             }
 
+        }
+    }
+
+    // Guardar asignacion de pretension desde respuesta
+    if(document.querySelector('.btn-respuesta-pretension-asignar')){
+        let btnEstados = document.querySelectorAll('.btn-respuesta-pretension-asignar')
+        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+
+        function guardarEstado(btn){
+            btn.preventDefault()
+            let btnE = btn.target 
+            let contenedorPadre = btnE.parentElement.parentElement
+            let url = btnE.getAttribute('data_url')
+            let url2 = btnE.getAttribute('data_url2')
+            let token = btnE.getAttribute('data_token')
+            let id_pretension = contenedorPadre.querySelector('.respuesta-pretension-asignar').value
+            let id_respuesta = contenedorPadre.querySelector('.id_respuesta').value
+            let estado = contenedorPadre.querySelector('.estado_actual').value
+            let data = {
+                id_pretension,
+                id_auto,
+                id_respuesta,
+                estado
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    // console.log(respuesta)
+    
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+            $.ajax({
+                url: url2,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+    
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
         }
     }
 
@@ -680,6 +856,41 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Eliminar respuesta pretension
+    if(document.querySelectorAll('.eliminarPretension')){
+        let btnsEliminarPretension =document.querySelectorAll('.eliminarPretension')
+        btnsEliminarPretension.forEach(btn => {
+            btn.addEventListener('click', eliminarAsigancionPretension)
+        })
+
+        function eliminarAsigancionPretension (btn){
+            let btnEH = btn.target
+            if (btnEH.tagName === 'I') {
+                btnEH = btnEH.parentNode
+            }
+            let contenedorPadre = btnEH.parentElement
+            let pretension_id = contenedorPadre.querySelector('.id_relacion_pretension').value
+            let url = btnEH.getAttribute('data_url')
+            let token = btnEH.getAttribute('data_token')
+            let data = {
+                pretension_id
+            }
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        }
+    }
+
     // Guardar respuesta hechos editar
     if (document.querySelectorAll('.btn-respuesta-hecho-editar')) {
         let btnRespuesta = document.querySelectorAll('.btn-respuesta-hecho-editar')
@@ -696,8 +907,13 @@ window.addEventListener('DOMContentLoaded', function() {
             let token = btn.target.getAttribute('data_token')
             let estado = padreRespuesta.querySelector('.estadoHecho').value
             let respuesta = padreRespuesta.querySelector('.respuesta').value
+            let respuestaAnterior = padreRespuesta.querySelector('.respuesta_anterior').value
+            let url4 = padreRespuesta.querySelector('.respuesta_anterior').getAttribute('data_url')
             let id_respuesta = padreRespuesta.querySelector('.id_respuesta').value
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
+            if(respuestaAnterior != respuesta){
+                guardarHisotrialRespuesta()
+            }
             if (respuesta != '') {
                 let data1 = {
                     respuesta,
@@ -753,6 +969,148 @@ window.addEventListener('DOMContentLoaded', function() {
                 })
             }
 
+            function guardarHisotrialRespuesta(){
+                let data = {
+                    historial: respuestaAnterior,
+                    respuesta_hecho_id: id_respuesta
+                }
+
+                $.ajax({
+                    url: url4,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function guardarEstado(idrespuesta){
+                let data = {
+                    estado,
+                    id_respuesta
+                }
+
+                $.ajax({
+                    url: url3,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+                location.reload();
+            }
+
+        }
+    }
+
+    // Guardar respuesta pretensiones editar
+    if (document.querySelectorAll('.btn-respuesta-pretension-editar')) {
+        let btnRespuesta = document.querySelectorAll('.btn-respuesta-pretension-editar')
+        btnRespuesta.forEach(btn => {
+            btn.addEventListener('click', guardarRespuesta)
+        })
+
+        function guardarRespuesta(btn) {
+            btn.preventDefault()
+            padreRespuesta = btn.target.parentElement.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let url2 = btn.target.getAttribute('data_url2')
+            let url3 = btn.target.getAttribute('data_url3')
+            let token = btn.target.getAttribute('data_token')
+            let estado = padreRespuesta.querySelector('.estadoPretension').value
+            let respuesta = padreRespuesta.querySelector('.respuesta').value
+            let respuestaAnterior = padreRespuesta.querySelector('.respuesta_anterior').value
+            let url4 = padreRespuesta.querySelector('.respuesta_anterior').getAttribute('data_url')
+            let id_respuesta = padreRespuesta.querySelector('.id_respuesta').value
+            let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
+            if(respuestaAnterior != respuesta){
+                guardarHisotrialRespuesta()
+            }
+            if (respuesta != '') {
+                let data1 = {
+                    respuesta,
+                    id_respuesta,
+                    estado
+                }
+                guardarRespuesta(data1)
+            }
+            function guardarRespuesta(data) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        guardarRespuestaAnexo(anexos, id_respuesta)
+                        guardarEstado()
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function guardarRespuestaAnexo(anexos, idrespuesta) {
+                anexos.forEach(anexo => {
+                    let titulo = anexo.querySelector('.titulo').value
+                    let descripcion = anexo.querySelector('.descripcion').value
+                    let archivo = anexo.querySelector('.documento').files[0]
+                    if (archivo) {
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('respuesta_pretensiones_id', idrespuesta);
+                        dataAnexo.append('titulo', titulo);
+                        dataAnexo.append('descripcion', descripcion);
+                        dataAnexo.append('archivo', archivo);
+                        dataAnexo.append('_token', token);
+                        $.ajax({
+                            async: false,
+                            url: url2,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false,
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                })
+            }
+
+            function guardarHisotrialRespuesta(){
+                let data = {
+                    historial: respuestaAnterior,
+                    respuesta_pretension_id: id_respuesta
+                }
+
+                $.ajax({
+                    url: url4,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+
             function guardarEstado(idrespuesta){
                 let data = {
                     estado,
@@ -788,6 +1146,29 @@ window.addEventListener('DOMContentLoaded', function() {
             let check = btn.target
             let contenedorPadre = check.parentElement.parentElement
             let selectores = contenedorPadre.querySelectorAll('.select-hecho')
+            if(check.checked){
+                selectores.forEach(selector => {
+                    selector.checked = true
+                })
+            }else{
+                selectores.forEach(selector => {
+                    selector.checked = false
+                })
+            }
+        }
+    }
+
+    // Funcion check multiple pretensiones
+    if(document.querySelectorAll('.check-todos-pretensiones')){
+        let checkTodos = document.querySelectorAll('.check-todos-pretensiones')
+        checkTodos.forEach(check => {
+            check.addEventListener('input', seleccionMultiple)
+        })
+
+        function seleccionMultiple(btn){
+            let check = btn.target
+            let contenedorPadre = check.parentElement.parentElement
+            let selectores = contenedorPadre.querySelectorAll('.select-pretension')
             if(check.checked){
                 selectores.forEach(selector => {
                     selector.checked = true

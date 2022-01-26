@@ -23,6 +23,8 @@ use App\Models\Tutela\HistorialRespuestaHecho;
 use App\Models\Tutela\HistorialRespuestaPretension;
 use App\Models\Tutela\HistorialTareas;
 use App\Models\Tutela\PretensionesTutela;
+use App\Models\Tutela\RespuestaHechos;
+use App\Models\Tutela\RespuestaPretensiones;
 use App\Models\Tutela\ResuelveTutela;
 use App\Models\Tutela\TutelaRespuesta;
 use Illuminate\Database\Eloquent\Model;
@@ -140,9 +142,19 @@ class Empleado extends Model
         return $this->hasMany(HistorialHecho::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function respuestaHechosTutela()
+    {
+        return $this->hasMany(RespuestaHechos::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
     public function historialPretensionesTutela()
     {
         return $this->hasMany(HistorialPretension::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function respuestalPretensionesTutela()
+    {
+        return $this->hasMany(RespuestaPretensiones::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function historialRespuestaHechosTutela()

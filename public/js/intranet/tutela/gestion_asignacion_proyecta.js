@@ -46,7 +46,7 @@ window.addEventListener('DOMContentLoaded', function(){
         });
     });
 
-//  Guardar Historial tutela - tarea  
+// Guardar Historial tutela - tarea  
     if(document.querySelector('.guardarHistorialTarea')){
         let guardarHistorialTarea = document.querySelector('.guardarHistorialTarea')
         guardarHistorialTarea.addEventListener('click', function(e){
@@ -83,7 +83,7 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-//  Guardar Historial tutela - hecho  
+// Guardar Historial tutela - hecho  
     if(document.querySelector('.guardarHistorialHecho')){
         let HistorialHecho = document.querySelectorAll('.guardarHistorialHecho')
         HistorialHecho.forEach(btn => btn.addEventListener('click', guardarHistorialHecho))
@@ -122,7 +122,45 @@ window.addEventListener('DOMContentLoaded', function(){
         }   
     }
 
-//  Guardar Historial tutela - pretension  
+// Guardar Historial tutela - respuesta hecho  
+    if(document.querySelector('.guardarHistorialRespuestaHecho')){
+        let HistorialHecho = document.querySelectorAll('.guardarHistorialRespuestaHecho')
+        HistorialHecho.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaHecho))
+        function guardarHistorialRespuestaHecho(btn){
+            btn.preventDefault()
+            let contenedorHisotrial = btn.target.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let token = btn.target.getAttribute('data_token')
+            let mensajeHistorial = contenedorHisotrial.querySelector('.mensaje-historial-respuesta-hecho').value
+            let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_hecho').value
+            if (mensajeHistorial == '') {
+                alert("Debe agregar un historial")
+            }else{
+                guardarHistorialPeticion()
+            }
+    
+            function guardarHistorialPeticion (){
+                let data = {
+                    historial: mensajeHistorial,
+                    respuesta_hecho_id: idRespuesta
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+        }   
+    }
+
+// Guardar Historial tutela - pretension  
     if(document.querySelector('.guardarHistorialPretension')){
         let HistorialPretension = document.querySelectorAll('.guardarHistorialPretension')
         HistorialPretension.forEach(btn => btn.addEventListener('click', guardarHistorialPretension))
@@ -144,6 +182,43 @@ window.addEventListener('DOMContentLoaded', function(){
                     mensajeHistorial,
                     idAuto,
                     idPretension
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+        }   
+    }
+// Guardar Historial tutela - respuesta pretensión  
+    if(document.querySelector('.guardarHistorialRespuestaPretension')){
+        let HistorialPretension = document.querySelectorAll('.guardarHistorialRespuestaPretension')
+        HistorialPretension.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaPretension))
+        function guardarHistorialRespuestaPretension(btn){
+            btn.preventDefault()
+            let contenedorHisotrial = btn.target.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let token = btn.target.getAttribute('data_token')
+            let mensajeHistorial = contenedorHisotrial.querySelector('.mensaje-historial-respuesta-pretension').value
+            let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_pretension').value
+            if (mensajeHistorial == '') {
+                alert("Debe agregar un historial")
+            }else{
+                guardarHistorialPeticion()
+            }
+
+            function guardarHistorialPeticion (){
+                let data = {
+                    historial: mensajeHistorial,
+                    respuesta_pretension_id: idRespuesta
                 }
                 $.ajax({
                     url: url,
@@ -207,6 +282,69 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
+// Guardar reasignar hecho a funcionario
+    if(document.querySelectorAll('.reasignacion_hecho_guardar')){
+        let asignacionHechos = document.querySelectorAll('.reasignacion_hecho_guardar')
+        asignacionHechos.forEach(asignacionHecho => {
+            asignacionHecho.addEventListener('click', reasignacionHechos )})
+        function reasignacionHechos(e){    
+            e.preventDefault()
+            let padreContenedor = e.target.parentElement.parentElement.parentElement
+            let url = e.target.getAttribute('data_url')
+            let url2 = e.target.getAttribute('data_url2')
+            let token = e.target.getAttribute('data_token')
+            let id_respuesta = padreContenedor.querySelector('.id_respuesta').value
+            let funcionario = padreContenedor.querySelector('.funcionario').value
+            let cargo = padreContenedor.querySelector('.cargo').value
+            let hechos = padreContenedor.querySelectorAll('.id_relacion_hecho')
+            if (cargo == '' || funcionario == '' ) {
+                alert("Debe dilegenciar todos los campos del formulario")
+            }else{
+                actualizarRespuesta()
+                hechos.forEach(hecho => {
+                    guardarAsignacionPeticion(hecho.value)
+                })
+            }
+            function actualizarRespuesta(){
+                let data = {
+                    id_respuesta,
+                    funcionario
+                }
+                $.ajax({
+                    url: url2,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+            function guardarAsignacionPeticion (value){
+                let data = {
+                    hecho: value,
+                    funcionario,
+                    idAuto
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+        }
+    }
+
 // Guardar asignar pretension a funcionario
     if(document.querySelector('.asignacion_pretension_guardar')){
         let asignacionPretension = document.querySelector('.asignacion_pretension_guardar')
@@ -215,7 +353,6 @@ window.addEventListener('DOMContentLoaded', function(){
             let padreContenedor = e.target.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
             let token = e.target.getAttribute('data_token')
-            // let pretension = padreContenedor.querySelector('.pretension').value
             let funcionario = padreContenedor.querySelector('.funcionario').value
             let cargo = padreContenedor.querySelector('.cargo').value
             let pretensiones = document.querySelectorAll('.select-pretension')
@@ -254,6 +391,70 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
+// Guardar reasignar pretension a funcionario
+    if(document.querySelectorAll('.reasignacion_pretension_guardar')){
+        let asignacionPretensiones = document.querySelectorAll('.reasignacion_pretension_guardar')
+        asignacionPretensiones.forEach(asignacionPretension => {
+            asignacionPretension.addEventListener('click', reasignacionPretensiones)
+        })
+        function reasignacionPretensiones(e){
+            e.preventDefault()
+            let padreContenedor = e.target.parentElement.parentElement.parentElement
+            let url = e.target.getAttribute('data_url')
+            let url2 = e.target.getAttribute('data_url2')
+            let token = e.target.getAttribute('data_token')
+            let id_respuesta = padreContenedor.querySelector('.id_respuesta').value
+            let funcionario = padreContenedor.querySelector('.funcionario').value
+            let cargo = padreContenedor.querySelector('.cargo').value
+            let pretensiones = padreContenedor.querySelectorAll('.id_relacion_pretension')
+            if (cargo == '' || funcionario == '' ) {
+                alert("Debe dilegenciar todos los campos del formulario")
+            }else{
+                actualizarRespuesta()
+                pretensiones.forEach(pretension => {
+                    guardarAsignacionPeticion(pretension.value)
+                })
+            }
+            function actualizarRespuesta(){
+                let data = {
+                    id_respuesta,
+                    funcionario
+                }
+                $.ajax({
+                    url: url2,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+            function guardarAsignacionPeticion (value){
+                let data = {
+                    pretension: value,
+                    funcionario,
+                    idAuto
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+        }
+    }
+
 // Guardar prioridad tutela
     if(document.querySelector('.prioridad_guardar')){
         let prioridadGuardar = document.querySelector('.prioridad_guardar')
@@ -288,7 +489,7 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-//Guardar respuesta tutela  
+// Guardar respuesta tutela  
     if(document.querySelector('.btn-tutela')){
         let btnRespuesta = document.querySelector('.btn-tutela')
         btnRespuesta.addEventListener('click', function(e){
@@ -344,32 +545,37 @@ window.addEventListener('DOMContentLoaded', function(){
             btn.preventDefault()
             let btnE = btn.target 
             if (btnE.tagName === 'I') {
-                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
                 btnE = btnE.parentElement.parentElement
             }else {
-                padreEstado = btnE.parentElement.parentElement
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
             }
+            let id_respuesta = padreEstado.querySelector('.id_respuesta').value
             let url = btnE.getAttribute('data_url')
             let token = btnE.getAttribute('data_token')
             let estado = padreEstado.querySelector('.estadoHecho').value
-            let id_hecho = padreEstado.querySelector('.id_hecho').value
+            let respuesta = padreEstado.querySelector('.respuesta').value
             let data = {
                 estado,
-                id_hecho
+                id_respuesta
             }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    location.reload();
-    
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
+            if (estado == 11 && respuesta == '') {
+                alert('Para guardar el 100% debe agregar una respuesta antes')
+            } else {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+        
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
         }
     }
 
@@ -382,19 +588,60 @@ window.addEventListener('DOMContentLoaded', function(){
             btn.preventDefault()
             let btnE = btn.target 
             if (btnE.tagName === 'I') {
-                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
                 btnE = btnE.parentElement.parentElement
             }else {
-                padreEstado = btnE.parentElement.parentElement
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
             }
+            let id_respuesta = padreEstado.querySelector('.id_respuesta').value
             let url = btnE.getAttribute('data_url')
             let token = btnE.getAttribute('data_token')
             let estado = padreEstado.querySelector('.estadoPretension').value
-            let id_pretension = padreEstado.querySelector('.id_pretension').value
+            let respuesta = padreEstado.querySelector('.respuesta').value
             let data = {
                 estado,
-                id_pretension
+                id_respuesta
             }
+            if (estado == 11 && respuesta == '') {
+                alert('Para guardar el 100% debe agregar una respuesta antes')
+            } else {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+        
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+        }
+    }
+
+// Eliminar respuesta hecho
+    if(document.querySelectorAll('.eliminarHecho')){
+        let btnsEliminarHecho =document.querySelectorAll('.eliminarHecho')
+        btnsEliminarHecho.forEach(btn => {
+            btn.addEventListener('click', eliminarAsigancionHecho)
+        })
+
+        function eliminarAsigancionHecho (btn){
+            let btnEH = btn.target
+            if (btnEH.tagName === 'I') {
+                btnEH = btnEH.parentNode
+            }
+            let contenedorPadre = btnEH.parentElement
+            let hecho_id = contenedorPadre.querySelector('.id_relacion_hecho').value
+            let url = btnEH.getAttribute('data_url')
+            let token = btnEH.getAttribute('data_token')
+            let data = {
+                hecho_id
+            }
+
             $.ajax({
                 url: url,
                 type: 'POST',
@@ -402,7 +649,6 @@ window.addEventListener('DOMContentLoaded', function(){
                 data: data,
                 success: function(respuesta) {
                     location.reload();
-    
                 },
                 error: function(error) {
                     console.log(error)
@@ -411,7 +657,42 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-//Guardar resuelve tutela  
+// Eliminar respuesta Pretesion
+    if(document.querySelectorAll('.eliminarPretension')){
+        let btnsEliminarPretension =document.querySelectorAll('.eliminarPretension')
+        btnsEliminarPretension.forEach(btn => {
+            btn.addEventListener('click', eliminarAsigancionPretension)
+        })
+
+        function eliminarAsigancionPretension (btn){
+            let btnEH = btn.target
+            if (btnEH.tagName === 'I') {
+                btnEH = btnEH.parentNode
+            }
+            let contenedorPadre = btnEH.parentElement
+            let pretension_id = contenedorPadre.querySelector('.id_relacion_pretension').value
+            let url = btnEH.getAttribute('data_url')
+            let token = btnEH.getAttribute('data_token')
+            let data = {
+                pretension_id
+            }
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error)
+                }
+            });
+        }
+    }
+
+// Guardar resuelve tutela  
     if(document.querySelector('.btn-tutela-resuelve')){
         let btnResuelve = document.querySelector('.btn-tutela-resuelve')
         btnResuelve.addEventListener('click', function(e){
@@ -643,11 +924,15 @@ window.addEventListener('DOMContentLoaded', function(){
             let selectores = contenedorPadre.querySelectorAll('.select-hecho')
             if(check.checked){
                 selectores.forEach(selector => {
-                    selector.checked = true
+                    if(!selector.disabled){
+                        selector.checked = true
+                    }
                 })
             }else{
                 selectores.forEach(selector => {
-                    selector.checked = false
+                    if(!selector.disabled){
+                        selector.checked = false
+                    }
                 })
             }
         }
@@ -666,11 +951,15 @@ window.addEventListener('DOMContentLoaded', function(){
             let selectores = contenedorPadre.querySelectorAll('.select-pretension')
             if(check.checked){
                 selectores.forEach(selector => {
-                    selector.checked = true
+                    if(!selector.disabled){
+                        selector.checked = true
+                    }
                 })
             }else{
                 selectores.forEach(selector => {
-                    selector.checked = false
+                    if(!selector.disabled){
+                        selector.checked = false
+                    }
                 })
             }
         }
