@@ -24,6 +24,7 @@ use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
 use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
 use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
 use App\Http\Controllers\Intranet\Funcionarios\TutelaController;
+use App\Http\Controllers\Intranet\Funcionarios\TutelasConsulta;
 use App\Models\Tutela\TutelaRespuesta;
 
 /*
@@ -443,6 +444,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('usuario_descarga_respuestaPQR/{id}', [PQRController::class, 'usuario_descarga_respuestaPQR'])->name('usuario_descarga_respuestaPQR');
         Route::post('cambiar_estado_tareas', [PQRController::class, 'cambiar_estado_tareas_guardar'])->name('cambiar_estado_tareas_guardar');
         Route::get('cambiar-password-asistido/{id}', [ClienteController::class, 'cambiar_password_asistido'])->name('funcionario_cambiar_password_asistido');
+        //==================================================================================================================
+        Route::get('consulta', [TutelasConsulta::class, 'index'])->name('index_consulta');
+        Route::get('cargar_tutelas', [TutelasConsulta::class, 'cargar_tutelas'])->name('cargar_tutelas');
+
+        //==================================================================================================================
     });
     //==================================================================================================================
     Route::group(['prefix' => 'usuario'], function () {
