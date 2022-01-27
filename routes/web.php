@@ -450,6 +450,8 @@ Route::group(['middleware' => 'auth'], function () {
         //==================================================================================================================
         Route::get('consulta', [TutelasConsulta::class, 'index'])->name('index_consulta');
         Route::get('cargar_tutelas', [TutelasConsulta::class, 'cargar_tutelas'])->name('cargar_tutelas');
+        Route::get('consulta/detalles_tutelas/{id}', [TutelasConsulta::class, 'detalles_tutelas'])->name('detalles_tutelas');
+        Route::get('consulta/tutelas/primera-instancia/{id}', [TutelasConsulta::class, 'tutelas_primera_instancia'])->name('tutelas_primera_instancia');
 
         //==================================================================================================================
     });

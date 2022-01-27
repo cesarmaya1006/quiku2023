@@ -22,7 +22,7 @@ class TutelasConsulta extends Controller
     {
         if ($request->ajax()) {
             if ($request['tipoBusqueda'] == 'Número de radicado') {
-                return AutoAdmisorio::where('radicado', 'like', $request['numRadicado'] . '%')->with('accions')->with('accions.tipos_docu_accion')->get();
+                return AutoAdmisorio::where('radicado', 'like', '%' . $request['numRadicado'] . '%')->with('accions')->with('accions.tipos_docu_accion')->get();
             } elseif ($request['tipoBusqueda'] == 'Nombre o apellido del accionante') {
                 $nombreApellidos = $request['nombreApellidos'];
                 return AutoAdmisorio::with('accions')->with('accions.tipos_docu_accion')->whereHas('accions', function ($q) use ($nombreApellidos) {
@@ -32,14 +32,18 @@ class TutelasConsulta extends Controller
                 $tipoDoc = $request['tipoDoc'];
                 $numDocumento = $request['numDocumento'];
                 return AutoAdmisorio::with('accions')->with('accions.tipos_docu_accion')->whereHas('accions', function ($q) use ($tipoDoc, $numDocumento) {
-                    $q->where('numero_documento_accion', $numDocumento)->whereHas('tipos_docu_accion', function ($p) use ($tipoDoc) {
+                    $q->where('numero_documento_accion', 'like', '%' . $numDocumento . '%')->whereHas('tipos_docu_accion', function ($p) use ($tipoDoc) {
                         $p->where('id', $tipoDoc);
                     });
                 })->get();
             }
         }
     }
-
+    public function detalles_tutelas($id)
+    {
+        $tutela = AutoAdmisorio::findOrFail($id);
+        return view('intranet.funcionarios.tutela.consulta.detalles', compact('tutela'));
+    }
     /**
      * Show the form for creating a new resource.
      *

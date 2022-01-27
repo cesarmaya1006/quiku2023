@@ -22,8 +22,10 @@ $(document).ready(function() {
     // ===========================================================================
     $('#botonBuscar').click(function() {
         const url_t = $(this).attr('data_url');
+        const primer = url_t.search('/f');
+        const servidor = url_t.substring(0, primer);
+        const dirDetalles = servidor + '/funcionario/consulta/detalles_tutelas/'
         const tipoBusqueda = $('#tipoBusqueda').val();
-        console.log(tipoBusqueda);
         if (tipoBusqueda == 'Número de radicado') {
             const numRadicado = $('#numRadicado').val();
 
@@ -53,7 +55,6 @@ $(document).ready(function() {
             type: 'GET',
             data: data,
             success: function(respuesta) {
-                console.log(respuesta);
                 respuesta_html = '';
                 $.each(respuesta, function(index, item) {
                     respuesta_html += '<tr>';
@@ -63,7 +64,7 @@ $(document).ready(function() {
                     respuesta_html += '<td>' + item['accions'][0]['numero_documento_accion'] + '</td>';
                     respuesta_html += '<td>' + item['fecha_notificacion'] + '</td>';
                     respuesta_html += '<td style="white-space:nowrap">' + item['juzgado'] + '</td>';
-                    respuesta_html += '<td>';
+                    respuesta_html += '<td class="text-center">';
                     if (item['dias_termino'] != null) {
                         respuesta_html += item['dias_termino'] + ' dias';
                     }
@@ -71,8 +72,7 @@ $(document).ready(function() {
                         respuesta_html += item['horas_termino'] + ' horas';
                     }
                     respuesta_html += '</td>';
-                    respuesta_html += '<td>' + item['titulo_admisorio'] + '</td>';
-                    respuesta_html += '<td>Opciones</td>';
+                    respuesta_html += '<td><a href="' + dirDetalles + item['id'] + '" class="btn-accion-tabla tooltipsC text-info" title="Editar"><i class="fas fa-eye" aria-hidden="true"></i></a></td>';
                     respuesta_html += '</tr>';
 
                 });

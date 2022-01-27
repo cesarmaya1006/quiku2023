@@ -66,8 +66,8 @@
                                             <div class="col-12 col-md-6 pl-3 pr-3" id="cajaRadicado">
                                                 <div class="form-group">
                                                     <label for="numRadicado">Número de radicado</label>
-                                                    <input class="form-control" type="text" name="numRadicado"
-                                                        id="numRadicado">
+                                                    <input class="form-control form-control-sm" type="text"
+                                                        name="numRadicado" id="numRadicado">
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 pl-3 pr-3 d-none" id="cajaNombres">
@@ -129,8 +129,6 @@
                                                             </th>
                                                             <th class="text-center" style="white-space:nowrap">Tiempo
                                                                 Terminos</th>
-                                                            <th class="text-center" style="white-space:nowrap">Titulo
-                                                                Admisorio</th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
