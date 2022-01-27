@@ -122,7 +122,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('eliminar_respuesta_pretension', [TutelaController::class, 'eliminar_respuesta_pretension_guardar'])->name('eliminar_respuesta_pretension_guardar');
         Route::get('respuestaTutela/{id}', [TutelaController::class, 'respuesta_tutela'])->name('respuesta_tutela');
         Route::post('historial_resuelve_tutela', [TutelaController::class, 'historial_resuelve_tutela_guardar'])->name('historial_resuelve_tutela_guardar');
+        Route::post('historial_resuelve_tutela_eliminar', [TutelaController::class, 'historial_resuelve_tutela_eliminar'])->name('historial_resuelve_tutela_eliminar');
+        Route::post('resuelve_orden_tutela', [TutelaController::class, 'resuelve_orden_tutela_guardar'])->name('resuelve_orden_tutela_guardar');
         Route::post('tutela_respuesta_guardar', [TutelaController::class, 'tutela_respuesta_guardar'])->name('tutela_respuesta_guardar');
+        Route::post('historial_resuelve_tutela_editar', [TutelaController::class, 'historial_resuelve_tutela_editar'])->name('historial_resuelve_tutela_editar');
         Route::post('cambiar_estado_tutela_tareas', [TutelaController::class, 'cambiar_estado_tareas_tutela_guardar'])->name('cambiar_estado_tareas_tutela_guardar');
         Route::get('descarga_respuesta_tutela/{id}', [TutelaController::class, 'descarga_respuesta_tutela'])->name('descarga_respuesta_tutela');
         // Rutas Index
