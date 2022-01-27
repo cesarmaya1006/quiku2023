@@ -872,6 +872,48 @@ class TutelaController extends Controller
         }
     }
 
+    public function historial_resuelve_tutela_eliminar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve = ResuelveTutela::findOrFail($request['value']);
+            $index = $resuelve['orden'];
+            $tutela = $resuelve->auto_admisorio_id;
+            $respuesta = $resuelve->delete(); 
+            $resuelves = ResuelveTutela::where('auto_admisorio_id', $tutela)->get(); 
+            foreach ($resuelves as $key => $resuel) {
+                if($index < $resuel['orden'] ){
+                    $orden['orden'] =  $resuel['orden'] - 1;
+                    ResuelveTutela::findOrFail($resuel->id)->update($orden);
+                }
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function resuelve_orden_tutela_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve['orden'] = $request['orden'];
+            $respuesta = ResuelveTutela::findOrFail($request['id'])->update($resuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function historial_resuelve_tutela_editar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelve['resuelve'] = $request['resuelveNuevo'];
+            $respuesta = ResuelveTutela::findOrFail($request['value'])->update($resuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function cargar_nombre_despachos(Request $request)
     {
         if ($request->ajax()) {
