@@ -80,6 +80,7 @@ class Tabla_Menu extends Seeder
             ['nombre' => 'Registro', 'menu_id' => '28',  'url' => 'admin/registro', 'orden' => '1',  'icono' => 'fas fa-plus-square'],
             ['nombre' => 'Listado', 'menu_id' => '28',  'url' => 'admin/listado', 'orden' => '2',  'icono' => 'far fa-list-alt'],
             ['nombre' => 'Gestión', 'menu_id' => '28',  'url' => 'admin/gestion', 'orden' => '3',  'icono' => 'fas fa-grip-horizontal'],
+            ['nombre' => 'Consulta', 'menu_id' => '28',  'url' => 'funcionario/consulta', 'orden' => '4',  'icono' => 'fas fa-search'],
             //----------------------------------------------------------------------------------------------------------------------
 
         ];
