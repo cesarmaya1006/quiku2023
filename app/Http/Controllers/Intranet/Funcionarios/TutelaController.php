@@ -808,13 +808,9 @@ class TutelaController extends Controller
                 $rPdf['tipo_respuesta'] = $request["tipo_respuesta"];
                 $rPdf['tareas_id'] = $request["idTarea"];
                 $rPdf['empleado_id'] = session('id_usuario');
-                // $rrr = TutelaRespuesta::create($rPdf);
+                $rrr = TutelaRespuesta::create($rPdf);
             }
             $tutela = AutoAdmisorio::findOrfail($request["idAuto"]);
-            // $peticiones = Peticion::where('pqr_id', $pqr->id)->get();
-            // if(sizeof($peticiones)){
-            //     $pqr['recurso_dias'] = $peticiones[0]->recurso_dias;
-            // }
             // $pqr_id = $pqr->id;
             // if ($pqr->persona_id != null) {
             //     $email = $pqr->persona->email;

@@ -55,13 +55,13 @@
         .tabla table, .tabla th, .tabla td { border: 1px solid black; border-collapse: collapse;}
         .p-negro { line-height: .3; }
             
-}
-
+        }
     </style>
-
 </head>
-
 <body>
+    @php
+        $aprueba = $tutela->asignaciontareas->where('tareas_id', 4)[3];
+    @endphp
     <header>
         <table class="header">
             <tr >
@@ -92,23 +92,22 @@
             @foreach ($accionantes as $key => $accionante)
                 <strong>{{$accionante->nombres_accion}} {{$accionante->apellidos_accion}}, </strong>
             @endforeach 
-            contra <strong>Wilson Ruiz. </strong></p>
+            contra <strong>Cesar Maya.</strong></p>
             <p>Radicación N° {{$tutela->radicado}}</p>
             <p>Respetado Señor Juez (a): {{$tutela->nombre_juez}}</p>
-            <p>Juliana Morad Acero, mayor de edad, con domicilio en la ciudad de Bogotá, D.C., identificada con la Cédula de Ciudadanía N° 1.018.417.398 de Bogotá D. C., en calidad de representante legal de MGL Y ASOCIADOS S.A.S., ante Usted acudo para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.
+            <p>{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}, mayor de edad, con domicilio en la ciudad de Bogotá, D.C., identificado con la {{$aprueba->empleado->tipo_id}} N° {{$aprueba->empleado->identificacion}} de Bogotá D. C., en calidad de representante legal de MGL Y ASOCIADOS S.A.S., ante Usted acudo para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.
             </p>
         </div>
         <div>
             <h4 style="text-align: center;">I.  PRONUNCIAMIENTO FRENTE A LOS HECHOS</h4>
-            <ol>
-                @foreach($tutela->hechos as $key => $hecho)
-                <li style="list-style-type: upper-roman;">
-                    <p style="text-transform: capitalize;"> {{$hecho->hecho}}</p>
-                    <h4>Respuesta</h4>
-                    <p> {!! $hecho->respuesta->respuesta !!}</p>
-                </li>
+            @foreach($tutela->respuestasHechos as $key => $respuesta)
+                <h4>Hechos</h4>
+                @foreach($respuesta->relacion as $key => $relacion)
+                    <p style="text-transform: capitalize;">{{$relacion->hecho->hecho}}</p>
                 @endforeach
-            </ol>
+                <h4>Respuesta</h4>
+                <p> {!! $respuesta->respuesta !!}</p>
+            @endforeach
         </div>
         <div>
             <h4 style="text-align: center;">II.  HECHOS DE LA DEFENSA</h4>
@@ -131,8 +130,8 @@
         <div class="tabla">
             <h4 style="text-align: center;">IV.  PRUEBAS APORTADAS CON LA CONTESTACIÓN</h4>
             <ol>
-                @foreach ($tutela->hechos as $key => $hecho)
-                    @foreach ($hecho->respuesta->documentos as $key => $anexo)
+                @foreach ($tutela->respuestasHechos as $key => $respuesta)
+                    @foreach ($respuesta->documentos as $key => $anexo)
                         <li>
                             <p class="text-justify">{{ $anexo->titulo }}</p>
                         </li>
@@ -144,38 +143,8 @@
                             <p class="text-justify">{{ $anexo->titulo }}</p>
                         </li>
                     @endforeach
-            @endforeach
+                @endforeach
             </ol>
-            {{-- <table class="table table-light"  style="font-size: 0.8em;" >
-                <thead>
-                    <tr>
-                        <th scope="col">NOMBRE</th>
-                        <th scope="col">DESCRIPCIÓN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($tutela->hechos as $key => $hecho)
-                        @foreach ($hecho->respuesta->documentos as $key => $anexo)
-                            <tr>
-                                <td class="text-justify">{{ $anexo->titulo }}
-                                </td>
-                                <td class="text-justify">{{ $anexo->descripcion }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endforeach
-                    @foreach ($tutela->respuestasPretensiones as $key => $respuesta)
-                        @foreach ($respuesta->documentos as $key => $anexo)
-                            <tr>
-                                <td class="text-justify">{{ $anexo->titulo }}
-                                </td>
-                                <td class="text-justify">{{ $anexo->descripcion }}
-                                </td>
-                            </tr>
-                        @endforeach
-                    @endforeach
-                </tbody>
-            </table> --}}
         </div>
         <div>
             <h4 style="text-align: center;">V.  ANEXOS</h4>
@@ -192,21 +161,20 @@
             <p>Atentamente,</p>
         </div>
         <div>
-            @php
-                $aprueba = $tutela->asignaciontareas->where('tareas_id', 4)[3];
-            @endphp
+
             @if($firma && $firma != '') 
                 <img src="{{ $firma }}" class="firma" alt="firma">
             @else
                 <p style="font-style: italic;">* Espacio para estanpar firma electrónica</p>
             @endif
-            <p style="font-weight: bold;">Juliana Morad Acero</p>
-            <p class="p-negro">C.C. 1.018.417.398</p>
+            <p style="font-weight: bold;">{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}</p>
+            <p class="p-negro">{{$aprueba->empleado->tipos_docu->abreb_id}} {{$aprueba->empleado->identificacion}}</p>
             <p class="p-negro">Representante Legal</p>
             <p class="p-negro">MGL y Asociados S.A.S.</p>
         </div>
     </main>
     <footer>
+        
         <div style="footer width: 100%;text-align: center;font-weight: bold;font-size: 0.6em;">
             <p class="p-azul">57-1-7229497</p>
             <p class="p-azul">www.mglasociados.com</p>
