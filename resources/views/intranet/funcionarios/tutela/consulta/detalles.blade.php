@@ -47,7 +47,7 @@
                                         <!-- /.info-box -->
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-12">
-                                        <a href="#">
+                                        <a href="{{ route('tutelas_primera_instancia', ['id' => $tutela->id]) }}">
                                             <div class="info-box bg-gray">
                                                 <span class="info-box-icon"><i class="fas fa-medal"></i></span>
 
