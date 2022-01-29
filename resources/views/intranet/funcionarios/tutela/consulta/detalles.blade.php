@@ -47,10 +47,21 @@
                                         <!-- /.info-box -->
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-12">
-                                        <a href="#">
-                                            <div class="info-box bg-gray">
+                                        @if ($tutela->primeraInstancia)
+                                            <a href="{{ route('tutelas_primera_instancia', ['id' => $tutela->id]) }}">
+                                                <div class="info-box bg-gray">
+                                                    <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">
+                                                            Registro Sentencia <br> en primera instancia
+                                                        </span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </a>
+                                        @else
+                                            <div class="info-box bg-success">
                                                 <span class="info-box-icon"><i class="fas fa-medal"></i></span>
-
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">
                                                         Registro Sentencia <br> en primera instancia
@@ -58,7 +69,7 @@
                                                 </div>
                                                 <!-- /.info-box-content -->
                                             </div>
-                                        </a>
+                                        @endif
                                         <!-- /.info-box -->
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-12">
