@@ -17,5 +17,19 @@ class PrimeraInstancia extends Model
         return $this->belongsTo(AutoAdmisorio::class, 'auto_admisorio_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function anexosPrimeraInstancia()
+    {
+        return $this->hasMany(AnexoPrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+
+    //----------------------------------------------------------------------------------
+    public function resuelvesPrimeraInstancia()
+    {
+        return $this->hasMany(ResuelvePrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+
 
 }
