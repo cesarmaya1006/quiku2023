@@ -55,8 +55,20 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('wiku-index') }}">Wiku</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('analitica-index') }}">Analitica</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Analitica
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 0.8em;">
+                                    <li><a class="dropdown-item" href="{{ route('analitica-cantidad') }}">Anlítica
+                                            por
+                                            volumen</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ route('analitica-index') }}">Analítica por
+                                            tiempos de respuesta</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

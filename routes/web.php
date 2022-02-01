@@ -329,7 +329,9 @@ Route::group(['middleware' => 'auth'], function () {
 
             // Gestion de analitica
             Route::get('analitica/index', [AnaliticaController::class, 'index'])->name('analitica-index');
+            Route::get('analitica/index/cantidad', [AnaliticaController::class, 'cantidad'])->name('analitica-cantidad');
             Route::get('analitica/tipoPQR', [AnaliticaController::class, 'tipoPQR'])->name('analitica-tipoPQR');
+            Route::get('analitica/cantidad_cargar', [AnaliticaController::class, 'cantidad_cargar'])->name('analitica-cantidad_cargar');
         });
     });
     //==================================================================================================================

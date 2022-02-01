@@ -26,9 +26,9 @@ $(document).ready(function() {
             }
         });
         if (id != '') {
-            var titulo = 'Tiempo medio de respuesta por tipo de PQR ' + $(this).find("option:selected").text();
-            cargarcanvas('tipopqr_id', id, titulo, 'Motivos', $('#annoBusqueda').val(), $('#tipoGrafico').val());
 
+            var titulo = 'Cantidad de Tutela por  ';
+            cargarcanvas('tipopqr_id', id, titulo, 'Motivos', $('#annoBusqueda').val(), $('#tipoGrafico').val());
 
         }
 
@@ -56,7 +56,7 @@ $(document).ready(function() {
             }
         });
         if (id != '') {
-            var titulo = 'Tiempo medio de respuesta por motivo de PQR ' + $(this).find("option:selected").text();
+            var titulo = 'Tiempo medio de respuesta por motivo de Tutela ' + $(this).find("option:selected").text();
             cargarcanvas('motivo_id', id, 'pie', titulo, 'Sub - Motivos');
         }
     });
@@ -318,10 +318,10 @@ $(document).ready(function() {
             "busqueda": busqueda,
         };
         if (busqueda == 'tipopqr') {
-            var titulo = 'Tiempo medio de respuesta por tipo de PQR';
+            var titulo = 'Tiempo medio de respuesta por tipo de Tutela';
             var tipo = 'column'
         } else if (busqueda == 'motivos') {
-            var titulo = 'Tiempo medio de respuesta por motivo de PQR';
+            var titulo = 'Tiempo medio de respuesta por motivo de Tutela';
             var tipo = 'pie'
         }
         $.ajax({
@@ -377,46 +377,102 @@ function cargarcanvas(busqueda_, id_, titulo_, titulo_tabla, annoBusqueda, tipoG
 
             console.log(respuesta);
 
-            var html_ = "";
+            if (tipo_grafico == 'pie') {
+                var html_ = "";
 
-            respuesta.forEach(function(item, index) {
-                item.dataPoints.forEach(function(item2, index) {
-                    html_ += '<tr>';
-                    html_ += '<td class="text-center" style="white-space:nowrapmin-width:250px;">' + item['name'] + '</td>';
-                    html_ += '<td class="text-center" style="white-space:nowrap;min-width:50px;">' + convertirMeses(item2['x']) + '</td>';
-                    html_ += '<td class="text-center" style="white-space:nowrap;min-width:50px;">' + item2['y'] + '</td>';
-                    html_ += '</tr>';
+                respuesta.forEach(function(item, index) {
+                    item.dataPoints.forEach(function(item2, index) {
+                        html_ += '<tr>';
+                        html_ += '<td class="text-center" style="white-space:nowrapmin-width:250px;">' + item['motivo'] + '</td>';
+                        html_ += '<td class="text-center" style="white-space:nowrap;min-width:50px;">' + item2['name'] + '</td>';
+                        html_ += '<td class="text-center" style="white-space:nowrap;min-width:50px;">' + item2['y'] + '</td>';
+                        html_ += '</tr>';
+                    });
                 });
-            });
-            $("#bodyTabla").html(html_);
-            var chart = new CanvasJS.Chart("analiticaAjax", {
-                animationEnabled: true,
-                theme: "light2",
-                title: {
-                    text: titulo
-                },
-                axisY: {
-                    title: "Dias Promedio",
-                    valueFormatString: "#0",
-                    suffix: " D"
-                },
-                axisX: {
-                    title: "Meses",
-                    suffix: " Mes"
-                },
-                legend: {
-                    cursor: "pointer",
-                    itemclick: toogleDataSeries
-                },
-                toolTip: {
-                    shared: true
-                },
-                exportEnabled: true,
+                $("#bodyTabla").html(html_);
+                var html_ = "";
+                respuesta.forEach(function(item, index) {
+                    cajaanaliticaAjax = 'analiticaAjax' + (index + 1);
+                    html_ += '<div class="col-12 col-md-6 pl-3 pr-3 mb-5 mt-5" id="caja' + (index + 1) + '">';
+                    html_ += '<div id="' + cajaanaliticaAjax + '" style="height: 370px; max-width: auto; margin: 0px auto;"></div>';
+                    html_ += '</div>';
+                });
+                $("#containerAnalitica").html(html_);
+                respuesta.forEach(function(item, index) {
+                    var chart = new CanvasJS.Chart("analiticaAjax" + (index + 1), {
+                        exportEnabled: true,
+                        animationEnabled: true,
+                        title: {
+                            text: titulo + ' ' + item['motivo'],
+                            fontSize: 16,
+                            wrap: true,
+                        },
+                        legend: {
+                            horizontalAlign: "right",
+                            verticalAlign: "center"
+                        },
+                        data: [{
+                            type: "pie",
+                            showInLegend: true,
+                            toolTipContent: "<b>{name}</b>: {y} (#percent%)",
+                            indexLabel: "{name}",
+                            legendText: "{name} (#percent%)",
+                            indexLabelPlacement: "inside",
+                            dataPoints: item['dataPoints']
+                        }]
+                    });
+                    chart.render();
+                });
 
-                data: respuesta
-            });
+            } else {
+                var html_ = "";
 
-            chart.render();
+                respuesta.forEach(function(item, index) {
+                    item.dataPoints.forEach(function(item2, index) {
+                        html_ += '<tr>';
+                        html_ += '<td class="text-center" style="white-space:nowrapmin-width:250px;">' + item['name'] + '</td>';
+                        html_ += '<td class="text-center" style="white-space:nowrap;min-width:50px;">' + convertirMeses(item2['x']) + '</td>';
+                        html_ += '<td class="text-center" style="white-space:nowrap;min-width:50px;">' + item2['y'] + '</td>';
+                        html_ += '</tr>';
+                    });
+                });
+                $("#bodyTabla").html(html_);
+                var html_ = "";
+                html_ += '<div class="col-12" id="caja1">';
+                html_ += '<div id="analiticaAjax" style="height: 370px; max-width: auto; margin: 0px auto;"></div>';
+                html_ += '</div>';
+                $("#containerAnalitica").html(html_);
+                var chart = new CanvasJS.Chart("analiticaAjax", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    title: {
+                        text: titulo
+                    },
+                    axisY: {
+                        title: "Dias Promedio",
+                        valueFormatString: "#0",
+                        suffix: " D"
+                    },
+                    axisX: {
+                        title: "Meses",
+                        suffix: " Mes"
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        itemclick: toogleDataSeries
+                    },
+                    toolTip: {
+                        shared: true
+                    },
+                    exportEnabled: true,
+
+                    data: respuesta
+                });
+                chart.render();
+            }
+
+
+
         },
         error: function() {
 
