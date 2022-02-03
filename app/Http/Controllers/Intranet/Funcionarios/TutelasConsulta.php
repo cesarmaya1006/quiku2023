@@ -118,8 +118,31 @@ class TutelasConsulta extends Controller
             }
             return redirect('funcionario/consulta/detalles_tutelas/' . $id)->with('mensaje', 'Registro de primera instancia con exito.');
         } else {
-            dd('no');
-            # code...
+            $sentenciapinstancia['auto_admisorio_id'] = $id;
+            $sentenciapinstancia['fecha_sentencia'] = $request['fecha_sentencia'];
+            $sentenciapinstancia['fecha_notificacion'] = $request['fecha_notificacion'] . ' ' . $request['hora_notificacion'];
+            $sentenciapinstancia['sentencia'] = $request['sentencia'];
+            //------------------------------------------
+            if ($request->hasFile('url_sentencia')) {
+                $ruta = Config::get('constantes.folder_sentencias');
+                $ruta = trim($ruta);
+                $doc_subido = $request->url_sentencia;
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $sentenciapinstancia['url_sentencia'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+            }
+            //------------------------------------------
+            $nuevasentenciapinstancia = PrimeraInstancia::create($sentenciapinstancia);
+            //------------------------------------------
+            if (intval($request['cantResuelves']) > 0) {
+                $cantResuelves = intval($request['cantResuelves']);
+                for ($i = 1; $i <= $cantResuelves; $i++) {
+                    $newResuelve['sentenciapinstancia_id'] = $nuevasentenciapinstancia->id;
+                    //------------------------------------------
+                    ResuelvePrimeraInstancia::create($newResuelve);
+                }
+            }
+            return redirect('funcionario/consulta/detalles_tutelas/' . $id)->with('mensaje', 'Registro de primera instancia con exito.');
         }
     }
 

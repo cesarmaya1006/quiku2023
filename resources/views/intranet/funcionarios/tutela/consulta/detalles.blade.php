@@ -670,7 +670,21 @@
                                                     <!-- /.card-header -->
                                                     <div class="card-body">
                                                         <div class="row px-2">
+                                                            <div class="row">
+                                                                @foreach ($tutela->primeraInstancia as $primeraInstancia)
+                                                                    <div class="col-12 col-md-2 text-center form-group">
+                                                                        <label>Fecha de la sentencia</label>
+                                                                        <span
+                                                                            class="">{{ $primeraInstancia->fecha_sentencia }}</span>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-2 text-center form-group">
+                                                                        <label>Fecha de notificación</label>
+                                                                        <span
+                                                                            class="">{{ $primeraInstancia->fecha_notificacion }}</span>
+                                                                    </div>
+                                                                @endforeach
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <!-- /.card-body -->
