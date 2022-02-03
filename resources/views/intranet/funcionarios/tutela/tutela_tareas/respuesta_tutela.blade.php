@@ -148,11 +148,11 @@
         </div>
         <div>
             <h4 style="text-align: center;">V.  ANEXOS</h4>
-            <p style="text-transform: capitalize;">Se anexa con la presente contestación la documental ya referida en el acápite de las pruebas allegadas, y, en el entendido por demás que el Poder que me fuere conferido ya obra al plenario.</p>
+            <p>Se anexa con la presente contestación la documental ya referida en el acápite de las pruebas allegadas, y, en el entendido por demás que el Poder que me fuere conferido ya obra al plenario.</p>
         </div>
         <div>
             <h4 style="text-align: center;">VI.  NOTIFICACIONES</h4>
-            <p style="text-transform: capitalize;">La dirección de MGL y Asociados S.A.S. en la ciudad de Bogotá en la carrera 13 # 76-12 piso 4, o al correo electrónico dlopez@mglasociados.com</p>
+            <p>La dirección de MGL y Asociados S.A.S. en la ciudad de Bogotá en la carrera 13 # 76-12 piso 4, o al correo electrónico dlopez@mglasociados.com</p>
         </div>
         <div>
             <p>Del Señor (a) Juez,</p>
