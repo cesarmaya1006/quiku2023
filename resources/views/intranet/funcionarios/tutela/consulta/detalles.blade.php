@@ -33,19 +33,35 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-md-3 col-sm-6 col-12">
-                                        <div class="info-box bg-primary">
-                                            <span class="info-box-icon"><i class="fas fa-medal"></i></span>
-                                            <div class="info-box-content">
-                                                <span class="info-box-text text-center">En Gestión</span>
-                                                <span class="progress-description" style="font-size: 0.8em;">
-                                                    Dias gestión restante 80% / 8 Dias
-                                                </span>
+                                    @if ($tutela->estado->id < 4)
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box bg-primary">
+                                                <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text text-center">En Gestión</span>
+                                                    <span class="progress-description" style="font-size: 0.8em;">
+
+                                                    </span>
+                                                </div>
+                                                <!-- /.info-box-content -->
                                             </div>
-                                            <!-- /.info-box-content -->
+                                            <!-- /.info-box -->
                                         </div>
-                                        <!-- /.info-box -->
-                                    </div>
+                                    @else
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box bg-danger">
+                                                <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text text-center">Cerrada</span>
+                                                    <span class="progress-description" style="font-size: 0.8em;">
+                                                        Tutela cerrada
+                                                    </span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                            <!-- /.info-box -->
+                                        </div>
+                                    @endif
                                     <div class="col-md-3 col-sm-6 col-12">
                                         @if ($tutela->primeraInstancia->count() > 0)
                                             <div class="info-box bg-success">
@@ -672,16 +688,137 @@
                                                         <div class="row px-2">
                                                             <div class="row">
                                                                 @foreach ($tutela->primeraInstancia as $primeraInstancia)
-                                                                    <div class="col-12 col-md-2 text-center form-group">
+                                                                    <div class="col-12 col-md-3 text-center form-group">
                                                                         <label>Fecha de la sentencia</label>
+                                                                        <br>
                                                                         <span
                                                                             class="">{{ $primeraInstancia->fecha_sentencia }}</span>
                                                                     </div>
-                                                                    <div class="col-12 col-md-2 text-center form-group">
+                                                                    <div class="col-12 col-md-3 text-center form-group">
                                                                         <label>Fecha de notificación</label>
+                                                                        <br>
                                                                         <span
                                                                             class="">{{ $primeraInstancia->fecha_notificacion }}</span>
                                                                     </div>
+                                                                    <div class="col-12 col-md-3 text-center form-group">
+                                                                        <label>Sentido de la sentencia</label>
+                                                                        <br>
+                                                                        <span
+                                                                            class="">{{ $primeraInstancia->sentencia }}</span>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-3 text-center form-group">
+                                                                        <label>Documento de sentencia</label>
+                                                                        <br>
+                                                                        <span class=""><a
+                                                                                href="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer">Descargar</a></span>
+                                                                    </div>
+                                                                    @if ($primeraInstancia->anexosPrimeraInstancia)
+                                                                        <div class="col-12">
+                                                                            <div class="row">
+                                                                                <div class="col-12 mt-3 mb-4">
+                                                                                    <h6>Archivos Adjuntos</h6>
+                                                                                </div>
+                                                                                @foreach ($primeraInstancia->anexosPrimeraInstancia as $anexo)
+                                                                                    <div class="col-12">
+                                                                                        <div class="row">
+                                                                                            <div class="col-4">
+                                                                                                <div
+                                                                                                    class="col-12 col-md-3 text-center form-group">
+                                                                                                    <label>Titulo
+                                                                                                        Anexo</label>
+                                                                                                    <br>
+                                                                                                    <span
+                                                                                                        class="">{{ $anexo->titulo_anexo }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-4">
+                                                                                                <div
+                                                                                                    class="col-12 col-md-3 text-center form-group">
+                                                                                                    <label>Descripción
+                                                                                                        Anexo</label>
+                                                                                                    <br>
+                                                                                                    <span
+                                                                                                        class="">{{ $anexo->descripcion_anexo }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-4">
+                                                                                                <div
+                                                                                                    class="col-12 col-md-3 text-center form-group">
+                                                                                                    <label>Archivo
+                                                                                                        Anexo</label>
+                                                                                                    <br>
+                                                                                                    <span
+                                                                                                        class=""><a
+                                                                                                            href="{{ asset('documentos/tutelas/sentencias/' . $anexo->url_anexo) }}"
+                                                                                                            target="_blank"
+                                                                                                            rel="noopener noreferrer">Descargar</a></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endforeach
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                    @if ($primeraInstancia->resuelvesPrimeraInstancia)
+                                                                        <div class="col-12">
+                                                                            <div class="row">
+                                                                                <div class="col-12 mt-3 mb-4">
+                                                                                    <h6>Resuleves Primera Instancia</h6>
+                                                                                </div>
+                                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                                                                    @if ($resuelve->numeracion!=null)
+                                                                                        <?php  $tipo='detalle' ?>
+                                                                                        @else
+                                                                                        <?php  $tipo='cantidad' ?>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                                    @if ($tipo=='detalle')
+                                                                                    <div class="col-12 mb-4">
+                                                                                        <div class="row">
+                                                                                            <div class="col-12 table-responsive">
+                                                                                                <table class="table">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Numeracion</th>
+                                                                                                            <th>Resuelve</th>
+                                                                                                            <th>Tiempo de cumplimiento</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+
+                                                                                                        <tr>
+                                                                                                            <td scope="row">{{$resuelve->numeracion}}</td>
+                                                                                                            <td>{{$resuelve->resuelve}}</td>
+                                                                                                            <td>
+                                                                                                                @if ($resuelve->dias !=null)
+                                                                                                                {{$resuelve->dias .' dias '}}
+                                                                                                                @endif
+                                                                                                                @if ($resuelve->horas !=null)
+                                                                                                                {{$resuelve->horas .' horas '}}
+                                                                                                                @endif
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        @endforeach
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    @else
+                                                                                    <div class="col-12 mb-4">
+                                                                                    Cantidad de resuelves : {{$primeraInstancia->resuelvesPrimeraInstancia->count()}}
+                                                                                    </div>
+                                                                                    @endif
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+
                                                                 @endforeach
 
                                                             </div>
