@@ -83,6 +83,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('index/gestionarAsignacionRevisa/{id}', [FuncionarioController::class, 'gestionar_asignacion_revisa'])->name('funcionario-gestionar-asignacion-revisa');
         Route::get('index/gestionarAsignacionAprueba/{id}', [FuncionarioController::class, 'gestionar_asignacion_aprueba'])->name('funcionario-gestionar-asignacion-aprueba');
         Route::get('index/gestionarAsignacionRadica/{id}', [FuncionarioController::class, 'gestionar_asignacion_radica'])->name('funcionario-gestionar-asignacion-radica');
+        Route::get('listado/gestionarAsignacionColaboracion/{id}', [PQRController::class, 'gestionar'])->name('funcionario-gestionar-asignacion-colaboracion');
         // Rutas Index
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'adminSistema'], function () {
@@ -358,8 +359,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cambiar-password', [FuncionarioController::class, 'cambiar_password'])->name('funcionario-cambiar-password');
         Route::get('usuarios-listado', [FuncionarioController::class, 'listado_usuarios'])->name('funcionario-listado-usuarios');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Route::get('listado/gestionar_pqr/{id}', [PQRController::class, 'gestionar'])->name('funcionario-gestionar_pqr');
-        Route::post('listado/gestionarqr', [PQRController::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_guardar');
         Route::post('respuesta_recurso_guardar', [PQRController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
         Route::post('respuesta_recurso_actualizar', [PQRController::class, 'respuesta_recurso_actualizar'])->name('respuesta_recurso_actualizar');
         Route::post('respuesta_recurso_anexos', [PQRController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');

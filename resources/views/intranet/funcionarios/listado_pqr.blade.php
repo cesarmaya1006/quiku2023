@@ -116,7 +116,7 @@
                                             <td>{{ dias_restantes(date('Y-m-d'), $fechaFinal) }}</td>
                                             <td>{{ $fechaFinal }}</td>
                                             <td>
-                                                <a href="{{ route('funcionario-gestionar_pqr', ['id' => $peticion->pqr->id]) }}"
+                                                <a href="{{ route('funcionario-gestionar-asignacion-colaboracion', ['id' => $peticion->pqr->id]) }}"
                                                     class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                         class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                                             </td>

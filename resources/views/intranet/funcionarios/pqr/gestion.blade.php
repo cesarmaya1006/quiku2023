@@ -449,13 +449,15 @@
                                                                 class="far fa-save"></i></span></button>
                                                 @endif
                                                 {{-- Inicio btn Modal de busqueda --}}
-                                                <div class="col-3 row estado-peticion">
-                                                    <button type="" class="btn btn-success col-12 mx-2" data-toggle="modal"
-                                                        data-target=".buscar-{{ $key }}"><span
-                                                            style="font-size: 1em;"><i class="fas fa-search"></i>
-                                                            Wiku</span>
-                                                    </button>
-                                                </div>
+                                                @if ($peticion->estadopeticion->estado != 100 && !sizeOf($peticion->recursos) )
+                                                    <div class="col-3 row estado-peticion">
+                                                        <button type="" class="btn btn-success col-12 mx-2" data-toggle="modal"
+                                                            data-target=".buscar-{{ $key }}"><span
+                                                                style="font-size: 1em;"><i class="fas fa-search"></i>
+                                                                Wiku</span>
+                                                        </button>
+                                                    </div>
+                                                @endif
                                             </div>
                                             {{-- Fin btn Modal de busqueda --}}
                                             {{-- Inicio Modal de busqueda --}}
