@@ -44,15 +44,15 @@
                 </div>
                 <div class="form-check col-12 col-md-2">
                     <input class="form-check-input check_clase" type="checkbox" value="" id="tipopqrCheck">
-                    <label class="form-check-label" for="tipopqrCheck">Tipo de Tutela</label>
+                    <label class="form-check-label" for="tipopqrCheck">Tipo</label>
                 </div>
                 <div class="form-check col-12 col-md-2">
                     <input class="form-check-input check_clase" type="checkbox" value="" id="motivoCheck">
-                    <label class="form-check-label" for="motivoCheck">Motivo Tutela</label>
+                    <label class="form-check-label" for="motivoCheck">Motivo</label>
                 </div>
                 <div class="form-check col-12 col-md-2">
                     <input class="form-check-input check_clase" type="checkbox" value="" id="subMotivoCheck">
-                    <label class="form-check-label" for="subMotivoCheck">Sub-Motivo Tutela</label>
+                    <label class="form-check-label" for="subMotivoCheck">Sub-Motivo</label>
                 </div>
                 <div class="form-check col-12 col-md-2">
                     <input class="form-check-input check_clase" type="checkbox" value="" id="serviciosCheck">
@@ -82,7 +82,7 @@
             <hr>
             <div class="row">
                 <div class="form-group col-12 col-md-6 d-none" id="tipo_pqr">
-                    <label class="requerido" for="tipo_p_q_r_id">Tipo de Tutela</label>
+                    <label class="requerido" for="tipo_p_q_r_id">Tipo</label>
                     <select id="tipo_p_q_r_id" class="form-control form-control-sm" name="tipo_p_q_r_id"
                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}" required>
                         <option value="">---Seleccione---</option>
@@ -92,14 +92,14 @@
                     </select>
                 </div>
                 <div class="form-group col-12 col-md-6 d-none" id="motivo_pqr">
-                    <label class="requerido" for="motivo_id">Motivo de Tutela</label>
+                    <label class="requerido" for="motivo_id">Motivo</label>
                     <select id="motivo_id" class="form-control form-control-sm" name="motivo_id"
                         data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}">
                         <option value="">---Seleccione---</option>
                     </select>
                 </div>
                 <div class="form-group col-12 col-md-6 d-none" id="sub_motivo_pqr">
-                    <label class="requerido" for="motivo_sub_id">Sub-Motivo de Tutela</label>
+                    <label class="requerido" for="motivo_sub_id">Sub-Motivo</label>
                     <select id="motivo_sub_id" class="form-control form-control-sm" name="motivo_sub_id">
                         <option value="">---Seleccione---</option>
                     </select>

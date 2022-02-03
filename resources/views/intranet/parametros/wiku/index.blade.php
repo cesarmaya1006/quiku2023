@@ -94,12 +94,12 @@
                                                                 {{ $argumento->autorInst->institucion . ';' }}
                                                             @endif
                                                             @if ($argumento->autor != null)
-                                                                {{ $argumento->autor->nombre1 . ' ' . $argumento->autor->nombre2 . ' ' . $argumento->autor->apellido1 . ' ' . $argumento->autor->apellido2 }}
+                                                                {{ $argumento->autor->nombre1 .' ' .$argumento->autor->nombre2 .' ' .$argumento->autor->apellido1 .' ' .$argumento->autor->apellido2 }}
 
                                                             @endif
                                                         </td>
                                                         <td class="text-justify" style="min-width:100px;">
-                                                            {{ $argumento->texto }}
+                                                            {!! $argumento->texto !!}
                                                         </td>
                                                         <td class="text-justify" style="min-width:100px;">
                                                             {{ $argumento->descripcion }}
@@ -240,7 +240,7 @@
                                                             {{ $jurisprudencia->fecha != null ? $jurisprudencia->fecha : '---' }}
                                                         </td>
                                                         <td>
-                                                            {{ $jurisprudencia->magistrado->nombre1 . ' ' . $jurisprudencia->magistrado->nombre2 . ' ' . $jurisprudencia->magistrado->apellido1 . ' ' . $jurisprudencia->magistrado->apellido2 }}
+                                                            {{ $jurisprudencia->magistrado->nombre1 .' ' .$jurisprudencia->magistrado->nombre2 .' ' .$jurisprudencia->magistrado->apellido1 .' ' .$jurisprudencia->magistrado->apellido2 }}
                                                         </td>
                                                         <td>
                                                             {{ $jurisprudencia->demandante ? $jurisprudencia->demandante->demandante : '' }}
@@ -347,7 +347,7 @@
                                                                 {{ $doctrina->autorInst->institucion . ';' }}
                                                             @endif
                                                             @if ($doctrina->autor != null)
-                                                                {{ $doctrina->autor->nombre1 . ' ' . $doctrina->autor->nombre2 . ' ' . $doctrina->autor->apellido1 . ' ' . $doctrina->autor->apellido2 }}
+                                                                {{ $doctrina->autor->nombre1 .' ' .$doctrina->autor->nombre2 .' ' .$doctrina->autor->apellido1 .' ' .$doctrina->autor->apellido2 }}
 
                                                             @endif
                                                         </td>

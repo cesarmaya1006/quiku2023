@@ -120,5 +120,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/intranet/parametros/argumentos.js') }}"></script>
     <script src="{{ asset('js/intranet/parametros/fuentes.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 @endsection
 <!-- ************************************************************* -->

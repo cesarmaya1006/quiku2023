@@ -88,18 +88,18 @@ window.addEventListener('DOMContentLoaded', function() {
         let idRecurso = contenedor.querySelector('.id_recurso').value
         let tipo_reposicion_id = contenedor.querySelector('.tipo_reposicion_id').value
         let respuesta = contenedor.querySelector('.titulo-anexoRespuestaRecurso textArea').value
-        if(respuesta == ''){
+        if (respuesta == '') {
             alert('La respuesta al recurso esta vacia.')
-        }else{
+        } else {
             let resprecursos_id = 0
-                let data = {
-                    recurso_id: idRecurso,
-                    id: id_pqr,
-                    tipo_reposicion_id,
-                    respuesta: respuesta
-                }
-                guardar_recurso(data)
-    
+            let data = {
+                recurso_id: idRecurso,
+                id: id_pqr,
+                tipo_reposicion_id,
+                respuesta: respuesta
+            }
+            guardar_recurso(data)
+
             function guardar_recurso(data) {
                 $.ajax({
                     async: false,
@@ -129,7 +129,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         dataAnexo.append('_token', token);
                         let urlAnexo = anexo.parentNode.parentNode.parentNode
                         urlAnexo = urlAnexo.querySelector('.guardarRespuestaRecurso button').getAttribute('data_url_anexos')
-                        if(archivo){
+                        if (archivo) {
                             $.ajax({
                                 async: false,
                                 url: urlAnexo,
@@ -167,18 +167,18 @@ window.addEventListener('DOMContentLoaded', function() {
         let idRecurso = contenedor.querySelector('.id_recurso').value
         let tipo_reposicion_id = contenedor.querySelector('.tipo_reposicion_id').value
         let respuesta = contenedor.querySelector('.titulo-anexoRespuestaRecurso textArea').value
-        if(respuesta == ''){
+        if (respuesta == '') {
             alert('La respuesta al recurso esta vacia.')
-        }else{
+        } else {
             let resprecursos_id = 0
-                let data = {
-                    recurso_id: idRecurso,
-                    id: id_pqr,
-                    tipo_reposicion_id,
-                    respuesta: respuesta
-                }
-                guardar_recurso(data)
-    
+            let data = {
+                recurso_id: idRecurso,
+                id: id_pqr,
+                tipo_reposicion_id,
+                respuesta: respuesta
+            }
+            guardar_recurso(data)
+
             function guardar_recurso(data) {
                 $.ajax({
                     async: false,
@@ -207,7 +207,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     dataAnexo.append('_token', token);
                     let urlAnexo = anexo.parentNode.parentNode.parentNode
                     urlAnexo = urlAnexo.querySelector('.actualizarRespuestaRecurso button').getAttribute('data_url_anexos')
-                    if(archivo){
+                    if (archivo) {
                         $.ajax({
                             async: false,
                             url: urlAnexo,
@@ -528,7 +528,7 @@ window.addEventListener('DOMContentLoaded', function() {
             if (padreEstado.parentElement.parentElement.parentElement.querySelector('.validacion_recurso')) {
                 if (padreEstado.parentElement.parentElement.parentElement.querySelector('.validacion_recurso').value == 0) {
                     alert('Debe responder el recursos de la petición')
-                }else{
+                } else {
                     let data = {
                         estado,
                         id_peticion
@@ -540,7 +540,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         data: data,
                         success: function(respuesta) {
                             location.reload();
-    
+
                         },
                         error: function(error) {
                             console.log(error)
@@ -733,7 +733,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         $html_ += '<div class="row">';
                         $html_ += '<div class="col-12">';
                         $html_ += '<p><strong>Texto:</strong></p>';
-                        $html_ += '<p class="textoCopiar">' + argumento['texto'] + '</p>';
+                        $html_ += '<div class="textoCopiar">' + argumento['texto'] + '</div>';
                         $html_ += '</div>';
                         $html_ += '</div>';
                         $html_ += '<div class="row">';
@@ -1326,7 +1326,7 @@ window.addEventListener('DOMContentLoaded', function() {
                             $html_ += '<div class="row">';
                             $html_ += '<div class="col-12">';
                             $html_ += '<p><strong>Texto:</strong></p>';
-                            $html_ += '<p class="textoCopiar">' + argumento['texto'] + '</p>';
+                            $html_ += '<div class="textoCopiar">' + argumento['texto'] + '</div>';
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '<div class="row">';
