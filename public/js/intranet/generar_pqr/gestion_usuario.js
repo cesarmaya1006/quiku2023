@@ -1,12 +1,12 @@
-window.addEventListener('DOMContentLoaded', function(){
+window.addEventListener('DOMContentLoaded', function() {
     const id_pqr = document.querySelector('.id_pqr').value
-    // Inicio Función para generar varios anexos en una consulta con validación.
-    if(document.querySelectorAll('.crearAnexo').length){
+        // Inicio Función para generar varios anexos en una consulta con validación.
+    if (document.querySelectorAll('.crearAnexo').length) {
         let btncrearAnexo = document.querySelectorAll('.crearAnexo')
         btncrearAnexo.forEach(btn => btn.addEventListener('click', crearNuevoAnexo))
         let btnEliminarAnexo = document.querySelector('.eliminaranexoConsulta')
         btnEliminarAnexo.addEventListener('click', agregarEliminarAnexo)
-    
+
         function crearNuevoAnexo(e) {
             e.preventDefault()
             let consulta = e.target.parentNode.parentNode
@@ -17,13 +17,13 @@ window.addEventListener('DOMContentLoaded', function(){
             consulta.querySelector('.anexosConsulta').appendChild(nuevoAnexo)
             document.querySelectorAll('.eliminaranexoConsulta').forEach(item => item.addEventListener('click', agregarEliminarAnexo))
         }
-    
+
         function agregarEliminarAnexo(e) {
             e.preventDefault()
             let consulta = e.target
             if (consulta.tagName === 'I') {
                 consulta = consulta.parentNode.parentNode.parentNode.parentNode
-            }else {
+            } else {
                 consulta = consulta.parentNode.parentNode.parentNode
             }
             if (consulta.querySelectorAll('.anexoconsulta').length >= 2) {
@@ -38,14 +38,14 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
     // Fin Función para generar varios anexos en una consulta con validación.
-    
+
     // Inicio bloque para la funcion de tarjetas
     let menuCardLink = document.querySelectorAll('.card-step')
     menuCardLink.forEach(link => {
         link.addEventListener('click', menuscards)
     })
 
-    function menuscards (link) {
+    function menuscards(link) {
         link.preventDefault()
         let seleccion = link.target
         switch (seleccion.tagName) {
@@ -64,17 +64,17 @@ window.addEventListener('DOMContentLoaded', function(){
         }
 
         menuCardLink.forEach(link => {
-            if(link.classList.contains('activo')){
+            if (link.classList.contains('activo')) {
                 link.classList.remove('activo')
             }
         })
         seleccion.classList.add('activo')
-        if(seleccion.getAttribute('data-content') == 'menu-salir-inicio'){
+        if (seleccion.getAttribute('data-content') == 'menu-salir-inicio') {
             window.location = "/usuario/listado"
         }
         let menuCard = document.querySelectorAll('.menu-card')
         menuCard.forEach(content => {
-            if(!content.classList.contains('d-none')){
+            if (!content.classList.contains('d-none')) {
                 content.classList.add('d-none')
             }
         })
@@ -84,13 +84,13 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
     // Fin bloque para la funcion de tarjetas
-    
-    // Inicio bloque para la funcion de aclaraciones
-    if(document.querySelectorAll('.btn-guardar-aclaracion')){
-        let btnRespuestas = document.querySelectorAll('.btn-guardar-aclaracion')
-        btnRespuestas.forEach(btn=> btn.addEventListener('click', guardarRespuestas))
 
-        function guardarRespuestas(btn){
+    // Inicio bloque para la funcion de aclaraciones
+    if (document.querySelectorAll('.btn-guardar-aclaracion')) {
+        let btnRespuestas = document.querySelectorAll('.btn-guardar-aclaracion')
+        btnRespuestas.forEach(btn => btn.addEventListener('click', guardarRespuestas))
+
+        function guardarRespuestas(btn) {
             btn.preventDefault()
             padreRespuesta = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -107,7 +107,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 }
                 guardarRespuesta(data)
             }
-            function guardarRespuesta(data){
+
+            function guardarRespuesta(data) {
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -122,7 +123,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 });
             }
 
-            function guardarRespuestaAnexo(anexos, idrespuesta){
+            function guardarRespuestaAnexo(anexos, idrespuesta) {
                 anexos.forEach(anexo => {
                     let titulo = anexo.querySelector('.titulo').value
                     let descripcion = anexo.querySelector('.descripcion').value
@@ -135,12 +136,12 @@ window.addEventListener('DOMContentLoaded', function(){
                         dataAnexo.append('archivo', archivo);
                         dataAnexo.append('_token', token);
                         $.ajax({
-                            async:false,
+                            async: false,
                             url: url2,
                             type: 'POST',
                             headers: { 'X-CSRF-TOKEN': token },
                             data: dataAnexo,
-                            processData: false, 
+                            processData: false,
                             contentType: false,
                             success: function(respuesta) {
                                 // console.log(respuesta)
@@ -156,34 +157,34 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
     // Fin bloque para la funcion de aclaraciones
-    
-    // Incio función para ocultar bloque de recursos    
-    let radioRecursos = document.querySelectorAll('.recurso_procede_check') 
+
+    // Incio función para ocultar bloque de recursos
+    let radioRecursos = document.querySelectorAll('.recurso_procede_check')
     radioRecursos.forEach(radio => {
-        radio.addEventListener('change', function(e){
-        let recursos = document.querySelectorAll('.form-recursos')
-        let btnGuardarRecursos = document.querySelector('.guardarRecurso')
-            if(e.target.value == 1){
-                recursos.forEach(recurso => {
-                    recurso.classList.remove('d-none');
-                })
-                btnGuardarRecursos.classList.remove('d-none');
-            }else {
-                recursos.forEach(recurso => {
-                    recurso.classList.add('d-none');
-                })
-                btnGuardarRecursos.classList.add('d-none');
-            }
+            radio.addEventListener('change', function(e) {
+                let recursos = document.querySelectorAll('.form-recursos')
+                let btnGuardarRecursos = document.querySelector('.guardarRecurso')
+                if (e.target.value == 1) {
+                    recursos.forEach(recurso => {
+                        recurso.classList.remove('d-none');
+                    })
+                    btnGuardarRecursos.classList.remove('d-none');
+                } else {
+                    recursos.forEach(recurso => {
+                        recurso.classList.add('d-none');
+                    })
+                    btnGuardarRecursos.classList.add('d-none');
+                }
+            })
         })
-    })
-    // Fin función para ocultar bloque de recursos
+        // Fin función para ocultar bloque de recursos
 
     // Inicio función para guardar recurso
-    if(document.querySelectorAll('.btn-recurso')){
+    if (document.querySelectorAll('.btn-recurso')) {
         let btnRecursosGuardar = document.querySelector('.btn-recurso')
         btnRecursosGuardar.addEventListener('click', guardarRecurso)
-    
-        function guardarRecurso(e){
+
+        function guardarRecurso(e) {
             e.preventDefault()
             let url = e.target.getAttribute('data_url')
             let url2 = e.target.getAttribute('data_url_anexos')
@@ -192,11 +193,11 @@ window.addEventListener('DOMContentLoaded', function(){
             let tipo_reposicion = document.querySelector('.tipo_reposicion').value
             let respuestaRecurso = document.querySelectorAll('.respuestaRecurso')
             let dataActualizar = {
-                tipo_reposicion_id : tipo_reposicion,
+                tipo_reposicion_id: tipo_reposicion,
                 id: id_pqr
             }
             $.ajax({
-                async:false,
+                async: false,
                 url: url3,
                 type: 'POST',
                 headers: { 'X-CSRF-TOKEN': token },
@@ -209,22 +210,22 @@ window.addEventListener('DOMContentLoaded', function(){
                 }
             });
 
-            if(tipo_reposicion){
+            if (tipo_reposicion) {
                 respuestaRecurso.forEach(item => {
-                    if(item.value != ''){
+                    if (item.value != '') {
                         let respuesta = item.value
                         let contenedor = item.parentElement.parentElement.parentElement.parentElement
                         let idPeticionRecurso = contenedor.querySelector('.id_peticionRecurso').value
                         let anexos = contenedor.querySelectorAll('.anexoconsulta')
-                        if(tipo_reposicion == 4){
+                        if (tipo_reposicion == 4) {
                             let data = {
-                                peticion_id : idPeticionRecurso,
-                                tipo_reposicion_id : 2,
-                                recurso : respuesta,
+                                peticion_id: idPeticionRecurso,
+                                tipo_reposicion_id: 2,
+                                recurso: respuesta,
                                 id: id_pqr
                             }
                             $.ajax({
-                                async:false,
+                                async: false,
                                 url: url,
                                 type: 'POST',
                                 headers: { 'X-CSRF-TOKEN': token },
@@ -237,15 +238,15 @@ window.addEventListener('DOMContentLoaded', function(){
                                     console.log(error)
                                 }
                             });
-        
+
                             let data2 = {
-                                peticion_id : idPeticionRecurso,
-                                tipo_reposicion_id : 3,
-                                recurso : respuesta,
+                                peticion_id: idPeticionRecurso,
+                                tipo_reposicion_id: 3,
+                                recurso: respuesta,
                                 id: id_pqr
                             }
                             $.ajax({
-                                async:false,
+                                async: false,
                                 url: url,
                                 type: 'POST',
                                 headers: { 'X-CSRF-TOKEN': token },
@@ -258,15 +259,15 @@ window.addEventListener('DOMContentLoaded', function(){
                                     console.log(error)
                                 }
                             });
-                        }else{
+                        } else {
                             let data = {
-                                peticion_id : idPeticionRecurso,
-                                tipo_reposicion_id : tipo_reposicion,
-                                recurso : respuesta,
+                                peticion_id: idPeticionRecurso,
+                                tipo_reposicion_id: tipo_reposicion,
+                                recurso: respuesta,
                                 id: id_pqr
                             }
                             $.ajax({
-                                async:false,
+                                async: false,
                                 url: url,
                                 type: 'POST',
                                 headers: { 'X-CSRF-TOKEN': token },
@@ -282,11 +283,11 @@ window.addEventListener('DOMContentLoaded', function(){
                         }
                     }
                 })
-            }else{
+            } else {
                 alert('Debe seleccionar un tipo de recurso')
             }
 
-            function guardarRespuestaAnexo(anexos, idrespuesta){
+            function guardarRespuestaAnexo(anexos, idrespuesta) {
                 anexos.forEach(anexo => {
                     let titulo = anexo.querySelector('.titulo').value
                     let descripcion = anexo.querySelector('.descripcion').value
@@ -299,12 +300,12 @@ window.addEventListener('DOMContentLoaded', function(){
                         dataAnexo.append('archivo', archivo);
                         dataAnexo.append('_token', token);
                         $.ajax({
-                            async:false,
+                            async: false,
                             url: url2,
                             type: 'POST',
                             headers: { 'X-CSRF-TOKEN': token },
                             data: dataAnexo,
-                            processData: false, 
+                            processData: false,
                             contentType: false,
                             success: function(respuesta) {
                                 // console.log(respuesta)
@@ -318,6 +319,6 @@ window.addEventListener('DOMContentLoaded', function(){
             }
             location.reload();
         }
-    }       
-    // Fin función para guardar recurso 
+    }
+    // Fin función para guardar recurso
 })

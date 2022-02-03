@@ -135,8 +135,8 @@
 <div class="row">
     <div class="col-12 col-md-6 form-group">
         <label class="requerido" for="texto">Texto Principal</label>
-        <textarea name="texto" id="texto" class="form-control form-control-sm" cols="30" rows="5" style="resize: none;"
-            required>{{ old('texto') }}</textarea>
+        <textarea name="texto" id="texto" class="form-control form-control-sm textoPrincipal" cols="30" rows="5"
+            style="resize: none;" required>{{ old('texto') }}</textarea>
         <small id="helpId" class="form-text text-muted">Texto Principal</small>
     </div>
     <div class="col-12 col-md-6 form-group">

@@ -194,17 +194,17 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     // Guardar estado hechos
-    if(document.querySelector('.btn-estado-hecho')){
+    if (document.querySelector('.btn-estado-hecho')) {
         let btnEstados = document.querySelectorAll('.btn-estado-hecho')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
+        function guardarEstado(btn) {
             btn.preventDefault()
-            let btnE = btn.target 
+            let btnE = btn.target
             if (btnE.tagName === 'I') {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
                 btnE = btnE.parentElement.parentElement
-            }else {
+            } else {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
             }
             let id_respuesta = padreEstado.querySelector('.id_respuesta').value
@@ -226,7 +226,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     data: data,
                     success: function(respuesta) {
                         location.reload();
-        
+
                     },
                     error: function(error) {
                         console.log(error)
@@ -237,17 +237,17 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     // Guardar estado pretensiones
-    if(document.querySelector('.btn-estado-pretension')){
+    if (document.querySelector('.btn-estado-pretension')) {
         let btnEstados = document.querySelectorAll('.btn-estado-pretension')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
+        function guardarEstado(btn) {
             btn.preventDefault()
-            let btnE = btn.target 
+            let btnE = btn.target
             if (btnE.tagName === 'I') {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
                 btnE = btnE.parentElement.parentElement
-            }else {
+            } else {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
             }
             let id_respuesta = padreEstado.querySelector('.id_respuesta').value
@@ -269,7 +269,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     data: data,
                     success: function(respuesta) {
                         location.reload();
-        
+
                     },
                     error: function(error) {
                         console.log(error)
@@ -279,11 +279,12 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    //  Guardar Historial tutela - hecho  
-    if(document.querySelector('.guardarHistorialHecho')){
+    //  Guardar Historial tutela - hecho
+    if (document.querySelector('.guardarHistorialHecho')) {
         let HistorialHecho = document.querySelectorAll('.guardarHistorialHecho')
         HistorialHecho.forEach(btn => btn.addEventListener('click', guardarHistorialHecho))
-        function guardarHistorialHecho(btn){
+
+        function guardarHistorialHecho(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -292,11 +293,11 @@ window.addEventListener('DOMContentLoaded', function() {
             let idHecho = contenedorHisotrial.querySelector('.id_hecho').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
-    
-            function guardarHistorialPeticion (){
+
+            function guardarHistorialPeticion() {
                 let data = {
                     mensajeHistorial,
                     idAuto: id_auto,
@@ -315,14 +316,15 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-        }   
+        }
     }
 
-    //  Guardar Historial tutela - respuesta hecho  
-    if(document.querySelector('.guardarHistorialRespuestaHecho')){
+    //  Guardar Historial tutela - respuesta hecho
+    if (document.querySelector('.guardarHistorialRespuestaHecho')) {
         let HistorialHecho = document.querySelectorAll('.guardarHistorialRespuestaHecho')
         HistorialHecho.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaHecho))
-        function guardarHistorialRespuestaHecho(btn){
+
+        function guardarHistorialRespuestaHecho(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -331,11 +333,11 @@ window.addEventListener('DOMContentLoaded', function() {
             let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_hecho').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
-    
-            function guardarHistorialPeticion (){
+
+            function guardarHistorialPeticion() {
                 let data = {
                     historial: mensajeHistorial,
                     respuesta_hecho_id: idRespuesta
@@ -353,14 +355,15 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-        }   
+        }
     }
 
-    //  Guardar Historial tutela - pretension  
-    if(document.querySelector('.guardarHistorialPretension')){
+    //  Guardar Historial tutela - pretension
+    if (document.querySelector('.guardarHistorialPretension')) {
         let HistorialPretension = document.querySelectorAll('.guardarHistorialPretension')
         HistorialPretension.forEach(btn => btn.addEventListener('click', guardarHistorialPretension))
-        function guardarHistorialPretension(btn){
+
+        function guardarHistorialPretension(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -369,11 +372,11 @@ window.addEventListener('DOMContentLoaded', function() {
             let idPretension = contenedorHisotrial.querySelector('.id_pretension').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
-    
-            function guardarHistorialPeticion (){
+
+            function guardarHistorialPeticion() {
                 let data = {
                     mensajeHistorial,
                     idAuto: id_auto,
@@ -392,14 +395,15 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-        }   
+        }
     }
 
-    //  Guardar Historial tutela - respuesta pretension  
-    if(document.querySelector('.guardarHistorialRespuestaPretension')){
+    //  Guardar Historial tutela - respuesta pretension
+    if (document.querySelector('.guardarHistorialRespuestaPretension')) {
         let HistorialPretension = document.querySelectorAll('.guardarHistorialRespuestaPretension')
         HistorialPretension.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaPretension))
-        function guardarHistorialRespuestaPretension(btn){
+
+        function guardarHistorialRespuestaPretension(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -408,11 +412,11 @@ window.addEventListener('DOMContentLoaded', function() {
             let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_pretension').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
-    
-            function guardarHistorialPeticion (){
+
+            function guardarHistorialPeticion() {
                 let data = {
                     historial: mensajeHistorial,
                     respuesta_pretension_id: idRespuesta
@@ -430,7 +434,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
-        }   
+        }
     }
 
     // Inicio Función para generar varios anexos en una consulta con validación.
@@ -489,9 +493,9 @@ window.addEventListener('DOMContentLoaded', function() {
             let estado = padreRespuesta.querySelector('.estadoHecho').value
             let respuesta = padreRespuesta.querySelector('.respuesta').value
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
-            validacionHechos = false 
+            validacionHechos = false
             hechos.forEach(hecho => {
-                if(hecho.checked == true){
+                if (hecho.checked == true) {
                     validacionHechos = true
                 }
             })
@@ -502,7 +506,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     estado
                 }
                 guardarRespuesta(data1)
-            }else {
+            } else {
                 alert('Debe seleccionar los hechos y diligenciar los campos de respuesta y avance')
             }
 
@@ -553,12 +557,12 @@ window.addEventListener('DOMContentLoaded', function() {
                 })
             }
 
-            function guardarRelacionRespuesta(idrespuesta){
+            function guardarRelacionRespuesta(idrespuesta) {
                 hechos.forEach(hecho => {
-                    if(hecho.checked){
+                    if (hecho.checked) {
                         let data = {
                             estado,
-                            id_hecho : hecho.value,
+                            id_hecho: hecho.value,
                             id_auto,
                             id_respuesta: idrespuesta.data
                         }
@@ -588,22 +592,22 @@ window.addEventListener('DOMContentLoaded', function() {
                             }
                         });
                     }
-                    
+
                 })
-            location.reload();
+                location.reload();
             }
 
         }
     }
 
     // Guardar asignacion de hecho desde respuesta
-    if(document.querySelector('.btn-respuesta-hecho-asignar')){
+    if (document.querySelector('.btn-respuesta-hecho-asignar')) {
         let btnEstados = document.querySelectorAll('.btn-respuesta-hecho-asignar')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
+        function guardarEstado(btn) {
             btn.preventDefault()
-            let btnE = btn.target 
+            let btnE = btn.target
             let contenedorPadre = btnE.parentElement.parentElement
             let url = btnE.getAttribute('data_url')
             let url2 = btnE.getAttribute('data_url2')
@@ -624,7 +628,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 data: data,
                 success: function(respuesta) {
                     // console.log(respuesta)
-    
+
                 },
                 error: function(error) {
                     console.log(error)
@@ -637,7 +641,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 data: data,
                 success: function(respuesta) {
                     location.reload();
-    
+
                 },
                 error: function(error) {
                     console.log(error)
@@ -664,9 +668,9 @@ window.addEventListener('DOMContentLoaded', function() {
             let estado = padreRespuesta.querySelector('.estadoPretension').value
             let respuesta = padreRespuesta.querySelector('.respuesta').value
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
-            validacionPretensiones = false 
+            validacionPretensiones = false
             pretensiones.forEach(pretension => {
-                if(pretension.checked == true){
+                if (pretension.checked == true) {
                     validacionPretensiones = true
                 }
             })
@@ -677,7 +681,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     estado
                 }
                 guardarRespuesta(data1)
-            }else {
+            } else {
                 alert('Debe seleccionar las pretensiones y diligenciar los campos de respuesta y avance')
             }
 
@@ -728,12 +732,12 @@ window.addEventListener('DOMContentLoaded', function() {
                 })
             }
 
-            function guardarRelacionRespuesta(idrespuesta){
+            function guardarRelacionRespuesta(idrespuesta) {
                 pretensiones.forEach(pretension => {
-                    if(pretension.checked){
+                    if (pretension.checked) {
                         let data = {
                             estado,
-                            id_pretension : pretension.value,
+                            id_pretension: pretension.value,
                             id_auto,
                             id_respuesta: idrespuesta.data
                         }
@@ -763,22 +767,22 @@ window.addEventListener('DOMContentLoaded', function() {
                             }
                         });
                     }
-                    
+
                 })
-            location.reload();
+                location.reload();
             }
 
         }
     }
 
     // Guardar asignacion de pretension desde respuesta
-    if(document.querySelector('.btn-respuesta-pretension-asignar')){
+    if (document.querySelector('.btn-respuesta-pretension-asignar')) {
         let btnEstados = document.querySelectorAll('.btn-respuesta-pretension-asignar')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
+        function guardarEstado(btn) {
             btn.preventDefault()
-            let btnE = btn.target 
+            let btnE = btn.target
             let contenedorPadre = btnE.parentElement.parentElement
             let url = btnE.getAttribute('data_url')
             let url2 = btnE.getAttribute('data_url2')
@@ -799,7 +803,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 data: data,
                 success: function(respuesta) {
                     // console.log(respuesta)
-    
+
                 },
                 error: function(error) {
                     console.log(error)
@@ -812,7 +816,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 data: data,
                 success: function(respuesta) {
                     location.reload();
-    
+
                 },
                 error: function(error) {
                     console.log(error)
@@ -822,13 +826,13 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     // Eliminar respuesta hecho
-    if(document.querySelectorAll('.eliminarHecho')){
-        let btnsEliminarHecho =document.querySelectorAll('.eliminarHecho')
+    if (document.querySelectorAll('.eliminarHecho')) {
+        let btnsEliminarHecho = document.querySelectorAll('.eliminarHecho')
         btnsEliminarHecho.forEach(btn => {
             btn.addEventListener('click', eliminarAsigancionHecho)
         })
 
-        function eliminarAsigancionHecho (btn){
+        function eliminarAsigancionHecho(btn) {
             let btnEH = btn.target
             if (btnEH.tagName === 'I') {
                 btnEH = btnEH.parentNode
@@ -857,13 +861,13 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     // Eliminar respuesta pretension
-    if(document.querySelectorAll('.eliminarPretension')){
-        let btnsEliminarPretension =document.querySelectorAll('.eliminarPretension')
+    if (document.querySelectorAll('.eliminarPretension')) {
+        let btnsEliminarPretension = document.querySelectorAll('.eliminarPretension')
         btnsEliminarPretension.forEach(btn => {
             btn.addEventListener('click', eliminarAsigancionPretension)
         })
 
-        function eliminarAsigancionPretension (btn){
+        function eliminarAsigancionPretension(btn) {
             let btnEH = btn.target
             if (btnEH.tagName === 'I') {
                 btnEH = btnEH.parentNode
@@ -911,7 +915,7 @@ window.addEventListener('DOMContentLoaded', function() {
             let url4 = padreRespuesta.querySelector('.respuesta_anterior').getAttribute('data_url')
             let id_respuesta = padreRespuesta.querySelector('.id_respuesta').value
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
-            if(respuestaAnterior != respuesta){
+            if (respuestaAnterior != respuesta) {
                 guardarHisotrialRespuesta()
             }
             if (respuesta != '') {
@@ -922,6 +926,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
                 guardarRespuesta(data1)
             }
+
             function guardarRespuesta(data) {
                 $.ajax({
                     url: url,
@@ -969,7 +974,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 })
             }
 
-            function guardarHisotrialRespuesta(){
+            function guardarHisotrialRespuesta() {
                 let data = {
                     historial: respuestaAnterior,
                     respuesta_hecho_id: id_respuesta
@@ -989,7 +994,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 });
             }
 
-            function guardarEstado(idrespuesta){
+            function guardarEstado(idrespuesta) {
                 let data = {
                     estado,
                     id_respuesta
@@ -1033,7 +1038,7 @@ window.addEventListener('DOMContentLoaded', function() {
             let url4 = padreRespuesta.querySelector('.respuesta_anterior').getAttribute('data_url')
             let id_respuesta = padreRespuesta.querySelector('.id_respuesta').value
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
-            if(respuestaAnterior != respuesta){
+            if (respuestaAnterior != respuesta) {
                 guardarHisotrialRespuesta()
             }
             if (respuesta != '') {
@@ -1044,6 +1049,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 }
                 guardarRespuesta(data1)
             }
+
             function guardarRespuesta(data) {
                 $.ajax({
                     url: url,
@@ -1091,7 +1097,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 })
             }
 
-            function guardarHisotrialRespuesta(){
+            function guardarHisotrialRespuesta() {
                 let data = {
                     historial: respuestaAnterior,
                     respuesta_pretension_id: id_respuesta
@@ -1111,7 +1117,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 });
             }
 
-            function guardarEstado(idrespuesta){
+            function guardarEstado(idrespuesta) {
                 let data = {
                     estado,
                     id_respuesta
@@ -1136,21 +1142,21 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     // Funcion check multiple hechos
-    if(document.querySelectorAll('.check-todos-hechos')){
+    if (document.querySelectorAll('.check-todos-hechos')) {
         let checkTodos = document.querySelectorAll('.check-todos-hechos')
         checkTodos.forEach(check => {
             check.addEventListener('input', seleccionMultiple)
         })
 
-        function seleccionMultiple(btn){
+        function seleccionMultiple(btn) {
             let check = btn.target
             let contenedorPadre = check.parentElement.parentElement
             let selectores = contenedorPadre.querySelectorAll('.select-hecho')
-            if(check.checked){
+            if (check.checked) {
                 selectores.forEach(selector => {
                     selector.checked = true
                 })
-            }else{
+            } else {
                 selectores.forEach(selector => {
                     selector.checked = false
                 })
@@ -1159,21 +1165,21 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     // Funcion check multiple pretensiones
-    if(document.querySelectorAll('.check-todos-pretensiones')){
+    if (document.querySelectorAll('.check-todos-pretensiones')) {
         let checkTodos = document.querySelectorAll('.check-todos-pretensiones')
         checkTodos.forEach(check => {
             check.addEventListener('input', seleccionMultiple)
         })
 
-        function seleccionMultiple(btn){
+        function seleccionMultiple(btn) {
             let check = btn.target
             let contenedorPadre = check.parentElement.parentElement
             let selectores = contenedorPadre.querySelectorAll('.select-pretension')
-            if(check.checked){
+            if (check.checked) {
                 selectores.forEach(selector => {
                     selector.checked = true
                 })
-            }else{
+            } else {
                 selectores.forEach(selector => {
                     selector.checked = false
                 })
@@ -1247,7 +1253,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         $html_ += '<div class="row">';
                         $html_ += '<div class="col-12">';
                         $html_ += '<p><strong>Texto:</strong></p>';
-                        $html_ += '<p class="textoCopiar">' + argumento['texto'] + '</p>';
+                        $html_ += '<div class="textoCopiar">' + argumento['texto'] + '</div>';
                         $html_ += '</div>';
                         $html_ += '</div>';
                         $html_ += '<div class="row">';
@@ -1841,7 +1847,7 @@ window.addEventListener('DOMContentLoaded', function() {
                             $html_ += '<div class="row">';
                             $html_ += '<div class="col-12">';
                             $html_ += '<p><strong>Texto:</strong></p>';
-                            $html_ += '<p class="textoCopiar">' + argumento['texto'] + '</p>';
+                            $html_ += '<div class="textoCopiar">' + argumento['texto'] + '</div>';
                             $html_ += '</div>';
                             $html_ += '</div>';
                             $html_ += '<div class="row">';

@@ -25,7 +25,7 @@
             <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Tutela con número de radicado:
+                        <h3 class="card-title">Número de radicado:
                             <strong>{{ $tutela->radicado }}</strong>
                         </h3>
                     </div>
@@ -34,7 +34,7 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-md-3 col-sm-6 col-12">
-                                        <div class="info-box bg-info">
+                                        <div class="info-box bg-primary">
                                             <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                                             <div class="info-box-content">
                                                 <span class="info-box-text text-center">En Gestión</span>
@@ -47,7 +47,7 @@
                                         <!-- /.info-box -->
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-12">
-                                        @if ($tutela->primeraInstancia)
+                                        @if ($tutela->primeraInstancia->count() > 0)
                                             <div class="info-box bg-success">
                                                 <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                                                 <div class="info-box-content">
@@ -59,7 +59,7 @@
                                             </div>
                                         @else
                                             <a href="{{ route('tutelas_primera_instancia', ['id' => $tutela->id]) }}">
-                                                <div class="info-box bg-gray">
+                                                <div class="info-box" style="border: 1px solid black">
                                                     <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                                                     <div class="info-box-content">
                                                         <span class="info-box-text">
@@ -73,7 +73,7 @@
                                         <!-- /.info-box -->
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-12">
-                                        <div class="info-box bg-gray">
+                                        <div class="info-box" style="border: 1px solid black">
                                             <span class="info-box-icon"><i class="fas fa-medal"></i></span>
 
                                             <div class="info-box-content">
@@ -86,7 +86,7 @@
                                         <!-- /.info-box -->
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-12">
-                                        <div class="info-box bg-gray">
+                                        <div class="info-box" style="border: 1px solid black">
                                             <span class="info-box-icon"><i class="fas fa-medal"></i></span>
 
                                             <div class="info-box-content">
@@ -156,7 +156,7 @@
                                     <hr>
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="card card-info collapsed-card">
+                                            <div class="card card-outline card-primary collapsed-card">
                                                 <div class="card-header">
                                                     <h5 class="card-title">Términos</h5>
 
@@ -252,7 +252,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="card card-info collapsed-card">
+                                            <div class="card card-outline card-primary collapsed-card">
                                                 <div class="card-header">
                                                     <h5 class="card-title">Accionantes</h5>
 
@@ -385,7 +385,7 @@
                                     @if (sizeOf($tutela->anexostutela))
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card card-info collapsed-card">
+                                                <div class="card card-outline card-primary collapsed-card">
                                                     <div class="card-header">
                                                         <h5 class="card-title">Anexos</h5>
 
@@ -440,7 +440,7 @@
                                     @endif
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="card card-info collapsed-card">
+                                            <div class="card card-outline card-primary collapsed-card">
                                                 <div class="card-header">
                                                     <h5 class="card-title">Hechos</h5>
 
@@ -475,7 +475,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="card card-info collapsed-card">
+                                            <div class="card card-outline card-primary collapsed-card">
                                                 <div class="card-header">
                                                     <h5 class="card-title">Pretensiones</h5>
 
@@ -512,7 +512,7 @@
                                     @if (sizeOf($tutela->argumentos))
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card card-info collapsed-card">
+                                                <div class="card card-outline card-primary collapsed-card">
                                                     <div class="card-header">
                                                         <h5 class="card-title">Argumentos</h5>
 
@@ -550,7 +550,7 @@
                                     @if (sizeOf($tutela->pruebas))
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card card-info collapsed-card">
+                                                <div class="card card-outline card-primary collapsed-card">
                                                     <div class="card-header">
                                                         <h5 class="card-title">Pruebas</h5>
 
@@ -606,7 +606,7 @@
                                     @if (sizeOf($tutela->motivos))
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card card-info collapsed-card">
+                                                <div class="card card-outline card-primary collapsed-card">
                                                     <div class="card-header">
                                                         <h5 class="card-title">Motivos</h5>
 
@@ -654,7 +654,7 @@
                                     @if ($tutela->primeraInstancia)
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="card card-info collapsed-card">
+                                                <div class="card card-outline card-primary collapsed-card">
                                                     <div class="card-header">
                                                         <h5 class="card-title">Sentencia
                                                             en primera instancia</h5>
