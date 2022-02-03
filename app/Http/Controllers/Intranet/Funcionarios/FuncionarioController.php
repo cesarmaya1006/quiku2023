@@ -29,6 +29,7 @@ class FuncionarioController extends Controller
         $pqr = PQR::where('empleado_id', session('id_usuario'))->get();
         $estados = AsignacionEstado::get();
         return view('intranet.funcionarios.listado_pqr', compact('pqr', 'peticiones', 'estados'));
+
     }
     public function crear_usuario()
     {

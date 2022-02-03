@@ -214,6 +214,7 @@
                             <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                             <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
                             <th class="text-center" style="white-space:nowrap;">Cliente</th>
+                            <th class="text-center" style="white-space:nowrap;">Empleado</th>
                             <th class="text-center" style="white-space:nowrap;">Prioridad</th>
                             <th class="text-center" style="white-space:nowrap;">Ver</th>
                         </tr>
@@ -231,6 +232,9 @@
                                     </td>
                                     <td class="text-center" style="white-space:nowrap;">
                                         {{ $pqr->persona_id != null ? $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 : $pqr->empresa->nombre1 . ' ' . $pqr->empresa->nombre2 . ' ' . $pqr->empresa->apellido1 . ' ' . $pqr->empresa->apellido2 }}
+                                    </td>
+                                    <td class="text-center" style="white-space:nowrap;">
+                                        {{ $pqr->empleado->nombre1 . ' ' . $pqr->empleado->nombre2 . ' ' . $pqr->empleado->apellido1 . ' ' . $pqr->empleado->apellido2 }}
                                     </td>
                                     <td class="text-center" style="white-space:nowrap;">
                                         {{ $pqr->prioridad->prioridad }}
@@ -625,7 +629,7 @@
                                 <td>{{ dias_restantes(date('Y-m-d'), $fechaFinal) }}</td>
                                 <td>{{ $fechaFinal }}</td>
                                 <td>
-                                    <a href="{{ route('funcionario-gestionar_pqr', ['id' => $peticion->pqr->id]) }}"
+                                    <a href="{{ route('funcionario-gestionar-asignacion-colaboracion', ['id' => $peticion->pqr->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                                 </td>
