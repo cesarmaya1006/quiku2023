@@ -761,7 +761,7 @@
                                                                 <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }} <input type="hidden" value="{{$resuelve->resuelve}}"></td>
                                                                 <td class="text-justify">
                                                                     <div class="col-12 d-flex">
-                                                                        <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelveRecurso-i"></i></button>
+                                                                        <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelve-i"></i></button>
                                                                         <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}"><i class="far fa-trash-alt"></i></button>
                                                                     </div>
                                                                 </td>

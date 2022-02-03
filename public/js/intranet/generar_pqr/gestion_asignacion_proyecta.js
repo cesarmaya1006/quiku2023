@@ -255,74 +255,105 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
 //Guardar respuesta anexo  
-    if(document.querySelector('.btn-pqr-anexo')){
-        let btnRespuesta = document.querySelector('.btn-pqr-anexo')
-        btnRespuesta.addEventListener('click', function(e){
-            e.preventDefault
-            let contenedorPadre = btnRespuesta.parentElement.parentElement.parentElement
-            let url = e.target.getAttribute('data_url')
-            let url2 = e.target.getAttribute('data_url2')
-            let url3 = e.target.getAttribute('data_url3')
-            let token = e.target.getAttribute('data_token')
-            let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
-            if (mensajeHistorial != '' && idPqr != '') {
-                let data = {
-                    idTarea,
-                    mensajeHistorial,
-                    idPqr
-                }
-                $.ajax({
-                    url: url2,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON)
-                    }
-                });
-                $.ajax({
-                    url: url3,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                        window.location = "/admin/index"
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON)
-                    }
-                });
-            }else{
-                alert('Debe diligenciar todos los campos del formulario')
+if(document.querySelector('.btn-pqr-anexo')){
+    let btnRespuesta = document.querySelector('.btn-pqr-anexo')
+    btnRespuesta.addEventListener('click', function(e){
+        e.preventDefault
+        let contenedorPadre = btnRespuesta.parentElement.parentElement.parentElement
+        let url = e.target.getAttribute('data_url')
+        let url2 = e.target.getAttribute('data_url2')
+        let url3 = e.target.getAttribute('data_url3')
+        let token = e.target.getAttribute('data_token')
+        let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
+        if (mensajeHistorial != '' && idPqr != '') {
+            let data = {
+                idTarea,
+                mensajeHistorial,
+                idPqr
             }
-        })
-    }
+            $.ajax({
+                url: url2,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    // console.log(respuesta)
+                },
+                error: function(error) {
+                    console.log(error.responseJSON)
+                }
+            });
+            $.ajax({
+                url: url3,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    // console.log(respuesta)
+                    window.location = "/admin/index"
+                },
+                error: function(error) {
+                    console.log(error.responseJSON)
+                }
+            });
+        }else{
+            alert('Debe diligenciar todos los campos del formulario')
+        }
+    })
+}
 
 // Guardar estado 
-    if(document.querySelector('.btn-estado')){
-        let btnEstados = document.querySelectorAll('.btn-estado')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+if(document.querySelector('.btn-estado')){
+    let btnEstados = document.querySelectorAll('.btn-estado')
+    btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
-            btn.preventDefault()
-            let btnE = btn.target 
-            if (btnE.tagName === 'I') {
-                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
-                btnE = btnE.parentElement.parentElement
-            }else {
-                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
+    function guardarEstado(btn){
+        btn.preventDefault()
+        let btnE = btn.target 
+        if (btnE.tagName === 'I') {
+            padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+            btnE = btnE.parentElement.parentElement
+        }else {
+            padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
+        }
+        let url = btnE.getAttribute('data_url')
+        let token = btnE.getAttribute('data_token')
+        let estado = padreEstado.querySelector('.estadoPeticion').value
+        let id_peticion = padreEstado.querySelector('.id_peticion').value
+        let data = {
+            estado,
+            id_peticion
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            headers: { 'X-CSRF-TOKEN': token },
+            data: data,
+            success: function(respuesta) {
+                location.reload();
+
+            },
+            error: function(error) {
+                console.log(error)
             }
-            let url = btnE.getAttribute('data_url')
-            let token = btnE.getAttribute('data_token')
-            let estado = padreEstado.querySelector('.estadoPeticion').value
-            let id_peticion = padreEstado.querySelector('.id_peticion').value
+        });
+    }
+}
+
+//Guardar resuelve  
+if(document.querySelector('.btn-pqr-resuelve')){
+    let btnResuelve = document.querySelector('.btn-pqr-resuelve')
+    btnResuelve.addEventListener('click', function(e){
+        e.preventDefault
+        let contenedorPadre = btnResuelve.parentElement.parentElement.parentElement
+        let url = e.target.getAttribute('data_url')
+        let token = e.target.getAttribute('data_token')
+        let mensajeResuelve = contenedorPadre.querySelector('.mensaje-resuelve').value
+        let idPqr = document.querySelector('#id_pqr').value
+        if (mensajeResuelve != '' && idPqr != '') {
             let data = {
-                estado,
-                id_peticion
+                mensajeResuelve,
+                idPqr
             }
             $.ajax({
                 url: url,
@@ -337,178 +368,150 @@ window.addEventListener('DOMContentLoaded', function(){
                     console.log(error)
                 }
             });
+        }else{
+            alert('Debe diligenciar el campo del formulario')
         }
-    }
-
-//Guardar resuelve  
-    if(document.querySelector('.btn-pqr-resuelve')){
-        let btnResuelve = document.querySelector('.btn-pqr-resuelve')
-        btnResuelve.addEventListener('click', function(e){
-            e.preventDefault
-            let contenedorPadre = btnResuelve.parentElement.parentElement.parentElement
-            let url = e.target.getAttribute('data_url')
-            let token = e.target.getAttribute('data_token')
-            let mensajeResuelve = contenedorPadre.querySelector('.mensaje-resuelve').value
-            let idPqr = document.querySelector('#id_pqr').value
-            if (mensajeResuelve != '' && idPqr != '') {
-                let data = {
-                    mensajeResuelve,
-                    idPqr
-                }
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        location.reload();
-        
-                    },
-                    error: function(error) {
-                        console.log(error)
-                    }
-                });
-            }else{
-                alert('Debe diligenciar el campo del formulario')
-            }
-        })
-    }
+    })
+}
 
 //Eliminar resuelve  
-    if(document.querySelectorAll('.eliminarResuelve')){
-        let btnEliminaResuelves = document.querySelectorAll('.eliminarResuelve')
-        btnEliminaResuelves.forEach(btnEliminar => {
-            btnEliminar.addEventListener('click', function(btn){
-                btn.preventDefault
-                let btnElim = btn.target
-                if (!btnElim.classList.contains('.eliminarResuelve')) {
-                    btnElim = btnElim.parentNode
-                }
-                let url = btnElim.getAttribute('data_url')
-                let token = btnElim.getAttribute('data_token')
-                let value = btnElim.value
-                let data = {
-                    value
-                }
-                swal({
-                    title: "¿Desea eliminar recurso?",
-                    icon: "warning",
-                    buttons: ["No", "Si"],
-                    dangerMode: true,
-                })
-                .then((value) => {
-                    if (value) {
-                        $.ajax({
-                            url: url,
-                            type: 'POST',
-                            headers: { 'X-CSRF-TOKEN': token },
-                            data: data,
-                            success: function(respuesta) {
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 3000);
-                            },
-                            error: function(error) {
-                            }
-                        });
-                    }
-                });
-            })
-        })
-    }
-
-//Editar resuelve  
-    if(document.querySelectorAll('.editarResuelve')){
-        let resuelves = document.querySelectorAll('.editarResuelve')
-        resuelves.forEach(resuelve => {
-            resuelve.addEventListener('click', editarResuelve)
-        })
-        function editarResuelve(resuelve){
-            let resuelveBtn = resuelve.target
-            if (resuelveBtn.classList.contains('editarResuelve-i')) {
-                resuelveBtn = resuelve.target.parentNode
-            }else {
-                resuelveBtn = resuelve.target
+if(document.querySelectorAll('.eliminarResuelve')){
+    let btnEliminaResuelves = document.querySelectorAll('.eliminarResuelve')
+    btnEliminaResuelves.forEach(btnEliminar => {
+        btnEliminar.addEventListener('click', function(btn){
+            btn.preventDefault
+            let btnElim = btn.target
+            if (!btnElim.classList.contains('.eliminarResuelve')) {
+                btnElim = btnElim.parentNode
             }
-            let tdResuelve = resuelveBtn.parentElement.parentElement.parentElement
-            let contenidoAnteriorResuelve = tdResuelve.querySelector('.contenido-resuelve input').value
-            let valueResuelve = tdResuelve.querySelector('.editarResuelve').value
-            let modalResuelveEditar = document.querySelector('.bd-resuelve')
-            let textareaResuelveEditar = modalResuelveEditar.querySelector('.note-editable')
-            let btnGuardarResuelve = modalResuelveEditar.querySelector('.editarResuelveGuardar')
-            textareaResuelveEditar.innerHTML = contenidoAnteriorResuelve
-            btnGuardarResuelve.value = valueResuelve
-        }
-    }
-
-//Guardar Editar resuelve  
-    if(document.querySelector('.editarResuelveGuardar')){
-        let btnResuelve = document.querySelector('.editarResuelveGuardar')
-        btnResuelve.addEventListener('click', function(resuelve){
-            resuelve.preventDefault()
-            let url = resuelve.target.getAttribute('data_url')
-            let token = resuelve.target.getAttribute('data_token')
-            let contenidoResuelve = resuelve.target.parentElement.parentElement
-            let resuelveNuevo = contenidoResuelve.querySelector('.mensaje-resuelve-editar').value
-            let value = contenidoResuelve.querySelector('.editarResuelveGuardar').value
+            let url = btnElim.getAttribute('data_url')
+            let token = btnElim.getAttribute('data_token')
+            let value = btnElim.value
             let data = {
-                value,
-                resuelveNuevo
+                value
             }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    location.reload();
-                },
-                error: function(error) {
-                    console.log(error)
+            swal({
+                title: "¿Desea eliminar recurso?",
+                icon: "warning",
+                buttons: ["No", "Si"],
+                dangerMode: true,
+            })
+            .then((value) => {
+                if (value) {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data,
+                        success: function(respuesta) {
+                            setTimeout(function(){
+                                location.reload();
+                            }, 3000);
+                        },
+                        error: function(error) {
+                        }
+                    });
                 }
             });
         })
+    })
+}
+
+//Editar resuelve  
+if(document.querySelectorAll('.editarResuelve')){
+    let resuelves = document.querySelectorAll('.editarResuelve')
+    resuelves.forEach(resuelve => {
+        resuelve.addEventListener('click', editarResuelve)
+    })
+    function editarResuelve(resuelve){
+        let resuelveBtn = resuelve.target
+        if (resuelveBtn.classList.contains('editarResuelve-i')) {
+            resuelveBtn = resuelve.target.parentNode
+        }else {
+            resuelveBtn = resuelve.target
+        }
+        let tdResuelve = resuelveBtn.parentElement.parentElement.parentElement
+        let contenidoAnteriorResuelve = tdResuelve.querySelector('.contenido-resuelve input').value
+        let valueResuelve = tdResuelve.querySelector('.editarResuelve').value
+        let modalResuelveEditar = document.querySelector('.bd-resuelve')
+        let textareaResuelveEditar = modalResuelveEditar.querySelector('.note-editable')
+        let btnGuardarResuelve = modalResuelveEditar.querySelector('.editarResuelveGuardar')
+        textareaResuelveEditar.innerHTML = contenidoAnteriorResuelve
+        btnGuardarResuelve.value = valueResuelve
     }
+}
+
+//Guardar Editar resuelve  
+if(document.querySelector('.editarResuelveGuardar')){
+    let btnResuelve = document.querySelector('.editarResuelveGuardar')
+    btnResuelve.addEventListener('click', function(resuelve){
+        resuelve.preventDefault()
+        let url = resuelve.target.getAttribute('data_url')
+        let token = resuelve.target.getAttribute('data_token')
+        let contenidoResuelve = resuelve.target.parentElement.parentElement
+        let resuelveNuevo = contenidoResuelve.querySelector('.mensaje-resuelve-editar').value
+        let value = contenidoResuelve.querySelector('.editarResuelveGuardar').value
+        let data = {
+            value,
+            resuelveNuevo
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            headers: { 'X-CSRF-TOKEN': token },
+            data: data,
+            success: function(respuesta) {
+                location.reload();
+            },
+            error: function(error) {
+                console.log(error)
+            }
+        });
+    })
+}
 
 //Editar orden resuelve  
-    if(document.querySelector('.btn-ordenar')){
-        let btnOrdenar = document.querySelector('.btn-ordenar')
-        btnOrdenar.addEventListener('click', function(btn){
-            btn.preventDefault()
-            let orden = document.querySelector('.orden-resuelve')
-            let ordenEditar = document.querySelector('.editar-orden-resuelve')
-            let btnGuardar = document.querySelector('.btn-ordenar-guardar')
-            if (orden.classList.contains('d-none')) {
-                orden.classList.remove('d-none')
-                ordenEditar.classList.add('d-none')
-                btnGuardar.classList.add('d-none')
-            }else{
-                btnGuardar.classList.remove('d-none')
-                ordenEditar.classList.remove('d-none')
-                orden.classList.add('d-none')
-            }
-        })
-    }
+if(document.querySelector('.btn-ordenar')){
+    let btnOrdenar = document.querySelector('.btn-ordenar')
+    btnOrdenar.addEventListener('click', function(btn){
+        btn.preventDefault()
+        let orden = document.querySelector('.orden-resuelve')
+        let ordenEditar = document.querySelector('.editar-orden-resuelve')
+        let btnGuardar = document.querySelector('.btn-ordenar-guardar')
+        if (orden.classList.contains('d-none')) {
+            orden.classList.remove('d-none')
+            ordenEditar.classList.add('d-none')
+            btnGuardar.classList.add('d-none')
+        }else{
+            btnGuardar.classList.remove('d-none')
+            ordenEditar.classList.remove('d-none')
+            orden.classList.add('d-none')
+        }
+    })
+}
 
 //Guardar orden resuelve  
-    if(document.querySelector('.btn-ordenar-guardar')){
-        let btnGuardarOrden = document.querySelector('.btn-ordenar-guardar')
-        btnGuardarOrden.addEventListener('click', function(btn){
-            btn.preventDefault()
-            let url = btn.target.getAttribute('data_url')
-            let token = btn.target.getAttribute('data_token')
-            let ordenEditar = document.querySelector('.editar-orden-resuelve')
-            let trs = ordenEditar.querySelectorAll('tr')
-            let dataOrden = []
-            trs.forEach((tr, key) => {
-                dataOrden.push(tr.querySelector('.select-orden').value)
-            })
-            dataOrden.forEach((orden, key )=>{
-                let index = key + 1
-                if(index != dataOrden.find(item => item == index)){
-                    alert("¡Error! El consecutivo de orden no puede estar duplicado.")
-                }
-            })
+if(document.querySelector('.btn-ordenar-guardar')){
+    let btnGuardarOrden = document.querySelector('.btn-ordenar-guardar')
+    btnGuardarOrden.addEventListener('click', function(btn){
+        btn.preventDefault()
+        let url = btn.target.getAttribute('data_url')
+        let token = btn.target.getAttribute('data_token')
+        let ordenEditar = document.querySelector('.editar-orden-resuelve')
+        let trs = ordenEditar.querySelectorAll('tr')
+        let dataOrden = []
+        let validadorConsecutivo = true
+        trs.forEach((tr, key) => {
+            dataOrden.push(tr.querySelector('.select-orden').value)
+        })
+        dataOrden.forEach((orden, key )=>{
+            let index = key + 1
+            if(index != dataOrden.find(item => item == index)){
+                alert("¡Error! El consecutivo de orden no puede estar duplicado.")
+                validadorConsecutivo = false
+            }
+        })
+        if(validadorConsecutivo){
             trs.forEach((tr) => {
                 let data = {
                     orden : tr.querySelector('.select-orden').value,
@@ -528,9 +531,10 @@ window.addEventListener('DOMContentLoaded', function(){
                 });
             })
             location.reload();
-        })
+        }
+    })
 
-    }
+}
 
 //==========================================================================
 
@@ -613,7 +617,7 @@ if(document.querySelectorAll('.eliminarResuelveRecurso')){
     })
 }
 
-// Editar resuelve  
+// Editar resuelve recurso
 if(document.querySelectorAll('.editarResuelveRecurso')){
     let resuelves = document.querySelectorAll('.editarResuelveRecurso')
     resuelves.forEach(resuelve => {
@@ -696,6 +700,7 @@ if(document.querySelector('.btn-ordenar-recurso-guardar')){
         let ordenEditar = document.querySelector('.editar-orden-resuelve')
         let trs = ordenEditar.querySelectorAll('tr')
         let dataOrden = []
+        let validadorConsecutivo = true
         trs.forEach((tr, key) => {
             dataOrden.push(tr.querySelector('.select-orden').value)
         })
@@ -703,27 +708,30 @@ if(document.querySelector('.btn-ordenar-recurso-guardar')){
             let index = key + 1
             if(index != dataOrden.find(item => item == index)){
                 alert("¡Error! El consecutivo de orden no puede estar duplicado.")
+                validadorConsecutivo = false
             }
         })
-        trs.forEach((tr) => {
-            let data = {
-                orden : tr.querySelector('.select-orden').value,
-                id : tr.querySelector('.editarResuelveRecurso').value
-            }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    // console.log(respuesta)
-                },
-                error: function(error) {
-                    console.log(error)
+        if(validadorConsecutivo){
+            trs.forEach((tr) => {
+                let data = {
+                    orden : tr.querySelector('.select-orden').value,
+                    id : tr.querySelector('.editarResuelveRecurso').value
                 }
-            });
-        })
-        location.reload();
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            })
+            location.reload();
+        }
     })
 
 }
