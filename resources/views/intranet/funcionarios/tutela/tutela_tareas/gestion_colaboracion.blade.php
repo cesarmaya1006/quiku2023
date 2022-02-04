@@ -385,7 +385,7 @@
                                                             <input type="checkbox" class="form-check-input check-todos-hechos">
                                                             <label class="form-check-label"><strong>Seleccionar todos los hechos</strong></label>
                                                         </div>
-                                                        @foreach ( $tutela->hechos as $key => $hecho)
+                                                        @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                                             @if (session('id_usuario') == $hecho->empleado_id && !sizeOf($hecho->relacionesHechos))
                                                                 <div class="form-check my-2">
                                                                     <input type="checkbox" class="form-check-input select-hecho" value="{{$hecho->id}}">
@@ -901,7 +901,7 @@
                                                                     </div>
                                                                     <select class="custom-select respuesta-hecho-asignar col-lg-3 col-xl-2">
                                                                         <option value="">---Seleccione Hecho---</option>
-                                                                        @foreach ( $tutela->hechos as $key => $hecho)
+                                                                        @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                                                             @if (session('id_usuario') == $hecho->empleado_id && !sizeOf($hecho->relacionesHechos))
                                                                                 <option value="{{ $hecho->id }}">Hecho #{{ $hecho->id }}</option>
                                                                             @endif
@@ -2727,7 +2727,7 @@
                                         <div class="col-12 mb-2">
                                             <h5>Hechos</h5>
                                         </div>
-                                        @foreach ( $tutela->hechos as $key => $hecho)
+                                        @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                             <div class="rounded border my-3">
                                                 @if (session('id_usuario') == $hecho->empleado_id && $hecho->estadohecho->estado != 100 && !sizeOf($hecho->relacionesHechos) ) 
                                                     <div class="row form-reasignarHecho p-4">
@@ -2856,7 +2856,7 @@
                                         <div class="col-12 mb-2">
                                             <h5>Pretensiones</h5>
                                         </div>
-                                        @foreach ( $tutela->pretensiones as $key => $pretension)
+                                        @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                             <div class="rounded border my-3">
                                                 @if (session('id_usuario') == $pretension->empleado_id && $pretension->estadopretension->estado != 100 && !sizeOf($pretension->relacionesPretensiones)) 
                                                     <div class="row form-reasignarPretension p-4">
