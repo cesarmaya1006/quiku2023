@@ -1565,7 +1565,7 @@
                                                             <input type="checkbox" class="form-check-input check-todos-pretensiones">
                                                             <label class="form-check-label"><strong>Seleccionar todos las pretensiones</strong></label>
                                                         </div>
-                                                        @foreach ( $tutela->pretensiones as $key => $pretension)
+                                                        @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                                             @if (session('id_usuario') == $pretension->empleado_id && !sizeOf($pretension->relacionesPretensiones))
                                                                 <div class="form-check my-2">
                                                                     <input type="checkbox" class="form-check-input select-pretension" value="{{$pretension->id}}">
@@ -2081,7 +2081,7 @@
                                                                     </div>
                                                                     <select class="custom-select respuesta-pretension-asignar col-lg-3 col-xl-2">
                                                                         <option value="">---Seleccione Pretensión---</option>
-                                                                        @foreach ( $tutela->pretensiones as $key => $pretension)
+                                                                        @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                                                             @if (session('id_usuario') == $pretension->empleado_id && !sizeOf($pretension->relacionesPretensiones))
                                                                                 <option value="{{ $pretension->id }}">Pretensión #{{ $pretension->id }}</option>
                                                                             @endif
