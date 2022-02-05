@@ -25,7 +25,7 @@
             <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Número de radicado:
+                        <h3 class="card-title">NÃºmero de radicado:
                             <strong>{{ $tutela->radicado }}</strong>
                         </h3>
                     </div>
@@ -63,13 +63,8 @@
                                         </div>
                                     @endif
                                     <div class="col-md-3 col-sm-6 col-12">
-<<<<<<< HEAD
-                                        <a href="{{ route('tutelas_primera_instancia', ['id' => $tutela->id]) }}">
-                                            <div class="info-box bg-gray">
-=======
                                         @if ($tutela->primeraInstancia->count() > 0)
                                             <div class="info-box bg-success">
->>>>>>> 3aaff0ad2e034fdbc66dd03da4ce9318d5f125d7
                                                 <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">
@@ -127,7 +122,7 @@
                             <div class="col-12 rounded border mb-3 p-2">
                                 <div class="row">
                                     <div class="col-12 col-md-6">
-                                        Número de radicado:
+                                        NÃºmero de radicado:
                                         <strong>{{ $tutela->radicado }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -156,7 +151,7 @@
                                         Dirección Juzgado : <strong>{{ $tutela->direccion_juez }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        Teléfono Juzgado: <strong>{{ $tutela->telefono_juez }}</strong>
+                                        TelÃ©fono Juzgado: <strong>{{ $tutela->telefono_juez }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         Correo Juzgado: <strong>{{ $tutela->correo_juez }}</strong>
@@ -179,7 +174,7 @@
                                         <div class="col-12">
                                             <div class="card card-outline card-primary collapsed-card">
                                                 <div class="card-header">
-                                                    <h5 class="card-title">Términos</h5>
+                                                    <h5 class="card-title">TÃ©rminos</h5>
 
                                                     <div class="card-tools">
                                                         <button type="button" class="btn btn-tool"
@@ -194,7 +189,7 @@
                                                     <div class="row px-2">
                                                         @if ($tutela->dias_termino)
                                                             <div class="col-12">
-                                                                <p class="text-justify"><strong>Días:</strong>
+                                                                <p class="text-justify"><strong>DÃ­as:</strong>
                                                                     {{ $tutela->dias_termino }}
                                                                 </p>
                                                             </div>
@@ -249,8 +244,10 @@
                                                                     </div>
                                                                     @if ($tutela->dias_medida_cautelar)
                                                                         <div class="col-12">
-                                                                            <p class="text-justify"><strong>Días:</strong>
-                                                                                {{ $tutela->dias_medida_cautelar }}</p>
+                                                                            <p class="text-justify">
+                                                                                <strong>DÃ­as:</strong>
+                                                                                {{ $tutela->dias_medida_cautelar }}
+                                                                            </p>
                                                                         </div>
                                                                     @endif
                                                                     @if ($tutela->horas_medida_cautelar)
@@ -294,11 +291,13 @@
                                                                     <div class="col-6">
                                                                         @if ($accion->tipo_accion == 'Accionante')
                                                                             <div class="col-12 mb-3">
-                                                                                <h6 class="pl-4">Accionante</h6>
+                                                                                <h6 class="pl-4">Accionante
+                                                                                </h6>
                                                                             </div>
                                                                         @else
                                                                             <div class="col-12 mb-3">
-                                                                                <h6 class="pl-4">Accionado</h6>
+                                                                                <h6 class="pl-4">Accionado
+                                                                                </h6>
                                                                             </div>
                                                                         @endif
                                                                         <div class="col-12">
@@ -311,22 +310,24 @@
                                                                         <div class="col-12">
                                                                             <p class="text-justify"><strong>Tipo
                                                                                     Persona:</strong>
-                                                                                {{ $accion->tipo_persona_accion }}</p>
+                                                                                {{ $accion->tipo_persona_accion }}
+                                                                            </p>
                                                                         </div>
                                                                         <div class="col-12">
                                                                             <p class="text-justify"><strong>Tipo
                                                                                     Documento:</strong>
-                                                                                {{ $accion->docutipos_id_accion }}</p>
+                                                                                {{ $accion->docutipos_id_accion }}
+                                                                            </p>
                                                                         </div>
                                                                         <div class="col-12">
-                                                                            <p class="text-justify"><strong>Número
+                                                                            <p class="text-justify"><strong>NÃºmero
                                                                                     Documento:</strong>
                                                                                 {{ $accion->numero_documento_accion }}
                                                                             </p>
                                                                         </div>
                                                                         <div class="col-12">
                                                                             <p class="text-justify">
-                                                                                <strong>Teléfono:</strong>
+                                                                                <strong>TelÃ©fono:</strong>
                                                                                 {{ $accion->telefono_accion }}
                                                                             </p>
                                                                         </div>
@@ -346,7 +347,8 @@
                                                                     <div class="col-6">
                                                                         @if ($accion->nombre_apoderado)
                                                                             <div class="col-12  mb-3">
-                                                                                <h6 class="pl-4">Apoderado</h6>
+                                                                                <h6 class="pl-4">Apoderado
+                                                                                </h6>
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <p class="text-justify">
@@ -361,20 +363,22 @@
                                                                                 </p>
                                                                             </div>
                                                                             <div class="col-12">
-                                                                                <p class="text-justify"><strong>Número
+                                                                                <p class="text-justify">
+                                                                                    <strong>NÃºmero
                                                                                         Documento:</strong>
                                                                                     {{ $accion->numero_documento_apoderado }}
                                                                                 </p>
                                                                             </div>
                                                                             <div class="col-12">
-                                                                                <p class="text-justify"><strong>Tarjeta
+                                                                                <p class="text-justify">
+                                                                                    <strong>Tarjeta
                                                                                         Profesional:</strong>
                                                                                     {{ $accion->tarjeta_profesional_apoderado }}
                                                                                 </p>
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <p class="text-justify">
-                                                                                    <strong>Teléfono:</strong>
+                                                                                    <strong>TelÃ©fono:</strong>
                                                                                     {{ $accion->telefono_apoderado }}
                                                                                 </p>
                                                                             </div>
@@ -479,11 +483,13 @@
                                                         @foreach ($tutela->hechos as $key => $hecho)
                                                             <div class="col-12 row t">
                                                                 <div class="col-12 mb-3">
-                                                                    <h6 class="pl-4">Hecho # {{ $key + 1 }}
+                                                                    <h6 class="pl-4">Hecho #
+                                                                        {{ $key + 1 }}
                                                                     </h6>
                                                                 </div>
                                                                 <div class="col-12">
-                                                                    <p class="text-justify">{{ $hecho->hecho }}</p>
+                                                                    <p class="text-justify">{{ $hecho->hecho }}
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                         @endforeach
@@ -649,8 +655,10 @@
                                                                             {{ $key + 1 }}</h6>
                                                                     </div>
                                                                     <div class="col-12">
-                                                                        <p class="text-justify"><strong>Motivo:</strong>
-                                                                            {{ $motivo->motivo_tutela }}</p>
+                                                                        <p class="text-justify">
+                                                                            <strong>Motivo:</strong>
+                                                                            {{ $motivo->motivo_tutela }}
+                                                                        </p>
                                                                     </div>
                                                                     <div class="col-12">
                                                                         <p class="text-justify"><strong>Sub -
@@ -774,50 +782,62 @@
                                                                                     <h6>Resuleves Primera Instancia</h6>
                                                                                 </div>
                                                                                 @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                                                    @if ($resuelve->numeracion!=null)
-                                                                                        <?php  $tipo='detalle' ?>
-                                                                                        @else
-                                                                                        <?php  $tipo='cantidad' ?>
+                                                                                    @if ($resuelve->numeracion != null)
+                                                                                        <?php $tipo = 'detalle'; ?>
+                                                                                    @else
+                                                                                        <?php $tipo = 'cantidad'; ?>
                                                                                     @endif
                                                                                 @endforeach
-                                                                                    @if ($tipo=='detalle')
+                                                                                @if ($tipo == 'detalle')
                                                                                     <div class="col-12 mb-4">
                                                                                         <div class="row">
-                                                                                            <div class="col-12 table-responsive">
-                                                                                                <table class="table">
+                                                                                            <div
+                                                                                                class="col-12 table-responsive">
+                                                                                                <table
+                                                                                                    class="table">
                                                                                                     <thead>
                                                                                                         <tr>
-                                                                                                            <th>Numeracion</th>
-                                                                                                            <th>Resuelve</th>
-                                                                                                            <th>Tiempo de cumplimiento</th>
+                                                                                                            <th>Numeracion
+                                                                                                            </th>
+                                                                                                            <th>Resuelve
+                                                                                                            </th>
+                                                                                                            <th>Tiempo
+                                                                                                                de
+                                                                                                                cumplimiento
+                                                                                                            </th>
                                                                                                         </tr>
                                                                                                     </thead>
                                                                                                     <tbody>
                                                                                                         @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
 
-                                                                                                        <tr>
-                                                                                                            <td scope="row">{{$resuelve->numeracion}}</td>
-                                                                                                            <td>{{$resuelve->resuelve}}</td>
-                                                                                                            <td>
-                                                                                                                @if ($resuelve->dias !=null)
-                                                                                                                {{$resuelve->dias .' dias '}}
-                                                                                                                @endif
-                                                                                                                @if ($resuelve->horas !=null)
-                                                                                                                {{$resuelve->horas .' horas '}}
-                                                                                                                @endif
-                                                                                                            </td>
-                                                                                                        </tr>
+                                                                                                            <tr>
+                                                                                                                <td
+                                                                                                                    scope="row">
+                                                                                                                    {{ $resuelve->numeracion }}
+                                                                                                                </td>
+                                                                                                                <td>{{ $resuelve->resuelve }}
+                                                                                                                </td>
+                                                                                                                <td>
+                                                                                                                    @if ($resuelve->dias != null)
+                                                                                                                        {{ $resuelve->dias . ' dias ' }}
+                                                                                                                    @endif
+                                                                                                                    @if ($resuelve->horas != null)
+                                                                                                                        {{ $resuelve->horas . ' horas ' }}
+                                                                                                                    @endif
+                                                                                                                </td>
+                                                                                                            </tr>
                                                                                                         @endforeach
                                                                                                     </tbody>
                                                                                                 </table>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    @else
+                                                                                @else
                                                                                     <div class="col-12 mb-4">
-                                                                                    Cantidad de resuelves : {{$primeraInstancia->resuelvesPrimeraInstancia->count()}}
+                                                                                        Cantidad de resuelves :
+                                                                                        {{ $primeraInstancia->resuelvesPrimeraInstancia->count() }}
                                                                                     </div>
-                                                                                    @endif
+                                                                                @endif
 
 
                                                                             </div>
