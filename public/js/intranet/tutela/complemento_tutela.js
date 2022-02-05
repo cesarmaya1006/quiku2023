@@ -191,6 +191,8 @@ window.addEventListener('DOMContentLoaded', function () {
         let btnGuardarComplemento = document.querySelector('.btn-complemento-tutela')
         btnGuardarComplemento.addEventListener('click', function(e){
             e.preventDefault
+            let btnGuardar = e.target
+            btnGuardar.setAttribute('disabled','' )
             let contenedorPadre = document.querySelector('.form_auto_admisorio_complemento')
             let url = e.target.getAttribute('data_url')
             let url1 = e.target.getAttribute('data_url1')

@@ -798,23 +798,19 @@ class TutelaController extends Controller
         if ($request->ajax()) {
             if($request["idTarea"] == 4){
                 $tutela = AutoAdmisorio::findOrFail($request["idAuto"]);
-                $imagen = public_path('imagenes\sistema\logo_mgl.png');
-                $firma = public_path('documentos\usuarios\\' . $tutela->empleadoasignado->url);
-                // $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
-                // $firma = asset('documentos/usuarios/' . $tutela->empleado->url); //url_servidor
+                // $imagen = public_path('imagenes\sistema\logo_mgl.png');
+                // $firma = public_path('documentos\usuarios\\' . $tutela->empleadoasignado->url);
+                $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
+                $firma = asset('documentos/usuarios/' . $tutela->empleado->url); //url_servidor
                 $resuelves = ResuelveTutela::where('auto_admisorio_id', $request["idAuto"])->orderBy('orden')->get();
                 $rPdf['respuesta'] = view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('tutela', 'imagen', 'resuelves', 'firma'));
                 $rPdf['auto_admisorio_id'] = $request["idAuto"];
                 $rPdf['tipo_respuesta'] = $request["tipo_respuesta"];
                 $rPdf['tareas_id'] = $request["idTarea"];
                 $rPdf['empleado_id'] = session('id_usuario');
-                // $rrr = TutelaRespuesta::create($rPdf);
+                $rrr = TutelaRespuesta::create($rPdf);
             }
             $tutela = AutoAdmisorio::findOrfail($request["idAuto"]);
-            // $peticiones = Peticion::where('pqr_id', $pqr->id)->get();
-            // if(sizeof($peticiones)){
-            //     $pqr['recurso_dias'] = $peticiones[0]->recurso_dias;
-            // }
             // $pqr_id = $pqr->id;
             // if ($pqr->persona_id != null) {
             //     $email = $pqr->persona->email;

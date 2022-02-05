@@ -1,4 +1,17 @@
 $(document).ready(function() {
+    $('.textoPrincipal').summernote({
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['font', ['bold', 'underline', 'italic', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture']],
+        ]
+    })
+
+
     $(function() {
         $('[data-toggle="popover-hover"]').popover({
             trigger: 'hover',

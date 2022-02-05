@@ -255,10 +255,10 @@
                                 <div class="col-12 mb-2">
                                     <h5>Hechos</h5>
                                 </div>
-                                @foreach ( $tutela->hechos as $key => $hecho)
+                                @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                     <div class="col-12 row t">
                                         <div class="col-12 mb-3">
-                                            <h6 class="pl-4">Hecho # {{$key + 1}}</h6>
+                                            <h6 class="pl-4">Hecho # {{$hecho->consecutivo}}</h6>
                                         </div>
                                         <div class="col-12">
                                             <p class="text-justify">{{ $hecho->hecho }}</p>
@@ -271,10 +271,10 @@
                                 <div class="col-12 mb-2">
                                     <h5>Pretensiones</h5>
                                 </div>
-                                @foreach ( $tutela->pretensiones as $key => $pretension)
+                                @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                     <div class="col-12 row t">
                                         <div class="col-12 mb-3">
-                                            <h6 class="pl-4">Pretensión # {{$key + 1}}</h6>
+                                            <h6 class="pl-4">Pretensión # {{$pretension->consecutivo}}</h6>
                                         </div>
                                         <div class="col-12">
                                             <p class="text-justify">{{ $pretension->pretension }}</p>
@@ -377,9 +377,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tutela->hechos as $key=> $hecho)
+                                    @foreach ($tutela->hechos->sortBy('consecutivo') as $key=> $hecho)
                                         <tr>
-                                            <td>{{$key + 1}}</td>
+                                            <td>{{$hecho->consecutivo}}</td>
                                             @if($hecho->empleado)
                                                 <td>{{$hecho->empleado->nombre1 }} {{$hecho->empleado->apellido1}}</td>
                                             @else    
@@ -405,9 +405,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tutela->pretensiones as $key=> $pretension)
+                                    @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key=> $pretension)
                                         <tr>
-                                            <td>{{$key + 1}}</td>
+                                            <td>{{$pretension->consecutivo}}</td>
                                             @if($pretension->empleado)
                                                 <td>{{$pretension->empleado->nombre1 }} {{$pretension->empleado->apellido1}}</td>
                                             @else    

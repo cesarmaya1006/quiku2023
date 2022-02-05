@@ -150,3 +150,12 @@ label.requerido:after {
 .card-primary:not(.card-outline)>.card-header {
     background-color: #3359fa;
 }
+
+.separadorhr {
+    border-top: 5px solid #470d92
+}
+
+.detallesTarjeta {
+    background-color: #d2d2dd;
+    border-radius: 5px;
+}

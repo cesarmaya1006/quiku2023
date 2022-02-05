@@ -25,7 +25,7 @@
             <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Tutela con número de radicado:
+                        <h3 class="card-title">Número de radicado:
                             <strong>{{ $tutela->radicado }}</strong>
                         </h3>
                     </div>
@@ -33,24 +33,44 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-md-3 col-sm-6 col-12">
-                                        <div class="info-box bg-info">
-                                            <span class="info-box-icon"><i class="fas fa-medal"></i></span>
-                                            <div class="info-box-content">
-                                                <span class="info-box-text text-center">En Gestión</span>
-                                                <span class="progress-description" style="font-size: 0.8em;">
-                                                    Dias gestión restante 80% / 8 Dias
-                                                </span>
+                                    @if ($tutela->estado->id < 4)
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box bg-primary">
+                                                <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text text-center">En Gestión</span>
+                                                    <span class="progress-description" style="font-size: 0.8em;">
+
+                                                    </span>
+                                                </div>
+                                                <!-- /.info-box-content -->
                                             </div>
-                                            <!-- /.info-box-content -->
+                                            <!-- /.info-box -->
                                         </div>
-                                        <!-- /.info-box -->
-                                    </div>
+                                    @else
+                                        <div class="col-md-3 col-sm-6 col-12">
+                                            <div class="info-box bg-danger">
+                                                <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                                                <div class="info-box-content">
+                                                    <span class="info-box-text text-center">Cerrada</span>
+                                                    <span class="progress-description" style="font-size: 0.8em;">
+                                                        Tutela cerrada
+                                                    </span>
+                                                </div>
+                                                <!-- /.info-box-content -->
+                                            </div>
+                                            <!-- /.info-box -->
+                                        </div>
+                                    @endif
                                     <div class="col-md-3 col-sm-6 col-12">
+<<<<<<< HEAD
                                         <a href="{{ route('tutelas_primera_instancia', ['id' => $tutela->id]) }}">
                                             <div class="info-box bg-gray">
+=======
+                                        @if ($tutela->primeraInstancia->count() > 0)
+                                            <div class="info-box bg-success">
+>>>>>>> 3aaff0ad2e034fdbc66dd03da4ce9318d5f125d7
                                                 <span class="info-box-icon"><i class="fas fa-medal"></i></span>
-
                                                 <div class="info-box-content">
                                                     <span class="info-box-text">
                                                         Registro Sentencia <br> en primera instancia
@@ -58,11 +78,23 @@
                                                 </div>
                                                 <!-- /.info-box-content -->
                                             </div>
-                                        </a>
+                                        @else
+                                            <a href="{{ route('tutelas_primera_instancia', ['id' => $tutela->id]) }}">
+                                                <div class="info-box" style="border: 1px solid black">
+                                                    <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">
+                                                            Registro Sentencia <br> en primera instancia
+                                                        </span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                            </a>
+                                        @endif
                                         <!-- /.info-box -->
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-12">
-                                        <div class="info-box bg-gray">
+                                        <div class="info-box" style="border: 1px solid black">
                                             <span class="info-box-icon"><i class="fas fa-medal"></i></span>
 
                                             <div class="info-box-content">
@@ -75,7 +107,7 @@
                                         <!-- /.info-box -->
                                     </div>
                                     <div class="col-md-3 col-sm-6 col-12">
-                                        <div class="info-box bg-gray">
+                                        <div class="info-box" style="border: 1px solid black">
                                             <span class="info-box-icon"><i class="fas fa-medal"></i></span>
 
                                             <div class="info-box-content">
@@ -143,322 +175,668 @@
                                         <h5>Detalle Tutela</h5>
                                     </div>
                                     <hr>
-                                    <div class="col-12 mt-2">
-                                        <h5>Términos</h5>
-                                    </div>
-                                    <div class="row px-2">
-                                        @if ($tutela->dias_termino)
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Días:</strong>
-                                                    {{ $tutela->dias_termino }}
-                                                </p>
-                                            </div>
-                                        @endif
-                                        @if ($tutela->horas_termino)
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Horas:</strong>
-                                                    {{ $tutela->horas_termino }}</p>
-                                            </div>
-                                        @endif
-                                        @if ($tutela->url_admisorio)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <h6>Archivo auto admisorio</h6>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card card-outline card-primary collapsed-card">
+                                                <div class="card-header">
+                                                    <h5 class="card-title">Términos</h5>
+
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool"
+                                                            data-card-widget="collapse">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- /.card-tools -->
                                                 </div>
-                                                <div class="col-12">
-                                                    <table class="table table-light" style="font-size: 0.8em;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Titulo</th>
-                                                                <th scope="col">Descripción</th>
-                                                                <th scope="col">Descarga</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-justify">
-                                                                    {{ $tutela->titulo_admisorio }}
-                                                                </td>
-                                                                <td class="text-justify">
-                                                                    {{ $tutela->descripcion_admisorio }}</td>
-                                                                <td><a href="{{ asset('documentos/autoadmisorios/' . $tutela->url_admisorio) }}"
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer">Descargar</a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                @if ($tutela->medida_cautelar == 'true')
-                                                    <hr>
-                                                    <div class="col-12 my-2">
-                                                        <h5> Medida Cautelar</h5>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Descripción:</strong>
-                                                            {{ $tutela->text_medida_cautelar }}</p>
-                                                    </div>
-                                                    @if ($tutela->dias_medida_cautelar)
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Días:</strong>
-                                                                {{ $tutela->dias_medida_cautelar }}</p>
-                                                        </div>
-                                                    @endif
-                                                    @if ($tutela->horas_medida_cautelar)
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Horas:</strong>
-                                                                {{ $tutela->horas_medida_cautelar }}</p>
-                                                        </div>
-                                                    @endif
-                                                @endif
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="row menu-card p-2">
-                                    <div class="col-12">
-                                        <h5>Accionantes</h5>
-                                    </div>
-                                    <div class="col-12 mt-2">
-                                        @foreach ($tutela->accions as $accion)
-                                            <div class="col-12 row">
-                                                <div class="col-6">
-                                                    @if ($accion->tipo_accion == 'Accionante')
-                                                        <div class="col-12 mb-3">
-                                                            <h6 class="pl-4">Accionante</h6>
-                                                        </div>
-                                                    @else
-                                                        <div class="col-12 mb-3">
-                                                            <h6 class="pl-4">Accionado</h6>
-                                                        </div>
-                                                    @endif
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Nombre:</strong>
-                                                            {{ $accion->nombres_accion }}
-                                                            {{ $accion->apellidos_accion }}
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Tipo Persona:</strong>
-                                                            {{ $accion->tipo_persona_accion }}</p>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Tipo Documento:</strong>
-                                                            {{ $accion->docutipos_id_accion }}</p>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Número Documento:</strong>
-                                                            {{ $accion->numero_documento_accion }}</p>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Teléfono:</strong>
-                                                            {{ $accion->telefono_accion }}</p>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Dirección:</strong>
-                                                            {{ $accion->direccion_accion }}</p>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <p class="text-justify"><strong>Correo:</strong>
-                                                            {{ $accion->correo_accion }}</p>
+                                                <!-- /.card-header -->
+                                                <div class="card-body">
+                                                    <div class="row px-2">
+                                                        @if ($tutela->dias_termino)
+                                                            <div class="col-12">
+                                                                <p class="text-justify"><strong>Días:</strong>
+                                                                    {{ $tutela->dias_termino }}
+                                                                </p>
+                                                            </div>
+                                                        @endif
+                                                        @if ($tutela->horas_termino)
+                                                            <div class="col-12">
+                                                                <p class="text-justify"><strong>Horas:</strong>
+                                                                    {{ $tutela->horas_termino }}</p>
+                                                            </div>
+                                                        @endif
+                                                        @if ($tutela->url_admisorio)
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <h6>Archivo auto admisorio</h6>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <table class="table table-light"
+                                                                        style="font-size: 0.8em;">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Titulo</th>
+                                                                                <th scope="col">Descripción</th>
+                                                                                <th scope="col">Descarga</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="text-justify">
+                                                                                    {{ $tutela->titulo_admisorio }}
+                                                                                </td>
+                                                                                <td class="text-justify">
+                                                                                    {{ $tutela->descripcion_admisorio }}
+                                                                                </td>
+                                                                                <td><a href="{{ asset('documentos/autoadmisorios/' . $tutela->url_admisorio) }}"
+                                                                                        target="_blank"
+                                                                                        rel="noopener noreferrer">Descargar</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                @if ($tutela->medida_cautelar == 'true')
+                                                                    <hr>
+                                                                    <div class="col-12 my-2">
+                                                                        <h5> Medida Cautelar</h5>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <p class="text-justify">
+                                                                            <strong>Descripción:</strong>
+                                                                            {{ $tutela->text_medida_cautelar }}
+                                                                        </p>
+                                                                    </div>
+                                                                    @if ($tutela->dias_medida_cautelar)
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify"><strong>Días:</strong>
+                                                                                {{ $tutela->dias_medida_cautelar }}</p>
+                                                                        </div>
+                                                                    @endif
+                                                                    @if ($tutela->horas_medida_cautelar)
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify">
+                                                                                <strong>Horas:</strong>
+                                                                                {{ $tutela->horas_medida_cautelar }}
+                                                                            </p>
+                                                                        </div>
+                                                                    @endif
+                                                                @endif
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
-                                                    @if ($accion->nombre_apoderado)
-                                                        <div class="col-12  mb-3">
-                                                            <h6 class="pl-4">Apoderado</h6>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Nombre:</strong>
-                                                                {{ $accion->nombre_apoderado }}</p>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Tipo Documento:</strong>
-                                                                {{ $accion->docutipos_id_apoderado }}</p>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Número Documento:</strong>
-                                                                {{ $accion->numero_documento_apoderado }}</p>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Tarjeta Profesional:</strong>
-                                                                {{ $accion->tarjeta_profesional_apoderado }}</p>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Teléfono:</strong>
-                                                                {{ $accion->telefono_apoderado }}</p>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Dirección:</strong>
-                                                                {{ $accion->direccion_apoderado }}</p>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Correo:</strong>
-                                                                {{ $accion->correo_apoderado }}</p>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <hr>
+                                                <!-- /.card-body -->
                                             </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                @if (sizeOf($tutela->anexostutela))
-                                    <div class="menu-card">
-                                        <div class="col-12 row mb-2">
-                                            <div class="col-6">
-                                                <h5>Anexos</h5>
-                                            </div>
+                                            <!-- /.card -->
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="col-12 table-responsive">
-                                                <table class="table table-light" style="font-size: 0.8em;">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Nombre</th>
-                                                            <th scope="col">Descripción</th>
-                                                            <th scope="col">Archivo</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($tutela->anexostutela as $anexo)
-                                                            <tr>
-                                                                <td class="text-justify">{{ $anexo->titulo }}
-                                                                </td>
-                                                                <td class="text-justify">
-                                                                    {{ $anexo->descripcion }}
-                                                                </td>
-                                                                <td><a href="{{ asset('documentos/tutelas/' . $anexo->url) }}"
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer">Descargar</a>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                @endif
-                                <div class="row menu-card p-2">
-                                    <div class="col-12 mb-2">
-                                        <h5>Hechos</h5>
-                                    </div>
-                                    @foreach ($tutela->hechos as $key => $hecho)
-                                        <div class="col-12 row t">
-                                            <div class="col-12 mb-3">
-                                                <h6 class="pl-4">Hecho # {{ $key + 1 }}</h6>
-                                            </div>
-                                            <div class="col-12">
-                                                <p class="text-justify">{{ $hecho->hecho }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <hr>
-                                <div class="row menu-card p-2">
-                                    <div class="col-12 mb-2">
-                                        <h5>Pretensiones</h5>
-                                    </div>
-                                    @foreach ($tutela->pretensiones as $key => $pretension)
-                                        <div class="col-12 row t">
-                                            <div class="col-12 mb-3">
-                                                <h6 class="pl-4">Pretensión # {{ $key + 1 }}</h6>
-                                            </div>
-                                            <div class="col-12">
-                                                <p class="text-justify">{{ $pretension->pretension }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <hr>
-                                @if (sizeOf($tutela->argumentos))
-                                    <div class="row menu-card p-2">
-                                        <div class="col-12 mb-2">
-                                            <h5>Argumentos</h5>
-                                        </div>
-                                        @foreach ($tutela->argumentos as $key => $argumento)
-                                            <div class="col-12 row t">
-                                                <div class="col-12 mb-3">
-                                                    <h6 class="pl-4">Argumento # {{ $key + 1 }}</h6>
+                                            <div class="card card-outline card-primary collapsed-card">
+                                                <div class="card-header">
+                                                    <h5 class="card-title">Accionantes</h5>
+
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool"
+                                                            data-card-widget="collapse">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- /.card-tools -->
                                                 </div>
-                                                <div class="col-12">
-                                                    <p class="text-justify">{{ $argumento->argumento }}</p>
+                                                <!-- /.card-header -->
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-12 mt-2">
+                                                            @foreach ($tutela->accions as $accion)
+                                                                <div class="col-12 row">
+                                                                    <div class="col-6">
+                                                                        @if ($accion->tipo_accion == 'Accionante')
+                                                                            <div class="col-12 mb-3">
+                                                                                <h6 class="pl-4">Accionante</h6>
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="col-12 mb-3">
+                                                                                <h6 class="pl-4">Accionado</h6>
+                                                                            </div>
+                                                                        @endif
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify">
+                                                                                <strong>Nombre:</strong>
+                                                                                {{ $accion->nombres_accion }}
+                                                                                {{ $accion->apellidos_accion }}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify"><strong>Tipo
+                                                                                    Persona:</strong>
+                                                                                {{ $accion->tipo_persona_accion }}</p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify"><strong>Tipo
+                                                                                    Documento:</strong>
+                                                                                {{ $accion->docutipos_id_accion }}</p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify"><strong>Número
+                                                                                    Documento:</strong>
+                                                                                {{ $accion->numero_documento_accion }}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify">
+                                                                                <strong>Teléfono:</strong>
+                                                                                {{ $accion->telefono_accion }}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify">
+                                                                                <strong>Dirección:</strong>
+                                                                                {{ $accion->direccion_accion }}
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <p class="text-justify">
+                                                                                <strong>Correo:</strong>
+                                                                                {{ $accion->correo_accion }}
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        @if ($accion->nombre_apoderado)
+                                                                            <div class="col-12  mb-3">
+                                                                                <h6 class="pl-4">Apoderado</h6>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <p class="text-justify">
+                                                                                    <strong>Nombre:</strong>
+                                                                                    {{ $accion->nombre_apoderado }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <p class="text-justify"><strong>Tipo
+                                                                                        Documento:</strong>
+                                                                                    {{ $accion->docutipos_id_apoderado }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <p class="text-justify"><strong>Número
+                                                                                        Documento:</strong>
+                                                                                    {{ $accion->numero_documento_apoderado }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <p class="text-justify"><strong>Tarjeta
+                                                                                        Profesional:</strong>
+                                                                                    {{ $accion->tarjeta_profesional_apoderado }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <p class="text-justify">
+                                                                                    <strong>Teléfono:</strong>
+                                                                                    {{ $accion->telefono_apoderado }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <p class="text-justify">
+                                                                                    <strong>Dirección:</strong>
+                                                                                    {{ $accion->direccion_apoderado }}
+                                                                                </p>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <p class="text-justify">
+                                                                                    <strong>Correo:</strong>
+                                                                                    {{ $accion->correo_apoderado }}
+                                                                                </p>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                    <hr>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <!-- /.card-body -->
                                             </div>
-                                        @endforeach
-                                    </div>
-                                    <hr>
-                                @endif
-                                @if (sizeOf($tutela->pruebas))
-                                    <div class="row menu-card p-2">
-                                        <div class="col-12 mb-2">
-                                            <h5>Pruebas</h5>
+                                            <!-- /.card -->
                                         </div>
+                                    </div>
+                                    @if (sizeOf($tutela->anexostutela))
                                         <div class="row">
                                             <div class="col-12">
-                                                <div class="col-12 table-responsive">
-                                                    <table class="table table-light" style="font-size: 0.8em;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Nombre</th>
-                                                                <th scope="col">Descripción</th>
-                                                                <th scope="col">Archivo</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($tutela->pruebas as $anexo)
-                                                                <tr>
-                                                                    <td class="text-justify">{{ $anexo->titulo }}
-                                                                    </td>
-                                                                    <td class="text-justify">
-                                                                        {{ $anexo->descripcion }}
-                                                                    </td>
-                                                                    <td><a href="{{ asset('documentos/tutelaspruebas/' . $anexo->url) }}"
-                                                                            target="_blank"
-                                                                            rel="noopener noreferrer">Descargar</a>
-                                                                    </td>
-                                                                </tr>
+                                                <div class="card card-outline card-primary collapsed-card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Anexos</h5>
+
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <!-- /.card-tools -->
+                                                    </div>
+                                                    <!-- /.card-header -->
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="col-12 table-responsive">
+                                                                    <table class="table table-light"
+                                                                        style="font-size: 0.8em;">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Nombre</th>
+                                                                                <th scope="col">Descripción</th>
+                                                                                <th scope="col">Archivo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach ($tutela->anexostutela as $anexo)
+                                                                                <tr>
+                                                                                    <td class="text-justify">
+                                                                                        {{ $anexo->titulo }}
+                                                                                    </td>
+                                                                                    <td class="text-justify">
+                                                                                        {{ $anexo->descripcion }}
+                                                                                    </td>
+                                                                                    <td><a href="{{ asset('documentos/tutelas/' . $anexo->url) }}"
+                                                                                            target="_blank"
+                                                                                            rel="noopener noreferrer">Descargar</a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card card-outline card-primary collapsed-card">
+                                                <div class="card-header">
+                                                    <h5 class="card-title">Hechos</h5>
+
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool"
+                                                            data-card-widget="collapse">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- /.card-tools -->
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body">
+                                                    <div class="row px-2">
+                                                        @foreach ($tutela->hechos as $key => $hecho)
+                                                            <div class="col-12 row t">
+                                                                <div class="col-12 mb-3">
+                                                                    <h6 class="pl-4">Hecho # {{ $key + 1 }}
+                                                                    </h6>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <p class="text-justify">{{ $hecho->hecho }}</p>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- /.card -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card card-outline card-primary collapsed-card">
+                                                <div class="card-header">
+                                                    <h5 class="card-title">Pretensiones</h5>
+
+                                                    <div class="card-tools">
+                                                        <button type="button" class="btn btn-tool"
+                                                            data-card-widget="collapse">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- /.card-tools -->
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body">
+                                                    <div class="row px-2">
+                                                        @foreach ($tutela->pretensiones as $key => $pretension)
+                                                            <div class="col-12 row t">
+                                                                <div class="col-12 mb-3">
+                                                                    <h6 class="pl-4">Pretensión #
+                                                                        {{ $key + 1 }}</h6>
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    <p class="text-justify">
+                                                                        {{ $pretension->pretension }}</p>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- /.card -->
+                                        </div>
+                                    </div>
+                                    @if (sizeOf($tutela->argumentos))
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card card-outline card-primary collapsed-card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Argumentos</h5>
+
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <!-- /.card-tools -->
+                                                    </div>
+                                                    <!-- /.card-header -->
+                                                    <div class="card-body">
+                                                        <div class="row px-2">
+                                                            @foreach ($tutela->argumentos as $key => $argumento)
+                                                                <div class="col-12 row t">
+                                                                    <div class="col-12 mb-3">
+                                                                        <h6 class="pl-4">Argumento #
+                                                                            {{ $key + 1 }}</h6>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <p class="text-justify">
+                                                                            {{ $argumento->argumento }}</p>
+                                                                    </div>
+                                                                </div>
                                                             @endforeach
-                                                        </tbody>
-                                                    </table>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.card-body -->
                                                 </div>
+                                                <!-- /.card -->
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                @endif
-                                @if (sizeOf($tutela->motivos))
-                                    <div class="row menu-card p-2">
-                                        <div class="col-12 mb-2">
-                                            <h5>Motivos</h5>
-                                        </div>
-                                        @foreach ($tutela->motivos as $key => $motivo)
-                                            <div class="col-6 row">
-                                                <div class="col-12 mb-3">
-                                                    <h6 class="pl-4">Motivo # {{ $key + 1 }}</h6>
+                                    @endif
+                                    @if (sizeOf($tutela->pruebas))
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card card-outline card-primary collapsed-card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Pruebas</h5>
+
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <!-- /.card-tools -->
+                                                    </div>
+                                                    <!-- /.card-header -->
+                                                    <div class="card-body">
+                                                        <div class="row px-2">
+                                                            <div class="col-12">
+                                                                <div class="col-12 table-responsive">
+                                                                    <table class="table table-light"
+                                                                        style="font-size: 0.8em;">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Nombre</th>
+                                                                                <th scope="col">Descripción</th>
+                                                                                <th scope="col">Archivo</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach ($tutela->pruebas as $anexo)
+                                                                                <tr>
+                                                                                    <td class="text-justify">
+                                                                                        {{ $anexo->titulo }}
+                                                                                    </td>
+                                                                                    <td class="text-justify">
+                                                                                        {{ $anexo->descripcion }}
+                                                                                    </td>
+                                                                                    <td><a href="{{ asset('documentos/tutelaspruebas/' . $anexo->url) }}"
+                                                                                            target="_blank"
+                                                                                            rel="noopener noreferrer">Descargar</a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.card-body -->
                                                 </div>
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Motivo:</strong>
-                                                        {{ $motivo->motivo_tutela }}</p>
-                                                </div>
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Sub - motivo:</strong>
-                                                        {{ $motivo->sub_motivo_tutela }}</p>
-                                                </div>
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Tutela sobre:</strong>
-                                                        {{ $motivo->tipo_tutela }}</p>
-                                                </div>
+                                                <!-- /.card -->
                                             </div>
-                                        @endforeach
-                                    </div>
+                                        </div>
+                                    @endif
+                                    @if (sizeOf($tutela->motivos))
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card card-outline card-primary collapsed-card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Motivos</h5>
+
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <!-- /.card-tools -->
+                                                    </div>
+                                                    <!-- /.card-header -->
+                                                    <div class="card-body">
+                                                        <div class="row px-2">
+                                                            @foreach ($tutela->motivos as $key => $motivo)
+                                                                <div class="col-6 row">
+                                                                    <div class="col-12 mb-3">
+                                                                        <h6 class="pl-4">Motivo #
+                                                                            {{ $key + 1 }}</h6>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <p class="text-justify"><strong>Motivo:</strong>
+                                                                            {{ $motivo->motivo_tutela }}</p>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <p class="text-justify"><strong>Sub -
+                                                                                motivo:</strong>
+                                                                            {{ $motivo->sub_motivo_tutela }}</p>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <p class="text-justify"><strong>Tutela
+                                                                                sobre:</strong>
+                                                                            {{ $motivo->tipo_tutela }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                        </div>
+                                    @endif
+                                    @if ($tutela->primeraInstancia)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card card-outline card-primary collapsed-card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title">Sentencia
+                                                            en primera instancia</h5>
+
+                                                        <div class="card-tools">
+                                                            <button type="button" class="btn btn-tool"
+                                                                data-card-widget="collapse">
+                                                                <i class="fas fa-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <!-- /.card-tools -->
+                                                    </div>
+                                                    <!-- /.card-header -->
+                                                    <div class="card-body">
+                                                        <div class="row px-2">
+                                                            <div class="row">
+                                                                @foreach ($tutela->primeraInstancia as $primeraInstancia)
+                                                                    <div class="col-12 col-md-3 text-center form-group">
+                                                                        <label>Fecha de la sentencia</label>
+                                                                        <br>
+                                                                        <span
+                                                                            class="">{{ $primeraInstancia->fecha_sentencia }}</span>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-3 text-center form-group">
+                                                                        <label>Fecha de notificación</label>
+                                                                        <br>
+                                                                        <span
+                                                                            class="">{{ $primeraInstancia->fecha_notificacion }}</span>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-3 text-center form-group">
+                                                                        <label>Sentido de la sentencia</label>
+                                                                        <br>
+                                                                        <span
+                                                                            class="">{{ $primeraInstancia->sentencia }}</span>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-3 text-center form-group">
+                                                                        <label>Documento de sentencia</label>
+                                                                        <br>
+                                                                        <span class=""><a
+                                                                                href="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer">Descargar</a></span>
+                                                                    </div>
+                                                                    @if ($primeraInstancia->anexosPrimeraInstancia)
+                                                                        <div class="col-12">
+                                                                            <div class="row">
+                                                                                <div class="col-12 mt-3 mb-4">
+                                                                                    <h6>Archivos Adjuntos</h6>
+                                                                                </div>
+                                                                                @foreach ($primeraInstancia->anexosPrimeraInstancia as $anexo)
+                                                                                    <div class="col-12">
+                                                                                        <div class="row">
+                                                                                            <div class="col-4">
+                                                                                                <div
+                                                                                                    class="col-12 col-md-3 text-center form-group">
+                                                                                                    <label>Titulo
+                                                                                                        Anexo</label>
+                                                                                                    <br>
+                                                                                                    <span
+                                                                                                        class="">{{ $anexo->titulo_anexo }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-4">
+                                                                                                <div
+                                                                                                    class="col-12 col-md-3 text-center form-group">
+                                                                                                    <label>Descripción
+                                                                                                        Anexo</label>
+                                                                                                    <br>
+                                                                                                    <span
+                                                                                                        class="">{{ $anexo->descripcion_anexo }}</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-4">
+                                                                                                <div
+                                                                                                    class="col-12 col-md-3 text-center form-group">
+                                                                                                    <label>Archivo
+                                                                                                        Anexo</label>
+                                                                                                    <br>
+                                                                                                    <span
+                                                                                                        class=""><a
+                                                                                                            href="{{ asset('documentos/tutelas/sentencias/' . $anexo->url_anexo) }}"
+                                                                                                            target="_blank"
+                                                                                                            rel="noopener noreferrer">Descargar</a></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endforeach
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+                                                                    @if ($primeraInstancia->resuelvesPrimeraInstancia)
+                                                                        <div class="col-12">
+                                                                            <div class="row">
+                                                                                <div class="col-12 mt-3 mb-4">
+                                                                                    <h6>Resuleves Primera Instancia</h6>
+                                                                                </div>
+                                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                                                                    @if ($resuelve->numeracion!=null)
+                                                                                        <?php  $tipo='detalle' ?>
+                                                                                        @else
+                                                                                        <?php  $tipo='cantidad' ?>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                                    @if ($tipo=='detalle')
+                                                                                    <div class="col-12 mb-4">
+                                                                                        <div class="row">
+                                                                                            <div class="col-12 table-responsive">
+                                                                                                <table class="table">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Numeracion</th>
+                                                                                                            <th>Resuelve</th>
+                                                                                                            <th>Tiempo de cumplimiento</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+
+                                                                                                        <tr>
+                                                                                                            <td scope="row">{{$resuelve->numeracion}}</td>
+                                                                                                            <td>{{$resuelve->resuelve}}</td>
+                                                                                                            <td>
+                                                                                                                @if ($resuelve->dias !=null)
+                                                                                                                {{$resuelve->dias .' dias '}}
+                                                                                                                @endif
+                                                                                                                @if ($resuelve->horas !=null)
+                                                                                                                {{$resuelve->horas .' horas '}}
+                                                                                                                @endif
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        @endforeach
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    @else
+                                                                                    <div class="col-12 mb-4">
+                                                                                    Cantidad de resuelves : {{$primeraInstancia->resuelvesPrimeraInstancia->count()}}
+                                                                                    </div>
+                                                                                    @endif
+
+
+                                                                            </div>
+                                                                        </div>
+                                                                    @endif
+
+                                                                @endforeach
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                        </div>
+                                    @endif
                                     <hr>
-                                @endif
+                                </div>
                             </div>
                         </div>
                     </div>

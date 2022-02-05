@@ -38,10 +38,10 @@
                                 <div class="col-12 col-md-6">
                                     @if ($pqr->persona_id != null)
                                         Persona que interpone la Petición:
-                                        <strong>{{ $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 }}</strong>
+                                        <strong>{{ $pqr->persona->nombre1 .' ' .$pqr->persona->nombre2 .' ' .$pqr->persona->apellido1 .' ' .$pqr->persona->apellido2 }}</strong>
                                     @else
                                         Empresa que interpone la Petición:
-                                        <strong>{{ $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social }}</strong>
+                                        <strong>{{ $pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social }}</strong>
                                     @endif
                                 </div>
                                 @if ($pqr->adquisicion)
@@ -120,7 +120,7 @@
                                             correo físico.</h6>
                                         <div class="col-12 col-md-6">
                                             <strong>Nombre:</strong>
-                                            {{ $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 }}
+                                            {{ $pqr->persona->nombre1 .' ' .$pqr->persona->nombre2 .' ' .$pqr->persona->apellido1 .' ' .$pqr->persona->apellido2 }}
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <strong>Teléfono:</strong> {{ $pqr->persona->telefono_celu }}
@@ -1077,7 +1077,7 @@
                                                     </div>
                                                 </div>
                                                 @foreach ($peticion->recursos as $recurso)
-                                                    @if ( sizeOf($pqr->anexos->where('tipo_respuesta', $recurso->tipo_reposicion_id )) == 0 && $peticion->estadopeticion->estado != 100)
+                                                    @if (sizeOf($pqr->anexos->where('tipo_respuesta', $recurso->tipo_reposicion_id)) == 0 && $peticion->estadopeticion->estado != 100)
                                                         <div class="row form-respuesta-recursos">
                                                             <input class="id_recurso" type="hidden"
                                                                 value="{{ $recurso->id }}">
@@ -1092,26 +1092,30 @@
                                                                 <textarea type="text"
                                                                     class="form-control form-control-sm text-justify"
                                                                     disabled>{{ $recurso->recurso }}</textarea>
-                                                                <div class="col-12 mt-3"
-                                                                    id="anexosRespuestaRecursos">
+                                                                <div class="col-12 mt-3" id="anexosRespuestaRecursos">
                                                                     <div class="col-12 d-flex row anexoRespuestaRecurso m-0"
                                                                         id="anexoRespuestaRecurso">
                                                                         <div
                                                                             class="col-12 col-md-12 form-group titulo-anexoRespuestaRecurso">
                                                                             <label for="titulo">Respuesta Anexo</label>
-                                                                            @if($recurso->respuestaRecurso)
-                                                                                <textarea type="text" rows="6" class="form-control form-control-sm">{{ $recurso->respuestaRecurso->respuesta }}</textarea>
-                                                                                @if($recurso->respuestaRecurso->respuesta != '')
-                                                                                    <input class="validacion_recurso" type="hidden" value="1">
+                                                                            @if ($recurso->respuestaRecurso)
+                                                                                <textarea type="text" rows="6"
+                                                                                    class="form-control form-control-sm">{{ $recurso->respuestaRecurso->respuesta }}</textarea>
+                                                                                @if ($recurso->respuestaRecurso->respuesta != '')
+                                                                                    <input class="validacion_recurso"
+                                                                                        type="hidden" value="1">
                                                                                 @endif
                                                                             @else
-                                                                                <textarea type="text" rows="6" class="form-control form-control-sm"></textarea>
-                                                                                <input class="validacion_recurso" type="hidden" value="0">
+                                                                                <textarea type="text" rows="6"
+                                                                                    class="form-control form-control-sm"></textarea>
+                                                                                <input class="validacion_recurso"
+                                                                                    type="hidden" value="0">
                                                                             @endif
                                                                         </div>
                                                                         <div
                                                                             class="col-12 col-md-6 form-group descripcion-anexoRespuestaRecurso">
-                                                                            <label for="descripcion">Descripción Archivo</label>
+                                                                            <label for="descripcion">Descripción
+                                                                                Archivo</label>
                                                                             <input type="text"
                                                                                 class="form-control form-control-sm">
                                                                         </div>
@@ -1125,7 +1129,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            @if($recurso->respuestaRecurso)
+                                                            @if ($recurso->respuestaRecurso)
                                                                 <div
                                                                     class="card-footer d-flex actualizarRespuestaRecurso mb-2">
                                                                     <button type="" class="btn btn-primary px-4"
@@ -1134,7 +1138,7 @@
                                                                         data_token="{{ csrf_token() }}">Actualizar
                                                                         recurso</button>
                                                                 </div>
-                                                            @else    
+                                                            @else
                                                                 <div
                                                                     class="card-footer d-flex guardarRespuestaRecurso mb-2">
                                                                     <button type="" class="btn btn-primary px-4"
@@ -1143,72 +1147,71 @@
                                                                         data_token="{{ csrf_token() }}">Guardar
                                                                         recurso</button>
                                                                 </div>
-                                                            @endif    
+                                                            @endif
                                                         </div>
                                                         <hr class="mt-3">
                                                     @break
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                        @endif
+                                                @endif
+                                        @endforeach
                                     </div>
                                 @endif
-                                {{-- Fin bloque de respuesta recurso --}}
-                                {{-- Incio historial petición --}}
-
-                                <h6 class="">Historial peticiones</h6>
-                                <div class="row d-flex px-12 p-3">
-                                    <div class="col-12 table-responsive">
-                                        <table class="table table-light" style="font-size: 0.8em;">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Fecha</th>
-                                                    <th scope="col">Empleado</th>
-                                                    <th scope="col">Historial</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($peticion->historialpeticiones as $historial)
-                                                    <tr>
-                                                        <td>{{ $historial->created_at }}</td>
-                                                        <td class="text-justify">{{ $historial->empleado->nombre1 }}
-                                                            {{ $historial->empleado->apellido1 }}</td>
-                                                        <td class="text-justify">
-                                                            {{ strip_tags($historial->historial) }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <hr>
-                                @if (session('id_usuario') == $peticion->empleado_id)
-                                    <div class="row d-flex px-12 p-3 mensaje-peticion">
-                                        <div class="container-mensaje-historial form-group col-12">
-                                            <label for="" class="">Agregar Historial</label>
-                                            <textarea class="form-control mensaje-historial-peticion" rows="3"
-                                                placeholder="" required></textarea>
-                                        </div>
-                                        <div class="col-12 col-md-12 form-group d-flex">
-                                            <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialPeticion"
-                                                data_url="{{ route('historial_peticion_guardar') }}"
-                                                data_token="{{ csrf_token() }}">Guardar Historial</button>
-                                        </div>
-                                    </div>
-                                @endif
-                                {{-- Fin historial petición --}}
-                                <input class="id_peticion" type="hidden" value="{{ $peticion->id }}">
                             </div>
-                        @endforeach
-                        <div class="card-footer d-flex justify-content-end">
-                            <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                        @endif
+                        {{-- Fin bloque de respuesta recurso --}}
+                        {{-- Incio historial petición --}}
+
+                        <h6 class="">Historial peticiones</h6>
+                        <div class="row d-flex px-12 p-3">
+                            <div class="col-12 table-responsive">
+                                <table class="table table-light" style="font-size: 0.8em;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Empleado</th>
+                                            <th scope="col">Historial</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($peticion->historialpeticiones as $historial)
+                                            <tr>
+                                                <td>{{ $historial->created_at }}</td>
+                                                <td class="text-justify">{{ $historial->empleado->nombre1 }}
+                                                    {{ $historial->empleado->apellido1 }}</td>
+                                                <td class="text-justify">
+                                                    {{ strip_tags($historial->historial) }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden"
-                            value="{{ $pqr->id }}">
+                        <hr>
+                        @if (session('id_usuario') == $peticion->empleado_id)
+                            <div class="row d-flex px-12 p-3 mensaje-peticion">
+                                <div class="container-mensaje-historial form-group col-12">
+                                    <label for="" class="">Agregar Historial</label>
+                                    <textarea class="form-control mensaje-historial-peticion" rows="3" placeholder=""
+                                        required></textarea>
+                                </div>
+                                <div class="col-12 col-md-12 form-group d-flex">
+                                    <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialPeticion"
+                                        data_url="{{ route('historial_peticion_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar Historial</button>
+                                </div>
+                            </div>
+                        @endif
+                        {{-- Fin historial petición --}}
+                        <input class="id_peticion" type="hidden" value="{{ $peticion->id }}">
                     </div>
+                    @endforeach
+                    <div class="card-footer d-flex justify-content-end">
+                        <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                    </div>
+                    <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 @endsection

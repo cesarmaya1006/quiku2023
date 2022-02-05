@@ -736,7 +736,7 @@
                                         <div class="col-12 mb-2">
                                             <h5>Hechos</h5>
                                         </div>
-                                        @foreach ( $tutela->hechos as $key => $hecho)
+                                        @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                             <div class="rounded border my-3">
                                                 <div class="col-12 row my-3">
                                                     <div class="col-6 mb-3">
@@ -807,7 +807,7 @@
                                         <div class="col-12 mb-2">
                                             <h5>Pretensiones</h5>
                                         </div>
-                                        @foreach ( $tutela->pretensiones as $key => $pretension)
+                                        @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                             <div class="rounded border my-3">
                                                 <div class="col-12 row my-3">
                                                     <div class="col-6 mb-3">
@@ -883,14 +883,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($tutela->hechos as $key=> $hecho)
+                                                @foreach ($tutela->hechos->sortBy('consecutivo') as $key=> $hecho)
                                                     <tr>
                                                         @if($hecho->empleado)
-                                                            <td class="text-success font-weight-bold">{{$key + 1}}</td>
+                                                            <td class="text-success font-weight-bold">{{$hecho->consecutivo}}</td>
                                                             <td class="text-success font-weight-bold">{{$hecho->empleado->nombre1 }} {{$hecho->empleado->apellido1}}</td>
                                                             <td class="text-success font-weight-bold">{{$hecho->estadohecho->estado}}%</td>
                                                         @else    
-                                                            <td class="text-danger font-weight-bold">{{$key + 1}}</td>
+                                                            <td class="text-danger font-weight-bold">{{$hecho->consecutivo}}</td>
                                                             <td class="text-danger font-weight-bold">Sin asignar</td>
                                                             <td class="text-danger font-weight-bold">{{$hecho->estadohecho->estado}}%</td>
                                                         @endif
@@ -907,7 +907,7 @@
                                                 <input type="checkbox" class="form-check-input check-todos-hechos">
                                                 <label class="form-check-label"><strong>Seleccionar todos los hechos</strong></label>
                                             </div>
-                                            @foreach ( $tutela->hechos as $key => $hecho)
+                                            @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                                     <div class="form-check form-check-inline">
                                                         @if ($hecho->estadohecho->estado == 0)
                                                             <input type="checkbox" class="form-check-input select-hecho" value="{{$hecho->id}}">
@@ -958,14 +958,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($tutela->pretensiones as $key=> $pretension)
+                                                @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key=> $pretension)
                                                     <tr>
                                                         @if($pretension->empleado)
-                                                            <td class="text-success font-weight-bold">{{$key + 1}}</td>
+                                                            <td class="text-success font-weight-bold">{{$pretension->consecutivo}}</td>
                                                             <td class="text-success font-weight-bold">{{$pretension->empleado->nombre1 }} {{$pretension->empleado->apellido1}}</td>
                                                             <td class="text-success font-weight-bold">{{$pretension->estadopretension->estado }}%</td>
                                                         @else    
-                                                            <td class="text-danger font-weight-bold">{{$key + 1}}</td>
+                                                            <td class="text-danger font-weight-bold">{{$pretension->consecutivo}}</td>
                                                             <td class="text-danger font-weight-bold">Sin asignar</td>
                                                             <td class="text-danger font-weight-bold">{{$pretension->estadopretension->estado }}%</td>
                                                         @endif
@@ -982,7 +982,7 @@
                                                 <input type="checkbox" class="form-check-input check-todos-pretensiones">
                                                 <label class="form-check-label"><strong>Seleccionar todos las pretensines</strong></label>
                                             </div>
-                                            @foreach ( $tutela->pretensiones as $key => $pretension)
+                                            @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                                 <div class="form-check form-check-inline">
                                                     @if ($pretension->estadopretension->estado == 0)
                                                         <input type="checkbox" class="form-check-input select-pretension" value="{{$pretension->id}}">
