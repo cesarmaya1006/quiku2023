@@ -58,12 +58,6 @@ class TutelasConsulta extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function tutelas_primera_instancia($id)
-    {
-        $tutela = AutoAdmisorio::findOrFail($id);
-        return view('intranet.funcionarios.tutela.sentenciap.index', compact('tutela'));
-    }
-
     /**
      * Store a newly created resource in storage.
      *
