@@ -151,7 +151,7 @@
                                         Dirección Juzgado : <strong>{{ $tutela->direccion_juez }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
-                                        TelÃ©fono Juzgado: <strong>{{ $tutela->telefono_juez }}</strong>
+                                        Teléfono Juzgado: <strong>{{ $tutela->telefono_juez }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         Correo Juzgado: <strong>{{ $tutela->correo_juez }}</strong>
@@ -174,7 +174,7 @@
                                         <div class="col-12">
                                             <div class="card card-outline card-primary collapsed-card">
                                                 <div class="card-header">
-                                                    <h5 class="card-title">TÃ©rminos</h5>
+                                                    <h5 class="card-title">Términos</h5>
 
                                                     <div class="card-tools">
                                                         <button type="button" class="btn btn-tool"
@@ -327,7 +327,7 @@
                                                                         </div>
                                                                         <div class="col-12">
                                                                             <p class="text-justify">
-                                                                                <strong>TelÃ©fono:</strong>
+                                                                                <strong>Teléfono:</strong>
                                                                                 {{ $accion->telefono_accion }}
                                                                             </p>
                                                                         </div>
@@ -378,7 +378,7 @@
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <p class="text-justify">
-                                                                                    <strong>TelÃ©fono:</strong>
+                                                                                    <strong>Teléfono:</strong>
                                                                                     {{ $accion->telefono_apoderado }}
                                                                                 </p>
                                                                             </div>
