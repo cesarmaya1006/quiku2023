@@ -1950,6 +1950,10 @@ window.addEventListener('DOMContentLoaded', function() {
         }
 
         bloqueEditable.appendChild(respuestaCopia)
+        const enter = new KeyboardEvent('keydown', {
+            bubbles: true, cancelable: true, keyCode: 32
+        });
+        bloqueEditable.dispatchEvent(enter);
         let btnCerrar = document.querySelector(`.buscar-${numPeticion} .modal-header button`)
         btnCerrar.click()
 
