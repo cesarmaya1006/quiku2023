@@ -25,7 +25,7 @@
             <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">NÃºmero de radicado:
+                        <h3 class="card-title">Número de radicado:
                             <strong>{{ $tutela->radicado }}</strong>
                         </h3>
                     </div>
@@ -122,7 +122,7 @@
                             <div class="col-12 rounded border mb-3 p-2">
                                 <div class="row">
                                     <div class="col-12 col-md-6">
-                                        NÃºmero de radicado:
+                                        Número de radicado:
                                         <strong>{{ $tutela->radicado }}</strong>
                                     </div>
                                     <div class="col-12 col-md-6">
@@ -320,7 +320,7 @@
                                                                             </p>
                                                                         </div>
                                                                         <div class="col-12">
-                                                                            <p class="text-justify"><strong>NÃºmero
+                                                                            <p class="text-justify"><strong>Número
                                                                                     Documento:</strong>
                                                                                 {{ $accion->numero_documento_accion }}
                                                                             </p>
@@ -364,7 +364,7 @@
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <p class="text-justify">
-                                                                                    <strong>NÃºmero
+                                                                                    <strong>Número
                                                                                         Documento:</strong>
                                                                                     {{ $accion->numero_documento_apoderado }}
                                                                                 </p>
