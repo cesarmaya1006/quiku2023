@@ -42,21 +42,6 @@
                         <hr>
                         <div class="row">
                             <div class="col-12">
-<<<<<<< HEAD
-                                <form action="{{ route('admin-funcionario-cargos-guardar') }}" class="form-horizontal row"
-                                    method="POST" autocomplete="off" enctype="multipart/form-data">
-                                    @csrf
-                                    @method('post')
-                                    <div class="card-body">
-                                        <div class="col-12 col-md-6 form-group">
-                                            <label for="cargo">Registro 1</label>
-                                            <input type="text" class="form-control form-control-sm" name="cargo" id="cargo"
-                                                aria-describedby="helpId" value="" placeholder="Nombre de cargo" required>
-                                            <small id="helpId" class="form-text text-muted">REgistro 1</small>
-                                        </div>
-
-                                    </div>
-=======
                                 <form action="{{ route('tutelas_primera_instancia_guardar', ['id' => $tutela->id]) }}"
                                     class="form-horizontal row" method="POST" autocomplete="off"
                                     enctype="multipart/form-data">
@@ -218,29 +203,18 @@
                                     </div>
                                     <input type="hidden" name="catnResuelves" id="catnResuelves" value="0">
                                     <input type="hidden" name="cantAdjuntos" id="cantAdjuntos" value="0">
->>>>>>> 3aaff0ad2e034fdbc66dd03da4ce9318d5f125d7
                                     <!-- /.card-body -->
                                     <div class="card-footer">
                                         <button type="submit"
                                             class="btn btn-primary btn-sm btn-sombra pl-4 pr-4">Guardar</button>
-<<<<<<< HEAD
-=======
                                         <a href="{{ route('detalles_tutelas', ['id' => $tutela->id]) }}"
                                             class="btn btn-danger btn-sm btn-sombra mx-2 px-4 float-end">Regresar</a>
->>>>>>> 3aaff0ad2e034fdbc66dd03da4ce9318d5f125d7
                                     </div>
                                     <!-- /.card-footer -->
                                 </form>
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-                    <div class="card-footer d-flex justify-content-end">
-                        <a href="{{ route('detalles_tutelas', ['id' => $tutela->id]) }}"
-                            class="btn btn-danger mx-2 px-4">Regresar</a>
-                    </div>
-=======
->>>>>>> 3aaff0ad2e034fdbc66dd03da4ce9318d5f125d7
                 </div>
             </div>
         </div>
@@ -249,10 +223,6 @@
 <!-- ************************************************************* -->
 <!-- script hoja -->
 @section('scripts_pagina')
-<<<<<<< HEAD
-
-=======
     <script src="{{ asset('js/intranet/tutela/sentenciap.js') }}"></script>
->>>>>>> 3aaff0ad2e034fdbc66dd03da4ce9318d5f125d7
 @endsection
 <!-- ************************************************************* -->
