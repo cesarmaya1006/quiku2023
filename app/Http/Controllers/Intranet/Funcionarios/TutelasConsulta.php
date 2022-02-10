@@ -26,12 +26,12 @@ class TutelasConsulta extends Controller
     {
         if ($request->ajax()) {
             if ($request['tipoBusqueda'] == 'Número de radicado') {
-                return AutoAdmisorio::where('radicado', 'like', '%' . $request['numRadicado'] . '%')->with('accions')->with('accions.tipos_docu_accion')->get();
+                return AutoAdmisorio::where('radicado', 'like', '%' . $request['numRadicado'] . '%')->with('accions')->with('accions.tipos_docu_accion')->orderByDesc('fecha_radicado')->get();
             } elseif ($request['tipoBusqueda'] == 'Nombre o apellido del accionante') {
                 $nombreApellidos = $request['nombreApellidos'];
                 return AutoAdmisorio::with('accions')->with('accions.tipos_docu_accion')->whereHas('accions', function ($q) use ($nombreApellidos) {
                     $q->where('nombres_accion', 'like', '%' . $nombreApellidos . '%')->orWhere('apellidos_accion', 'like', '%' . $nombreApellidos . '%');
-                })->get();
+                })->orderByDesc('fecha_radicado')->get();
             } else {
                 $tipoDoc = $request['tipoDoc'];
                 $numDocumento = $request['numDocumento'];
@@ -39,7 +39,7 @@ class TutelasConsulta extends Controller
                     $q->where('numero_documento_accion', 'like', '%' . $numDocumento . '%')->whereHas('tipos_docu_accion', function ($p) use ($tipoDoc) {
                         $p->where('id', $tipoDoc);
                     });
-                })->get();
+                })->orderByDesc('fecha_radicado')->get();
             }
         }
     }

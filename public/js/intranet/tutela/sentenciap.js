@@ -1,4 +1,23 @@
 $(document).ready(function() {
+
+    //================================
+    $('.selectorTiempo').on('change', function(event) {
+        //const id = $(this).val();
+        alert('sip');
+
+        //if (id == '1') {
+        //    $('#diasCumplimiento').removeClass('d-none');
+        //    $('#horasCumplimiento').addClass('d-none');
+        //} else if (id == '2') {
+        //    $('#horasCumplimiento').removeClass('d-none');
+        //    $('#diasCumplimiento').addClass('d-none');
+        //} else {
+        //    $('#horasCumplimiento').addClass('d-none');
+        //    $('#diasCumplimiento').addClass('d-none');
+        //}
+    });
+
+
     $('#cajaCantiodad').addClass('d-none');
     $('#detalles0').addClass('d-none');
     $('.archivoAdjuntoC').addClass('d-none');
@@ -35,6 +54,10 @@ $(document).ready(function() {
                 //---------------------------------------------------
                 $(elemento).find('input#dias').attr('name', 'dias' + cantElem);
                 $(elemento).find('input#dias').attr('id', 'dias' + cantElem);
+                //---------------------------------------------------
+                $(elemento).find('select#selectorTiempo').attr('name', 'selectorTiempo' + cantElem);
+                $(elemento).find('select#selectorTiempo').attr('id_sel', cantElem);
+                $(elemento).find('select#selectorTiempo').attr('id', 'selectorTiempo' + cantElem);
                 //---------------------------------------------------
                 $(elemento).find('label#diasLabel').attr('name', 'diasLabel' + cantElem);
                 $(elemento).find('label#diasLabel').attr('id', 'diasLabel' + cantElem);
@@ -76,6 +99,11 @@ $(document).ready(function() {
                 $(elemento).find('a').attr('idAnexo', cantElem);
                 $(elemento).find('a').attr("onclick", "eliminarAnexo(" + cantElem + ")");
                 //---------------------------------------------------
+                //---------------------------------------------------
+                $(elemento).find('select#selectorTiempo').attr('name', 'selectorTiempo' + cantElem);
+                $(elemento).find('select#selectorTiempo').attr('id_sel', cantElem);
+                $(elemento).find('select#selectorTiempo').attr('id', 'selectorTiempo' + cantElem);
+                //---------------------------------------------------
                 $(elemento).hide();
                 $(elemento).show();
             }
@@ -83,6 +111,8 @@ $(document).ready(function() {
         });
         $('#cantAdjuntos').val(cantElem - 1);
     });
+
+
 });
 
 function eliminarDiv(id) {
@@ -148,7 +178,6 @@ function eliminarAnexo(id) {
             $(elemento).show();
         }
         cantElem++;
-    });
 
-    $('#cantAdjuntos').val(cantElem - 1);
+    });
 }
