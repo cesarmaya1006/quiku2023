@@ -78,21 +78,10 @@
                 </div>
             </div>
             <div class="col-lg-3 col-6">
-                <div class="small-box bg-light" style="border:  solid 1px pink">
-                    <div class="inner">
-                        <h3>{{ $revisiones->count() }}</h3>
-                        <p style="font-size: 0.8em">En revisión</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph text-pink"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
                 <div class="small-box bg-light" style="border: solid 1px teal">
                     <div class="inner">
-                        <h3>{{ $aprobadas->count() }}</h3>
-                        <p style="font-size: 0.8em">En aprobación</p>
+                        <h3>{{ sizeOf($activasAprobar) }}</h3>
+                        <p style="font-size: 0.8em">En revisión y aprobación</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph text-teal"></i>
@@ -102,7 +91,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-light" style="border: solid 1px indigo">
                     <div class="inner">
-                        <h3>{{ $radicadas->count() }}</h3>
+                        <h3>{{ sizeOf($activasRadicar) }}</h3>
                         <p style="font-size: 0.8em">En radicación</p>
                     </div>
                     <div class="icon">
@@ -526,7 +515,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($aprobadas as $aprobar)
+                    @foreach ($activasAprobar as $aprobar)
                         <tr>
                             <td class="text-center" style="white-space:nowrap;">{{ $aprobar->tutela->fecha_radicado }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $aprobar->tutela->estado->estado_funcionario }}</td>
@@ -585,7 +574,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($radicadas as $radicar)
+                    @foreach ($activasRadicar as $radicar)
                         <tr>
                             <td class="text-center" style="white-space:nowrap;">{{ $radicar->tutela->fecha_radicado }}</td>
                             <td class="text-center" style="white-space:nowrap;">{{ $radicar->tutela->estado->estado_funcionario }}</td>

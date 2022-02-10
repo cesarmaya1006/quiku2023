@@ -817,11 +817,11 @@ class TutelaController extends Controller
             // }elseif($pqr->empresa_id != null){
             //     $email = $pqr->empresa->email;
             // } 
-            if($request["idTarea"] == 4 && $request["apruebaRadica"] ){
+            // if($request["idTarea"] == 4 && $request["apruebaRadica"] ){
                 // if($email){
                 //     Mail::to($email)->send(new RespuestaPQR($pqr_id));
                 // }
-            }
+            // }
             if( ($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5 ){
                 $tutelaEstado['estadostutela_id'] = 4;
                 AutoAdmisorio::findOrFail($tutela->id)->update($tutelaEstado);
