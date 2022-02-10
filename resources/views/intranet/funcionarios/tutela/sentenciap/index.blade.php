@@ -50,25 +50,25 @@
                                     <div class="col-">
                                         <div class="row">
                                             <div class="col-12 col-md-2 form-group">
-                                                <label for="fecha_sentencia">Fecha sentencia</label>
+                                                <label class="requerido" for="fecha_sentencia">Fecha sentencia</label>
                                                 <input type="date" class="form-control form-control-sm"
                                                     name="fecha_sentencia" id="fecha_sentencia" aria-describedby="helpId"
                                                     value="{{ date('Y-m-d') }}" required>
                                             </div>
                                             <div class="col-12 col-md-2 form-group">
-                                                <label for="fecha_notificacion">Fecha de notificación</label>
+                                                <label class="requerido" for="fecha_notificacion">Fecha de notificación</label>
                                                 <input type="date" class="form-control form-control-sm"
                                                     name="fecha_notificacion" id="fecha_notificacion"
                                                     aria-describedby="helpId" value="{{ date('Y-m-d') }}" required>
                                             </div>
                                             <div class="col-12 col-md-2 form-group">
-                                                <label for="hora_notificacion">Hora de notificación</label>
+                                                <label class="requerido" for="hora_notificacion">Hora de notificación</label>
                                                 <input type="time" class="form-control form-control-sm"
                                                     name="hora_notificacion" id="hora_notificacion"
                                                     aria-describedby="helpId" value="{{ date('H:i:s') }}" required>
                                             </div>
                                             <div class="col-12 col-md-2 form-group">
-                                                <label for="sentencia">Decisión</label>
+                                                <label class="requerido" for="sentencia">Decisión</label>
                                                 <select id="sentencia" class="form-control form-control-sm"
                                                     name="sentencia">
                                                     <option value="Favorable">Favorable</option>
@@ -78,7 +78,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-12 col-md-4 form-group">
-                                                <label for="sentencia">Archivo Sentencia</label>
+                                                <label class="requerido" for="sentencia">Archivo Sentencia</label>
                                                 <input class="form-control form-control-sm" type="file"
                                                     accept="application/pdf" id="url_sentencia" name="url_sentencia"
                                                     required>

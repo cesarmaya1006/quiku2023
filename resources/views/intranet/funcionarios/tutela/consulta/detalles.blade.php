@@ -680,7 +680,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                    @if ($tutela->primeraInstancia)
+                                    @if ($tutela->primeraInstancia->count() > 0)
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="card card-outline card-primary collapsed-card">
@@ -843,9 +843,7 @@
                                                                             </div>
                                                                         </div>
                                                                     @endif
-
                                                                 @endforeach
-
                                                             </div>
                                                         </div>
                                                     </div>
