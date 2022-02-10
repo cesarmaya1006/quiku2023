@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     //================================
-    $('.selectorTiempo').on('change', function(event) {
+    $('.selectorTiempo132').on('change', function(event) {
         //const id = $(this).val();
         alert('sip');
 
