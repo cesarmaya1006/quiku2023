@@ -56,13 +56,15 @@
                                                     value="{{ date('Y-m-d') }}" required>
                                             </div>
                                             <div class="col-12 col-md-2 form-group">
-                                                <label class="requerido" for="fecha_notificacion">Fecha de notificación</label>
+                                                <label class="requerido" for="fecha_notificacion">Fecha de
+                                                    notificación</label>
                                                 <input type="date" class="form-control form-control-sm"
                                                     name="fecha_notificacion" id="fecha_notificacion"
                                                     aria-describedby="helpId" value="{{ date('Y-m-d') }}" required>
                                             </div>
                                             <div class="col-12 col-md-2 form-group">
-                                                <label class="requerido" for="hora_notificacion">Hora de notificación</label>
+                                                <label class="requerido" for="hora_notificacion">Hora de
+                                                    notificación</label>
                                                 <input type="time" class="form-control form-control-sm"
                                                     name="hora_notificacion" id="hora_notificacion"
                                                     aria-describedby="helpId" value="{{ date('H:i:s') }}" required>
@@ -159,9 +161,47 @@
                                     </div>
                                     <div class="row" id="cajaCantiodad">
                                         <div class="col-12 col-md-2 form-group">
-                                            <label for="fecha_notificacion">Cantidad de resuelves</label>
+                                            <label for="cantResuelves">Cantidad de resuelves</label>
                                             <input type="number" class="form-control form-control-sm" name="cantResuelves"
                                                 id="cantResuelves" value="1" min="1">
+                                        </div>
+                                        <div class="col-12 resuelvesPorCantidad" id="resuelvesPorCantidad">
+                                            <div class="row resuelvecant" id="resuelvecant1">
+                                                <div class="col-12">
+                                                    <h6><strong id="tituloResuelveCant">Resuelve 1</strong></h6>
+                                                </div>
+                                                <div class="col-12 col-md-2 form-group">
+                                                    <label for="cumplimientocant">Cumplimiento</label>
+                                                    <select class="form-control form-control-sm tcumplimientocant"
+                                                        id="cumplimientocant1" name="cumplimientocant1"
+                                                        onchange="cumplimientoSentenciaCant(1)">
+                                                        <option value="0">Sin cumplimiento</option>
+                                                        <option value="1">Dias</option>
+                                                        <option value="2">Horas</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-md-2 form-group d-none">
+                                                    <label for="dias" id="diasLabel">Dias Cumplimiento</label>
+                                                    <input type="number" class="form-control form-control-sm diascant"
+                                                        name="diascant1" id="diascant1" value="0" min="0">
+                                                </div>
+                                                <div class="col-12 col-md-2 form-group d-none">
+                                                    <label for="horas" id="horasLabel">Horas Cumplimiento</label>
+                                                    <input type="number" class="form-control form-control-sm horascant"
+                                                        name="horascant1" id="horascant1" value="0" min="0" max="23">
+                                                </div>
+                                                <div class="col-12 col-md-2 form-group">
+                                                    <label for="sentido" id="sentido1">Sentido del resuelve</label>
+                                                    <select id="sentido1" class="form-control form-control-sm"
+                                                        name="sentido1">
+                                                        <option value="Favorable">Favorable</option>
+                                                        <option value="Desfavorable">Desfavorable</option>
+                                                        <option value="Parcialmente desfavorable">Parcialmente desfavorable
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row" id="cajaDetalle">
@@ -183,16 +223,37 @@
                                                         id="resuelve" cols="30" rows="10" style="resize: none;"></textarea>
                                                 </div>
                                                 <div class="col-12 col-md-2 form-group">
+                                                    <label for="cumplimiento">Cumplimiento</label>
+                                                    <select class="form-control form-control-sm tcumplimiento"
+                                                        id="cumplimiento" name="cumplimiento"
+                                                        onchange="cumplimientoSentencia(0)">
+                                                        <option value="0">Sin cumplimiento</option>
+                                                        <option value="1">Dias</option>
+                                                        <option value="2">Horas</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-md-2 form-group d-none">
                                                     <label for="dias" id="diasLabel">Dias Cumplimiento</label>
                                                     <input type="number" class="form-control form-control-sm dias"
                                                         name="dias" id="dias" value="0" min="0">
                                                 </div>
-                                                <div class="col-12 col-md-2 form-group">
+                                                <div class="col-12 col-md-2 form-group d-none">
                                                     <label for="horas" id="horasLabel">Horas Cumplimiento</label>
                                                     <input type="number" class="form-control form-control-sm horas"
                                                         name="horas" id="horas" value="0" min="0" max="23">
                                                 </div>
-                                                <div class="col-12 col-md-8 form-group">
+                                                <div class="col-12 col-md-2 form-group">
+                                                    <label for="sentido">Sentido del resuelve</label>
+                                                    <select id="sentido" class="form-control form-control-sm"
+                                                        name="sentido">
+                                                        <option value="Favorable">Favorable</option>
+                                                        <option value="Desfavorable">Desfavorable</option>
+                                                        <option value="Parcialmente desfavorable">Parcialmente desfavorable
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 col-md-6 form-group">
                                                     <a class="btn-accion-tabla tooltipsC text-danger float-end eliminarResuelve"
                                                         idResuelve="0" title="Quitar" onclick="eliminarDiv(0)"><i
                                                             class="fa fa-trash" aria-hidden="true"></i>

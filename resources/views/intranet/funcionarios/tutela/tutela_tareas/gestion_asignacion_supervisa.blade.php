@@ -36,7 +36,7 @@
                                     <strong>{{ $tutela->radicado }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    Fecha de notificación: <strong>{{ $tutela->fecha_notificacion}}</strong>
+                                    Fecha de notificación: <strong>{{ $tutela->fecha_notificacion }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha de radicado: <strong>{{ $tutela->fecha_radicado }}</strong>
@@ -88,62 +88,68 @@
                                     <h5>Términos</h5>
                                 </div>
                                 <div class="row px-2">
-                                    @if($tutela->dias_termino)
+                                    @if ($tutela->dias_termino)
                                         <div class="col-12">
-                                            <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_termino }}</p>
+                                            <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_termino }}
+                                            </p>
                                         </div>
                                     @endif
-                                    @if($tutela->horas_termino)
+                                    @if ($tutela->horas_termino)
                                         <div class="col-12">
-                                            <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_termino }}</p>
+                                            <p class="text-justify"><strong>Horas:</strong>
+                                                {{ $tutela->horas_termino }}</p>
                                         </div>
                                     @endif
                                     @if ($tutela->url_admisorio)
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h6>Archivo auto admisorio</h6>
-                                        </div>
-                                        <div class="col-12">
-                                            <table class="table table-light" style="font-size: 0.8em;">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Titulo</th>
-                                                        <th scope="col">Descripción</th>
-                                                        <th scope="col">Descarga</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="text-justify">{{ $tutela->titulo_admisorio }}</td>
-                                                        <td class="text-justify">{{ $tutela->descripcion_admisorio }}</td>
-                                                        <td><a href="{{ asset('documentos/autoadmisorios/' . $tutela->url_admisorio) }}"
-                                                                target="_blank"
-                                                                rel="noopener noreferrer">Descargar</a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        @if ($tutela->medida_cautelar == 'true')
-                                            <hr>
-                                            <div class="col-12 my-2">
-                                                <h5> Medida Cautelar</h5>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h6>Archivo auto admisorio</h6>
                                             </div>
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Descripción:</strong> {{ $tutela->text_medida_cautelar }}</p>
+                                                <table class="table table-light" style="font-size: 0.8em;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Titulo</th>
+                                                            <th scope="col">Descripción</th>
+                                                            <th scope="col">Descarga</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-justify">{{ $tutela->titulo_admisorio }}
+                                                            </td>
+                                                            <td class="text-justify">
+                                                                {{ $tutela->descripcion_admisorio }}</td>
+                                                            <td><a href="{{ asset('documentos/autoadmisorios/' . $tutela->url_admisorio) }}"
+                                                                    target="_blank" rel="noopener noreferrer">Descargar</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                            @if($tutela->dias_medida_cautelar)
-                                                <div class="col-12">
-                                                    <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_medida_cautelar }}</p>
+                                            @if ($tutela->medida_cautelar == 'true')
+                                                <hr>
+                                                <div class="col-12 my-2">
+                                                    <h5> Medida Cautelar</h5>
                                                 </div>
-                                            @endif
-                                            @if($tutela->horas_medida_cautelar)
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_medida_cautelar }}</p>
+                                                    <p class="text-justify"><strong>Descripción:</strong>
+                                                        {{ $tutela->text_medida_cautelar }}</p>
                                                 </div>
+                                                @if ($tutela->dias_medida_cautelar)
+                                                    <div class="col-12">
+                                                        <p class="text-justify"><strong>Días:</strong>
+                                                            {{ $tutela->dias_medida_cautelar }}</p>
+                                                    </div>
+                                                @endif
+                                                @if ($tutela->horas_medida_cautelar)
+                                                    <div class="col-12">
+                                                        <p class="text-justify"><strong>Horas:</strong>
+                                                            {{ $tutela->horas_medida_cautelar }}</p>
+                                                    </div>
+                                                @endif
                                             @endif
-                                        @endif
-                                    </div>
+                                        </div>
                                     @endif
                                 </div>
                                 <hr>
@@ -153,65 +159,80 @@
                                     <h5>Accionantes</h5>
                                 </div>
                                 <div class="col-12 mt-2">
-                                    @foreach ( $tutela->accions as $accion)
+                                    @foreach ($tutela->accions as $accion)
                                         <div class="col-12 row">
                                             <div class="col-6">
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Nombre:</strong> {{ $accion->nombres_accion }}  {{ $accion->apellidos_accion }}</p>
+                                                    <p class="text-justify"><strong>Nombre:</strong>
+                                                        {{ $accion->nombres_accion }} {{ $accion->apellidos_accion }}
+                                                    </p>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Tipo Persona:</strong> {{ $accion->tipo_persona_accion }}</p>
+                                                    <p class="text-justify"><strong>Tipo Persona:</strong>
+                                                        {{ $accion->tipo_persona_accion }}</p>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Tipo Documento:</strong> {{ $accion->docutipos_id_accion }}</p>
+                                                    <p class="text-justify"><strong>Tipo Documento:</strong>
+                                                        {{ $accion->docutipos_id_accion }}</p>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Número Documento:</strong> {{ $accion->numero_documento_accion }}</p>
+                                                    <p class="text-justify"><strong>Número Documento:</strong>
+                                                        {{ $accion->numero_documento_accion }}</p>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Teléfono:</strong> {{ $accion->telefono_accion }}</p>
+                                                    <p class="text-justify"><strong>Teléfono:</strong>
+                                                        {{ $accion->telefono_accion }}</p>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Dirección:</strong> {{ $accion->direccion_accion }}</p>
+                                                    <p class="text-justify"><strong>Dirección:</strong>
+                                                        {{ $accion->direccion_accion }}</p>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Correo:</strong> {{ $accion->correo_accion }}</p>
+                                                    <p class="text-justify"><strong>Correo:</strong>
+                                                        {{ $accion->correo_accion }}</p>
                                                 </div>
                                             </div>
                                             <div class="col-6">
-                                                @if($accion->nombre_apoderado)
+                                                @if ($accion->nombre_apoderado)
                                                     <div class="col-12  mb-3">
                                                         <h6 class="pl-4">Apoderado</h6>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Nombre:</strong> {{ $accion->nombre_apoderado }}</p>
+                                                        <p class="text-justify"><strong>Nombre:</strong>
+                                                            {{ $accion->nombre_apoderado }}</p>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Tipo Documento:</strong> {{ $accion->docutipos_id_apoderado }}</p>
+                                                        <p class="text-justify"><strong>Tipo Documento:</strong>
+                                                            {{ $accion->docutipos_id_apoderado }}</p>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Número Documento:</strong> {{ $accion->numero_documento_apoderado }}</p>
+                                                        <p class="text-justify"><strong>Número Documento:</strong>
+                                                            {{ $accion->numero_documento_apoderado }}</p>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Tarjeta Profesional:</strong> {{ $accion->tarjeta_profesional_apoderado }}</p>
+                                                        <p class="text-justify"><strong>Tarjeta Profesional:</strong>
+                                                            {{ $accion->tarjeta_profesional_apoderado }}</p>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Teléfono:</strong> {{ $accion->telefono_apoderado }}</p>
+                                                        <p class="text-justify"><strong>Teléfono:</strong>
+                                                            {{ $accion->telefono_apoderado }}</p>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Dirección:</strong> {{ $accion->direccion_apoderado }}</p>
+                                                        <p class="text-justify"><strong>Dirección:</strong>
+                                                            {{ $accion->direccion_apoderado }}</p>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Correo:</strong> {{ $accion->correo_apoderado }}</p>
+                                                        <p class="text-justify"><strong>Correo:</strong>
+                                                            {{ $accion->correo_apoderado }}</p>
                                                     </div>
                                                 @endif
                                             </div>
                                             <hr>
                                         </div>
-                                    @endforeach  
+                                    @endforeach
                                 </div>
                             </div>
-                            @if(sizeOf($tutela->anexostutela))
+                            @if (sizeOf($tutela->anexostutela))
                                 <div class="menu-card">
                                     <div class="col-12 row mb-2">
                                         <div class="col-6">
@@ -222,7 +243,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="col-12 table-responsive">
-                                            <table class="table table-light"  style="font-size: 0.8em;" >
+                                            <table class="table table-light" style="font-size: 0.8em;">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Nombre</th>
@@ -239,8 +260,7 @@
                                                                 {{ $anexo->descripcion }}
                                                             </td>
                                                             <td><a href="{{ asset('documentos/tutelas/' . $anexo->url) }}"
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer">Descargar</a>
+                                                                    target="_blank" rel="noopener noreferrer">Descargar</a>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -250,58 +270,58 @@
                                     </div>
                                 </div>
                                 <hr>
-                            @endif 
+                            @endif
                             <div class="row menu-card p-2">
                                 <div class="col-12 mb-2">
                                     <h5>Hechos</h5>
                                 </div>
-                                @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
+                                @foreach ($tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                     <div class="col-12 row t">
                                         <div class="col-12 mb-3">
-                                            <h6 class="pl-4">Hecho # {{$hecho->consecutivo}}</h6>
+                                            <h6 class="pl-4">Hecho # {{ $hecho->consecutivo }}</h6>
                                         </div>
                                         <div class="col-12">
                                             <p class="text-justify">{{ $hecho->hecho }}</p>
                                         </div>
                                     </div>
-                                 @endforeach  
+                                @endforeach
                             </div>
                             <hr>
                             <div class="row menu-card p-2">
                                 <div class="col-12 mb-2">
                                     <h5>Pretensiones</h5>
                                 </div>
-                                @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
+                                @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                     <div class="col-12 row t">
                                         <div class="col-12 mb-3">
-                                            <h6 class="pl-4">Pretensión # {{$pretension->consecutivo}}</h6>
+                                            <h6 class="pl-4">Pretensión # {{ $pretension->consecutivo }}</h6>
                                         </div>
                                         <div class="col-12">
                                             <p class="text-justify">{{ $pretension->pretension }}</p>
                                         </div>
                                     </div>
-                                 @endforeach  
+                                @endforeach
                             </div>
                             <hr>
-                            @if(sizeOf($tutela->argumentos))
+                            @if (sizeOf($tutela->argumentos))
                                 <div class="row menu-card p-2">
                                     <div class="col-12 mb-2">
                                         <h5>Argumentos</h5>
                                     </div>
-                                    @foreach ( $tutela->argumentos as $key => $argumento)
+                                    @foreach ($tutela->argumentos as $key => $argumento)
                                         <div class="col-12 row t">
                                             <div class="col-12 mb-3">
-                                                <h6 class="pl-4">Argumento # {{$key + 1}}</h6>
+                                                <h6 class="pl-4">Argumento # {{ $key + 1 }}</h6>
                                             </div>
                                             <div class="col-12">
                                                 <p class="text-justify">{{ $argumento->argumento }}</p>
                                             </div>
                                         </div>
-                                    @endforeach  
+                                    @endforeach
                                 </div>
                                 <hr>
                             @endif
-                            @if(sizeOf($tutela->pruebas))
+                            @if (sizeOf($tutela->pruebas))
                                 <div class="row menu-card p-2">
                                     <div class="col-12 mb-2">
                                         <h5>Pruebas</h5>
@@ -309,7 +329,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="col-12 table-responsive">
-                                                <table class="table table-light"  style="font-size: 0.8em;" >
+                                                <table class="table table-light" style="font-size: 0.8em;">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">Nombre</th>
@@ -339,32 +359,35 @@
                                 </div>
                                 <hr>
                             @endif
-                            @if(sizeOf($tutela->motivos))
+                            @if (sizeOf($tutela->motivos))
                                 <div class="row menu-card p-2">
                                     <div class="col-12 mb-2">
                                         <h5>Motivos</h5>
                                     </div>
-                                    @foreach ( $tutela->motivos as $key => $motivo)
+                                    @foreach ($tutela->motivos as $key => $motivo)
                                         <div class="col-6 row">
                                             <div class="col-12 mb-3">
-                                                <h6 class="pl-4">Motivo # {{$key + 1}}</h6>
+                                                <h6 class="pl-4">Motivo # {{ $key + 1 }}</h6>
                                             </div>
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Motivo:</strong> {{ $motivo->motivo_tutela }}</p>
+                                                <p class="text-justify"><strong>Motivo:</strong>
+                                                    {{ $motivo->motivo_tutela }}</p>
                                             </div>
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Sub - motivo:</strong> {{ $motivo->sub_motivo_tutela }}</p>
+                                                <p class="text-justify"><strong>Sub - motivo:</strong>
+                                                    {{ $motivo->sub_motivo_tutela }}</p>
                                             </div>
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Tutela sobre:</strong> {{ $motivo->tipo_tutela }}</p>
+                                                <p class="text-justify"><strong>Tutela sobre:</strong>
+                                                    {{ $motivo->tipo_tutela }}</p>
                                             </div>
                                         </div>
-                                    @endforeach  
+                                    @endforeach
                                 </div>
                                 <hr>
                             @endif
                         </div>
-                    </div> 
+                    </div>
                     <div class="rounded border m-3 p-2">
                         <h5 class="">Gestión Hechos</h5>
                         <div class="col-12 table-responsive d-flex justify-content-center">
@@ -377,15 +400,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tutela->hechos->sortBy('consecutivo') as $key=> $hecho)
+                                    @foreach ($tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                         <tr>
-                                            <td>{{$hecho->consecutivo}}</td>
-                                            @if($hecho->empleado)
-                                                <td>{{$hecho->empleado->nombre1 }} {{$hecho->empleado->apellido1}}</td>
-                                            @else    
+                                            <td>{{ $hecho->consecutivo }}</td>
+                                            @if ($hecho->empleado)
+                                                <td>{{ $hecho->empleado->nombre1 }} {{ $hecho->empleado->apellido1 }}
+                                                </td>
+                                            @else
                                                 <td>Sin asignar</td>
                                             @endif
-                                            <td class="">{{$hecho->estadohecho->estado }}%</td>
+                                            <td class="">{{ $hecho->estadohecho->estado }}%</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -405,15 +429,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key=> $pretension)
+                                    @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                         <tr>
-                                            <td>{{$pretension->consecutivo}}</td>
-                                            @if($pretension->empleado)
-                                                <td>{{$pretension->empleado->nombre1 }} {{$pretension->empleado->apellido1}}</td>
-                                            @else    
+                                            <td>{{ $pretension->consecutivo }}</td>
+                                            @if ($pretension->empleado)
+                                                <td>{{ $pretension->empleado->nombre1 }}
+                                                    {{ $pretension->empleado->apellido1 }}</td>
+                                            @else
                                                 <td>Sin asignar</td>
                                             @endif
-                                            <td class="">{{$pretension->estadopretension->estado }}%</td>
+                                            <td class="">{{ $pretension->estadopretension->estado }}%</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -438,12 +463,13 @@
                                         @foreach ($tutela->historialtareas as $historial)
                                             <tr>
                                                 <td>{{ $historial->created_at }}</td>
-                                                @if($historial->tarea)
+                                                @if ($historial->tarea)
                                                     <td class="text-justify">{{ $historial->tarea->tarea }}</td>
                                                 @else
                                                     <td class="text-justify">ADMINISTRADOR</td>
                                                 @endif
-                                                <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
+                                                <td class="text-justify">{{ $historial->empleado->nombre1 }}
+                                                    {{ $historial->empleado->apellido1 }}</td>
                                                 <td class="text-justify">{{ $historial->historial }}</td>
                                             </tr>
                                         @endforeach
@@ -452,15 +478,17 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row d-flex px-12 p-3"> 
+                        <div class="row d-flex px-12 p-3">
                             <input class="id_tarea" type="hidden" value="1">
                             <div class="container-mensaje-historial-tarea form-group col-12">
                                 <label for="" class="">Agregar Historial</label>
-                                <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
+                                <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder=""
+                                    required></textarea>
                             </div>
                             <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialTarea" data_url="{{ route('historial_tarea_tutela_guardar') }}"
-                                data_token="{{ csrf_token() }}">Guardar</button>
+                                <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialTarea"
+                                    data_url="{{ route('historial_tarea_tutela_guardar') }}"
+                                    data_token="{{ csrf_token() }}">Guardar</button>
                             </div>
                         </div>
                     </div>
