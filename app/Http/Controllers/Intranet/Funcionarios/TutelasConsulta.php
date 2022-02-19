@@ -107,6 +107,7 @@ class TutelasConsulta extends Controller
                 $catnResuelves = intval($request['catnResuelves']);
                 for ($i = 1; $i <= $catnResuelves; $i++) {
                     $newResuelve['sentenciapinstancia_id'] = $nuevasentenciapinstancia->id;
+                    $newResuelve['sentido'] = $request['sentido' . $i];
                     $newResuelve['numeracion'] = $request['numeracion' . $i];
                     $newResuelve['resuelve'] = $request['resuelve' . $i];
                     $newResuelve['dias'] = $request['dias' . $i];
@@ -137,6 +138,9 @@ class TutelasConsulta extends Controller
                 $cantResuelves = intval($request['cantResuelves']);
                 for ($i = 1; $i <= $cantResuelves; $i++) {
                     $newResuelve['sentenciapinstancia_id'] = $nuevasentenciapinstancia->id;
+                    $newResuelve['sentido'] = $request['sentido' . $i];
+                    $newResuelve['dias'] = $request['diascant' . $i];
+                    $newResuelve['horas'] = $request['horascant' . $i];
                     //------------------------------------------
                     ResuelvePrimeraInstancia::create($newResuelve);
                 }

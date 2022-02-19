@@ -34,10 +34,10 @@
                                 <div class="col-12 col-md-6">
                                     @if ($pqr->persona_id != null)
                                         Persona que interpone la Petición:
-                                        <strong>{{ $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 }}</strong>
+                                        <strong>{{ $pqr->persona->nombre1 .' ' .$pqr->persona->nombre2 .' ' .$pqr->persona->apellido1 .' ' .$pqr->persona->apellido2 }}</strong>
                                     @else
                                         Empresa que interpone la Petición:
-                                        <strong>{{ $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social }}</strong>
+                                        <strong>{{ $pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social }}</strong>
                                     @endif
                                 </div>
                                 @if ($pqr->adquisicion)
@@ -78,27 +78,27 @@
                                         Referencia : <strong>{{ $pqr->referencia->referencia }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->servicio)
+                                @if ($pqr->servicio)
                                     <div class="col-12 col-md-6">
                                         Servicio : <strong>{{ $pqr->servicio->servicio }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->factura)
+                                @if ($pqr->factura)
                                     <div class="col-12 col-md-6">
                                         Número de factura: <strong>{{ $pqr->factura }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->fecha_factura)
+                                @if ($pqr->fecha_factura)
                                     <div class="col-12 col-md-6">
                                         Fecha de factura: <strong>{{ $pqr->fecha_factura }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->fecha_radicado)
+                                @if ($pqr->fecha_radicado)
                                     <div class="col-12 col-md-6">
                                         Fecha de radicado: <strong>{{ $pqr->fecha_generacion }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->estadospqr_id < 6)
+                                @if ($pqr->estadospqr_id < 6)
                                     <div class="col-12 col-md-6">
                                         Fecha estimada de respuesta:
                                         <strong>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</strong>
@@ -113,9 +113,11 @@
                             @if (!$pqr->persona->email)
                                 <div class="col-12 rounded border border-danger mb-4 p-3">
                                     <div class="row">
-                                        <h6 class="text-danger pl-2">el usuario no posee correo electrónico se debe enviar correo físico.</h6>
+                                        <h6 class="text-danger pl-2">el usuario no posee correo electrónico se debe enviar
+                                            correo físico.</h6>
                                         <div class="col-12 col-md-6">
-                                            <strong>Nombre:</strong> {{ $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 }}
+                                            <strong>Nombre:</strong>
+                                            {{ $pqr->persona->nombre1 .' ' .$pqr->persona->nombre2 .' ' .$pqr->persona->apellido1 .' ' .$pqr->persona->apellido2 }}
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <strong>Teléfono:</strong> {{ $pqr->persona->telefono_celu }}
@@ -124,7 +126,8 @@
                                             <strong>Dirección:</strong> {{ $pqr->persona->direccion }}
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            <strong>Departatmento:</strong> {{ $pqr->persona->municipio->departamento->departamento }}
+                                            <strong>Departatmento:</strong>
+                                            {{ $pqr->persona->municipio->departamento->departamento }}
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <strong>Ciudad:</strong> {{ $pqr->persona->municipio->municipio }}
@@ -142,7 +145,8 @@
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <strong>
-                                        <a href="{{ route('prorrogaPdf', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                        <a href="{{ route('prorrogaPdf', ['id' => $pqr->id]) }}" target="_blank"
+                                            rel="noopener noreferrer">
                                             <i class="fa fa-download" aria-hidden="true"></i>Descargar Radicado Prórroga</a>
                                     </strong>
                                 </div>
@@ -156,91 +160,105 @@
                                         <h5>Petición {{ $n_peticion }}</h5>
                                     </div>
                                     <hr>
-                                    @if($peticion->motivo_sub_id)
+                                    @if ($peticion->motivo_sub_id)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Categoría Motivo:</strong> {{ $peticion->motivo->motivo->motivo }}</p>
+                                                <p class="text-justify"><strong>Categoría Motivo:</strong>
+                                                    {{ $peticion->motivo->motivo->motivo }}</p>
                                             </div>
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Sub - Categoría Motivo:</strong> {{ $peticion->motivo->sub_motivo }}</p>
+                                                <p class="text-justify"><strong>Sub - Categoría Motivo:</strong>
+                                                    {{ $peticion->motivo->sub_motivo }}</p>
                                             </div>
                                             @if ($peticion->otro)
-                                                <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}</p>
+                                                <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}
+                                                </p>
                                             @endif
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->justificacion }}</p>
+                                                <p class="text-justify"><strong>Solicitud:</strong>
+                                                    {{ $peticion->justificacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->consulta)
+                                    @if ($peticion->consulta)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Consulta:</strong> {{ $peticion->consulta }}</p>
+                                                <p class="text-justify"><strong>Consulta:</strong>
+                                                    {{ $peticion->consulta }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->tiposolicitud)
+                                    @if ($peticion->tiposolicitud)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Tipo de solicitud:</strong> {{ $peticion->tiposolicitud }}</p>
+                                                <p class="text-justify"><strong>Tipo de solicitud:</strong>
+                                                    {{ $peticion->tiposolicitud }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Datos personales objeto de la solicitud:</strong> {{ $peticion->datossolicitud }}</p>
+                                                <p class="text-justify"><strong>Datos personales objeto de la
+                                                        solicitud:</strong> {{ $peticion->datossolicitud }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Descripción de la solicitud:</strong> {{ $peticion->descripcionsolicitud }}</p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                    @endif
-                                    @if($peticion->peticion)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Tipo de petición:</strong> {{ $peticion->peticion }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Documento o información requerida:</strong> {{ $peticion->indentifiquedocinfo }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Justificacion:</strong> {{ $peticion->justificacion }}</p>
+                                                <p class="text-justify"><strong>Descripción de la solicitud:</strong>
+                                                    {{ $peticion->descripcionsolicitud }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->irregularidad)
+                                    @if ($peticion->peticion)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Tipo de irregularidad:</strong> {{ $peticion->irregularidad }}</p>
+                                                <p class="text-justify"><strong>Tipo de petición:</strong>
+                                                    {{ $peticion->peticion }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Documento o información
+                                                        requerida:</strong> {{ $peticion->indentifiquedocinfo }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Justificacion:</strong>
+                                                    {{ $peticion->justificacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->felicitacion)
-                                        @if($peticion->nombre_funcionario)
+                                    @if ($peticion->irregularidad)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Tipo de irregularidad:</strong>
+                                                    {{ $peticion->irregularidad }}</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if ($peticion->felicitacion)
+                                        @if ($peticion->nombre_funcionario)
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Nombre de funcionario:</strong> {{ $peticion->nombre_funcionario }}</p>
+                                                    <p class="text-justify"><strong>Nombre de funcionario:</strong>
+                                                        {{ $peticion->nombre_funcionario }}</p>
                                                 </div>
                                             </div>
                                         @endif
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Felicitaciones:</strong> {{ $peticion->felicitacion }}</p>
+                                                <p class="text-justify"><strong>Felicitaciones:</strong>
+                                                    {{ $peticion->felicitacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if(sizeof($peticion->hechos))
+                                    @if (sizeof($peticion->hechos))
                                         <div class="row">
                                             <div class="col-12">
                                                 <h6>Hechos</h6>
@@ -257,7 +275,7 @@
                                         </div>
                                         <br>
                                     @endif
-                                    @if(sizeof($peticion->anexos))
+                                    @if (sizeof($peticion->anexos))
                                         <div class="row">
                                             <div class="col-12">
                                                 <h6>Anexos</h6>
@@ -290,7 +308,7 @@
                                     @endif
                                 </div>
 
-                                @if(sizeOf($peticion->aclaraciones))
+                                @if (sizeOf($peticion->aclaraciones))
                                     <div class="row menu-card-aclaraciones menu-card">
                                         <div class="col-12">
                                             <h6>Aclaraciones</h6>
@@ -311,9 +329,11 @@
                                                         @if ($aclaracion->respuesta != '')
                                                             <tr>
                                                                 <td>{{ $aclaracion->fecha }}</td>
-                                                                <td class="text-justify">{{ $aclaracion->aclaracion }}</td>
+                                                                <td class="text-justify">{{ $aclaracion->aclaracion }}
+                                                                </td>
                                                                 <td>{{ $aclaracion->fecha_respuesta }}</td>
-                                                                <td class="text-justify">{{ $aclaracion->respuesta }}</td>
+                                                                <td class="text-justify">{{ $aclaracion->respuesta }}
+                                                                </td>
                                                                 @if ($aclaracion->anexos)
                                                                     <td>
                                                                         @foreach ($aclaracion->anexos as $anexo)
@@ -342,7 +362,8 @@
                                             </div>
                                         </div>
                                         <div class="col-12 form-group">
-                                            <textarea type="text" class="form-control form-control-sm respuesta" disabled>{{ strip_tags($peticion->respuesta->respuesta) }}</textarea>
+                                            <textarea type="text" class="form-control form-control-sm respuesta"
+                                                disabled>{{ strip_tags($peticion->respuesta->respuesta) }}</textarea>
                                         </div>
                                     </div>
                                     <hr>
@@ -353,7 +374,7 @@
                                                     <h6>Anexos respuesta petición</h6>
                                                 </div>
                                                 <div class="col-12 table-responsive">
-                                                    <table class="table table-light"  style="font-size: 0.8em;" >
+                                                    <table class="table table-light" style="font-size: 0.8em;">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Nombre</th>
@@ -382,7 +403,7 @@
                                         </div>
                                         <hr>
                                     @endif
-                                 @endif
+                                @endif
                                 <br>
                                 <div class="menu-card-recursos menu-card">
                                     @if (sizeOf($peticion->recursos))
@@ -407,7 +428,8 @@
                                                         @foreach ($peticion->recursos as $recurso)
                                                             <tr>
                                                                 <td>{{ $recurso->fecha_radicacion }}</td>
-                                                                <td class="text-justify">{{ $recurso->tiporeposicion->tipo }}</td>
+                                                                <td class="text-justify">
+                                                                    {{ $recurso->tiporeposicion->tipo }}</td>
                                                                 <td class="text-justify">{{ $recurso->recurso }}</td>
                                                                 @if ($recurso->documentos)
                                                                     <td>
@@ -447,7 +469,7 @@
                                         </div>
                                     @endif
                                 </div>
-                                @if(sizeOf($peticion->historialpeticiones))
+                                @if (sizeOf($peticion->historialpeticiones))
                                     <hr>
                                     <h5 class="">Historial peticiones</h5>
                                     <div class="row d-flex px-12 p-3">
@@ -464,8 +486,11 @@
                                                     @foreach ($peticion->historialpeticiones as $historial)
                                                         <tr>
                                                             <td>{{ $historial->created_at }}</td>
-                                                            <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                            <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
+                                                            <td class="text-justify">
+                                                                {{ $historial->empleado->nombre1 }}
+                                                                {{ $historial->empleado->apellido1 }}</td>
+                                                            <td class="text-justify">
+                                                                {{ strip_tags($historial->historial) }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -475,8 +500,8 @@
                                 @endif
                             </div>
                         @endforeach
-                    </div> 
-                    @if (sizeOf($pqr->historialasignacion) )
+                    </div>
+                    @if (sizeOf($pqr->historialasignacion))
                         <div class="rounded border m-3 p-2">
                             <h5 class="">Historial asignación</h5>
                             <div class="row d-flex px-12 p-3">
@@ -493,7 +518,8 @@
                                             @foreach ($pqr->historialasignacion as $historial)
                                                 <tr>
                                                     <td>{{ $historial->created_at }}</td>
-                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
+                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }}
+                                                        {{ $historial->empleado->apellido1 }}</td>
                                                     <td class="text-justify">{{ $historial->historial }}</td>
                                                 </tr>
                                             @endforeach
@@ -502,28 +528,30 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="row d-flex px-12 p-3"> 
+                            <div class="row d-flex px-12 p-3">
                                 <div class="container-mensaje-historial form-group col-12">
                                     <label for="" class="">Agregar Historial</label>
                                     <textarea class="form-control" rows="3" placeholder="" name="mensaje-historial"
                                         id="mensaje-historial" required></textarea>
                                 </div>
                                 <div class="col-12 col-md-12 form-group d-flex">
-                                    <button href="" class="btn btn-primary px-4" id="guardarHistorial" data_url="{{ route('historial_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar historial</button>
+                                    <button href="" class="btn btn-primary px-4" id="guardarHistorial"
+                                        data_url="{{ route('historial_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar historial</button>
                                 </div>
                             </div>
                         </div>
                     @endif
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
-                    
+
                     @if ($pqr->estado_asignacion == 0)
                         <div class="rounded border m-3 p-2">
                             <h5 class="">Gestion asignación</h5>
-                            <div class="row d-flex px-12 p-3"> 
+                            <div class="row d-flex px-12 p-3">
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">¿Acepta la asignación?</label>
-                                    <select name="confirmacion-asignacion" id="confirmacion-asignacion" class="custom-select rounded-0" required="">
+                                    <select name="confirmacion-asignacion" id="confirmacion-asignacion"
+                                        class="custom-select rounded-0" required="">
                                         <option value="1">Aceptar</option>
                                         <option value="0">Rechazar</option>
                                     </select>
@@ -534,8 +562,9 @@
                                         id="mensaje-asignacion" required></textarea>
                                 </div>
                                 <div class="col-12 col-md-3 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4" id="guardarAsignacion" data_url="{{ route('asignacion_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar</button>
+                                    <button href="" class="btn btn-primary mx-2 px-4" id="guardarAsignacion"
+                                        data_url="{{ route('asignacion_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar</button>
                                 </div>
                             </div>
                         </div>
@@ -556,10 +585,11 @@
                                     <tbody>
                                         @foreach ($pqr->asignaciontareas as $asignacion)
                                             <tr>
-                                                <td>{{$asignacion->tarea->tarea}}</td>
-                                                <td>{{$asignacion->empleado->nombre1}} {{$asignacion->empleado->apellido1}}</td>
-                                                <td>{{$asignacion->created_at}}</td>
-                                                <td>{{$asignacion->estadotarea->estado}} %</td>
+                                                <td>{{ $asignacion->tarea->tarea }}</td>
+                                                <td>{{ $asignacion->empleado->nombre1 }}
+                                                    {{ $asignacion->empleado->apellido1 }}</td>
+                                                <td>{{ $asignacion->created_at }}</td>
+                                                <td>{{ $asignacion->estadotarea->estado }} %</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -567,70 +597,77 @@
                             </div>
                             <hr>
                             <h5 class="">Asignación tareas</h5>
-                            <div class="row d-flex px-4"> 
+                            <div class="row d-flex px-4">
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Tarea</label>
-                                    <select name="tarea" id="tarea" class="custom-select rounded-0" required="" data_url="{{ route('cargar_tareas') }}">                                    </select>
+                                    <select name="tarea" id="tarea" class="custom-select rounded-0" required=""
+                                        data_url="{{ route('cargar_tareas') }}"> </select>
                                 </div>
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Cargo</label>
-                                    <select name="cargo" id="cargo" class="custom-select rounded-0" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
+                                    <select name="cargo" id="cargo" class="custom-select rounded-0" required=""
+                                        data_url="{{ route('cargar_cargos') }}"
+                                        data_url2="{{ route('cargar_funcionarios') }}">
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Funcionario</label>
-                                    <select name="funcionario" id="funcionario" class="custom-select rounded-0" required="">
+                                    <select name="funcionario" id="funcionario" class="custom-select rounded-0"
+                                        required="">
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-6 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary py-2 px-3" id="asignacion_tarea_guardar" data_url="{{ route('asignacion_tarea_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar asignación</button>
+                                    <button href="" class="btn btn-primary py-2 px-3" id="asignacion_tarea_guardar"
+                                        data_url="{{ route('asignacion_tarea_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar asignación</button>
                                 </div>
                             </div>
                             {{-- @if (sizeOf($pqr->historialtareas)) --}}
                             <hr>
                             <h5 class="">Historial tareas</h5>
-                                <div class="col-12 table-responsive">
-                                    <table class="table table-light" style="font-size: 0.8em;">
-                                        <thead>
+                            <div class="col-12 table-responsive">
+                                <table class="table table-light" style="font-size: 0.8em;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Empleado</th>
+                                            <th scope="col">Tarea</th>
+                                            <th scope="col">Historial</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pqr->historialtareas as $historial)
                                             <tr>
-                                                <th scope="col">Fecha</th>
-                                                <th scope="col">Empleado</th>
-                                                <th scope="col">Tarea</th>
-                                                <th scope="col">Historial</th>
+                                                <td>{{ $historial->created_at }}</td>
+                                                <td class="text-justify">{{ $historial->empleado->nombre1 }}
+                                                    {{ $historial->empleado->apellido1 }}</td>
+                                                @if ($historial->tarea)
+                                                    <td class="text-justify">{{ $historial->tarea->tarea }}</td>
+                                                @else
+                                                    <td class="text-justify">ADMINISTRADOR</td>
+                                                @endif
+                                                <td class="text-justify">{{ $historial->historial }}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pqr->historialtareas as $historial)
-                                                <tr>
-                                                    <td>{{ $historial->created_at }}</td>
-                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                    @if($historial->tarea)
-                                                        <td class="text-justify">{{ $historial->tarea->tarea }}</td>
-                                                    @else
-                                                        <td class="text-justify">ADMINISTRADOR</td>
-                                                    @endif
-                                                    <td class="text-justify">{{ $historial->historial }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+                            <div class="row d-flex px-12 p-3">
+                                <div class="container-mensaje-historial-tarea form-group col-12">
+                                    <label for="" class="">Agregar Historial</label>
+                                    <textarea class="form-control" rows="3" placeholder="" name="mensaje-historia-tarea"
+                                        id="mensaje-historial-tarea" required></textarea>
                                 </div>
-                                <hr>
-                                <div class="row d-flex px-12 p-3"> 
-                                    <div class="container-mensaje-historial-tarea form-group col-12">
-                                        <label for="" class="">Agregar Historial</label>
-                                        <textarea class="form-control" rows="3" placeholder="" name="mensaje-historia-tarea"
-                                            id="mensaje-historial-tarea" required></textarea>
-                                    </div>
-                                    <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                        <button href="" class="btn btn-primary mx-2 px-4" id="guardarHistorialTarea" data_url="{{ route('historial_tarea_guardar') }}"
+                                <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
+                                    <button href="" class="btn btn-primary mx-2 px-4" id="guardarHistorialTarea"
+                                        data_url="{{ route('historial_tarea_guardar') }}"
                                         data_token="{{ csrf_token() }}">Guardar</button>
-                                    </div>
                                 </div>
+                            </div>
                             {{-- @endif --}}
 
-                            @if(sizeOf($pqr->anexos))   
+                            @if (sizeOf($pqr->anexos))
                                 <hr>
                                 <div class="p-2 mb-4">
                                     <h5 class="">Historial de respuesta </h5>
@@ -649,9 +686,10 @@
                                                 @foreach ($pqr->anexos as $anexo)
                                                     <tr>
                                                         <td>{{ $anexo->created_at }}</td>
-                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }}
+                                                            {{ $anexo->empleado->apellido1 }}</td>
                                                         <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                        @if($anexo->tipo_respuesta == 0)
+                                                        @if ($anexo->tipo_respuesta == 0)
                                                             <td>Respuesta PQR</td>
                                                         @elseif($anexo->tipo_respuesta == 1)
                                                             <td>Respuesta aclaración</td>
@@ -660,7 +698,10 @@
                                                         @elseif($anexo->tipo_respuesta == 3)
                                                             <td>Respuesta apelación</td>
                                                         @endif
-                                                        <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                                        <td class="text-justify"><a
+                                                                href="{{ asset('documentos/tareas/' . $anexo->url) }}"
+                                                                target="_blank" rel="noopener noreferrer"><i
+                                                                    class="fa fa-download" aria-hidden="true"></i></a></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
