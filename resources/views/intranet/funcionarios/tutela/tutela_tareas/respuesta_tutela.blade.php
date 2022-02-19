@@ -101,10 +101,18 @@
         <div>
             <h4 style="text-align: center;">I.  PRONUNCIAMIENTO FRENTE A LOS HECHOS</h4>
             @foreach($tutela->respuestasHechos as $key => $respuesta)
-                <h4>Hechos</h4>
-                @foreach($respuesta->relacion as $key => $relacion)
-                    <p style="text-transform: capitalize;">{{$relacion->hecho->hecho}}</p>
-                @endforeach
+                <h4>Hechos:</h4>
+                @if($tutela->cantidad_hechos)
+                    <p style="text-transform: capitalize;">
+                        @foreach($respuesta->relacion as $key => $relacion)
+                            {{$relacion->hecho->consecutivo}},
+                        @endforeach
+                    </p>
+                @else
+                    @foreach($respuesta->relacion as $key => $relacion)
+                        <p style="text-transform: capitalize;"><strong class="fw-bold">Hecho # {{$relacion->hecho->consecutivo}}: </strong>{{$relacion->hecho->hecho}}</p>
+                    @endforeach
+                @endif
                 <h4>Respuesta</h4>
                 <p> {!! $respuesta->respuesta !!}</p>
             @endforeach
@@ -119,10 +127,18 @@
         <div>
             <h4 style="text-align: center;">III.  FUNDAMENTOS Y RAZONES DE DERECHO</h4>
             @foreach($tutela->respuestasPretensiones as $key => $respuesta)
-                <h4>Prestensión(es)</h4>
-                @foreach($respuesta->relacion as $key => $relacion)
-                    <p style="text-transform: capitalize;">{{$relacion->pretension->pretension}}</p>
-                @endforeach
+                <h4>Prestensión(es):</h4>
+                @if($tutela->cantidad_pretensiones)
+                    <p style="text-transform: capitalize;">
+                        @foreach($respuesta->relacion as $key => $relacion)
+                            {{$relacion->pretension->consecutivo}},
+                        @endforeach
+                    </p>
+                @else
+                    @foreach($respuesta->relacion as $key => $relacion)
+                        <p style="text-transform: capitalize;"><strong class="fw-bold">Pretensión # {{$relacion->pretension->consecutivo}}: </strong>{{$relacion->pretension->pretension}}</p>
+                    @endforeach
+                @endif
                 <h4>Respuesta</h4>
                 <p> {!! $respuesta->respuesta !!}</p>
             @endforeach

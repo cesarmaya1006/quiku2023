@@ -52,6 +52,8 @@ class CrearTablaAutoAdmisorio extends Migration
             $table->unsignedBigInteger('estadostutela_id')->nullable();
             $table->foreign('estadostutela_id', 'fk_estados_tutela')->references('id')->on('estadostutela')->onDelete('restrict')->onUpdate('restrict');
             $table->boolean('estado_asignacion')->default(0)->nullable();
+            $table->boolean('cantidad_hechos')->default(0)->nullable();
+            $table->boolean('cantidad_pretensiones')->default(0)->nullable();
             $table->boolean('estado_creacion')->default(0)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';

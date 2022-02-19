@@ -410,19 +410,35 @@
                                                                 </div>
                                                             @endif
 
-                                                            @foreach ($respuesta->relacion as $relacion)
-                                                                <div class="row">
-                                                                    <div class="my-2 col-11">
-                                                                        <strong class="">#{{ $relacion->hecho->consecutivo }} Hecho: </strong>{{$relacion->hecho->hecho}}
-                                                                    </div>
-                                                                    @if($respuesta->estado_id != 11)
-                                                                        <div class="col-1">
-                                                                            <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho" data_url="{{ route('eliminar_respuesta_hecho_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
-                                                                            <input class="id_relacion_hecho" type="hidden" value="{{ $relacion->hecho->id }}">
+                                                            <div class="col-12 row">
+                                                                @foreach ($respuesta->relacion as $relacion)
+                                                                    @if($tutela->cantidad_hechos)
+                                                                        <div class="d-flex col-10 col-md-5 col-lg-3">
+                                                                            @if($respuesta->estado_id != 11)
+                                                                                <div class="mr-3">
+                                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho" data_url="{{ route('eliminar_respuesta_hecho_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
+                                                                                    <input class="id_relacion_hecho" type="hidden" value="{{ $relacion->hecho->id }}">
+                                                                                </div>
+                                                                            @endif
+                                                                            <div class="my-2">
+                                                                                <strong class="">Hecho # {{ $relacion->hecho->consecutivo }}</strong>{{$relacion->hecho->hecho}}
+                                                                            </div>
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="row">
+                                                                            <div class="my-2 col-11">
+                                                                                <strong class="">#{{ $relacion->hecho->consecutivo }} Hecho: </strong>{{$relacion->hecho->hecho}}
+                                                                            </div>
+                                                                            @if($respuesta->estado_id != 11)
+                                                                                <div class="col-1">
+                                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho" data_url="{{ route('eliminar_respuesta_hecho_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
+                                                                                    <input class="id_relacion_hecho" type="hidden" value="{{ $relacion->hecho->id }}">
+                                                                                </div>
+                                                                            @endif
                                                                         </div>
                                                                     @endif
-                                                                </div>
-                                                            @endforeach
+                                                                @endforeach
+                                                            </div>
                                                             <div class="row respuesta-hecho">
                                                                 <div class="col-12 row mt-4 mb-2 ">
                                                                     <div class="col-12 col-md-5">
@@ -585,20 +601,35 @@
                                                                     </div>
                                                                 </div>
                                                             @endif
-
-                                                            @foreach ($respuesta->relacion as $relacion)
-                                                                <div class="row">
-                                                                    <div class="my-2 col-11">
-                                                                        <strong class="">#{{ $relacion->pretension->consecutivo }} Pretensión: </strong>{{$relacion->pretension->pretension}}
-                                                                    </div>
-                                                                    @if($respuesta->estado_id != 11)
-                                                                        <div class="col-1">
-                                                                            <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension" data_url="{{ route('eliminar_respuesta_pretension_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
-                                                                            <input class="id_relacion_pretension" type="hidden" value="{{ $relacion->pretension->id }}">
+                                                            <div class="col-12 row">
+                                                                @foreach ($respuesta->relacion as $relacion)
+                                                                    @if($tutela->cantidad_pretensiones)
+                                                                        <div class="d-flex col-10 col-md-5 col-lg-3">
+                                                                            @if($respuesta->estado_id != 11)
+                                                                                <div class="mr-3">
+                                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension" data_url="{{ route('eliminar_respuesta_pretension_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
+                                                                                    <input class="id_relacion_pretension" type="hidden" value="{{ $relacion->pretension->id }}">
+                                                                                </div>
+                                                                            @endif
+                                                                            <div class="my-2">
+                                                                                <strong class="">Pretensión # {{ $relacion->pretension->consecutivo }}</strong>{{$relacion->pretension->pretension}}
+                                                                            </div>
                                                                         </div>
-                                                                    @endif
-                                                                </div>
-                                                            @endforeach
+                                                                    @else   
+                                                                        <div class="row">
+                                                                            <div class="my-2 col-11">
+                                                                                <strong class="">#{{ $relacion->pretension->consecutivo }} Pretensión: </strong>{{$relacion->pretension->pretension}}
+                                                                            </div>
+                                                                            @if($respuesta->estado_id != 11)
+                                                                                <div class="col-1">
+                                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension" data_url="{{ route('eliminar_respuesta_pretension_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
+                                                                                    <input class="id_relacion_pretension" type="hidden" value="{{ $relacion->pretension->id }}">
+                                                                                </div>
+                                                                            @endif
+                                                                        </div>
+                                                                    @endif 
+                                                                @endforeach
+                                                            </div>
                                                             <div class="row respuesta-pretension">
                                                                 <div class="col-12 row mt-4 mb-2 ">
                                                                     <div class="col-12 col-md-5">
@@ -1078,7 +1109,7 @@
                                             </div>
                                         </div>
                                         <div class="card-body" style="display: none;">
-                                            <div class="rounded border m-3 p-2 px-4">
+                                            <div class="rounded border my-3 p-2 px-4">
                                                 <h5 class="mt-2">Hechos de la defensa</h5>
                                                 @if(sizeof($tutela->resuelves))
                                                     <div class="row d-flex px-12 p-3">

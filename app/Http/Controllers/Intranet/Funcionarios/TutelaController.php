@@ -140,6 +140,12 @@ class TutelaController extends Controller
             $update_tutela['fecha_radicado'] = date("Y-m-d H:i:s");
             $update_tutela['estado_creacion'] = 1;
             $update_tutela['estadostutela_id'] = 2;
+            if($request['check_cantidad_hechos']){
+                $update_tutela['cantidad_hechos'] = 1;
+            }
+            if($request['check_cantidad_pretensiones']){
+                $update_tutela['cantidad_pretensiones'] = 1;
+            }
             $repuesta = AutoAdmisorio::findOrFail($request["id"])->update($update_tutela);
             return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
         } else {
@@ -222,9 +228,18 @@ class TutelaController extends Controller
     {
         if ($request->ajax()) {
             $nuevo_hecho['auto_admisorio_id'] = $request['auto_admisorio_id'];
-            $nuevo_hecho['hecho'] = $request['hecho'];
-            $nuevo_hecho['consecutivo'] = $request['consecutivo'];
-            $repuesta = HechosTutela::create($nuevo_hecho);
+            if($request['check_cantidad_hechos']){
+                for ($i = 0; $i < $request['cantidad_hechos'] ; $i++) { 
+                    $nuevo_hecho['hecho'] = '';
+                    $nuevo_hecho['consecutivo'] = $i + 1;
+                    $repuesta = HechosTutela::create($nuevo_hecho);
+                }
+                $repuesta = 'ok';
+            }else{
+                $nuevo_hecho['hecho'] = $request['hecho'];
+                $nuevo_hecho['consecutivo'] = $request['consecutivo'];
+                $repuesta = HechosTutela::create($nuevo_hecho);
+            }
             return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
         } else {
             abort(404);
@@ -235,9 +250,18 @@ class TutelaController extends Controller
     {
         if ($request->ajax()) {
             $nuevo_pretension['auto_admisorio_id'] = $request['auto_admisorio_id'];
-            $nuevo_pretension['pretension'] = $request['pretension'];
-            $nuevo_pretension['consecutivo'] = $request['consecutivo'];
-            $repuesta = PretensionesTutela::create($nuevo_pretension);
+            if($request['check_cantidad_pretensiones']){
+                for ($i = 0; $i < $request['cantidad_pretensiones'] ; $i++) { 
+                    $nuevo_pretension['pretension'] = '';
+                    $nuevo_pretension['consecutivo'] = $i + 1;
+                    $repuesta = PretensionesTutela::create($nuevo_pretension);
+                }
+                $repuesta = 'ok';
+            }else{
+                $nuevo_pretension['pretension'] = $request['pretension'];
+                $nuevo_pretension['consecutivo'] = $request['consecutivo'];
+                $repuesta = PretensionesTutela::create($nuevo_pretension);
+            }
             return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
         } else {
             abort(404);
@@ -422,24 +446,31 @@ class TutelaController extends Controller
 
     public function estado_hecho_guardar(Request $request)
     {
-        if ($request->ajax()) {
-            $nuevoEstado['estado_id'] = $request["estado"];
+        $nuevoEstado['estado_id'] = $request["estado"];
+        if($request['id_hecho']){
             $hecho = HechosTutela::findOrFail($request['id_hecho'])->update($nuevoEstado);
-            return response()->json(['mensaje' => 'ok', 'data' => $hecho]);
-        } else {
-            abort(404);
+        }else{
+            foreach ($request['id_hechos'] as $hechoId) {
+                HechosTutela::findOrFail($hechoId)->update($nuevoEstado);
+            }
+            $hecho = 'ok';
         }
+        return response()->json(['mensaje' => 'ok', 'data' => $hecho]);
     }
 
     public function estado_pretension_guardar(Request $request)
     {
-        if ($request->ajax()) {
-            $nuevoEstado['estado_id'] = $request["estado"];
+        $nuevoEstado['estado_id'] = $request["estado"];
+        if($request['id_pretension']){
             $pretension = PretensionesTutela::findOrFail($request['id_pretension'])->update($nuevoEstado);
-            return response()->json(['mensaje' => 'ok', 'data' => $pretension]);
-        } else {
-            abort(404);
+        }else{
+            foreach ($request['id_pretensiones'] as $pretensionId) {
+                PretensionesTutela::findOrFail($pretensionId)->update($nuevoEstado);
+            }
+            $pretension = 'ok';
         }
+        return response()->json(['mensaje' => 'ok', 'data' => $pretension]);
+ 
     }
 
     public function asignacion_hecho_guardar(Request $request)
@@ -652,15 +683,19 @@ class TutelaController extends Controller
 
     public function relacion_respuesta_hecho_guardar(Request $request)
     {
-        if ($request->ajax()) {
-            $relacion['auto_admisorio_id'] = $request["id_auto"];
+        $relacion['auto_admisorio_id'] = $request["id_auto"];
+        $relacion['respuesta_hechos_id'] = $request["id_respuesta"];
+        if($request["id_hecho"]){
             $relacion['hecho_tutela_id'] = $request["id_hecho"];
-            $relacion['respuesta_hechos_id'] = $request["id_respuesta"];
             $respuestaRelacion = RelacionHecho::create($relacion);
-            return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
-        } else {
-            abort(404);
+        }else{
+            foreach ($request["id_hechos"] as $hechoId) {
+                $relacion['hecho_tutela_id'] = $hechoId;
+                RelacionHecho::create($relacion);
+            }
+            $respuestaRelacion = 'ok';
         }
+        return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
     }
 
     public function estado_respuesta_hecho_guardar(Request $request)
@@ -715,15 +750,20 @@ class TutelaController extends Controller
 
     public function relacion_respuesta_pretension_guardar(Request $request)
     {
-        if ($request->ajax()) {
-            $relacion['auto_admisorio_id'] = $request["id_auto"];
+        $relacion['auto_admisorio_id'] = $request["id_auto"];
+        $relacion['respuesta_pretensiones_id'] = $request["id_respuesta"];
+        if($request["id_pretension"]){
             $relacion['pretension_tutela_id'] = $request["id_pretension"];
-            $relacion['respuesta_pretensiones_id'] = $request["id_respuesta"];
             $respuestaRelacion = RelacionPretension::create($relacion);
-            return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
-        } else {
-            abort(404);
-        }
+        }else{
+            foreach ($request["id_pretensiones"] as $pretensionId) {
+                $relacion['pretension_tutela_id'] = $pretensionId;
+                RelacionPretension::create($relacion);
+            }
+            $respuestaRelacion = 'ok';
+        }  
+        return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
+
     }
 
     public function estado_respuesta_pretension_guardar(Request $request)

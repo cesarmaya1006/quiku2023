@@ -101,7 +101,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('prioridad', [TutelaController::class, 'prioridad_tutela_guardar'])->name('prioridad_tutela_guardar');
         Route::post('estado_hecho', [TutelaController::class, 'estado_hecho_guardar'])->name('estado_hecho_guardar');
         Route::post('estado_pretension', [TutelaController::class, 'estado_pretension_guardar'])->name('estado_pretension_guardar');
-        Route::post('estado_hecho', [TutelaController::class, 'estado_hecho_guardar'])->name('estado_hecho_guardar');
         Route::post('asignacion_hecho', [TutelaController::class, 'asignacion_hecho_guardar'])->name('asignacion_hecho_guardar');
         Route::post('asignacion_pretension', [TutelaController::class, 'asignacion_pretension_guardar'])->name('asignacion_pretension_guardar');
         Route::post('historial_hecho', [TutelaController::class, 'historial_hecho_guardar'])->name('historial_hecho_guardar');

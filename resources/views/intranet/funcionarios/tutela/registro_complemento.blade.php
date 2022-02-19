@@ -41,7 +41,11 @@
                                         </div>
                                     </div>
                                     <div class="card-body" style="display: none;">
-                                        <div class="form-row">
+                                        <div class="form-check text-end pr-4 flex align-self-center">
+                                            <label class="form-check-label mr-2"><strong>Agregar hechos por cantidad</strong></label>
+                                            <input type="checkbox" class="form-check-input check-input-hechos mt-1 mx-auto">
+                                        </div>
+                                        <div class="form-row none-hechos">
                                             <div class="col-12 d-flex row hechos">
                                                 <div class="col-12 bloque_hecho">
                                                     <div class="col-12 d-flex row contenido_hecho">
@@ -57,6 +61,14 @@
                                                 <button class="btn btn-secondary btn-xs btn-sombra pl-2 pr-2 crearHecho"><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir otro hecho</button>
                                             </div>
                                         </div>
+                                        <div class="form-row active-hechos d-none">
+                                            <div class="col-12 d-flex row hechos">
+                                                <div class="row">
+                                                    <label class="requerido text-black h6">Ingrese cantidad de hechos</label>
+                                                    <input class="form-control col-4 ml-2 cantidad-hechos" type="number" required>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card card-outline card-primary collapsed-card mx-1 py-2 mb-4" style="font-size: 0.8em;">
@@ -69,7 +81,11 @@
                                         </div>
                                     </div>
                                     <div class="card-body" style="display: none;">
-                                        <div class="form-row">
+                                        <div class="form-check text-end pr-4 flex align-self-center">
+                                            <label class="form-check-label mr-2"><strong>Agregar pretensiones por cantidad</strong></label>
+                                            <input type="checkbox" class="form-check-input check-input-pretensiones mt-1 mx-auto">
+                                        </div>
+                                        <div class="form-row none-pretensiones">
                                             <div class="col-12 d-flex row pretensiones">
                                                 <div class="col-12 bloque_pretension">
                                                     <div class="col-12 d-flex row contenido_pretension">
@@ -83,6 +99,14 @@
                                             </div>
                                             <div class="col-12 d-flex justify-content-end flex-row mt-3">
                                                 <button class="btn btn-secondary btn-xs btn-sombra pl-2 pr-2 crearPretension"><i class="fa fa-plus-circle mr-2" aria-hidden="true"></i> Añadir otra pretensión</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-row active-pretensiones d-none">
+                                            <div class="col-12 d-flex row pretensiones">
+                                                <div class="row">
+                                                    <label class="requerido text-black h6">Ingrese cantidad de pretensiones</label>
+                                                    <input class="form-control col-4 ml-2 cantidad-pretensiones" type="number" required>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

@@ -202,28 +202,44 @@ window.addEventListener('DOMContentLoaded', function () {
             let url5 = e.target.getAttribute('data_url5')
             let token = e.target.getAttribute('data_token')
             let auto_admisorio_id = contenedorPadre.querySelector('.auto_admisorio_id').value
+            let check_cantidad_hechos = contenedorPadre.querySelector('.check-input-hechos').checked
+            let check_cantidad_pretensiones = contenedorPadre.querySelector('.check-input-pretensiones').checked
+            let cantidad_hechos = contenedorPadre.querySelector('.cantidad-hechos').value
+            let cantidad_pretensiones = contenedorPadre.querySelector('.cantidad-pretensiones').value
             let validacion = false
             let hechos = contenedorPadre.querySelectorAll('.contenido_hecho')
-            hechos.forEach(hecho => {
-                if(!hecho.querySelector('.hecho').value){
-                    validacion = true
-                }
-            })
             let pretensiones = contenedorPadre.querySelectorAll('.contenido_pretension')
-            pretensiones.forEach(pretension => {
-                if(!pretension.querySelector('.pretension').value){
+            if(check_cantidad_hechos){
+                if(!cantidad_hechos){
                     validacion = true
                 }
-            })
+            }else{
+                hechos.forEach(hecho => {
+                    if(!hecho.querySelector('.hecho').value){
+                        validacion = true
+                    }
+                })
+            }
+            if(check_cantidad_pretensiones){
+                if(!cantidad_pretensiones){
+                    validacion = true
+                }
+            }else{
+                pretensiones.forEach(pretension => {
+                    if(!pretension.querySelector('.pretension').value){
+                        validacion = true
+                    }
+                })
+            }
             if(validacion){
                 alert('los hechos y argumentos son campos obligatorios.')
+                btnGuardar.removeAttribute('disabled','' )
             }else{
-                hechos.forEach((item, key) => {
-                    let hecho = item.querySelector('.hecho').value
+                if(check_cantidad_hechos){
                     let data = {
                         auto_admisorio_id,
-                        hecho,
-                        consecutivo: key + 1
+                        check_cantidad_hechos,
+                        cantidad_hechos
                     }
                     $.ajax({
                         url: url,
@@ -237,14 +253,35 @@ window.addEventListener('DOMContentLoaded', function () {
                             console.log(error.responseJSON)
                         }
                     });
-                })
+                    
+                }else {
+                    hechos.forEach((item, key) => {
+                        let hecho = item.querySelector('.hecho').value
+                        let data = {
+                            auto_admisorio_id,
+                            hecho,
+                            consecutivo: key + 1
+                        }
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: data,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error.responseJSON)
+                            }
+                        });
+                    })
+                }
 
-                pretensiones.forEach((item, key) => {
-                    let pretension = item.querySelector('.pretension').value
+                if(check_cantidad_pretensiones){
                     let data = {
                         auto_admisorio_id,
-                        pretension,
-                        consecutivo: key + 1
+                        check_cantidad_pretensiones,
+                        cantidad_pretensiones
                     }
                     $.ajax({
                         url: url1,
@@ -258,7 +295,28 @@ window.addEventListener('DOMContentLoaded', function () {
                             console.log(error.responseJSON)
                         }
                     });
-                })
+                }else{
+                    pretensiones.forEach((item, key) => {
+                        let pretension = item.querySelector('.pretension').value
+                        let data = {
+                            auto_admisorio_id,
+                            pretension,
+                            consecutivo: key + 1
+                        }
+                        $.ajax({
+                            url: url1,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: data,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error.responseJSON)
+                            }
+                        });
+                    })
+                }
         
                 let argumentos = contenedorPadre.querySelectorAll('.contenido_argumento')
                 argumentos.forEach(item => {
@@ -324,7 +382,6 @@ window.addEventListener('DOMContentLoaded', function () {
                             sub_motivo_tutela,
                             tipo_tutela,
                             id: auto_admisorio_id
-    
                         }
                         $.ajax({
                             url: url4,
@@ -343,6 +400,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
                 let data = {
                     id: auto_admisorio_id,
+                    check_cantidad_hechos,
+                    check_cantidad_pretensiones
                 }
                 $.ajax({
                     url: url5,
@@ -363,5 +422,65 @@ window.addEventListener('DOMContentLoaded', function () {
         })
     }
     //Fin guardar auto admisorio complemento 
+    // ---------------------------------------------------------------------------------------------------------
+    // Inicio Funcion de cantidad hechos
+    if(document.querySelector('.check-input-hechos')){
+        let checkHechos = document.querySelector('.check-input-hechos')
+        checkHechos.addEventListener('click', function(e){
+            let btnCheck = e.target
+            let contenedorPadre = btnCheck.parentElement.parentElement
+            let bloqueCheck = contenedorPadre.querySelector('.active-hechos')
+            let bloqueNocheck = contenedorPadre.querySelector('.none-hechos')
+            if(btnCheck.checked){
+                if(bloqueCheck.classList.contains('d-none')){
+                    bloqueCheck.classList.remove('d-none')
+                    bloqueNocheck.classList.add('d-none')
+                }else{
+                    bloqueCheck.classList.add('d-none')
+                    bloqueNocheck.classList.remove('d-none')
+                }
+            }else{
+                if(bloqueCheck.classList.contains('d-none')){
+                    bloqueCheck.classList.remove('d-none')
+                    bloqueNocheck.classList.add('d-none')
+                }else{
+                    bloqueCheck.classList.add('d-none')
+                    bloqueNocheck.classList.remove('d-none')
+                }
+            }
+        })
 
+    }
+    // Fin Funcion de cantidad hechos
+    // ---------------------------------------------------------------------------------------------------------
+    // Inicio Funcion de cantidad pretensiones
+    if(document.querySelector('.check-input-pretensiones')){
+        let checkPretensiones = document.querySelector('.check-input-pretensiones')
+        checkPretensiones.addEventListener('click', function(e){
+            let btnCheck = e.target
+            let contenedorPadre = btnCheck.parentElement.parentElement
+            let bloqueCheck = contenedorPadre.querySelector('.active-pretensiones')
+            let bloqueNocheck = contenedorPadre.querySelector('.none-pretensiones')
+            if(btnCheck.checked){
+                if(bloqueCheck.classList.contains('d-none')){
+                    bloqueCheck.classList.remove('d-none')
+                    bloqueNocheck.classList.add('d-none')
+                }else{
+                    bloqueCheck.classList.add('d-none')
+                    bloqueNocheck.classList.remove('d-none')
+                }
+            }else{
+                if(bloqueCheck.classList.contains('d-none')){
+                    bloqueCheck.classList.remove('d-none')
+                    bloqueNocheck.classList.add('d-none')
+                }else{
+                    bloqueCheck.classList.add('d-none')
+                    bloqueNocheck.classList.remove('d-none')
+                }
+            }
+        })
+
+    }
+    // Fin Funcion de cantidad hechos
+    
 })
