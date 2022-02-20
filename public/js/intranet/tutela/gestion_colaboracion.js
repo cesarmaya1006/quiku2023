@@ -558,46 +558,45 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
             function guardarRelacionRespuesta(idrespuesta) {
+                let hechosValidados = []
                 hechos.forEach(hecho => {
                     if (hecho.checked) {
-                        let data = {
-                            estado,
-                            id_hecho: hecho.value,
-                            id_auto,
-                            id_respuesta: idrespuesta.data
-                        }
-                        $.ajax({
-                            url: url3,
-                            type: 'POST',
-                            headers: { 'X-CSRF-TOKEN': token },
-                            data: data,
-                            success: function(respuesta) {
-                                // console.log(respuesta)
-                            },
-                            error: function(error) {
-                                console.log(error)
-                            }
-                        });
-
-                        $.ajax({
-                            url: url4,
-                            type: 'POST',
-                            headers: { 'X-CSRF-TOKEN': token },
-                            data: data,
-                            success: function(respuesta) {
-                                // console.log(respuesta)
-                            },
-                            error: function(error) {
-                                console.log(error)
-                            }
-                        });
+                        hechosValidados.push(hecho.value)
                     }
-
                 })
-                location.reload();
+                let data = {
+                    estado,
+                    id_hechos: hechosValidados,
+                    id_auto,
+                    id_respuesta: idrespuesta.data
+                }
+                fetch(url3, {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                     },
+                    method:'POST',
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(res => {
+                    fetch(url4, {
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                         },
+                        method:'POST',
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(res2 => {
+                        location.reload();
+                    })
+                })
             }
-
         }
+
+
     }
 
     // Guardar asignacion de hecho desde respuesta
@@ -621,32 +620,29 @@ window.addEventListener('DOMContentLoaded', function() {
                 id_respuesta,
                 estado
             }
-            $.ajax({
-                url: url,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
-                    // console.log(respuesta)
-
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
-            $.ajax({
-                url: url2,
-                type: 'POST',
-                headers: { 'X-CSRF-TOKEN': token },
-                data: data,
-                success: function(respuesta) {
+            fetch(url, {
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token
+                 },
+                method:'POST',
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(res => {
+                fetch(url2, {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                     },
+                    method:'POST',
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(res2 => {
                     location.reload();
-
-                },
-                error: function(error) {
-                    console.log(error)
-                }
-            });
+                })
+            })
         }
     }
 
@@ -733,45 +729,42 @@ window.addEventListener('DOMContentLoaded', function() {
             }
 
             function guardarRelacionRespuesta(idrespuesta) {
+                let pretensionesValidados = []
                 pretensiones.forEach(pretension => {
                     if (pretension.checked) {
-                        let data = {
-                            estado,
-                            id_pretension: pretension.value,
-                            id_auto,
-                            id_respuesta: idrespuesta.data
-                        }
-                        $.ajax({
-                            url: url3,
-                            type: 'POST',
-                            headers: { 'X-CSRF-TOKEN': token },
-                            data: data,
-                            success: function(respuesta) {
-                                // console.log(respuesta)
-                            },
-                            error: function(error) {
-                                console.log(error)
-                            }
-                        });
-
-                        $.ajax({
-                            url: url4,
-                            type: 'POST',
-                            headers: { 'X-CSRF-TOKEN': token },
-                            data: data,
-                            success: function(respuesta) {
-                                // console.log(respuesta)
-                            },
-                            error: function(error) {
-                                console.log(error)
-                            }
-                        });
+                        pretensionesValidados.push(pretension.value)
                     }
-
                 })
-                location.reload();
+                let data = {
+                    estado,
+                    id_pretensiones: pretensionesValidados,
+                    id_auto,
+                    id_respuesta: idrespuesta.data
+                }
+                fetch(url3, {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                     },
+                    method:'POST',
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(res => {
+                    fetch(url4, {
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                         },
+                        method:'POST',
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(res2 => {
+                        location.reload();
+                    })
+                })
             }
-
         }
     }
 
