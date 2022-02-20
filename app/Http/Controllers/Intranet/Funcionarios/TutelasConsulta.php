@@ -139,6 +139,7 @@ class TutelasConsulta extends Controller
                 for ($i = 1; $i <= $cantResuelves; $i++) {
                     $newResuelve['sentenciapinstancia_id'] = $nuevasentenciapinstancia->id;
                     $newResuelve['sentido'] = $request['sentido' . $i];
+                    $newResuelve['numeracion'] =  $i;
                     $newResuelve['dias'] = $request['diascant' . $i];
                     $newResuelve['horas'] = $request['horascant' . $i];
                     //------------------------------------------

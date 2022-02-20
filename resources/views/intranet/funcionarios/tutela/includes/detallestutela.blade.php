@@ -706,6 +706,7 @@
                                                                         <table class="table">
                                                                             <thead>
                                                                                 <tr>
+                                                                                    <th>Numeracion</th>
                                                                                     <th>Sentido</th>
                                                                                     <th>Tiempo de cumplimiento</th>
                                                                                     <th>Fecha de Cumplimiento</th>
@@ -714,6 +715,9 @@
                                                                             <tbody>
                                                                                 @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
                                                                                     <tr>
+                                                                                        <td scope="row">
+                                                                                            {{ $resuelve->numeracion }}
+                                                                                        </td>
                                                                                         <td>{{ $resuelve->sentido }}
                                                                                         </td>
                                                                                         <td>
