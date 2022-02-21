@@ -18,8 +18,9 @@ class DatabaseSeeder extends Seeder
             'docutipos', 'roles', 'menu', 'menu_rol', 'icono', 'pais', 'departamento', 'municipio',
             'sedes', 'parametros', 'areas', 'niveles', 'cargos', 'tipo_reposicion', 'area_influencia',
             'usuarios', 'personas', 'tipo_pqr', 'prioridades', 'estadospqr', 'motivos', 'motivo_sub', 'categorias', 'productos', 'marcas',
-            'referencias', 'servicios', 'diasfestivos', 'asignacion_particular_pqr', 'despachos' , 'wikuareas', 'wikutemas', 'wikutemaespecifico', 'wikudocument', 'estadostutela', 'tareas_tutela',
-            'asignacion_estados_tutela',
+            'referencias', 'servicios', 'diasfestivos', 'asignacion_particular_pqr', 'despachos', 'wikuareas', 'wikutemas', 'wikutemaespecifico', 'wikudocument', 'estadostutela', 'tareas_tutela',
+            'asignacion_estados_tutela', 'auto_admisorio', 'tutela_motivo', 'accionante_accionado', 'hechos_tutela', 'pretensiones_tutela',
+            'argumentos_tutela', 'historial_primera_asignacion_tutela', 'asignancion_tareas_tutela', 'sentenciapinstancia', 'resuelvesentencia',
         ]);
         // --------------------------------------------------------------------------------------------------
         $this->call(Tabla_DocuTipos::class);
@@ -61,6 +62,16 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_EstadosTutela::class);
         $this->call(Tabla_TareasTutela::class);
         $this->call(Tabla_AsignacionEstadosTutela::class);
+        $this->call(TutelaAutoAdmisorio::class);
+        $this->call(TutelaMotivo::class);
+        $this->call(TutelaAccionanteAccionado::class);
+        $this->call(TutelaHechosTutela::class);
+        $this->call(TutelaPretensionesTutela::class);
+        $this->call(TutelaArgumentosTutela::class);
+        $this->call(TutelaHistorialPrimeraAsignacionTutela::class);
+        $this->call(TutelaAsignancionTareasTutela::class);
+        $this->call(PrimeraSentencia::class);
+        $this->call(PrimeraInstanciaResuelve::class);
     }
 
     protected function truncateTablas(array $tablas)

@@ -9,6 +9,7 @@ $(document).ready(function() {
     $('.archivoAdjuntoC').addClass('d-none');
 
     $('input[type=radio][name=formaCarga]').change(function() {
+        var sentencia = $('#sentencia').val();
         if (this.value == 'cantidad') {
             $('#cajaCantiodad').removeClass('d-none');
             $('#cajaDetalle').addClass('d-none');
@@ -36,9 +37,13 @@ $(document).ready(function() {
             xHtml += '<div class="col-12 col-md-2 form-group">';
             xHtml += '<label for="sentido" id="sentido1">Sentido del resuelve</label>';
             xHtml += '<select id="sentido1" class="form-control form-control-sm" name="sentido1">';
-            xHtml += '<option value="Favorable">Favorable</option>';
-            xHtml += '<option value="Desfavorable">Desfavorable</option>';
-            xHtml += '<option value="Parcialmente desfavorable">Parcialmente desfavorable</option>';
+            if (sentencia == 'Favorable' || sentencia == 'Parcialmente desfavorable') {
+                xHtml += '<option value="Favorable">Favorable</option>';
+            }
+            if (sentencia == 'Desfavorable' || sentencia == 'Parcialmente desfavorable') {
+                xHtml += '<option value="Desfavorable">Desfavorable</option>';
+                xHtml += '<option value="Parcialmente desfavorable">Parcialmente desfavorable</option>';
+            }
             xHtml += '</select>';
             xHtml += '</div>';
             xHtml += '</div>';
@@ -109,9 +114,13 @@ $(document).ready(function() {
             xHtml += '<div class="col-12 col-md-2 form-group">';
             xHtml += '<label for="sentido" id="sentido">Sentido del resuelve</label>';
             xHtml += '<select id="sentido" class="form-control form-control-sm" name="sentido">';
-            xHtml += '<option value="Favorable">Favorable</option>';
-            xHtml += '<option value="Desfavorable">Desfavorable</option>';
-            xHtml += '<option value="Parcialmente desfavorable">Parcialmente desfavorable</option>';
+            if (sentencia == 'Favorable' || sentencia == 'Parcialmente desfavorable') {
+                xHtml += '<option value="Favorable">Favorable</option>';
+            }
+            if (sentencia == 'Desfavorable' || sentencia == 'Parcialmente desfavorable') {
+                xHtml += '<option value="Desfavorable">Desfavorable</option>';
+                xHtml += '<option value="Parcialmente desfavorable">Parcialmente desfavorable</option>';
+            }
             xHtml += '</select>';
             xHtml += '</div>';
             xHtml += '<div class="col-12 col-md-6 form-group">';

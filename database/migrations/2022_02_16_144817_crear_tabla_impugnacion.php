@@ -15,6 +15,8 @@ class CrearTablaImpugnacion extends Migration
     {
         Schema::create('impugnacion', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
+            $table->unsignedBigInteger('sentenciapinstancia_id');
+            $table->foreign('sentenciapinstancia_id', 'fk_sentenciap_impugnacion')->references('id')->on('sentenciapinstancia')->onDelete('restrict')->onUpdate('restrict');
             $table->string('interpositor', 255)->nullable();
             $table->date('fecha')->nullable();
             $table->timestamps();

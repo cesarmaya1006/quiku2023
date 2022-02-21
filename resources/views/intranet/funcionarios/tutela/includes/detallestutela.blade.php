@@ -649,7 +649,7 @@
                                                             <h6>Resuleves Primera Instancia</h6>
                                                         </div>
                                                         @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                            @if ($resuelve->numeracion != null)
+                                                            @if ($resuelve->resuelve != null)
                                                                 <?php $tipo = 'detalle'; ?>
                                                             @else
                                                                 <?php $tipo = 'cantidad'; ?>
