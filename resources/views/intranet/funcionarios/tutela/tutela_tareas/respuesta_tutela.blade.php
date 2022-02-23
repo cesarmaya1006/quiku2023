@@ -146,8 +146,14 @@
         <div class="tabla">
             <h4 style="text-align: center;">IV.  PRUEBAS APORTADAS CON LA CONTESTACIÓN</h4>
             <ol>
+                @php
+                    $validardor_anexos = false;
+                @endphp
                 @foreach ($tutela->respuestasHechos as $key => $respuesta)
                     @foreach ($respuesta->documentos as $key => $anexo)
+                        @php
+                            $validador_anexos = true;
+                        @endphp
                         <li>
                             <p class="text-justify">{{ $anexo->titulo }}</p>
                         </li>
@@ -155,11 +161,17 @@
                 @endforeach
                 @foreach ($tutela->respuestasPretensiones as $key => $respuesta)
                     @foreach ($respuesta->documentos as $key => $anexo)
+                        @php
+                            $validador_anexos = true;
+                        @endphp
                         <li>
                             <p class="text-justify">{{ $anexo->titulo }}</p>
                         </li>
                     @endforeach
                 @endforeach
+                @if (!$validardor_anexos)
+                    <p class="text-justify">Sin pruebas.</p>
+                @endif
             </ol>
         </div>
         <div>

@@ -47,6 +47,12 @@ class CrearTablaAutoAdmisorio extends Migration
             $table->text('text_medida_cautelar')->nullable();
             $table->bigInteger('dias_medida_cautelar')->default(0)->nullable();
             $table->bigInteger('horas_medida_cautelar')->default(0)->nullable();
+            //Bloque tutela    
+            $table->string('titulo_tutela', 255)->nullable();
+            $table->longText('descripcion_tutela')->nullable();
+            $table->string('url_tutela', 255)->nullable();
+            $table->string('extension_tutela', 255)->nullable();
+            $table->double('peso_tutela')->nullable();
             //Bloque estados    
             $table->dateTime('fecha_limite')->nullable();
             $table->unsignedBigInteger('estadostutela_id')->nullable();

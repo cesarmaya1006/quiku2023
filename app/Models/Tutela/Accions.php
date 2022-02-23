@@ -3,6 +3,7 @@
 namespace App\Models\Tutela;
 
 use App\Models\Admin\Tipo_Docu;
+use App\Models\Tutela\TipoAccion;
 use App\Models\Tutela\AutoAdmisorio;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -22,5 +23,10 @@ class Accions extends Model
     public function tipos_docu_accion()
     {
         return $this->belongsTo(Tipo_Docu::class, 'docutipos_id_accion', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function tipo_accion()
+    {
+        return $this->belongsTo(TipoAccion::class, 'tipo_accion_id', 'id');
     }
 }

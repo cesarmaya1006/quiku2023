@@ -158,7 +158,7 @@
                                                     <h6>Cargar auto admisorio</h6>
                                                 </div>
                                                 <div class="col-12 col-md-4 form-group titulo-anexo-admisorio">
-                                                    <label for="titulo">Título archivo</label>
+                                                    <label class="requerido" for="titulo">Título archivo</label>
                                                     <input type="text" class="form-control form-control-sm">
                                                 </div>
                                                 <div class="col-12 col-md-4 form-group descripcion-anexo-admisorio">
@@ -166,7 +166,7 @@
                                                     <input type="text" class="form-control form-control-sm">
                                                 </div>
                                                 <div class="col-12 col-md-4 form-group archivo-admisorio">
-                                                    <label for="documentos">Archivo</label>
+                                                    <label class="requerido" for="documentos">Archivo</label>
                                                     <input class="form-control form-control-sm" type="file">
                                                 </div>
                                             </div>
@@ -230,14 +230,14 @@
                                         <div class="form-row">
                                             <div class="col-12 d-flex row accions">
                                                 <div class="col-12 bloque_accions">
-                                                    <div class="col-12 d-flex row contenido_accion">
+                                                    <div class="col-12 d-flex row contenido_accion accionante">
                                                         <div class="col-12 d-flex justify-content-between">
                                                             <h6>Accionante</h6>
                                                             <button type="button"
                                                                 class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_accion"><i
                                                                     class="fas fa-minus-circle"></i></button>
                                                         </div>
-                                                        <input type="hidden" class="tipo_rol_accion" value="Accionante" >
+                                                        <input type="hidden" class="tipo_rol_accion" value="1" >
                                                         <div class="form-group col-md-6 mt-3">
                                                             <label class="requerido" for="tipo_persona_accion">Tipo persona</label>
                                                             <select class="form-control form-control-sm tipo_persona_accion"
@@ -253,8 +253,7 @@
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
                                                                 @foreach ($tipos_docu as $tipodocu)
-                                                                    <option value="{{ $tipodocu->id }}"
-                                                                        {{ $tipodocu->id == 1 ? 'selected' : '' }}>
+                                                                    <option value="{{ $tipodocu->id }}">
                                                                         {{ $tipodocu->abreb_id }} ({{ $tipodocu->tipo_id }})</option>
                                                                 @endforeach
                                                             </select>
@@ -296,53 +295,191 @@
                                                             <input type="text" class="form-control telefono_accion"
                                                                 placeholder="Teléfono">
                                                         </div>
-                                                        <h6 class="font-weight-bold my-3">Datos apoderado</h6>
-                                                        <div class="form-group col-md-12">
-                                                            <label class="" for="nombreApellido_apoderado">Nombre y apellido</label>
-                                                            <input type="text" class="form-control lcapital nombreApellido_apoderado"
-                                                                placeholder="Nombre y apellido" name="nombreApellido_apoderado" required>
+                                                        <h6 class="font-weight-bold my-3 datos_apoderado">Datos apoderado <i class="fa fa-plus-circle mr-2" aria-hidden="true"></i></h6>
+                                                        <div class="col-12 row bloque_datos_apoderado d-none">
+                                                            <div class="form-group col-md-12">
+                                                                <label class="" for="nombreApellido_apoderado">Nombre y apellido</label>
+                                                                <input type="text" class="form-control lcapital nombreApellido_apoderado"
+                                                                    placeholder="Nombre y apellido" name="nombreApellido_apoderado" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6 mt-3">
+                                                                <label class="" for="docutipos_id_apoderado">Tipo documento</label>
+                                                                <select class="form-control form-control-sm docutipos_id_apoderado"
+                                                                    required>
+                                                                    <option value="">--Seleccione un tipo--</option>
+                                                                    @foreach ($tipos_docu as $tipodocu)
+                                                                        <option value="{{ $tipodocu->id }}">
+                                                                            {{ $tipodocu->abreb_id }} ({{ $tipodocu->tipo_id }})</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-6 mt-3">
+                                                                <label class="" for="identificacion_apoderado">Número de documento</label>
+                                                                <input type="text" class="form-control form-control-sm identificacion_apoderado" placeholder="Número documento" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label class="" for="tarjetaProfesional_apoderado">Tarjeta profesional</label>
+                                                                <input type="text" class="form-control lcapital tarjetaProfesional_apoderado" id="tarjetaProfesional_apoderado"
+                                                                    placeholder="">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label class="" for="email_apoderado">Correo electrónico</label>
+                                                                <input type="email" class="form-control correo_apoderado" placeholder="Correo electrónico" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label class="" for="direccion_apoderado">Dirección</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <button type="button" class="btn btn-info"><i class="fa fa-plus-circle"
+                                                                                aria-hidden="true" data-bs-toggle="modal"
+                                                                                data-bs-target="#staticBackdrop"></i></button>
+                                                                    </div>
+                                                                    <input type="text" class="form-control readonly direccion_apoderado"
+                                                                        placeholder="Dirección" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="telefono_apoderado">Teléfono</label>
+                                                                <input type="text" class="form-control telefono_apoderado"
+                                                                    placeholder="Teléfono">
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 d-flex justify-content-end flex-row mb-3">
+                                                    <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAccion"><i class="fa fa-plus-circle mr-2 crearAccion" aria-hidden="true"></i> Añadir otro Accionante/Accionado</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Accionados externos</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="display: none;">
+                                        <div class="form-row">
+                                            <div class="col-12 d-flex row accions">
+                                                <div class="col-12 bloque_accions">
+                                                    <div class="col-12 d-flex row contenido_accion accionado">
+                                                        <div class="col-12 d-flex justify-content-between">
+                                                            <h6>Accionado externo</h6>
+                                                            <button type="button"
+                                                                class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminar_contenido_accion"><i
+                                                                    class="fas fa-minus-circle"></i></button>
+                                                        </div>
+                                                        <input type="hidden" class="tipo_rol_accion" value="2" >
+                                                        <div class="form-group col-md-6 mt-3">
+                                                            <label class="" for="tipo_persona_accion">Tipo persona</label>
+                                                            <select class="form-control form-control-sm tipo_persona_accion"
+                                                                required>
+                                                                <option value="">--Seleccione un tipo--</option>
+                                                                <option value="Persona Natural">Persona Natural</option>
+                                                                <option value="Persona Jurídica">Persona Jurídica</option>
+                                                            </select>
                                                         </div>
                                                         <div class="form-group col-md-6 mt-3">
-                                                            <label class="" for="docutipos_id_apoderado">Tipo documento</label>
-                                                            <select class="form-control form-control-sm docutipos_id_apoderado"
+                                                            <label class="" for="docutipos_id">Tipo documento</label>
+                                                            <select class="form-control form-control-sm docutipos_id_accion"
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
                                                                 @foreach ($tipos_docu as $tipodocu)
-                                                                    <option value="{{ $tipodocu->id }}"
-                                                                        {{ $tipodocu->id == 1 ? 'selected' : '' }}>
+                                                                    <option value="{{ $tipodocu->id }}">
                                                                         {{ $tipodocu->abreb_id }} ({{ $tipodocu->tipo_id }})</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        <div class="form-group col-md-6 mt-3">
-                                                            <label class="" for="identificacion_apoderado">Número de documento</label>
-                                                            <input type="text" class="form-control form-control-sm identificacion_apoderado" placeholder="Número documento" required>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label class="" for="identificacion_accion">Número de documento</label>
+                                                            <input type="text" class="form-control form-control-sm identificacion_accion" placeholder="Número documento" required>
+                                                        </div>
+
+                                                        <div class="col-12 col-md-6 form-group">
+                                                            <label class="" for="nombres_accion">Nombres</label>
+                                                            <input type="text" class="form-control form-control-sm nombres_accion">
+                                                        </div>
+
+                                                        <div class="col-12 col-md-6 form-group">
+                                                            <label class="" for="titulo">Apellidos</label>
+                                                            <input type="text" class="form-control form-control-sm apellidos_accion">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label class="" for="email_accion">Correo electrónico</label>
+                                                            <input type="email" class="form-control correo_accion" placeholder="Correo electrónico" required>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label class="" for="tarjetaProfesional_apoderado">Tarjeta profesional</label>
-                                                            <input type="text" class="form-control lcapital tarjetaProfesional_apoderado" id="tarjetaProfesional_apoderado"
-                                                                placeholder="">
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label class="" for="email_apoderado">Correo electrónico</label>
-                                                            <input type="email" class="form-control correo_apoderado" placeholder="Correo electrónico" required>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label class="" for="direccion_apoderado">Dirección</label>
+                                                            <label class="" for="direccion_accion">Dirección</label>
                                                             <div class="input-group mb-3">
                                                                 <div class="input-group-prepend">
                                                                     <button type="button" class="btn btn-info"><i class="fa fa-plus-circle"
                                                                             aria-hidden="true" data-bs-toggle="modal"
                                                                             data-bs-target="#staticBackdrop"></i></button>
                                                                 </div>
-                                                                <input type="text" class="form-control readonly direccion_apoderado"
+                                                                <input type="text" class="form-control readonly direccion_accion"
                                                                     placeholder="Dirección" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="telefono_apoderado">Teléfono</label>
-                                                            <input type="text" class="form-control telefono_apoderado"
+                                                            <label class ="" for="telefono_accion">Teléfono</label>
+                                                            <input type="text" class="form-control telefono_accion"
                                                                 placeholder="Teléfono">
+                                                        </div>
+                                                        <h6 class="font-weight-bold my-3 datos_apoderado">Datos apoderado <i class="fa fa-plus-circle mr-2" aria-hidden="true"></i></h6>
+                                                        <div class="col-12 row bloque_datos_apoderado d-none">
+                                                            <div class="form-group col-md-12">
+                                                                <label class="" for="nombreApellido_apoderado">Nombre y apellido</label>
+                                                                <input type="text" class="form-control lcapital nombreApellido_apoderado"
+                                                                    placeholder="Nombre y apellido" name="nombreApellido_apoderado" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6 mt-3">
+                                                                <label class="" for="docutipos_id_apoderado">Tipo documento</label>
+                                                                <select class="form-control form-control-sm docutipos_id_apoderado"
+                                                                    required>
+                                                                    <option value="">--Seleccione un tipo--</option>
+                                                                    @foreach ($tipos_docu as $tipodocu)
+                                                                        <option value="{{ $tipodocu->id }}">
+                                                                            {{ $tipodocu->abreb_id }} ({{ $tipodocu->tipo_id }})</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-6 mt-3">
+                                                                <label class="" for="identificacion_apoderado">Número de documento</label>
+                                                                <input type="text" class="form-control form-control-sm identificacion_apoderado" placeholder="Número documento" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label class="" for="tarjetaProfesional_apoderado">Tarjeta profesional</label>
+                                                                <input type="text" class="form-control lcapital tarjetaProfesional_apoderado" id="tarjetaProfesional_apoderado"
+                                                                    placeholder="">
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label class="" for="email_apoderado">Correo electrónico</label>
+                                                                <input type="email" class="form-control correo_apoderado" placeholder="Correo electrónico" required>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label class="" for="direccion_apoderado">Dirección</label>
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <button type="button" class="btn btn-info"><i class="fa fa-plus-circle"
+                                                                                aria-hidden="true" data-bs-toggle="modal"
+                                                                                data-bs-target="#staticBackdrop"></i></button>
+                                                                    </div>
+                                                                    <input type="text" class="form-control readonly direccion_apoderado"
+                                                                        placeholder="Dirección" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="telefono_apoderado">Teléfono</label>
+                                                                <input type="text" class="form-control telefono_apoderado"
+                                                                    placeholder="Teléfono">
+                                                            </div>
                                                         </div>
                                                         <hr>
                                                     </div>
@@ -357,7 +494,44 @@
 
                                 <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
                                     <div class="card-header">
-                                        <h3 class="card-title font-weight-bold">Tutela - Anexos</h3>
+                                        <h3 class="card-title font-weight-bold">Tutela</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="display: none;">
+                                        <div class="form-row">
+                                            <div class="col-12 d-flex row anexo_tutela">
+                                                <div class="col-12 bloque_anexo_tutela">
+                                                    <div class="col-12 d-flex row contenido_anexo_tutela">
+                                                        <div class="col-12 d-flex justify-content-between">
+                                                            <h6>Tutela</h6>
+                                                        </div>
+                                                        <div class="col-12 col-md-4 form-group titulo-anexo-tutela">
+                                                            <label class="requerido" for="titulo">Título archivo</label>
+                                                            <input type="text" class="form-control form-control-sm">
+                                                        </div>
+                                                        <div class="col-12 col-md-4 form-group descripcion-anexo-tutela">
+                                                            <label for="descripcion">Descripción archivo</label>
+                                                            <input type="text" class="form-control form-control-sm">
+                                                        </div>
+                                                        <div class="col-12 col-md-4 form-group archivo-tutela">
+                                                            <label class="requerido" for="documentos">Archivo</label>
+                                                            <input class="form-control form-control-sm" type="file">
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Anexos tutela</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-plus"></i>
