@@ -156,9 +156,10 @@ class TutelasConsulta extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function tutelas_impugnacion($id)
     {
-        //
+        $tutela = AutoAdmisorio::findOrFail($id);
+        return view('intranet.funcionarios.tutela.impugnacion.index', compact('tutela'));
     }
 
     /**
@@ -167,7 +168,7 @@ class TutelasConsulta extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function tutelas_impugnacion_guardar(Request $request, $id)
     {
         //
     }

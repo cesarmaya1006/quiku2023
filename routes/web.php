@@ -456,6 +456,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('consulta/tutelas/primera-instancia/{id}', [TutelasConsulta::class, 'tutelas_primera_instancia'])->name('tutelas_primera_instancia');
         Route::post('consulta/tutelas/primera-instancia/guardar/{id}', [TutelasConsulta::class, 'tutelas_primera_instancia_guardar'])->name('tutelas_primera_instancia_guardar');
         //==================================================================================================================
+        Route::get('consulta/tutelas/impugnacion/{id}', [TutelasConsulta::class, 'tutelas_impugnacion'])->name('tutelas_impugnacion');
+        Route::post('consulta/tutelas/impugnacion/guardar/{id}', [TutelasConsulta::class, 'tutelas_impugnacion_guardar'])->name('tutelas_impugnacion_guardar');
+
+        //==================================================================================================================
     });
     //==================================================================================================================
     Route::group(['prefix' => 'usuario'], function () {

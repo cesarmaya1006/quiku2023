@@ -30,6 +30,11 @@ class PrimeraInstancia extends Model
         return $this->hasMany(ResuelvePrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
-
+    //----------------------------------------------------------------------------------
+    public function impugnaciones()
+    {
+        return $this->hasMany(Impugnacion::class, 'sentenciapinstancia_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 
 }
