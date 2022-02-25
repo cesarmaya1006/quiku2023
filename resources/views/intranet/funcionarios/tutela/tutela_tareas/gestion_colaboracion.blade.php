@@ -134,6 +134,30 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                <div class="col-12">
+                                                    <h6>Archivo tutela</h6>
+                                                </div>
+                                                <div class="col-12">
+                                                    <table class="table table-light" style="font-size: 0.8em;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Titulo</th>
+                                                                <th scope="col">Descripción</th>
+                                                                <th scope="col">Descarga</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="text-justify">{{ $tutela->titulo_tutela }}</td>
+                                                                <td class="text-justify">{{ $tutela->descripcion_tutela }}</td>
+                                                                <td><a href="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer">Descargar</a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                                 @if ($tutela->medida_cautelar == 'true')
                                                     <hr>
                                                     <div class="col-12 my-2">
@@ -166,7 +190,7 @@
                                             @foreach ( $tutela->accions as $accion)
                                                 <div class="col-12 row">
                                                     <div class="col-6">
-                                                        @if($accion->tipo_accion == 'Accionante')
+                                                        @if($accion->tipo_accion_id == 1)
                                                             <div class="col-12 mb-3">
                                                                 <h6 class="pl-4">Accionante</h6>
                                                             </div>
@@ -376,11 +400,9 @@
                                             @endphp
                                             @if($tutela->cantidad_hechos)
                                                 <div class="rrounded border my-3 p-3">
-                                                    @foreach ($tutela->anexostutela as $anexo)
-                                                        <div class="embed-responsive embed-responsive-16by9">
-                                                            <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $anexo->url) }}" allowfullscreen></iframe>
-                                                        </div>
-                                                    @endforeach  
+                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                        <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}" allowfullscreen></iframe>
+                                                    </div>
                                                 </div>
                                             @endif
                                             @if($validacionHechos)
@@ -1592,11 +1614,9 @@
                                             @endphp
                                             @if($tutela->cantidad_pretensiones)
                                                 <div class="rounded border my-3 p-3">
-                                                    @foreach ($tutela->anexostutela as $anexo)
-                                                        <div class="embed-responsive embed-responsive-16by9">
-                                                            <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $anexo->url) }}" allowfullscreen></iframe>
-                                                        </div>
-                                                    @endforeach  
+                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                        <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}" allowfullscreen></iframe>
+                                                    </div>
                                                 </div>
                                             @endif
                                             @if($validacionPretensiones)

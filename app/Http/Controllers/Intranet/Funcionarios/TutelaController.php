@@ -125,8 +125,24 @@ class TutelaController extends Controller
                 $nuevo_auto_admisorio['extension_admisorio'] = $doc_subido->getClientOriginalExtension();
                 $nuevo_auto_admisorio['peso_admisorio'] = $tamaño;
                 $doc_subido->move($ruta, $nombre_doc);
-                $repuesta = AutoAdmisorio::findOrFail($request["id"])->update($nuevo_auto_admisorio);
             }
+            if ($request->hasFile("archivo_anexo_tutela")) {
+                $ruta_tutela = Config::get('constantes.folder_tutelas');
+                $ruta_tutela = trim($ruta_tutela);
+                $doc_subido_tutela = $documento["archivo_anexo_tutela"];
+                $tamaño_tutela = $doc_subido_tutela->getSize();
+                if ($tamaño_tutela > 0) {
+                    $tamaño_tutela = $tamaño_tutela / 1000;
+                }
+                $nombre_doc_tutela = time() . '-' . utf8_encode(utf8_decode($doc_subido_tutela->getClientOriginalName()));
+                $nuevo_auto_admisorio['titulo_tutela'] = $request["titulo_anexo_tutela"];
+                $nuevo_auto_admisorio['descripcion_tutela'] = $request["descripcion_anexo_tutela"];
+                $nuevo_auto_admisorio['url_tutela'] = $nombre_doc_tutela;
+                $nuevo_auto_admisorio['extension_tutela'] = $doc_subido_tutela->getClientOriginalExtension();
+                $nuevo_auto_admisorio['peso_tutela'] = $tamaño_tutela;
+                $doc_subido_tutela->move($ruta_tutela, $nombre_doc_tutela);
+            }
+            $repuesta = AutoAdmisorio::findOrFail($request["id"])->update($nuevo_auto_admisorio);
             return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
         } else {
             abort(404);
@@ -140,10 +156,10 @@ class TutelaController extends Controller
             $update_tutela['fecha_radicado'] = date("Y-m-d H:i:s");
             $update_tutela['estado_creacion'] = 1;
             $update_tutela['estadostutela_id'] = 2;
-            if($request['check_cantidad_hechos']){
+            if($request['check_cantidad_hechos'] == 'true'){
                 $update_tutela['cantidad_hechos'] = 1;
             }
-            if($request['check_cantidad_pretensiones']){
+            if($request['check_cantidad_pretensiones'] == 'true'){
                 $update_tutela['cantidad_pretensiones'] = 1;
             }
             $repuesta = AutoAdmisorio::findOrFail($request["id"])->update($update_tutela);
@@ -157,7 +173,7 @@ class TutelaController extends Controller
     {
         if ($request->ajax()) {
             $nuevo_accion['auto_admisorio_id'] = $request['id'];
-            $nuevo_accion['tipo_accion'] = $request['tipo_accion'];
+            $nuevo_accion['tipo_accion_id'] = $request['tipo_accion'];
             $nuevo_accion['tipo_persona_accion'] = $request['tipo_persona_accion'];
             $nuevo_accion['docutipos_id_accion'] = $request['docutipos_id_accion'];
             $nuevo_accion['numero_documento_accion'] = $request['numero_documento_accion'];
@@ -166,7 +182,7 @@ class TutelaController extends Controller
             $nuevo_accion['correo_accion'] = $request['correo_accion'];
             $nuevo_accion['direccion_accion'] = $request['direccion_accion'];
             $nuevo_accion['telefono_accion'] = $request['telefono_accion'];
-
+            
             $nuevo_accion['nombre_apoderado'] = $request['nombre_apoderado'];
             $nuevo_accion['docutipos_id_apoderado'] = $request['docutipos_id_apoderado'];
             $nuevo_accion['numero_documento_apoderado'] = $request['numero_documento_apoderado'];
@@ -228,7 +244,7 @@ class TutelaController extends Controller
     {
         if ($request->ajax()) {
             $nuevo_hecho['auto_admisorio_id'] = $request['auto_admisorio_id'];
-            if($request['check_cantidad_hechos']){
+            if($request['check_cantidad_hechos'] == 'true'){
                 for ($i = 0; $i < $request['cantidad_hechos'] ; $i++) { 
                     $nuevo_hecho['hecho'] = '';
                     $nuevo_hecho['consecutivo'] = $i + 1;
@@ -250,7 +266,7 @@ class TutelaController extends Controller
     {
         if ($request->ajax()) {
             $nuevo_pretension['auto_admisorio_id'] = $request['auto_admisorio_id'];
-            if($request['check_cantidad_pretensiones']){
+            if($request['check_cantidad_pretensiones'] == 'true'){
                 for ($i = 0; $i < $request['cantidad_pretensiones'] ; $i++) { 
                     $nuevo_pretension['pretension'] = '';
                     $nuevo_pretension['consecutivo'] = $i + 1;

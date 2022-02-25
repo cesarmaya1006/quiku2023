@@ -167,7 +167,7 @@
                                     @foreach ($tutela->accions as $accion)
                                         <div class="col-12 row">
                                             <div class="col-6">
-                                                @if ($accion->tipo_accion == 'Accionante')
+                                                @if ($accion->tipo_accion_id == 1)
                                                     <div class="col-12 mb-3">
                                                         <h6 class="pl-4">Accionante
                                                         </h6>

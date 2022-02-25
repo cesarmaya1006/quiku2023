@@ -1,8 +1,10 @@
 window.addEventListener('DOMContentLoaded', function () {
 
     // Inicio Función para generar varios accions.
-    let btncrearAccion = document.querySelector('.crearAccion')
-    btncrearAccion.addEventListener('click', crearNuevoAccion)
+    let btncrearAccion = document.querySelectorAll('.crearAccion')
+    btncrearAccion.forEach(btn => {
+        btn.addEventListener('click', crearNuevoAccion)
+    })
     let btnEliminarAccions = document.querySelectorAll('.eliminar_contenido_accion')
     btnEliminarAccions.forEach(btn => {
         btn.addEventListener('click', agregarEliminarAccion)
@@ -11,6 +13,11 @@ window.addEventListener('DOMContentLoaded', function () {
     selectorTipo.forEach(tipo => {
         tipo.addEventListener('change', tipo_persona)
     })
+    let btnDatosApoderado = document.querySelectorAll('.datos_apoderado')
+    btnDatosApoderado.forEach(tipo => {
+        tipo.addEventListener('click', bloque_apoderado)
+    })
+
 
     function crearNuevoAccion(e) {
         e.preventDefault()
@@ -31,6 +38,7 @@ window.addEventListener('DOMContentLoaded', function () {
         containerAccion.querySelector('.bloque_accions').appendChild(nuevoAccion)
         document.querySelectorAll('.eliminar_contenido_accion').forEach(item => item.addEventListener('click', agregarEliminarAccion))
         document.querySelectorAll('.tipo_persona_accion').forEach(item => item.addEventListener('change', tipo_persona))
+        document.querySelectorAll('.datos_apoderado').forEach(item => item.addEventListener('click', bloque_apoderado))
     }
 
     function agregarEliminarAccion(e) {
@@ -41,19 +49,32 @@ window.addEventListener('DOMContentLoaded', function () {
         }else {
             bloqueAccion = bloqueAccion.parentNode.parentNode
         }
-        if (document.querySelectorAll('.contenido_accion').length >= 2) {
-            let idAccion = e.target
-            if (idAccion.tagName === 'I') {
-                idAccion = idAccion.parentNode.parentNode.parentNode
-            } else {
-                idAccion = idAccion.parentNode.parentNode
+        if(bloqueAccion.classList.contains('accionante')){
+            if (document.querySelectorAll('.contenido_accion.accionante').length >= 2) {
+                let idAccion = e.target
+                if (idAccion.tagName === 'I') {
+                    idAccion = idAccion.parentNode.parentNode.parentNode
+                } else {
+                    idAccion = idAccion.parentNode.parentNode
+                }
+                idAccion.remove()
             }
-            idAccion.remove()
+        }else {
+            if (document.querySelectorAll('.contenido_accion.accionado').length >= 2) {
+                let idAccion = e.target
+                if (idAccion.tagName === 'I') {
+                    idAccion = idAccion.parentNode.parentNode.parentNode
+                } else {
+                    idAccion = idAccion.parentNode.parentNode
+                }
+                idAccion.remove()
+            }
         }
     }
 
     function tipo_persona(tipo){
         let bloquePadre = tipo.target.parentElement.parentElement
+        let tipo_accion = bloquePadre.querySelector('.tipo_rol_accion').value
         let tipoPersona = tipo.target.value
         if(tipoPersona == 'Persona Jurídica'){
             bloquePadre.querySelector('.apellidos_accion').parentElement.classList.add('d-none')
@@ -64,8 +85,41 @@ window.addEventListener('DOMContentLoaded', function () {
             bloquePadre.querySelector('.identificacion_accion').parentElement.querySelector('label').textContent = 'Número de documento'
             bloquePadre.querySelector('.nombres_accion').parentElement.querySelector('label').textContent = 'Nombres'
         }
+        if(tipo_accion == 2){
+            let labelTipo = bloquePadre.querySelector('.tipo_persona_accion').parentElement.querySelector('label')
+            let labelDoc = bloquePadre.querySelector('.docutipos_id_accion').parentElement.querySelector('label')
+            let labelIde = bloquePadre.querySelector('.identificacion_accion').parentElement.querySelector('label')
+            let labelNom = bloquePadre.querySelector('.nombres_accion').parentElement.querySelector('label')
+            if(tipoPersona){
+                labelTipo.classList.add('requerido')
+                labelDoc.classList.add('requerido')
+                labelIde.classList.add('requerido')
+                labelNom.classList.add('requerido')
+            }else{
+                labelTipo.classList.remove('requerido')
+                labelDoc.classList.remove('requerido')
+                labelIde.classList.remove('requerido')
+                labelNom.classList.remove('requerido')
+            }
+        }
     }
 
+    function bloque_apoderado(btn){
+        btn.preventDefault()
+        let bloqueApoderado = btn.target
+        if (bloqueApoderado.tagName === 'I') {
+            bloqueApoderado = bloqueApoderado.parentNode.parentNode
+        }else {
+            bloqueApoderado = bloqueApoderado.parentNode
+        }
+        let bloque = bloqueApoderado.querySelector('.bloque_datos_apoderado')
+
+        if(bloque.classList.contains('d-none')){
+            bloque.classList.remove('d-none')
+        }else {
+            bloque.classList.add('d-none')
+        } 
+    }
 
     // Fin Función para generar varios accions.
     // ---------------------------------------------------------------------------------------------------------
@@ -136,10 +190,16 @@ window.addEventListener('DOMContentLoaded', function () {
             let titulo_anexo_admisorio = contenedorPadre.querySelector('.titulo-anexo-admisorio input').value
             let descripcion_anexo_admisorio = contenedorPadre.querySelector('.descripcion-anexo-admisorio input').value
             let archivo_anexo_admisorio = contenedorPadre.querySelector('.archivo-admisorio input').files[0]
+            let titulo_anexo_tutela = contenedorPadre.querySelector('.titulo-anexo-tutela input').value
+            let descripcion_anexo_tutela = contenedorPadre.querySelector('.descripcion-anexo-tutela input').value
+            let archivo_anexo_tutela = contenedorPadre.querySelector('.archivo-tutela input').files[0]
             let dataAnexo = new FormData();
             dataAnexo.append('titulo_anexo_admisorio', titulo_anexo_admisorio);
             dataAnexo.append('descripcion_anexo_admisorio', descripcion_anexo_admisorio);
             dataAnexo.append('archivo_anexo_admisorio', archivo_anexo_admisorio);
+            dataAnexo.append('titulo_anexo_tutela', titulo_anexo_tutela);
+            dataAnexo.append('descripcion_anexo_tutela', descripcion_anexo_tutela);
+            dataAnexo.append('archivo_anexo_tutela', archivo_anexo_tutela);
             dataAnexo.append('_token', token);
             let medida_cautelar = contenedorPadre.querySelector('.medidaCautelar_check').checked
             let text_medida_cautelar = contenedorPadre.querySelector('.medidaCautelar-text').value
@@ -175,15 +235,19 @@ window.addEventListener('DOMContentLoaded', function () {
             let accionantes = document.querySelectorAll('.bloque_accions .contenido_accion')
             let validacionAccionantes = false
             accionantes.forEach(accionante => {
+                let tipo_accion = accionante.querySelector('.tipo_rol_accion').value
                 let tipo_persona = accionante.querySelector('.tipo_persona_accion').value
-                let tipo_documento = accionante.querySelector('.docutipos_id_accion').value
-                let identificacion = accionante.querySelector('.identificacion_accion').value
-                let nombres = accionante.querySelector('.nombres_accion').value
-                if( tipo_persona == '' || tipo_documento == '' || identificacion == '' || nombres == ''  ){
-                    validacionAccionantes = true
+                if(tipo_accion == 1 || (tipo_accion == 2 && tipo_persona != '' )){
+                    let tipo_documento = accionante.querySelector('.docutipos_id_accion').value
+                    let identificacion = accionante.querySelector('.identificacion_accion').value
+                    let nombres = accionante.querySelector('.nombres_accion').value
+                    if( tipo_persona == '' || tipo_documento == '' || identificacion == '' || nombres == ''  ){
+                        validacionAccionantes = true
+                    }
+
                 }
             })
-            if(radicado == '' || jurisdiccion == '' || juzgado == '' || departamento == '' || municipio == '' || fecha_notificacion == '' || fecha_notificacion_horas == '' || nombreApellido_juez == '' || direccion_juez == '' || telefono_fijo_juez == '' || correo_juez == '' || selectorTerminos == '' || terminosTiempo == '' || validacionAccionantes){
+            if(radicado == '' || jurisdiccion == '' || juzgado == '' || departamento == '' || municipio == '' || fecha_notificacion == '' || fecha_notificacion_horas == '' || nombreApellido_juez == '' || direccion_juez == '' || telefono_fijo_juez == '' || correo_juez == '' || selectorTerminos == '' || terminosTiempo == '' || validacionAccionantes || titulo_anexo_admisorio == '' || titulo_anexo_tutela == '' || !archivo_anexo_admisorio || !archivo_anexo_tutela){
                 alert('Debe diligenciar todos los campos requeridos') 
             }else{
                 $.ajax({
@@ -228,54 +292,56 @@ window.addEventListener('DOMContentLoaded', function () {
                     accions.forEach(accion => {
                         let tipo_accion = accion.querySelector('.tipo_rol_accion').value
                         let tipo_persona_accion = accion.querySelector('.tipo_persona_accion').value
-                        let docutipos_id_accion = accion.querySelector('.docutipos_id_accion').value
-                        let numero_documento_accion = accion.querySelector('.identificacion_accion').value
-                        let nombres_accion = accion.querySelector('.nombres_accion').value
-                        let apellidos_accion = accion.querySelector('.apellidos_accion').value
-                        let correo_accion = accion.querySelector('.correo_accion').value
-                        let direccion_accion = accion.querySelector('.direccion_accion').value
-                        let telefono_accion = accion.querySelector('.telefono_accion').value
-        
-                        let nombre_apoderado = accion.querySelector('.nombreApellido_apoderado').value
-                        let docutipos_id_apoderado = accion.querySelector('.docutipos_id_apoderado').value
-                        let numero_documento_apoderado = accion.querySelector('.identificacion_apoderado').value
-                        let tarjeta_profesional_apoderado = accion.querySelector('.tarjetaProfesional_apoderado').value
-                        let correo_apoderado = accion.querySelector('.correo_apoderado').value
-                        let direccion_apoderado = accion.querySelector('.direccion_apoderado').value
-                        let telefono_apoderado = accion.querySelector('.telefono_apoderado').value
-        
-                        let data = {
-                            tipo_accion,
-                            tipo_persona_accion,
-                            docutipos_id_accion,
-                            numero_documento_accion,
-                            nombres_accion,
-                            apellidos_accion,
-                            correo_accion,
-                            direccion_accion,
-                            telefono_accion,
-                            nombre_apoderado,
-                            docutipos_id_apoderado,
-                            numero_documento_apoderado,
-                            tarjeta_profesional_apoderado,
-                            correo_apoderado,
-                            direccion_apoderado,
-                            telefono_apoderado,
-                            id
-        
-                        }
-                        $.ajax({
-                            url: url2,
-                            type: 'POST',
-                            headers: { 'X-CSRF-TOKEN': token },
-                            data: data,
-                            success: function(respuesta) {
-                                // console.log(respuesta)
-                            },
-                            error: function(error) {
-                                console.log(error.responseJSON)
+                        if(tipo_accion == 1 || (tipo_accion == 2 && tipo_persona_accion != '')){
+                            let docutipos_id_accion = accion.querySelector('.docutipos_id_accion').value
+                            let numero_documento_accion = accion.querySelector('.identificacion_accion').value
+                            let nombres_accion = accion.querySelector('.nombres_accion').value
+                            let apellidos_accion = accion.querySelector('.apellidos_accion').value
+                            let correo_accion = accion.querySelector('.correo_accion').value
+                            let direccion_accion = accion.querySelector('.direccion_accion').value
+                            let telefono_accion = accion.querySelector('.telefono_accion').value
+            
+                            let nombre_apoderado = accion.querySelector('.nombreApellido_apoderado').value
+                            let docutipos_id_apoderado = accion.querySelector('.docutipos_id_apoderado').value
+                            let numero_documento_apoderado = accion.querySelector('.identificacion_apoderado').value
+                            let tarjeta_profesional_apoderado = accion.querySelector('.tarjetaProfesional_apoderado').value
+                            let correo_apoderado = accion.querySelector('.correo_apoderado').value
+                            let direccion_apoderado = accion.querySelector('.direccion_apoderado').value
+                            let telefono_apoderado = accion.querySelector('.telefono_apoderado').value
+            
+                            let data = {
+                                tipo_accion,
+                                tipo_persona_accion,
+                                docutipos_id_accion,
+                                numero_documento_accion,
+                                nombres_accion,
+                                apellidos_accion,
+                                correo_accion,
+                                direccion_accion,
+                                telefono_accion,
+                                nombre_apoderado,
+                                docutipos_id_apoderado,
+                                numero_documento_apoderado,
+                                tarjeta_profesional_apoderado,
+                                correo_apoderado,
+                                direccion_apoderado,
+                                telefono_apoderado,
+                                id
+            
                             }
-                        });
+                            $.ajax({
+                                url: url2,
+                                type: 'POST',
+                                headers: { 'X-CSRF-TOKEN': token },
+                                data: data,
+                                success: function(respuesta) {
+                                    // console.log(respuesta)
+                                },
+                                error: function(error) {
+                                    console.log(error.responseJSON)
+                                }
+                            });
+                        }
                     })
                 }
 
@@ -443,5 +509,4 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         }
     })
-
 })

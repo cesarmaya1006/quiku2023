@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Database\Seeders\Tabla_TipoAccion;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'usuarios', 'personas', 'tipo_pqr', 'prioridades', 'estadospqr', 'motivos', 'motivo_sub', 'categorias', 'productos', 'marcas',
             'referencias', 'servicios', 'diasfestivos', 'asignacion_particular_pqr', 'despachos', 'wikuareas', 'wikutemas', 'wikutemaespecifico', 'wikudocument', 'estadostutela', 'tareas_tutela',
             'asignacion_estados_tutela', 'auto_admisorio', 'tutela_motivo', 'accionante_accionado', 'hechos_tutela', 'pretensiones_tutela',
-            'argumentos_tutela', 'historial_primera_asignacion_tutela', 'asignancion_tareas_tutela', 'sentenciapinstancia', 'resuelvesentencia',
+            'argumentos_tutela', 'historial_primera_asignacion_tutela', 'asignancion_tareas_tutela', 'sentenciapinstancia', 'resuelvesentencia', 'tipo_accion',
         ]);
         // --------------------------------------------------------------------------------------------------
         $this->call(Tabla_DocuTipos::class);
@@ -62,6 +63,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_EstadosTutela::class);
         $this->call(Tabla_TareasTutela::class);
         $this->call(Tabla_AsignacionEstadosTutela::class);
+        $this->call(Tabla_TipoAccion::class);
         $this->call(TutelaAutoAdmisorio::class);
         $this->call(TutelaMotivo::class);
         $this->call(TutelaAccionanteAccionado::class);
