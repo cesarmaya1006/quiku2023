@@ -40,7 +40,7 @@
                                     <strong>{{ $tutela->radicado }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    Fecha de notificación: <strong>{{ $tutela->fecha_notificacion}}</strong>
+                                    Fecha de notificación: <strong>{{ $tutela->fecha_notificacion }}</strong>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     Fecha de radicado: <strong>{{ $tutela->fecha_radicado }}</strong>
@@ -88,7 +88,7 @@
                                     <h3 class="card-title font-weight-bold">Detalles tutela</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-plus"></i>
+                                            <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -98,86 +98,95 @@
                                             <h5>Términos</h5>
                                         </div>
                                         <div class="row px-2">
-                                            @if($tutela->dias_termino)
+                                            @if ($tutela->dias_termino)
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_termino }}</p>
+                                                    <p class="text-justify"><strong>Días:</strong>
+                                                        {{ $tutela->dias_termino }}</p>
                                                 </div>
                                             @endif
-                                            @if($tutela->horas_termino)
+                                            @if ($tutela->horas_termino)
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_termino }}</p>
+                                                    <p class="text-justify"><strong>Horas:</strong>
+                                                        {{ $tutela->horas_termino }}</p>
                                                 </div>
                                             @endif
                                             @if ($tutela->url_admisorio)
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <h6>Archivo auto admisorio</h6>
-                                                </div>
-                                                <div class="col-12">
-                                                    <table class="table table-light" style="font-size: 0.8em;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Titulo</th>
-                                                                <th scope="col">Descripción</th>
-                                                                <th scope="col">Descarga</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-justify">{{ $tutela->titulo_admisorio }}</td>
-                                                                <td class="text-justify">{{ $tutela->descripcion_admisorio }}</td>
-                                                                <td><a href="{{ asset('documentos/autoadmisorios/' . $tutela->url_admisorio) }}"
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer">Descargar</a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-12">
-                                                    <h6>Archivo tutela</h6>
-                                                </div>
-                                                <div class="col-12">
-                                                    <table class="table table-light" style="font-size: 0.8em;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Titulo</th>
-                                                                <th scope="col">Descripción</th>
-                                                                <th scope="col">Descarga</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-justify">{{ $tutela->titulo_tutela }}</td>
-                                                                <td class="text-justify">{{ $tutela->descripcion_tutela }}</td>
-                                                                <td><a href="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer">Descargar</a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                @if ($tutela->medida_cautelar == 'true')
-                                                    <hr>
-                                                    <div class="col-12 my-2">
-                                                        <h5> Medida Cautelar</h5>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <h6>Archivo auto admisorio</h6>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Descripción:</strong> {{ $tutela->text_medida_cautelar }}</p>
+                                                        <table class="table table-light" style="font-size: 0.8em;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Titulo</th>
+                                                                    <th scope="col">Descripción</th>
+                                                                    <th scope="col">Descarga</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="text-justify">
+                                                                        {{ $tutela->titulo_admisorio }}</td>
+                                                                    <td class="text-justify">
+                                                                        {{ $tutela->descripcion_admisorio }}</td>
+                                                                    <td><a href="{{ asset('documentos/autoadmisorios/' . $tutela->url_admisorio) }}"
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer">Descargar</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                    @if($tutela->dias_medida_cautelar)
-                                                        <div class="col-12">
-                                                            <p class="text-justify"><strong>Días:</strong> {{ $tutela->dias_medida_cautelar }}</p>
+                                                    <div class="col-12">
+                                                        <h6>Archivo tutela</h6>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <table class="table table-light" style="font-size: 0.8em;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Titulo</th>
+                                                                    <th scope="col">Descripción</th>
+                                                                    <th scope="col">Descarga</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="text-justify">
+                                                                        {{ $tutela->titulo_tutela }}</td>
+                                                                    <td class="text-justify">
+                                                                        {{ $tutela->descripcion_tutela }}</td>
+                                                                    <td><a href="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer">Descargar</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    @if ($tutela->medida_cautelar == 'true')
+                                                        <hr>
+                                                        <div class="col-12 my-2">
+                                                            <h5> Medida Cautelar</h5>
                                                         </div>
-                                                    @endif
-                                                    @if($tutela->horas_medida_cautelar)
                                                         <div class="col-12">
-                                                            <p class="text-justify"><strong>Horas:</strong> {{ $tutela->horas_medida_cautelar }}</p>
+                                                            <p class="text-justify"><strong>Descripción:</strong>
+                                                                {{ $tutela->text_medida_cautelar }}</p>
                                                         </div>
+                                                        @if ($tutela->dias_medida_cautelar)
+                                                            <div class="col-12">
+                                                                <p class="text-justify"><strong>Días:</strong>
+                                                                    {{ $tutela->dias_medida_cautelar }}</p>
+                                                            </div>
+                                                        @endif
+                                                        @if ($tutela->horas_medida_cautelar)
+                                                            <div class="col-12">
+                                                                <p class="text-justify"><strong>Horas:</strong>
+                                                                    {{ $tutela->horas_medida_cautelar }}</p>
+                                                            </div>
+                                                        @endif
                                                     @endif
-                                                @endif
-                                            </div>
+                                                </div>
                                             @endif
                                         </div>
                                         <hr>
@@ -187,10 +196,10 @@
                                             <h5>Accionantes</h5>
                                         </div>
                                         <div class="col-12 mt-2">
-                                            @foreach ( $tutela->accions as $accion)
+                                            @foreach ($tutela->accions as $accion)
                                                 <div class="col-12 row">
                                                     <div class="col-6">
-                                                        @if($accion->tipo_accion_id == 1)
+                                                        @if ($accion->tipo_accion_id == 1)
                                                             <div class="col-12 mb-3">
                                                                 <h6 class="pl-4">Accionante</h6>
                                                             </div>
@@ -200,61 +209,77 @@
                                                             </div>
                                                         @endif
                                                         <div class="col-12">
-                                                            <p class="text-justify"><strong>Nombre:</strong> {{ $accion->nombres_accion }}  {{ $accion->apellidos_accion }}</p>
+                                                            <p class="text-justify"><strong>Nombre:</strong>
+                                                                {{ $accion->nombres_accion }}
+                                                                {{ $accion->apellidos_accion }}</p>
                                                         </div>
                                                         <div class="col-12">
-                                                            <p class="text-justify"><strong>Tipo Persona:</strong> {{ $accion->tipo_persona_accion }}</p>
+                                                            <p class="text-justify"><strong>Tipo Persona:</strong>
+                                                                {{ $accion->tipo_persona_accion }}</p>
                                                         </div>
                                                         <div class="col-12">
-                                                            <p class="text-justify"><strong>Tipo Documento:</strong> {{ $accion->docutipos_id_accion }}</p>
+                                                            <p class="text-justify"><strong>Tipo Documento:</strong>
+                                                                {{ $accion->docutipos_id_accion }}</p>
                                                         </div>
                                                         <div class="col-12">
-                                                            <p class="text-justify"><strong>Número Documento:</strong> {{ $accion->numero_documento_accion }}</p>
+                                                            <p class="text-justify"><strong>Número Documento:</strong>
+                                                                {{ $accion->numero_documento_accion }}</p>
                                                         </div>
                                                         <div class="col-12">
-                                                            <p class="text-justify"><strong>Teléfono:</strong> {{ $accion->telefono_accion }}</p>
+                                                            <p class="text-justify"><strong>Teléfono:</strong>
+                                                                {{ $accion->telefono_accion }}</p>
                                                         </div>
                                                         <div class="col-12">
-                                                            <p class="text-justify"><strong>Dirección:</strong> {{ $accion->direccion_accion }}</p>
+                                                            <p class="text-justify"><strong>Dirección:</strong>
+                                                                {{ $accion->direccion_accion }}</p>
                                                         </div>
                                                         <div class="col-12">
-                                                            <p class="text-justify"><strong>Correo:</strong> {{ $accion->correo_accion }}</p>
+                                                            <p class="text-justify"><strong>Correo:</strong>
+                                                                {{ $accion->correo_accion }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
-                                                        @if($accion->nombre_apoderado)
+                                                        @if ($accion->nombre_apoderado)
                                                             <div class="col-12  mb-3">
                                                                 <h6 class="pl-4">Apoderado</h6>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="text-justify"><strong>Nombre:</strong> {{ $accion->nombre_apoderado }}</p>
+                                                                <p class="text-justify"><strong>Nombre:</strong>
+                                                                    {{ $accion->nombre_apoderado }}</p>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="text-justify"><strong>Tipo Documento:</strong> {{ $accion->docutipos_id_apoderado }}</p>
+                                                                <p class="text-justify"><strong>Tipo Documento:</strong>
+                                                                    {{ $accion->docutipos_id_apoderado }}</p>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="text-justify"><strong>Número Documento:</strong> {{ $accion->numero_documento_apoderado }}</p>
+                                                                <p class="text-justify"><strong>Número Documento:</strong>
+                                                                    {{ $accion->numero_documento_apoderado }}</p>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="text-justify"><strong>Tarjeta Profesional:</strong> {{ $accion->tarjeta_profesional_apoderado }}</p>
+                                                                <p class="text-justify"><strong>Tarjeta
+                                                                        Profesional:</strong>
+                                                                    {{ $accion->tarjeta_profesional_apoderado }}</p>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="text-justify"><strong>Teléfono:</strong> {{ $accion->telefono_apoderado }}</p>
+                                                                <p class="text-justify"><strong>Teléfono:</strong>
+                                                                    {{ $accion->telefono_apoderado }}</p>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="text-justify"><strong>Dirección:</strong> {{ $accion->direccion_apoderado }}</p>
+                                                                <p class="text-justify"><strong>Dirección:</strong>
+                                                                    {{ $accion->direccion_apoderado }}</p>
                                                             </div>
                                                             <div class="col-12">
-                                                                <p class="text-justify"><strong>Correo:</strong> {{ $accion->correo_apoderado }}</p>
+                                                                <p class="text-justify"><strong>Correo:</strong>
+                                                                    {{ $accion->correo_apoderado }}</p>
                                                             </div>
                                                         @endif
                                                     </div>
                                                     <hr>
                                                 </div>
-                                            @endforeach  
+                                            @endforeach
                                         </div>
                                     </div>
-                                    @if(sizeOf($tutela->anexostutela))
+                                    @if (sizeOf($tutela->anexostutela))
                                         <div class="menu-card">
                                             <div class="col-12 row mb-2">
                                                 <div class="col-6">
@@ -265,7 +290,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="col-12 table-responsive">
-                                                    <table class="table table-light"  style="font-size: 0.8em;" >
+                                                    <table class="table table-light" style="font-size: 0.8em;">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Nombre</th>
@@ -293,26 +318,26 @@
                                             </div>
                                         </div>
                                         <hr>
-                                    @endif 
-                                    @if(sizeOf($tutela->argumentos))
+                                    @endif
+                                    @if (sizeOf($tutela->argumentos))
                                         <div class="row menu-card p-2">
                                             <div class="col-12 mb-2">
                                                 <h5>Argumentos</h5>
                                             </div>
-                                            @foreach ( $tutela->argumentos as $key => $argumento)
+                                            @foreach ($tutela->argumentos as $key => $argumento)
                                                 <div class="col-12 row t">
                                                     <div class="col-12 mb-3">
-                                                        <h6 class="pl-4">Argumento # {{$key + 1}}</h6>
+                                                        <h6 class="pl-4">Argumento # {{ $key + 1 }}</h6>
                                                     </div>
                                                     <div class="col-12">
                                                         <p class="text-justify">{{ $argumento->argumento }}</p>
                                                     </div>
                                                 </div>
-                                            @endforeach  
+                                            @endforeach
                                         </div>
                                         <hr>
                                     @endif
-                                    @if(sizeOf($tutela->pruebas))
+                                    @if (sizeOf($tutela->pruebas))
                                         <div class="row menu-card p-2">
                                             <div class="col-12 mb-2">
                                                 <h5>Pruebas</h5>
@@ -320,7 +345,7 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="col-12 table-responsive">
-                                                        <table class="table table-light"  style="font-size: 0.8em;" >
+                                                        <table class="table table-light" style="font-size: 0.8em;">
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">Nombre</th>
@@ -350,27 +375,30 @@
                                         </div>
                                         <hr>
                                     @endif
-                                    @if(sizeOf($tutela->motivos))
+                                    @if (sizeOf($tutela->motivos))
                                         <div class="row menu-card p-2">
                                             <div class="col-12 mb-2">
                                                 <h5>Motivos</h5>
                                             </div>
-                                            @foreach ( $tutela->motivos as $key => $motivo)
+                                            @foreach ($tutela->motivos as $key => $motivo)
                                                 <div class="col-6 row">
                                                     <div class="col-12 mb-3">
-                                                        <h6 class="pl-4">Motivo # {{$key + 1}}</h6>
+                                                        <h6 class="pl-4">Motivo # {{ $key + 1 }}</h6>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Motivo:</strong> {{ $motivo->motivo_tutela }}</p>
+                                                        <p class="text-justify"><strong>Motivo:</strong>
+                                                            {{ $motivo->motivo_tutela }}</p>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Sub - motivo:</strong> {{ $motivo->sub_motivo_tutela }}</p>
+                                                        <p class="text-justify"><strong>Sub - motivo:</strong>
+                                                            {{ $motivo->sub_motivo_tutela }}</p>
                                                     </div>
                                                     <div class="col-12">
-                                                        <p class="text-justify"><strong>Tutela sobre:</strong> {{ $motivo->tipo_tutela }}</p>
+                                                        <p class="text-justify"><strong>Tutela sobre:</strong>
+                                                            {{ $motivo->tipo_tutela }}</p>
                                                     </div>
                                                 </div>
-                                            @endforeach  
+                                            @endforeach
                                         </div>
                                         <hr>
                                     @endif
@@ -382,30 +410,32 @@
                                     <h3 class="card-title font-weight-bold">Respuestas hechos</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-plus"></i>
+                                            <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="card-body" style="display: none;">
-                                    @if(sizeOf($tutela->hechos))
+                                    @if (sizeOf($tutela->hechos))
                                         <div class="col-12 row mb-2">
                                             @php
                                                 $validacionHechos = false;
                                                 foreach ($tutela->hechos->where('empleado_id', session('id_usuario')) as $hecho) {
-                                                    if(!sizeOf($hecho->relacionesHechos)){
+                                                    if (!sizeOf($hecho->relacionesHechos)) {
                                                         $validacionHechos = true;
                                                         break;
                                                     }
                                                 }
                                             @endphp
-                                            @if($tutela->cantidad_hechos)
+                                            @if ($tutela->cantidad_hechos)
                                                 <div class="rrounded border my-3 p-3">
                                                     <div class="embed-responsive embed-responsive-16by9">
-                                                        <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}" allowfullscreen></iframe>
+                                                        <iframe class="embed-responsive-item"
+                                                            src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
+                                                            allowfullscreen></iframe>
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if($validacionHechos)
+                                            @if ($validacionHechos)
                                                 <div class="rounded border my-3 p-3">
                                                     <div class="col-12 col-md-5 my-3">
                                                         <h5>Respuestas hechos</h5>
@@ -413,24 +443,33 @@
                                                     <hr>
                                                     <div class="col-12 bloque-seleccion-hechos">
                                                         <div class="form-check my-4 text-right">
-                                                            <input type="checkbox" class="form-check-input check-todos-hechos">
-                                                            <label class="form-check-label"><strong>Seleccionar todos los hechos</strong></label>
+                                                            <input type="checkbox"
+                                                                class="form-check-input check-todos-hechos">
+                                                            <label class="form-check-label"><strong>Seleccionar todos los
+                                                                    hechos</strong></label>
                                                         </div>
-                                                        @if($tutela->cantidad_hechos)
-                                                            @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
+                                                        @if ($tutela->cantidad_hechos)
+                                                            @foreach ($tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                                                 <div class="form-check form-check-inline">
                                                                     @if (session('id_usuario') == $hecho->empleado_id && !sizeOf($hecho->relacionesHechos))
-                                                                        <input type="checkbox" class="form-check-input select-hecho" value="{{$hecho->id}}">
-                                                                        <label class="form-check-label"><strong>#{{$hecho->consecutivo}}</strong></label>
+                                                                        <input type="checkbox"
+                                                                            class="form-check-input select-hecho"
+                                                                            value="{{ $hecho->id }}">
+                                                                        <label
+                                                                            class="form-check-label"><strong>#{{ $hecho->consecutivo }}</strong></label>
                                                                     @endif
                                                                 </div>
-                                                            @endforeach     
+                                                            @endforeach
                                                         @else
-                                                            @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
+                                                            @foreach ($tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                                                 @if (session('id_usuario') == $hecho->empleado_id && !sizeOf($hecho->relacionesHechos))
                                                                     <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input select-hecho" value="{{$hecho->id}}">
-                                                                        <label class="form-check-label"><strong>#{{$hecho->consecutivo}}</strong> - {{$hecho->hecho}}</label>
+                                                                        <input type="checkbox"
+                                                                            class="form-check-input select-hecho"
+                                                                            value="{{ $hecho->id }}">
+                                                                        <label
+                                                                            class="form-check-label"><strong>#{{ $hecho->consecutivo }}</strong>
+                                                                            - {{ $hecho->hecho }}</label>
                                                                     </div>
                                                                     <hr>
                                                                 @endif
@@ -443,21 +482,24 @@
                                                         </div>
                                                         <div class="col-12 col-md-7 row estado-hechos justify-content-end">
                                                             @if ($tutela->estadostutela_id < 4)
-                                                            <div class="col-9 row estado-hechos justify-content-end">
-                                                                <div class="col-3 d-flex mb-2">
-                                                                    <h6>Avance:</h6>
+                                                                <div class="col-9 row estado-hechos justify-content-end">
+                                                                    <div class="col-3 d-flex mb-2">
+                                                                        <h6>Avance:</h6>
+                                                                    </div>
+                                                                    <select
+                                                                        class="custom-select rounded-0 estadoHecho col-4">
+                                                                        @foreach ($estados as $estado)
+                                                                            <option value="{{ $estado->id }}">
+                                                                                {{ $estado->estado }} %</option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
-                                                                <select class="custom-select rounded-0 estadoHecho col-4">
-                                                                    @foreach ($estados as $estado)
-                                                                        <option value="{{ $estado->id }}">{{ $estado->estado }} %</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
                                                             @endif
                                                             <div class="col-3 row modal-hecho">
-                                                                <button type="" class="btn btn-success col-12 mx-2" data-toggle="modal"
-                                                                    data-target=".buscar-hecho"><span
-                                                                        style="font-size: 1em;"><i class="fas fa-search"></i>
+                                                                <button type="" class="btn btn-success col-12 mx-2"
+                                                                    data-toggle="modal" data-target=".buscar-hecho"><span
+                                                                        style="font-size: 1em;"><i
+                                                                            class="fas fa-search"></i>
                                                                         Wiku</span>
                                                                 </button>
                                                             </div>
@@ -469,7 +511,8 @@
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Buscar En
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                        Buscar En
                                                                         Wiku</h5>
                                                                     <button type="button" class="close"
                                                                         data-dismiss="modal" aria-label="Close">
@@ -481,30 +524,39 @@
                                                                         <ul class="nav nav-pills mb-3" id="pills-tab"
                                                                             role="tablist">
                                                                             <li class="nav-item" role="presentation">
-                                                                                <button class="nav-link active" id="pills-home-tab"
+                                                                                <button class="nav-link active"
+                                                                                    id="pills-home-tab"
                                                                                     data-bs-toggle="pill"
-                                                                                    data-bs-target="#pills-home" type="button"
-                                                                                    role="tab" aria-controls="pills-home"
-                                                                                    aria-selected="true">Busqueda Basica</button>
+                                                                                    data-bs-target="#pills-home"
+                                                                                    type="button" role="tab"
+                                                                                    aria-controls="pills-home"
+                                                                                    aria-selected="true">Busqueda
+                                                                                    Basica</button>
                                                                             </li>
                                                                             <li class="nav-item" role="presentation">
                                                                                 <button class="nav-link"
-                                                                                    id="pills-profile-tab" data-bs-toggle="pill"
-                                                                                    data-bs-target="#pills-profile" type="button"
-                                                                                    role="tab" aria-controls="pills-profile"
-                                                                                    aria-selected="false">Busqueda Avanzada</button>
+                                                                                    id="pills-profile-tab"
+                                                                                    data-bs-toggle="pill"
+                                                                                    data-bs-target="#pills-profile"
+                                                                                    type="button" role="tab"
+                                                                                    aria-controls="pills-profile"
+                                                                                    aria-selected="false">Busqueda
+                                                                                    Avanzada</button>
                                                                             </li>
                                                                         </ul>
                                                                         <div class="tab-content" id="pills-tabContent">
-                                                                            <div class="tab-pane fade show active" id="pills-home"
-                                                                                role="tabpanel" aria-labelledby="pills-home-tab">
-                                                                                <div class="row d-flex justify-content-center">
+                                                                            <div class="tab-pane fade show active"
+                                                                                id="pills-home" role="tabpanel"
+                                                                                aria-labelledby="pills-home-tab">
+                                                                                <div
+                                                                                    class="row d-flex justify-content-center">
                                                                                     <div
                                                                                         class="col-12 col-md-8 d-flex justify-content-around">
                                                                                         <div class="form-check">
                                                                                             <input class="form-check-input"
                                                                                                 type="radio" name="radio1"
-                                                                                                checked="checked" value="todos">
+                                                                                                checked="checked"
+                                                                                                value="todos">
                                                                                             <label
                                                                                                 class="form-check-label">Todos</label>
                                                                                         </div>
@@ -539,27 +591,32 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <hr>
-                                                                                <div class="row d-flex justify-content-center">
+                                                                                <div
+                                                                                    class="row d-flex justify-content-center">
                                                                                     <div
                                                                                         class="col-12 col-md-8 form-group d-flex justify-content-center">
-                                                                                        <label for="query" class="mr-3"
+                                                                                        <label for="query"
+                                                                                            class="mr-3"
                                                                                             style="white-space:nowrap">Busqueda
                                                                                             Básica</label>
                                                                                         <input type="text"
-                                                                                            class="form-control query" id="query"
-                                                                                            name="query"
+                                                                                            class="form-control query"
+                                                                                            id="query" name="query"
                                                                                             data_url="{{ route('wiku_busqueda_basica') }}"
                                                                                             placeholder="Ingrese palabras de busqueda">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="tab-pane fade" id="pills-profile"
-                                                                                role="tabpanel" aria-labelledby="pills-profile-tab">
-                                                                                <div class="row d-flex justify-content-star">
+                                                                                role="tabpanel"
+                                                                                aria-labelledby="pills-profile-tab">
+                                                                                <div
+                                                                                    class="row d-flex justify-content-star">
                                                                                     <div class="col-12 mb-3">
                                                                                         <h6>Por tipo de wiku...</h6>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
                                                                                         <label class="requerido"
                                                                                             for="tipo_wiku">Categoria de
                                                                                             Wiku</label>
@@ -567,56 +624,70 @@
                                                                                             class="form-control form-control-sm tipo_wiku"
                                                                                             id="tipo_wiku"
                                                                                             data_url="{{ route('wiku-cargarargumentos') }}">
-                                                                                            <option value="">---Seleccione Wiku---
+                                                                                            <option value="">---Seleccione
+                                                                                                Wiku---
                                                                                             </option>
-                                                                                            <option value="Argumentos">Argumentos
+                                                                                            <option value="Argumentos">
+                                                                                                Argumentos
                                                                                             </option>
-                                                                                            <option value="Normas">Normas</option>
+                                                                                            <option value="Normas">Normas
+                                                                                            </option>
                                                                                             <option value="Jurisprudencias">
                                                                                                 Jurisprudencias</option>
-                                                                                            <option value="Doctrinas">Doctrinas
+                                                                                            <option value="Doctrinas">
+                                                                                                Doctrinas
                                                                                             </option>
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
                                                                                 <hr>
-                                                                                <div class="row d-flex justify-content-center">
+                                                                                <div
+                                                                                    class="row d-flex justify-content-center">
                                                                                     <div class="col-12 mb-3">
-                                                                                        <h6>Por área, tema y tema específico...</h6>
+                                                                                        <h6>Por área, tema y tema
+                                                                                            específico...</h6>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
                                                                                         <label for="area_id">Área</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             id="area_id"
                                                                                             data_url="{{ route('cargar_temas') }}">
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                             @foreach ($areas as $area)
                                                                                                 <option
                                                                                                     value="{{ $area->id }}">
-                                                                                                    {{ $area->area }}</option>
+                                                                                                    {{ $area->area }}
+                                                                                                </option>
                                                                                             @endforeach
                                                                                         </select>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
                                                                                         <label for="tema_id">Tema</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             id="tema_id"
                                                                                             data_url="{{ route('cargar_temasespec') }}">
-                                                                                            <option value="">Seleccione primero un
+                                                                                            <option value="">Seleccione
+                                                                                                primero un
                                                                                                 área</option>
                                                                                         </select>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                        <label for="wikutemaespecifico_id">Tema
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
+                                                                                        <label
+                                                                                            for="wikutemaespecifico_id">Tema
                                                                                             Específico</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             name="wikutemaespecifico_id"
                                                                                             id="wikutemaespecifico_id">
-                                                                                            <option value="">Seleccione primero un
+                                                                                            <option value="">Seleccione
+                                                                                                primero un
                                                                                                 Tema</option>
                                                                                         </select>
                                                                                     </div>
@@ -624,17 +695,20 @@
                                                                                 <hr>
                                                                                 <div class="row">
                                                                                     <div class="col-12 mb-3">
-                                                                                        <h6>Por fuente, artículo y fecha de entrada
+                                                                                        <h6>Por fuente, artículo y fecha de
+                                                                                            entrada
                                                                                             en vigencia...</h6>
                                                                                     </div>
-                                                                                    <div class="col-12 col-md-5 form-group">
+                                                                                    <div
+                                                                                        class="col-12 col-md-5 form-group">
                                                                                         <label for="fuente_id">Fuente
                                                                                             emisora</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             name="fuente_id" id="fuente_id"
                                                                                             data_url="{{ route('cargar_normas') }}">
-                                                                                            <option value="">--- Seleccione ---
+                                                                                            <option value="">--- Seleccione
+                                                                                                ---
                                                                                             </option>
                                                                                             @foreach ($fuentes as $fuente)
                                                                                                 <option
@@ -644,16 +718,20 @@
                                                                                             @endforeach
                                                                                         </select>
                                                                                     </div>
-                                                                                    <div class="col-12 col-md-5 form-group">
-                                                                                        <label for="fuente_id">Artículo</label>
+                                                                                    <div
+                                                                                        class="col-12 col-md-5 form-group">
+                                                                                        <label
+                                                                                            for="fuente_id">Artículo</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             id="id">
-                                                                                            <option value="">Seleccione primero una
+                                                                                            <option value="">Seleccione
+                                                                                                primero una
                                                                                                 Fuente Emisora</option>
                                                                                         </select>
                                                                                     </div>
-                                                                                    <div class="col-12 col-md-2 form-group">
+                                                                                    <div
+                                                                                        class="col-12 col-md-2 form-group">
                                                                                         <label for="fecha">Entrada en
                                                                                             vigencia</label>
                                                                                         <input type="date"
@@ -663,10 +741,12 @@
                                                                                     </div>
                                                                                     <hr>
                                                                                     <div class="col-12 mb-3">
-                                                                                        <h6>Por asociación servicio / producto..
+                                                                                        <h6>Por asociación servicio /
+                                                                                            producto..
                                                                                         </h6>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
                                                                                         <label class="requerido"
                                                                                             for="prod_serv">Producto /
                                                                                             Servicio</label>
@@ -675,22 +755,26 @@
                                                                                             id="prod_serv">
                                                                                             <option value="">---Selecione---
                                                                                             </option>
-                                                                                            <option value="Producto">Producto
+                                                                                            <option value="Producto">
+                                                                                                Producto
                                                                                             </option>
-                                                                                            <option value="Servicio">Servicio
+                                                                                            <option value="Servicio">
+                                                                                                Servicio
                                                                                             </option>
                                                                                         </select>
                                                                                     </div>
                                                                                     <div class="form-group col-12 col-md-4"
                                                                                         id="tipo_pqr">
                                                                                         <label class="requerido"
-                                                                                            for="tipo_p_q_r_id">Tipo de PQR</label>
+                                                                                            for="tipo_p_q_r_id">Tipo de
+                                                                                            PQR</label>
                                                                                         <select id="tipo_p_q_r_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="tipo_p_q_r_id"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}"
                                                                                             required>
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                             @foreach ($tipos_pqr as $tipo_pqr)
                                                                                                 <option
@@ -703,34 +787,40 @@
                                                                                     <div class="form-group col-12 col-md-4"
                                                                                         id="motivo_pqr">
                                                                                         <label class="requerido"
-                                                                                            for="motivo_id">Motivo de PQR</label>
+                                                                                            for="motivo_id">Motivo de
+                                                                                            PQR</label>
                                                                                         <select id="motivo_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="motivo_id"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}">
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                         </select>
                                                                                     </div>
                                                                                     <div class="form-group col-12 col-md-4"
                                                                                         id="sub_motivo_pqr">
                                                                                         <label class="requerido"
-                                                                                            for="motivo_sub_id">Sub-Motivo de
+                                                                                            for="motivo_sub_id">Sub-Motivo
+                                                                                            de
                                                                                             PQR</label>
                                                                                         <select id="motivo_sub_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="motivo_sub_id">
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                         </select>
                                                                                     </div>
                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                         id="servicios">
-                                                                                        <label for="servicio_id">Servicios</label>
+                                                                                        <label
+                                                                                            for="servicio_id">Servicios</label>
                                                                                         <select id="servicio_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="servicio_id">
-                                                                                            <option value="">---Seleccione un
+                                                                                            <option value="">---Seleccione
+                                                                                                un
                                                                                                 servcio---</option>
                                                                                             @foreach ($servicios as $servicio)
                                                                                                 <option
@@ -749,7 +839,8 @@
                                                                                             class="form-control form-control-sm"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_producto') }}"
                                                                                             name="categoria_id">
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                             @foreach ($categorias as $categoria)
                                                                                                 <option
@@ -767,7 +858,8 @@
                                                                                             class="form-control form-control-sm"
                                                                                             name="producto_id"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}">
-                                                                                            <option value="">---Seleccione primero
+                                                                                            <option value="">---Seleccione
+                                                                                                primero
                                                                                                 una categoría---</option>
                                                                                         </select>
                                                                                     </div>
@@ -779,7 +871,8 @@
                                                                                             class="form-control form-control-sm"
                                                                                             name="marca_id"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}">
-                                                                                            <option value="">---Seleccione primero
+                                                                                            <option value="">---Seleccione
+                                                                                                primero
                                                                                                 un producto---</option>
                                                                                         </select>
                                                                                     </div>
@@ -790,7 +883,8 @@
                                                                                         <select id="referencia_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="referencia_id">
-                                                                                            <option value="">---Seleccione primero
+                                                                                            <option value="">---Seleccione
+                                                                                                primero
                                                                                                 una marca---</option>
                                                                                         </select>
                                                                                     </div>
@@ -815,26 +909,31 @@
                                                                                             <span class="username"><a
                                                                                                     href="#"
                                                                                                     id="tituloNoma"></a></span>
-                                                                                            <span class="description"></span>
+                                                                                            <span
+                                                                                                class="description"></span>
                                                                                         </div>
                                                                                         <div class="card-tools">
                                                                                             <button type="button"
                                                                                                 class="btn btn-tool"
                                                                                                 data-card-widget="collapse">
-                                                                                                <i class="fas fa-minus"></i>
+                                                                                                <i
+                                                                                                    class="fas fa-minus"></i>
                                                                                             </button>
                                                                                             <button type="button"
                                                                                                 class="btn btn-tool"
                                                                                                 data-card-widget="remove">
-                                                                                                <i class="fas fa-times"></i>
+                                                                                                <i
+                                                                                                    class="fas fa-times"></i>
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="card-body">
                                                                                         <div class="row">
                                                                                             <div class="col-12">
-                                                                                                <p><strong>Texto:</strong></p>
-                                                                                                <p class="textoCopiar">El
+                                                                                                <p><strong>Texto:</strong>
+                                                                                                </p>
+                                                                                                <p class="textoCopiar">
+                                                                                                    El
                                                                                                     Texto...</p>
                                                                                             </div>
                                                                                         </div>
@@ -843,17 +942,26 @@
                                                                                             <div class="col-12">
                                                                                                 <h6>Criterios Juridicos</h6>
                                                                                             </div>
-                                                                                            <div class="col-12 table-responsive">
-                                                                                                <table class="table">
+                                                                                            <div
+                                                                                                class="col-12 table-responsive">
+                                                                                                <table
+                                                                                                    class="table">
                                                                                                     <thead>
                                                                                                         <tr>
-                                                                                                            <th>Autor(es)</th>
-                                                                                                            <th>Criterios jurídicos
-                                                                                                                de aplicación</th>
-                                                                                                            <th>Criterios jurídicos
-                                                                                                                de no aplicación
+                                                                                                            <th>Autor(es)
                                                                                                             </th>
-                                                                                                            <th>Notas de la Vigencia
+                                                                                                            <th>Criterios
+                                                                                                                jurídicos
+                                                                                                                de
+                                                                                                                aplicación
+                                                                                                            </th>
+                                                                                                            <th>Criterios
+                                                                                                                jurídicos
+                                                                                                                de no
+                                                                                                                aplicación
+                                                                                                            </th>
+                                                                                                            <th>Notas de la
+                                                                                                                Vigencia
                                                                                                             </th>
                                                                                                         </tr>
                                                                                                     </thead>
@@ -886,12 +994,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 form-group mt-3">
-                                                        <textarea type="text" class="form-control form-control-sm respuesta respuesta-editar"
+                                                        <textarea type="text"
+                                                            class="form-control form-control-sm respuesta respuesta-editar"
                                                             rows="6"></textarea>
                                                     </div>
                                                     <div class="col-12 anexosConsulta">
                                                         <div class="col-12 d-flex row anexoconsulta">
-                                                            <div class="col-12 titulo-anexo d-flex justify-content-between">
+                                                            <div
+                                                                class="col-12 titulo-anexo d-flex justify-content-between">
                                                                 <h6>Anexo</h6>
                                                                 <button type="button"
                                                                     class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoConsulta"><i
@@ -900,9 +1010,11 @@
                                                             </div>
                                                             <div class="col-12 col-md-4 form-group titulo-anexoConsulta">
                                                                 <label for="titulo">Título anexo</label>
-                                                                <input type="text" class="titulo form-control form-control-sm">
+                                                                <input type="text"
+                                                                    class="titulo form-control form-control-sm">
                                                             </div>
-                                                            <div class="col-12 col-md-4 form-group descripcion-anexoConsulta">
+                                                            <div
+                                                                class="col-12 col-md-4 form-group descripcion-anexoConsulta">
                                                                 <label for="descripcion">Descripción</label>
                                                                 <input type="text"
                                                                     class="descripcion form-control form-control-sm">
@@ -915,41 +1027,46 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 d-flex justify-content-end flex-row mb-3">
-                                                        <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
+                                                        <button
+                                                            class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
                                                             id="crearAnexo"><i class="fa fa-plus-circle mr-2"
                                                                 aria-hidden="true"></i>
                                                             Añadir
                                                             otro Anexo</button>
                                                     </div>
-                                                    <button type="" class="btn btn-primary mx-2 btn-respuesta-hecho col-md-3 col-12 mb-3"
+                                                    <button type=""
+                                                        class="btn btn-primary mx-2 btn-respuesta-hecho col-md-3 col-12 mb-3"
                                                         data_url="{{ route('respuesta_hecho_guardar') }}"
-                                                        data_url2="{{ route('respuesta_hecho_anexo_guardar') }}" 
+                                                        data_url2="{{ route('respuesta_hecho_anexo_guardar') }}"
                                                         data_url3="{{ route('estado_hecho_guardar') }}"
                                                         data_url4="{{ route('relacion_respuesta_hecho_guardar') }}"
                                                         data_token="{{ csrf_token() }}">Guardar respuesta</button>
                                                 </div>
                                             @endif
-                                            @if(sizeOf($tutela->respuestasHechos))
+                                            @if (sizeOf($tutela->respuestasHechos))
                                                 @foreach ($tutela->respuestasHechos as $key => $respuesta)
-                                                    @if (session('id_usuario') ==  $respuesta->empleado_id)
+                                                    @if (session('id_usuario') == $respuesta->empleado_id)
                                                         <div class="rounded border my-3 p-3">
                                                             <div class="col-12 col-md-12 mt-2 mb-4">
-                                                                <h5>Respuesta #{{$key + 1}}</h5>
+                                                                <h5>Respuesta #{{ $key + 1 }}</h5>
                                                             </div>
-                                                            @if($respuesta->estado_id != 11)
+                                                            @if ($respuesta->estado_id != 11)
                                                                 <div class="col-12 row justify-content-end my-2">
                                                                     <div class="col-lg-4 col-xl-3 d-flex mb-2">
                                                                         <h6>Agregar hecho a respuesta:</h6>
                                                                     </div>
-                                                                    <select class="custom-select respuesta-hecho-asignar col-lg-3 col-xl-2">
+                                                                    <select
+                                                                        class="custom-select respuesta-hecho-asignar col-lg-3 col-xl-2">
                                                                         <option value="">---Seleccione Hecho---</option>
-                                                                        @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
+                                                                        @foreach ($tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                                                             @if (session('id_usuario') == $hecho->empleado_id && !sizeOf($hecho->relacionesHechos))
-                                                                                <option value="{{ $hecho->id }}">Hecho #{{ $hecho->consecutivo }}</option>
+                                                                                <option value="{{ $hecho->id }}">Hecho
+                                                                                    #{{ $hecho->consecutivo }}</option>
                                                                             @endif
                                                                         @endforeach
                                                                     </select>
-                                                                    <button type="" class="btn btn-primary btn-respuesta-hecho-asignar col-lg-2 col-xl-1 mx-2"
+                                                                    <button type=""
+                                                                        class="btn btn-primary btn-respuesta-hecho-asignar col-lg-2 col-xl-1 mx-2"
                                                                         data_url="{{ route('relacion_respuesta_hecho_guardar') }}"
                                                                         data_url2="{{ route('estado_hecho_guardar') }}"
                                                                         data_token="{{ csrf_token() }}">Agregar</button>
@@ -958,27 +1075,43 @@
                                                             <hr>
                                                             <div class="col-12 row">
                                                                 @foreach ($respuesta->relacion as $relacion)
-                                                                    @if($tutela->cantidad_hechos)
+                                                                    @if ($tutela->cantidad_hechos)
                                                                         <div class="d-flex col-10 col-md-5 col-lg-3">
-                                                                            @if($respuesta->estado_id != 11)
+                                                                            @if ($respuesta->estado_id != 11)
                                                                                 <div class="mr-3">
-                                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho" data_url="{{ route('eliminar_respuesta_hecho_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
-                                                                                    <input class="id_relacion_hecho" type="hidden" value="{{ $relacion->hecho->id }}">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho"
+                                                                                        data_url="{{ route('eliminar_respuesta_hecho_guardar') }}"
+                                                                                        data_token="{{ csrf_token() }}"><i
+                                                                                            class="fas fa-minus-circle"></i></button>
+                                                                                    <input class="id_relacion_hecho"
+                                                                                        type="hidden"
+                                                                                        value="{{ $relacion->hecho->id }}">
                                                                                 </div>
                                                                             @endif
                                                                             <div class="my-2">
-                                                                                <strong class="">Hecho # {{ $relacion->hecho->consecutivo }}</strong>{{$relacion->hecho->hecho}}
+                                                                                <strong class="">Hecho #
+                                                                                    {{ $relacion->hecho->consecutivo }}</strong>{{ $relacion->hecho->hecho }}
                                                                             </div>
                                                                         </div>
                                                                     @else
                                                                         <div class="row">
                                                                             <div class="my-2 col-11">
-                                                                                <strong class="">#{{ $relacion->hecho->consecutivo }} Hecho: </strong>{{$relacion->hecho->hecho}}
+                                                                                <strong
+                                                                                    class="">#{{ $relacion->hecho->consecutivo }}
+                                                                                    Hecho:
+                                                                                </strong>{{ $relacion->hecho->hecho }}
                                                                             </div>
-                                                                            @if($respuesta->estado_id != 11)
+                                                                            @if ($respuesta->estado_id != 11)
                                                                                 <div class="col-1">
-                                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho" data_url="{{ route('eliminar_respuesta_hecho_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
-                                                                                    <input class="id_relacion_hecho" type="hidden" value="{{ $relacion->hecho->id }}">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarHecho"
+                                                                                        data_url="{{ route('eliminar_respuesta_hecho_guardar') }}"
+                                                                                        data_token="{{ csrf_token() }}"><i
+                                                                                            class="fas fa-minus-circle"></i></button>
+                                                                                    <input class="id_relacion_hecho"
+                                                                                        type="hidden"
+                                                                                        value="{{ $relacion->hecho->id }}">
                                                                                 </div>
                                                                             @endif
                                                                         </div>
@@ -990,104 +1123,152 @@
                                                                     <div class="col-12 col-md-5">
                                                                         <h6 class="font-weight-bold">Respuesta hecho</h6>
                                                                     </div>
-                                                                    <div class="col-12 col-md-7 row estado-hecho justify-content-end">
-                                                                        <input class="estado_actual" type="hidden" value="{{ $respuesta->estado_id }}">
+                                                                    <div
+                                                                        class="col-12 col-md-7 row estado-hecho justify-content-end">
+                                                                        <input class="estado_actual" type="hidden"
+                                                                            value="{{ $respuesta->estado_id }}">
                                                                         @if ($tutela->estadostutela_id < 4)
-                                                                            <div class="col-9 row estado-hecho justify-content-end">
+                                                                            <div
+                                                                                class="col-9 row estado-hecho justify-content-end">
                                                                                 <div class="col-3 d-flex mb-2">
                                                                                     <h6>Avance:</h6>
                                                                                 </div>
-                                                                                <select class="custom-select rounded-0 estadoHecho col-4">
+                                                                                <select
+                                                                                    class="custom-select rounded-0 estadoHecho col-4">
                                                                                     @foreach ($estados as $estado)
-                                                                                        <option value="{{ $estado->id }}"
-                                                                                        {{ $respuesta->estadorepuestahecho->id == $estado->id ? 'selected' : '' }}>
-                                                                                        {{ $estado->estado }} %</option>
+                                                                                        <option
+                                                                                            value="{{ $estado->id }}"
+                                                                                            {{ $respuesta->estadorepuestahecho->id == $estado->id ? 'selected' : '' }}>
+                                                                                            {{ $estado->estado }} %
+                                                                                        </option>
                                                                                     @endforeach
                                                                                 </select>
-                                                                                <button type="" class="btn btn-primary btn-estado-hecho col-2 mx-2"
+                                                                                <button type=""
+                                                                                    class="btn btn-primary btn-estado-hecho col-2 mx-2"
                                                                                     data_url="{{ route('estado_respuesta_hecho_guardar') }}"
-                                                                                    data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
+                                                                                    data_token="{{ csrf_token() }}"><span
+                                                                                        style="font-size: 1em;"><i
+                                                                                            class="far fa-save"></i></span></button>
                                                                             </div>
                                                                         @endif
-                                                                        @if($respuesta->estado_id != 11)
+                                                                        @if ($respuesta->estado_id != 11)
                                                                             <div class="col-3 row estado-hecho">
-                                                                                <button type="" class="btn btn-success col-12 mx-2" data-toggle="modal"
+                                                                                <button type=""
+                                                                                    class="btn btn-success col-12 mx-2"
+                                                                                    data-toggle="modal"
                                                                                     data-target=".buscar-{{ $key }}"><span
-                                                                                        style="font-size: 1em;"><i class="fas fa-search"></i>
+                                                                                        style="font-size: 1em;"><i
+                                                                                            class="fas fa-search"></i>
                                                                                         Wiku</span>
                                                                                 </button>
                                                                             </div>
                                                                         @endif
                                                                     </div>
-                                                                    <div class="modal fade buscar-{{ $key }}" tabindex="-1" role="dialog"
-                                                                        data-value="{{ $key }}" aria-labelledby="myLargeModalLabel"
+                                                                    <div class="modal fade buscar-{{ $key }}"
+                                                                        tabindex="-1" role="dialog"
+                                                                        data-value="{{ $key }}"
+                                                                        aria-labelledby="myLargeModalLabel"
                                                                         aria-hidden="true">
                                                                         <div class="modal-dialog modal-lg">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Buscar En
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLongTitle">Buscar En
                                                                                         Wiku</h5>
-                                                                                    <button type="button" class="close"
-                                                                                        data-dismiss="modal" aria-label="Close">
-                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    <button type="button"
+                                                                                        class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                        <span
+                                                                                            aria-hidden="true">&times;</span>
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body">
                                                                                     <div class="card-body">
-                                                                                        <ul class="nav nav-pills mb-3" id="pills-tab"
-                                                                                            role="tablist">
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <button class="nav-link active" id="pills-home-tab"
+                                                                                        <ul class="nav nav-pills mb-3"
+                                                                                            id="pills-tab" role="tablist">
+                                                                                            <li class="nav-item"
+                                                                                                role="presentation">
+                                                                                                <button
+                                                                                                    class="nav-link active"
+                                                                                                    id="pills-home-tab"
                                                                                                     data-bs-toggle="pill"
-                                                                                                    data-bs-target="#pills-home" type="button"
-                                                                                                    role="tab" aria-controls="pills-home"
-                                                                                                    aria-selected="true">Busqueda Basica</button>
+                                                                                                    data-bs-target="#pills-home"
+                                                                                                    type="button" role="tab"
+                                                                                                    aria-controls="pills-home"
+                                                                                                    aria-selected="true">Busqueda
+                                                                                                    Basica</button>
                                                                                             </li>
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <button class="nav-link"
-                                                                                                    id="pills-profile-tab" data-bs-toggle="pill"
-                                                                                                    data-bs-target="#pills-profile" type="button"
-                                                                                                    role="tab" aria-controls="pills-profile"
-                                                                                                    aria-selected="false">Busqueda Avanzada</button>
+                                                                                            <li class="nav-item"
+                                                                                                role="presentation">
+                                                                                                <button
+                                                                                                    class="nav-link"
+                                                                                                    id="pills-profile-tab"
+                                                                                                    data-bs-toggle="pill"
+                                                                                                    data-bs-target="#pills-profile"
+                                                                                                    type="button" role="tab"
+                                                                                                    aria-controls="pills-profile"
+                                                                                                    aria-selected="false">Busqueda
+                                                                                                    Avanzada</button>
                                                                                             </li>
                                                                                         </ul>
-                                                                                        <div class="tab-content" id="pills-tabContent">
-                                                                                            <div class="tab-pane fade show active" id="pills-home"
-                                                                                                role="tabpanel" aria-labelledby="pills-home-tab">
-                                                                                                <div class="row d-flex justify-content-center">
+                                                                                        <div class="tab-content"
+                                                                                            id="pills-tabContent">
+                                                                                            <div class="tab-pane fade show active"
+                                                                                                id="pills-home"
+                                                                                                role="tabpanel"
+                                                                                                aria-labelledby="pills-home-tab">
+                                                                                                <div
+                                                                                                    class="row d-flex justify-content-center">
                                                                                                     <div
                                                                                                         class="col-12 col-md-8 d-flex justify-content-around">
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
-                                                                                                                checked="checked" value="todos">
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
+                                                                                                                checked="checked"
+                                                                                                                value="todos">
                                                                                                             <label
                                                                                                                 class="form-check-label">Todos</label>
                                                                                                         </div>
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
                                                                                                                 value="Normas">
                                                                                                             <label
                                                                                                                 class="form-check-label">Normas</label>
                                                                                                         </div>
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
                                                                                                                 value="Jurisprudencias">
                                                                                                             <label
                                                                                                                 class="form-check-label">Jurisprudencias</label>
                                                                                                         </div>
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
                                                                                                                 value="Argumentos">
                                                                                                             <label
                                                                                                                 class="form-check-label">Argumentos</label>
                                                                                                         </div>
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
                                                                                                                 value="Normas">
                                                                                                             <label
                                                                                                                 class="form-check-label">Doctrinas</label>
@@ -1095,102 +1276,158 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <hr>
-                                                                                                <div class="row d-flex justify-content-center">
+                                                                                                <div
+                                                                                                    class="row d-flex justify-content-center">
                                                                                                     <div
                                                                                                         class="col-12 col-md-8 form-group d-flex justify-content-center">
-                                                                                                        <label for="query" class="mr-3"
+                                                                                                        <label for="query"
+                                                                                                            class="mr-3"
                                                                                                             style="white-space:nowrap">Busqueda
                                                                                                             Básica</label>
                                                                                                         <input type="text"
-                                                                                                            class="form-control query" id="query"
+                                                                                                            class="form-control query"
+                                                                                                            id="query"
                                                                                                             name="query"
                                                                                                             data_url="{{ route('wiku_busqueda_basica') }}"
                                                                                                             placeholder="Ingrese palabras de busqueda">
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="tab-pane fade" id="pills-profile"
-                                                                                                role="tabpanel" aria-labelledby="pills-profile-tab">
-                                                                                                <div class="row d-flex justify-content-star">
-                                                                                                    <div class="col-12 mb-3">
-                                                                                                        <h6>Por tipo de wiku...</h6>
+                                                                                            <div class="tab-pane fade"
+                                                                                                id="pills-profile"
+                                                                                                role="tabpanel"
+                                                                                                aria-labelledby="pills-profile-tab">
+                                                                                                <div
+                                                                                                    class="row d-flex justify-content-star">
+                                                                                                    <div
+                                                                                                        class="col-12 mb-3">
+                                                                                                        <h6>Por tipo de
+                                                                                                            wiku...</h6>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label class="requerido"
-                                                                                                            for="tipo_wiku">Categoria de
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="tipo_wiku">Categoria
+                                                                                                            de
                                                                                                             Wiku</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm tipo_wiku"
                                                                                                             id="tipo_wiku"
                                                                                                             data_url="{{ route('wiku-cargarargumentos') }}">
-                                                                                                            <option value="">---Seleccione Wiku---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                Wiku---
                                                                                                             </option>
-                                                                                                            <option value="Argumentos">Argumentos
+                                                                                                            <option
+                                                                                                                value="Argumentos">
+                                                                                                                Argumentos
                                                                                                             </option>
-                                                                                                            <option value="Normas">Normas</option>
-                                                                                                            <option value="Jurisprudencias">
-                                                                                                                Jurisprudencias</option>
-                                                                                                            <option value="Doctrinas">Doctrinas
+                                                                                                            <option
+                                                                                                                value="Normas">
+                                                                                                                Normas
+                                                                                                            </option>
+                                                                                                            <option
+                                                                                                                value="Jurisprudencias">
+                                                                                                                Jurisprudencias
+                                                                                                            </option>
+                                                                                                            <option
+                                                                                                                value="Doctrinas">
+                                                                                                                Doctrinas
                                                                                                             </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <hr>
-                                                                                                <div class="row d-flex justify-content-center">
-                                                                                                    <div class="col-12 mb-3">
-                                                                                                        <h6>Por área, tema y tema específico...</h6>
+                                                                                                <div
+                                                                                                    class="row d-flex justify-content-center">
+                                                                                                    <div
+                                                                                                        class="col-12 mb-3">
+                                                                                                        <h6>Por área, tema y
+                                                                                                            tema
+                                                                                                            específico...
+                                                                                                        </h6>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label for="area_id">Área</label>
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            for="area_id">Área</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             id="area_id"
                                                                                                             data_url="{{ route('cargar_temas') }}">
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                             @foreach ($areas as $area)
                                                                                                                 <option
                                                                                                                     value="{{ $area->id }}">
-                                                                                                                    {{ $area->area }}</option>
+                                                                                                                    {{ $area->area }}
+                                                                                                                </option>
                                                                                                             @endforeach
                                                                                                         </select>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label for="tema_id">Tema</label>
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            for="tema_id">Tema</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             id="tema_id"
                                                                                                             data_url="{{ route('cargar_temasespec') }}">
-                                                                                                            <option value="">Seleccione primero un
-                                                                                                                área</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                Seleccione
+                                                                                                                primero un
+                                                                                                                área
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label for="wikutemaespecifico_id">Tema
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            for="wikutemaespecifico_id">Tema
                                                                                                             Específico</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="wikutemaespecifico_id"
                                                                                                             id="wikutemaespecifico_id">
-                                                                                                            <option value="">Seleccione primero un
-                                                                                                                Tema</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                Seleccione
+                                                                                                                primero un
+                                                                                                                Tema
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <hr>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-12 mb-3">
-                                                                                                        <h6>Por fuente, artículo y fecha de entrada
-                                                                                                            en vigencia...</h6>
+                                                                                                <div
+                                                                                                    class="row">
+                                                                                                    <div
+                                                                                                        class="col-12 mb-3">
+                                                                                                        <h6>Por fuente,
+                                                                                                            artículo y fecha
+                                                                                                            de entrada
+                                                                                                            en vigencia...
+                                                                                                        </h6>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-5 form-group">
-                                                                                                        <label for="fuente_id">Fuente
+                                                                                                    <div
+                                                                                                        class="col-12 col-md-5 form-group">
+                                                                                                        <label
+                                                                                                            for="fuente_id">Fuente
                                                                                                             emisora</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
-                                                                                                            name="fuente_id" id="fuente_id"
+                                                                                                            name="fuente_id"
+                                                                                                            id="fuente_id"
                                                                                                             data_url="{{ route('cargar_normas') }}">
-                                                                                                            <option value="">--- Seleccione ---
+                                                                                                            <option
+                                                                                                                value="">---
+                                                                                                                Seleccione
+                                                                                                                ---
                                                                                                             </option>
                                                                                                             @foreach ($fuentes as $fuente)
                                                                                                                 <option
@@ -1200,53 +1437,81 @@
                                                                                                             @endforeach
                                                                                                         </select>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-5 form-group">
-                                                                                                        <label for="fuente_id">Artículo</label>
+                                                                                                    <div
+                                                                                                        class="col-12 col-md-5 form-group">
+                                                                                                        <label
+                                                                                                            for="fuente_id">Artículo</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             id="id">
-                                                                                                            <option value="">Seleccione primero una
-                                                                                                                Fuente Emisora</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                Seleccione
+                                                                                                                primero una
+                                                                                                                Fuente
+                                                                                                                Emisora
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-2 form-group">
-                                                                                                        <label for="fecha">Entrada en
+                                                                                                    <div
+                                                                                                        class="col-12 col-md-2 form-group">
+                                                                                                        <label
+                                                                                                            for="fecha">Entrada
+                                                                                                            en
                                                                                                             vigencia</label>
                                                                                                         <input type="date"
                                                                                                             class="form-control form-control-sm"
-                                                                                                            name="fecha" id="fecha"
+                                                                                                            name="fecha"
+                                                                                                            id="fecha"
                                                                                                             max="{{ date('Y-m-d') }}">
                                                                                                     </div>
                                                                                                     <hr>
-                                                                                                    <div class="col-12 mb-3">
-                                                                                                        <h6>Por asociación servicio / producto..
+                                                                                                    <div
+                                                                                                        class="col-12 mb-3">
+                                                                                                        <h6>Por asociación
+                                                                                                            servicio /
+                                                                                                            producto..
                                                                                                         </h6>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label class="requerido"
-                                                                                                            for="prod_serv">Producto /
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="prod_serv">Producto
+                                                                                                            /
                                                                                                             Servicio</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             id="prod_serv">
-                                                                                                            <option value="">---Selecione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Selecione---
                                                                                                             </option>
-                                                                                                            <option value="Producto">Producto
+                                                                                                            <option
+                                                                                                                value="Producto">
+                                                                                                                Producto
                                                                                                             </option>
-                                                                                                            <option value="Servicio">Servicio
+                                                                                                            <option
+                                                                                                                value="Servicio">
+                                                                                                                Servicio
                                                                                                             </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4"
                                                                                                         id="tipo_pqr">
-                                                                                                        <label class="requerido"
-                                                                                                            for="tipo_p_q_r_id">Tipo de PQR</label>
-                                                                                                        <select id="tipo_p_q_r_id"
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="tipo_p_q_r_id">Tipo
+                                                                                                            de PQR</label>
+                                                                                                        <select
+                                                                                                            id="tipo_p_q_r_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="tipo_p_q_r_id"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}"
                                                                                                             required>
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                             @foreach ($tipos_pqr as $tipo_pqr)
                                                                                                                 <option
@@ -1258,36 +1523,52 @@
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4"
                                                                                                         id="motivo_pqr">
-                                                                                                        <label class="requerido"
-                                                                                                            for="motivo_id">Motivo de PQR</label>
-                                                                                                        <select id="motivo_id"
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="motivo_id">Motivo
+                                                                                                            de PQR</label>
+                                                                                                        <select
+                                                                                                            id="motivo_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="motivo_id"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}">
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4"
                                                                                                         id="sub_motivo_pqr">
-                                                                                                        <label class="requerido"
-                                                                                                            for="motivo_sub_id">Sub-Motivo de
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="motivo_sub_id">Sub-Motivo
+                                                                                                            de
                                                                                                             PQR</label>
-                                                                                                        <select id="motivo_sub_id"
+                                                                                                        <select
+                                                                                                            id="motivo_sub_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="motivo_sub_id">
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="servicios">
-                                                                                                        <label for="servicio_id">Servicios</label>
-                                                                                                        <select id="servicio_id"
+                                                                                                        <label
+                                                                                                            for="servicio_id">Servicios</label>
+                                                                                                        <select
+                                                                                                            id="servicio_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="servicio_id">
-                                                                                                            <option value="">---Seleccione un
-                                                                                                                servcio---</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                un
+                                                                                                                servcio---
+                                                                                                            </option>
                                                                                                             @foreach ($servicios as $servicio)
                                                                                                                 <option
                                                                                                                     value="{{ $servicio->id }}">
@@ -1298,14 +1579,19 @@
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="categorias">
-                                                                                                        <label class="requerido"
-                                                                                                            for="categoria_id">Categoría de
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="categoria_id">Categoría
+                                                                                                            de
                                                                                                             producto</label>
-                                                                                                        <select id="categoria_id"
+                                                                                                        <select
+                                                                                                            id="categoria_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_producto') }}"
                                                                                                             name="categoria_id">
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                             @foreach ($categorias as $categoria)
                                                                                                                 <option
@@ -1317,37 +1603,57 @@
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="productos">
-                                                                                                        <label class="requerido"
+                                                                                                        <label
+                                                                                                            class="requerido"
                                                                                                             for="producto_id">Productos</label>
-                                                                                                        <select id="producto_id"
+                                                                                                        <select
+                                                                                                            id="producto_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="producto_id"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}">
-                                                                                                            <option value="">---Seleccione primero
-                                                                                                                una categoría---</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                primero
+                                                                                                                una
+                                                                                                                categoría---
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="marcas">
-                                                                                                        <label class="requerido"
+                                                                                                        <label
+                                                                                                            class="requerido"
                                                                                                             for="marca_id">Marcas</label>
-                                                                                                        <select id="marca_id"
+                                                                                                        <select
+                                                                                                            id="marca_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="marca_id"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}">
-                                                                                                            <option value="">---Seleccione primero
-                                                                                                                un producto---</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                primero
+                                                                                                                un
+                                                                                                                producto---
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="referencias">
-                                                                                                        <label class="requerido"
+                                                                                                        <label
+                                                                                                            class="requerido"
                                                                                                             for="referencia_id">Referencias</label>
-                                                                                                        <select id="referencia_id"
+                                                                                                        <select
+                                                                                                            id="referencia_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="referencia_id">
-                                                                                                            <option value="">---Seleccione primero
-                                                                                                                una marca---</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                primero
+                                                                                                                una marca---
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div
@@ -1366,68 +1672,107 @@
                                                                                             <div class="col-md-6  d-none">
                                                                                                 <div
                                                                                                     class="card card-primary collapsed-card card-mini-sombra">
-                                                                                                    <div class="card-header">
-                                                                                                        <div class="user-block">
-                                                                                                            <span class="username"><a
+                                                                                                    <div
+                                                                                                        class="card-header">
+                                                                                                        <div
+                                                                                                            class="user-block">
+                                                                                                            <span
+                                                                                                                class="username"><a
                                                                                                                     href="#"
                                                                                                                     id="tituloNoma"></a></span>
-                                                                                                            <span class="description"></span>
+                                                                                                            <span
+                                                                                                                class="description"></span>
                                                                                                         </div>
-                                                                                                        <div class="card-tools">
-                                                                                                            <button type="button"
+                                                                                                        <div
+                                                                                                            class="card-tools">
+                                                                                                            <button
+                                                                                                                type="button"
                                                                                                                 class="btn btn-tool"
                                                                                                                 data-card-widget="collapse">
-                                                                                                                <i class="fas fa-minus"></i>
+                                                                                                                <i
+                                                                                                                    class="fas fa-minus"></i>
                                                                                                             </button>
-                                                                                                            <button type="button"
+                                                                                                            <button
+                                                                                                                type="button"
                                                                                                                 class="btn btn-tool"
                                                                                                                 data-card-widget="remove">
-                                                                                                                <i class="fas fa-times"></i>
+                                                                                                                <i
+                                                                                                                    class="fas fa-times"></i>
                                                                                                             </button>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="card-body">
-                                                                                                        <div class="row">
-                                                                                                            <div class="col-12">
-                                                                                                                <p><strong>Texto:</strong></p>
-                                                                                                                <p class="textoCopiar">El
-                                                                                                                    Texto...</p>
+                                                                                                    <div
+                                                                                                        class="card-body">
+                                                                                                        <div
+                                                                                                            class="row">
+                                                                                                            <div
+                                                                                                                class="col-12">
+                                                                                                                <p><strong>Texto:</strong>
+                                                                                                                </p>
+                                                                                                                <p
+                                                                                                                    class="textoCopiar">
+                                                                                                                    El
+                                                                                                                    Texto...
+                                                                                                                </p>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                         <hr>
-                                                                                                        <div class="row">
-                                                                                                            <div class="col-12">
-                                                                                                                <h6>Criterios Juridicos</h6>
+                                                                                                        <div
+                                                                                                            class="row">
+                                                                                                            <div
+                                                                                                                class="col-12">
+                                                                                                                <h6>Criterios
+                                                                                                                    Juridicos
+                                                                                                                </h6>
                                                                                                             </div>
-                                                                                                            <div class="col-12 table-responsive">
-                                                                                                                <table class="table">
+                                                                                                            <div
+                                                                                                                class="col-12 table-responsive">
+                                                                                                                <table
+                                                                                                                    class="table">
                                                                                                                     <thead>
                                                                                                                         <tr>
-                                                                                                                            <th>Autor(es)</th>
-                                                                                                                            <th>Criterios jurídicos
-                                                                                                                                de aplicación</th>
-                                                                                                                            <th>Criterios jurídicos
-                                                                                                                                de no aplicación
+                                                                                                                            <th>Autor(es)
                                                                                                                             </th>
-                                                                                                                            <th>Notas de la Vigencia
+                                                                                                                            <th>Criterios
+                                                                                                                                jurídicos
+                                                                                                                                de
+                                                                                                                                aplicación
+                                                                                                                            </th>
+                                                                                                                            <th>Criterios
+                                                                                                                                jurídicos
+                                                                                                                                de
+                                                                                                                                no
+                                                                                                                                aplicación
+                                                                                                                            </th>
+                                                                                                                            <th>Notas
+                                                                                                                                de
+                                                                                                                                la
+                                                                                                                                Vigencia
                                                                                                                             </th>
                                                                                                                         </tr>
                                                                                                                     </thead>
                                                                                                                     <tbody>
                                                                                                                         <tr>
-                                                                                                                            <td></td>
-                                                                                                                            <td></td>
-                                                                                                                            <td></td>
-                                                                                                                            <td></td>
+                                                                                                                            <td>
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                            </td>
                                                                                                                         </tr>
                                                                                                                     </tbody>
                                                                                                                 </table>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="card-footer ">
-                                                                                                        <div class="row">
-                                                                                                            <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="card-footer ">
+                                                                                                        <div
+                                                                                                            class="row">
+                                                                                                            <div
+                                                                                                                class="col-12">
                                                                                                                 <button
                                                                                                                     class="btn btn-info btn-xs pl-4 pr-4 agregarTexto">Agregar</button>
                                                                                                             </div>
@@ -1444,7 +1789,7 @@
                                                                     <div class="col-12 form-group mt-3">
                                                                         @if ($respuesta->estadorepuestahecho->estado == 100)
                                                                             <div class="respuesta mt-2">
-                                                                                @if($respuesta->respuesta)
+                                                                                @if ($respuesta->respuesta)
                                                                                     {!! $respuesta->respuesta !!}
                                                                                 @endif
                                                                             </div>
@@ -1454,52 +1799,67 @@
                                                                                 rows="6"
                                                                                 max>{{ isset($respuesta->respuesta) ? $respuesta->respuesta : '' }}</textarea>
                                                                         @endif
-                                                                        
+
                                                                         @if (isset($respuesta->respuesta))
                                                                             <input class="respuesta_anterior" type="hidden"
                                                                                 value="{{ $respuesta->respuesta }}"
                                                                                 data_url="{{ route('historial_respuesta_hecho_guardar') }}">
                                                                         @endif
-                                                                        <input class="id_respuesta" type="hidden" value="{{ $respuesta->id }}">
+                                                                        <input class="id_respuesta" type="hidden"
+                                                                            value="{{ $respuesta->id }}">
                                                                     </div>
                                                                     @if ($respuesta->estadorepuestahecho->estado != 100)
                                                                         <div class="col-12 anexosConsulta">
                                                                             <div class="col-12 d-flex row anexoconsulta">
-                                                                                <div class="col-12 titulo-anexo d-flex justify-content-between">
+                                                                                <div
+                                                                                    class="col-12 titulo-anexo d-flex justify-content-between">
                                                                                     <h6>Anexo</h6>
                                                                                     <button type="button"
                                                                                         class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoConsulta"><i
-                                                                                            class="fas fa-minus-circle"></i> Eliminar
+                                                                                            class="fas fa-minus-circle"></i>
+                                                                                        Eliminar
                                                                                         anexo</button>
                                                                                 </div>
-                                                                                <div class="col-12 col-md-4 form-group titulo-anexoConsulta">
+                                                                                <div
+                                                                                    class="col-12 col-md-4 form-group titulo-anexoConsulta">
                                                                                     <label for="titulo">Título anexo</label>
-                                                                                    <input type="text" class="titulo form-control form-control-sm">
+                                                                                    <input type="text"
+                                                                                        class="titulo form-control form-control-sm">
                                                                                 </div>
-                                                                                <div class="col-12 col-md-4 form-group descripcion-anexoConsulta">
-                                                                                    <label for="descripcion">Descripción</label>
+                                                                                <div
+                                                                                    class="col-12 col-md-4 form-group descripcion-anexoConsulta">
+                                                                                    <label
+                                                                                        for="descripcion">Descripción</label>
                                                                                     <input type="text"
                                                                                         class="descripcion form-control form-control-sm">
                                                                                 </div>
-                                                                                <div class="col-12 col-md-4 form-group doc-anexoConsulta">
-                                                                                    <label for="documento">Anexos o Pruebas</label>
-                                                                                    <input class="documento form-control form-control-sm"
+                                                                                <div
+                                                                                    class="col-12 col-md-4 form-group doc-anexoConsulta">
+                                                                                    <label for="documento">Anexos o
+                                                                                        Pruebas</label>
+                                                                                    <input
+                                                                                        class="documento form-control form-control-sm"
                                                                                         type="file">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-12 d-flex justify-content-end flex-row mb-3">
-                                                                            <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
-                                                                                id="crearAnexo"><i class="fa fa-plus-circle mr-2"
+                                                                        <div
+                                                                            class="col-12 d-flex justify-content-end flex-row mb-3">
+                                                                            <button
+                                                                                class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
+                                                                                id="crearAnexo"><i
+                                                                                    class="fa fa-plus-circle mr-2"
                                                                                     aria-hidden="true"></i>
                                                                                 Añadir
                                                                                 otro Anexo</button>
                                                                         </div>
-                                                                        <button type="" class="btn btn-primary mx-2 btn-respuesta-hecho-editar col-md-3 col-12"
+                                                                        <button type=""
+                                                                            class="btn btn-primary mx-2 btn-respuesta-hecho-editar col-md-3 col-12"
                                                                             data_url="{{ route('respuesta_hecho_editar_guardar') }}"
-                                                                            data_url2="{{ route('respuesta_hecho_anexo_guardar') }}" 
+                                                                            data_url2="{{ route('respuesta_hecho_anexo_guardar') }}"
                                                                             data_url3="{{ route('estado_respuesta_hecho_guardar') }}"
-                                                                            data_token="{{ csrf_token() }}">Guardar respuesta</button>
+                                                                            data_token="{{ csrf_token() }}">Guardar
+                                                                            respuesta</button>
                                                                     @endif
                                                                     @if (isset($respuesta))
                                                                         @if (sizeOf($respuesta->documentos))
@@ -1510,21 +1870,27 @@
                                                                                         <h6>Anexos respuesta</h6>
                                                                                     </div>
                                                                                     <div class="col-12 table-responsive">
-                                                                                        <table class="table table-light" style="font-size: 0.8em;">
+                                                                                        <table class="table table-light"
+                                                                                            style="font-size: 0.8em;">
                                                                                             <thead>
                                                                                                 <tr>
-                                                                                                    <th scope="col">Nombre</th>
-                                                                                                    <th scope="col">Descripción</th>
-                                                                                                    <th scope="col">Archivo</th>
+                                                                                                    <th scope="col">Nombre
+                                                                                                    </th>
+                                                                                                    <th scope="col">
+                                                                                                        Descripción</th>
+                                                                                                    <th scope="col">Archivo
+                                                                                                    </th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
                                                                                                 @foreach ($respuesta->documentos as $anexo)
                                                                                                     <tr>
-                                                                                                        <td class="text-justify">
+                                                                                                        <td
+                                                                                                            class="text-justify">
                                                                                                             {{ $anexo->titulo }}
                                                                                                         </td>
-                                                                                                        <td class="text-justify">
+                                                                                                        <td
+                                                                                                            class="text-justify">
                                                                                                             {{ $anexo->descripcion }}
                                                                                                         </td>
                                                                                                         <td><a href="{{ asset('documentos/tutelas/hechos/' . $anexo->url) }}"
@@ -1543,23 +1909,35 @@
                                                                     @if (isset($respuesta))
                                                                         @if (sizeOf($respuesta->historial))
                                                                             <hr class="mt-3">
-                                                                            <h6 class="">Historial de respuestas</h6>
+                                                                            <h6 class="">Historial de
+                                                                                respuestas</h6>
                                                                             <div class="row d-flex px-12 p-3">
                                                                                 <div class="col-12 table-responsive">
-                                                                                    <table class="table table-light" style="font-size: 0.8em;">
+                                                                                    <table class="table table-light"
+                                                                                        style="font-size: 0.8em;">
                                                                                         <thead>
                                                                                             <tr>
                                                                                                 <th scope="col">Fecha</th>
-                                                                                                <th scope="col">Empleado</th>
-                                                                                                <th scope="col">Historial</th>
+                                                                                                <th scope="col">Empleado
+                                                                                                </th>
+                                                                                                <th scope="col">Historial
+                                                                                                </th>
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
                                                                                             @foreach ($respuesta->historial as $historial)
                                                                                                 <tr>
-                                                                                                    <td>{{ $historial->created_at }}</td>
-                                                                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                                                                    <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
+                                                                                                    <td>{{ $historial->created_at }}
+                                                                                                    </td>
+                                                                                                    <td
+                                                                                                        class="text-justify">
+                                                                                                        {{ $historial->empleado->nombre1 }}
+                                                                                                        {{ $historial->empleado->apellido1 }}
+                                                                                                    </td>
+                                                                                                    <td
+                                                                                                        class="text-justify">
+                                                                                                        {{ strip_tags($historial->historial) }}
+                                                                                                    </td>
                                                                                                 </tr>
                                                                                             @endforeach
                                                                                         </tbody>
@@ -1568,21 +1946,33 @@
                                                                             </div>
                                                                         @endif
                                                                         <hr class="mt-3">
-                                                                        <div class="row d-flex px-12 p-3 mensaje-respuesta-hecho"> 
-                                                                            <input class="id_respuesta_hecho" type="hidden" value="{{ $respuesta->id }}">
-                                                                            <div class="container-mensaje-historial form-group col-12">
-                                                                                <label for="" class="">Agregar Historial de respuesta</label>
-                                                                                <textarea class="form-control mensaje-historial-respuesta-hecho" rows="3" placeholder="" required></textarea>
+                                                                        <div
+                                                                            class="row d-flex px-12 p-3 mensaje-respuesta-hecho">
+                                                                            <input class="id_respuesta_hecho" type="hidden"
+                                                                                value="{{ $respuesta->id }}">
+                                                                            <div
+                                                                                class="container-mensaje-historial form-group col-12">
+                                                                                <label for=""
+                                                                                    class="">Agregar
+                                                                                    Historial de respuesta</label>
+                                                                                <textarea
+                                                                                    class="form-control mensaje-historial-respuesta-hecho"
+                                                                                    rows="3" placeholder=""
+                                                                                    required></textarea>
                                                                             </div>
-                                                                            <div class="col-12 col-md-12 form-group d-flex">
-                                                                                <button href="" class="btn btn-primary px-4 guardarHistorialRespuestaHecho" data_url="{{ route('historial_respuesta_hecho_guardar') }}"
-                                                                                data_token="{{ csrf_token() }}">Guardar historial</button>
+                                                                            <div
+                                                                                class="col-12 col-md-12 form-group d-flex">
+                                                                                <button href=""
+                                                                                    class="btn btn-primary px-4 guardarHistorialRespuestaHecho"
+                                                                                    data_url="{{ route('historial_respuesta_hecho_guardar') }}"
+                                                                                    data_token="{{ csrf_token() }}">Guardar
+                                                                                    historial</button>
                                                                             </div>
                                                                         </div>
                                                                     @endif
                                                                 </div>
                                                             </div>
-                                                        </div>    
+                                                        </div>
                                                     @endif
                                                 @endforeach
                                             @endif
@@ -1596,30 +1986,32 @@
                                     <h3 class="card-title font-weight-bold">Respuestas pretensiones</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-plus"></i>
+                                            <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="card-body" style="display: none;">
-                                    @if(sizeOf($tutela->pretensiones))
+                                    @if (sizeOf($tutela->pretensiones))
                                         <div class="col-12 row mb-2">
                                             @php
                                                 $validacionPretensiones = false;
                                                 foreach ($tutela->pretensiones->where('empleado_id', session('id_usuario')) as $pretension) {
-                                                    if(!sizeOf($pretension->relacionesPretensiones)){
+                                                    if (!sizeOf($pretension->relacionesPretensiones)) {
                                                         $validacionPretensiones = true;
                                                         break;
                                                     }
                                                 }
                                             @endphp
-                                            @if($tutela->cantidad_pretensiones)
+                                            @if ($tutela->cantidad_pretensiones)
                                                 <div class="rounded border my-3 p-3">
                                                     <div class="embed-responsive embed-responsive-16by9">
-                                                        <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}" allowfullscreen></iframe>
+                                                        <iframe class="embed-responsive-item"
+                                                            src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
+                                                            allowfullscreen></iframe>
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if($validacionPretensiones)
+                                            @if ($validacionPretensiones)
                                                 <div class="rounded border my-3 p-3">
                                                     <div class="col-12 col-md-5 my-3">
                                                         <h5>Respuestas pretensiones</h5>
@@ -1627,51 +2019,66 @@
                                                     <hr>
                                                     <div class="col-12 bloque-seleccion-pretensiones">
                                                         <div class="form-check my-4 text-right">
-                                                            <input type="checkbox" class="form-check-input check-todos-pretensiones">
-                                                            <label class="form-check-label"><strong>Seleccionar todos las pretensiones</strong></label>
+                                                            <input type="checkbox"
+                                                                class="form-check-input check-todos-pretensiones">
+                                                            <label class="form-check-label"><strong>Seleccionar todos las
+                                                                    pretensiones</strong></label>
                                                         </div>
-                                                        @if($tutela->cantidad_pretensiones)
-                                                            @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
+                                                        @if ($tutela->cantidad_pretensiones)
+                                                            @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                                                 <div class="form-check form-check-inline">
                                                                     @if (session('id_usuario') == $pretension->empleado_id && !sizeOf($pretension->relacionesPretensiones))
-                                                                        <input type="checkbox" class="form-check-input select-pretension" value="{{$pretension->id}}">
-                                                                        <label class="form-check-label"><strong>#{{$pretension->consecutivo}}</strong></label>
+                                                                        <input type="checkbox"
+                                                                            class="form-check-input select-pretension"
+                                                                            value="{{ $pretension->id }}">
+                                                                        <label
+                                                                            class="form-check-label"><strong>#{{ $pretension->consecutivo }}</strong></label>
                                                                     @endif
                                                                 </div>
                                                             @endforeach
                                                         @else
-                                                            @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
+                                                            @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                                                 @if (session('id_usuario') == $pretension->empleado_id && !sizeOf($pretension->relacionesPretensiones))
                                                                     <div class="form-check my-2">
-                                                                        <input type="checkbox" class="form-check-input select-pretension" value="{{$pretension->id}}">
-                                                                        <label class="form-check-label"><strong>#{{$pretension->consecutivo}}</strong> - {{$pretension->pretension}}</label>
+                                                                        <input type="checkbox"
+                                                                            class="form-check-input select-pretension"
+                                                                            value="{{ $pretension->id }}">
+                                                                        <label
+                                                                            class="form-check-label"><strong>#{{ $pretension->consecutivo }}</strong>
+                                                                            - {{ $pretension->pretension }}</label>
                                                                     </div>
                                                                     <hr>
                                                                 @endif
-                                                            @endforeach       
+                                                            @endforeach
                                                         @endif
                                                     </div>
                                                     <div class="row col-12 mt-3">
                                                         <div class="col-12 col-md-5">
                                                             <h5>Respuesta</h5>
                                                         </div>
-                                                        <div class="col-12 col-md-7 row estado-pretensiones justify-content-end">
+                                                        <div
+                                                            class="col-12 col-md-7 row estado-pretensiones justify-content-end">
                                                             @if ($tutela->estadostutela_id < 4)
-                                                            <div class="col-9 row estado-pretensiones justify-content-end">
-                                                                <div class="col-3 d-flex mb-2">
-                                                                    <h6>Avance:</h6>
+                                                                <div
+                                                                    class="col-9 row estado-pretensiones justify-content-end">
+                                                                    <div class="col-3 d-flex mb-2">
+                                                                        <h6>Avance:</h6>
+                                                                    </div>
+                                                                    <select
+                                                                        class="custom-select rounded-0 estadoPretension col-4">
+                                                                        @foreach ($estados as $estado)
+                                                                            <option value="{{ $estado->id }}">
+                                                                                {{ $estado->estado }} %</option>
+                                                                        @endforeach
+                                                                    </select>
                                                                 </div>
-                                                                <select class="custom-select rounded-0 estadoPretension col-4">
-                                                                    @foreach ($estados as $estado)
-                                                                        <option value="{{ $estado->id }}">{{ $estado->estado }} %</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
                                                             @endif
                                                             <div class="col-3 row modal-pretension">
-                                                                <button type="" class="btn btn-success col-12 mx-2" data-toggle="modal"
+                                                                <button type="" class="btn btn-success col-12 mx-2"
+                                                                    data-toggle="modal"
                                                                     data-target=".buscar-pretension"><span
-                                                                        style="font-size: 1em;"><i class="fas fa-search"></i>
+                                                                        style="font-size: 1em;"><i
+                                                                            class="fas fa-search"></i>
                                                                         Wiku</span>
                                                                 </button>
                                                             </div>
@@ -1683,7 +2090,8 @@
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Buscar En
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                                        Buscar En
                                                                         Wiku</h5>
                                                                     <button type="button" class="close"
                                                                         data-dismiss="modal" aria-label="Close">
@@ -1695,30 +2103,39 @@
                                                                         <ul class="nav nav-pills mb-3" id="pills-tab"
                                                                             role="tablist">
                                                                             <li class="nav-item" role="presentation">
-                                                                                <button class="nav-link active" id="pills-home-tab"
+                                                                                <button class="nav-link active"
+                                                                                    id="pills-home-tab"
                                                                                     data-bs-toggle="pill"
-                                                                                    data-bs-target="#pills-home" type="button"
-                                                                                    role="tab" aria-controls="pills-home"
-                                                                                    aria-selected="true">Busqueda Basica</button>
+                                                                                    data-bs-target="#pills-home"
+                                                                                    type="button" role="tab"
+                                                                                    aria-controls="pills-home"
+                                                                                    aria-selected="true">Busqueda
+                                                                                    Basica</button>
                                                                             </li>
                                                                             <li class="nav-item" role="presentation">
                                                                                 <button class="nav-link"
-                                                                                    id="pills-profile-tab" data-bs-toggle="pill"
-                                                                                    data-bs-target="#pills-profile" type="button"
-                                                                                    role="tab" aria-controls="pills-profile"
-                                                                                    aria-selected="false">Busqueda Avanzada</button>
+                                                                                    id="pills-profile-tab"
+                                                                                    data-bs-toggle="pill"
+                                                                                    data-bs-target="#pills-profile"
+                                                                                    type="button" role="tab"
+                                                                                    aria-controls="pills-profile"
+                                                                                    aria-selected="false">Busqueda
+                                                                                    Avanzada</button>
                                                                             </li>
                                                                         </ul>
                                                                         <div class="tab-content" id="pills-tabContent">
-                                                                            <div class="tab-pane fade show active" id="pills-home"
-                                                                                role="tabpanel" aria-labelledby="pills-home-tab">
-                                                                                <div class="row d-flex justify-content-center">
+                                                                            <div class="tab-pane fade show active"
+                                                                                id="pills-home" role="tabpanel"
+                                                                                aria-labelledby="pills-home-tab">
+                                                                                <div
+                                                                                    class="row d-flex justify-content-center">
                                                                                     <div
                                                                                         class="col-12 col-md-8 d-flex justify-content-around">
                                                                                         <div class="form-check">
                                                                                             <input class="form-check-input"
                                                                                                 type="radio" name="radio1"
-                                                                                                checked="checked" value="todos">
+                                                                                                checked="checked"
+                                                                                                value="todos">
                                                                                             <label
                                                                                                 class="form-check-label">Todos</label>
                                                                                         </div>
@@ -1753,27 +2170,32 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <hr>
-                                                                                <div class="row d-flex justify-content-center">
+                                                                                <div
+                                                                                    class="row d-flex justify-content-center">
                                                                                     <div
                                                                                         class="col-12 col-md-8 form-group d-flex justify-content-center">
-                                                                                        <label for="query" class="mr-3"
+                                                                                        <label for="query"
+                                                                                            class="mr-3"
                                                                                             style="white-space:nowrap">Busqueda
                                                                                             Básica</label>
                                                                                         <input type="text"
-                                                                                            class="form-control query" id="query"
-                                                                                            name="query"
+                                                                                            class="form-control query"
+                                                                                            id="query" name="query"
                                                                                             data_url="{{ route('wiku_busqueda_basica') }}"
                                                                                             placeholder="Ingrese palabras de busqueda">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="tab-pane fade" id="pills-profile"
-                                                                                role="tabpanel" aria-labelledby="pills-profile-tab">
-                                                                                <div class="row d-flex justify-content-star">
+                                                                                role="tabpanel"
+                                                                                aria-labelledby="pills-profile-tab">
+                                                                                <div
+                                                                                    class="row d-flex justify-content-star">
                                                                                     <div class="col-12 mb-3">
                                                                                         <h6>Por tipo de wiku...</h6>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
                                                                                         <label class="requerido"
                                                                                             for="tipo_wiku">Categoria de
                                                                                             Wiku</label>
@@ -1781,56 +2203,70 @@
                                                                                             class="form-control form-control-sm tipo_wiku"
                                                                                             id="tipo_wiku"
                                                                                             data_url="{{ route('wiku-cargarargumentos') }}">
-                                                                                            <option value="">---Seleccione Wiku---
+                                                                                            <option value="">---Seleccione
+                                                                                                Wiku---
                                                                                             </option>
-                                                                                            <option value="Argumentos">Argumentos
+                                                                                            <option value="Argumentos">
+                                                                                                Argumentos
                                                                                             </option>
-                                                                                            <option value="Normas">Normas</option>
+                                                                                            <option value="Normas">Normas
+                                                                                            </option>
                                                                                             <option value="Jurisprudencias">
                                                                                                 Jurisprudencias</option>
-                                                                                            <option value="Doctrinas">Doctrinas
+                                                                                            <option value="Doctrinas">
+                                                                                                Doctrinas
                                                                                             </option>
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
                                                                                 <hr>
-                                                                                <div class="row d-flex justify-content-center">
+                                                                                <div
+                                                                                    class="row d-flex justify-content-center">
                                                                                     <div class="col-12 mb-3">
-                                                                                        <h6>Por área, tema y tema específico...</h6>
+                                                                                        <h6>Por área, tema y tema
+                                                                                            específico...</h6>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
                                                                                         <label for="area_id">Área</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             id="area_id"
                                                                                             data_url="{{ route('cargar_temas') }}">
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                             @foreach ($areas as $area)
                                                                                                 <option
                                                                                                     value="{{ $area->id }}">
-                                                                                                    {{ $area->area }}</option>
+                                                                                                    {{ $area->area }}
+                                                                                                </option>
                                                                                             @endforeach
                                                                                         </select>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
                                                                                         <label for="tema_id">Tema</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             id="tema_id"
                                                                                             data_url="{{ route('cargar_temasespec') }}">
-                                                                                            <option value="">Seleccione primero un
+                                                                                            <option value="">Seleccione
+                                                                                                primero un
                                                                                                 área</option>
                                                                                         </select>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                        <label for="wikutemaespecifico_id">Tema
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
+                                                                                        <label
+                                                                                            for="wikutemaespecifico_id">Tema
                                                                                             Específico</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             name="wikutemaespecifico_id"
                                                                                             id="wikutemaespecifico_id">
-                                                                                            <option value="">Seleccione primero un
+                                                                                            <option value="">Seleccione
+                                                                                                primero un
                                                                                                 Tema</option>
                                                                                         </select>
                                                                                     </div>
@@ -1838,17 +2274,20 @@
                                                                                 <hr>
                                                                                 <div class="row">
                                                                                     <div class="col-12 mb-3">
-                                                                                        <h6>Por fuente, artículo y fecha de entrada
+                                                                                        <h6>Por fuente, artículo y fecha de
+                                                                                            entrada
                                                                                             en vigencia...</h6>
                                                                                     </div>
-                                                                                    <div class="col-12 col-md-5 form-group">
+                                                                                    <div
+                                                                                        class="col-12 col-md-5 form-group">
                                                                                         <label for="fuente_id">Fuente
                                                                                             emisora</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             name="fuente_id" id="fuente_id"
                                                                                             data_url="{{ route('cargar_normas') }}">
-                                                                                            <option value="">--- Seleccione ---
+                                                                                            <option value="">--- Seleccione
+                                                                                                ---
                                                                                             </option>
                                                                                             @foreach ($fuentes as $fuente)
                                                                                                 <option
@@ -1858,16 +2297,20 @@
                                                                                             @endforeach
                                                                                         </select>
                                                                                     </div>
-                                                                                    <div class="col-12 col-md-5 form-group">
-                                                                                        <label for="fuente_id">Artículo</label>
+                                                                                    <div
+                                                                                        class="col-12 col-md-5 form-group">
+                                                                                        <label
+                                                                                            for="fuente_id">Artículo</label>
                                                                                         <select
                                                                                             class="form-control form-control-sm"
                                                                                             id="id">
-                                                                                            <option value="">Seleccione primero una
+                                                                                            <option value="">Seleccione
+                                                                                                primero una
                                                                                                 Fuente Emisora</option>
                                                                                         </select>
                                                                                     </div>
-                                                                                    <div class="col-12 col-md-2 form-group">
+                                                                                    <div
+                                                                                        class="col-12 col-md-2 form-group">
                                                                                         <label for="fecha">Entrada en
                                                                                             vigencia</label>
                                                                                         <input type="date"
@@ -1877,10 +2320,12 @@
                                                                                     </div>
                                                                                     <hr>
                                                                                     <div class="col-12 mb-3">
-                                                                                        <h6>Por asociación servicio / producto..
+                                                                                        <h6>Por asociación servicio /
+                                                                                            producto..
                                                                                         </h6>
                                                                                     </div>
-                                                                                    <div class="form-group col-12 col-md-4">
+                                                                                    <div
+                                                                                        class="form-group col-12 col-md-4">
                                                                                         <label class="requerido"
                                                                                             for="prod_serv">Producto /
                                                                                             Servicio</label>
@@ -1889,22 +2334,26 @@
                                                                                             id="prod_serv">
                                                                                             <option value="">---Selecione---
                                                                                             </option>
-                                                                                            <option value="Producto">Producto
+                                                                                            <option value="Producto">
+                                                                                                Producto
                                                                                             </option>
-                                                                                            <option value="Servicio">Servicio
+                                                                                            <option value="Servicio">
+                                                                                                Servicio
                                                                                             </option>
                                                                                         </select>
                                                                                     </div>
                                                                                     <div class="form-group col-12 col-md-4"
                                                                                         id="tipo_pqr">
                                                                                         <label class="requerido"
-                                                                                            for="tipo_p_q_r_id">Tipo de PQR</label>
+                                                                                            for="tipo_p_q_r_id">Tipo de
+                                                                                            PQR</label>
                                                                                         <select id="tipo_p_q_r_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="tipo_p_q_r_id"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}"
                                                                                             required>
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                             @foreach ($tipos_pqr as $tipo_pqr)
                                                                                                 <option
@@ -1917,34 +2366,40 @@
                                                                                     <div class="form-group col-12 col-md-4"
                                                                                         id="motivo_pqr">
                                                                                         <label class="requerido"
-                                                                                            for="motivo_id">Motivo de PQR</label>
+                                                                                            for="motivo_id">Motivo de
+                                                                                            PQR</label>
                                                                                         <select id="motivo_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="motivo_id"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}">
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                         </select>
                                                                                     </div>
                                                                                     <div class="form-group col-12 col-md-4"
                                                                                         id="sub_motivo_pqr">
                                                                                         <label class="requerido"
-                                                                                            for="motivo_sub_id">Sub-Motivo de
+                                                                                            for="motivo_sub_id">Sub-Motivo
+                                                                                            de
                                                                                             PQR</label>
                                                                                         <select id="motivo_sub_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="motivo_sub_id">
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                         </select>
                                                                                     </div>
                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                         id="servicios">
-                                                                                        <label for="servicio_id">Servicios</label>
+                                                                                        <label
+                                                                                            for="servicio_id">Servicios</label>
                                                                                         <select id="servicio_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="servicio_id">
-                                                                                            <option value="">---Seleccione un
+                                                                                            <option value="">---Seleccione
+                                                                                                un
                                                                                                 servcio---</option>
                                                                                             @foreach ($servicios as $servicio)
                                                                                                 <option
@@ -1963,7 +2418,8 @@
                                                                                             class="form-control form-control-sm"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_producto') }}"
                                                                                             name="categoria_id">
-                                                                                            <option value="">---Seleccione---
+                                                                                            <option value="">
+                                                                                                ---Seleccione---
                                                                                             </option>
                                                                                             @foreach ($categorias as $categoria)
                                                                                                 <option
@@ -1981,7 +2437,8 @@
                                                                                             class="form-control form-control-sm"
                                                                                             name="producto_id"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}">
-                                                                                            <option value="">---Seleccione primero
+                                                                                            <option value="">---Seleccione
+                                                                                                primero
                                                                                                 una categoría---</option>
                                                                                         </select>
                                                                                     </div>
@@ -1993,7 +2450,8 @@
                                                                                             class="form-control form-control-sm"
                                                                                             name="marca_id"
                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}">
-                                                                                            <option value="">---Seleccione primero
+                                                                                            <option value="">---Seleccione
+                                                                                                primero
                                                                                                 un producto---</option>
                                                                                         </select>
                                                                                     </div>
@@ -2004,7 +2462,8 @@
                                                                                         <select id="referencia_id"
                                                                                             class="form-control form-control-sm"
                                                                                             name="referencia_id">
-                                                                                            <option value="">---Seleccione primero
+                                                                                            <option value="">---Seleccione
+                                                                                                primero
                                                                                                 una marca---</option>
                                                                                         </select>
                                                                                     </div>
@@ -2029,26 +2488,31 @@
                                                                                             <span class="username"><a
                                                                                                     href="#"
                                                                                                     id="tituloNoma"></a></span>
-                                                                                            <span class="description"></span>
+                                                                                            <span
+                                                                                                class="description"></span>
                                                                                         </div>
                                                                                         <div class="card-tools">
                                                                                             <button type="button"
                                                                                                 class="btn btn-tool"
                                                                                                 data-card-widget="collapse">
-                                                                                                <i class="fas fa-minus"></i>
+                                                                                                <i
+                                                                                                    class="fas fa-minus"></i>
                                                                                             </button>
                                                                                             <button type="button"
                                                                                                 class="btn btn-tool"
                                                                                                 data-card-widget="remove">
-                                                                                                <i class="fas fa-times"></i>
+                                                                                                <i
+                                                                                                    class="fas fa-times"></i>
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="card-body">
                                                                                         <div class="row">
                                                                                             <div class="col-12">
-                                                                                                <p><strong>Texto:</strong></p>
-                                                                                                <p class="textoCopiar">El
+                                                                                                <p><strong>Texto:</strong>
+                                                                                                </p>
+                                                                                                <p class="textoCopiar">
+                                                                                                    El
                                                                                                     Texto...</p>
                                                                                             </div>
                                                                                         </div>
@@ -2057,17 +2521,26 @@
                                                                                             <div class="col-12">
                                                                                                 <h6>Criterios Juridicos</h6>
                                                                                             </div>
-                                                                                            <div class="col-12 table-responsive">
-                                                                                                <table class="table">
+                                                                                            <div
+                                                                                                class="col-12 table-responsive">
+                                                                                                <table
+                                                                                                    class="table">
                                                                                                     <thead>
                                                                                                         <tr>
-                                                                                                            <th>Autor(es)</th>
-                                                                                                            <th>Criterios jurídicos
-                                                                                                                de aplicación</th>
-                                                                                                            <th>Criterios jurídicos
-                                                                                                                de no aplicación
+                                                                                                            <th>Autor(es)
                                                                                                             </th>
-                                                                                                            <th>Notas de la Vigencia
+                                                                                                            <th>Criterios
+                                                                                                                jurídicos
+                                                                                                                de
+                                                                                                                aplicación
+                                                                                                            </th>
+                                                                                                            <th>Criterios
+                                                                                                                jurídicos
+                                                                                                                de no
+                                                                                                                aplicación
+                                                                                                            </th>
+                                                                                                            <th>Notas de la
+                                                                                                                Vigencia
                                                                                                             </th>
                                                                                                         </tr>
                                                                                                     </thead>
@@ -2100,12 +2573,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 form-group mt-3">
-                                                        <textarea type="text" class="form-control form-control-sm respuesta respuesta-editar"
+                                                        <textarea type="text"
+                                                            class="form-control form-control-sm respuesta respuesta-editar"
                                                             rows="6"></textarea>
                                                     </div>
                                                     <div class="col-12 anexosConsulta">
                                                         <div class="col-12 d-flex row anexoconsulta">
-                                                            <div class="col-12 titulo-anexo d-flex justify-content-between">
+                                                            <div
+                                                                class="col-12 titulo-anexo d-flex justify-content-between">
                                                                 <h6>Anexo</h6>
                                                                 <button type="button"
                                                                     class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoConsulta"><i
@@ -2114,9 +2589,11 @@
                                                             </div>
                                                             <div class="col-12 col-md-4 form-group titulo-anexoConsulta">
                                                                 <label for="titulo">Título anexo</label>
-                                                                <input type="text" class="titulo form-control form-control-sm">
+                                                                <input type="text"
+                                                                    class="titulo form-control form-control-sm">
                                                             </div>
-                                                            <div class="col-12 col-md-4 form-group descripcion-anexoConsulta">
+                                                            <div
+                                                                class="col-12 col-md-4 form-group descripcion-anexoConsulta">
                                                                 <label for="descripcion">Descripción</label>
                                                                 <input type="text"
                                                                     class="descripcion form-control form-control-sm">
@@ -2129,41 +2606,49 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 d-flex justify-content-end flex-row mb-3">
-                                                        <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
+                                                        <button
+                                                            class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
                                                             id="crearAnexo"><i class="fa fa-plus-circle mr-2"
                                                                 aria-hidden="true"></i>
                                                             Añadir
                                                             otro Anexo</button>
                                                     </div>
-                                                    <button type="" class="btn btn-primary mx-2 btn-respuesta-pretension col-md-3 col-12 mb-3"
+                                                    <button type=""
+                                                        class="btn btn-primary mx-2 btn-respuesta-pretension col-md-3 col-12 mb-3"
                                                         data_url="{{ route('respuesta_pretension_guardar') }}"
-                                                        data_url2="{{ route('respuesta_pretension_anexo_guardar') }}" 
+                                                        data_url2="{{ route('respuesta_pretension_anexo_guardar') }}"
                                                         data_url3="{{ route('estado_pretension_guardar') }}"
                                                         data_url4="{{ route('relacion_respuesta_pretension_guardar') }}"
                                                         data_token="{{ csrf_token() }}">Guardar respuesta</button>
                                                 </div>
                                             @endif
-                                            @if(sizeOf($tutela->respuestasPretensiones))
+                                            @if (sizeOf($tutela->respuestasPretensiones))
                                                 @foreach ($tutela->respuestasPretensiones as $key => $respuesta)
-                                                    @if (session('id_usuario') ==  $respuesta->empleado_id)
+                                                    @if (session('id_usuario') == $respuesta->empleado_id)
                                                         <div class="rounded border my-3 p-3">
                                                             <div class="col-12 col-md-12 mt-2 mb-4">
-                                                                <h5>Respuesta #{{$key + 1}}</h5>
+                                                                <h5>Respuesta #{{ $key + 1 }}</h5>
                                                             </div>
-                                                            @if($respuesta->estado_id != 11)
+                                                            @if ($respuesta->estado_id != 11)
                                                                 <div class="col-12 row justify-content-end my-2">
                                                                     <div class="col-lg-4 col-xl-3 d-flex mb-2">
                                                                         <h6>Agregar pretensión a respuesta:</h6>
                                                                     </div>
-                                                                    <select class="custom-select respuesta-pretension-asignar col-lg-3 col-xl-2">
-                                                                        <option value="">---Seleccione Pretensión---</option>
-                                                                        @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
+                                                                    <select
+                                                                        class="custom-select respuesta-pretension-asignar col-lg-3 col-xl-2">
+                                                                        <option value="">---Seleccione Pretensión---
+                                                                        </option>
+                                                                        @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                                                             @if (session('id_usuario') == $pretension->empleado_id && !sizeOf($pretension->relacionesPretensiones))
-                                                                                <option value="{{ $pretension->id }}">Pretensión #{{ $pretension->consecutivo }}</option>
+                                                                                <option value="{{ $pretension->id }}">
+                                                                                    Pretensión
+                                                                                    #{{ $pretension->consecutivo }}
+                                                                                </option>
                                                                             @endif
                                                                         @endforeach
                                                                     </select>
-                                                                    <button type="" class="btn btn-primary btn-respuesta-pretension-asignar col-lg-2 col-xl-1 mx-2"
+                                                                    <button type=""
+                                                                        class="btn btn-primary btn-respuesta-pretension-asignar col-lg-2 col-xl-1 mx-2"
                                                                         data_url="{{ route('relacion_respuesta_pretension_guardar') }}"
                                                                         data_url2="{{ route('estado_pretension_guardar') }}"
                                                                         data_token="{{ csrf_token() }}">Agregar</button>
@@ -2172,136 +2657,201 @@
                                                             <hr>
                                                             <div class="col-12 row">
                                                                 @foreach ($respuesta->relacion as $relacion)
-                                                                    @if($tutela->cantidad_pretensiones)
+                                                                    @if ($tutela->cantidad_pretensiones)
                                                                         <div class="d-flex col-10 col-md-5 col-lg-3">
-                                                                            @if($respuesta->estado_id != 11)
+                                                                            @if ($respuesta->estado_id != 11)
                                                                                 <div class="mr-3">
-                                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension" data_url="{{ route('eliminar_respuesta_pretension_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
-                                                                                    <input class="id_relacion_pretension" type="hidden" value="{{ $relacion->pretension->id }}">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension"
+                                                                                        data_url="{{ route('eliminar_respuesta_pretension_guardar') }}"
+                                                                                        data_token="{{ csrf_token() }}"><i
+                                                                                            class="fas fa-minus-circle"></i></button>
+                                                                                    <input class="id_relacion_pretension"
+                                                                                        type="hidden"
+                                                                                        value="{{ $relacion->pretension->id }}">
                                                                                 </div>
                                                                             @endif
                                                                             <div class="my-2">
-                                                                                <strong class="">Pretensión # {{ $relacion->pretension->consecutivo }}</strong>{{$relacion->pretension->pretension}}
+                                                                                <strong class="">Pretensión #
+                                                                                    {{ $relacion->pretension->consecutivo }}</strong>{{ $relacion->pretension->pretension }}
                                                                             </div>
                                                                         </div>
-                                                                    @else   
+                                                                    @else
                                                                         <div class="row">
                                                                             <div class="my-2 col-11">
-                                                                                <strong class="">#{{ $relacion->pretension->consecutivo }} Pretensión: </strong>{{$relacion->pretension->pretension}}
+                                                                                <strong
+                                                                                    class="">#{{ $relacion->pretension->consecutivo }}
+                                                                                    Pretensión:
+                                                                                </strong>{{ $relacion->pretension->pretension }}
                                                                             </div>
-                                                                            @if($respuesta->estado_id != 11)
+                                                                            @if ($respuesta->estado_id != 11)
                                                                                 <div class="col-1">
-                                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension" data_url="{{ route('eliminar_respuesta_pretension_guardar') }}" data_token="{{ csrf_token() }}" ><i class="fas fa-minus-circle"></i></button>
-                                                                                    <input class="id_relacion_pretension" type="hidden" value="{{ $relacion->pretension->id }}">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension"
+                                                                                        data_url="{{ route('eliminar_respuesta_pretension_guardar') }}"
+                                                                                        data_token="{{ csrf_token() }}"><i
+                                                                                            class="fas fa-minus-circle"></i></button>
+                                                                                    <input class="id_relacion_pretension"
+                                                                                        type="hidden"
+                                                                                        value="{{ $relacion->pretension->id }}">
                                                                                 </div>
                                                                             @endif
                                                                         </div>
-                                                                    @endif 
+                                                                    @endif
                                                                 @endforeach
                                                             </div>
                                                             <div class="row respuesta-pretension">
                                                                 <div class="col-12 row mt-4 mb-2 ">
                                                                     <div class="col-12 col-md-5">
-                                                                        <h6 class="font-weight-bold">Respuesta pretensión</h6>
+                                                                        <h6 class="font-weight-bold">Respuesta pretensión
+                                                                        </h6>
                                                                     </div>
-                                                                    <div class="col-12 col-md-7 row estado-pretension justify-content-end">
-                                                                        <input class="estado_actual" type="hidden" value="{{ $respuesta->estado_id }}">
+                                                                    <div
+                                                                        class="col-12 col-md-7 row estado-pretension justify-content-end">
+                                                                        <input class="estado_actual" type="hidden"
+                                                                            value="{{ $respuesta->estado_id }}">
                                                                         @if ($tutela->estadostutela_id < 4)
-                                                                            <div class="col-9 row estado-pretension justify-content-end">
+                                                                            <div
+                                                                                class="col-9 row estado-pretension justify-content-end">
                                                                                 <div class="col-3 d-flex mb-2">
                                                                                     <h6>Avance:</h6>
                                                                                 </div>
-                                                                                <select class="custom-select rounded-0 estadoPretension col-4">
+                                                                                <select
+                                                                                    class="custom-select rounded-0 estadoPretension col-4">
                                                                                     @foreach ($estados as $estado)
-                                                                                        <option value="{{ $estado->id }}"
-                                                                                        {{ $respuesta->estadorespuestapretension->id == $estado->id ? 'selected' : '' }}>
-                                                                                        {{ $estado->estado }} %</option>
+                                                                                        <option
+                                                                                            value="{{ $estado->id }}"
+                                                                                            {{ $respuesta->estadorespuestapretension->id == $estado->id ? 'selected' : '' }}>
+                                                                                            {{ $estado->estado }} %
+                                                                                        </option>
                                                                                     @endforeach
                                                                                 </select>
-                                                                                <button type="" class="btn btn-primary btn-estado-pretension col-2 mx-2"
+                                                                                <button type=""
+                                                                                    class="btn btn-primary btn-estado-pretension col-2 mx-2"
                                                                                     data_url="{{ route('estado_respuesta_pretension_guardar') }}"
-                                                                                    data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
+                                                                                    data_token="{{ csrf_token() }}"><span
+                                                                                        style="font-size: 1em;"><i
+                                                                                            class="far fa-save"></i></span></button>
                                                                             </div>
                                                                         @endif
-                                                                        @if($respuesta->estado_id != 11)
+                                                                        @if ($respuesta->estado_id != 11)
                                                                             <div class="col-3 row estado-pretension">
-                                                                                <button type="" class="btn btn-success col-12 mx-2" data-toggle="modal"
+                                                                                <button type=""
+                                                                                    class="btn btn-success col-12 mx-2"
+                                                                                    data-toggle="modal"
                                                                                     data-target=".buscar-{{ $key }}"><span
-                                                                                        style="font-size: 1em;"><i class="fas fa-search"></i>
+                                                                                        style="font-size: 1em;"><i
+                                                                                            class="fas fa-search"></i>
                                                                                         Wiku</span>
                                                                                 </button>
                                                                             </div>
                                                                         @endif
                                                                     </div>
-                                                                    <div class="modal fade buscar-{{ $key }}" tabindex="-1" role="dialog"
-                                                                        data-value="{{ $key }}" aria-labelledby="myLargeModalLabel"
+                                                                    <div class="modal fade buscar-{{ $key }}"
+                                                                        tabindex="-1" role="dialog"
+                                                                        data-value="{{ $key }}"
+                                                                        aria-labelledby="myLargeModalLabel"
                                                                         aria-hidden="true">
                                                                         <div class="modal-dialog modal-lg">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Buscar En
+                                                                                    <h5 class="modal-title"
+                                                                                        id="exampleModalLongTitle">Buscar En
                                                                                         Wiku</h5>
-                                                                                    <button type="button" class="close"
-                                                                                        data-dismiss="modal" aria-label="Close">
-                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    <button type="button"
+                                                                                        class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                        <span
+                                                                                            aria-hidden="true">&times;</span>
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body">
                                                                                     <div class="card-body">
-                                                                                        <ul class="nav nav-pills mb-3" id="pills-tab"
-                                                                                            role="tablist">
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <button class="nav-link active" id="pills-home-tab"
+                                                                                        <ul class="nav nav-pills mb-3"
+                                                                                            id="pills-tab" role="tablist">
+                                                                                            <li class="nav-item"
+                                                                                                role="presentation">
+                                                                                                <button
+                                                                                                    class="nav-link active"
+                                                                                                    id="pills-home-tab"
                                                                                                     data-bs-toggle="pill"
-                                                                                                    data-bs-target="#pills-home" type="button"
-                                                                                                    role="tab" aria-controls="pills-home"
-                                                                                                    aria-selected="true">Busqueda Basica</button>
+                                                                                                    data-bs-target="#pills-home"
+                                                                                                    type="button" role="tab"
+                                                                                                    aria-controls="pills-home"
+                                                                                                    aria-selected="true">Busqueda
+                                                                                                    Basica</button>
                                                                                             </li>
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <button class="nav-link"
-                                                                                                    id="pills-profile-tab" data-bs-toggle="pill"
-                                                                                                    data-bs-target="#pills-profile" type="button"
-                                                                                                    role="tab" aria-controls="pills-profile"
-                                                                                                    aria-selected="false">Busqueda Avanzada</button>
+                                                                                            <li class="nav-item"
+                                                                                                role="presentation">
+                                                                                                <button
+                                                                                                    class="nav-link"
+                                                                                                    id="pills-profile-tab"
+                                                                                                    data-bs-toggle="pill"
+                                                                                                    data-bs-target="#pills-profile"
+                                                                                                    type="button" role="tab"
+                                                                                                    aria-controls="pills-profile"
+                                                                                                    aria-selected="false">Busqueda
+                                                                                                    Avanzada</button>
                                                                                             </li>
                                                                                         </ul>
-                                                                                        <div class="tab-content" id="pills-tabContent">
-                                                                                            <div class="tab-pane fade show active" id="pills-home"
-                                                                                                role="tabpanel" aria-labelledby="pills-home-tab">
-                                                                                                <div class="row d-flex justify-content-center">
+                                                                                        <div class="tab-content"
+                                                                                            id="pills-tabContent">
+                                                                                            <div class="tab-pane fade show active"
+                                                                                                id="pills-home"
+                                                                                                role="tabpanel"
+                                                                                                aria-labelledby="pills-home-tab">
+                                                                                                <div
+                                                                                                    class="row d-flex justify-content-center">
                                                                                                     <div
                                                                                                         class="col-12 col-md-8 d-flex justify-content-around">
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
-                                                                                                                checked="checked" value="todos">
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
+                                                                                                                checked="checked"
+                                                                                                                value="todos">
                                                                                                             <label
                                                                                                                 class="form-check-label">Todos</label>
                                                                                                         </div>
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
                                                                                                                 value="Normas">
                                                                                                             <label
                                                                                                                 class="form-check-label">Normas</label>
                                                                                                         </div>
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
                                                                                                                 value="Jurisprudencias">
                                                                                                             <label
                                                                                                                 class="form-check-label">Jurisprudencias</label>
                                                                                                         </div>
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
                                                                                                                 value="Argumentos">
                                                                                                             <label
                                                                                                                 class="form-check-label">Argumentos</label>
                                                                                                         </div>
-                                                                                                        <div class="form-check">
-                                                                                                            <input class="form-check-input"
-                                                                                                                type="radio" name="radio1"
+                                                                                                        <div
+                                                                                                            class="form-check">
+                                                                                                            <input
+                                                                                                                class="form-check-input"
+                                                                                                                type="radio"
+                                                                                                                name="radio1"
                                                                                                                 value="Normas">
                                                                                                             <label
                                                                                                                 class="form-check-label">Doctrinas</label>
@@ -2309,102 +2859,158 @@
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <hr>
-                                                                                                <div class="row d-flex justify-content-center">
+                                                                                                <div
+                                                                                                    class="row d-flex justify-content-center">
                                                                                                     <div
                                                                                                         class="col-12 col-md-8 form-group d-flex justify-content-center">
-                                                                                                        <label for="query" class="mr-3"
+                                                                                                        <label for="query"
+                                                                                                            class="mr-3"
                                                                                                             style="white-space:nowrap">Busqueda
                                                                                                             Básica</label>
                                                                                                         <input type="text"
-                                                                                                            class="form-control query" id="query"
+                                                                                                            class="form-control query"
+                                                                                                            id="query"
                                                                                                             name="query"
                                                                                                             data_url="{{ route('wiku_busqueda_basica') }}"
                                                                                                             placeholder="Ingrese palabras de busqueda">
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="tab-pane fade" id="pills-profile"
-                                                                                                role="tabpanel" aria-labelledby="pills-profile-tab">
-                                                                                                <div class="row d-flex justify-content-star">
-                                                                                                    <div class="col-12 mb-3">
-                                                                                                        <h6>Por tipo de wiku...</h6>
+                                                                                            <div class="tab-pane fade"
+                                                                                                id="pills-profile"
+                                                                                                role="tabpanel"
+                                                                                                aria-labelledby="pills-profile-tab">
+                                                                                                <div
+                                                                                                    class="row d-flex justify-content-star">
+                                                                                                    <div
+                                                                                                        class="col-12 mb-3">
+                                                                                                        <h6>Por tipo de
+                                                                                                            wiku...</h6>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label class="requerido"
-                                                                                                            for="tipo_wiku">Categoria de
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="tipo_wiku">Categoria
+                                                                                                            de
                                                                                                             Wiku</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm tipo_wiku"
                                                                                                             id="tipo_wiku"
                                                                                                             data_url="{{ route('wiku-cargarargumentos') }}">
-                                                                                                            <option value="">---Seleccione Wiku---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                Wiku---
                                                                                                             </option>
-                                                                                                            <option value="Argumentos">Argumentos
+                                                                                                            <option
+                                                                                                                value="Argumentos">
+                                                                                                                Argumentos
                                                                                                             </option>
-                                                                                                            <option value="Normas">Normas</option>
-                                                                                                            <option value="Jurisprudencias">
-                                                                                                                Jurisprudencias</option>
-                                                                                                            <option value="Doctrinas">Doctrinas
+                                                                                                            <option
+                                                                                                                value="Normas">
+                                                                                                                Normas
+                                                                                                            </option>
+                                                                                                            <option
+                                                                                                                value="Jurisprudencias">
+                                                                                                                Jurisprudencias
+                                                                                                            </option>
+                                                                                                            <option
+                                                                                                                value="Doctrinas">
+                                                                                                                Doctrinas
                                                                                                             </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <hr>
-                                                                                                <div class="row d-flex justify-content-center">
-                                                                                                    <div class="col-12 mb-3">
-                                                                                                        <h6>Por área, tema y tema específico...</h6>
+                                                                                                <div
+                                                                                                    class="row d-flex justify-content-center">
+                                                                                                    <div
+                                                                                                        class="col-12 mb-3">
+                                                                                                        <h6>Por área, tema y
+                                                                                                            tema
+                                                                                                            específico...
+                                                                                                        </h6>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label for="area_id">Área</label>
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            for="area_id">Área</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             id="area_id"
                                                                                                             data_url="{{ route('cargar_temas') }}">
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                             @foreach ($areas as $area)
                                                                                                                 <option
                                                                                                                     value="{{ $area->id }}">
-                                                                                                                    {{ $area->area }}</option>
+                                                                                                                    {{ $area->area }}
+                                                                                                                </option>
                                                                                                             @endforeach
                                                                                                         </select>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label for="tema_id">Tema</label>
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            for="tema_id">Tema</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             id="tema_id"
                                                                                                             data_url="{{ route('cargar_temasespec') }}">
-                                                                                                            <option value="">Seleccione primero un
-                                                                                                                área</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                Seleccione
+                                                                                                                primero un
+                                                                                                                área
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label for="wikutemaespecifico_id">Tema
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            for="wikutemaespecifico_id">Tema
                                                                                                             Específico</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="wikutemaespecifico_id"
                                                                                                             id="wikutemaespecifico_id">
-                                                                                                            <option value="">Seleccione primero un
-                                                                                                                Tema</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                Seleccione
+                                                                                                                primero un
+                                                                                                                Tema
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <hr>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-12 mb-3">
-                                                                                                        <h6>Por fuente, artículo y fecha de entrada
-                                                                                                            en vigencia...</h6>
+                                                                                                <div
+                                                                                                    class="row">
+                                                                                                    <div
+                                                                                                        class="col-12 mb-3">
+                                                                                                        <h6>Por fuente,
+                                                                                                            artículo y fecha
+                                                                                                            de entrada
+                                                                                                            en vigencia...
+                                                                                                        </h6>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-5 form-group">
-                                                                                                        <label for="fuente_id">Fuente
+                                                                                                    <div
+                                                                                                        class="col-12 col-md-5 form-group">
+                                                                                                        <label
+                                                                                                            for="fuente_id">Fuente
                                                                                                             emisora</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
-                                                                                                            name="fuente_id" id="fuente_id"
+                                                                                                            name="fuente_id"
+                                                                                                            id="fuente_id"
                                                                                                             data_url="{{ route('cargar_normas') }}">
-                                                                                                            <option value="">--- Seleccione ---
+                                                                                                            <option
+                                                                                                                value="">---
+                                                                                                                Seleccione
+                                                                                                                ---
                                                                                                             </option>
                                                                                                             @foreach ($fuentes as $fuente)
                                                                                                                 <option
@@ -2414,53 +3020,81 @@
                                                                                                             @endforeach
                                                                                                         </select>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-5 form-group">
-                                                                                                        <label for="fuente_id">Artículo</label>
+                                                                                                    <div
+                                                                                                        class="col-12 col-md-5 form-group">
+                                                                                                        <label
+                                                                                                            for="fuente_id">Artículo</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             id="id">
-                                                                                                            <option value="">Seleccione primero una
-                                                                                                                Fuente Emisora</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                Seleccione
+                                                                                                                primero una
+                                                                                                                Fuente
+                                                                                                                Emisora
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
-                                                                                                    <div class="col-12 col-md-2 form-group">
-                                                                                                        <label for="fecha">Entrada en
+                                                                                                    <div
+                                                                                                        class="col-12 col-md-2 form-group">
+                                                                                                        <label
+                                                                                                            for="fecha">Entrada
+                                                                                                            en
                                                                                                             vigencia</label>
                                                                                                         <input type="date"
                                                                                                             class="form-control form-control-sm"
-                                                                                                            name="fecha" id="fecha"
+                                                                                                            name="fecha"
+                                                                                                            id="fecha"
                                                                                                             max="{{ date('Y-m-d') }}">
                                                                                                     </div>
                                                                                                     <hr>
-                                                                                                    <div class="col-12 mb-3">
-                                                                                                        <h6>Por asociación servicio / producto..
+                                                                                                    <div
+                                                                                                        class="col-12 mb-3">
+                                                                                                        <h6>Por asociación
+                                                                                                            servicio /
+                                                                                                            producto..
                                                                                                         </h6>
                                                                                                     </div>
-                                                                                                    <div class="form-group col-12 col-md-4">
-                                                                                                        <label class="requerido"
-                                                                                                            for="prod_serv">Producto /
+                                                                                                    <div
+                                                                                                        class="form-group col-12 col-md-4">
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="prod_serv">Producto
+                                                                                                            /
                                                                                                             Servicio</label>
                                                                                                         <select
                                                                                                             class="form-control form-control-sm"
                                                                                                             id="prod_serv">
-                                                                                                            <option value="">---Selecione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Selecione---
                                                                                                             </option>
-                                                                                                            <option value="Producto">Producto
+                                                                                                            <option
+                                                                                                                value="Producto">
+                                                                                                                Producto
                                                                                                             </option>
-                                                                                                            <option value="Servicio">Servicio
+                                                                                                            <option
+                                                                                                                value="Servicio">
+                                                                                                                Servicio
                                                                                                             </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4"
                                                                                                         id="tipo_pqr">
-                                                                                                        <label class="requerido"
-                                                                                                            for="tipo_p_q_r_id">Tipo de PQR</label>
-                                                                                                        <select id="tipo_p_q_r_id"
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="tipo_p_q_r_id">Tipo
+                                                                                                            de PQR</label>
+                                                                                                        <select
+                                                                                                            id="tipo_p_q_r_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="tipo_p_q_r_id"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_motivo') }}"
                                                                                                             required>
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                             @foreach ($tipos_pqr as $tipo_pqr)
                                                                                                                 <option
@@ -2472,36 +3106,52 @@
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4"
                                                                                                         id="motivo_pqr">
-                                                                                                        <label class="requerido"
-                                                                                                            for="motivo_id">Motivo de PQR</label>
-                                                                                                        <select id="motivo_id"
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="motivo_id">Motivo
+                                                                                                            de PQR</label>
+                                                                                                        <select
+                                                                                                            id="motivo_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="motivo_id"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_sub_motivo') }}">
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4"
                                                                                                         id="sub_motivo_pqr">
-                                                                                                        <label class="requerido"
-                                                                                                            for="motivo_sub_id">Sub-Motivo de
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="motivo_sub_id">Sub-Motivo
+                                                                                                            de
                                                                                                             PQR</label>
-                                                                                                        <select id="motivo_sub_id"
+                                                                                                        <select
+                                                                                                            id="motivo_sub_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="motivo_sub_id">
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="servicios">
-                                                                                                        <label for="servicio_id">Servicios</label>
-                                                                                                        <select id="servicio_id"
+                                                                                                        <label
+                                                                                                            for="servicio_id">Servicios</label>
+                                                                                                        <select
+                                                                                                            id="servicio_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="servicio_id">
-                                                                                                            <option value="">---Seleccione un
-                                                                                                                servcio---</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                un
+                                                                                                                servcio---
+                                                                                                            </option>
                                                                                                             @foreach ($servicios as $servicio)
                                                                                                                 <option
                                                                                                                     value="{{ $servicio->id }}">
@@ -2512,14 +3162,19 @@
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="categorias">
-                                                                                                        <label class="requerido"
-                                                                                                            for="categoria_id">Categoría de
+                                                                                                        <label
+                                                                                                            class="requerido"
+                                                                                                            for="categoria_id">Categoría
+                                                                                                            de
                                                                                                             producto</label>
-                                                                                                        <select id="categoria_id"
+                                                                                                        <select
+                                                                                                            id="categoria_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_producto') }}"
                                                                                                             name="categoria_id">
-                                                                                                            <option value="">---Seleccione---
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione---
                                                                                                             </option>
                                                                                                             @foreach ($categorias as $categoria)
                                                                                                                 <option
@@ -2531,37 +3186,57 @@
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="productos">
-                                                                                                        <label class="requerido"
+                                                                                                        <label
+                                                                                                            class="requerido"
                                                                                                             for="producto_id">Productos</label>
-                                                                                                        <select id="producto_id"
+                                                                                                        <select
+                                                                                                            id="producto_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="producto_id"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_marca') }}">
-                                                                                                            <option value="">---Seleccione primero
-                                                                                                                una categoría---</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                primero
+                                                                                                                una
+                                                                                                                categoría---
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="marcas">
-                                                                                                        <label class="requerido"
+                                                                                                        <label
+                                                                                                            class="requerido"
                                                                                                             for="marca_id">Marcas</label>
-                                                                                                        <select id="marca_id"
+                                                                                                        <select
+                                                                                                            id="marca_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="marca_id"
                                                                                                             data_url="{{ route('admin-funcionario-asignacion_particular-cargar_referencia') }}">
-                                                                                                            <option value="">---Seleccione primero
-                                                                                                                un producto---</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                primero
+                                                                                                                un
+                                                                                                                producto---
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div class="form-group col-12 col-md-4 d-none"
                                                                                                         id="referencias">
-                                                                                                        <label class="requerido"
+                                                                                                        <label
+                                                                                                            class="requerido"
                                                                                                             for="referencia_id">Referencias</label>
-                                                                                                        <select id="referencia_id"
+                                                                                                        <select
+                                                                                                            id="referencia_id"
                                                                                                             class="form-control form-control-sm"
                                                                                                             name="referencia_id">
-                                                                                                            <option value="">---Seleccione primero
-                                                                                                                una marca---</option>
+                                                                                                            <option
+                                                                                                                value="">
+                                                                                                                ---Seleccione
+                                                                                                                primero
+                                                                                                                una marca---
+                                                                                                            </option>
                                                                                                         </select>
                                                                                                     </div>
                                                                                                     <div
@@ -2580,68 +3255,107 @@
                                                                                             <div class="col-md-6  d-none">
                                                                                                 <div
                                                                                                     class="card card-primary collapsed-card card-mini-sombra">
-                                                                                                    <div class="card-header">
-                                                                                                        <div class="user-block">
-                                                                                                            <span class="username"><a
+                                                                                                    <div
+                                                                                                        class="card-header">
+                                                                                                        <div
+                                                                                                            class="user-block">
+                                                                                                            <span
+                                                                                                                class="username"><a
                                                                                                                     href="#"
                                                                                                                     id="tituloNoma"></a></span>
-                                                                                                            <span class="description"></span>
+                                                                                                            <span
+                                                                                                                class="description"></span>
                                                                                                         </div>
-                                                                                                        <div class="card-tools">
-                                                                                                            <button type="button"
+                                                                                                        <div
+                                                                                                            class="card-tools">
+                                                                                                            <button
+                                                                                                                type="button"
                                                                                                                 class="btn btn-tool"
                                                                                                                 data-card-widget="collapse">
-                                                                                                                <i class="fas fa-minus"></i>
+                                                                                                                <i
+                                                                                                                    class="fas fa-minus"></i>
                                                                                                             </button>
-                                                                                                            <button type="button"
+                                                                                                            <button
+                                                                                                                type="button"
                                                                                                                 class="btn btn-tool"
                                                                                                                 data-card-widget="remove">
-                                                                                                                <i class="fas fa-times"></i>
+                                                                                                                <i
+                                                                                                                    class="fas fa-times"></i>
                                                                                                             </button>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="card-body">
-                                                                                                        <div class="row">
-                                                                                                            <div class="col-12">
-                                                                                                                <p><strong>Texto:</strong></p>
-                                                                                                                <p class="textoCopiar">El
-                                                                                                                    Texto...</p>
+                                                                                                    <div
+                                                                                                        class="card-body">
+                                                                                                        <div
+                                                                                                            class="row">
+                                                                                                            <div
+                                                                                                                class="col-12">
+                                                                                                                <p><strong>Texto:</strong>
+                                                                                                                </p>
+                                                                                                                <p
+                                                                                                                    class="textoCopiar">
+                                                                                                                    El
+                                                                                                                    Texto...
+                                                                                                                </p>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                         <hr>
-                                                                                                        <div class="row">
-                                                                                                            <div class="col-12">
-                                                                                                                <h6>Criterios Juridicos</h6>
+                                                                                                        <div
+                                                                                                            class="row">
+                                                                                                            <div
+                                                                                                                class="col-12">
+                                                                                                                <h6>Criterios
+                                                                                                                    Juridicos
+                                                                                                                </h6>
                                                                                                             </div>
-                                                                                                            <div class="col-12 table-responsive">
-                                                                                                                <table class="table">
+                                                                                                            <div
+                                                                                                                class="col-12 table-responsive">
+                                                                                                                <table
+                                                                                                                    class="table">
                                                                                                                     <thead>
                                                                                                                         <tr>
-                                                                                                                            <th>Autor(es)</th>
-                                                                                                                            <th>Criterios jurídicos
-                                                                                                                                de aplicación</th>
-                                                                                                                            <th>Criterios jurídicos
-                                                                                                                                de no aplicación
+                                                                                                                            <th>Autor(es)
                                                                                                                             </th>
-                                                                                                                            <th>Notas de la Vigencia
+                                                                                                                            <th>Criterios
+                                                                                                                                jurídicos
+                                                                                                                                de
+                                                                                                                                aplicación
+                                                                                                                            </th>
+                                                                                                                            <th>Criterios
+                                                                                                                                jurídicos
+                                                                                                                                de
+                                                                                                                                no
+                                                                                                                                aplicación
+                                                                                                                            </th>
+                                                                                                                            <th>Notas
+                                                                                                                                de
+                                                                                                                                la
+                                                                                                                                Vigencia
                                                                                                                             </th>
                                                                                                                         </tr>
                                                                                                                     </thead>
                                                                                                                     <tbody>
                                                                                                                         <tr>
-                                                                                                                            <td></td>
-                                                                                                                            <td></td>
-                                                                                                                            <td></td>
-                                                                                                                            <td></td>
+                                                                                                                            <td>
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                            </td>
                                                                                                                         </tr>
                                                                                                                     </tbody>
                                                                                                                 </table>
                                                                                                             </div>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="card-footer ">
-                                                                                                        <div class="row">
-                                                                                                            <div class="col-12">
+                                                                                                    <div
+                                                                                                        class="card-footer ">
+                                                                                                        <div
+                                                                                                            class="row">
+                                                                                                            <div
+                                                                                                                class="col-12">
                                                                                                                 <button
                                                                                                                     class="btn btn-info btn-xs pl-4 pr-4 agregarTexto">Agregar</button>
                                                                                                             </div>
@@ -2658,7 +3372,7 @@
                                                                     <div class="col-12 form-group mt-3">
                                                                         @if ($respuesta->estadorespuestapretension->estado == 100)
                                                                             <div class="respuesta mt-2">
-                                                                                @if($respuesta->respuesta)
+                                                                                @if ($respuesta->respuesta)
                                                                                     {!! $respuesta->respuesta !!}
                                                                                 @endif
                                                                             </div>
@@ -2668,52 +3382,67 @@
                                                                                 rows="6"
                                                                                 max>{{ isset($respuesta->respuesta) ? $respuesta->respuesta : '' }}</textarea>
                                                                         @endif
-                                                                        
+
                                                                         @if (isset($respuesta->respuesta))
                                                                             <input class="respuesta_anterior" type="hidden"
                                                                                 value="{{ $respuesta->respuesta }}"
                                                                                 data_url="{{ route('historial_respuesta_pretension_guardar') }}">
                                                                         @endif
-                                                                        <input class="id_respuesta" type="hidden" value="{{ $respuesta->id }}">
+                                                                        <input class="id_respuesta" type="hidden"
+                                                                            value="{{ $respuesta->id }}">
                                                                     </div>
                                                                     @if ($respuesta->estadorespuestapretension->estado != 100)
                                                                         <div class="col-12 anexosConsulta">
                                                                             <div class="col-12 d-flex row anexoconsulta">
-                                                                                <div class="col-12 titulo-anexo d-flex justify-content-between">
+                                                                                <div
+                                                                                    class="col-12 titulo-anexo d-flex justify-content-between">
                                                                                     <h6>Anexo</h6>
                                                                                     <button type="button"
                                                                                         class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminaranexoConsulta"><i
-                                                                                            class="fas fa-minus-circle"></i> Eliminar
+                                                                                            class="fas fa-minus-circle"></i>
+                                                                                        Eliminar
                                                                                         anexo</button>
                                                                                 </div>
-                                                                                <div class="col-12 col-md-4 form-group titulo-anexoConsulta">
+                                                                                <div
+                                                                                    class="col-12 col-md-4 form-group titulo-anexoConsulta">
                                                                                     <label for="titulo">Título anexo</label>
-                                                                                    <input type="text" class="titulo form-control form-control-sm">
+                                                                                    <input type="text"
+                                                                                        class="titulo form-control form-control-sm">
                                                                                 </div>
-                                                                                <div class="col-12 col-md-4 form-group descripcion-anexoConsulta">
-                                                                                    <label for="descripcion">Descripción</label>
+                                                                                <div
+                                                                                    class="col-12 col-md-4 form-group descripcion-anexoConsulta">
+                                                                                    <label
+                                                                                        for="descripcion">Descripción</label>
                                                                                     <input type="text"
                                                                                         class="descripcion form-control form-control-sm">
                                                                                 </div>
-                                                                                <div class="col-12 col-md-4 form-group doc-anexoConsulta">
-                                                                                    <label for="documento">Anexos o Pruebas</label>
-                                                                                    <input class="documento form-control form-control-sm"
+                                                                                <div
+                                                                                    class="col-12 col-md-4 form-group doc-anexoConsulta">
+                                                                                    <label for="documento">Anexos o
+                                                                                        Pruebas</label>
+                                                                                    <input
+                                                                                        class="documento form-control form-control-sm"
                                                                                         type="file">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-12 d-flex justify-content-end flex-row mb-3">
-                                                                            <button class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
-                                                                                id="crearAnexo"><i class="fa fa-plus-circle mr-2"
+                                                                        <div
+                                                                            class="col-12 d-flex justify-content-end flex-row mb-3">
+                                                                            <button
+                                                                                class="btn btn-success btn-xs btn-sombra pl-2 pr-2 crearAnexo"
+                                                                                id="crearAnexo"><i
+                                                                                    class="fa fa-plus-circle mr-2"
                                                                                     aria-hidden="true"></i>
                                                                                 Añadir
                                                                                 otro Anexo</button>
                                                                         </div>
-                                                                        <button type="" class="btn btn-primary mx-2 btn-respuesta-pretension-editar col-md-3 col-12"
+                                                                        <button type=""
+                                                                            class="btn btn-primary mx-2 btn-respuesta-pretension-editar col-md-3 col-12"
                                                                             data_url="{{ route('respuesta_pretension_editar_guardar') }}"
-                                                                            data_url2="{{ route('respuesta_pretension_anexo_guardar') }}" 
+                                                                            data_url2="{{ route('respuesta_pretension_anexo_guardar') }}"
                                                                             data_url3="{{ route('estado_respuesta_pretension_guardar') }}"
-                                                                            data_token="{{ csrf_token() }}">Guardar respuesta</button>
+                                                                            data_token="{{ csrf_token() }}">Guardar
+                                                                            respuesta</button>
                                                                     @endif
                                                                     @if (isset($respuesta))
                                                                         @if (sizeOf($respuesta->documentos))
@@ -2724,21 +3453,27 @@
                                                                                         <h6>Anexos respuesta</h6>
                                                                                     </div>
                                                                                     <div class="col-12 table-responsive">
-                                                                                        <table class="table table-light" style="font-size: 0.8em;">
+                                                                                        <table class="table table-light"
+                                                                                            style="font-size: 0.8em;">
                                                                                             <thead>
                                                                                                 <tr>
-                                                                                                    <th scope="col">Nombre</th>
-                                                                                                    <th scope="col">Descripción</th>
-                                                                                                    <th scope="col">Archivo</th>
+                                                                                                    <th scope="col">Nombre
+                                                                                                    </th>
+                                                                                                    <th scope="col">
+                                                                                                        Descripción</th>
+                                                                                                    <th scope="col">Archivo
+                                                                                                    </th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
                                                                                                 @foreach ($respuesta->documentos as $anexo)
                                                                                                     <tr>
-                                                                                                        <td class="text-justify">
+                                                                                                        <td
+                                                                                                            class="text-justify">
                                                                                                             {{ $anexo->titulo }}
                                                                                                         </td>
-                                                                                                        <td class="text-justify">
+                                                                                                        <td
+                                                                                                            class="text-justify">
                                                                                                             {{ $anexo->descripcion }}
                                                                                                         </td>
                                                                                                         <td><a href="{{ asset('documentos/tutelas/pretensiones/' . $anexo->url) }}"
@@ -2757,23 +3492,35 @@
                                                                     @if (isset($respuesta))
                                                                         @if (sizeOf($respuesta->historial))
                                                                             <hr class="mt-3">
-                                                                            <h6 class="">Historial de respuestas</h6>
+                                                                            <h6 class="">Historial de
+                                                                                respuestas</h6>
                                                                             <div class="row d-flex px-12 p-3">
                                                                                 <div class="col-12 table-responsive">
-                                                                                    <table class="table table-light" style="font-size: 0.8em;">
+                                                                                    <table class="table table-light"
+                                                                                        style="font-size: 0.8em;">
                                                                                         <thead>
                                                                                             <tr>
                                                                                                 <th scope="col">Fecha</th>
-                                                                                                <th scope="col">Empleado</th>
-                                                                                                <th scope="col">Historial</th>
+                                                                                                <th scope="col">Empleado
+                                                                                                </th>
+                                                                                                <th scope="col">Historial
+                                                                                                </th>
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
                                                                                             @foreach ($respuesta->historial as $historial)
                                                                                                 <tr>
-                                                                                                    <td>{{ $historial->created_at }}</td>
-                                                                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                                                                    <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
+                                                                                                    <td>{{ $historial->created_at }}
+                                                                                                    </td>
+                                                                                                    <td
+                                                                                                        class="text-justify">
+                                                                                                        {{ $historial->empleado->nombre1 }}
+                                                                                                        {{ $historial->empleado->apellido1 }}
+                                                                                                    </td>
+                                                                                                    <td
+                                                                                                        class="text-justify">
+                                                                                                        {{ strip_tags($historial->historial) }}
+                                                                                                    </td>
                                                                                                 </tr>
                                                                                             @endforeach
                                                                                         </tbody>
@@ -2782,21 +3529,34 @@
                                                                             </div>
                                                                         @endif
                                                                         <hr class="mt-3">
-                                                                        <div class="row d-flex px-12 p-3 mensaje-respuesta-pretension"> 
-                                                                            <input class="id_respuesta_pretension" type="hidden" value="{{ $respuesta->id }}">
-                                                                            <div class="container-mensaje-historial form-group col-12">
-                                                                                <label for="" class="">Agregar Historial de respuesta</label>
-                                                                                <textarea class="form-control mensaje-historial-respuesta-pretension" rows="3" placeholder="" required></textarea>
+                                                                        <div
+                                                                            class="row d-flex px-12 p-3 mensaje-respuesta-pretension">
+                                                                            <input class="id_respuesta_pretension"
+                                                                                type="hidden"
+                                                                                value="{{ $respuesta->id }}">
+                                                                            <div
+                                                                                class="container-mensaje-historial form-group col-12">
+                                                                                <label for=""
+                                                                                    class="">Agregar
+                                                                                    Historial de respuesta</label>
+                                                                                <textarea
+                                                                                    class="form-control mensaje-historial-respuesta-pretension"
+                                                                                    rows="3" placeholder=""
+                                                                                    required></textarea>
                                                                             </div>
-                                                                            <div class="col-12 col-md-12 form-group d-flex">
-                                                                                <button href="" class="btn btn-primary px-4 guardarHistorialRespuestaPretension" data_url="{{ route('historial_respuesta_pretension_guardar') }}"
-                                                                                data_token="{{ csrf_token() }}">Guardar historial</button>
+                                                                            <div
+                                                                                class="col-12 col-md-12 form-group d-flex">
+                                                                                <button href=""
+                                                                                    class="btn btn-primary px-4 guardarHistorialRespuestaPretension"
+                                                                                    data_url="{{ route('historial_respuesta_pretension_guardar') }}"
+                                                                                    data_token="{{ csrf_token() }}">Guardar
+                                                                                    historial</button>
                                                                             </div>
                                                                         </div>
                                                                     @endif
                                                                 </div>
                                                             </div>
-                                                        </div>    
+                                                        </div>
                                                     @endif
                                                 @endforeach
                                             @endif
@@ -2810,7 +3570,7 @@
                                     <h3 class="card-title font-weight-bold">Historial hechos</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-plus"></i>
+                                            <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -2819,48 +3579,56 @@
                                         <div class="col-12 mb-2">
                                             <h5>Hechos</h5>
                                         </div>
-                                        @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
+                                        @foreach ($tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                             <div class="rounded border my-3">
-                                                @if (session('id_usuario') == $hecho->empleado_id && $hecho->estadohecho->estado != 100 && !sizeOf($hecho->relacionesHechos) ) 
+                                                @if (session('id_usuario') == $hecho->empleado_id && $hecho->estadohecho->estado != 100 && !sizeOf($hecho->relacionesHechos))
                                                     <div class="row form-reasignarHecho p-4">
                                                         <div class="col-12 col-md-6 ">
                                                             <h5>Reasignar Hecho</h5>
                                                         </div>
                                                         <div class="col-12 col-md-6 d-flex flex-row">
                                                             <div class="form-check mb-3 mr-4">
-                                                                <input type="radio" name='reasignarHecho{{ $key }}'
+                                                                <input type="radio"
+                                                                    name='reasignarHecho{{ $key }}'
                                                                     class="form-check-input reasignarHecho reasignarHecho_si"
                                                                     value="1" />
                                                                 <label class="form-check-label" for="">SI</label>
                                                             </div>
                                                             <div class="form-check mb-3">
-                                                                <input type="radio" name="reasignarHecho{{ $key }}"
-                                                                    class="form-check-input reasignarHecho reasignarHecho_no" checked
-                                                                    value="0" />
+                                                                <input type="radio"
+                                                                    name="reasignarHecho{{ $key }}"
+                                                                    class="form-check-input reasignarHecho reasignarHecho_no"
+                                                                    checked value="0" />
                                                                 <label class="form-check-label" for="">NO</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-12 contentReasignacion d-none" id="contentReasignacion">
+                                                        <div class="col-12 contentReasignacion d-none"
+                                                            id="contentReasignacion">
                                                             <div class="row d-flex px-4">
                                                                 <div class="col-12 col-md-5 form-group">
                                                                     <label for="">Cargo</label>
-                                                                    <select class="cargo custom-select rounded-0" required=""
+                                                                    <select class="cargo custom-select rounded-0"
+                                                                        required=""
                                                                         data_url="{{ route('cargar_cargos') }}"
                                                                         data_url2="{{ route('cargar_funcionarios') }}">
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-12 col-md-5 form-group">
                                                                     <label for="">Funcionario</label>
-                                                                    <select class="funcionario custom-select rounded-0" required="">
+                                                                    <select class="funcionario custom-select rounded-0"
+                                                                        required="">
                                                                     </select>
                                                                 </div>
-                                                                <div class="container-mensaje-historial-hecho form-group col-12">
-                                                                    <label for="" class="">Agregar Historial</label>
+                                                                <div
+                                                                    class="container-mensaje-historial-hecho form-group col-12">
+                                                                    <label for="" class="">Agregar
+                                                                        Historial</label>
                                                                     <textarea class="form-control mensaje-historial-hecho"
-                                                                        name="container-mensaje-historial-tarea" rows="3" placeholder=""
-                                                                        required></textarea>
+                                                                        name="container-mensaje-historial-tarea" rows="3"
+                                                                        placeholder="" required></textarea>
                                                                 </div>
-                                                                <div class="col-12 col-md-2 form-group d-flex align-items-end">
+                                                                <div
+                                                                    class="col-12 col-md-2 form-group d-flex align-items-end">
                                                                     <button href=""
                                                                         class="btn btn-primary mx-2 px-4 reasignacion_hecho_guardar"
                                                                         data_url="{{ route('asignacion_hecho_guardar') }}"
@@ -2874,12 +3642,13 @@
                                                 @endif
                                                 <div class="col-12 row my-3">
                                                     <div class="col-6 mb-3">
-                                                        <h5 class="pl-4">Hecho # {{$hecho->consecutivo}}</h5>
+                                                        <h5 class="pl-4">Hecho # {{ $hecho->consecutivo }}
+                                                        </h5>
                                                     </div>
                                                     @if (session('id_usuario') == $hecho->empleado_id)
                                                         <div class="col-6 row estado-hecho justify-content-end pb-3">
                                                             <div class="col-2 d-flex mb-2">
-                                                                <h6>Avance: {{$hecho->estadohecho->estado}} %</h6>
+                                                                <h6>Avance: {{ $hecho->estadohecho->estado }} %</h6>
                                                             </div>
                                                         </div>
                                                     @endif
@@ -2888,7 +3657,7 @@
                                                     </div>
                                                 </div>
                                                 <hr>
-                                                @if(sizeOf($hecho->historialHechos))
+                                                @if (sizeOf($hecho->historialHechos))
                                                     <h6 class="">Historial hecho</h6>
                                                     <div class="row d-flex px-12 p-3">
                                                         <div class="col-12 table-responsive">
@@ -2904,8 +3673,13 @@
                                                                     @foreach ($hecho->historialHechos as $historialHecho)
                                                                         <tr>
                                                                             <td>{{ $historialHecho->created_at }}</td>
-                                                                            <td class="text-justify">{{ $historialHecho->empleado->nombre1 }} {{ $historialHecho->empleado->apellido1 }}</td>
-                                                                            <td class="text-justify">{{ strip_tags($historialHecho->historial) }}</td>
+                                                                            <td class="text-justify">
+                                                                                {{ $historialHecho->empleado->nombre1 }}
+                                                                                {{ $historialHecho->empleado->apellido1 }}
+                                                                            </td>
+                                                                            <td class="text-justify">
+                                                                                {{ strip_tags($historialHecho->historial) }}
+                                                                            </td>
                                                                         </tr>
                                                                     @endforeach
                                                                 </tbody>
@@ -2915,21 +3689,26 @@
                                                     <hr>
                                                 @endif
                                                 @if (session('id_usuario') == $hecho->empleado_id)
-                                                    <div class="row d-flex px-12 p-3 mensaje-hecho"> 
-                                                        <input class="id_hecho" type="hidden" value="{{ $hecho->id }}">
+                                                    <div class="row d-flex px-12 p-3 mensaje-hecho">
+                                                        <input class="id_hecho" type="hidden"
+                                                            value="{{ $hecho->id }}">
                                                         <div class="container-mensaje-historial form-group col-12">
                                                             <label for="" class="">Agregar Historial</label>
-                                                            <textarea class="form-control mensaje-historial-hecho" rows="3" placeholder="" required></textarea>
+                                                            <textarea class="form-control mensaje-historial-hecho" rows="3"
+                                                                placeholder="" required></textarea>
                                                         </div>
                                                         <div class="col-12 col-md-12 form-group d-flex">
-                                                            <button href="" class="btn btn-primary px-4 guardarHistorialHecho" data_url="{{ route('historial_hecho_guardar') }}"
-                                                            data_token="{{ csrf_token() }}">Guardar historial</button>
+                                                            <button href=""
+                                                                class="btn btn-primary px-4 guardarHistorialHecho"
+                                                                data_url="{{ route('historial_hecho_guardar') }}"
+                                                                data_token="{{ csrf_token() }}">Guardar
+                                                                historial</button>
                                                         </div>
                                                     </div>
                                                 @endif
                                             </div>
-                                            <input class="id_hecho" type="hidden" value="{{$hecho->id}}">
-                                        @endforeach  
+                                            <input class="id_hecho" type="hidden" value="{{ $hecho->id }}">
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -2939,7 +3718,7 @@
                                     <h3 class="card-title font-weight-bold">Historial pretensiones</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-plus"></i>
+                                            <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -2948,48 +3727,57 @@
                                         <div class="col-12 mb-2">
                                             <h5>Pretensiones</h5>
                                         </div>
-                                        @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
+                                        @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                             <div class="rounded border my-3">
-                                                @if (session('id_usuario') == $pretension->empleado_id && $pretension->estadopretension->estado != 100 && !sizeOf($pretension->relacionesPretensiones)) 
+                                                @if (session('id_usuario') == $pretension->empleado_id && $pretension->estadopretension->estado != 100 && !sizeOf($pretension->relacionesPretensiones))
                                                     <div class="row form-reasignarPretension p-4">
                                                         <div class="col-12 col-md-6 ">
                                                             <h5>Reasignar Pretensión</h5>
                                                         </div>
                                                         <div class="col-12 col-md-6 d-flex flex-row">
                                                             <div class="form-check mb-3 mr-4">
-                                                                <input type="radio" name='reasignarPretension{{ $key }}'
+                                                                <input type="radio"
+                                                                    name='reasignarPretension{{ $key }}'
                                                                     class="form-check-input reasignarPretension reasignarPretension_si"
                                                                     value="1" />
                                                                 <label class="form-check-label" for="">SI</label>
                                                             </div>
                                                             <div class="form-check mb-3">
-                                                                <input type="radio" name="reasignarPretension{{ $key }}"
-                                                                    class="form-check-input reasignarPretension reasignarPretension_no" checked
-                                                                    value="0" />
+                                                                <input type="radio"
+                                                                    name="reasignarPretension{{ $key }}"
+                                                                    class="form-check-input reasignarPretension reasignarPretension_no"
+                                                                    checked value="0" />
                                                                 <label class="form-check-label" for="">NO</label>
                                                             </div>
                                                         </div>
-                                                        <div class="col-12 contentReasignacion d-none" id="contentReasignacion">
+                                                        <div class="col-12 contentReasignacion d-none"
+                                                            id="contentReasignacion">
                                                             <div class="row d-flex px-4">
                                                                 <div class="col-12 col-md-5 form-group">
                                                                     <label for="">Cargo</label>
-                                                                    <select class="cargo custom-select rounded-0" required=""
+                                                                    <select class="cargo custom-select rounded-0"
+                                                                        required=""
                                                                         data_url="{{ route('cargar_cargos') }}"
                                                                         data_url2="{{ route('cargar_funcionarios') }}">
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-12 col-md-5 form-group">
                                                                     <label for="">Funcionario</label>
-                                                                    <select class="funcionario custom-select rounded-0" required="">
+                                                                    <select class="funcionario custom-select rounded-0"
+                                                                        required="">
                                                                     </select>
                                                                 </div>
-                                                                <div class="container-mensaje-historial-pretension form-group col-12">
-                                                                    <label for="" class="">Agregar Historial</label>
-                                                                    <textarea class="form-control mensaje-historial-pretension"
-                                                                        name="container-mensaje-historial-tarea" rows="3" placeholder=""
-                                                                        required></textarea>
+                                                                <div
+                                                                    class="container-mensaje-historial-pretension form-group col-12">
+                                                                    <label for="" class="">Agregar
+                                                                        Historial</label>
+                                                                    <textarea
+                                                                        class="form-control mensaje-historial-pretension"
+                                                                        name="container-mensaje-historial-tarea" rows="3"
+                                                                        placeholder="" required></textarea>
                                                                 </div>
-                                                                <div class="col-12 col-md-2 form-group d-flex align-items-end">
+                                                                <div
+                                                                    class="col-12 col-md-2 form-group d-flex align-items-end">
                                                                     <button href=""
                                                                         class="btn btn-primary mx-2 px-4 reasignacion_pretension_guardar"
                                                                         data_url="{{ route('asignacion_pretension_guardar') }}"
@@ -3004,20 +3792,23 @@
 
                                                 <div class="col-12 row my-3">
                                                     <div class="col-6 mb-3">
-                                                        <h5 class="pl-4">Pretensión # {{$pretension->consecutivo}}</h5>
+                                                        <h5 class="pl-4">Pretensión #
+                                                            {{ $pretension->consecutivo }}</h5>
                                                     </div>
                                                     @if (session('id_usuario') == $pretension->empleado_id)
                                                         <div class="col-6 row estado-pretension justify-content-end pb-3">
                                                             <div class="col-2 d-flex mb-2">
-                                                                <h6>Avance: {{$pretension->estadopretension->estado}} %</h6>
+                                                                <h6>Avance: {{ $pretension->estadopretension->estado }}
+                                                                    %
+                                                                </h6>
                                                             </div>
                                                         </div>
-                                                    @endif  
+                                                    @endif
                                                     <div class="col-12">
                                                         <p class="text-justify">{{ $pretension->pretension }}</p>
                                                     </div>
                                                 </div>
-                                                @if(sizeOf($pretension->historialPretensiones))
+                                                @if (sizeOf($pretension->historialPretensiones))
                                                     <h6 class="">Historial pretensión</h6>
                                                     <div class="row d-flex px-12 p-3">
                                                         <div class="col-12 table-responsive">
@@ -3032,9 +3823,15 @@
                                                                 <tbody>
                                                                     @foreach ($pretension->historialPretensiones as $historialPretension)
                                                                         <tr>
-                                                                            <td>{{ $historialPretension->created_at }}</td>
-                                                                            <td class="text-justify">{{ $historialPretension->empleado->nombre1 }} {{ $historialPretension->empleado->apellido1 }}</td>
-                                                                            <td class="text-justify">{{ strip_tags($historialPretension->historial) }}</td>
+                                                                            <td>{{ $historialPretension->created_at }}
+                                                                            </td>
+                                                                            <td class="text-justify">
+                                                                                {{ $historialPretension->empleado->nombre1 }}
+                                                                                {{ $historialPretension->empleado->apellido1 }}
+                                                                            </td>
+                                                                            <td class="text-justify">
+                                                                                {{ strip_tags($historialPretension->historial) }}
+                                                                            </td>
                                                                         </tr>
                                                                     @endforeach
                                                                 </tbody>
@@ -3044,21 +3841,26 @@
                                                     <hr>
                                                 @endif
                                                 @if (session('id_usuario') == $pretension->empleado_id)
-                                                    <div class="row d-flex px-12 p-3 mensaje-pretension"> 
-                                                        <input class="id_pretension" type="hidden" value="{{ $pretension->id }}">
+                                                    <div class="row d-flex px-12 p-3 mensaje-pretension">
+                                                        <input class="id_pretension" type="hidden"
+                                                            value="{{ $pretension->id }}">
                                                         <div class="container-mensaje-historial form-group col-12">
                                                             <label for="" class="">Agregar Historial</label>
-                                                            <textarea class="form-control mensaje-historial-pretension" rows="3" placeholder="" required></textarea>
+                                                            <textarea class="form-control mensaje-historial-pretension"
+                                                                rows="3" placeholder="" required></textarea>
                                                         </div>
                                                         <div class="col-12 col-md-12 form-group d-flex">
-                                                            <button href="" class="btn btn-primary px-4 guardarHistorialPretension" data_url="{{ route('historial_pretension_guardar') }}"
-                                                            data_token="{{ csrf_token() }}">Guardar historial</button>
+                                                            <button href=""
+                                                                class="btn btn-primary px-4 guardarHistorialPretension"
+                                                                data_url="{{ route('historial_pretension_guardar') }}"
+                                                                data_token="{{ csrf_token() }}">Guardar
+                                                                historial</button>
                                                         </div>
                                                     </div>
                                                 @endif
                                             </div>
-                                            <input class="id_pretension" type="hidden" value="{{$pretension->id}}">
-                                        @endforeach  
+                                            <input class="id_pretension" type="hidden" value="{{ $pretension->id }}">
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
