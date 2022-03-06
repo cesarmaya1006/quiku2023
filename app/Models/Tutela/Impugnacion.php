@@ -18,4 +18,15 @@ class Impugnacion extends Model
         return $this->belongsTo(PrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function estado()
+    {
+        return $this->belongsTo(ImpugnacionEstado::class, 'impugnacion_estado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function resuelves()
+    {
+        return $this->hasMany(ImpugnacionResuelve::class, 'impugnacion_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
 }

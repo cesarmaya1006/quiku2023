@@ -457,6 +457,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('consulta/tutelas/primera-instancia/guardar/{id}', [TutelasConsulta::class, 'tutelas_primera_instancia_guardar'])->name('tutelas_primera_instancia_guardar');
         //==================================================================================================================
         Route::get('consulta/tutelas/impugnacion/{id}', [TutelasConsulta::class, 'tutelas_impugnacion'])->name('tutelas_impugnacion');
+        Route::get('consulta/tutelas/impugnacion/gestion/{id}', [TutelasConsulta::class, 'tutelas_impugnacion_gestion'])->name('tutelas_impugnacion_gestion');
+        Route::get('consulta/tutelas/impugnacion/registro/{id}', [TutelasConsulta::class, 'tutelas_impugnacion_registro'])->name('tutelas_impugnacion_registro');
         Route::post('consulta/tutelas/impugnacion/guardar/{id}', [TutelasConsulta::class, 'tutelas_impugnacion_guardar'])->name('tutelas_impugnacion_guardar');
 
         //==================================================================================================================

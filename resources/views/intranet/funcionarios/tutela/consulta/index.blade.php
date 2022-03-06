@@ -6,7 +6,6 @@
 @endsection
 <!-- Pagina CSS -->
 @section('estilosHojas')
-
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
@@ -113,6 +112,7 @@
                                                 <table class="table table-striped table-hover table-sm display">
                                                     <thead class="thead-inverse">
                                                         <tr>
+                                                            <th></th>
                                                             <th class="text-center" style="white-space:nowrap">Número de
                                                                 radicado</th>
                                                             <th class="text-center" style="white-space:nowrap">Nombres y
@@ -129,7 +129,6 @@
                                                             </th>
                                                             <th class="text-center" style="white-space:nowrap">Tiempo
                                                                 Terminos</th>
-                                                            <th></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="contenidoTabla">

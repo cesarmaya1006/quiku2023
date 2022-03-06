@@ -22,6 +22,7 @@ use App\Models\Tutela\HistorialPretension;
 use App\Models\Tutela\HistorialRespuestaHecho;
 use App\Models\Tutela\HistorialRespuestaPretension;
 use App\Models\Tutela\HistorialTareas;
+use App\Models\Tutela\ImpugnacionResuelve;
 use App\Models\Tutela\PretensionesTutela;
 use App\Models\Tutela\RespuestaHechos;
 use App\Models\Tutela\RespuestaPretensiones;
@@ -165,6 +166,11 @@ class Empleado extends Model
     public function historialRespuestaPretensionesTutela()
     {
         return $this->hasMany(HistorialRespuestaPretension::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function impugnacionresuelves()
+    {
+        return $this->hasMany(ImpugnacionResuelve::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

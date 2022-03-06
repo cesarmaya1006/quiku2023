@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'referencias', 'servicios', 'diasfestivos', 'asignacion_particular_pqr', 'despachos', 'wikuareas', 'wikutemas', 'wikutemaespecifico', 'wikudocument', 'estadostutela', 'tareas_tutela',
             'asignacion_estados_tutela', 'auto_admisorio', 'tutela_motivo', 'accionante_accionado', 'hechos_tutela', 'pretensiones_tutela',
             'argumentos_tutela', 'historial_primera_asignacion_tutela', 'asignancion_tareas_tutela', 'sentenciapinstancia', 'resuelvesentencia', 'tipo_accion',
+            'impugnacion_estado', 'impugnacionresuelve_estado',
         ]);
         // --------------------------------------------------------------------------------------------------
         $this->call(Tabla_DocuTipos::class);
@@ -74,6 +75,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TutelaAsignancionTareasTutela::class);
         $this->call(PrimeraSentencia::class);
         $this->call(PrimeraInstanciaResuelve::class);
+        $this->call(ImpugnacionEstados::class);
+        $this->call(ImpugnacionResuelveEstados::class);
     }
 
     protected function truncateTablas(array $tablas)

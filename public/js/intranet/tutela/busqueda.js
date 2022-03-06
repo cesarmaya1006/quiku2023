@@ -58,6 +58,7 @@ $(document).ready(function() {
                 respuesta_html = '';
                 $.each(respuesta, function(index, item) {
                     respuesta_html += '<tr>';
+                    respuesta_html += '<td><a href="' + dirDetalles + item['id'] + '" class="btn-accion-tabla tooltipsC text-info" title="Editar"><i class="fas fa-eye" aria-hidden="true"></i></a></td>';
                     respuesta_html += '<td>' + item['radicado'] + '</td>';
                     respuesta_html += '<td>' + item['accions'][0]['nombres_accion'] + ' ' + item['accions'][0]['apellidos_accion'] + '</td>';
                     respuesta_html += '<td>' + item['accions'][0]['tipos_docu_accion']['tipo_id'] + '</td>';
@@ -68,11 +69,10 @@ $(document).ready(function() {
                     if (item['dias_termino'] != null) {
                         respuesta_html += item['dias_termino'] + ' dias';
                     }
-                    if (item['horas_termino'] != null) {
+                    /*if (item['horas_termino'] != null) {
                         respuesta_html += item['horas_termino'] + ' horas';
-                    }
+                    }*/
                     respuesta_html += '</td>';
-                    respuesta_html += '<td><a href="' + dirDetalles + item['id'] + '" class="btn-accion-tabla tooltipsC text-info" title="Editar"><i class="fas fa-eye" aria-hidden="true"></i></a></td>';
                     respuesta_html += '</tr>';
 
                 });

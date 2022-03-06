@@ -17,4 +17,10 @@ class ResuelvePrimeraInstancia extends Model
         return $this->belongsTo(PrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function resuelves()
+    {
+        return $this->belongsToMany(ImpugnacionResuelve::class, 'impugnacionresuelve_resuelvesentencia');
+    }
+    //----------------------------------------------------------------------------------
 }

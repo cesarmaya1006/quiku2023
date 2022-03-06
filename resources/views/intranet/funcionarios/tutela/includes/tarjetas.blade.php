@@ -57,18 +57,8 @@
                 <!-- /.info-box -->
             </div>
             <div class="col-md-3 col-sm-6 col-12">
-                @foreach ($tutela->primeraInstancia as $primeraInstancia)
-                    @if ($primeraInstancia->impugnaciones->count() > 0)
-                        <div class="info-box bg-success">
-                            <span class="info-box-icon"><i class="fas fa-medal"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">
-                                    Recursos de Impugnación
-                                </span>
-                            </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                    @else
+                @if ($tutela->primeraInstancia->count() > 0)
+                    @foreach ($tutela->primeraInstancia as $primeraInstancia)
                         @php
                             $firstDate = new DateTime($primeraInstancia->fecha_notificacion);
                             $secondDate = new DateTime(date('d-m-Y', strtotime($primeraInstancia->fecha_notificacion . '+ 3 days')));
@@ -99,8 +89,20 @@
                                 </div>
                             </a>
                         @endif
-                    @endif
-                @endforeach
+                    @endforeach
+                @else
+                    <div class="info-box" style="border: 1px solid black">
+                        <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">
+                                Recursos de Impugnación
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                @endif
+
 
                 <!-- /.info-box -->
             </div>

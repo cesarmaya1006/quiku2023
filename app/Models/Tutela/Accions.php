@@ -29,4 +29,11 @@ class Accions extends Model
     {
         return $this->belongsTo(TipoAccion::class, 'tipo_accion_id', 'id');
     }
+
+    //----------------------------------------------------------------------------------
+    public function resuelves()
+    {
+        return $this->belongsToMany(ImpugnacionResuelve::class, 'impugnacion_accionante', 'impugnacionresuelve_id', 'accionante_accionado_id');
+    }
+    //----------------------------------------------------------------------------------
 }

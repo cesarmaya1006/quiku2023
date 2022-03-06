@@ -1,4 +1,13 @@
 <div class="row">
+    <div class="col-12">
+        <a class="card-header collapsed card-link" data-bs-toggle="collapse" href="#infoPrincipalTutela" role="button"
+            aria-expanded="false" aria-controls="infoPrincipalTutela">
+            Información Principal Tutela
+            <i class="fa fa-plus-circle mr-2" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+<div class="row collapse mt-4 mb-5" id="infoPrincipalTutela">
     <div class="col-12 col-md-6">
         Número de radicado:
         <strong>{{ $tutela->radicado }}</strong>
@@ -44,3 +53,4 @@
         Fecha límite: <strong>{{ $tutela->fecha_limite }}</strong>
     </div>
 </div>
+<hr>
