@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Intranet\Funcionarios;
 use App\Http\Controllers\Controller;
 use App\Models\Tutela\AnexoPrimeraInstancia;
 use App\Models\Tutela\AutoAdmisorio;
+use App\Models\Tutela\Impugnacion;
+use App\Models\Tutela\ImpugnacionResuelve;
 use App\Models\Tutela\PrimeraInstancia;
 use App\Models\Tutela\ResuelvePrimeraInstancia;
+use App\Models\Tutela\TipoAccion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use DateTime;
 
 class TutelasConsulta extends Controller
 {
@@ -168,9 +173,17 @@ class TutelasConsulta extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function tutelas_impugnacion_guardar(Request $request, $id)
+    public function tutelas_impugnacion_gestion($id)
     {
-        //
+        $tutela = AutoAdmisorio::findOrFail($id);
+        return view('intranet.funcionarios.tutela.impugnacion.gestionar.index', compact('tutela'));
+    }
+
+    public function tutelas_impugnacion_registro($id)
+    {
+        $tipo_accion = TipoAccion::get();
+        $tutela = AutoAdmisorio::findOrFail($id);
+        return view('intranet.funcionarios.tutela.impugnacion.registrar.index', compact('tutela', 'tipo_accion'));
     }
 
     /**
@@ -180,9 +193,73 @@ class TutelasConsulta extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function tutelas_impugnacion_guardar(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+
+            $tutela = AutoAdmisorio::findOrFail($id);
+            foreach ($tutela->primeraInstancia as $primeraInstancia) {
+
+                $firstDate = new DateTime($primeraInstancia->fecha_notificacion);
+                $secondDate = new DateTime(date('d-m-Y', strtotime($primeraInstancia->fecha_notificacion . '+ 3 days')));
+                $intvl = $firstDate->diff($secondDate);
+                if ($intvl->days > 3) {
+                    $impugnacion_estado_id = 2;
+                } else {
+                    $impugnacion_estado_id = 1;
+                }
+                if ($primeraInstancia->impugnaciones->count() > 0) {
+                    $impugnacionUpdate['impugnacion_estado_id'] = $impugnacion_estado_id;
+                    foreach ($primeraInstancia->impugnaciones as $impugnacionn) {
+                        $idImpugnacion = $impugnacionn;
+                    }
+                    Impugnacion::findOrFail($idImpugnacion->id)->update($impugnacionUpdate);
+                    $impugnacion = Impugnacion::findOrFail($idImpugnacion->id);
+                } else {
+                    $impugnacionNueva['sentenciapinstancia_id'] = $primeraInstancia->id;
+                    $impugnacionNueva['impugnacion_estado_id'] = $impugnacion_estado_id;
+                    $impugnacionNueva['fecha'] = Carbon::now();
+                    $impugnacion = Impugnacion::create($impugnacionNueva);
+                }
+
+                $impugnacionResuelveNueva['impugnacion_id'] = $impugnacion->id;
+                $impugnacionResuelveNueva['impugnacionresuelve_estado_id'] = 7;
+                $impugnacionResuelveNueva['resuelve'] = $request->resuelve;
+                if ($request->hasFile('url_sentencia')) {
+                    $ruta = Config::get('constantes.folder_sentencias');
+                    $ruta = trim($ruta);
+                    $doc_subido = $request->url_sentencia;
+                    $nombre_doc = str_replace(' ', '', time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName())));
+                    $impugnacionResuelveNueva['url_impugnacion'] = $nombre_doc;
+                    $doc_subido->move($ruta, $nombre_doc);
+                }
+                $impugnacionResuelve = ImpugnacionResuelve::create($impugnacionResuelveNueva);
+
+                $resuelves_ = explode(",", $request->resuelves);
+                foreach ($resuelves_ as $resuelve) {
+                    $impugnacionResuelve->resuelves()->attach($resuelve);
+                }
+
+                if ($request->accionantes != '') {
+                    $accionantes = explode(",", $request->accionantes);
+                    foreach ($accionantes as $accionante) {
+                        $impugnacionResuelve->accionantes()->attach($accionante);
+                    }
+                }
+
+                if ($request->accionados != '') {
+                    $accionados = explode(",", $request->accionados);
+                    foreach ($accionados as $accionado) {
+                        $impugnacionResuelve->accionantes()->attach($accionado);
+                    }
+                }
+            }
+            $impugnacionRespuesta = Impugnacion::findOrFail($impugnacion->id)->with('resuelves')->with('resuelves.estado')->with('resuelves.resuelves')->with('resuelves.empleado')->with('resuelves.accionantes')->get();
+            $impugnacionResuelveRespuesta = ImpugnacionResuelve::findOrFail($impugnacionResuelve->id)->with('impugnacion')->with('estado')->with('resuelves')->with('empleado')->with('accionantes')->get();
+            return response()->json(['mensaje' => 'ok', 'data' => $impugnacionRespuesta]);
+        } else {
+            abort(404);
+        }
     }
 
     /**

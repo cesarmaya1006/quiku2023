@@ -17,6 +17,8 @@ class CrearTablaImpugnacion extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('sentenciapinstancia_id');
             $table->foreign('sentenciapinstancia_id', 'fk_sentenciap_impugnacion')->references('id')->on('sentenciapinstancia')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('impugnacion_estado_id');
+            $table->foreign('impugnacion_estado_id', 'fk_estado_impugnacion')->references('id')->on('impugnacion_estado')->onDelete('restrict')->onUpdate('restrict');
             $table->string('interpositor', 255)->nullable();
             $table->date('fecha')->nullable();
             $table->timestamps();
