@@ -70,31 +70,31 @@
                                                 $idImpugnacion = 0;
                                             @endphp
                                             @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                @if ($resuelve->resuelves->count() > 0)
-                                                    @foreach ($resuelve->resuelves as $impugnacionResuelve)
-                                                        @if ($idImpugnacion != $impugnacionResuelve->id)
+                                                @if ($resuelve->impugnacionexterna->count() > 0)
+                                                    @foreach ($resuelve->impugnacionexterna as $impugnacionexterna)
+                                                        @if ($idImpugnacion != $impugnacionexterna->id)
                                                             @php
-                                                                $idImpugnacion = $impugnacionResuelve->id;
+                                                                $idImpugnacion = $impugnacionexterna->id;
                                                             @endphp
                                                             <tr>
                                                                 <td>
-                                                                    @foreach ($impugnacionResuelve->resuelves as $resuelvePrimeraInts)
+                                                                    @foreach ($impugnacionexterna->resuelves as $resuelvePrimeraInts)
                                                                         <p># {{ $resuelvePrimeraInts->numeracion }}</p>
                                                                     @endforeach
 
                                                                 </td>
                                                                 <td>
-                                                                    @foreach ($impugnacionResuelve->accionantes as $accionante)
+                                                                    @foreach ($impugnacionexterna->accion as $accionante)
                                                                         <p>{{ $accionante->nombres_accion . ' ' . $accionante->apellidos_accion }}
                                                                         </p>
                                                                     @endforeach
                                                                 </td>
                                                                 <td>
-                                                                    <a href="{{ asset('documentos/tutelas/sentencias/' . $impugnacionResuelve->url_impugnacion) }}"
+                                                                    <a href="{{ asset('documentos/tutelas/sentencias/' . $impugnacionexterna->url) }}"
                                                                         target="_blank"
                                                                         rel="noopener noreferrer">Descargar</a>
                                                                 </td>
-                                                                <td>{{ $impugnacionResuelve->resuelve }}</td>
+                                                                <td>{{ $impugnacionexterna->descripcion }}</td>
                                                             </tr>
                                                         @endif
                                                     @endforeach

@@ -22,11 +22,13 @@ use App\Models\Tutela\HistorialPretension;
 use App\Models\Tutela\HistorialRespuestaHecho;
 use App\Models\Tutela\HistorialRespuestaPretension;
 use App\Models\Tutela\HistorialTareas;
-use App\Models\Tutela\ImpugnacionResuelve;
+use App\Models\Tutela\ImpugnacionExterna;
+use App\Models\Tutela\ImpugnacionInternaHistorial;
 use App\Models\Tutela\PretensionesTutela;
 use App\Models\Tutela\RespuestaHechos;
 use App\Models\Tutela\RespuestaPretensiones;
 use App\Models\Tutela\ResuelveTutela;
+use App\Models\Tutela\SentenciaPHistorial;
 use App\Models\Tutela\TutelaRespuesta;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -168,9 +170,19 @@ class Empleado extends Model
         return $this->hasMany(HistorialRespuestaPretension::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    public function impugnacionresuelves()
+    public function impugnacionexterna()
     {
-        return $this->hasMany(ImpugnacionResuelve::class, 'empleado_id', 'id');
+        return $this->hasMany(ImpugnacionExterna::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function sentenciaphistorial()
+    {
+        return $this->hasMany(SentenciaPHistorial::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function historialimpugnacioninterna()
+    {
+        return $this->hasMany(ImpugnacionInternaHistorial::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

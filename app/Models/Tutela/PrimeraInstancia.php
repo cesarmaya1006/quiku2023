@@ -31,9 +31,19 @@ class PrimeraInstancia extends Model
     }
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
-    public function impugnaciones()
+    public function impugnacionesexternas()
     {
-        return $this->hasMany(Impugnacion::class, 'sentenciapinstancia_id', 'id');
+        return $this->hasMany(ImpugnacionExterna::class, 'sentenciapinstancia_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function impugnacionesinternas()
+    {
+        return $this->hasMany(ImpugnacionInterna::class, 'sentenciapinstancia_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function sentenciaphistorial()
+    {
+        return $this->hasMany(SentenciaPHistorial::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
 

@@ -48,14 +48,14 @@ class FuncionarioController extends Controller
     {
         return view('intranet/password.index');
     }
-    
+
     public function listado_usuarios()
     {
         $usuariosTotales = Usuario::all();
         $usuarios = [];
         foreach ($usuariosTotales as $usuario) {
-            if(sizeOf($usuario->roles) == 1){
-                if($usuario->roles[0]->id == 6){
+            if (sizeOf($usuario->roles) == 1) {
+                if ($usuario->roles[0]->id == 6) {
                     $usuarios[] = $usuario;
                 }
             }
@@ -205,13 +205,13 @@ class FuncionarioController extends Controller
         $activasAprobar = [];
         foreach ($aprobadas as $key => $value) {
             $validacion = AsignacionTarea::where('auto_admisorio_id', $value->auto_admisorio_id)->where('tareas_id', 2)->where('estado_id', '=', 11)->get();
-            if(sizeOf($validacion)) $activasAprobar[] = $value;
+            if (sizeOf($validacion)) $activasAprobar[] = $value;
         }
         $radicadas = AsignacionTarea::where('tareas_id', 5)->where('estado_id', '<', 11)->get();
         $activasRadicar = [];
         foreach ($radicadas as $key => $value) {
             $validacion = AsignacionTarea::where('auto_admisorio_id', $value->auto_admisorio_id)->where('tareas_id', 4)->where('estado_id', '=', 11)->get();
-            if(sizeOf($validacion)) $activasRadicar[] = $value;
+            if (sizeOf($validacion)) $activasRadicar[] = $value;
         }
         $hechos = HechosTutela::where('empleado_id', session('id_usuario'))->where('estado_id', '!=', 11)->get();
         $pretensiones = PretensionesTutela::where('empleado_id', session('id_usuario'))->where('estado_id', '!=', 11)->get();

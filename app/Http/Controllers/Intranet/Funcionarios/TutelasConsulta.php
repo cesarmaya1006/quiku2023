@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Tutela\AnexoPrimeraInstancia;
 use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\Impugnacion;
+use App\Models\Tutela\ImpugnacionExterna;
+use App\Models\Tutela\ImpugnacionInterna;
 use App\Models\Tutela\ImpugnacionResuelve;
 use App\Models\Tutela\PrimeraInstancia;
 use App\Models\Tutela\ResuelvePrimeraInstancia;
@@ -199,63 +201,56 @@ class TutelasConsulta extends Controller
 
             $tutela = AutoAdmisorio::findOrFail($id);
             foreach ($tutela->primeraInstancia as $primeraInstancia) {
-
+                $id_primeraInstancia = $primeraInstancia->id;
                 $firstDate = new DateTime($primeraInstancia->fecha_notificacion);
                 $secondDate = new DateTime(date('d-m-Y', strtotime($primeraInstancia->fecha_notificacion . '+ 3 days')));
                 $intvl = $firstDate->diff($secondDate);
-                if ($intvl->days > 3) {
-                    $impugnacion_estado_id = 2;
-                } else {
-                    $impugnacion_estado_id = 1;
-                }
-                if ($primeraInstancia->impugnaciones->count() > 0) {
-                    $impugnacionUpdate['impugnacion_estado_id'] = $impugnacion_estado_id;
-                    foreach ($primeraInstancia->impugnaciones as $impugnacionn) {
-                        $idImpugnacion = $impugnacionn;
-                    }
-                    Impugnacion::findOrFail($idImpugnacion->id)->update($impugnacionUpdate);
-                    $impugnacion = Impugnacion::findOrFail($idImpugnacion->id);
-                } else {
-                    $impugnacionNueva['sentenciapinstancia_id'] = $primeraInstancia->id;
-                    $impugnacionNueva['impugnacion_estado_id'] = $impugnacion_estado_id;
-                    $impugnacionNueva['fecha'] = Carbon::now();
-                    $impugnacion = Impugnacion::create($impugnacionNueva);
-                }
 
-                $impugnacionResuelveNueva['impugnacion_id'] = $impugnacion->id;
-                $impugnacionResuelveNueva['impugnacionresuelve_estado_id'] = 7;
-                $impugnacionResuelveNueva['resuelve'] = $request->resuelve;
+                $impugnacionNueva['sentenciapinstancia_id'] = $primeraInstancia->id;
+                $impugnacionNueva['fecha'] = Carbon::now();
+                $impugnacionNueva['descripcion'] = $request->resuelve;
                 if ($request->hasFile('url_sentencia')) {
                     $ruta = Config::get('constantes.folder_sentencias');
                     $ruta = trim($ruta);
                     $doc_subido = $request->url_sentencia;
                     $nombre_doc = str_replace(' ', '', time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName())));
-                    $impugnacionResuelveNueva['url_impugnacion'] = $nombre_doc;
+                    $impugnacionNueva['url'] = $nombre_doc;
+
+                    $tamaño = $doc_subido->getSize();
+                    if ($tamaño > 0) {
+                        $tamaño = $tamaño / 1000;
+                    }
+                    $impugnacionNueva['peso'] = $tamaño;
+                    $impugnacionNueva['extension'] = $doc_subido->getClientOriginalExtension();
                     $doc_subido->move($ruta, $nombre_doc);
                 }
-                $impugnacionResuelve = ImpugnacionResuelve::create($impugnacionResuelveNueva);
+
+                $impugnacion = ImpugnacionExterna::create($impugnacionNueva);
 
                 $resuelves_ = explode(",", $request->resuelves);
                 foreach ($resuelves_ as $resuelve) {
-                    $impugnacionResuelve->resuelves()->attach($resuelve);
+                    $impugnacion->resuelves()->attach($resuelve);
                 }
 
                 if ($request->accionantes != '') {
                     $accionantes = explode(",", $request->accionantes);
                     foreach ($accionantes as $accionante) {
-                        $impugnacionResuelve->accionantes()->attach($accionante);
+                        $impugnacion->accion()->attach($accionante);
                     }
                 }
 
                 if ($request->accionados != '') {
                     $accionados = explode(",", $request->accionados);
                     foreach ($accionados as $accionado) {
-                        $impugnacionResuelve->accionantes()->attach($accionado);
+                        $impugnacion->accion()->attach($accionado);
                     }
                 }
             }
-            $impugnacionRespuesta = Impugnacion::findOrFail($impugnacion->id)->with('resuelves')->with('resuelves.estado')->with('resuelves.resuelves')->with('resuelves.empleado')->with('resuelves.accionantes')->get();
-            $impugnacionResuelveRespuesta = ImpugnacionResuelve::findOrFail($impugnacionResuelve->id)->with('impugnacion')->with('estado')->with('resuelves')->with('empleado')->with('accionantes')->get();
+
+
+
+
+            $impugnacionRespuesta = ImpugnacionExterna::where('sentenciapinstancia_id', $id_primeraInstancia)->with('sentenciap')->with('accion')->with('resuelves')->get();
             return response()->json(['mensaje' => 'ok', 'data' => $impugnacionRespuesta]);
         } else {
             abort(404);

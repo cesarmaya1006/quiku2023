@@ -18,9 +18,21 @@ class ResuelvePrimeraInstancia extends Model
     }
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
-    public function resuelves()
+    public function impugnacionexterna()
     {
-        return $this->belongsToMany(ImpugnacionResuelve::class, 'impugnacionresuelve_resuelvesentencia');
+        return $this->belongsToMany(ImpugnacionExterna::class, 'impugnacion_externa_resuelve');
+    }
+    //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function impugnacioninterna()
+    {
+        return $this->belongsToMany(ImpugnacionInterna::class, 'impugnacion_interna_resuelve');
+    }
+    //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function sentenciaphistorial()
+    {
+        return $this->hasMany(SentenciaPHistorial::class, 'resuelvesentencia_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

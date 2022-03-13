@@ -226,22 +226,20 @@ $(document).ready(function() {
                 console.log(respuesta['data']);
                 respuesta_html = '';
                 $.each(respuesta['data'], function(index, item) {
+                    respuesta_html += '<tr>';
+                    respuesta_html += '<td>';
                     $.each(item['resuelves'], function(index, resuelves1) {
-                        respuesta_html += '<tr>';
-                        respuesta_html += '<td>';
-                        $.each(resuelves1['resuelves'], function(index, resuelves2) {
-                            respuesta_html += '<p># ' + resuelves2['numeracion'] + '</p>';
-                        });
-                        respuesta_html += '</td>';
-                        respuesta_html += '<td>';
-                        $.each(resuelves1['accionantes'], function(index, accionantes) {
-                            respuesta_html += '<p>' + accionantes['nombres_accion'] + ' ' + accionantes['apellidos_accion'] + '</p>';
-                        });
-                        respuesta_html += '</td>';
-                        respuesta_html += '<td><a href="' + data_archivos + '/' + resuelves1['url_impugnacion'] + '" target="_blank" rel="noopener noreferrer">Descargar</a></td>';
-                        respuesta_html += '<td>' + resuelves1['resuelve'] + '</td>';
-                        respuesta_html += '</tr>';
+                        respuesta_html += '<p># ' + resuelves1['numeracion'] + '</p>';
                     });
+                    respuesta_html += '</td>';
+                    respuesta_html += '<td>';
+                    $.each(item['accion'], function(index, accionantes) {
+                        respuesta_html += '<p>' + accionantes['nombres_accion'] + ' ' + accionantes['apellidos_accion'] + '</p>';
+                    });
+                    respuesta_html += '</td>';
+                    respuesta_html += '<td><a href="' + data_archivos + '/' + item['url'] + '" target="_blank" rel="noopener noreferrer">Descargar</a></td>';
+                    respuesta_html += '<td>' + item['descripcion'] + '</td>';
+                    respuesta_html += '</tr>';
                 });
                 $('#cuerpoTabla').html(respuesta_html);
                 Sistema.notificaciones('El documento de anexo correctamente', 'Sistema', 'success');

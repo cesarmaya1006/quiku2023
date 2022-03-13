@@ -2,31 +2,32 @@
 
 namespace App\Models\Tutela;
 
+use App\Models\Empleados\Empleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Impugnacion extends Model
+class SentenciaPHistorial extends Model
 {
-    use HasFactory, Notifiable;
-    protected $table = 'impugnacion';
-    protected $guarded = [];
 
+    use HasFactory, Notifiable;
+    protected $table = 'sentenciap_historial';
+    protected $guarded = [];
     //----------------------------------------------------------------------------------
-    public function sentenciaprimera()
+    public function sentenciap()
     {
         return $this->belongsTo(PrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
-    public function estado()
+    public function resuelvesentenciap()
     {
-        return $this->belongsTo(ImpugnacionEstado::class, 'impugnacion_estado_id', 'id');
+        return $this->belongsTo(ResuelvePrimeraInstancia::class, 'resuelvesentencia_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    public function resuelves()
+    //----------------------------------------------------------------------------------
+    public function empleado()
     {
-        return $this->hasMany(ImpugnacionResuelve::class, 'impugnacion_id', 'id');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
 }

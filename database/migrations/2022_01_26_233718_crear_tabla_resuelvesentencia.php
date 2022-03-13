@@ -18,10 +18,12 @@ class CrearTablaResuelvesentencia extends Migration
             $table->unsignedBigInteger('sentenciapinstancia_id');
             $table->foreign('sentenciapinstancia_id', 'fk_sentenciap_resuelve')->references('id')->on('sentenciapinstancia')->onDelete('restrict')->onUpdate('restrict');
             $table->string('sentido', 255)->nullable();
+            $table->boolean('gestion')->default(0)->nullable();
             $table->integer('numeracion')->nullable();
             $table->longText('resuelve')->nullable();
             $table->integer('dias')->nullable();
             $table->integer('horas')->nullable();
+            $table->date('fecha_final')->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

@@ -31,9 +31,9 @@ class Accions extends Model
     }
 
     //----------------------------------------------------------------------------------
-    public function resuelves()
+    public function impugnacionexterna()
     {
-        return $this->belongsToMany(ImpugnacionResuelve::class, 'impugnacion_accionante', 'impugnacionresuelve_id', 'accionante_accionado_id');
+        return $this->belongsToMany(ImpugnacionExterna::class, 'impugnacion_externa_accion', 'accionante_accionado_id', 'impugnacion_externa_id');
     }
     //----------------------------------------------------------------------------------
 }

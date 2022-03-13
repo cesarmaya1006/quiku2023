@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CrearTablaImpugnacion extends Migration
+class CrearTablaImpugnacionExterna extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,16 @@ class CrearTablaImpugnacion extends Migration
      */
     public function up()
     {
-        Schema::create('impugnacion', function (Blueprint $table) {
+        Schema::create('impugnacion_externa', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('sentenciapinstancia_id');
             $table->foreign('sentenciapinstancia_id', 'fk_sentenciap_impugnacion')->references('id')->on('sentenciapinstancia')->onDelete('restrict')->onUpdate('restrict');
-            $table->unsignedBigInteger('impugnacion_estado_id');
-            $table->foreign('impugnacion_estado_id', 'fk_estado_impugnacion')->references('id')->on('impugnacion_estado')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('interpositor', 255)->nullable();
             $table->date('fecha')->nullable();
+            $table->string('titulo', 255)->nullable();
+            $table->longText('descripcion')->nullable();
+            $table->string('url', 255);
+            $table->string('extension', 255);
+            $table->double('peso');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
@@ -34,6 +36,6 @@ class CrearTablaImpugnacion extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('impugnacion');
+        Schema::dropIfExists('impugnacion_externa');
     }
 }
