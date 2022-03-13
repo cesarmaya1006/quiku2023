@@ -19,7 +19,8 @@ class CrearTablaAccionanteAccionado extends Migration
             $table->foreign('auto_admisorio_id', 'fk_auto_admisorio_accionante_accionado')->references('id')->on('auto_admisorio')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('tipo_accion_id');
             $table->foreign('tipo_accion_id', 'fk_tipo_accion_accions')->references('id')->on('tipo_accion')->onDelete('restrict')->onUpdate('restrict');
-            $table->text('tipo_persona_accion', 255)->nullable();
+            $table->unsignedBigInteger('tipo_persona_id');
+            $table->foreign('tipo_persona_id', 'fk_tipo_persona_accions')->references('id')->on('tipo_persona')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('docutipos_id_accion');
             $table->foreign('docutipos_id_accion', 'fk_persona_accion')->references('id')->on('docutipos')->onDelete('restrict')->onUpdate('restrict');
             $table->string('numero_documento_accion', 30)->nullable();

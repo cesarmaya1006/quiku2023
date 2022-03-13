@@ -11,6 +11,7 @@ use App\Models\Tutela\HechosTutela;
 use App\Models\Tutela\MotivosTutela;
 use App\Models\Tutela\PruebasTutela;
 use App\Models\Tutela\RelacionHecho;
+use App\Models\Tutela\UnidadNegocio;
 use App\Models\Tutela\ResuelveTutela;
 use App\Models\Tutela\HistorialTareas;
 use App\Models\Tutela\RespuestaHechos;
@@ -37,6 +38,11 @@ class AutoAdmisorio extends Model
     public function prioridad()
     {
         return $this->belongsTo(Prioridad::class, 'prioridad_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function unidadNegocio()
+    {
+        return $this->belongsTo(UnidadNegocio::class, 'unidad_negocio_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function accions()

@@ -174,7 +174,7 @@ class TutelaController extends Controller
         if ($request->ajax()) {
             $nuevo_accion['auto_admisorio_id'] = $request['id'];
             $nuevo_accion['tipo_accion_id'] = $request['tipo_accion'];
-            $nuevo_accion['tipo_persona_accion'] = $request['tipo_persona_accion'];
+            $nuevo_accion['tipo_persona_id'] = $request['tipo_persona_accion'];
             $nuevo_accion['docutipos_id_accion'] = $request['docutipos_id_accion'];
             $nuevo_accion['numero_documento_accion'] = $request['numero_documento_accion'];
             $nuevo_accion['nombres_accion'] = $request['nombres_accion'];
@@ -854,10 +854,10 @@ class TutelaController extends Controller
         if ($request->ajax()) {
             if($request["idTarea"] == 4){
                 $tutela = AutoAdmisorio::findOrFail($request["idAuto"]);
-                // $imagen = public_path('imagenes\sistema\logo_mgl.png');
-                // $firma = public_path('documentos\usuarios\\' . $tutela->empleadoasignado->url);
-                $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
-                $firma = asset('documentos/usuarios/' . $tutela->empleado->url); //url_servidor
+                $imagen = public_path('imagenes\sistema\logo_mgl.png');
+                $firma = public_path('documentos\usuarios\\' . $tutela->empleadoasignado->url);
+                // $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
+                // $firma = asset('documentos/usuarios/' . $tutela->empleado->url); //url_servidor
                 $resuelves = ResuelveTutela::where('auto_admisorio_id', $request["idAuto"])->orderBy('orden')->get();
                 $rPdf['respuesta'] = view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('tutela', 'imagen', 'resuelves', 'firma'));
                 $rPdf['auto_admisorio_id'] = $request["idAuto"];

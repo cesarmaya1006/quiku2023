@@ -16,6 +16,8 @@ class CrearTablaAutoAdmisorio extends Migration
         Schema::create('auto_admisorio', function (Blueprint $table) {
             // Bloque informativo usuario
             $table->bigIncrements('id')->autoIncrement();
+            $table->unsignedBigInteger('unidad_negocio_id')->nullable();
+            $table->foreign('unidad_negocio_id', 'fk_unidad_negocio_tutela')->references('id')->on('unidad_negocio')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empleado_rigistro_id')->nullable();
             $table->foreign('empleado_rigistro_id', 'fk_empleado_registro_tutela')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empleado_asignado_id')->nullable();

@@ -206,6 +206,7 @@ window.addEventListener('DOMContentLoaded', function () {
             let check_cantidad_pretensiones = contenedorPadre.querySelector('.check-input-pretensiones').checked
             let cantidad_hechos = contenedorPadre.querySelector('.cantidad-hechos').value
             let cantidad_pretensiones = contenedorPadre.querySelector('.cantidad-pretensiones').value
+            let motivos = contenedorPadre.querySelectorAll('.contenido_motivo')
             let validacion = false
             let hechos = contenedorPadre.querySelectorAll('.contenido_hecho')
             let pretensiones = contenedorPadre.querySelectorAll('.contenido_pretension')
@@ -231,10 +232,19 @@ window.addEventListener('DOMContentLoaded', function () {
                     }
                 })
             }
+            motivos.forEach(motivo => {
+                let selects = motivo.querySelectorAll('select')
+                selects.forEach(item => {
+                    if(!item.value){
+                        validacion = true
+                    }
+                })
+            })
             if(validacion){
-                alert('los hechos y argumentos son campos obligatorios.')
+                alert('los campos marcados con * son obligatorios.')
                 btnGuardar.removeAttribute('disabled','' )
-            }else{
+            }
+            else{
                 if(check_cantidad_hechos){
                     let data = {
                         auto_admisorio_id,
@@ -371,7 +381,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     }
                 })
 
-                let motivos = contenedorPadre.querySelectorAll('.contenido_motivo')
+                
                 motivos.forEach(motivo => {
                     let motivo_tutela = motivo.querySelector('.motivo_tutela').value
                     let sub_motivo_tutela = motivo.querySelector('.motivo_sub_tutela').value

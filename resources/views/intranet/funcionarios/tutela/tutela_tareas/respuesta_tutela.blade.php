@@ -95,7 +95,7 @@
             contra <strong>Cesar Maya.</strong></p>
             <p>Radicación N° {{$tutela->radicado}}</p>
             <p>Respetado Señor Juez (a): {{$tutela->nombre_juez}}</p>
-            <p>{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}, mayor de edad, con domicilio en la ciudad de Bogotá, D.C., identificado con la {{$aprueba->empleado->tipo_id}} N° {{$aprueba->empleado->identificacion}} de Bogotá D. C., en calidad de representante legal de MGL Y ASOCIADOS S.A.S., ante Usted acudo para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.
+            <p>{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}, mayor de edad, con domicilio en la ciudad de Bogotá, D.C., identificado con la {{$aprueba->empleado->tipo_id}} N° {{$aprueba->empleado->identificacion}} de Bogotá D. C., en calidad de representante legal de {{$tutela->unidadNegocio->nombres}}, ante Usted acudo para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.
             </p>
         </div>
         <div>

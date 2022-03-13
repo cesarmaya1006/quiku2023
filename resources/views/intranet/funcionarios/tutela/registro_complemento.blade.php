@@ -200,7 +200,7 @@
                                                         </div>
                                                         <div class="form-group col-12 col-md-6">
                                                             <div class="col-12 d-flex justify-content-between">
-                                                                <label class="h6" for="">Motivo</label>
+                                                                <label class="h6 requerido" for="">Motivo</label>
                                                             </div>
                                                             <select class="custom-select rounded-0 motivo_tutela">
                                                                 <option value="">--Seleccione--</option>
@@ -211,7 +211,7 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-12 col-md-6">
-                                                            <label for="motivo_sub_tutela">Sub - Motivo</label>
+                                                            <label class="requerido" for="motivo_sub_tutela">Sub - Motivo</label>
                                                             <select class="custom-select rounded-0 motivo_sub_tutela h6">
                                                                 <option value="">--Seleccione--</option>
                                                                 <option value="Sub 1">Sub 1</option>
@@ -221,7 +221,7 @@
                                                             </select>
                                                         </div>  
                                                         <div class="col-12 col-md-6 form-group">
-                                                            <label for="tipo_tutela">¿Su Tutela es sobre un producto o servicio?</label>
+                                                            <label class="requerido" for="tipo_tutela">¿Su Tutela es sobre un producto o servicio?</label>
                                                             <select class="custom-select rounded-0 tipo_tutela h6">
                                                                 <option value="">--Seleccione--</option>
                                                                 <option value="Producto">Producto</option>

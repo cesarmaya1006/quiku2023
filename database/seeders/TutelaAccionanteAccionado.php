@@ -17,7 +17,7 @@ class TutelaAccionanteAccionado extends Seeder
         DB::table('accionante_accionado')->insert([
             'auto_admisorio_id' => '1',
             'tipo_accion_id' => '1',
-            'tipo_persona_accion' => 'Persona Natural',
+            'tipo_persona_id' => '1',
             'docutipos_id_accion' => '1',
             'numero_documento_accion' => '79888777',
             'nombres_accion' => 'Jorge',

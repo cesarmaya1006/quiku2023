@@ -158,7 +158,7 @@
                                                     <h6>Cargar auto admisorio</h6>
                                                 </div>
                                                 <div class="col-12 col-md-4 form-group titulo-anexo-admisorio">
-                                                    <label class="requerido" for="titulo">Título archivo</label>
+                                                    <label class="" for="titulo">Título archivo</label>
                                                     <input type="text" class="form-control form-control-sm">
                                                 </div>
                                                 <div class="col-12 col-md-4 form-group descripcion-anexo-admisorio">
@@ -166,7 +166,7 @@
                                                     <input type="text" class="form-control form-control-sm">
                                                 </div>
                                                 <div class="col-12 col-md-4 form-group archivo-admisorio">
-                                                    <label class="requerido" for="documentos">Archivo</label>
+                                                    <label class="" for="documentos">Archivo</label>
                                                     <input class="form-control form-control-sm" type="file">
                                                 </div>
                                             </div>
@@ -240,11 +240,11 @@
                                                         <input type="hidden" class="tipo_rol_accion" value="1" >
                                                         <div class="form-group col-md-6 mt-3">
                                                             <label class="requerido" for="tipo_persona_accion">Tipo persona</label>
-                                                            <select class="form-control form-control-sm tipo_persona_accion"
+                                                            <select class="form-control form-control-sm tipo_persona_accion" data_url="{{ route('cargar_tipo_documentos') }}" data_token="{{ csrf_token() }}"
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
-                                                                <option value="Persona Natural">Persona Natural</option>
-                                                                <option value="Persona Jurídica">Persona Jurídica</option>
+                                                                <option value="1">Persona Natural</option>
+                                                                <option value="2">Persona Jurídica</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-6 mt-3">
@@ -252,13 +252,8 @@
                                                             <select class="form-control form-control-sm docutipos_id_accion"
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
-                                                                @foreach ($tipos_docu as $tipodocu)
-                                                                    <option value="{{ $tipodocu->id }}">
-                                                                        {{ $tipodocu->abreb_id }} ({{ $tipodocu->tipo_id }})</option>
-                                                                @endforeach
                                                             </select>
                                                         </div>
-
                                                         <div class="form-group col-md-6">
                                                             <label class="requerido" for="identificacion_accion">Número de documento</label>
                                                             <input type="text" class="form-control form-control-sm identificacion_accion" placeholder="Número documento" required>
@@ -376,12 +371,12 @@
                                                         </div>
                                                         <input type="hidden" class="tipo_rol_accion" value="2" >
                                                         <div class="form-group col-md-6 mt-3">
-                                                            <label class="" for="tipo_persona_accion">Tipo persona</label>
-                                                            <select class="form-control form-control-sm tipo_persona_accion"
+                                                            <label class="requerido" for="tipo_persona_accion">Tipo persona</label>
+                                                            <select class="form-control form-control-sm tipo_persona_accion" data_url="{{ route('cargar_tipo_documentos') }}" data_token="{{ csrf_token() }}"
                                                                 required>
                                                                 <option value="">--Seleccione un tipo--</option>
-                                                                <option value="Persona Natural">Persona Natural</option>
-                                                                <option value="Persona Jurídica">Persona Jurídica</option>
+                                                                <option value="1">Persona Natural</option>
+                                                                <option value="2">Persona Jurídica</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-6 mt-3">
@@ -519,7 +514,7 @@
                                                         </div>
                                                         <div class="col-12 col-md-4 form-group archivo-tutela">
                                                             <label class="requerido" for="documentos">Archivo</label>
-                                                            <input class="form-control form-control-sm" type="file">
+                                                            <input class="form-control form-control-sm" type="file" accept=".pdf">
                                                         </div>
                                                     </div>
                                                     <hr>
