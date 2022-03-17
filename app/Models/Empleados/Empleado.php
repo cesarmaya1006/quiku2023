@@ -18,24 +18,13 @@ use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\UnidadNegocio;
 use App\Models\PQR\HistorialPeticion;
 use App\Models\Tutela\HistorialHecho;
-<<<<<<< HEAD
-use App\Models\Tutela\HistorialPretension;
-use App\Models\Tutela\HistorialRespuestaHecho;
-use App\Models\Tutela\HistorialRespuestaPretension;
-use App\Models\Tutela\HistorialTareas;
 use App\Models\Tutela\ImpugnacionExterna;
 use App\Models\Tutela\ImpugnacionInternaHistorial;
-use App\Models\Tutela\PretensionesTutela;
-use App\Models\Tutela\RespuestaHechos;
-use App\Models\Tutela\RespuestaPretensiones;
-use App\Models\Tutela\ResuelveTutela;
 use App\Models\Tutela\SentenciaPHistorial;
-=======
 use App\Models\Tutela\ImpugnacionResuelve;
 use App\Models\Tutela\ResuelveTutela;
 use App\Models\Tutela\HistorialTareas;
 use App\Models\Tutela\RespuestaHechos;
->>>>>>> b1cc8f428603f8b67e87d06449e3b1e5d2c46ecb
 use App\Models\Tutela\TutelaRespuesta;
 use App\Models\PQR\HistorialAsignacion;
 use Illuminate\Database\Eloquent\Model;
@@ -44,7 +33,10 @@ use App\Models\Tutela\PretensionesTutela;
 use App\Models\Tutela\HistorialPretension;
 use App\Models\Tutela\RespuestaPretensiones;
 use App\Models\Tutela\HistorialRespuestaHecho;
+use App\Models\Tutela\HistorialRespuestaImpugnacion;
 use App\Models\Tutela\HistorialRespuestaPretension;
+use App\Models\Tutela\ImpugnacionInterna;
+use App\Models\Tutela\RespuestaImpugnaciones;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Empleado extends Model
@@ -197,10 +189,29 @@ class Empleado extends Model
     {
         return $this->hasMany(SentenciaPHistorial::class, 'empleado_id', 'id');
     }
+
+
+    //=========
     //----------------------------------------------------------------------------------
     public function historialimpugnacioninterna()
     {
         return $this->hasMany(ImpugnacionInternaHistorial::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function historialRespuestaImpugnacion()
+    {
+        return $this->hasMany(HistorialRespuestaImpugnacion::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function impugnacionInterna()
+    {
+        return $this->hasMany(ImpugnacionInterna::class, 'empleado_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function respuestasImpugnaciones()
+    {
+        return $this->hasMany(RespuestaImpugnaciones::class, 'empleado_id', 'id');
+    }
+
 }

@@ -15,6 +15,8 @@ class CrearTablaHistorialImpugnacionInterna extends Migration
     {
         Schema::create('historial_impugnacion_interna', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
+            $table->unsignedBigInteger('sentenciapinstancia_id');
+            $table->foreign('sentenciapinstancia_id', 'fk_sentenciapinstancia_historial_impugnacion_interna')->references('id')->on('sentenciapinstancia')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('impugnacion_interna_id');
             $table->foreign('impugnacion_interna_id', 'fk_historial_impugnacion_interna')->references('id')->on('impugnacion_interna')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empleado_id')->nullable();
