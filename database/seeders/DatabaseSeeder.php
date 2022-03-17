@@ -22,13 +22,8 @@ class DatabaseSeeder extends Seeder
             'usuarios', 'personas', 'tipo_pqr', 'prioridades', 'estadospqr', 'motivos', 'motivo_sub', 'categorias', 'productos', 'marcas',
             'referencias', 'servicios', 'diasfestivos', 'asignacion_particular_pqr', 'despachos', 'wikuareas', 'wikutemas', 'wikutemaespecifico', 'wikudocument', 'estadostutela', 'tareas_tutela',
             'asignacion_estados_tutela', 'auto_admisorio', 'tutela_motivo', 'accionante_accionado', 'hechos_tutela', 'pretensiones_tutela',
-<<<<<<< HEAD
-            'argumentos_tutela', 'historial_primera_asignacion_tutela', 'asignancion_tareas_tutela', 'sentenciapinstancia', 'resuelvesentencia', 'tipo_accion',
-
-=======
             'argumentos_tutela', 'historial_primera_asignacion_tutela', 'asignancion_tareas_tutela', 'sentenciapinstancia', 'resuelvesentencia', 'tipo_accion', 'tipo_persona', 'unidad_negocio',
             'impugnacion_estado', 'impugnacionresuelve_estado',
->>>>>>> b1cc8f428603f8b67e87d06449e3b1e5d2c46ecb
         ]);
         // --------------------------------------------------------------------------------------------------
         $this->call(Tabla_DocuTipos::class);
