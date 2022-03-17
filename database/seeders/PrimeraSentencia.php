@@ -15,7 +15,7 @@ class PrimeraSentencia extends Seeder
     public function run()
     {
         DB::table('sentenciapinstancia')->insert([
-            'auto_admisorio_id' => '1',
+            'id' => '1',
             'fecha_sentencia' => '2022-02-20',
             'fecha_notificacion' => '2022-02-21 03:02:13',
             'sentencia' => 'Parcialmente desfavorable',

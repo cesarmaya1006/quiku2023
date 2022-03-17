@@ -1,8 +1,8 @@
-window.addEventListener('DOMContentLoaded', function(){
+window.addEventListener('DOMContentLoaded', function() {
     let idAuto = document.querySelector('.id_auto').value
     let idTarea = document.querySelector('.id_tarea').value
-// Carga de cargos en selector
-    if(document.querySelector('.cargo')){
+        // Carga de cargos en selector
+    if (document.querySelector('.cargo')) {
         cargos = document.querySelector('.cargo')
         const url_t = cargos.getAttribute('data_url')
         $.ajax({
@@ -21,7 +21,7 @@ window.addEventListener('DOMContentLoaded', function(){
             }
         });
     }
-// Carga de funcionarios en selector
+    // Carga de funcionarios en selector
     $('.cargo').on('change', function(event) {
         const url_t = $(this).attr('data_url2');
         const id = $(this).val();
@@ -46,10 +46,10 @@ window.addEventListener('DOMContentLoaded', function(){
         });
     });
 
-// Guardar Historial tutela - tarea  
-    if(document.querySelector('.guardarHistorialTarea')){
+    // Guardar Historial tutela - tarea
+    if (document.querySelector('.guardarHistorialTarea')) {
         let guardarHistorialTarea = document.querySelector('.guardarHistorialTarea')
-        guardarHistorialTarea.addEventListener('click', function(e){
+        guardarHistorialTarea.addEventListener('click', function(e) {
             e.preventDefault()
             let url = e.target.getAttribute('data_url')
             let token = e.target.getAttribute('data_token')
@@ -57,11 +57,11 @@ window.addEventListener('DOMContentLoaded', function(){
             let idTarea = document.querySelector('.id_tarea').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialTarea()
             }
 
-            function guardarHistorialTarea (){
+            function guardarHistorialTarea() {
                 let data = {
                     mensajeHistorial,
                     idAuto,
@@ -83,11 +83,12 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-// Guardar Historial tutela - hecho  
-    if(document.querySelector('.guardarHistorialHecho')){
+    // Guardar Historial tutela - hecho
+    if (document.querySelector('.guardarHistorialHecho')) {
         let HistorialHecho = document.querySelectorAll('.guardarHistorialHecho')
         HistorialHecho.forEach(btn => btn.addEventListener('click', guardarHistorialHecho))
-        function guardarHistorialHecho(btn){
+
+        function guardarHistorialHecho(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -96,11 +97,11 @@ window.addEventListener('DOMContentLoaded', function(){
             let idHecho = contenedorHisotrial.querySelector('.id_hecho').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
-    
-            function guardarHistorialPeticion (){
+
+            function guardarHistorialPeticion() {
                 let data = {
                     mensajeHistorial,
                     idAuto,
@@ -119,14 +120,15 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                 });
             }
-        }   
+        }
     }
 
-// Guardar Historial tutela - respuesta hecho  
-    if(document.querySelector('.guardarHistorialRespuestaHecho')){
+    // Guardar Historial tutela - respuesta hecho
+    if (document.querySelector('.guardarHistorialRespuestaHecho')) {
         let HistorialHecho = document.querySelectorAll('.guardarHistorialRespuestaHecho')
         HistorialHecho.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaHecho))
-        function guardarHistorialRespuestaHecho(btn){
+
+        function guardarHistorialRespuestaHecho(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -135,11 +137,11 @@ window.addEventListener('DOMContentLoaded', function(){
             let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_hecho').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
-    
-            function guardarHistorialPeticion (){
+
+            function guardarHistorialPeticion() {
                 let data = {
                     historial: mensajeHistorial,
                     respuesta_hecho_id: idRespuesta
@@ -157,14 +159,15 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                 });
             }
-        }   
+        }
     }
 
-// Guardar Historial tutela - pretension  
-    if(document.querySelector('.guardarHistorialPretension')){
+    // Guardar Historial tutela - pretension
+    if (document.querySelector('.guardarHistorialPretension')) {
         let HistorialPretension = document.querySelectorAll('.guardarHistorialPretension')
         HistorialPretension.forEach(btn => btn.addEventListener('click', guardarHistorialPretension))
-        function guardarHistorialPretension(btn){
+
+        function guardarHistorialPretension(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -173,11 +176,11 @@ window.addEventListener('DOMContentLoaded', function(){
             let idPretension = contenedorHisotrial.querySelector('.id_pretension').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
-    
-            function guardarHistorialPeticion (){
+
+            function guardarHistorialPeticion() {
                 let data = {
                     mensajeHistorial,
                     idAuto,
@@ -196,13 +199,14 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                 });
             }
-        }   
+        }
     }
-// Guardar Historial tutela - respuesta pretensión  
-    if(document.querySelector('.guardarHistorialRespuestaPretension')){
+    // Guardar Historial tutela - respuesta pretensión
+    if (document.querySelector('.guardarHistorialRespuestaPretension')) {
         let HistorialPretension = document.querySelectorAll('.guardarHistorialRespuestaPretension')
         HistorialPretension.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaPretension))
-        function guardarHistorialRespuestaPretension(btn){
+
+        function guardarHistorialRespuestaPretension(btn) {
             btn.preventDefault()
             let contenedorHisotrial = btn.target.parentElement.parentElement
             let url = btn.target.getAttribute('data_url')
@@ -211,11 +215,11 @@ window.addEventListener('DOMContentLoaded', function(){
             let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_pretension').value
             if (mensajeHistorial == '') {
                 alert("Debe agregar un historial")
-            }else{
+            } else {
                 guardarHistorialPeticion()
             }
 
-            function guardarHistorialPeticion (){
+            function guardarHistorialPeticion() {
                 let data = {
                     historial: mensajeHistorial,
                     respuesta_pretension_id: idRespuesta
@@ -233,13 +237,13 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                 });
             }
-        }   
+        }
     }
 
-// Guardar asignar hecho a funcionario
-    if(document.querySelector('.asignacion_hecho_guardar')){
+    // Guardar asignar hecho a funcionario
+    if (document.querySelector('.asignacion_hecho_guardar')) {
         let asignacionHecho = document.querySelector('.asignacion_hecho_guardar')
-        asignacionHecho.addEventListener('click', function(e){
+        asignacionHecho.addEventListener('click', function(e) {
             e.preventDefault()
             let padreContenedor = e.target.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
@@ -249,18 +253,19 @@ window.addEventListener('DOMContentLoaded', function(){
             let hechos = document.querySelectorAll('.select-hecho')
             let hechosAsignar = []
             hechos.forEach(hecho => {
-                if(hecho.checked){
+                if (hecho.checked) {
                     hechosAsignar.push(hecho)
                 }
-            })            
-            if (hechosAsignar.length == 0 || cargo == '' || funcionario == '' ) {
+            })
+            if (hechosAsignar.length == 0 || cargo == '' || funcionario == '') {
                 alert("Debe dilegenciar todos los campos del formulario")
-            }else{
+            } else {
                 hechosAsignar.forEach(hecho => {
                     guardarAsignacionPeticion(hecho.value)
                 })
             }
-            function guardarAsignacionPeticion (value){
+
+            function guardarAsignacionPeticion(value) {
                 let data = {
                     hecho: value,
                     funcionario,
@@ -282,12 +287,14 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-// Guardar reasignar hecho a funcionario
-    if(document.querySelectorAll('.reasignacion_hecho_guardar')){
+    // Guardar reasignar hecho a funcionario
+    if (document.querySelectorAll('.reasignacion_hecho_guardar')) {
         let asignacionHechos = document.querySelectorAll('.reasignacion_hecho_guardar')
         asignacionHechos.forEach(asignacionHecho => {
-            asignacionHecho.addEventListener('click', reasignacionHechos )})
-        function reasignacionHechos(e){    
+            asignacionHecho.addEventListener('click', reasignacionHechos)
+        })
+
+        function reasignacionHechos(e) {
             e.preventDefault()
             let padreContenedor = e.target.parentElement.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
@@ -297,15 +304,16 @@ window.addEventListener('DOMContentLoaded', function(){
             let funcionario = padreContenedor.querySelector('.funcionario').value
             let cargo = padreContenedor.querySelector('.cargo').value
             let hechos = padreContenedor.querySelectorAll('.id_relacion_hecho')
-            if (cargo == '' || funcionario == '' ) {
+            if (cargo == '' || funcionario == '') {
                 alert("Debe dilegenciar todos los campos del formulario")
-            }else{
+            } else {
                 actualizarRespuesta()
                 hechos.forEach(hecho => {
                     guardarAsignacionPeticion(hecho.value)
                 })
             }
-            function actualizarRespuesta(){
+
+            function actualizarRespuesta() {
                 let data = {
                     id_respuesta,
                     funcionario
@@ -323,7 +331,8 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                 });
             }
-            function guardarAsignacionPeticion (value){
+
+            function guardarAsignacionPeticion(value) {
                 let data = {
                     hecho: value,
                     funcionario,
@@ -345,10 +354,10 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-// Guardar asignar pretension a funcionario
-    if(document.querySelector('.asignacion_pretension_guardar')){
+    // Guardar asignar pretension a funcionario
+    if (document.querySelector('.asignacion_pretension_guardar')) {
         let asignacionPretension = document.querySelector('.asignacion_pretension_guardar')
-        asignacionPretension.addEventListener('click', function(e){
+        asignacionPretension.addEventListener('click', function(e) {
             e.preventDefault()
             let padreContenedor = e.target.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
@@ -358,18 +367,19 @@ window.addEventListener('DOMContentLoaded', function(){
             let pretensiones = document.querySelectorAll('.select-pretension')
             let pretensionesAsignar = []
             pretensiones.forEach(pretension => {
-                if(pretension.checked){
+                if (pretension.checked) {
                     pretensionesAsignar.push(pretension)
                 }
-            })            
-            if (pretensionesAsignar.length == 0 || cargo == '' || funcionario == '' ) {
+            })
+            if (pretensionesAsignar.length == 0 || cargo == '' || funcionario == '') {
                 alert("Debe dilegenciar todos los campos del formulario")
-            }else{
+            } else {
                 pretensionesAsignar.forEach(pretension => {
                     guardarAsignacionPeticion(pretension.value)
                 })
             }
-            function guardarAsignacionPeticion (value){
+
+            function guardarAsignacionPeticion(value) {
                 let data = {
                     pretension: value,
                     funcionario,
@@ -391,13 +401,14 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-// Guardar reasignar pretension a funcionario
-    if(document.querySelectorAll('.reasignacion_pretension_guardar')){
+    // Guardar reasignar pretension a funcionario
+    if (document.querySelectorAll('.reasignacion_pretension_guardar')) {
         let asignacionPretensiones = document.querySelectorAll('.reasignacion_pretension_guardar')
         asignacionPretensiones.forEach(asignacionPretension => {
             asignacionPretension.addEventListener('click', reasignacionPretensiones)
         })
-        function reasignacionPretensiones(e){
+
+        function reasignacionPretensiones(e) {
             e.preventDefault()
             let padreContenedor = e.target.parentElement.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
@@ -407,15 +418,16 @@ window.addEventListener('DOMContentLoaded', function(){
             let funcionario = padreContenedor.querySelector('.funcionario').value
             let cargo = padreContenedor.querySelector('.cargo').value
             let pretensiones = padreContenedor.querySelectorAll('.id_relacion_pretension')
-            if (cargo == '' || funcionario == '' ) {
+            if (cargo == '' || funcionario == '') {
                 alert("Debe dilegenciar todos los campos del formulario")
-            }else{
+            } else {
                 actualizarRespuesta()
                 pretensiones.forEach(pretension => {
                     guardarAsignacionPeticion(pretension.value)
                 })
             }
-            function actualizarRespuesta(){
+
+            function actualizarRespuesta() {
                 let data = {
                     id_respuesta,
                     funcionario
@@ -433,7 +445,8 @@ window.addEventListener('DOMContentLoaded', function(){
                     }
                 });
             }
-            function guardarAsignacionPeticion (value){
+
+            function guardarAsignacionPeticion(value) {
                 let data = {
                     pretension: value,
                     funcionario,
@@ -455,20 +468,21 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-// Guardar prioridad tutela
-    if(document.querySelector('.prioridad_guardar')){
+    // Guardar prioridad tutela
+    if (document.querySelector('.prioridad_guardar')) {
         let prioridadGuardar = document.querySelector('.prioridad_guardar')
-        prioridadGuardar.addEventListener('click', function(e){
+        prioridadGuardar.addEventListener('click', function(e) {
             e.preventDefault()
             let url = e.target.getAttribute('data_url')
             let token = e.target.getAttribute('data_token')
             let prioridad = document.querySelector('.prioridad').value
-            if (prioridad == '' ) {
+            if (prioridad == '') {
                 alert("Debe dilegenciar todos los campos del formulario")
-            }else{
+            } else {
                 guardarPrioridad()
             }
-            function guardarPrioridad (){
+
+            function guardarPrioridad() {
                 let data = {
                     prioridad,
                     idAuto
@@ -489,10 +503,10 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-// Guardar respuesta tutela  
-    if(document.querySelector('.btn-tutela')){
+    // Guardar respuesta tutela
+    if (document.querySelector('.btn-tutela')) {
         let btnRespuesta = document.querySelector('.btn-tutela')
-        btnRespuesta.addEventListener('click', function(e){
+        btnRespuesta.addEventListener('click', function(e) {
             e.preventDefault
             let contenedorPadre = btnRespuesta.parentElement.parentElement.parentElement
             let url2 = e.target.getAttribute('data_url2')
@@ -530,24 +544,24 @@ window.addEventListener('DOMContentLoaded', function(){
                         console.log(error.responseJSON)
                     }
                 });
-            }else{
+            } else {
                 alert('Debe diligenciar todos los campos del formulario')
             }
         })
     }
 
-// Guardar estado hechos
-    if(document.querySelector('.btn-estado-hecho')){
+    // Guardar estado hechos
+    if (document.querySelector('.btn-estado-hecho')) {
         let btnEstados = document.querySelectorAll('.btn-estado-hecho')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
+        function guardarEstado(btn) {
             btn.preventDefault()
-            let btnE = btn.target 
+            let btnE = btn.target
             if (btnE.tagName === 'I') {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
                 btnE = btnE.parentElement.parentElement
-            }else {
+            } else {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
             }
             let id_respuesta = padreEstado.querySelector('.id_respuesta').value
@@ -569,7 +583,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     data: data,
                     success: function(respuesta) {
                         location.reload();
-        
+
                     },
                     error: function(error) {
                         console.log(error)
@@ -579,18 +593,18 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-// Guardar estado pretensiones
-    if(document.querySelector('.btn-estado-pretension')){
+    // Guardar estado pretensiones
+    if (document.querySelector('.btn-estado-pretension')) {
         let btnEstados = document.querySelectorAll('.btn-estado-pretension')
-        btnEstados.forEach(btn=> btn.addEventListener('click', guardarEstado))
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
 
-        function guardarEstado(btn){
+        function guardarEstado(btn) {
             btn.preventDefault()
-            let btnE = btn.target 
+            let btnE = btn.target
             if (btnE.tagName === 'I') {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
                 btnE = btnE.parentElement.parentElement
-            }else {
+            } else {
                 padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
             }
             let id_respuesta = padreEstado.querySelector('.id_respuesta').value
@@ -612,7 +626,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     data: data,
                     success: function(respuesta) {
                         location.reload();
-        
+
                     },
                     error: function(error) {
                         console.log(error)
@@ -622,14 +636,14 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-// Eliminar respuesta hecho
-    if(document.querySelectorAll('.eliminarHecho')){
-        let btnsEliminarHecho =document.querySelectorAll('.eliminarHecho')
+    // Eliminar respuesta hecho
+    if (document.querySelectorAll('.eliminarHecho')) {
+        let btnsEliminarHecho = document.querySelectorAll('.eliminarHecho')
         btnsEliminarHecho.forEach(btn => {
             btn.addEventListener('click', eliminarAsigancionHecho)
         })
 
-        function eliminarAsigancionHecho (btn){
+        function eliminarAsigancionHecho(btn) {
             let btnEH = btn.target
             if (btnEH.tagName === 'I') {
                 btnEH = btnEH.parentNode
@@ -657,14 +671,14 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-// Eliminar respuesta Pretesion
-    if(document.querySelectorAll('.eliminarPretension')){
-        let btnsEliminarPretension =document.querySelectorAll('.eliminarPretension')
+    // Eliminar respuesta Pretesion
+    if (document.querySelectorAll('.eliminarPretension')) {
+        let btnsEliminarPretension = document.querySelectorAll('.eliminarPretension')
         btnsEliminarPretension.forEach(btn => {
             btn.addEventListener('click', eliminarAsigancionPretension)
         })
 
-        function eliminarAsigancionPretension (btn){
+        function eliminarAsigancionPretension(btn) {
             let btnEH = btn.target
             if (btnEH.tagName === 'I') {
                 btnEH = btnEH.parentNode
@@ -692,10 +706,10 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-// Guardar resuelve tutela  
-    if(document.querySelector('.btn-tutela-resuelve')){
+    // Guardar resuelve tutela
+    if (document.querySelector('.btn-tutela-resuelve')) {
         let btnResuelve = document.querySelector('.btn-tutela-resuelve')
-        btnResuelve.addEventListener('click', function(e){
+        btnResuelve.addEventListener('click', function(e) {
             e.preventDefault
             let contenedorPadre = btnResuelve.parentElement.parentElement.parentElement
             let url = e.target.getAttribute('data_url')
@@ -713,23 +727,23 @@ window.addEventListener('DOMContentLoaded', function(){
                     data: data,
                     success: function(respuesta) {
                         location.reload();
-        
+
                     },
                     error: function(error) {
                         console.log(error)
                     }
                 });
-            }else{
+            } else {
                 alert('Debe diligenciar el campo del formulario')
             }
         })
     }
 
-// //Eliminar resuelve  
-    if(document.querySelectorAll('.eliminarResuelveTutela')){
+    // //Eliminar resuelve
+    if (document.querySelectorAll('.eliminarResuelveTutela')) {
         let btnEliminaResuelves = document.querySelectorAll('.eliminarResuelveTutela')
         btnEliminaResuelves.forEach(btnEliminar => {
-            btnEliminar.addEventListener('click', function(btn){
+            btnEliminar.addEventListener('click', function(btn) {
                 btn.preventDefault
                 let btnElim = btn.target
                 if (btnElim.tagName === 'I') {
@@ -742,43 +756,43 @@ window.addEventListener('DOMContentLoaded', function(){
                     value
                 }
                 swal({
-                    title: "¿Desea eliminar recurso?",
-                    icon: "warning",
-                    buttons: ["No", "Si"],
-                    dangerMode: true,
-                })
-                .then((value) => {
-                    if (value) {
-                        $.ajax({
-                            url: url,
-                            type: 'POST',
-                            headers: { 'X-CSRF-TOKEN': token },
-                            data: data,
-                            success: function(respuesta) {
-                                setTimeout(function(){
-                                    location.reload();
-                                }, 3000);
-                            },
-                            error: function(error) {
-                            }
-                        });
-                    }
-                });
+                        title: "¿Desea eliminar recurso?",
+                        icon: "warning",
+                        buttons: ["No", "Si"],
+                        dangerMode: true,
+                    })
+                    .then((value) => {
+                        if (value) {
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                headers: { 'X-CSRF-TOKEN': token },
+                                data: data,
+                                success: function(respuesta) {
+                                    setTimeout(function() {
+                                        location.reload();
+                                    }, 3000);
+                                },
+                                error: function(error) {}
+                            });
+                        }
+                    });
             })
         })
     }
 
-// //Editar resuelve  
-    if(document.querySelectorAll('.editarResuelveTutela')){
+    // //Editar resuelve
+    if (document.querySelectorAll('.editarResuelveTutela')) {
         let resuelves = document.querySelectorAll('.editarResuelveTutela')
         resuelves.forEach(resuelve => {
             resuelve.addEventListener('click', editarResuelveTutela)
         })
-        function editarResuelveTutela(resuelve){
+
+        function editarResuelveTutela(resuelve) {
             let resuelveBtn = resuelve.target
             if (resuelveBtn.classList.contains('editarResuelveTutela-i')) {
                 resuelveBtn = resuelve.target.parentNode
-            }else {
+            } else {
                 resuelveBtn = resuelve.target
             }
             let tdResuelve = resuelveBtn.parentElement.parentElement.parentElement
@@ -792,10 +806,10 @@ window.addEventListener('DOMContentLoaded', function(){
         }
     }
 
-//Guardar Editar resuelve  
-    if(document.querySelector('.editarResuelveTutelaGuardar')){
+    //Guardar Editar resuelve
+    if (document.querySelector('.editarResuelveTutelaGuardar')) {
         let btnResuelve = document.querySelector('.editarResuelveTutelaGuardar')
-        btnResuelve.addEventListener('click', function(resuelve){
+        btnResuelve.addEventListener('click', function(resuelve) {
             resuelve.preventDefault()
             let url = resuelve.target.getAttribute('data_url')
             let token = resuelve.target.getAttribute('data_token')
@@ -821,10 +835,10 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-//Editar orden resuelve  
-    if(document.querySelector('.btn-ordenar')){
+    //Editar orden resuelve
+    if (document.querySelector('.btn-ordenar')) {
         let btnOrdenar = document.querySelector('.btn-ordenar')
-        btnOrdenar.addEventListener('click', function(btn){
+        btnOrdenar.addEventListener('click', function(btn) {
             btn.preventDefault()
             let orden = document.querySelector('.orden-resuelve')
             let ordenEditar = document.querySelector('.editar-orden-resuelve')
@@ -833,7 +847,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 orden.classList.remove('d-none')
                 ordenEditar.classList.add('d-none')
                 btnGuardar.classList.add('d-none')
-            }else{
+            } else {
                 btnGuardar.classList.remove('d-none')
                 ordenEditar.classList.remove('d-none')
                 orden.classList.add('d-none')
@@ -841,10 +855,10 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-//Guardar orden resuelve  
-    if(document.querySelector('.btn-ordenar-guardar')){
+    //Guardar orden resuelve
+    if (document.querySelector('.btn-ordenar-guardar')) {
         let btnGuardarOrden = document.querySelector('.btn-ordenar-guardar')
-        btnGuardarOrden.addEventListener('click', function(btn){
+        btnGuardarOrden.addEventListener('click', function(btn) {
             btn.preventDefault()
             let url = btn.target.getAttribute('data_url')
             let token = btn.target.getAttribute('data_token')
@@ -855,18 +869,18 @@ window.addEventListener('DOMContentLoaded', function(){
             trs.forEach((tr, key) => {
                 dataOrden.push(tr.querySelector('.select-orden').value)
             })
-            dataOrden.forEach((orden, key )=>{
+            dataOrden.forEach((orden, key) => {
                 let index = key + 1
-                if(index != dataOrden.find(item => item == index)){
+                if (index != dataOrden.find(item => item == index)) {
                     alert("¡Error! El consecutivo de orden no puede estar duplicado.")
-                    validador = false 
+                    validador = false
                 }
             })
-            if(validador){
+            if (validador) {
                 trs.forEach((tr) => {
                     let data = {
-                        orden : tr.querySelector('.select-orden').value,
-                        id : tr.querySelector('.editarResuelveTutela').value
+                        orden: tr.querySelector('.select-orden').value,
+                        id: tr.querySelector('.editarResuelveTutela').value
                     }
                     $.ajax({
                         url: url,
@@ -886,55 +900,55 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 
-//==========================================================================
+    //==========================================================================
     $(document).ready(function() {
         $('.mensaje-resuelve').summernote({
             tabsize: 2,
             height: 120,
             toolbar: [
-              ['font', ['bold', 'underline', 'italic', 'clear' ]],
-              ['color', ['color']],
-              ['para', ['ul', 'ol', 'paragraph']],
-              ['table', ['table']],
-              ['insert', ['link', 'picture']],
+                ['font', ['bold', 'underline', 'italic', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
             ]
-          })
+        })
     });
-//==========================================================================
+    //==========================================================================
     $(document).ready(function() {
         $('.mensaje-resuelve-editar').summernote({
             tabsize: 2,
             height: 320,
             toolbar: [
-              ['font', ['bold', 'underline', 'italic', 'clear' ]],
-              ['color', ['color']],
-              ['para', ['ul', 'ol', 'paragraph']],
-              ['table', ['table']],
-              ['insert', ['link', 'picture']],
+                ['font', ['bold', 'underline', 'italic', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
             ]
-          })
+        })
     });
 
     // Funcion check multiple hechos
-    if(document.querySelectorAll('.check-todos-hechos')){
+    if (document.querySelectorAll('.check-todos-hechos')) {
         let checkTodos = document.querySelectorAll('.check-todos-hechos')
         checkTodos.forEach(check => {
             check.addEventListener('input', seleccionMultiple)
         })
 
-        function seleccionMultiple(btn){
+        function seleccionMultiple(btn) {
             let check = btn.target
             let contenedorPadre = check.parentElement.parentElement
             let selectores = contenedorPadre.querySelectorAll('.select-hecho')
-            if(check.checked){
+            if (check.checked) {
                 selectores.forEach(selector => {
-                    if(!selector.disabled){
+                    if (!selector.disabled) {
                         selector.checked = true
                     }
                 })
-            }else{
+            } else {
                 selectores.forEach(selector => {
-                    if(!selector.disabled){
+                    if (!selector.disabled) {
                         selector.checked = false
                     }
                 })
@@ -943,30 +957,91 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
     // Funcion check multiple pretensiones
-    if(document.querySelectorAll('.check-todos-pretensiones')){
+    if (document.querySelectorAll('.check-todos-pretensiones')) {
         let checkTodos = document.querySelectorAll('.check-todos-pretensiones')
         checkTodos.forEach(check => {
             check.addEventListener('input', seleccionMultiple)
         })
 
-        function seleccionMultiple(btn){
+        function seleccionMultiple(btn) {
             let check = btn.target
             let contenedorPadre = check.parentElement.parentElement
             let selectores = contenedorPadre.querySelectorAll('.select-pretension')
-            if(check.checked){
+            if (check.checked) {
                 selectores.forEach(selector => {
-                    if(!selector.disabled){
+                    if (!selector.disabled) {
                         selector.checked = true
                     }
                 })
-            }else{
+            } else {
                 selectores.forEach(selector => {
-                    if(!selector.disabled){
+                    if (!selector.disabled) {
                         selector.checked = false
                     }
                 })
             }
         }
     }
-})
 
+    // Cambio de sentido resuelve primera instancia
+
+    $('.sentidoResuelve').on('change', function() {
+        const url_t = $(this).attr('data_url');
+        const sentido = $(this).val();
+        const id = $(this).attr('id_resuelve');
+        const token_ = $('input[name=_token]').val();
+        var data = {
+            "sentido": sentido,
+            "id": id,
+        };
+        console.log(url_t);
+        $.ajax({
+            url: url_t,
+            type: 'POST',
+            headers: { 'X-CSRF-TOKEN': token_ },
+            data: data,
+            success: function(respuesta) {
+
+
+                console.log(respuesta);
+                if (respuesta.mensaje == "ok") {
+                    Sistema.notificaciones('El sentido fue cambiado de manera correcta correctamente', 'Sistema', 'success');
+                } else {
+                    Sistema.notificaciones('El sentido no fue cambiado', 'Sistema', 'error');
+                }
+            },
+            error: function() {
+
+            }
+        });
+    });
+
+    $('.crearimpugnacion').change(function() {
+        const url_t = $(this).attr('data_url');
+        const token_ = $('input[name=_token]').val();
+        var check = 0;
+        if (this.checked) {
+            var check = 1;
+        }
+        var data = {
+            "check": check,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'POST',
+            headers: { 'X-CSRF-TOKEN': token_ },
+            data: data,
+            success: function(respuesta) {
+
+                if (respuesta.mensaje == "ok") {
+                    Sistema.notificaciones(respuesta.data, 'Sistema', 'success');
+                } else {
+                    Sistema.notificaciones('No fue posible hacer el proceso', 'Sistema', 'error');
+                }
+            },
+            error: function() {
+
+            }
+        });
+    });
+})

@@ -381,63 +381,72 @@
                                     </div>
                                 </div>
                                 <hr>
-                            @endif 
-                            @if($tutela->cantidad_hechos && $tutela->cantidad_pretensiones)
+                            @endif
+                            @if ($tutela->cantidad_hechos && $tutela->cantidad_pretensiones)
                                 <div class="row menu-card p-2">
                                     <div class="col-12 mb-2">
                                         <h5>Hechos y pretensiones</h5>
                                     </div>
                                     <div class="embed-responsive embed-responsive-16by9">
-                                        <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}" allowfullscreen></iframe>
+                                        <iframe class="embed-responsive-item"
+                                            src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
+                                            allowfullscreen></iframe>
                                     </div>
                                     <h6 class="pl-4 mt-3">Cantidad de hechos {{ sizeOf($tutela->hechos) }}</h6>
-                                    <h6 class="pl-4 mt-3">Cantidad de pretensiones {{ sizeOf($tutela->pretensiones) }}</h6>
+                                    <h6 class="pl-4 mt-3">Cantidad de pretensiones
+                                        {{ sizeOf($tutela->pretensiones) }}</h6>
                                 </div>
                             @else
                                 <div class="row menu-card p-2">
                                     <div class="col-12 mb-2">
                                         <h5>Hechos</h5>
                                     </div>
-                                    @if($tutela->cantidad_hechos)
+                                    @if ($tutela->cantidad_hechos)
                                         <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}" allowfullscreen></iframe>
+                                            <iframe class="embed-responsive-item"
+                                                src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
+                                                allowfullscreen></iframe>
                                         </div>
                                         <h6 class="pl-4 mt-3">Cantidad de hechos {{ sizeOf($tutela->hechos) }}</h6>
                                     @else
-                                        @foreach ( $tutela->hechos->sortBy('consecutivo') as $key => $hecho)
+                                        @foreach ($tutela->hechos->sortBy('consecutivo') as $key => $hecho)
                                             <div class="col-12 row t">
                                                 <div class="col-12 mb-3">
-                                                    <h6 class="pl-4">Hecho # {{$hecho->consecutivo}}</h6>
+                                                    <h6 class="pl-4">Hecho # {{ $hecho->consecutivo }}</h6>
                                                 </div>
                                                 <div class="col-12">
                                                     <p class="text-justify">{{ $hecho->hecho }}</p>
                                                 </div>
                                             </div>
                                         @endforeach
-                                    @endif  
+                                    @endif
                                 </div>
                                 <hr>
                                 <div class="row menu-card p-2">
                                     <div class="col-12 mb-2">
                                         <h5>Pretensiones</h5>
                                     </div>
-                                    @if($tutela->cantidad_pretensiones)
+                                    @if ($tutela->cantidad_pretensiones)
                                         <div class="embed-responsive embed-responsive-16by9">
-                                            <iframe class="embed-responsive-item" src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}" allowfullscreen></iframe>
+                                            <iframe class="embed-responsive-item"
+                                                src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
+                                                allowfullscreen></iframe>
                                         </div>
-                                        <h6 class="pl-4 mt-3">Cantidad de pretensiones {{ sizeOf($tutela->pretensiones) }}</h6>
+                                        <h6 class="pl-4 mt-3">Cantidad de pretensiones
+                                            {{ sizeOf($tutela->pretensiones) }}</h6>
                                     @else
-                                        @foreach ( $tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
+                                        @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                             <div class="col-12 row t">
                                                 <div class="col-12 mb-3">
-                                                    <h6 class="pl-4">Pretensión # {{$pretension->consecutivo}}</h6>
+                                                    <h6 class="pl-4">Pretensión # {{ $pretension->consecutivo }}
+                                                    </h6>
                                                 </div>
                                                 <div class="col-12">
                                                     <p class="text-justify">{{ $pretension->pretension }}</p>
                                                 </div>
                                             </div>
-                                        @endforeach  
-                                    @endif  
+                                        @endforeach
+                                    @endif
                                 </div>
                             @endif
                             <hr>
@@ -557,8 +566,7 @@
                                 <div class="row d-flex px-12 p-3">
                                     <div class="container-mensaje-historial form-group col-12">
                                         <label for="" class="">Agregar Historial</label>
-                                        <textarea class="form-control mensaje-historial" rows="3" placeholder=""
-                                            required></textarea>
+                                        <textarea class="form-control mensaje-historial" rows="3" placeholder="" required></textarea>
                                     </div>
                                     <div class="col-12 col-md-12 form-group d-flex">
                                         <button href="" class="btn btn-primary px-4 guardarHistorial"
@@ -593,8 +601,7 @@
                                 </div>
                                 <div class="container-mensaje-asigacion form-group col-10 d-none">
                                     <label for="" class="">Mensaje</label>
-                                    <textarea class="form-control mensaje-asignacion" rows="3" placeholder=""
-                                        required></textarea>
+                                    <textarea class="form-control mensaje-asignacion" rows="3" placeholder="" required></textarea>
                                 </div>
                                 <input class="asignados" type="hidden" value="{{ $asignados }}">
                                 <div class="col-12 col-md-3 form-group d-flex align-items-end">
@@ -696,8 +703,7 @@
                                 <div class="row d-flex px-12 p-3">
                                     <div class="container-mensaje-historial-tarea form-group col-12">
                                         <label for="" class="">Agregar Historial</label>
-                                        <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder=""
-                                            required></textarea>
+                                        <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
                                     </div>
                                     <div class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
                                         <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialTarea"

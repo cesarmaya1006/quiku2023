@@ -73,11 +73,17 @@ class TutelasConsulta extends Controller
      */
     public function tutelas_primera_instancia_guardar(Request $request, $id)
     {
+        $cambioEstado['estadostutela_id'] = '5';
+        AutoAdmisorio::findOrFail($id)->update($cambioEstado);
+
         if ($request['formaCarga'] == 'detalle') {
-            $sentenciapinstancia['auto_admisorio_id'] = $id;
+            $sentenciapinstancia['id'] = $id;
             $sentenciapinstancia['fecha_sentencia'] = $request['fecha_sentencia'];
             $sentenciapinstancia['fecha_notificacion'] = $request['fecha_notificacion'] . ' ' . $request['hora_notificacion'];
             $sentenciapinstancia['sentencia'] = $request['sentencia'];
+            $sentenciapinstancia['cantidad_resuelves'] = 0;
+
+
             //------------------------------------------
             if ($request->hasFile('url_sentencia')) {
                 $ruta = Config::get('constantes.folder_sentencias');
@@ -125,10 +131,11 @@ class TutelasConsulta extends Controller
             }
             return redirect('funcionario/consulta/detalles_tutelas/' . $id)->with('mensaje', 'Registro de primera instancia con exito.');
         } else {
-            $sentenciapinstancia['auto_admisorio_id'] = $id;
+            $sentenciapinstancia['id'] = $id;
             $sentenciapinstancia['fecha_sentencia'] = $request['fecha_sentencia'];
             $sentenciapinstancia['fecha_notificacion'] = $request['fecha_notificacion'] . ' ' . $request['hora_notificacion'];
             $sentenciapinstancia['sentencia'] = $request['sentencia'];
+            $sentenciapinstancia['cantidad_resuelves'] = 1;
             //------------------------------------------
             if ($request->hasFile('url_sentencia')) {
                 $ruta = Config::get('constantes.folder_sentencias');

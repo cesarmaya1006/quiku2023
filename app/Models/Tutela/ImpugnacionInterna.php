@@ -18,6 +18,11 @@ class ImpugnacionInterna extends Model
         return $this->belongsTo(PrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function resuelves()
+    {
+        return $this->belongsToMany(ResuelvePrimeraInstancia::class, 'impugnacion_interna_resuelve', 'impugnacion_interna_id', 'resuelve_primera_instancia_id');
+    }
+    //----------------------------------------------------------------------------------
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id');
@@ -28,22 +33,13 @@ class ImpugnacionInterna extends Model
         return $this->belongsTo(AsignacionEstados::class, 'estado_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
-    public function docsimpugnacioninternas()
+    /* public function docsimpugnacioninternas()
     {
         return $this->hasMany(ImpugnacionInternaDoc::class, 'impugnacion_interna_id', 'id');
-    }
+    }*/
     //----------------------------------------------------------------------------------
     public function historialimpugnacioninterna()
     {
         return $this->hasMany(ImpugnacionInternaHistorial::class, 'impugnacion_interna_id', 'id');
     }
-    //----------------------------------------------------------------------------------
-    //==================================================================================
-    //==================================================================================
-    public function resuelves()
-    {
-        return $this->belongsToMany(ResuelvePrimeraInstancia::class, 'impugnacion_interna_resuelve', 'impugnacion_interna_id', 'resuelve_primera_instancia_id');
-    }
-    //==================================================================================
 }

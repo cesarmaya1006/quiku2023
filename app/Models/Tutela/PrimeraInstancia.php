@@ -14,7 +14,7 @@ class PrimeraInstancia extends Model
     //----------------------------------------------------------------------------------
     public function tutela()
     {
-        return $this->belongsTo(AutoAdmisorio::class, 'auto_admisorio_id', 'id');
+        return $this->hasOne(AutoAdmisorio::class, 'id');
     }
     //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------

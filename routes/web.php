@@ -128,6 +128,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('historial_resuelve_tutela_editar', [TutelaController::class, 'historial_resuelve_tutela_editar'])->name('historial_resuelve_tutela_editar');
         Route::post('cambiar_estado_tutela_tareas', [TutelaController::class, 'cambiar_estado_tareas_tutela_guardar'])->name('cambiar_estado_tareas_tutela_guardar');
         Route::get('descarga_respuesta_tutela/{id}', [TutelaController::class, 'descarga_respuesta_tutela'])->name('descarga_respuesta_tutela');
+        Route::post('cambiosentidoresuelve/{id}', [TutelaController::class, 'cambiosentidoresuelve'])->name('cambiosentidoresuelve');
+        Route::post('crearimpugnacion/{id}', [TutelaController::class, 'crearimpugnacion'])->name('crearimpugnacion');
+
         // Rutas Index
         // ------------------------------------------------------------------------------------
         Route::group(['middleware' => 'adminSistema'], function () {

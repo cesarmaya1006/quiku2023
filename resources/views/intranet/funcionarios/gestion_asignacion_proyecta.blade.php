@@ -34,10 +34,10 @@
                                 <div class="col-12 col-md-6">
                                     @if ($pqr->persona_id != null)
                                         Persona que interpone la Petición:
-                                        <strong>{{ $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 }}</strong>
+                                        <strong>{{ $pqr->persona->nombre1 .' ' .$pqr->persona->nombre2 .' ' .$pqr->persona->apellido1 .' ' .$pqr->persona->apellido2 }}</strong>
                                     @else
                                         Empresa que interpone la Petición:
-                                        <strong>{{ $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social . ' ' . $pqr->empresa->razon_social }}</strong>
+                                        <strong>{{ $pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social .' ' .$pqr->empresa->razon_social }}</strong>
                                     @endif
                                 </div>
                                 @if ($pqr->adquisicion)
@@ -78,27 +78,27 @@
                                         Referencia : <strong>{{ $pqr->referencia->referencia }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->servicio)
+                                @if ($pqr->servicio)
                                     <div class="col-12 col-md-6">
                                         Servicio : <strong>{{ $pqr->servicio->servicio }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->factura)
+                                @if ($pqr->factura)
                                     <div class="col-12 col-md-6">
                                         Número de factura: <strong>{{ $pqr->factura }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->fecha_factura)
+                                @if ($pqr->fecha_factura)
                                     <div class="col-12 col-md-6">
                                         Fecha de factura: <strong>{{ $pqr->fecha_factura }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->fecha_radicado)
+                                @if ($pqr->fecha_radicado)
                                     <div class="col-12 col-md-6">
                                         Fecha de radicado: <strong>{{ $pqr->fecha_generacion }}</strong>
                                     </div>
                                 @endif
-                                @if($pqr->estadospqr_id < 6)
+                                @if ($pqr->estadospqr_id < 6)
                                     <div class="col-12 col-md-6">
                                         Fecha estimada de respuesta:
                                         <strong>{{ date('Y-m-d', strtotime($pqr->fecha_generacion . '+ ' . $pqr->tiempo_limite . ' days')) }}</strong>
@@ -113,7 +113,7 @@
                                 <div class="col-12 col-md-6">
                                     {{-- Porcentaje PQR: <strong>{{ ( $pqr->peticiones->count() / ($pqr->peticiones->sum('estado_id') - $pqr->peticiones->count()) * 100  )}} %</strong> --}}
                                 </div>
-                                @if(!sizeOf($pqr->peticiones->where('recurso_dias', '0')))
+                                @if (!sizeOf($pqr->peticiones->where('recurso_dias', '0')))
                                     <div class="col-12 col-md-6">
                                         Procede recurso: <strong>Si</strong>
                                     </div>
@@ -127,9 +127,11 @@
                             @if (!$pqr->persona->email)
                                 <div class="col-12 rounded border border-danger mb-4 p-3">
                                     <div class="row">
-                                        <h6 class="text-danger pl-2">el usuario no posee correo electrónico se debe enviar correo físico.</h6>
+                                        <h6 class="text-danger pl-2">el usuario no posee correo electrónico se debe enviar
+                                            correo físico.</h6>
                                         <div class="col-12 col-md-6">
-                                            <strong>Nombre:</strong> {{ $pqr->persona->nombre1 . ' ' . $pqr->persona->nombre2 . ' ' . $pqr->persona->apellido1 . ' ' . $pqr->persona->apellido2 }}
+                                            <strong>Nombre:</strong>
+                                            {{ $pqr->persona->nombre1 .' ' .$pqr->persona->nombre2 .' ' .$pqr->persona->apellido1 .' ' .$pqr->persona->apellido2 }}
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <strong>Teléfono:</strong> {{ $pqr->persona->telefono_celu }}
@@ -138,7 +140,8 @@
                                             <strong>Dirección:</strong> {{ $pqr->persona->direccion }}
                                         </div>
                                         <div class="col-12 col-md-6">
-                                            <strong>Departatmento:</strong> {{ $pqr->persona->municipio->departamento->departamento }}
+                                            <strong>Departatmento:</strong>
+                                            {{ $pqr->persona->municipio->departamento->departamento }}
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <strong>Ciudad:</strong> {{ $pqr->persona->municipio->municipio }}
@@ -158,14 +161,16 @@
                                 </div>
                                 <div class="col-12 col-md-6 mt-2">
                                     <strong>
-                                        <a href="{{ route('prorrogaPdf', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
-                                            <i class="fa fa-download" aria-hidden="true"></i> Descargar Radicado Prórroga</a>
+                                        <a href="{{ route('prorrogaPdf', ['id' => $pqr->id]) }}" target="_blank"
+                                            rel="noopener noreferrer">
+                                            <i class="fa fa-download" aria-hidden="true"></i> Descargar Radicado
+                                            Prórroga</a>
                                     </strong>
                                 </div>
                             </div>
                         @endif
                         <div class="col-12 rounded border mb-3 p-2 pt-3">
-                            <div class="row d-flex px-4"> 
+                            <div class="row d-flex px-4">
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Prioridad</label>
                                     <select class="custom-select rounded-0" id="prioridad" required>
@@ -177,15 +182,16 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-4 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4" id="prioridad_guardar" data_url="{{ route('prioridad_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar prioridad</button>
+                                    <button href="" class="btn btn-primary mx-2 px-4" id="prioridad_guardar"
+                                        data_url="{{ route('prioridad_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar prioridad</button>
                                 </div>
                             </div>
                             <hr>
 
-                            @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
+                            @if ($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
                                 <div class="row px-4 form-respuestaProrroga">
-                                    <input class="respuestaProrroga" type="hidden" value="{{$pqr->prorroga}}">
+                                    <input class="respuestaProrroga" type="hidden" value="{{ $pqr->prorroga }}">
                                     <div class="col-12 col-md-6 ">
                                         <h6>Prórroga</h6>
                                     </div>
@@ -204,21 +210,25 @@
                                     <div class="col-12 contentProrroga" id="contentProrroga">
                                         <div class="col-12 d-flex row">
                                             <div class="col-12 form-group">
-                                                <label for="plazo" class="col-md-6">Plazo prórroga días hábiles:</label>
-                                                <input type="number" class="form-control form-control-sm plazo_prorroga col-md-3"
+                                                <label for="plazo" class="col-md-6">Plazo prórroga días
+                                                    hábiles:</label>
+                                                <input type="number"
+                                                    class="form-control form-control-sm plazo_prorroga col-md-3"
                                                     name="plazo_prorroga" id="plazo_prorroga" min="1"
-                                                    max="{{$pqr->tipoPqr->tiempos * 2}}">
-                                                <p>El máximo de días de prórroga es: {{$pqr->tipoPqr->tiempos * 2}}</p>
+                                                    max="{{ $pqr->tipoPqr->tiempos * 2 }}">
+                                                <p>El máximo de días de prórroga es: {{ $pqr->tipoPqr->tiempos * 2 }}</p>
                                             </div>
                                             <div class="col-12 d-flex row mb-2">
                                                 <label for="prorroga_pdf">Justificacion de prórroga</label>
-                                                <textarea type="text" class="form-control form-control-sm prorroga_pdf"
-                                                    name="prorroga_pdf" id="prorroga_pdf">{{$pqr->prorroga_pdf}}</textarea>
+                                                <textarea type="text" class="form-control form-control-sm prorroga_pdf" name="prorroga_pdf"
+                                                    id="prorroga_pdf">{{ $pqr->prorroga_pdf }}</textarea>
                                             </div>
                                         </div>
-                                        @if($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
+                                        @if ($pqr->estadospqr_id < 6 && $pqr->prorroga == 0)
                                             <div class="" id="guardarProrroga">
-                                                <button type="" class="btn btn-primary" data_url="{{ route('prorroga_guardar') }}" data_token="{{ csrf_token() }}">Guardar prórroga</button>
+                                                <button type="" class="btn btn-primary"
+                                                    data_url="{{ route('prorroga_guardar') }}"
+                                                    data_token="{{ csrf_token() }}">Guardar prórroga</button>
                                             </div>
                                         @endif
                                     </div>
@@ -241,102 +251,117 @@
                                                 <select class="custom-select rounded-0 estadoPeticion col-4">
                                                     @foreach ($estados as $estado)
                                                         <option value="{{ $estado->id }}"
-                                                        {{ $peticion->estadopeticion->id == $estado->id ? 'selected' : '' }}>
-                                                        {{ $estado->estado }} %</option>
+                                                            {{ $peticion->estadopeticion->id == $estado->id ? 'selected' : '' }}>
+                                                            {{ $estado->estado }} %</option>
                                                     @endforeach
                                                 </select>
                                                 <button type="" class="btn btn-primary btn-estado col-2 mx-2"
                                                     data_url="{{ route('estado_guardar') }}"
-                                                    data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i class="far fa-save"></i></span></button>
+                                                    data_token="{{ csrf_token() }}"><span style="font-size: 1em;"><i
+                                                            class="far fa-save"></i></span></button>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
-                                    @if($peticion->motivo_sub_id)
+                                    @if ($peticion->motivo_sub_id)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Categoría Motivo:</strong> {{ $peticion->motivo->motivo->motivo }}</p>
+                                                <p class="text-justify"><strong>Categoría Motivo:</strong>
+                                                    {{ $peticion->motivo->motivo->motivo }}</p>
                                             </div>
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Sub - Categoría Motivo:</strong> {{ $peticion->motivo->sub_motivo }}</p>
+                                                <p class="text-justify"><strong>Sub - Categoría Motivo:</strong>
+                                                    {{ $peticion->motivo->sub_motivo }}</p>
                                             </div>
                                             @if ($peticion->otro)
-                                                <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}</p>
+                                                <p class="text-justify"><strong>Otro:</strong> {{ $peticion->otro }}
+                                                </p>
                                             @endif
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Solicitud:</strong> {{ $peticion->justificacion }}</p>
+                                                <p class="text-justify"><strong>Solicitud:</strong>
+                                                    {{ $peticion->justificacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->consulta)
+                                    @if ($peticion->consulta)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Consulta:</strong> {{ $peticion->consulta }}</p>
+                                                <p class="text-justify"><strong>Consulta:</strong>
+                                                    {{ $peticion->consulta }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->tiposolicitud)
+                                    @if ($peticion->tiposolicitud)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Tipo de solicitud:</strong> {{ $peticion->tiposolicitud }}</p>
+                                                <p class="text-justify"><strong>Tipo de solicitud:</strong>
+                                                    {{ $peticion->tiposolicitud }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Datos personales objeto de la solicitud:</strong> {{ $peticion->datossolicitud }}</p>
+                                                <p class="text-justify"><strong>Datos personales objeto de la
+                                                        solicitud:</strong> {{ $peticion->datossolicitud }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Descripción de la solicitud:</strong> {{ $peticion->descripcionsolicitud }}</p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                    @endif
-                                    @if($peticion->peticion)
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Tipo de petición:</strong> {{ $peticion->peticion }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Documento o información requerida:</strong> {{ $peticion->indentifiquedocinfo }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="text-justify"><strong>Justificacion:</strong> {{ $peticion->justificacion }}</p>
+                                                <p class="text-justify"><strong>Descripción de la solicitud:</strong>
+                                                    {{ $peticion->descripcionsolicitud }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->irregularidad)
+                                    @if ($peticion->peticion)
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Tipo de irregularidad:</strong> {{ $peticion->irregularidad }}</p>
+                                                <p class="text-justify"><strong>Tipo de petición:</strong>
+                                                    {{ $peticion->peticion }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Documento o información
+                                                        requerida:</strong> {{ $peticion->indentifiquedocinfo }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Justificacion:</strong>
+                                                    {{ $peticion->justificacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->felicitacion)
-                                        @if($peticion->nombre_funcionario)
+                                    @if ($peticion->irregularidad)
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <p class="text-justify"><strong>Tipo de irregularidad:</strong>
+                                                    {{ $peticion->irregularidad }}</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    @endif
+                                    @if ($peticion->felicitacion)
+                                        @if ($peticion->nombre_funcionario)
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <p class="text-justify"><strong>Nombre de funcionario:</strong> {{ $peticion->nombre_funcionario }}</p>
+                                                    <p class="text-justify"><strong>Nombre de funcionario:</strong>
+                                                        {{ $peticion->nombre_funcionario }}</p>
                                                 </div>
                                             </div>
                                         @endif
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="text-justify"><strong>Felicitaciones:</strong> {{ $peticion->felicitacion }}</p>
+                                                <p class="text-justify"><strong>Felicitaciones:</strong>
+                                                    {{ $peticion->felicitacion }}</p>
                                             </div>
                                         </div>
                                         <hr>
                                     @endif
-                                    @if($peticion->hechos)
+                                    @if ($peticion->hechos)
                                         <div class="row">
                                             <div class="col-12">
                                                 <h6>Hechos</h6>
@@ -353,7 +378,7 @@
                                         </div>
                                         <hr>
                                     @endif
-                                    @if(sizeof($peticion->anexos))
+                                    @if (sizeof($peticion->anexos))
                                         <div class="row">
                                             <div class="col-12">
                                                 <h6>Anexos</h6>
@@ -371,7 +396,8 @@
                                                         @foreach ($peticion->anexos as $anexo)
                                                             <tr>
                                                                 <td class="text-justify">{{ $anexo->titulo }}</td>
-                                                                <td class="text-justify">{{ $anexo->descripcion }}</td>
+                                                                <td class="text-justify">{{ $anexo->descripcion }}
+                                                                </td>
                                                                 <td><a href="{{ asset('documentos/pqr/' . $anexo->url) }}"
                                                                         target="_blank"
                                                                         rel="noopener noreferrer">Descargar</a>
@@ -385,7 +411,7 @@
                                         <hr>
                                     @endif
                                 </div>
-                                @if(sizeOf($peticion->aclaraciones))
+                                @if (sizeOf($peticion->aclaraciones))
                                     <div class="row menu-card-aclaraciones menu-card">
                                         <div class="col-12">
                                             <h6>Aclaraciones</h6>
@@ -406,9 +432,11 @@
                                                         @if ($aclaracion->respuesta != '')
                                                             <tr>
                                                                 <td>{{ $aclaracion->fecha }}</td>
-                                                                <td class="text-justify">{{ $aclaracion->aclaracion }}</td>
+                                                                <td class="text-justify">{{ $aclaracion->aclaracion }}
+                                                                </td>
                                                                 <td>{{ $aclaracion->fecha_respuesta }}</td>
-                                                                <td class="text-justify">{{ $aclaracion->respuesta }}</td>
+                                                                <td class="text-justify">{{ $aclaracion->respuesta }}
+                                                                </td>
                                                                 @if ($aclaracion->anexos)
                                                                     <td>
                                                                         @foreach ($aclaracion->anexos as $anexo)
@@ -439,7 +467,7 @@
                                         </div>
                                         <div class="col-12 form-group">
                                             <div class="respuesta mt-2">
-                                                {!!$peticion->respuesta->respuesta!!}
+                                                {!! $peticion->respuesta->respuesta !!}
                                             </div>
                                         </div>
                                     </div>
@@ -451,7 +479,7 @@
                                                     <h6>Anexos respuesta petición</h6>
                                                 </div>
                                                 <div class="col-12 table-responsive">
-                                                    <table class="table table-light"  style="font-size: 0.8em;" >
+                                                    <table class="table table-light" style="font-size: 0.8em;">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Nombre</th>
@@ -481,7 +509,7 @@
                                         <hr>
                                     @endif
                                 @endif
-                                
+
                                 @if (sizeOf($peticion->recursos))
                                     <div class="menu-card-recursos menu-card">
                                         <div class="row card-recursos">
@@ -506,7 +534,8 @@
                                                         @foreach ($peticion->recursos as $recurso)
                                                             <tr>
                                                                 <td>{{ $recurso->fecha_radicacion }}</td>
-                                                                <td class="text-justify">{{ $recurso->tiporeposicion->tipo }}</td>
+                                                                <td class="text-justify">
+                                                                    {{ $recurso->tiporeposicion->tipo }}</td>
                                                                 <td class="text-justify">{{ $recurso->recurso }}</td>
                                                                 @if ($recurso->documentos)
                                                                     <td>
@@ -525,7 +554,8 @@
                                                                     <td></td>
                                                                 @endif
                                                                 @if ($recurso->respuestarecurso)
-                                                                    <td>{{ strip_tags($recurso->respuestarecurso->respuesta) }}</td>
+                                                                    <td>{{ strip_tags($recurso->respuestarecurso->respuesta) }}
+                                                                    </td>
                                                                 @else
                                                                     <td></td>
                                                                 @endif
@@ -569,8 +599,10 @@
                                                 @foreach ($peticion->historialpeticiones as $historial)
                                                     <tr>
                                                         <td>{{ $historial->created_at }}</td>
-                                                        <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
-                                                        <td class="text-justify">{{ strip_tags($historial->historial) }}</td>
+                                                        <td class="text-justify">{{ $historial->empleado->nombre1 }}
+                                                            {{ $historial->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">
+                                                            {{ strip_tags($historial->historial) }}</td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -578,20 +610,21 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row d-flex px-12 p-3 mensaje-peticion"> 
+                                <div class="row d-flex px-12 p-3 mensaje-peticion">
                                     <input class="id_peticion" type="hidden" value="{{ $peticion->id }}">
                                     <div class="container-mensaje-historial form-group col-12">
                                         <label for="" class="">Agregar Historial</label>
                                         <textarea class="form-control mensaje-historial-peticion" rows="3" placeholder="" required></textarea>
                                     </div>
                                     <div class="col-12 col-md-12 form-group d-flex">
-                                        <button href="" class="btn btn-primary px-4 guardarHistorialPeticion" data_url="{{ route('historial_peticion_guardar') }}"
-                                        data_token="{{ csrf_token() }}">Guardar historial</button>
+                                        <button href="" class="btn btn-primary px-4 guardarHistorialPeticion"
+                                            data_url="{{ route('historial_peticion_guardar') }}"
+                                            data_token="{{ csrf_token() }}">Guardar historial</button>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
-                    </div> 
+                    </div>
                     <!-- /.card-body -->
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                     @if ($pqr->peticiones)
@@ -606,13 +639,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($pqr->peticiones as $key=> $peticion)
+                                        @foreach ($pqr->peticiones as $key => $peticion)
                                             <tr>
-                                                @if($peticion->empleado)
-                                                    <td class="bg-success">{{$key + 1}}</td>
-                                                    <td class="bg-success">{{$peticion->empleado->nombre1 }} {{$peticion->empleado->apellido1}}</td>
-                                                @else    
-                                                    <td class="bg-danger">{{$key + 1}}</td>
+                                                @if ($peticion->empleado)
+                                                    <td class="bg-success">{{ $key + 1 }}</td>
+                                                    <td class="bg-success">{{ $peticion->empleado->nombre1 }}
+                                                        {{ $peticion->empleado->apellido1 }}</td>
+                                                @else
+                                                    <td class="bg-danger">{{ $key + 1 }}</td>
                                                     <td class="bg-danger">Sin asignar</td>
                                                 @endif
                                             </tr>
@@ -622,28 +656,32 @@
                             </div>
                             <hr>
                             <h5 class="">Asignación Peticiones</h5>
-                            <div class="row d-flex px-4"> 
+                            <div class="row d-flex px-4">
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Peticion</label>
-                                    <select name="peticion" id="peticion" class="custom-select rounded-0" required="">                                    
-                                    @foreach($pqr->peticiones as $key=> $peticion)
-                                        <option value="{{$peticion->id}}">{{$key + 1}}</option>
-                                    @endforeach
+                                    <select name="peticion" id="peticion" class="custom-select rounded-0" required="">
+                                        @foreach ($pqr->peticiones as $key => $peticion)
+                                            <option value="{{ $peticion->id }}">{{ $key + 1 }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Cargo</label>
-                                    <select name="cargo" id="cargo" class="custom-select rounded-0" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
+                                    <select name="cargo" id="cargo" class="custom-select rounded-0" required=""
+                                        data_url="{{ route('cargar_cargos') }}"
+                                        data_url2="{{ route('cargar_funcionarios') }}">
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Funcionario</label>
-                                    <select name="funcionario" id="funcionario" class="custom-select rounded-0" required="">
+                                    <select name="funcionario" id="funcionario" class="custom-select rounded-0"
+                                        required="">
                                     </select>
                                 </div>
                                 <div class="col-12 col-md-4 form-group d-flex align-items-end">
-                                    <button href="" class="btn btn-primary mx-2 px-4" id="asignacion_peticion_guardar" data_url="{{ route('asignacion_peticion_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Asignar peticion</button>
+                                    <button href="" class="btn btn-primary mx-2 px-4" id="asignacion_peticion_guardar"
+                                        data_url="{{ route('asignacion_peticion_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Asignar peticion</button>
                                 </div>
                             </div>
                             <hr>
@@ -665,12 +703,13 @@
                                             @foreach ($pqr->historialtareas as $historial)
                                                 <tr>
                                                     <td>{{ $historial->created_at }}</td>
-                                                    @if($historial->tarea)
+                                                    @if ($historial->tarea)
                                                         <td class="text-justify">{{ $historial->tarea->tarea }}</td>
                                                     @else
                                                         <td class="text-justify">ADMINISTRADOR</td>
                                                     @endif
-                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }} {{ $historial->empleado->apellido1 }}</td>
+                                                    <td class="text-justify">{{ $historial->empleado->nombre1 }}
+                                                        {{ $historial->empleado->apellido1 }}</td>
                                                     <td class="text-justify">{{ $historial->historial }}</td>
                                                 </tr>
                                             @endforeach
@@ -679,20 +718,21 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="row d-flex px-12 p-3"> 
+                            <div class="row d-flex px-12 p-3">
                                 <input class="id_tarea" id="id_tarea" name="id_tarea" type="hidden" value="2">
                                 <div class="container-mensaje-historial-tarea form-group col-12">
                                     <label for="" class="">Agregar Historial</label>
-                                    <textarea class="form-control" rows="3" placeholder="" name="mensaje-historia-tarea"
-                                        id="mensaje-historial-tarea" required></textarea>
+                                    <textarea class="form-control" rows="3" placeholder="" name="mensaje-historia-tarea" id="mensaje-historial-tarea"
+                                        required></textarea>
                                 </div>
                                 <div class="col-12 col-md-12 form-group d-flex">
-                                    <button href="" class="btn btn-primary px-4" id="guardarHistorialTarea" data_url="{{ route('historial_tarea_guardar') }}"
-                                    data_token="{{ csrf_token() }}">Guardar Historial</button>
+                                    <button href="" class="btn btn-primary px-4" id="guardarHistorialTarea"
+                                        data_url="{{ route('historial_tarea_guardar') }}"
+                                        data_token="{{ csrf_token() }}">Guardar Historial</button>
                                 </div>
                             </div>
                         </div>
-                        @if(sizeOf($pqr->anexos))
+                        @if (sizeOf($pqr->anexos))
                             <div class="rounded border m-3 p-2">
                                 <h5 class="">Historial de respuesta </h5>
                                 <div class="row d-flex px-12 p-3">
@@ -711,9 +751,10 @@
                                                 @foreach ($pqr->anexos as $anexo)
                                                     <tr>
                                                         <td>{{ $anexo->created_at }}</td>
-                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }} {{ $anexo->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">{{ $anexo->empleado->nombre1 }}
+                                                            {{ $anexo->empleado->apellido1 }}</td>
                                                         <td class="text-justify">{{ $anexo->tarea->tarea }}</td>
-                                                        @if($anexo->tipo_respuesta == 0)
+                                                        @if ($anexo->tipo_respuesta == 0)
                                                             <td>Respuesta PQR</td>
                                                         @elseif($anexo->tipo_respuesta == 1)
                                                             <td>Respuesta aclaración</td>
@@ -722,7 +763,10 @@
                                                         @elseif($anexo->tipo_respuesta == 3)
                                                             <td>Respuesta apelación</td>
                                                         @endif
-                                                        <td class="text-justify"><a href="{{ asset('documentos/tareas/' . $anexo->url) }}" target="_blank" rel="noopener noreferrer"><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                                        <td class="text-justify"><a
+                                                                href="{{ asset('documentos/tareas/' . $anexo->url) }}"
+                                                                target="_blank" rel="noopener noreferrer"><i
+                                                                    class="fa fa-download" aria-hidden="true"></i></a></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -732,11 +776,11 @@
                                 <hr>
                             </div>
                         @endif
-                        @if (((($pqr->peticiones->sum('estado_id') / $pqr->peticiones->count())/ 11) * 100) == 100 )
-                            @if($pqr->estadospqr_id < 6)
+                        @if (($pqr->peticiones->sum('estado_id') / $pqr->peticiones->count() / 11) * 100 == 100)
+                            @if ($pqr->estadospqr_id < 6)
                                 <div class="rounded border m-3 p-2">
                                     <h5 class="mt-2">Resuelve</h5>
-                                    @if(sizeof($pqr->resuelves))
+                                    @if (sizeof($pqr->resuelves))
                                         <div class="row d-flex px-12 p-3">
                                             <div class="col-12 table-responsive">
                                                 <table class="table table-light" style="font-size: 0.8em;">
@@ -750,75 +794,108 @@
                                                         </tr>
                                                     </thead>
                                                     @php
-                                                        $totalResuelves = $pqr->resuelves->count()
+                                                        $totalResuelves = $pqr->resuelves->count();
                                                     @endphp
                                                     <tbody class="orden-resuelve">
-                                                        @foreach ($pqr->resuelves as $key=> $resuelve )
-                                                            <tr >
+                                                        @foreach ($pqr->resuelves as $key => $resuelve)
+                                                            <tr>
                                                                 <td>{{ $resuelve->orden }}</td>
                                                                 <td>{{ $resuelve->created_at }}</td>
-                                                                <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                                <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }} <input type="hidden" value="{{$resuelve->resuelve}}"></td>
+                                                                <td class="text-justify">
+                                                                    {{ $resuelve->empleado->nombre1 }}
+                                                                    {{ $resuelve->empleado->apellido1 }}</td>
+                                                                <td class="text-justify contenido-resuelve">
+                                                                    {{ strip_tags($resuelve->resuelve) }} <input
+                                                                        type="hidden" value="{{ $resuelve->resuelve }}">
+                                                                </td>
                                                                 <td class="text-justify">
                                                                     <div class="col-12 d-flex">
-                                                                        <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelveRecurso-i"></i></button>
-                                                                        <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}"><i class="far fa-trash-alt"></i></button>
+                                                                        <button type="button"
+                                                                            class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4"
+                                                                            data-toggle="modal" data-target=".bd-resuelve"
+                                                                            value="{{ $resuelve->id }}"><i
+                                                                                class="fas fa-edit editarResuelveRecurso-i"></i></button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4"
+                                                                            data_url="{{ route('historial_resuelve_eliminar') }}"
+                                                                            data_token="{{ csrf_token() }}"
+                                                                            value="{{ $resuelve->id }}"><i
+                                                                                class="far fa-trash-alt"></i></button>
                                                                     </div>
                                                                 </td>
                                                             </tr>
-
                                                         @endforeach
                                                     </tbody>
-                                                    <tbody  class="editar-orden-resuelve d-none">
-                                                        @foreach ($pqr->resuelves as $key=> $resuelve )
-                                                        <tr>
-                                                            <td class="td-orden">
-                                                                <select class="select-orden">
-                                                                @for ($i = 1; $i < $totalResuelves + 1; $i++)
-                                                                    <option value="{{ $i }}"
-                                                                        {{ $i == $resuelve->orden ? 'selected' : '' }}>
-                                                                        {{ $i }}</option>
-                                                                @endfor
-                                                                </select>
-                                                            </td>
-                                                            <td>{{ $resuelve->created_at }}</td>
-                                                            <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                            <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }}</td>
-                                                            <td class="text-justify">
-                                                                <div class="col-12 d-flex">
-                                                                    <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}" disabled><i class="fas fa-edit editarResuelve-i"></i></button>
-                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}" disabled><i class="far fa-trash-alt"></i></button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                    <tbody class="editar-orden-resuelve d-none">
+                                                        @foreach ($pqr->resuelves as $key => $resuelve)
+                                                            <tr>
+                                                                <td class="td-orden">
+                                                                    <select class="select-orden">
+                                                                        @for ($i = 1; $i < $totalResuelves + 1; $i++)
+                                                                            <option value="{{ $i }}"
+                                                                                {{ $i == $resuelve->orden ? 'selected' : '' }}>
+                                                                                {{ $i }}</option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </td>
+                                                                <td>{{ $resuelve->created_at }}</td>
+                                                                <td class="text-justify">
+                                                                    {{ $resuelve->empleado->nombre1 }}
+                                                                    {{ $resuelve->empleado->apellido1 }}</td>
+                                                                <td class="text-justify contenido-resuelve">
+                                                                    {{ strip_tags($resuelve->resuelve) }}</td>
+                                                                <td class="text-justify">
+                                                                    <div class="col-12 d-flex">
+                                                                        <button type="button"
+                                                                            class="btn btn-warning btn-xs btn-sombra editarResuelve py-1 px-2 mx-1 col-4"
+                                                                            data-toggle="modal" data-target=".bd-resuelve"
+                                                                            value="{{ $resuelve->id }}" disabled><i
+                                                                                class="fas fa-edit editarResuelve-i"></i></button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-xs btn-sombra eliminarResuelve py-1 px-2 mx-1 col-4"
+                                                                            data_url="{{ route('historial_resuelve_eliminar') }}"
+                                                                            data_token="{{ csrf_token() }}"
+                                                                            value="{{ $resuelve->id }}" disabled><i
+                                                                                class="far fa-trash-alt"></i></button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-                                                <div class="row d-flex px-12 p-3"> 
+                                                <div class="row d-flex px-12 p-3">
                                                     <div class="col-12 col-md-12 form-group d-flex">
-                                                        <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar">Ordenar</button>
-                                                        <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar-guardar d-none"
-                                                            data_url="{{ route('resuelve_orden_guardar') }}"  data_token="{{ csrf_token() }}"
-                                                        >Guardar</button>
+                                                        <button href=""
+                                                            class="btn btn-primary mx-2 px-4 btn-ordenar">Ordenar</button>
+                                                        <button href=""
+                                                            class="btn btn-primary mx-2 px-4 btn-ordenar-guardar d-none"
+                                                            data_url="{{ route('resuelve_orden_guardar') }}"
+                                                            data_token="{{ csrf_token() }}">Guardar</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal fade bd-resuelve" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal fade bd-resuelve" tabindex="-1" role="dialog"
+                                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Editar resuelve</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <textarea class="form-control mensaje-resuelve-editar mt-2" rows="3" cols="40" placeholder="" required></textarea>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary editarResuelveGuardar" data_url="{{ route('historial_resuelve_editar') }}"  data_token="{{ csrf_token() }}">Guardar</button>
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                    </div>
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Editar resuelve</h5>
+                                                            <button type="button" class="close"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <textarea class="form-control mensaje-resuelve-editar mt-2" rows="3" cols="40" placeholder="" required></textarea>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button"
+                                                                class="btn btn-primary editarResuelveGuardar"
+                                                                data_url="{{ route('historial_resuelve_editar') }}"
+                                                                data_token="{{ csrf_token() }}">Guardar</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Cerrar</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -831,10 +908,11 @@
                                             <textarea class="form-control mensaje-resuelve mt-2" rows="3" placeholder="" required></textarea>
                                         </div>
 
-                                        <div class="row d-flex px-12 p-3"> 
+                                        <div class="row d-flex px-12 p-3">
                                             <div class="col-12 col-md-12 form-group d-flex">
                                                 <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-resuelve"
-                                                data_url="{{ route('historial_resuelve_guardar') }}"  data_token="{{ csrf_token() }}">Crear resuelve</button>
+                                                    data_url="{{ route('historial_resuelve_guardar') }}"
+                                                    data_token="{{ csrf_token() }}">Crear resuelve</button>
                                             </div>
                                         </div>
                                     </div>
@@ -843,17 +921,17 @@
                                 <div class="rounded border m-3 p-2">
                                     <h5 class="mt-2">Resuelve Recurso</h5>
                                     @php
-                                        if($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1))){
+                                        if ($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1))) {
                                             $recursosRevision = $pqr->resuelvesrecursos->where('tipo_reposicion_id', 1);
-                                        }elseif($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2))){
+                                        } elseif ($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2))) {
                                             $recursosRevision = $pqr->resuelvesrecursos->where('tipo_reposicion_id', 2);
-                                        }elseif ($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3))) {
+                                        } elseif ($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3))) {
                                             $recursosRevision = $pqr->resuelvesrecursos->where('tipo_reposicion_id', 3);
-                                        }else{
+                                        } else {
                                             $recursosRevision = 0;
                                         }
                                     @endphp
-                                    @if(sizeof($recursosRevision))
+                                    @if (sizeof($recursosRevision))
                                         <div class="row d-flex px-12 p-3">
                                             <div class="col-12 table-responsive">
                                                 <table class="table table-light" style="font-size: 0.8em;">
@@ -867,75 +945,108 @@
                                                         </tr>
                                                     </thead>
                                                     @php
-                                                        $totalResuelves = $recursosRevision->count()
+                                                        $totalResuelves = $recursosRevision->count();
                                                     @endphp
                                                     <tbody class="orden-resuelve">
-                                                        @foreach ($recursosRevision as $key=> $resuelve )
-                                                            <tr >
+                                                        @foreach ($recursosRevision as $key => $resuelve)
+                                                            <tr>
                                                                 <td>{{ $resuelve->orden }}</td>
                                                                 <td>{{ $resuelve->created_at }}</td>
-                                                                <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                                <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }} <input type="hidden" value="{{$resuelve->resuelve}}"></td>
+                                                                <td class="text-justify">
+                                                                    {{ $resuelve->empleado->nombre1 }}
+                                                                    {{ $resuelve->empleado->apellido1 }}</td>
+                                                                <td class="text-justify contenido-resuelve">
+                                                                    {{ strip_tags($resuelve->resuelve) }} <input
+                                                                        type="hidden" value="{{ $resuelve->resuelve }}">
+                                                                </td>
                                                                 <td class="text-justify">
                                                                     <div class="col-12 d-flex">
-                                                                        <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}"><i class="fas fa-edit editarResuelveRecurso-i"></i></button>
-                                                                        <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelveRecurso py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_recurso_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}"><i class="far fa-trash-alt"></i></button>
+                                                                        <button type="button"
+                                                                            class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4"
+                                                                            data-toggle="modal" data-target=".bd-resuelve"
+                                                                            value="{{ $resuelve->id }}"><i
+                                                                                class="fas fa-edit editarResuelveRecurso-i"></i></button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-xs btn-sombra eliminarResuelveRecurso py-1 px-2 mx-1 col-4"
+                                                                            data_url="{{ route('historial_resuelve_recurso_eliminar') }}"
+                                                                            data_token="{{ csrf_token() }}"
+                                                                            value="{{ $resuelve->id }}"><i
+                                                                                class="far fa-trash-alt"></i></button>
                                                                     </div>
                                                                 </td>
                                                             </tr>
-
                                                         @endforeach
                                                     </tbody>
-                                                    <tbody  class="editar-orden-resuelve d-none">
-                                                        @foreach ($recursosRevision as $key=> $resuelve )
-                                                        <tr>
-                                                            <td class="td-orden">
-                                                                <select class="select-orden">
-                                                                @for ($i = 1; $i < $totalResuelves + 1; $i++)
-                                                                    <option value="{{ $i }}"
-                                                                        {{ $i == $resuelve->orden ? 'selected' : '' }}>
-                                                                        {{ $i }}</option>
-                                                                @endfor
-                                                                </select>
-                                                            </td>
-                                                            <td>{{ $resuelve->created_at }}</td>
-                                                            <td class="text-justify">{{ $resuelve->empleado->nombre1 }} {{ $resuelve->empleado->apellido1 }}</td>
-                                                            <td class="text-justify contenido-resuelve">{{ strip_tags($resuelve->resuelve) }}</td>
-                                                            <td class="text-justify">
-                                                                <div class="col-12 d-flex">
-                                                                    <button type="button" class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4" data-toggle="modal" data-target=".bd-resuelve" value="{{$resuelve->id}}" disabled><i class="fas fa-edit editarResuelveRecurso-i"></i></button>
-                                                                    <button type="button" class="btn btn-danger btn-xs btn-sombra eliminarResuelveRecurso py-1 px-2 mx-1 col-4" data_url="{{ route('historial_resuelve_recurso_eliminar') }}"  data_token="{{ csrf_token() }}" value="{{$resuelve->id}}" disabled><i class="far fa-trash-alt"></i></button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                    <tbody class="editar-orden-resuelve d-none">
+                                                        @foreach ($recursosRevision as $key => $resuelve)
+                                                            <tr>
+                                                                <td class="td-orden">
+                                                                    <select class="select-orden">
+                                                                        @for ($i = 1; $i < $totalResuelves + 1; $i++)
+                                                                            <option value="{{ $i }}"
+                                                                                {{ $i == $resuelve->orden ? 'selected' : '' }}>
+                                                                                {{ $i }}</option>
+                                                                        @endfor
+                                                                    </select>
+                                                                </td>
+                                                                <td>{{ $resuelve->created_at }}</td>
+                                                                <td class="text-justify">
+                                                                    {{ $resuelve->empleado->nombre1 }}
+                                                                    {{ $resuelve->empleado->apellido1 }}</td>
+                                                                <td class="text-justify contenido-resuelve">
+                                                                    {{ strip_tags($resuelve->resuelve) }}</td>
+                                                                <td class="text-justify">
+                                                                    <div class="col-12 d-flex">
+                                                                        <button type="button"
+                                                                            class="btn btn-warning btn-xs btn-sombra editarResuelveRecurso py-1 px-2 mx-1 col-4"
+                                                                            data-toggle="modal" data-target=".bd-resuelve"
+                                                                            value="{{ $resuelve->id }}" disabled><i
+                                                                                class="fas fa-edit editarResuelveRecurso-i"></i></button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-xs btn-sombra eliminarResuelveRecurso py-1 px-2 mx-1 col-4"
+                                                                            data_url="{{ route('historial_resuelve_recurso_eliminar') }}"
+                                                                            data_token="{{ csrf_token() }}"
+                                                                            value="{{ $resuelve->id }}" disabled><i
+                                                                                class="far fa-trash-alt"></i></button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
                                                         @endforeach
                                                     </tbody>
                                                 </table>
-                                                <div class="row d-flex px-12 p-3"> 
+                                                <div class="row d-flex px-12 p-3">
                                                     <div class="col-12 col-md-12 form-group d-flex">
-                                                        <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar-recurso">Ordenar</button>
-                                                        <button href="" class="btn btn-primary mx-2 px-4 btn-ordenar-recurso-guardar d-none"
-                                                            data_url="{{ route('resuelve_orden_recurso_guardar') }}"  data_token="{{ csrf_token() }}"
-                                                        >Guardar</button>
+                                                        <button href=""
+                                                            class="btn btn-primary mx-2 px-4 btn-ordenar-recurso">Ordenar</button>
+                                                        <button href=""
+                                                            class="btn btn-primary mx-2 px-4 btn-ordenar-recurso-guardar d-none"
+                                                            data_url="{{ route('resuelve_orden_recurso_guardar') }}"
+                                                            data_token="{{ csrf_token() }}">Guardar</button>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="modal fade bd-resuelve" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal fade bd-resuelve" tabindex="-1" role="dialog"
+                                                aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-lg">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Editar resuelve</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <textarea class="form-control mensaje-resuelve-editar mt-2" rows="3" cols="40" placeholder="" required></textarea>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary editarResuelveRecursoGuardar" data_url="{{ route('historial_resuelve_recurso_editar') }}"  data_token="{{ csrf_token() }}">Guardar</button>
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                    </div>
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Editar resuelve</h5>
+                                                            <button type="button" class="close"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <textarea class="form-control mensaje-resuelve-editar mt-2" rows="3" cols="40" placeholder="" required></textarea>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button"
+                                                                class="btn btn-primary editarResuelveRecursoGuardar"
+                                                                data_url="{{ route('historial_resuelve_recurso_editar') }}"
+                                                                data_token="{{ csrf_token() }}">Guardar</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Cerrar</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -947,62 +1058,67 @@
                                             <label for="" class="col-10">Nuevo resuelve</label>
                                             <textarea class="form-control mensaje-resuelve mt-2" rows="3" placeholder="" required></textarea>
                                         </div>
-                                        @if($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1)))
+                                        @if ($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1)))
                                             <input class="resuelve-recurso_tipo" type="hidden" value="1">
                                         @endif
-                                        @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)))
+                                        @if ($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)))
                                             <input class="resuelve-recurso_tipo" type="hidden" value="2">
                                         @endif
-                                        @if($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3)))
+                                        @if ($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3)))
                                             <input class="resuelve-recurso_tipo" type="hidden" value="3">
                                         @endif
-                                        <div class="row d-flex px-12 p-3"> 
+                                        <div class="row d-flex px-12 p-3">
                                             <div class="col-12 col-md-12 form-group d-flex">
                                                 <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-resuelve-recurso"
-                                                data_url="{{ route('historial_resuelve_recurso_guardar') }}"  data_token="{{ csrf_token() }}">Crear resuelve</button>
+                                                    data_url="{{ route('historial_resuelve_recurso_guardar') }}"
+                                                    data_token="{{ csrf_token() }}">Crear resuelve</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endif    
+                            @endif
                             <div class="rounded border m-3 p-2">
                                 <h5 class="mt-2">Proyectar</h5>
                                 <div class="col-12 d-flex row pqr-anexo">
-                                    @if(sizeOf($pqr->anexos) == 0)
+                                    @if (sizeOf($pqr->anexos) == 0)
                                         <div class="my-2 col-12 d-flex">
                                             <h6 class="mr-2">Documento de respuesta</h6>
                                             <strong class="mx-2">
-                                                <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}" target="_blank" rel="noopener noreferrer">
+                                                <a href="{{ route('respuestaPQR', ['id' => $pqr->id]) }}"
+                                                    target="_blank" rel="noopener noreferrer">
                                                     <i class="fas fa-eye"></i> Vista previa</a>
                                             </strong>
                                         </div>
                                     @endif
-                                    @if($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1)))
+                                    @if ($pqr->recurso_aclaracion && !sizeOf($pqr->anexos->where('tipo_respuesta', 1)))
                                         <div class="my-2 col-12 d-flex">
                                             <h6 class="mr-2">Documento de respuesta aclaración</h6>
                                             <strong class="mx-2">
-                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '1']) }}" target="_blank" rel="noopener noreferrer">
+                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '1']) }}"
+                                                    target="_blank" rel="noopener noreferrer">
                                                     <i class="fas fa-eye"></i> Vista previa </a>
                                             </strong>
                                         </div>
                                     @endif
-                                    @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)))
+                                    @if ($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)))
                                         <div class="my-2 col-12 d-flex">
                                             <h6 class="mr-2">Documento de respuesta reposición</h6>
                                             <strong class="mx-2">
-                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '2']) }}" target="_blank" rel="noopener noreferrer">
+                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '2']) }}"
+                                                    target="_blank" rel="noopener noreferrer">
                                                     <i class="fas fa-eye"></i> Vista previa</a>
                                             </strong>
                                         </div>
                                     @endif
                                     @php
-                                        $verificacion = ($pqr->recurso_aclaracion + $pqr->recurso_reposicion + $pqr->recurso_apelacion) -  sizeOf($pqr->anexos->where('tipo_respuesta', '!=', 0));
+                                        $verificacion = $pqr->recurso_aclaracion + $pqr->recurso_reposicion + $pqr->recurso_apelacion - sizeOf($pqr->anexos->where('tipo_respuesta', '!=', 0));
                                     @endphp
-                                    @if($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3)) && $verificacion == 1 )
+                                    @if ($pqr->recurso_apelacion && !sizeOf($pqr->anexos->where('tipo_respuesta', 3)) && $verificacion == 1)
                                         <div class="my-2 col-12 d-flex">
                                             <h6 class="mr-2">Documento de respuesta apelación</h6>
                                             <strong class="mx-2">
-                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '3']) }}" target="_blank" rel="noopener noreferrer">
+                                                <a href="{{ route('respuestaPQRRecurso', ['id' => $pqr->id, 'tipo_recurso' => '3']) }}"
+                                                    target="_blank" rel="noopener noreferrer">
                                                     <i class="fas fa-eye"></i> Vista previa</a>
                                             </strong>
                                         </div>
@@ -1011,10 +1127,13 @@
                                         <label for="" class="">Agregar Historial</label>
                                         <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
                                     </div>
-                                    <div class="row d-flex px-12 p-3"> 
+                                    <div class="row d-flex px-12 p-3">
                                         <div class="col-12 col-md-12 form-group d-flex">
-                                            <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-anexo" data_url="{{ route('pqr_anexo_guardar') }}"
-                                            data_url2="{{ route('historial_tarea_guardar') }}" data_url3="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Enviar a revisión</button>
+                                            <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-anexo"
+                                                data_url="{{ route('pqr_anexo_guardar') }}"
+                                                data_url2="{{ route('historial_tarea_guardar') }}"
+                                                data_url3="{{ route('cambiar_estado_tareas_guardar') }}"
+                                                data_token="{{ csrf_token() }}">Enviar a revisión</button>
                                         </div>
                                     </div>
                                 </div>

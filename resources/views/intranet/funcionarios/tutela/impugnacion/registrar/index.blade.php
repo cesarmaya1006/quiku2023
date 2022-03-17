@@ -39,80 +39,80 @@
                             <strong>{{ $tutela->radicado }}</strong> - <strong>Registro de Impugnación</strong>
                         </h3>
                     </div>
-                    @foreach ($tutela->primeraInstancia as $primeraInstancia)
-                        <div class="card-body">
-                            <div class="row mt-3 mb-3">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <h5>Impugnaciones externas registradas</h5>
-                                        </div>
-                                        <div class="col-2 text-center">
-                                            <a href="#" class="btn-accion-tabla tooltipsC text-info mr-4"
-                                                id="nuevaImpugnacion" title="Editar">
-                                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
+                    @php
+                        $primeraInstancia = $tutela->primeraInstancia;
+                    @endphp
+                    <div class="card-body">
+                        <div class="row mt-3 mb-3">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <h5>Impugnaciones externas registradas</h5>
+                                    </div>
+                                    <div class="col-2 text-center">
+                                        <a href="#" class="btn-accion-tabla tooltipsC text-info mr-4" id="nuevaImpugnacion"
+                                            title="Editar">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="col-12 table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Resuelves Primera Instancia</th>
-                                                <th>Accionantes / Acionados</th>
-                                                <th>Archivo de Impugnación</th>
-                                                <th>Descripción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="cuerpoTabla">
-                                            @php
-                                                $idImpugnacion = 0;
-                                            @endphp
-                                            @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                @if ($resuelve->impugnacionexterna->count() > 0)
-                                                    @foreach ($resuelve->impugnacionexterna as $impugnacionexterna)
-                                                        @if ($idImpugnacion != $impugnacionexterna->id)
-                                                            @php
-                                                                $idImpugnacion = $impugnacionexterna->id;
-                                                            @endphp
-                                                            <tr>
-                                                                <td>
-                                                                    @foreach ($impugnacionexterna->resuelves as $resuelvePrimeraInts)
-                                                                        <p># {{ $resuelvePrimeraInts->numeracion }}</p>
-                                                                    @endforeach
-
-                                                                </td>
-                                                                <td>
-                                                                    @foreach ($impugnacionexterna->accion as $accionante)
-                                                                        <p>{{ $accionante->nombres_accion . ' ' . $accionante->apellidos_accion }}
-                                                                        </p>
-                                                                    @endforeach
-                                                                </td>
-                                                                <td>
-                                                                    <a href="{{ asset('documentos/tutelas/sentencias/' . $impugnacionexterna->url) }}"
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer">Descargar</a>
-                                                                </td>
-                                                                <td>{{ $impugnacionexterna->descripcion }}</td>
-                                                            </tr>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-12">
-                                    <a href="{{ route('tutelas_impugnacion', ['id' => $tutela->id]) }}"
-                                        class="btn btn-danger btn-sm btn-sombra mx-2 px-4 float-end">Regresar</a>
-                                </div>
+                            <div class="col-12 table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Resuelves Primera Instancia</th>
+                                            <th>Accionantes / Acionados</th>
+                                            <th>Archivo de Impugnación</th>
+                                            <th>Descripción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cuerpoTabla">
+                                        @php
+                                            $idImpugnacion = 0;
+                                        @endphp
+                                        @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                            @if ($resuelve->impugnacionexterna->count() > 0)
+                                                @foreach ($resuelve->impugnacionexterna as $impugnacionexterna)
+                                                    @if ($idImpugnacion != $impugnacionexterna->id)
+                                                        @php
+                                                            $idImpugnacion = $impugnacionexterna->id;
+                                                        @endphp
+                                                        <tr>
+                                                            <td>
+                                                                @foreach ($impugnacionexterna->resuelves as $resuelvePrimeraInts)
+                                                                    <p># {{ $resuelvePrimeraInts->numeracion }}</p>
+                                                                @endforeach
+
+                                                            </td>
+                                                            <td>
+                                                                @foreach ($impugnacionexterna->accion as $accionante)
+                                                                    <p>{{ $accionante->nombres_accion . ' ' . $accionante->apellidos_accion }}
+                                                                    </p>
+                                                                @endforeach
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ asset('documentos/tutelas/sentencias/' . $impugnacionexterna->url) }}"
+                                                                    target="_blank" rel="noopener noreferrer">Descargar</a>
+                                                            </td>
+                                                            <td>{{ $impugnacionexterna->descripcion }}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    @endforeach
+                        <hr>
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="{{ route('tutelas_impugnacion', ['id' => $tutela->id]) }}"
+                                    class="btn btn-danger btn-sm btn-sombra mx-2 px-4 float-end">Regresar</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

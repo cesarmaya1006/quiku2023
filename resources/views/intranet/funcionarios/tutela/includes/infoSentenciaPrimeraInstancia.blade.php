@@ -11,73 +11,72 @@
     <div class="card-body" style="display: none;">
         <div class="menu-card">
             <div class="row">
-                @foreach ($tutela->primeraInstancia as $primeraInstanciaa)
-                    <div class="col-12 col-md-3 text-center form-group">
-                        <label>Fecha de la sentencia</label>
-                        <br>
-                        <span class="">{{ $primeraInstanciaa->fecha_sentencia }}</span>
-                    </div>
-                    <div class="col-12 col-md-3 text-center form-group">
-                        <label>Fecha de notificación</label>
-                        <br>
-                        <span class="">{{ $primeraInstanciaa->fecha_notificacion }}</span>
-                    </div>
-                    <div class="col-12 col-md-3 text-center form-group">
-                        <label>Sentido de la sentencia</label>
-                        <br>
-                        <span class="">{{ $primeraInstanciaa->sentencia }}</span>
-                    </div>
-                    <div class="col-12 col-md-3 text-center form-group">
-                        <label>Documento de sentencia</label>
-                        <br>
-                        <span class=""><a
-                                href="{{ asset('documentos/tutelas/sentencias/' . $primeraInstanciaa->url_sentencia) }}"
-                                target="_blank" rel="noopener noreferrer">Descargar</a></span>
-                    </div>
-                    @if ($primeraInstanciaa->anexosPrimeraInstancia->count() > 0)
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-12 mt-3 mb-4">
-                                    <h6>Archivos Adjuntos</h6>
-                                </div>
-                                @foreach ($primeraInstanciaa->anexosPrimeraInstancia as $anexo)
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <div class="col-12 col-md-3 text-center form-group">
-                                                    <label>Titulo
-                                                        Anexo</label>
-                                                    <br>
-                                                    <span class="">{{ $anexo->titulo_anexo }}</span>
-                                                </div>
+                @php
+                    $primeraInstancia = $tutela->primeraInstancia;
+                @endphp
+                <div class="col-12 col-md-3 text-center form-group">
+                    <label>Fecha de la sentencia</label>
+                    <br>
+                    <span class="">{{ $primeraInstancia->fecha_sentencia }}</span>
+                </div>
+                <div class="col-12 col-md-3 text-center form-group">
+                    <label>Fecha de notificación</label>
+                    <br>
+                    <span class="">{{ $primeraInstancia->fecha_notificacion }}</span>
+                </div>
+                <div class="col-12 col-md-3 text-center form-group">
+                    <label>Sentido de la sentencia</label>
+                    <br>
+                    <span class="">{{ $primeraInstancia->sentencia }}</span>
+                </div>
+                <div class="col-12 col-md-3 text-center form-group">
+                    <label>Documento de sentencia</label>
+                    <br>
+                    <span class=""><a
+                            href="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
+                            target="_blank" rel="noopener noreferrer">Descargar</a></span>
+                </div>
+                @if ($primeraInstancia->anexosPrimeraInstancia->count() > 0)
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 mt-3 mb-4">
+                                <h6>Archivos Adjuntos</h6>
+                            </div>
+                            @foreach ($primeraInstancia->anexosPrimeraInstancia as $anexo)
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="col-12 col-md-3 text-center form-group">
+                                                <label>Titulo
+                                                    Anexo</label>
+                                                <br>
+                                                <span class="">{{ $anexo->titulo_anexo }}</span>
                                             </div>
-                                            <div class="col-4">
-                                                <div class="col-12 col-md-3 text-center form-group">
-                                                    <label>Descripción
-                                                        Anexo</label>
-                                                    <br>
-                                                    <span
-                                                        class="">{{ $anexo->descripcion_anexo }}</span>
-                                                </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="col-12 col-md-3 text-center form-group">
+                                                <label>Descripción
+                                                    Anexo</label>
+                                                <br>
+                                                <span class="">{{ $anexo->descripcion_anexo }}</span>
                                             </div>
-                                            <div class="col-4">
-                                                <div class="col-12 col-md-3 text-center form-group">
-                                                    <label>Archivo
-                                                        Anexo</label>
-                                                    <br>
-                                                    <span class=""><a
-                                                            href="{{ asset('documentos/tutelas/sentencias/' . $anexo->url_anexo) }}"
-                                                            target="_blank"
-                                                            rel="noopener noreferrer">Descargar</a></span>
-                                                </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="col-12 col-md-3 text-center form-group">
+                                                <label>Archivo
+                                                    Anexo</label>
+                                                <br>
+                                                <span class=""><a
+                                                        href="{{ asset('documentos/tutelas/sentencias/' . $anexo->url_anexo) }}"
+                                                        target="_blank" rel="noopener noreferrer">Descargar</a></span>
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
-                            </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endif
-                @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>

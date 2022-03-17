@@ -17,12 +17,14 @@ class CrearTablaImpugnacionInterna extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('sentenciapinstancia_id');
             $table->foreign('sentenciapinstancia_id', 'fk_sentenciap_impugnacion_interna')->references('id')->on('sentenciapinstancia')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('resuelvesentencia_id');
+            $table->foreign('resuelvesentencia_id', 'fk_resuelvesentencia_impugnacion_interna_id')->references('id')->on('resuelvesentencia')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('empleado_id');
             $table->foreign('empleado_id', 'fk_empleado_impugnacion')->references('id')->on('empleados')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('estado_id')->default(1)->nullable();
             $table->foreign('estado_id', 'fk_estados_impugnacion_interna')->references('id')->on('asignacion_estados_tutela')->onDelete('restrict')->onUpdate('restrict');
-            $table->date('fecha')->nullable();
-            $table->longText('respuesta');
+            $table->longText('resuelve')->nullable();
+            $table->integer('consecutivo');
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';

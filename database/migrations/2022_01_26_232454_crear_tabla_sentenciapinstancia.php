@@ -15,12 +15,12 @@ class CrearTablaSentenciapinstancia extends Migration
     {
         Schema::create('sentenciapinstancia', function (Blueprint $table) {
             $table->bigIncrements('id')->autoIncrement();
-            $table->unsignedBigInteger('auto_admisorio_id');
-            $table->foreign('auto_admisorio_id', 'fk_auto_admisorio_sentenciap')->references('id')->on('auto_admisorio')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('id')->references('id')->on('auto_admisorio')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha_sentencia')->nullable();
             $table->timestamp('fecha_notificacion')->nullable();
             $table->string('sentencia', 255)->nullable();
             $table->string('url_sentencia', 255)->nullable();
+            $table->boolean('cantidad_resuelves')->default(0)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
