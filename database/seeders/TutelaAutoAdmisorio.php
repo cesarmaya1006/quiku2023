@@ -16,6 +16,7 @@ class TutelaAutoAdmisorio extends Seeder
     public function run()
     {
         DB::table('auto_admisorio')->insert([
+            'unidad_negocio_id' => '1',
             'empleado_rigistro_id' => '6',
             'empleado_asignado_id' => '6',
             'prioridad_id' => '2',

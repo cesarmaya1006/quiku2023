@@ -12,12 +12,13 @@ use App\Models\Empresas\Sede;
 use App\Models\Admin\Tipo_Docu;
 use App\Models\Empresas\Empresa;
 use App\Models\PQR\HistorialTarea;
-use App\Models\PQR\HistorialPeticion;
-use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\ResuelveRecurso;
-use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\HechosTutela;
+use App\Models\Tutela\AutoAdmisorio;
+use App\Models\Tutela\UnidadNegocio;
+use App\Models\PQR\HistorialPeticion;
 use App\Models\Tutela\HistorialHecho;
+<<<<<<< HEAD
 use App\Models\Tutela\HistorialPretension;
 use App\Models\Tutela\HistorialRespuestaHecho;
 use App\Models\Tutela\HistorialRespuestaPretension;
@@ -29,9 +30,21 @@ use App\Models\Tutela\RespuestaHechos;
 use App\Models\Tutela\RespuestaPretensiones;
 use App\Models\Tutela\ResuelveTutela;
 use App\Models\Tutela\SentenciaPHistorial;
+=======
+use App\Models\Tutela\ImpugnacionResuelve;
+use App\Models\Tutela\ResuelveTutela;
+use App\Models\Tutela\HistorialTareas;
+use App\Models\Tutela\RespuestaHechos;
+>>>>>>> b1cc8f428603f8b67e87d06449e3b1e5d2c46ecb
 use App\Models\Tutela\TutelaRespuesta;
+use App\Models\PQR\HistorialAsignacion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Tutela\PretensionesTutela;
+use App\Models\Tutela\HistorialPretension;
+use App\Models\Tutela\RespuestaPretensiones;
+use App\Models\Tutela\HistorialRespuestaHecho;
+use App\Models\Tutela\HistorialRespuestaPretension;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Empleado extends Model
@@ -118,6 +131,11 @@ class Empleado extends Model
     public function tutelaregistro()
     {
         return $this->hasMany(AutoAdmisorio::class, 'empleado_rigistro_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function unidadNegocio()
+    {
+        return $this->hasMany(UnidadNegocio::class, 'empleado_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function tutelaasignacion()

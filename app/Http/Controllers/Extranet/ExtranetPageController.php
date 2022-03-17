@@ -380,9 +380,22 @@ class ExtranetPageController extends Controller
     public function cargar_sedes(Request $request)
     {
         if ($request->ajax()) {
-            $id = $_GET['id'];
+            $id = $request['id'];
             return Sede::where('municipio_id', $id)->orderBy('nombre')->get();
         }
+    }
+
+    public function cargar_tipo_documentos(Request $request)
+    {
+        $option = $request['option'];
+        if($option == 1){
+            $tipos = Tipo_Docu::where('abreb_id', '!=', 'NIT')->get(); 
+        }elseif($option == 2){
+            $tipos = Tipo_Docu::where('abreb_id', 'NIT')->get(); 
+        }else{
+            $tipos = [];
+        }
+        return $tipos;
     }
 
     public function mensajeRegistroinicial($id, $cedula, $tipopersona)

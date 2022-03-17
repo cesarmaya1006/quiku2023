@@ -3,6 +3,7 @@
 namespace App\Models\Tutela;
 
 use App\Models\Admin\Tipo_Docu;
+use App\Models\PQR\TipoPersona;
 use App\Models\Tutela\TipoAccion;
 use App\Models\Tutela\AutoAdmisorio;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,11 @@ class Accions extends Model
     {
         return $this->belongsTo(TipoAccion::class, 'tipo_accion_id', 'id');
     }
-
+    //----------------------------------------------------------------------------------
+    public function tipo_persona()
+    {
+        return $this->belongsTo(TipoPersona::class, 'tipo_accion_id', 'id');
+    }
     //----------------------------------------------------------------------------------
     public function impugnacionexterna()
     {

@@ -24,6 +24,8 @@ window.addEventListener('DOMContentLoaded', function () {
         let containerAccion = e.target.parentNode.parentNode
         let nuevoAccion = containerAccion.querySelectorAll('.contenido_accion')[0].cloneNode(true)
         nuevoAccion.querySelector('.identificacion_accion').value = ''
+        nuevoAccion.querySelector('.docutipos_id_accion').value = ''
+        opcion_html = '<option value="">--Seleccione un tipo--</option>';
         nuevoAccion.querySelector('.nombres_accion').value = ''
         nuevoAccion.querySelector('.apellidos_accion').value = ''
         nuevoAccion.querySelector('.correo_accion').value = ''
@@ -38,6 +40,7 @@ window.addEventListener('DOMContentLoaded', function () {
         containerAccion.querySelector('.bloque_accions').appendChild(nuevoAccion)
         document.querySelectorAll('.eliminar_contenido_accion').forEach(item => item.addEventListener('click', agregarEliminarAccion))
         document.querySelectorAll('.tipo_persona_accion').forEach(item => item.addEventListener('change', tipo_persona))
+        document.querySelectorAll('.tipo_persona_accion').forEach(item => item.addEventListener('change', tipo_persona_documentos))
         document.querySelectorAll('.datos_apoderado').forEach(item => item.addEventListener('click', bloque_apoderado))
     }
 
@@ -76,7 +79,7 @@ window.addEventListener('DOMContentLoaded', function () {
         let bloquePadre = tipo.target.parentElement.parentElement
         let tipo_accion = bloquePadre.querySelector('.tipo_rol_accion').value
         let tipoPersona = tipo.target.value
-        if(tipoPersona == 'Persona Jurídica'){
+        if(tipoPersona == '2'){
             bloquePadre.querySelector('.apellidos_accion').parentElement.classList.add('d-none')
             bloquePadre.querySelector('.identificacion_accion').parentElement.querySelector('label').textContent = 'Nit'
             bloquePadre.querySelector('.nombres_accion').parentElement.querySelector('label').textContent = 'Razón social'
@@ -102,6 +105,40 @@ window.addEventListener('DOMContentLoaded', function () {
                 labelNom.classList.remove('requerido')
             }
         }
+    }
+
+    function tipo_persona_documentos(item){
+        let btn = item.target
+        let token = btn.getAttribute('data_token')
+        let option = btn.value
+        let contenedorPadre =btn.parentElement.parentElement
+        let selectorTipo = contenedorPadre.querySelector('.docutipos_id_accion')
+        let url = btn.getAttribute('data_url')
+        let data = {
+            option
+        }
+        fetch(url, {
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': token
+             },
+            method:'POST',
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(items => {
+            respuesta_html = '<option value="">--Seleccione un tipo--</option>';
+            items.forEach(item => {
+                respuesta_html += '<option value="' + item['id'] + '">' + item['abreb_id'] + ' ' + item['tipo_id'] + '</option>';
+            })
+            selectorTipo.innerHTML = respuesta_html
+        })
+    }
+    if(document.querySelectorAll('.tipo_persona_accion')){
+        let tipos_persona = document.querySelectorAll('.tipo_persona_accion')
+        tipos_persona.forEach(item => {
+            item.addEventListener('change', tipo_persona_documentos)
+        })
     }
 
     function bloque_apoderado(btn){
@@ -228,8 +265,10 @@ window.addEventListener('DOMContentLoaded', function () {
             let terminosTiempo
             if(selectorTerminos == 1){
                 terminosTiempo = document.querySelector('.cantidad_dias').value
+                cantidad_horas = null
             }else if(selectorTerminos == 2){
                 terminosTiempo = document.querySelector('.cantidad_horas').value
+                cantidad_dias = null
             }
             
             let accionantes = document.querySelectorAll('.bloque_accions .contenido_accion')
@@ -247,7 +286,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
                 }
             })
-            if(radicado == '' || jurisdiccion == '' || juzgado == '' || departamento == '' || municipio == '' || fecha_notificacion == '' || fecha_notificacion_horas == '' || nombreApellido_juez == '' || direccion_juez == '' || telefono_fijo_juez == '' || correo_juez == '' || selectorTerminos == '' || terminosTiempo == '' || validacionAccionantes || titulo_anexo_admisorio == '' || titulo_anexo_tutela == '' || !archivo_anexo_admisorio || !archivo_anexo_tutela){
+            if(radicado == '' || jurisdiccion == '' || juzgado == '' || departamento == '' || municipio == '' || fecha_notificacion == '' || fecha_notificacion_horas == '' || nombreApellido_juez == '' || direccion_juez == '' || telefono_fijo_juez == '' || correo_juez == '' || selectorTerminos == '' || terminosTiempo == '' || validacionAccionantes ||  titulo_anexo_tutela == '' || !archivo_anexo_tutela){
                 alert('Debe diligenciar todos los campos requeridos') 
             }else{
                 $.ajax({
