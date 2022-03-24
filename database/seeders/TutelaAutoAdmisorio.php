@@ -44,7 +44,7 @@ class TutelaAutoAdmisorio extends Seeder
             'peso_tutela' => '9.886',
             'medida_cautelar' => 'false',
             'fecha_limite' => '2022-03-07 18:21:00',
-            'estadostutela_id' => '3',
+            'estadostutela_id' => '5',
             'estado_asignacion' => '1',
             'cantidad_hechos' => '1',
             'cantidad_pretensiones' => '1',

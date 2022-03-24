@@ -20,7 +20,11 @@ class Tabla_EstadosTutela extends Seeder
             ['estado_funcionario' => 'Radicada'],
             ['estado_funcionario' => 'En trámite'],
             ['estado_funcionario' => 'Cerrado'],
-            ['estado_funcionario' => 'Sent 1era Instancia'],
+            ['estado_funcionario' => 'Registro Sent 1era Instancia'],
+            ['estado_funcionario' => 'Gestion Sent 1era Instancia'],
+            ['estado_funcionario' => 'Radicado Sent 1era Instancia'],
+            ['estado_funcionario' => 'Registro Sent 2da Instancia'],
+            ['estado_funcionario' => 'Tutela Cerrada'],
         ];
         foreach ($estados as $key => $value) {
             DB::table('estadostutela')->insert([

@@ -1266,7 +1266,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 1em;">
                                 <div class="card-header">
                                     <h3 class="card-title font-weight-bold">Historial pretensiones</h3>
