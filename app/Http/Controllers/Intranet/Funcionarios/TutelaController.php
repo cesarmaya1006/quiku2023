@@ -1156,8 +1156,18 @@ class TutelaController extends Controller
     {
         if ($request->ajax()) {
             $sentidoResuelve['sentido'] = $request['sentido'];
+            $sentidoResuelve['gestion'] = '0';
             ResuelvePrimeraInstancia::findOrFail($id)->update($sentidoResuelve);
-            return response()->json(['mensaje' => 'ok']);
+            ImpugnacionInterna::where('resuelvesentencia_id', $id)->delete();
+            $resuelvepi = ResuelvePrimeraInstancia::findOrFail($id);
+
+            $tutela = AutoAdmisorio::findOrfail($resuelvepi->sentencia->id)
+                                    ->with('primeraInstancia')
+                                    ->with('primeraInstancia.impugnacionesinternas')
+                                    ->with('primeraInstancia.impugnacionesinternas.empleado')
+                                    ->with('primeraInstancia.impugnacionesinternas.estado')
+                                    ->get();
+            return response()->json(['mensaje' => 'ok','tutela'=>$tutela]);
         } else {
             abort(404);
         }
@@ -1177,10 +1187,16 @@ class TutelaController extends Controller
                 ImpugnacionInterna::where('resuelvesentencia_id', $id)->delete();
                 $data = 'Se desactivo el proceso de impugnación';
             }
-
-            $sentidoResuelve['sentido'] = $request['check'];
+            $sentidoResuelve['gestion'] = $request['check'];
             ResuelvePrimeraInstancia::findOrFail($id)->update($sentidoResuelve);
-            return response()->json(['mensaje' => 'ok', 'data' => $data]);
+
+            $tutela = AutoAdmisorio::findOrfail($resuelvePI->sentencia->id)
+                                    ->with('primeraInstancia')
+                                    ->with('primeraInstancia.impugnacionesinternas')
+                                    ->with('primeraInstancia.impugnacionesinternas.empleado')
+                                    ->with('primeraInstancia.impugnacionesinternas.estado')
+                                    ->get();
+            return response()->json(['mensaje' => 'ok', 'data' => $data,'tutela'=>$tutela]);
         } else {
             abort(404);
         }

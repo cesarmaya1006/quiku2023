@@ -21,6 +21,7 @@ class CrearTablaSentenciapinstancia extends Migration
             $table->string('sentencia', 255)->nullable();
             $table->string('url_sentencia', 255)->nullable();
             $table->boolean('cantidad_resuelves')->default(0)->nullable();
+            $table->boolean('verificada')->default(0);
             $table->timestamps();
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
