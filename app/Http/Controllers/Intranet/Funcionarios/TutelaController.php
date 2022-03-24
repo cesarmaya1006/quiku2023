@@ -31,16 +31,20 @@ use Illuminate\Support\Facades\Config;
 use App\Models\Tutela\ArgumentosTutela;
 use App\Models\Tutela\AsignacionEstados;
 use App\Models\Tutela\DocRespuestaHecho;
+use App\Models\Tutela\ImpugnacionInterna;
 use App\Models\Tutela\PretensionesTutela;
 use App\Models\Tutela\RelacionPretension;
 use App\Models\Tutela\HistorialAsignacion;
 use App\Models\Tutela\HistorialPretension;
+use App\Models\Tutela\RelacionesImpugnacion;
 use App\Models\Tutela\RespuestaPretensiones;
 use App\Models\Tutela\DocRespuestaPretension;
+use App\Models\Tutela\RespuestaImpugnaciones;
+use App\Models\Tutela\DocRespuestaImpugnacion;
 use App\Models\Tutela\HistorialRespuestaHecho;
-use App\Models\Tutela\HistorialRespuestaPretension;
-use App\Models\Tutela\ImpugnacionInterna;
 use App\Models\Tutela\ResuelvePrimeraInstancia;
+use App\Models\Tutela\HistorialRespuestaPretension;
+use App\Models\Tutela\HistorialRespuestaImpugnacion;
 
 class TutelaController extends Controller
 {
@@ -490,6 +494,20 @@ class TutelaController extends Controller
         return response()->json(['mensaje' => 'ok', 'data' => $pretension]);
     }
 
+    public function estado_resuelve_guardar(Request $request)
+    {
+        $nuevoEstado['estado_id'] = $request["estado"];
+        if ($request['id_resuelve']) {
+            $resuelve = ImpugnacionInterna::findOrFail($request['id_resuelve'])->update($nuevoEstado);
+        } else {
+            foreach ($request['id_resuelves'] as $resuelveId) {
+                ImpugnacionInterna::findOrFail($resuelveId)->update($nuevoEstado);
+            }
+            $resuelve = 'ok';
+        }
+        return response()->json(['mensaje' => 'ok', 'data' => $resuelve]);
+    }
+
     public function asignacion_hecho_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -566,6 +584,19 @@ class TutelaController extends Controller
         }
     }
 
+    public function historial_respuesta_resuelve_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionHistorial['respuesta_impugnaciones_id'] = $request['respuesta_resuelve_id'];
+            $asignacionHistorial['empleado_id'] = session('id_usuario');
+            $asignacionHistorial['historial'] = $request['historial'];
+            $historial = HistorialRespuestaImpugnacion::create($asignacionHistorial);
+            return response()->json(['mensaje' => 'ok', 'data' => $historial]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function respuesta_pretension_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -576,6 +607,22 @@ class TutelaController extends Controller
             $respuesta['fecha'] = date("Y-m-d");
             $respuestaPretension = RespuestaPretensiones::create($respuesta);
             $id_respuesta = $respuestaPretension['id'];
+            return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_resuelve_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $respuesta['sentenciapinstancia_id'] = $request["sentenciapinstancia_id"];
+            $respuesta['respuesta'] = $request["respuesta"];
+            $respuesta['estado_id'] = $request["estado"];
+            $respuesta['empleado_id'] = session('id_usuario');
+            $respuesta['fecha'] = date("Y-m-d");
+            $respuestaResuelve = RespuestaImpugnaciones::create($respuesta);
+            $id_respuesta = $respuestaResuelve['id'];
             return response()->json(['mensaje' => 'ok', 'data' => $id_respuesta]);
         } else {
             abort(404);
@@ -609,6 +656,23 @@ class TutelaController extends Controller
                 $respuestaActualizada['empleado_id'] = $request['funcionario'];
             }
             $respuesta = RespuestaPretensiones::findOrFail($request['id_respuesta'])->update($respuestaActualizada);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_resuelve_editar_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request['respuesta']) {
+                $respuestaActualizada['respuesta'] = $request['respuesta'];
+                $respuestaActualizada['estado_id'] = $request['estado'];
+            }
+            if ($request['funcionario']) {
+                $respuestaActualizada['empleado_id'] = $request['funcionario'];
+            }
+            $respuesta = RespuestaImpugnaciones::findOrFail($request['id_respuesta'])->update($respuestaActualizada);
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
             abort(404);
@@ -657,6 +721,39 @@ class TutelaController extends Controller
                 $nuevo_documento['url'] = $nombre_doc;
                 $doc_subido->move($ruta, $nombre_doc);
                 $respuesta = DocRespuestaPretension::create($nuevo_documento);
+            }
+
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function respuesta_resuelve_anexo_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $documentos = $request->allFiles();
+            if ($request->hasFile('archivo')) {
+                $ruta = Config::get('constantes.folder_sentencias_resuelves');
+                $ruta = trim($ruta);
+                $doc_subido = $documentos["archivo"];
+                $tamaño = $doc_subido->getSize();
+                if ($tamaño > 0) {
+                    $tamaño = $tamaño / 1000;
+                }
+                $nombre_doc = time() . '-' . utf8_encode(utf8_decode($doc_subido->getClientOriginalName()));
+                $nuevo_documento['respuesta_impugnaciones_id'] = $request["respuesta_resuelves_id"];
+                $nuevo_documento['titulo'] = $request["titulo"];
+                if ($request["descripcion"]) {
+                    $nuevo_documento['descripcion'] = $request["descripcion"];
+                } else {
+                    $nuevo_documento['descripcion'] = '';
+                }
+                $nuevo_documento['extension'] = $doc_subido->getClientOriginalExtension();
+                $nuevo_documento['peso'] = $tamaño;
+                $nuevo_documento['url'] = $nombre_doc;
+                $doc_subido->move($ruta, $nombre_doc);
+                $respuesta = DocRespuestaImpugnacion::create($nuevo_documento);
             }
 
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
@@ -782,6 +879,23 @@ class TutelaController extends Controller
         return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
     }
 
+    public function relacion_respuesta_resuelve_guardar(Request $request)
+    {
+        $relacion['sentenciapinstancia_id'] = $request["sentenciapinstancia_id"];
+        $relacion['respuesta_impugnaciones_id'] = $request["id_respuesta"];
+        if ($request["id_resuelve"]) {
+            $relacion['impugnacion_interna_id'] = $request["id_resuelve"];
+            $respuestaRelacion = RelacionesImpugnacion::create($relacion);
+        } else {
+            foreach ($request["id_resuelves"] as $resuelveId) {
+                $relacion['impugnacion_interna_id'] = $resuelveId;
+                RelacionesImpugnacion::create($relacion);
+            }
+            $respuestaRelacion = 'ok';
+        }
+        return response()->json(['mensaje' => 'ok', 'data' => $respuestaRelacion]);
+    }
+
     public function estado_respuesta_pretension_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -792,6 +906,22 @@ class TutelaController extends Controller
             }
             $nuevoEstado['estado_id'] = $request["estado"];
             $respuesta = RespuestaPretensiones::findOrFail($request['id_respuesta'])->update($nuevoEstado);
+            return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function estado_respuesta_resuelve_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $resuelves = RelacionesImpugnacion::where('respuesta_impugnaciones_id', $request["id_respuesta"])->get();
+            foreach ($resuelves as $resuelves) {
+                $nuevoEstado['estado_id'] = $request["estado"];
+                ImpugnacionInterna::findOrFail($resuelves['impugnacion_interna_id'])->update($nuevoEstado);
+            }
+            $nuevoEstado['estado_id'] = $request["estado"];
+            $respuesta = RespuestaImpugnaciones::findOrFail($request['id_respuesta'])->update($nuevoEstado);
             return response()->json(['mensaje' => 'ok', 'data' => $respuesta]);
         } else {
             abort(404);
@@ -825,6 +955,40 @@ class TutelaController extends Controller
                 RelacionPretension::where('pretension_tutela_id', $request["pretension_id"])->delete();
                 $nuevoEstado['estado_id'] = 1;
                 PretensionesTutela::findOrFail($relacionPretension['pretension_tutela_id'])->update($nuevoEstado);
+            }
+            return response()->json(['mensaje' => 'ok', 'data' => 'ok']);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function eliminar_respuesta_resuelve_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $relacionResuelve = RelacionesImpugnacion::where('impugnacion_interna_id', $request["resuelve_id"])->get();
+            $relacionResuelve = $relacionResuelve[0];
+            $respuestaResuelves = RespuestaImpugnaciones::findOrFail($relacionResuelve['respuesta_impugnaciones_id']);
+            if (sizeOf($respuestaResuelves->relacion) == 1) {
+                RelacionesImpugnacion::where('impugnacion_interna_id', $request["resuelve_id"])->delete();
+                $anexos = DocRespuestaImpugnacion::where('respuesta_impugnaciones_id', $respuestaResuelves['id'])->get();
+                if (sizeOf($anexos)) {
+                    foreach ($anexos as $anexo) {
+                        DocRespuestaImpugnacion::where('respuesta_impugnaciones_id', $anexo['id'])->delete();
+                    }
+                }
+                $historiales = HistorialRespuestaImpugnacion::where('respuesta_impugnaciones_id', $respuestaResuelves['id'])->get();
+                if (sizeOf($historiales)) {
+                    foreach ($historiales as $historial) {
+                        HistorialRespuestaImpugnacion::where('respuesta_impugnaciones_id', $historial['id'])->delete();
+                    }
+                }
+                RespuestaImpugnaciones::findOrFail($relacionResuelve['respuesta_impugnaciones_id'])->delete();
+                $nuevoEstado['estado_id'] = 1;
+                ImpugnacionInterna::findOrFail($relacionResuelve['impugnacion_interna_id'])->update($nuevoEstado);
+            } else {
+                RelacionesImpugnacion::where('impugnacion_interna_id', $request["resuelve_id"])->delete();
+                $nuevoEstado['estado_id'] = 1;
+                ImpugnacionInterna::findOrFail($relacionResuelve['impugnacion_interna_id'])->update($nuevoEstado);
             }
             return response()->json(['mensaje' => 'ok', 'data' => 'ok']);
         } else {

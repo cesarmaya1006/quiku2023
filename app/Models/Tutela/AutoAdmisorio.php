@@ -135,7 +135,6 @@ class AutoAdmisorio extends Model
         return $this->hasMany(ResuelveTutela::class, 'auto_admisorio_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
     public function primeraInstancia()
     {
         return $this->belongsTo(PrimeraInstancia::class, 'id');

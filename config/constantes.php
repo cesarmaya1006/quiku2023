@@ -33,5 +33,7 @@ return [
     "folder_pretensiones" => public_path() . '/documentos/tutelas/pretensiones/ ',
     //--------------------------------------------------------------------------------
     "folder_sentencias" => public_path() . '/documentos/tutelas/sentencias/ ',
+    //--------------------------------------------------------------------------------
+    "folder_sentencias_resuelves" => public_path() . '/documentos/tutelas/sentencias/resuelves ',
 
 ];

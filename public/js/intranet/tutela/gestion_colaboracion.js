@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', function() {
     const id_auto = document.querySelector('.id_auto_admisorio').value
-
+    const sentenciapinstancia_id = document.querySelector('.id_sentencia_p_instancia').value
+    
     // Funcion para reasignar hecho
     $('.reasignarHecho').on('change', function(e) {
         let padre = e.target.parentElement.parentElement.parentElement
@@ -278,6 +279,48 @@ window.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
+    // Guardar estado resuelve
+    if (document.querySelector('.btn-estado-resuelve')) {
+        let btnEstados = document.querySelectorAll('.btn-estado-resuelve')
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
+
+        function guardarEstado(btn) {
+            btn.preventDefault()
+            let btnE = btn.target
+            if (btnE.tagName === 'I') {
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+                btnE = btnE.parentElement.parentElement
+            } else {
+                padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement
+            }
+            let id_respuesta = padreEstado.querySelector('.id_respuesta').value
+            let url = btnE.getAttribute('data_url')
+            let token = btnE.getAttribute('data_token')
+            let estado = padreEstado.querySelector('.estadoResuelve').value
+            let respuesta = padreEstado.querySelector('.respuesta').value
+            let data = {
+                estado,
+                id_respuesta
+            }
+            if (estado == 11 && respuesta == '') {
+                alert('Para guardar el 100% debe agregar una respuesta antes')
+            } else {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+        }
+    }
 
     //  Guardar Historial tutela - hecho
     if (document.querySelector('.guardarHistorialHecho')) {
@@ -420,6 +463,45 @@ window.addEventListener('DOMContentLoaded', function() {
                 let data = {
                     historial: mensajeHistorial,
                     respuesta_pretension_id: idRespuesta
+                }
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+            }
+        }
+    }
+
+    //  Guardar Historial resuelve 
+    if (document.querySelector('.guardarHistorialRespuestaResuelve')) {
+        let HistorialResuelve = document.querySelectorAll('.guardarHistorialRespuestaResuelve')
+        HistorialResuelve.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaResuelve))
+
+        function guardarHistorialRespuestaResuelve(btn) {
+            btn.preventDefault()
+            let contenedorHisotrial = btn.target.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let token = btn.target.getAttribute('data_token')
+            let mensajeHistorial = contenedorHisotrial.querySelector('.mensaje-historial-respuesta-resuelve').value
+            let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_resuelve').value
+            if (mensajeHistorial == '') {
+                alert("Debe agregar un historial")
+            } else {
+                guardarHistorialPeticion()
+            }
+
+            function guardarHistorialPeticion() {
+                let data = {
+                    historial: mensajeHistorial,
+                    respuesta_resuelve_id: idRespuesta
                 }
                 $.ajax({
                     url: url,
@@ -768,6 +850,128 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Guardar respuesta impugnacion
+    if (document.querySelector('.btn-respuesta-impugnacion')) {
+        let btnRespuesta = document.querySelector('.btn-respuesta-impugnacion')
+        btnRespuesta.addEventListener('click', guardarRespuesta)
+
+        function guardarRespuesta(btn) {
+            btn.preventDefault()
+            padreRespuesta = btn.target.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let url2 = btn.target.getAttribute('data_url2')
+            let url3 = btn.target.getAttribute('data_url3')
+            let url4 = btn.target.getAttribute('data_url4')
+            let token = btn.target.getAttribute('data_token')
+            let resuelvesContent = padreRespuesta.querySelector('.bloque-seleccion-resuelves')
+            let resuelves = resuelvesContent.querySelectorAll('.select-resuleve')
+            let estado = padreRespuesta.querySelector('.estadoResuelve').value
+            let respuesta = padreRespuesta.querySelector('.respuesta').value
+            let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
+            validacionResuelves = false
+            resuelves.forEach(resuelve => {
+                if (resuelve.checked == true) {
+                    validacionResuelves = true
+                }
+            })
+            if (respuesta != '' && estado > 1 && validacionResuelves) {
+                let data1 = {
+                    respuesta,
+                    sentenciapinstancia_id,
+                    estado
+                }
+                guardarRespuesta(data1)
+            } else {
+                alert('Debe seleccionar los resuelves y diligenciar los campos de respuesta y avance')
+            }
+
+            function guardarRespuesta(data) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        guardarRespuestaAnexo(anexos, respuesta)
+                        guardarRelacionRespuesta(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function guardarRespuestaAnexo(anexos, idrespuesta) {
+                anexos.forEach(anexo => {
+                    let titulo = anexo.querySelector('.titulo').value
+                    let descripcion = anexo.querySelector('.descripcion').value
+                    let archivo = anexo.querySelector('.documento').files[0]
+                    if (archivo) {
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('respuesta_resuelves_id', idrespuesta.data);
+                        dataAnexo.append('titulo', titulo);
+                        dataAnexo.append('descripcion', descripcion);
+                        dataAnexo.append('archivo', archivo);
+                        dataAnexo.append('_token', token);
+                        $.ajax({
+                            async: false,
+                            url: url2,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false,
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                })
+            }
+
+            function guardarRelacionRespuesta(idrespuesta) {
+                let resuelvesValidados = []
+                resuelves.forEach(resuelve => {
+                    if (resuelve.checked) {
+                        resuelvesValidados.push(resuelve.value)
+                    }
+                })
+                let data = {
+                    estado,
+                    id_resuelves: resuelvesValidados,
+                    sentenciapinstancia_id,
+                    id_respuesta: idrespuesta.data
+                }
+                fetch(url3, {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token
+                     },
+                    method:'POST',
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(res => {
+                    fetch(url4, {
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token
+                         },
+                        method:'POST',
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(res2 => {
+                        location.reload();
+                    })
+                })
+            }
+        }
+    }
+
     // Guardar asignacion de pretension desde respuesta
     if (document.querySelector('.btn-respuesta-pretension-asignar')) {
         let btnEstados = document.querySelectorAll('.btn-respuesta-pretension-asignar')
@@ -815,6 +1019,58 @@ window.addEventListener('DOMContentLoaded', function() {
                     console.log(error)
                 }
             });
+        }
+    }
+
+    // Guardar asignacion de resuelve desde respuesta
+    if (document.querySelector('.btn-respuesta-resuelve-asignar')) {
+        let btnEstados = document.querySelectorAll('.btn-respuesta-resuelve-asignar')
+        btnEstados.forEach(btn => btn.addEventListener('click', guardarEstado))
+
+        function guardarEstado(btn) {
+            btn.preventDefault()
+            let btnE = btn.target
+            let contenedorPadre = btnE.parentElement.parentElement
+            let url = btnE.getAttribute('data_url')
+            let url2 = btnE.getAttribute('data_url2')
+            let token = btnE.getAttribute('data_token')
+            let id_resuelve = contenedorPadre.querySelector('.respuesta-resuelve-asignar').value
+            // let id_respuesta = contenedorPadre.querySelector('.id_respuesta').value
+            let estado = contenedorPadre.querySelector('.estado_actual').value
+            let data = {
+                id_resuelve,
+                sentenciapinstancia_id,
+                // id_respuesta,
+                estado
+            }
+
+            console.log(data)
+            // $.ajax({
+            //     url: url,
+            //     type: 'POST',
+            //     headers: { 'X-CSRF-TOKEN': token },
+            //     data: data,
+            //     success: function(respuesta) {
+            //         // console.log(respuesta)
+
+            //     },
+            //     error: function(error) {
+            //         console.log(error)
+            //     }
+            // });
+            // $.ajax({
+            //     url: url2,
+            //     type: 'POST',
+            //     headers: { 'X-CSRF-TOKEN': token },
+            //     data: data,
+            //     success: function(respuesta) {
+            //         location.reload();
+
+            //     },
+            //     error: function(error) {
+            //         console.log(error)
+            //     }
+            // });
         }
     }
 
@@ -883,6 +1139,39 @@ window.addEventListener('DOMContentLoaded', function() {
                 },
                 error: function(error) {
                     console.log(error)
+                }
+            });
+        }
+    }
+
+    // Eliminar respuesta resuelve
+    if (document.querySelectorAll('.eliminarResuelve')) {
+        let btnsEliminarResuelve = document.querySelectorAll('.eliminarResuelve')
+        btnsEliminarResuelve.forEach(btn => {
+            btn.addEventListener('click', eliminarAsigancionResuelve)
+        })
+
+        function eliminarAsigancionResuelve(btn) {
+            let btnEH = btn.target
+            if (btnEH.tagName === 'I') {
+                btnEH = btnEH.parentNode
+            }
+            let contenedorPadre = btnEH.parentElement
+            let resuelve_id = contenedorPadre.querySelector('.id_relacion_resuelve').value
+            let url = btnEH.getAttribute('data_url')
+            let token = btnEH.getAttribute('data_token')
+            let data = {
+                resuelve_id
+            }
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+                },
+                error: function(error) {
                 }
             });
         }
@@ -1134,6 +1423,129 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Guardar respuesta resuelve editar
+    if (document.querySelectorAll('.btn-respuesta-resuelve-editar')) {
+        let btnRespuesta = document.querySelectorAll('.btn-respuesta-resuelve-editar')
+        btnRespuesta.forEach(btn => {
+            btn.addEventListener('click', guardarRespuesta)
+        })
+
+        function guardarRespuesta(btn) {
+            btn.preventDefault()
+            padreRespuesta = btn.target.parentElement.parentElement.parentElement
+            let url = btn.target.getAttribute('data_url')
+            let url2 = btn.target.getAttribute('data_url2')
+            let url3 = btn.target.getAttribute('data_url3')
+            let token = btn.target.getAttribute('data_token')
+            let estado = padreRespuesta.querySelector('.estadoResuelve').value
+            let respuesta = padreRespuesta.querySelector('.respuesta').value
+            let respuestaAnterior = padreRespuesta.querySelector('.respuesta_anterior').value
+            let url4 = padreRespuesta.querySelector('.respuesta_anterior').getAttribute('data_url')
+            let id_respuesta = padreRespuesta.querySelector('.id_respuesta').value
+            let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
+            if (respuestaAnterior != respuesta) {
+                guardarHisotrialRespuesta()
+            }
+            if (respuesta != '') {
+                let data1 = {
+                    respuesta,
+                    id_respuesta,
+                    estado
+                }
+                guardarRespuesta(data1)
+            }
+
+            function guardarRespuesta(data) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        guardarRespuestaAnexo(anexos, id_respuesta)
+                        guardarEstado()
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function guardarRespuestaAnexo(anexos, idrespuesta) {
+                anexos.forEach(anexo => {
+                    let titulo = anexo.querySelector('.titulo').value
+                    let descripcion = anexo.querySelector('.descripcion').value
+                    let archivo = anexo.querySelector('.documento').files[0]
+                    if (archivo) {
+                        let dataAnexo = new FormData();
+                        dataAnexo.append('respuesta_resuelves_id', idrespuesta);
+                        dataAnexo.append('titulo', titulo);
+                        dataAnexo.append('descripcion', descripcion);
+                        dataAnexo.append('archivo', archivo);
+                        dataAnexo.append('_token', token);
+                        $.ajax({
+                            async: false,
+                            url: url2,
+                            type: 'POST',
+                            headers: { 'X-CSRF-TOKEN': token },
+                            data: dataAnexo,
+                            processData: false,
+                            contentType: false,
+                            success: function(respuesta) {
+                                // console.log(respuesta)
+                            },
+                            error: function(error) {
+                                console.log(error)
+                            }
+                        });
+                    }
+                })
+            }
+
+            function guardarHisotrialRespuesta() {
+                let data = {
+                    historial: respuestaAnterior,
+                    respuesta_resuelve_id: id_respuesta
+                }
+
+                $.ajax({
+                    url: url4,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+            }
+
+            function guardarEstado(idrespuesta) {
+                let data = {
+                    estado,
+                    id_respuesta
+                }
+
+                $.ajax({
+                    url: url3,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+                });
+                location.reload();
+            }
+
+        }
+    }
+
     // Funcion check multiple hechos
     if (document.querySelectorAll('.check-todos-hechos')) {
         let checkTodos = document.querySelectorAll('.check-todos-hechos')
@@ -1168,6 +1580,29 @@ window.addEventListener('DOMContentLoaded', function() {
             let check = btn.target
             let contenedorPadre = check.parentElement.parentElement
             let selectores = contenedorPadre.querySelectorAll('.select-pretension')
+            if (check.checked) {
+                selectores.forEach(selector => {
+                    selector.checked = true
+                })
+            } else {
+                selectores.forEach(selector => {
+                    selector.checked = false
+                })
+            }
+        }
+    }
+
+    // Funcion check multiple resuelves
+    if (document.querySelectorAll('.check-todos-resuelves')) {
+        let checkTodos = document.querySelectorAll('.check-todos-resuelves')
+        checkTodos.forEach(check => {
+            check.addEventListener('input', seleccionMultiple)
+        })
+
+        function seleccionMultiple(btn) {
+            let check = btn.target
+            let contenedorPadre = check.parentElement.parentElement
+            let selectores = contenedorPadre.querySelectorAll('.select-resuleve')
             if (check.checked) {
                 selectores.forEach(selector => {
                     selector.checked = true

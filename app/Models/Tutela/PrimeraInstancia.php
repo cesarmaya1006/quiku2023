@@ -17,19 +17,15 @@ class PrimeraInstancia extends Model
         return $this->hasOne(AutoAdmisorio::class, 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
     public function anexosPrimeraInstancia()
     {
         return $this->hasMany(AnexoPrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
-
-    //----------------------------------------------------------------------------------
     public function resuelvesPrimeraInstancia()
     {
         return $this->hasMany(ResuelvePrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
     }
-    //----------------------------------------------------------------------------------
     //----------------------------------------------------------------------------------
     public function impugnacionesexternas()
     {
@@ -39,6 +35,11 @@ class PrimeraInstancia extends Model
     public function impugnacionesinternas()
     {
         return $this->hasMany(ImpugnacionInterna::class, 'sentenciapinstancia_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    public function respuestasImpugnacionesiInternas()
+    {
+        return $this->hasMany(RespuestaImpugnaciones::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
     public function sentenciaphistorial()

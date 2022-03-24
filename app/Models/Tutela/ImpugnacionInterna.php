@@ -43,7 +43,6 @@ class ImpugnacionInterna extends Model
         return $this->hasMany(RelacionesImpugnacion::class, 'impugnacion_interna_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------
     public function docImpugnacionInterna()
     {
         return $this->hasMany(ImpugnacionInternaDoc::class, 'impugnacion_interna_id', 'id');

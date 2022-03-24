@@ -3564,58 +3564,58 @@
                                     @if (sizeOf($tutela->primeraInstancia->impugnacionesinternas))
                                         <div class="col-12 row mb-2">
                                             @php
-                                                $validacionPretensiones = false;
+                                                $validacionImpugnaciones = false;
                                                 foreach ($tutela->primeraInstancia->impugnacionesinternas->where('empleado_id', session('id_usuario')) as $impugnacion) {
-                                                    if (!sizeOf($tutela->primeraInstancia->impugnacionesinternas)) {
-                                                        $validacionPretensiones = true;
+                                                    if (!sizeOf($impugnacion->relacionesimpugnacion)) {
+                                                        $validacionImpugnaciones = true;
                                                         break;
                                                     }
                                                 }
                                             @endphp
-                                            @if ($tutela->primeraInstancia->cantidad_resuelves)
+                                            @if ($tutela->primeraInstancia)
                                                 <div class="rounded border my-3 p-3">
                                                     <div class="embed-responsive embed-responsive-16by9">
                                                         <iframe class="embed-responsive-item"
-                                                            src="{{ asset('documentos/tutelas/' . $tutela->url_tutela) }}"
+                                                            src="{{ asset('documentos/tutelas/sentencias/' . $tutela->primeraInstancia->url_sentencia) }}"
                                                             allowfullscreen></iframe>
                                                     </div>
                                                 </div>
                                             @endif
-                                            @if ($validacionPretensiones)
+                                            @if ($validacionImpugnaciones)
                                                 <div class="rounded border my-3 p-3">
                                                     <div class="col-12 col-md-5 my-3">
                                                         <h5>Respuestas resuelves</h5>
                                                     </div>
                                                     <hr>
-                                                    <div class="col-12 bloque-seleccion-pretensiones">
+                                                    <div class="col-12 bloque-seleccion-resuelves">
                                                         <div class="form-check my-4 text-right">
                                                             <input type="checkbox"
-                                                                class="form-check-input check-todos-pretensiones">
+                                                                class="form-check-input check-todos-resuelves">
                                                             <label class="form-check-label"><strong>Seleccionar todos los
                                                                     resuelves</strong></label>
                                                         </div>
                                                         @if ($tutela->primeraInstancia->cantidad_resuelves)
                                                             @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
                                                                 <div class="form-check form-check-inline">
-                                                                    @if (session('id_usuario') == $impugnacion->empleado_id && !sizeOf($impugnacion->relacionesPretensiones))
+                                                                    @if (session('id_usuario') == $impugnacion->empleado_id && !sizeOf($impugnacion->relacionesimpugnacion))
                                                                         <input type="checkbox"
-                                                                            class="form-check-input select-pretension"
+                                                                            class="form-check-input select-resuleve"
                                                                             value="{{ $impugnacion->id }}">
-                                                                        <label
-                                                                            class="form-check-label"><strong>#{{ $pretension->consecutivo }}</strong></label>
+                                                                        <label 
+                                                                            class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
                                                                     @endif
                                                                 </div>
                                                             @endforeach
                                                         @else
-                                                            @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
-                                                                @if (session('id_usuario') == $pretension->empleado_id && !sizeOf($pretension->relacionesPretensiones))
+                                                            @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
+                                                                @if (session('id_usuario') == $impugnacion->empleado_id && !sizeOf($impugnacion->relacionesimpugnacion))
                                                                     <div class="form-check my-2">
                                                                         <input type="checkbox"
-                                                                            class="form-check-input select-pretension"
-                                                                            value="{{ $pretension->id }}">
+                                                                            class="form-check-input select-resuleve"
+                                                                            value="{{ $impugnacion->id }}">
                                                                         <label
-                                                                            class="form-check-label"><strong>#{{ $pretension->consecutivo }}</strong>
-                                                                            - {{ $pretension->pretension }}</label>
+                                                                            class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong>
+                                                                            - {{ $impugnacion->resuelve }}</label>
                                                                     </div>
                                                                     <hr>
                                                                 @endif
@@ -3627,15 +3627,15 @@
                                                             <h5>Respuesta</h5>
                                                         </div>
                                                         <div
-                                                            class="col-12 col-md-7 row estado-pretensiones justify-content-end">
-                                                            @if ($tutela->estadostutela_id < 4)
+                                                            class="col-12 col-md-7 row estado-resuelves justify-content-end">
+                                                            @if ($tutela->estadostutela_id === 5)
                                                                 <div
-                                                                    class="col-9 row estado-pretensiones justify-content-end">
+                                                                    class="col-9 row estado-resuelves justify-content-end">
                                                                     <div class="col-3 d-flex mb-2">
                                                                         <h6>Avance:</h6>
                                                                     </div>
                                                                     <select
-                                                                        class="custom-select rounded-0 estadoPretension col-4">
+                                                                        class="custom-select rounded-0 estadoResuelve col-4">
                                                                         @foreach ($estados as $estado)
                                                                             <option value="{{ $estado->id }}">
                                                                                 {{ $estado->estado }} %</option>
@@ -3643,10 +3643,10 @@
                                                                     </select>
                                                                 </div>
                                                             @endif
-                                                            <div class="col-3 row modal-pretension">
+                                                            <div class="col-3 row modal-resuelve">
                                                                 <button type="" class="btn btn-success col-12 mx-2"
                                                                     data-toggle="modal"
-                                                                    data-target=".buscar-pretension"><span
+                                                                    data-target=".buscar-resuelve"><span
                                                                         style="font-size: 1em;"><i
                                                                             class="fas fa-search"></i>
                                                                         Wiku</span>
@@ -3654,8 +3654,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="modal fade buscar-pretension" tabindex="-1" role="dialog"
-                                                        data-value="pretension" aria-labelledby="myLargeModalLabel"
+                                                    <div class="modal fade buscar-resuelve" tabindex="-1" role="dialog"
+                                                        data-value="resuelve" aria-labelledby="myLargeModalLabel"
                                                         aria-hidden="true">
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
@@ -4182,16 +4182,16 @@
                                                             otro Anexo</button>
                                                     </div>
                                                     <button type=""
-                                                        class="btn btn-primary mx-2 btn-respuesta-pretension col-md-3 col-12 mb-3"
-                                                        data_url="{{ route('respuesta_pretension_guardar') }}"
-                                                        data_url2="{{ route('respuesta_pretension_anexo_guardar') }}"
-                                                        data_url3="{{ route('estado_pretension_guardar') }}"
-                                                        data_url4="{{ route('relacion_respuesta_pretension_guardar') }}"
+                                                        class="btn btn-primary mx-2 btn-respuesta-impugnacion col-md-3 col-12 mb-3"
+                                                        data_url="{{ route('respuesta_resuelve_guardar') }}"
+                                                        data_url2="{{ route('respuesta_resuelve_anexo_guardar') }}"
+                                                        data_url3="{{ route('estado_resuelve_guardar') }}"
+                                                        data_url4="{{ route('relacion_respuesta_resuelve_guardar') }}"
                                                         data_token="{{ csrf_token() }}">Guardar respuesta</button>
                                                 </div>
                                             @endif
-                                            @if (sizeOf($tutela->respuestasPretensiones))
-                                                @foreach ($tutela->respuestasPretensiones as $key => $respuesta)
+                                            @if (sizeOf($tutela->primeraInstancia->respuestasImpugnacionesiInternas))
+                                                @foreach ($tutela->primeraInstancia->respuestasImpugnacionesiInternas as $key => $respuesta)
                                                     @if (session('id_usuario') == $respuesta->empleado_id)
                                                         <div class="rounded border my-3 p-3">
                                                             <div class="col-12 col-md-12 mt-2 mb-4">
@@ -4200,111 +4200,111 @@
                                                             @if ($respuesta->estado_id != 11)
                                                                 <div class="col-12 row justify-content-end my-2">
                                                                     <div class="col-lg-4 col-xl-3 d-flex mb-2">
-                                                                        <h6>Agregar pretensión a respuesta:</h6>
+                                                                        <h6>Agregar resuelve a respuesta:</h6>
                                                                     </div>
                                                                     <select
-                                                                        class="custom-select respuesta-pretension-asignar col-lg-3 col-xl-2">
-                                                                        <option value="">---Seleccione Pretensión---
+                                                                        class="custom-select respuesta-resuelve-asignar col-lg-3 col-xl-2">
+                                                                        <option value="">---Seleccione resuelve---
                                                                         </option>
-                                                                        @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
-                                                                            @if (session('id_usuario') == $pretension->empleado_id && !sizeOf($pretension->relacionesPretensiones))
-                                                                                <option value="{{ $pretension->id }}">
-                                                                                    Pretensión
-                                                                                    #{{ $pretension->consecutivo }}
+                                                                        @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
+                                                                            @if (session('id_usuario') == $impugnacion->empleado_id && !sizeOf($impugnacion->relacionesimpugnacion))
+                                                                                <option value="{{ $impugnacion->id }}">
+                                                                                    Resuelve
+                                                                                    #{{ $impugnacion->consecutivo }}
                                                                                 </option>
                                                                             @endif
                                                                         @endforeach
                                                                     </select>
                                                                     <button type=""
-                                                                        class="btn btn-primary btn-respuesta-pretension-asignar col-lg-2 col-xl-1 mx-2"
-                                                                        data_url="{{ route('relacion_respuesta_pretension_guardar') }}"
-                                                                        data_url2="{{ route('estado_pretension_guardar') }}"
+                                                                        class="btn btn-primary btn-respuesta-resuelve-asignar col-lg-2 col-xl-1 mx-2"
+                                                                        data_url="{{ route('relacion_respuesta_resuelve_guardar') }}"
+                                                                        data_url2="{{ route('estado_resuelve_guardar') }}"
                                                                         data_token="{{ csrf_token() }}">Agregar</button>
                                                                 </div>
                                                             @endif
                                                             <hr>
                                                             <div class="col-12 row">
                                                                 @foreach ($respuesta->relacion as $relacion)
-                                                                    @if ($tutela->cantidad_pretensiones)
+                                                                    @if ($tutela->primeraInstancia->cantidad_resuelves)
                                                                         <div class="d-flex col-10 col-md-5 col-lg-3">
                                                                             @if ($respuesta->estado_id != 11)
                                                                                 <div class="mr-3">
                                                                                     <button type="button"
-                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension"
-                                                                                        data_url="{{ route('eliminar_respuesta_pretension_guardar') }}"
+                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarResuelve"
+                                                                                        data_url="{{ route('eliminar_respuesta_resuelve_guardar') }}"
                                                                                         data_token="{{ csrf_token() }}"><i
                                                                                             class="fas fa-minus-circle"></i></button>
-                                                                                    <input class="id_relacion_pretension"
+                                                                                    <input class="id_relacion_resuelve"
                                                                                         type="hidden"
-                                                                                        value="{{ $relacion->pretension->id }}">
+                                                                                        value="{{ $relacion->impugancion->id }}">
                                                                                 </div>
                                                                             @endif
                                                                             <div class="my-2">
-                                                                                <strong class="">Pretensión
+                                                                                <strong class="">Resuelve
                                                                                     #
-                                                                                    {{ $relacion->pretension->consecutivo }}</strong>{{ $relacion->pretension->pretension }}
+                                                                                    {{ $relacion->impugancion->consecutivo }}</strong>{{ $relacion->impugancion->resuelve }}
                                                                             </div>
                                                                         </div>
                                                                     @else
                                                                         <div class="row">
                                                                             <div class="my-2 col-11">
                                                                                 <strong
-                                                                                    class="">#{{ $relacion->pretension->consecutivo }}
-                                                                                    Pretensión:
-                                                                                </strong>{{ $relacion->pretension->pretension }}
+                                                                                    class="">#{{ $relacion->impugancion->consecutivo }}
+                                                                                    Resuelve:
+                                                                                </strong>{{ $relacion->impugancion->resuelve }}
                                                                             </div>
                                                                             @if ($respuesta->estado_id != 11)
                                                                                 <div class="col-1">
                                                                                     <button type="button"
-                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarPretension"
-                                                                                        data_url="{{ route('eliminar_respuesta_pretension_guardar') }}"
+                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarResuelve"
+                                                                                        data_url="{{ route('eliminar_respuesta_resuelve_guardar') }}"
                                                                                         data_token="{{ csrf_token() }}"><i
                                                                                             class="fas fa-minus-circle"></i></button>
-                                                                                    <input class="id_relacion_pretension"
+                                                                                    <input class="id_relacion_resuelve"
                                                                                         type="hidden"
-                                                                                        value="{{ $relacion->pretension->id }}">
+                                                                                        value="{{ $relacion->impugancion->id }}">
                                                                                 </div>
                                                                             @endif
                                                                         </div>
                                                                     @endif
                                                                 @endforeach
                                                             </div>
-                                                            <div class="row respuesta-pretension">
+                                                            <div class="row respuesta-resuelve">
                                                                 <div class="col-12 row mt-4 mb-2 ">
                                                                     <div class="col-12 col-md-5">
-                                                                        <h6 class="font-weight-bold">Respuesta pretensión
+                                                                        <h6 class="font-weight-bold">Respuesta resuelve
                                                                         </h6>
                                                                     </div>
                                                                     <div
-                                                                        class="col-12 col-md-7 row estado-pretension justify-content-end">
+                                                                        class="col-12 col-md-7 row estado-resuelve justify-content-end">
                                                                         <input class="estado_actual" type="hidden"
                                                                             value="{{ $respuesta->estado_id }}">
-                                                                        @if ($tutela->estadostutela_id < 4)
+                                                                        @if ($tutela->estadostutela_id < 6)
                                                                             <div
-                                                                                class="col-9 row estado-pretension justify-content-end">
+                                                                                class="col-9 row estado-resuelve justify-content-end">
                                                                                 <div class="col-3 d-flex mb-2">
                                                                                     <h6>Avance:</h6>
                                                                                 </div>
                                                                                 <select
-                                                                                    class="custom-select rounded-0 estadoPretension col-4">
+                                                                                    class="custom-select rounded-0 estadoResuelve col-4">
                                                                                     @foreach ($estados as $estado)
                                                                                         <option
                                                                                             value="{{ $estado->id }}"
-                                                                                            {{ $respuesta->estadorespuestapretension->id == $estado->id ? 'selected' : '' }}>
+                                                                                            {{ $respuesta->estadorepuestaimpugnacion->id == $estado->id ? 'selected' : '' }}>
                                                                                             {{ $estado->estado }} %
                                                                                         </option>
                                                                                     @endforeach
                                                                                 </select>
                                                                                 <button type=""
-                                                                                    class="btn btn-primary btn-estado-pretension col-2 mx-2"
-                                                                                    data_url="{{ route('estado_respuesta_pretension_guardar') }}"
+                                                                                    class="btn btn-primary btn-estado-resuelve col-2 mx-2"
+                                                                                    data_url="{{ route('estado_respuesta_resuelve_guardar') }}"
                                                                                     data_token="{{ csrf_token() }}"><span
                                                                                         style="font-size: 1em;"><i
                                                                                             class="far fa-save"></i></span></button>
                                                                             </div>
                                                                         @endif
                                                                         @if ($respuesta->estado_id != 11)
-                                                                            <div class="col-3 row estado-pretension">
+                                                                            <div class="col-3 row estado-resuelve">
                                                                                 <button type=""
                                                                                     class="btn btn-success col-12 mx-2"
                                                                                     data-toggle="modal"
@@ -4939,7 +4939,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-12 form-group mt-3">
-                                                                        @if ($respuesta->estadorespuestapretension->estado == 100)
+                                                                        @if ($respuesta->estadorepuestaimpugnacion->estado == 100)
                                                                             <div class="respuesta mt-2">
                                                                                 @if ($respuesta->respuesta)
                                                                                     {!! $respuesta->respuesta !!}
@@ -4954,12 +4954,12 @@
                                                                             <input class="respuesta_anterior"
                                                                                 type="hidden"
                                                                                 value="{{ $respuesta->respuesta }}"
-                                                                                data_url="{{ route('historial_respuesta_pretension_guardar') }}">
+                                                                                data_url="{{ route('historial_respuesta_resuelve_guardar') }}">
                                                                         @endif
                                                                         <input class="id_respuesta" type="hidden"
                                                                             value="{{ $respuesta->id }}">
                                                                     </div>
-                                                                    @if ($respuesta->estadorespuestapretension->estado != 100)
+                                                                    @if ($respuesta->estadorepuestaimpugnacion->estado != 100)
                                                                         <div class="col-12 anexosConsulta">
                                                                             <div class="col-12 d-flex row anexoconsulta">
                                                                                 <div
@@ -5005,10 +5005,10 @@
                                                                                 otro Anexo</button>
                                                                         </div>
                                                                         <button type=""
-                                                                            class="btn btn-primary mx-2 btn-respuesta-pretension-editar col-md-3 col-12"
-                                                                            data_url="{{ route('respuesta_pretension_editar_guardar') }}"
-                                                                            data_url2="{{ route('respuesta_pretension_anexo_guardar') }}"
-                                                                            data_url3="{{ route('estado_respuesta_pretension_guardar') }}"
+                                                                            class="btn btn-primary mx-2 btn-respuesta-resuelve-editar col-md-3 col-12"
+                                                                            data_url="{{ route('respuesta_resuelve_editar_guardar') }}"
+                                                                            data_url2="{{ route('respuesta_resuelve_anexo_guardar') }}"
+                                                                            data_url3="{{ route('estado_respuesta_resuelve_guardar') }}"
                                                                             data_token="{{ csrf_token() }}">Guardar
                                                                             respuesta</button>
                                                                     @endif
@@ -5044,7 +5044,7 @@
                                                                                                             class="text-justify">
                                                                                                             {{ $anexo->descripcion }}
                                                                                                         </td>
-                                                                                                        <td><a href="{{ asset('documentos/tutelas/pretensiones/' . $anexo->url) }}"
+                                                                                                        <td><a href="{{ asset('documentos/tutelas/sentencias/resuelves/' . $anexo->url) }}"
                                                                                                                 target="_blank"
                                                                                                                 rel="noopener noreferrer">Descargar</a>
                                                                                                         </td>
@@ -5098,8 +5098,8 @@
                                                                         @endif
                                                                         <hr class="mt-3">
                                                                         <div
-                                                                            class="row d-flex px-12 p-3 mensaje-respuesta-pretension">
-                                                                            <input class="id_respuesta_pretension"
+                                                                            class="row d-flex px-12 p-3 mensaje-respuesta-resuelve">
+                                                                            <input class="id_respuesta_resuelve"
                                                                                 type="hidden"
                                                                                 value="{{ $respuesta->id }}">
                                                                             <div
@@ -5107,13 +5107,13 @@
                                                                                 <label for=""
                                                                                     class="">Agregar
                                                                                     Historial de respuesta</label>
-                                                                                <textarea class="form-control mensaje-historial-respuesta-pretension" rows="3" placeholder="" required></textarea>
+                                                                                <textarea class="form-control mensaje-historial-respuesta-resuelve" rows="3" placeholder="" required></textarea>
                                                                             </div>
                                                                             <div
                                                                                 class="col-12 col-md-12 form-group d-flex">
                                                                                 <button href=""
-                                                                                    class="btn btn-primary px-4 guardarHistorialRespuestaPretension"
-                                                                                    data_url="{{ route('historial_respuesta_pretension_guardar') }}"
+                                                                                    class="btn btn-primary px-4 guardarHistorialRespuestaResuelve"
+                                                                                    data_url="{{ route('historial_respuesta_resuelve_guardar') }}"
                                                                                     data_token="{{ csrf_token() }}">Guardar
                                                                                     historial</button>
                                                                             </div>
@@ -5429,6 +5429,7 @@
                             <a href="{{ route('tutela-gestion') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                         </div>
                         <input class="id_auto_admisorio" type="hidden" value="{{ $tutela->id }}">
+                        <input class="id_sentencia_p_instancia" type="hidden" value="{{ $tutela->primeraInstancia->id }}">
                     </div>
                 </div>
             </div>

@@ -17,16 +17,14 @@ class ImpugnacionExterna extends Model
         return $this->belongsTo(PrimeraInstancia::class, 'sentenciapinstancia_id', 'id');
     }
     //----------------------------------------------------------------------------------
-    //==================================================================================
     public function accion()
     {
         return $this->belongsToMany(Accions::class, 'impugnacion_externa_accion', 'impugnacion_externa_id', 'accionante_accionado_id');
     }
-    //==================================================================================
-    //==================================================================================
+    //----------------------------------------------------------------------------------
     public function resuelves()
     {
         return $this->belongsToMany(ResuelvePrimeraInstancia::class, 'impugnacion_externa_resuelve', 'impugnacion_externa_id', 'resuelve_primera_instancia_id');
     }
-    //==================================================================================
+    //----------------------------------------------------------------------------------
 }
