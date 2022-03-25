@@ -1582,20 +1582,20 @@
                                         </div>
                                     </div>
                                     @if ($tutela->estadostutela_id < 5)
-                                    <hr>
-                                    <div class="row d-flex px-12 p-3">
-                                        <input class="id_tarea" type="hidden" value="2">
-                                        <div class="container-mensaje-historial-tarea form-group col-12">
-                                            <label for="" class="">Agregar Historial</label>
-                                            <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
+                                        <hr>
+                                        <div class="row d-flex px-12 p-3">
+                                            <input class="id_tarea" type="hidden" value="2">
+                                            <div class="container-mensaje-historial-tarea form-group col-12">
+                                                <label for="" class="">Agregar Historial</label>
+                                                <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
+                                            </div>
+                                            <div
+                                                class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
+                                                <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialTarea"
+                                                    data_url="{{ route('historial_tarea_tutela_guardar') }}"
+                                                    data_token="{{ csrf_token() }}">Guardar</button>
+                                            </div>
                                         </div>
-                                        <div
-                                            class="col-12 col-md-12 form-group d-flex align-items-end justify-content-end">
-                                            <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialTarea"
-                                                data_url="{{ route('historial_tarea_tutela_guardar') }}"
-                                                data_token="{{ csrf_token() }}">Guardar</button>
-                                        </div>
-                                    </div>
                                     @endif
                                 </div>
                             </div>
@@ -2081,23 +2081,22 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         @if ($resuelve->sentido == 'Favorable')
-                                                                                        <div
-                                                                                        class="form-check">
-                                                                                        <input
-                                                                                            class="form-check-input crearimpugnacion"
-                                                                                            type="checkbox"
-                                                                                            value=""
-                                                                                            id="gestion"
-                                                                                            name="gestion"
-                                                                                            id_resuelve="{{ $resuelve->id }}"
-                                                                                            data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}" disabled>
-                                                                                        <label
-                                                                                            class="form-check-label"
-                                                                                            for="flexCheckChecked">
-                                                                                            Gestionar
-                                                                                            Impugnación
-                                                                                        </label>
-                                                                                    </div>
+                                                                                            <div class="form-check">
+                                                                                                <input
+                                                                                                    class="form-check-input crearimpugnacion"
+                                                                                                    type="checkbox" value=""
+                                                                                                    id="gestion"
+                                                                                                    name="gestion"
+                                                                                                    id_resuelve="{{ $resuelve->id }}"
+                                                                                                    data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
+                                                                                                    disabled>
+                                                                                                <label
+                                                                                                    class="form-check-label"
+                                                                                                    for="flexCheckChecked">
+                                                                                                    Gestionar
+                                                                                                    Impugnación
+                                                                                                </label>
+                                                                                            </div>
                                                                                         @else
                                                                                             @if ($resuelve->gestion == '1')
                                                                                                 <div
@@ -2150,7 +2149,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 mb-4">
-                                                <button class="btn btn-primary btn-sombra btn-xs pl-4 pr-4" id="guardarCambiosSentidos">Guardar</button>
+                                                <button class="btn btn-primary btn-sombra btn-xs pl-4 pr-4"
+                                                    id="guardarCambiosSentidos">Guardar</button>
                                             </div>
                                         </div>
 
@@ -2195,21 +2195,24 @@
                                                     <label class="form-check-label"><strong>Seleccionar todos las
                                                             impugnaciones</strong></label>
                                                 </div>
-                                                @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
-                                                    <div class="form-check form-check-inline">
-                                                        @if ($impugnacion->estado->estado == 0)
-                                                            <input type="checkbox" class="form-check-input select-hecho"
-                                                                value="{{ $impugnacion->id }}">
-                                                            <label
-                                                                class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
-                                                        @else
-                                                            <input type="checkbox" class="form-check-input select-hecho"
-                                                                disabled>
-                                                            <label
-                                                                class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
-                                                        @endif
-                                                    </div>
-                                                @endforeach
+                                                <div class="cajaChecksAsignar" id="cajaChecksAsignar">
+                                                    @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
+                                                        <div class="form-check form-check-inline checksAsignar">
+                                                            @if ($impugnacion->estado->estado == 0)
+                                                                <input type="checkbox"
+                                                                    class="form-check-input select-hecho"
+                                                                    value="{{ $impugnacion->id }}">
+                                                                <label
+                                                                    class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
+                                                            @else
+                                                                <input type="checkbox"
+                                                                    class="form-check-input select-hecho" disabled>
+                                                                <label
+                                                                    class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                </div>
                                             </div>
                                             <div class="col-12 col-md-5 form-group">
                                                 <label for="">Cargo</label>

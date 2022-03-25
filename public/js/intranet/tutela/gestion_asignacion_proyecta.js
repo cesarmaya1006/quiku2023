@@ -993,10 +993,10 @@ window.addEventListener('DOMContentLoaded', function() {
 		const token_ = $('input[name=_token]').val();
 		if (sentido == 'Favorable') {
 			$(this).parent().parent().parent().find('.crearimpugnacion').prop('disabled', true);
-            $(this).parent().parent().parent().find('.crearimpugnacion').prop('checked', false);
+			$(this).parent().parent().parent().find('.crearimpugnacion').prop('checked', false);
 		} else {
 			$(this).parent().parent().parent().find('input').prop('disabled', false);
-            $(this).parent().parent().parent().find('.crearimpugnacion').prop('checked', false);
+			$(this).parent().parent().parent().find('.crearimpugnacion').prop('checked', false);
 		}
 		var data = {
 			sentido: sentido,
@@ -1010,6 +1010,8 @@ window.addEventListener('DOMContentLoaded', function() {
 			success: function(respuesta) {
 				respuesta_html = llenarTablaImpugnacionesAjax(respuesta.tutela);
 				$('#bodyTablaResuelves').html(respuesta_html);
+				respuesta_html = llenarCheckBoxImpgnaciones(respuesta.tutela);
+				$('#cajaChecksAsignar').html(respuesta_html);
 
 				if (respuesta.mensaje == 'ok') {
 					Sistema.notificaciones('El sentido fue cambiado de manera correcta', 'Sistema', 'success');
@@ -1039,8 +1041,10 @@ window.addEventListener('DOMContentLoaded', function() {
 			success: function(respuesta) {
 				if (respuesta.mensaje == 'ok') {
 					Sistema.notificaciones(respuesta.data, 'Sistema', 'success');
-                    respuesta_html = llenarTablaImpugnacionesAjax(respuesta.tutela);
-				$('#bodyTablaResuelves').html(respuesta_html);
+					respuesta_html = llenarTablaImpugnacionesAjax(respuesta.tutela);
+					$('#bodyTablaResuelves').html(respuesta_html);
+					respuesta_html = llenarCheckBoxImpgnaciones(respuesta.tutela);
+					$('#cajaChecksAsignar').html(respuesta_html);
 				} else {
 					Sistema.notificaciones('No fue posible hacer el proceso', 'Sistema', 'error');
 				}
@@ -1074,5 +1078,25 @@ function llenarTablaImpugnacionesAjax(tutela) {
 			respuesta_html += '</tr>';
 		});
 	});
-    return respuesta_html
+	return respuesta_html;
+}
+function llenarCheckBoxImpgnaciones(tutela) {
+	respuesta_html = '';
+	$.each(tutela, function(index, tutela) {
+		$.each(tutela.primera_instancia.impugnacionesinternas, function(index, impugnacion) {
+			respuesta_html += '<div class="form-check form-check-inline checksAsignar">';
+			if (impugnacion.estado['estado'] == 0) {
+				respuesta_html +=
+					'<input type="checkbox" class="form-check-input select-hecho" value="' + impugnacion['id'] + '">';
+				respuesta_html +=
+					'<label class="form-check-label"><strong>#' + impugnacion['consecutivo'] + '</strong></label>';
+			} else {
+				respuesta_html += '<input type="checkbox" class="form-check-input select-hecho" disabled>';
+				respuesta_html +=
+					'<label class="form-check-label"><strong>#' + $impugnacion['consecutivo'] + '</strong></label>';
+			}
+            respuesta_html += '</div>';
+		});
+	});
+	return respuesta_html;
 }
