@@ -105,6 +105,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('estado_resuelve', [TutelaController::class, 'estado_resuelve_guardar'])->name('estado_resuelve_guardar');
         Route::post('asignacion_hecho', [TutelaController::class, 'asignacion_hecho_guardar'])->name('asignacion_hecho_guardar');
         Route::post('asignacion_pretension', [TutelaController::class, 'asignacion_pretension_guardar'])->name('asignacion_pretension_guardar');
+        Route::post('asignacion_resuelve', [TutelaController::class, 'asignacion_resuelve_guardar'])->name('asignacion_resuelve_guardar');
         Route::post('historial_hecho', [TutelaController::class, 'historial_hecho_guardar'])->name('historial_hecho_guardar');
         Route::post('historial_respuesta_hecho', [TutelaController::class, 'historial_respuesta_hecho_guardar'])->name('historial_respuesta_hecho_guardar');
         Route::post('historial_pretension', [TutelaController::class, 'historial_pretension_guardar'])->name('historial_pretension_guardar');
@@ -130,6 +131,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('eliminar_respuesta_pretension', [TutelaController::class, 'eliminar_respuesta_pretension_guardar'])->name('eliminar_respuesta_pretension_guardar');
         Route::post('eliminar_respuesta_resuelve', [TutelaController::class, 'eliminar_respuesta_resuelve_guardar'])->name('eliminar_respuesta_resuelve_guardar');
         Route::get('respuestaTutela/{id}', [TutelaController::class, 'respuesta_tutela'])->name('respuesta_tutela');
+        Route::get('respuestaSentenciaPrimeraInstancia/{id}', [TutelaController::class, 'respuesta_sentencia_primera_instancia'])->name('respuesta_sentencia_primera_instancia');
         Route::post('historial_resuelve_tutela', [TutelaController::class, 'historial_resuelve_tutela_guardar'])->name('historial_resuelve_tutela_guardar');
         Route::post('historial_resuelve_tutela_eliminar', [TutelaController::class, 'historial_resuelve_tutela_eliminar'])->name('historial_resuelve_tutela_eliminar');
         Route::post('resuelve_orden_tutela', [TutelaController::class, 'resuelve_orden_tutela_guardar'])->name('resuelve_orden_tutela_guardar');

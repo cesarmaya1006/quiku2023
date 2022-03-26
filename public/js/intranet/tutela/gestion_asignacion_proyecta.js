@@ -202,6 +202,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			}
 		}
 	}
+
 	// Guardar Historial tutela - respuesta pretensión
 	if (document.querySelector('.guardarHistorialRespuestaPretension')) {
 		let HistorialPretension = document.querySelectorAll('.guardarHistorialRespuestaPretension');
@@ -224,6 +225,45 @@ window.addEventListener('DOMContentLoaded', function() {
 				let data = {
 					historial: mensajeHistorial,
 					respuesta_pretension_id: idRespuesta
+				};
+				$.ajax({
+					url: url,
+					type: 'POST',
+					headers: { 'X-CSRF-TOKEN': token },
+					data: data,
+					success: function(respuesta) {
+						location.reload();
+					},
+					error: function(error) {
+						console.log(error.responseJSON);
+					}
+				});
+			}
+		}
+	}
+
+	// Guardar Historial tutela - respuesta resuelve
+	if (document.querySelector('.guardarHistorialRespuestaResuelve')) {
+		let HistorialResuelve = document.querySelectorAll('.guardarHistorialRespuestaResuelve');
+		HistorialResuelve.forEach((btn) => btn.addEventListener('click', guardarHistorialRespuestaResuelve));
+
+		function guardarHistorialRespuestaResuelve(btn) {
+			btn.preventDefault();
+			let contenedorHisotrial = btn.target.parentElement.parentElement;
+			let url = btn.target.getAttribute('data_url');
+			let token = btn.target.getAttribute('data_token');
+			let mensajeHistorial = contenedorHisotrial.querySelector('.mensaje-historial-respuesta-resuelve').value;
+			let idRespuesta = contenedorHisotrial.querySelector('.id_respuesta_resuelve').value;
+			if (mensajeHistorial == '') {
+				alert('Debe agregar un historial');
+			} else {
+				guardarHistorialResuelve();
+			}
+
+			function guardarHistorialResuelve() {
+				let data = {
+					historial: mensajeHistorial,
+					respuesta_resuelve_id: idRespuesta
 				};
 				$.ajax({
 					url: url,
@@ -469,6 +509,73 @@ window.addEventListener('DOMContentLoaded', function() {
 		}
 	}
 
+	// Guardar reasignar resuelve a funcionario
+	if (document.querySelectorAll('.reasignacion_resuelve_guardar')) {
+		let asignacionResuelves = document.querySelectorAll('.reasignacion_resuelve_guardar');
+		asignacionResuelves.forEach((asignacionPretension) => {
+			asignacionPretension.addEventListener('click', reasignacionResuelves);
+		});
+
+		function reasignacionResuelves(e) {
+			e.preventDefault();
+			let padreContenedor = e.target.parentElement.parentElement.parentElement;
+			let url = e.target.getAttribute('data_url');
+			let url2 = e.target.getAttribute('data_url2');
+			let token = e.target.getAttribute('data_token');
+			let id_respuesta = padreContenedor.querySelector('.id_respuesta').value;
+			let funcionario = padreContenedor.querySelector('.funcionario').value;
+			let cargo = padreContenedor.querySelector('.cargo').value;
+			let resuelves = padreContenedor.querySelectorAll('.id_relacion_resuelve');
+			if (cargo == '' || funcionario == '') {
+				alert('Debe dilegenciar todos los campos del formulario');
+			} else {
+				actualizarRespuesta();
+				resuelves.forEach((resuelve) => {
+					guardarAsignacionPeticion(resuelve.value);
+				});
+			}
+
+			function actualizarRespuesta() {
+				let data = {
+					id_respuesta,
+					funcionario
+				};
+				$.ajax({
+					url: url2,
+					type: 'POST',
+					headers: { 'X-CSRF-TOKEN': token },
+					data: data,
+					success: function(respuesta) {
+						// console.log(respuesta)
+					},
+					error: function(error) {
+						console.log(error.responseJSON);
+					}
+				});
+			}
+
+			function guardarAsignacionPeticion(value) {
+				let data = {
+					resuelve: value,
+					funcionario,
+					idAuto
+				};
+				$.ajax({
+					url: url,
+					type: 'POST',
+					headers: { 'X-CSRF-TOKEN': token },
+					data: data,
+					success: function(respuesta) {
+						location.reload();
+					},
+					error: function(error) {
+						console.log(error.responseJSON);
+					}
+				});
+			}
+		}
+	}
+
 	// Guardar prioridad tutela
 	if (document.querySelector('.prioridad_guardar')) {
 		let prioridadGuardar = document.querySelector('.prioridad_guardar');
@@ -639,6 +746,50 @@ window.addEventListener('DOMContentLoaded', function() {
 		}
 	}
 
+	// Guardar estado resuelve
+	if (document.querySelector('.btn-estado-resuelve')) {
+		let btnEstados = document.querySelectorAll('.btn-estado-resuelve');
+		btnEstados.forEach((btn) => btn.addEventListener('click', guardarEstado));
+
+		function guardarEstado(btn) {
+			btn.preventDefault();
+			let btnE = btn.target;
+			if (btnE.tagName === 'I') {
+				padreEstado =
+					btnE.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+						.parentElement;
+				btnE = btnE.parentElement.parentElement;
+			} else {
+				padreEstado = btnE.parentElement.parentElement.parentElement.parentElement.parentElement;
+			}
+			let id_respuesta = padreEstado.querySelector('.id_respuesta').value;
+			let url = btnE.getAttribute('data_url');
+			let token = btnE.getAttribute('data_token');
+			let estado = padreEstado.querySelector('.estadoResuelve').value;
+			let respuesta = padreEstado.querySelector('.respuesta').value;
+			let data = {
+				estado,
+				id_respuesta
+			};
+			if (estado == 11 && respuesta == '') {
+				alert('Para guardar el 100% debe agregar una respuesta antes');
+			} else {
+				$.ajax({
+					url: url,
+					type: 'POST',
+					headers: { 'X-CSRF-TOKEN': token },
+					data: data,
+					success: function(respuesta) {
+						location.reload();
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+			}
+		}
+	}
+
 	// Eliminar respuesta hecho
 	if (document.querySelectorAll('.eliminarHecho')) {
 		let btnsEliminarHecho = document.querySelectorAll('.eliminarHecho');
@@ -694,6 +845,40 @@ window.addEventListener('DOMContentLoaded', function() {
 				pretension_id
 			};
 
+			$.ajax({
+				url: url,
+				type: 'POST',
+				headers: { 'X-CSRF-TOKEN': token },
+				data: data,
+				success: function(respuesta) {
+					location.reload();
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		}
+	}
+
+	// Eliminar respuesta Resuelve
+	if (document.querySelectorAll('.eliminarResuelve')) {
+		let btnsEliminarResuelve = document.querySelectorAll('.eliminarResuelve');
+		btnsEliminarResuelve.forEach((btn) => {
+			btn.addEventListener('click', eliminarAsigancionResuelve);
+		});
+
+		function eliminarAsigancionResuelve(btn) {
+			let btnEH = btn.target;
+			if (btnEH.tagName === 'I') {
+				btnEH = btnEH.parentNode;
+			}
+			let contenedorPadre = btnEH.parentElement;
+			let resuelve_id = contenedorPadre.querySelector('.id_relacion_resuelve').value;
+			let url = btnEH.getAttribute('data_url');
+			let token = btnEH.getAttribute('data_token');
+			let data = {
+				resuelve_id
+			};
 			$.ajax({
 				url: url,
 				type: 'POST',
