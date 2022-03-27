@@ -29,6 +29,7 @@ use App\Models\Tutela\RespuestaHechos;
 use App\Models\Tutela\TutelaRespuesta;
 use Illuminate\Support\Facades\Config;
 use App\Models\Tutela\ArgumentosTutela;
+use App\Models\Tutela\PrimeraInstancia;
 use App\Models\Tutela\AsignacionEstados;
 use App\Models\Tutela\DocRespuestaHecho;
 use App\Models\Tutela\ImpugnacionInterna;
@@ -530,6 +531,17 @@ class TutelaController extends Controller
         }
     }
 
+    public function asignacion_resuelve_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionResuelve['empleado_id'] = (int)$request['funcionario'];
+            $resuelveActualizar = ImpugnacionInterna::findOrFail($request['resuelve'])->update($asignacionResuelve);
+            return response()->json(['mensaje' => 'ok', 'data' => $resuelveActualizar]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function historial_hecho_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -1003,6 +1015,14 @@ class TutelaController extends Controller
         $imagen = public_path('imagenes\sistema\icono_sistema.png');
         $firma  = '';
         return view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('tutela', 'imagen', 'resuelves', 'firma'));
+    }
+
+    public function respuesta_sentencia_primera_instancia($id)
+    {
+        $tutela = AutoAdmisorio::findOrFail($id);
+        $imagen = public_path('imagenes\sistema\icono_sistema.png');
+        $firma  = '';
+        return view('intranet.funcionarios.tutela.tutela_tareas.respuesta_sentencia_primera_instancia', compact('tutela', 'imagen', 'firma',));
     }
 
     public function descarga_respuesta_tutela($id)
