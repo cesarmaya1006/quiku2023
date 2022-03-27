@@ -509,6 +509,17 @@ class TutelaController extends Controller
         return response()->json(['mensaje' => 'ok', 'data' => $resuelve]);
     }
 
+    public function asignacion_impugnacion_guardar(Request $request)
+    {
+        if ($request->ajax()) {
+            $asignacionImpugnacion['empleado_id'] = (int)$request['funcionario'];
+            $impugnacionActualizar = ImpugnacionInterna::findOrFail($request['impugnacion'])->update($asignacionImpugnacion);
+            return response()->json(['mensaje' => 'ok', 'data' => $impugnacionActualizar]);
+        } else {
+            abort(404);
+        }
+    }
+
     public function asignacion_hecho_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -1217,6 +1228,24 @@ class TutelaController extends Controller
                                     ->with('primeraInstancia.impugnacionesinternas.estado')
                                     ->get();
             return response()->json(['mensaje' => 'ok', 'data' => $data,'tutela'=>$tutela]);
+        } else {
+            abort(404);
+        }
+    }
+
+    public function verificar_sentencia_primera_instancia(Request $request, $id){
+        if ($request->ajax()) {
+            $sentenciaPrimeraInstancia = PrimeraInstancia::findOrFail($id);
+            $updateSentencia1eraInst ['verificada']=1;
+            if ($sentenciaPrimeraInstancia->impugnacionesinternas->count()>0) {
+                $updateTutela['estadostutela_id']=6;
+            } else {
+                $updateTutela['estadostutela_id']=5;
+            }
+            $sentenciaPrimeraInstancia->update($updateSentencia1eraInst);
+            $tutela = AutoAdmisorio::findOrFail($id);
+            $tutela->update($updateTutela);
+            return response()->json(['mensaje' => 'ok']);
         } else {
             abort(404);
         }

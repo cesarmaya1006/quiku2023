@@ -14,3 +14,4 @@
 <script src="{{ asset('js/intranet/general/general.js') }}"></script>
 <script src="{{ asset('js/intranet/general/mis_scripst.js') }}"></script>
 <script src="{{ asset('js/intranet/general/generalprueba.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

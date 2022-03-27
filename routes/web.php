@@ -105,6 +105,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('estado_resuelve', [TutelaController::class, 'estado_resuelve_guardar'])->name('estado_resuelve_guardar');
         Route::post('asignacion_hecho', [TutelaController::class, 'asignacion_hecho_guardar'])->name('asignacion_hecho_guardar');
         Route::post('asignacion_pretension', [TutelaController::class, 'asignacion_pretension_guardar'])->name('asignacion_pretension_guardar');
+        Route::post('asignacion_impugnacion', [TutelaController::class, 'asignacion_impugnacion_guardar'])->name('asignacion_impugnacion_guardar');
+
         Route::post('asignacion_resuelve', [TutelaController::class, 'asignacion_resuelve_guardar'])->name('asignacion_resuelve_guardar');
         Route::post('historial_hecho', [TutelaController::class, 'historial_hecho_guardar'])->name('historial_hecho_guardar');
         Route::post('historial_respuesta_hecho', [TutelaController::class, 'historial_respuesta_hecho_guardar'])->name('historial_respuesta_hecho_guardar');
@@ -141,6 +143,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('descarga_respuesta_tutela/{id}', [TutelaController::class, 'descarga_respuesta_tutela'])->name('descarga_respuesta_tutela');
         Route::post('cambiosentidoresuelve/{id}', [TutelaController::class, 'cambiosentidoresuelve'])->name('cambiosentidoresuelve');
         Route::post('crearimpugnacion/{id}', [TutelaController::class, 'crearimpugnacion'])->name('crearimpugnacion');
+        Route::post('verificar_sentencia_primera_instancia/{id}', [TutelaController::class, 'verificar_sentencia_primera_instancia'])->name('verificar_sentencia_primera_instancia');
 
         // Rutas Index
         // ------------------------------------------------------------------------------------

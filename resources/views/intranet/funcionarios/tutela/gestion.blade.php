@@ -69,7 +69,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-light" style="border: solid 1px grey">
                         <div class="inner">
-                            <h3>{{ $hechos->count() + $pretensiones->count() }}</h3>
+                            <h3>{{ $hechos->count() + $pretensiones->count()+ $resuelves->count() }}</h3>
                             <p style="font-size: 0.8em">Colaboraciones</p>
                         </div>
                         <div class="icon">
@@ -521,6 +521,71 @@
                                 @endif
                                 <td class="text-center">
                                     <a href="{{ route('gestionar_tutela', ['id' => $pretension->tutela->id]) }}"
+                                        class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                            class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <hr>
+                <h6 class="mb-3">Resuelves en primera instancia</h6>
+                <table class="table table-striped table-hover table-sm display">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th class="text-center" style="white-space:nowrap;">Fecha radica usuario</th>
+                            <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
+                            <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
+                            <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                            <th class="text-center" style="white-space:nowrap;">Estado Pretensión</th>
+                            <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
+                            <th class="text-center" style="white-space:nowrap;">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($resuelves as $resuelve)
+                            <tr>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $resuelve->sentenciap->tutela->fecha_radicado }}</td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $resuelve->sentenciap->tutela->estado->estado_funcionario }}</td>
+                                <td class="text-center" style="white-space:nowrap;">
+                                    {{ $resuelve->sentenciap->tutela->radicado }}</td>
+                                @if ($resuelve->sentenciap->tutela->prioridad_id == 1)
+                                    <td class="text-center bg-warning" style="white-space:nowrap;">
+                                        {{ $resuelve->sentenciap->tutela->prioridad->prioridad }}
+                                    </td>
+                                @elseif($resuelve->sentenciap->tutela->prioridad_id == 2)
+                                    <td class="text-center bg-success" style="white-space:nowrap;">
+                                        {{ $resuelve->sentenciap->tutela->prioridad->prioridad }}
+                                    </td>
+                                @else
+                                    <td class="text-center bg-danger" style="white-space:nowrap;">
+                                        {{ $resuelve->sentenciap->tutela->prioridad->prioridad }}
+                                    </td>
+                                @endif
+                                @if ($resuelve->estado->estado >= 66)
+                                    <td class="text-center bg-success" style="white-space:nowrap;">
+                                        {{ $resuelve->estado->estado }} %</td>
+                                @elseif($resuelve->estado->estado <= 33)
+                                    <td class="text-center bg-danger" style="white-space:nowrap;">
+                                        {{ $resuelve->estado->estado }} %</td>
+                                @else
+                                    <td class="text-center bg-warning" style="white-space:nowrap;">
+                                        {{ $resuelve->estado->estado }} %</td>
+                                @endif
+                                @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($resuelve->sentenciap->tutela->fecha_limite))))
+                                    <td class="text-center bg-danger" style="white-space:nowrap;">
+                                        {{ $resuelve->sentenciap->tutela->fecha_limite }}</td>
+                                @elseif(strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($resuelve->sentenciap->tutela->fecha_limite))) > -172800)
+                                    <td class="text-center bg-warning" style="white-space:nowrap;">
+                                        {{ $resuelve->sentenciap->tutela->fecha_limite }}</td>
+                                @else
+                                    <td class="text-center bg-success" style="white-space:nowrap;">
+                                        {{ $resuelve->sentenciap->tutela->fecha_limite }}</td>
+                                @endif
+                                <td class="text-center">
+                                    <a href="{{ route('gestionar_tutela', ['id' => $resuelve->sentenciap->tutela->id]) }}"
                                         class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                             class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                                 </td>

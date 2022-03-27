@@ -1,6 +1,13 @@
 window.addEventListener('DOMContentLoaded', function() {
 	let idAuto = document.querySelector('.id_auto').value;
 	let idTarea = document.querySelector('.id_tarea').value;
+	//oculta o muestra  bloque Gestión Sentencia en primera Instancia
+	if ($('#verificada').val() == '0') {
+		$('.gest1eraparte2').addClass('d-none');
+	} else {
+		$('.gest1eraparte1').addClass('d-none');
+	}
+
 	// Carga de cargos en selector
 	if (document.querySelector('.cargo')) {
 		cargos = document.querySelector('.cargo');
@@ -280,6 +287,53 @@ window.addEventListener('DOMContentLoaded', function() {
 			}
 		}
 	}
+    // Guardar asignar impugnacion a funcionario
+	if (document.querySelector('.asignacion_impugnacion_guardar')) {
+		let asignacionImpugnacion = document.querySelector('.asignacion_impugnacion_guardar');
+		asignacionImpugnacion.addEventListener('click', function(e) {
+			e.preventDefault();
+			let padreContenedor = e.target.parentElement.parentElement;
+			let url = e.target.getAttribute('data_url');
+			let token = e.target.getAttribute('data_token');
+			let funcionario = padreContenedor.querySelector('.funcionario').value;
+			let cargo = padreContenedor.querySelector('.cargo').value;
+			let impugnaciones = document.querySelectorAll('.select-impugnacion');
+			let impugnacionesAsignar = [];
+			impugnaciones.forEach((impugnacion) => {
+				if (impugnacion.checked) {
+					impugnacionesAsignar.push(impugnacion);
+				}
+			});
+			if (impugnacionesAsignar.length == 0 || cargo == '' || funcionario == '') {
+				alert('Debe dilegenciar todos los campos del formulario');
+			} else {
+				impugnacionesAsignar.forEach((impugnacion) => {
+					guardarAsignacionImpugnacion(impugnacion.value);
+				});
+			}
+
+			function guardarAsignacionImpugnacion(value) {
+				let data = {
+					impugnacion: value,
+					funcionario,
+					idAuto
+				};
+				$.ajax({
+					url: url,
+					type: 'POST',
+					headers: { 'X-CSRF-TOKEN': token },
+					data: data,
+					success: function(respuesta) {
+						location.reload();
+					},
+					error: function(error) {
+						console.log(error.responseJSON);
+					}
+				});
+			}
+		});
+	}
+    //===========================================================================
 
 	// Guardar asignar hecho a funcionario
 	if (document.querySelector('.asignacion_hecho_guardar')) {
@@ -1237,7 +1291,51 @@ window.addEventListener('DOMContentLoaded', function() {
 			error: function() {}
 		});
 	});
+	$('#guardarCambiosSentidos').on('click', function(e) {
+		const url_t = $(this).attr('data_url');
+		const token_ = $('input[name=_token]').val();
+		const verificada = $('#verificada').val();
+		Swal.fire({
+			title: 'Esta Seguro de verificar la sentencia en primera instancia?',
+			text:
+				'Este proceso solo se puede hacer una vez, despues de verificar los sentidos de los reuelves no se puede volver a cambiar',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Si, verificar!',
+			cancelButtonText: 'Cancelar'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				guardarCambiosSentidos(url_t, token_, verificada);
+			}
+		});
+
+		//
+	});
 });
+
+function guardarCambiosSentidos(url_t, token_, verificada) {
+	var data = {
+		verificada: verificada
+	};
+	$.ajax({
+		url: url_t,
+		type: 'POST',
+		headers: { 'X-CSRF-TOKEN': token_ },
+		data: data,
+		success: function(respuesta) {
+			if (respuesta.mensaje == 'ok') {
+				Sistema.notificaciones('Sentencia en primera instancia verificada', 'Sistema', 'success');
+				$('.gest1eraparte2').removeClass('d-none');
+				$('.gest1eraparte1').addClass('d-none');
+			} else {
+				Sistema.notificaciones('No fue posible hacer el proceso', 'Sistema', 'error');
+			}
+		},
+		error: function() {}
+	});
+}
 
 function llenarTablaImpugnacionesAjax(tutela) {
 	respuesta_html = '';
@@ -1272,15 +1370,15 @@ function llenarCheckBoxImpgnaciones(tutela) {
 			respuesta_html += '<div class="form-check form-check-inline checksAsignar">';
 			if (impugnacion.estado['estado'] == 0) {
 				respuesta_html +=
-					'<input type="checkbox" class="form-check-input select-hecho" value="' + impugnacion['id'] + '">';
+					'<input type="checkbox" class="form-check-input select-impugnacion" value="' + impugnacion['id'] + '">';
 				respuesta_html +=
 					'<label class="form-check-label"><strong>#' + impugnacion['consecutivo'] + '</strong></label>';
 			} else {
-				respuesta_html += '<input type="checkbox" class="form-check-input select-hecho" disabled>';
+				respuesta_html += '<input type="checkbox" class="form-check-input select-impugnacion" disabled>';
 				respuesta_html +=
 					'<label class="form-check-label"><strong>#' + $impugnacion['consecutivo'] + '</strong></label>';
 			}
-            respuesta_html += '</div>';
+			respuesta_html += '</div>';
 		});
 	});
 	return respuesta_html;

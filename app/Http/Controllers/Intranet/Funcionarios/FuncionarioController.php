@@ -19,6 +19,7 @@ use App\Http\Requests\ValidarRegistroAsistido;
 use App\Models\Tutela\AsignacionTarea;
 use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\HechosTutela;
+use App\Models\Tutela\ImpugnacionInterna;
 use App\Models\Tutela\PretensionesTutela;
 
 class FuncionarioController extends Controller
@@ -219,8 +220,13 @@ class FuncionarioController extends Controller
         $pretensiones = PretensionesTutela::where('empleado_id', session('id_usuario'))->where('estado_id', '!=', 11)->whereHas('tutela', function ($q) {
             $q->where('estadostutela_id', '<', '4');
         })->get();
+        $resuelves = ImpugnacionInterna::where('empleado_id', session('id_usuario'))->where('estado_id', '!=', 11)->whereHas('sentenciap', function ($q) {
+            $q->whereHas('tutela', function ($p) {
+                $p->where('estadostutela_id', '6');
+            });
+        })->get();
         $cerradas = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->where('estado_asignacion', 1)->where('estadostutela_id', 4)->get();
-        return view('intranet.funcionarios.tutela.gestion', compact('tutelas', 'sin_aceptar', 'aceptadas', 'supervisadas', 'proyectadas', 'revisiones', 'activasAprobar', 'activasRadicar', 'hechos', 'pretensiones', 'cerradas'));
+        return view('intranet.funcionarios.tutela.gestion', compact('tutelas', 'sin_aceptar', 'aceptadas', 'supervisadas', 'proyectadas', 'revisiones', 'activasAprobar', 'activasRadicar', 'hechos', 'pretensiones', 'cerradas','resuelves'));
     }
 
     public function gestionar_asignacion_tutela($id)
