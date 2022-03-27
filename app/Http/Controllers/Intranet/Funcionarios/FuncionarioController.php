@@ -214,10 +214,10 @@ class FuncionarioController extends Controller
             if (sizeOf($validacion)) $activasRadicar[] = $value;
         }
         $hechos = HechosTutela::where('empleado_id', session('id_usuario'))->where('estado_id', '!=', 11)->whereHas('tutela', function ($q) {
-            $q->where('estadostutela_id', '<', '5');
+            $q->where('estadostutela_id', '<', '4');
         })->get();
         $pretensiones = PretensionesTutela::where('empleado_id', session('id_usuario'))->where('estado_id', '!=', 11)->whereHas('tutela', function ($q) {
-            $q->where('estadostutela_id', '<', '5');
+            $q->where('estadostutela_id', '<', '4');
         })->get();
         $cerradas = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->where('estado_asignacion', 1)->where('estadostutela_id', 4)->get();
         return view('intranet.funcionarios.tutela.gestion', compact('tutelas', 'sin_aceptar', 'aceptadas', 'supervisadas', 'proyectadas', 'revisiones', 'activasAprobar', 'activasRadicar', 'hechos', 'pretensiones', 'cerradas'));
