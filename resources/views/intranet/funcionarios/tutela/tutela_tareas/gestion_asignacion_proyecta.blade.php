@@ -1846,7 +1846,7 @@
                                 @endif
                             @endif
 
-                            @if ($tutela->estadostutela_id == 5 || $tutela->estadostutela_id == 6|| $tutela->estadostutela_id == 7)
+                            @if ($tutela->estadostutela_id == 5 || $tutela->estadostutela_id == 6 || $tutela->estadostutela_id == 7)
                                 <div class="card card-outline card-primary collapsed-card mx-1 py-2"
                                     style="font-size: 1em;">
                                     <div class="card-header">
@@ -1861,8 +1861,19 @@
                                         @php
                                             $primeraInstancia = $tutela->primeraInstancia;
                                         @endphp
-                                        <input type="hidden" name="verificada" id="verificada" value="{{$primeraInstancia->verificada}}">
+                                        <input type="hidden" name="verificada" id="verificada"
+                                            value="{{ $primeraInstancia->verificada }}">
                                         <div class="row gest1eraparte1">
+                                            <div class="col-12 mt-3 mb-4">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-12 col-md -6">
+                                                        <iframe class="embed-responsive-item w-100" style="min-height: 400px;"
+                                                            src="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
+                                                            allowfullscreen></iframe>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
                                             <div class="col-12 d-flex justify-content-center">
                                                 <div class="row">
                                                     <div class="col-12 mt-3 mb-4">
@@ -1879,7 +1890,8 @@
                                                         <div class="col-12 mb-4">
                                                             <div class="row">
                                                                 <div class="col-12 table-responsive">
-                                                                    <table class="table table-striped table-hover table-sm">
+                                                                    <table
+                                                                        class="table table-striped table-hover table-sm">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Numeracion</th>
@@ -2016,7 +2028,8 @@
                                                             <div class="row">
                                                                 <div class="col-12 table-responsive">
                                                                     @csrf
-                                                                    <table class="table table-striped table-hover table-sm">
+                                                                    <table
+                                                                        class="table table-striped table-hover table-sm">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Numeracion</th>
@@ -2151,8 +2164,8 @@
                                             </div>
                                             <div class="col-12 mb-4">
                                                 <button class="btn btn-primary btn-sombra btn-xs pl-4 pr-4"
-                                                        id="guardarCambiosSentidos"
-                                                        data_url="{{ route('verificar_sentencia_primera_instancia', ['id' => $primeraInstancia->id]) }}">Verificar</button>
+                                                    id="guardarCambiosSentidos"
+                                                    data_url="{{ route('verificar_sentencia_primera_instancia', ['id' => $primeraInstancia->id]) }}">Verificar</button>
                                             </div>
                                         </div>
                                         <div class="gest1eraparte2 w-100">
@@ -2180,7 +2193,8 @@
                                                                     @else
                                                                         <td class="text-danger font-weight-bold">
                                                                             {{ $impugnacion->consecutivo }}</td>
-                                                                        <td class="text-danger font-weight-bold">Sin asignar
+                                                                        <td class="text-danger font-weight-bold">Sin
+                                                                            asignar
                                                                         </td>
                                                                         <td class="text-danger font-weight-bold">
                                                                             {{ $impugnacion->estado->estado }}%</td>
@@ -2196,7 +2210,8 @@
                                             <div class="row d-flex px-4 gest1eraparte2">
                                                 <div class="col-12 col-md-12 form-group mt-3">
                                                     <div class="form-check mb-4">
-                                                        <input type="checkbox" class="form-check-input check-todas-impugnaciones">
+                                                        <input type="checkbox"
+                                                            class="form-check-input check-todas-impugnaciones">
                                                         <label class="form-check-label"><strong>Seleccionar todos las
                                                                 impugnaciones</strong></label>
                                                     </div>
@@ -2211,7 +2226,8 @@
                                                                         class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
                                                                 @else
                                                                     <input type="checkbox"
-                                                                        class="form-check-input select-impugnacion" disabled>
+                                                                        class="form-check-input select-impugnacion"
+                                                                        disabled>
                                                                     <label
                                                                         class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
                                                                 @endif
@@ -2233,9 +2249,11 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-12 col-md-4 form-group d-flex align-items-end">
-                                                    <button href="" class="btn btn-primary mx-2 px-4 asignacion_impugnacion_guardar"
+                                                    <button href=""
+                                                        class="btn btn-primary mx-2 px-4 asignacion_impugnacion_guardar"
                                                         data_url="{{ route('asignacion_impugnacion_guardar') }}"
-                                                        data_token="{{ csrf_token() }}">Asignar Impugnación (es)</button>
+                                                        data_token="{{ csrf_token() }}">Asignar Impugnación
+                                                        (es)</button>
                                                 </div>
                                             </div>
                                         </div>

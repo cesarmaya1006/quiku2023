@@ -1296,14 +1296,14 @@ window.addEventListener('DOMContentLoaded', function() {
 		const token_ = $('input[name=_token]').val();
 		const verificada = $('#verificada').val();
 		Swal.fire({
-			title: 'Esta Seguro de verificar la sentencia en primera instancia?',
+			title: '¿Esta seguro de verificar la sentencia en primera instancia?',
 			text:
-				'Este proceso solo se puede hacer una vez, despues de verificar los sentidos de los reuelves no se puede volver a cambiar',
+				'Este proceso solo se puede hacer una vez, despues de verificar los sentidos de los resuelves no se puede volver a cambiar',
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Si, verificar!',
+			confirmButtonText: 'Si, verificar',
 			cancelButtonText: 'Cancelar'
 		}).then((result) => {
 			if (result.isConfirmed) {
