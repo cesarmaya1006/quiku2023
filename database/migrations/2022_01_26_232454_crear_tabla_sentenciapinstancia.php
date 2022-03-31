@@ -17,7 +17,7 @@ class CrearTablaSentenciapinstancia extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->foreign('id')->references('id')->on('auto_admisorio')->onDelete('restrict')->onUpdate('restrict');
             $table->date('fecha_sentencia')->nullable();
-            $table->timestamp('fecha_notificacion')->nullable();
+            $table->date('fecha_notificacion')->nullable();
             $table->string('sentencia', 255)->nullable();
             $table->string('url_sentencia', 255)->nullable();
             $table->boolean('cantidad_resuelves')->default(0)->nullable();

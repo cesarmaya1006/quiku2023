@@ -17,7 +17,7 @@ class PrimeraSentencia extends Seeder
         DB::table('sentenciapinstancia')->insert([
             'id' => '1',
             'fecha_sentencia' => '2022-02-20',
-            'fecha_notificacion' => '2022-02-21 03:02:13',
+            'fecha_notificacion' => '2022-02-21',
             'sentencia' => 'Parcialmente desfavorable',
             'url_sentencia' => '1645412594-EJEMPLO SENT PRIMERA INSTANCIA.pdf',
             'cantidad_resuelves' => '3',

@@ -69,7 +69,7 @@
                 <div class="col-lg-3 col-6">
                     <div class="small-box bg-light" style="border: solid 1px grey">
                         <div class="inner">
-                            <h3>{{ $hechos->count() + $pretensiones->count()+ $resuelves->count() }}</h3>
+                            <h3>{{ $hechos->count() + $pretensiones->count() + $resuelves->count() }}</h3>
                             <p style="font-size: 0.8em">Colaboraciones</p>
                         </div>
                         <div class="icon">
@@ -345,21 +345,27 @@
                                 @php
                                     $porcentaje = 0;
                                     $totalColaboraciones = 0;
-
-                                    foreach ($proyecta->tutela->hechos as $key => $hecho) {
-                                        $porcentaje += $hecho->estadohecho->estado;
-                                        $totalColaboraciones++;
+                                    if ($proyecta->tutela->estadostutela_id < 5) {
+                                        foreach ($proyecta->tutela->hechos as $key => $hecho) {
+                                            $porcentaje += $hecho->estadohecho->estado;
+                                            $totalColaboraciones++;
+                                        }
+                                        foreach ($proyecta->tutela->pretensiones as $key => $pretension) {
+                                            $porcentaje += $pretension->estadopretension->estado;
+                                            $totalColaboraciones++;
+                                        }
+                                    } else {
+                                        foreach ($proyecta->tutela->primeraInstancia->impugnacionesinternas as $key => $resuelve) {
+                                            $porcentaje += $resuelve->estado->estado;
+                                            $totalColaboraciones++;
+                                        }
                                     }
-                                    foreach ($proyecta->tutela->pretensiones as $key => $pretension) {
-                                        $porcentaje += $pretension->estadopretension->estado;
-                                        $totalColaboraciones++;
-                                    }
 
-
-
-
-
-
+                                    $date1 = new DateTime($tutela->primeraInstancia->fecha_notificacion);
+                                    $date2 = new DateTime(Date('Y-m-d'));
+                                    $diff = date_diff($date1, $date2);
+                                    $differenceFormat = '%a';
+                                    $diferencia = $diff->format($differenceFormat);
                                 @endphp
                                 @if ($porcentaje / $totalColaboraciones == 100)
                                     <td class="text-center bg-success" style="white-space:nowrap;">
@@ -374,15 +380,35 @@
                                         {{ round($porcentaje / $totalColaboraciones) }}%
                                     </td>
                                 @endif
-                                @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))))
-                                    <td class="text-center bg-danger" style="white-space:nowrap;">
-                                        {{ $proyecta->tutela->fecha_limite }}</td>
-                                @elseif(strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))) > -172800)
-                                    <td class="text-center bg-warning" style="white-space:nowrap;">
-                                        {{ $proyecta->tutela->fecha_limite }}</td>
+                                @if ($proyecta->tutela->estadostutela_id < 5)
+                                    @if (strtotime(date('Y-m-d')) >= strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))))
+                                        <td class="text-center bg-danger" style="white-space:nowrap;">
+                                            {{ $proyecta->tutela->fecha_limite }}</td>
+                                    @elseif(strtotime(date('Y-m-d')) - strtotime(date('Y-m-d', strtotime($proyecta->tutela->fecha_limite))) > -172800)
+                                        <td class="text-center bg-warning" style="white-space:nowrap;">
+                                            {{ $proyecta->tutela->fecha_limite }}</td>
+                                    @else
+                                        <td class="text-center bg-success" style="white-space:nowrap;">
+                                            {{ $proyecta->tutela->fecha_limite }}</td>
+                                    @endif
                                 @else
-                                    <td class="text-center bg-success" style="white-space:nowrap;">
-                                        {{ $proyecta->tutela->fecha_limite }}</td>
+                                {{$diferencia}}
+                                    @if ($diferencia <= 1)
+                                        <td class="text-center bg-success" style="white-space:nowrap;">
+                                            {{ date('Y-m-d', strtotime($tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
+                                        </td>
+                                    @elseif($diferencia == 2)
+                                        <td class="text-center bg-warning" style="white-space:nowrap;">
+                                            {{ date('Y-m-d', strtotime($tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
+                                        </td>
+                                    @elseif($diferencia == 3)
+                                        <td class="text-center bg-danger" style="white-space:nowrap;">
+                                            {{ date('Y-m-d', strtotime($tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
+                                        </td>
+                                    @else
+                                        <td class="text-center bg-danger" style="white-space:nowrap;">Proceso Gestion en
+                                            primera instancia Cerrado</td>
+                                    @endif
                                 @endif
                                 <td class="text-center">
                                     <a href="{{ route('gestionar_asignacion_proyecta_tutela', ['id' => $proyecta->tutela->id]) }}"
