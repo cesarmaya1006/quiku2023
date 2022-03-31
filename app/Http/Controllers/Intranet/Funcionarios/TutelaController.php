@@ -1049,12 +1049,19 @@ class TutelaController extends Controller
         if ($request->ajax()) {
             if ($request["idTarea"] == 4) {
                 $tutela = AutoAdmisorio::findOrFail($request["idAuto"]);
+                $tipo_respuesta = $request["tipo_respuesta"]; 
                 $imagen = public_path('imagenes\sistema\logo_mgl.png');
                 $firma = public_path('documentos\usuarios\\' . $tutela->empleadoasignado->url);
                 // $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
                 // $firma = asset('documentos/usuarios/' . $tutela->empleado->url); //url_servidor
-                $resuelves = ResuelveTutela::where('auto_admisorio_id', $request["idAuto"])->orderBy('orden')->get();
-                $rPdf['respuesta'] = view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('tutela', 'imagen', 'resuelves', 'firma'));
+                if($tipo_respuesta == 1 ){
+                    $valor = "si";
+                    $resuelves = ResuelveTutela::where('auto_admisorio_id', $request["idAuto"])->orderBy('orden')->get();
+                    $rPdf['respuesta'] = view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('tutela', 'imagen', 'resuelves', 'firma'));
+                }else{
+                    $valor = "no";
+                    $rPdf['respuesta'] = view('intranet.funcionarios.tutela.tutela_tareas.respuesta_sentencia_primera_instancia', compact('tutela', 'imagen', 'firma'));
+                }
                 $rPdf['auto_admisorio_id'] = $request["idAuto"];
                 $rPdf['tipo_respuesta'] = $request["tipo_respuesta"];
                 $rPdf['tareas_id'] = $request["idTarea"];
@@ -1074,10 +1081,14 @@ class TutelaController extends Controller
             // }
             // }
             if (($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5) {
-                $tutelaEstado['estadostutela_id'] = 4;
+                if($tipo_respuesta == 1 ){
+                    $tutelaEstado['estadostutela_id'] = 4;
+                }else{
+                    $tutelaEstado['estadostutela_id'] = 7;
+                }
                 AutoAdmisorio::findOrFail($tutela->id)->update($tutelaEstado);
             }
-            return response()->json(['mensaje' => 'ok', 'data' => $rPdf]);
+            return response()->json(['mensaje' => 'ok', 'data' =>  $request["tipo_respuesta"]]);
         } else {
             abort(404);
         }

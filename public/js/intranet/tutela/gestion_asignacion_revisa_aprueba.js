@@ -68,13 +68,14 @@ window.addEventListener('DOMContentLoaded', function(){
             let url2 = e.target.getAttribute('data_url2')
             let url3 = e.target.getAttribute('data_url3')
             let token = e.target.getAttribute('data_token')
+            let tipo_respuesta = document.querySelector('.tipo_respuesta').value
             let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
             if (mensajeHistorial != '' && idAuto != '') {
                 let data2 = {
                     idTarea: "3",
                     mensajeHistorial: 'Revisión Aprobada.',
                     idAuto,
-                    tipo_respuesta : 1
+                    tipo_respuesta
                 }
                 $.ajax({
                     url: url2,
@@ -106,7 +107,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     mensajeHistorial,
                     idAuto,
                     apruebaRadica : 1,
-                    tipo_respuesta: 1
+                    tipo_respuesta
                 }
                 $.ajax({
                     url: url,
@@ -149,7 +150,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     idTarea: "5",
                     mensajeHistorial: 'Radicada automaticamente.',
                     idAuto,
-                    tipo_respuesta : 1
+                    tipo_respuesta
                 }
                 $.ajax({
                     url: url2,

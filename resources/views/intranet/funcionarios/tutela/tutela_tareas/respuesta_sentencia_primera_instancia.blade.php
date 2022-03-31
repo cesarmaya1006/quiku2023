@@ -37,7 +37,7 @@
             padding-top: 2%;
         }
         p { font-size: 12pt; text-align: justify; }
-        table {width: 90%; margin: auto; }
+        table {width: 100%; margin: auto; }
         /* header */
         .page-break { page-break-after: always; }
         .logo{ width: 35%; }
@@ -82,7 +82,28 @@
             <p>{{$tutela->juzgado}}</p>
             <p>E. S. D.</p>
         </div>
-
+        <div class="tabla">
+            <table class="" style="width:75%; text-align:end;">
+                <body>
+                    <tr>
+                        <td>REFERENCIA:</td>
+                        <td>ACCION DE TUTELA </td>
+                    </tr>
+                    <tr>
+                        <td>RADICADO:</td>
+                        <td>2021-348 </td>
+                    </tr>
+                    <tr>
+                        <td>ACCIONANTE:</td>
+                        <td>LUIS FERNANDO FORIGUA RIVERA </td>
+                    </tr>
+                    <tr>
+                        <td>ACCIONADA:</td>
+                        <td>COLPENSIONES </td>
+                    </tr>
+                </body>
+            </table>
+        </div>
         <div>
             <p>Señor Juez</p>
             <p>{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}, identificado con la {{$aprueba->empleado->tipo_id}} N° {{$aprueba->empleado->identificacion}}, domiciliado y residente en Bogotá D.C como aparece al pie de mi firma, allego ante su Señoría para manifestarle, con el usual respeto, que IMPUGNO la Sentencia de primera instancia proferida dentro del presente trámite, con miras a que el Juzgado Tercero Civil del Circuito de  Bogotá, analice detenidamente las razones de la Acción de Tutela y de la Impugnación, la revoque y conceda todas las pretensiones del  accionante, en los siguientes términos:
@@ -156,8 +177,7 @@
         </div>
     </main>
     <footer>
-        
-        <div style="footer width: 100%;text-align: center;font-weight: bold;font-size: 0.6em;">
+        <div class ="footer" style="width: 100%;text-align: center;font-weight: bold;font-size: 0.6em;">
             <p class="p-azul">57-1-7229497</p>
             <p class="p-azul">www.mglasociados.com</p>
             <p class="p-azul">Carrera 13 # 76-12 Of. 301 y Carrera 5 # 16-14 Of. 803</p>
