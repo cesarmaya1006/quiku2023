@@ -3601,7 +3601,7 @@
                                                                         <input type="checkbox"
                                                                             class="form-check-input select-resuleve"
                                                                             value="{{ $impugnacion->id }}">
-                                                                        <label 
+                                                                        <label
                                                                             class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
                                                                     @endif
                                                                 </div>
@@ -3628,7 +3628,7 @@
                                                         </div>
                                                         <div
                                                             class="col-12 col-md-7 row estado-resuelves justify-content-end">
-                                                            @if ($tutela->estadostutela_id === 5)
+                                                            @if ($tutela->estadostutela_id === 6)
                                                                 <div
                                                                     class="col-9 row estado-resuelves justify-content-end">
                                                                     <div class="col-3 d-flex mb-2">
@@ -4279,7 +4279,7 @@
                                                                         class="col-12 col-md-7 row estado-resuelve justify-content-end">
                                                                         <input class="estado_actual" type="hidden"
                                                                             value="{{ $respuesta->estado_id }}">
-                                                                        @if ($tutela->estadostutela_id < 6)
+                                                                        @if ($tutela->estadostutela_id === 6)
                                                                             <div
                                                                                 class="col-9 row estado-resuelve justify-content-end">
                                                                                 <div class="col-3 d-flex mb-2">
