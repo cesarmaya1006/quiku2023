@@ -345,6 +345,7 @@
                                 @php
                                     $porcentaje = 0;
                                     $totalColaboraciones = 0;
+
                                     foreach ($proyecta->tutela->hechos as $key => $hecho) {
                                         $porcentaje += $hecho->estadohecho->estado;
                                         $totalColaboraciones++;
@@ -353,6 +354,12 @@
                                         $porcentaje += $pretension->estadopretension->estado;
                                         $totalColaboraciones++;
                                     }
+
+
+
+
+
+
                                 @endphp
                                 @if ($porcentaje / $totalColaboraciones == 100)
                                     <td class="text-center bg-success" style="white-space:nowrap;">
@@ -537,7 +544,7 @@
                             <th class="text-center" style="white-space:nowrap;">Estado Tutela</th>
                             <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
                             <th class="text-center" style="white-space:nowrap;">Prioridad</th>
-                            <th class="text-center" style="white-space:nowrap;">Estado Pretensión</th>
+                            <th class="text-center" style="white-space:nowrap;">Estado Resuelve</th>
                             <th class="text-center" style="white-space:nowrap;">Fecha límite</th>
                             <th class="text-center" style="white-space:nowrap;">Ver</th>
                         </tr>
