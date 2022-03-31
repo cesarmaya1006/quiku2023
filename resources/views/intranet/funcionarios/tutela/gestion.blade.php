@@ -360,13 +360,11 @@
                                             $totalColaboraciones++;
                                         }
                                     }
-
-                                    $date1 = new DateTime($tutela->primeraInstancia->fecha_notificacion);
-                                    $date2 = new DateTime(Date('Y-m-d'));
-                                    $diff = date_diff($date1, $date2);
-                                    $differenceFormat = '%a';
-                                    $diferencia = $diff->format($differenceFormat);
+                                    if ($totalColaboraciones == 0) {
+                                        $totalColaboraciones = 1;
+                                    }
                                 @endphp
+
                                 @if ($porcentaje / $totalColaboraciones == 100)
                                     <td class="text-center bg-success" style="white-space:nowrap;">
                                         {{ round($porcentaje / $totalColaboraciones) }}%
@@ -392,18 +390,25 @@
                                             {{ $proyecta->tutela->fecha_limite }}</td>
                                     @endif
                                 @else
-                                {{$diferencia}}
+                                    @php
+                                        $date1 = new DateTime($proyecta->tutela->primeraInstancia->fecha_notificacion);
+                                        $date2 = new DateTime(Date('Y-m-d'));
+                                        $diff = date_diff($date1, $date2);
+                                        $differenceFormat = '%a';
+                                        $diferencia = $diff->format($differenceFormat);
+                                    @endphp
+                                    {{ $diferencia }}
                                     @if ($diferencia <= 1)
                                         <td class="text-center bg-success" style="white-space:nowrap;">
-                                            {{ date('Y-m-d', strtotime($tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
+                                            {{ date('Y-m-d', strtotime($proyecta->tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
                                         </td>
                                     @elseif($diferencia == 2)
                                         <td class="text-center bg-warning" style="white-space:nowrap;">
-                                            {{ date('Y-m-d', strtotime($tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
+                                            {{ date('Y-m-d', strtotime($proyecta->tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
                                         </td>
                                     @elseif($diferencia == 3)
                                         <td class="text-center bg-danger" style="white-space:nowrap;">
-                                            {{ date('Y-m-d', strtotime($tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
+                                            {{ date('Y-m-d', strtotime($proyecta->tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}
                                         </td>
                                     @else
                                         <td class="text-center bg-danger" style="white-space:nowrap;">Proceso Gestion en
@@ -432,6 +437,7 @@
                 </div>
             </div>
             <div class="card-body" style="display: none;">
+                @if ($hechos->count()>0)
                 <h6 class="mb-3">Hechos</h6>
                 <table class="table table-striped table-hover table-sm display">
                     <thead class="thead-inverse">
@@ -497,6 +503,8 @@
                     </tbody>
                 </table>
                 <hr>
+                @endif
+                @if ($pretensiones->count()>0)
                 <h6 class="mb-3">Pretensiones</h6>
                 <table class="table table-striped table-hover table-sm display">
                     <thead class="thead-inverse">
@@ -562,6 +570,8 @@
                     </tbody>
                 </table>
                 <hr>
+                @endif
+                @if ($resuelves->count()>0)
                 <h6 class="mb-3">Resuelves en primera instancia</h6>
                 <table class="table table-striped table-hover table-sm display">
                     <thead class="thead-inverse">
@@ -626,6 +636,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                @endif
             </div>
         </div>
         {{-- Tabla Revisa Aprueba --}}

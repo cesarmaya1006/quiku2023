@@ -550,7 +550,7 @@
                     </div>
                 </div>
             @endif
-            @if ($tutela->primeraInstancia->count() > 0)
+            @if ($tutela->primeraInstancia)
                 <div class="row">
                     <div class="col-12">
                         <div class="card card-outline card-primary collapsed-card">

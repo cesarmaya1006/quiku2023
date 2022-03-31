@@ -54,7 +54,7 @@
         .firma{ max-width: 100px; max-height: 80px; margin-top: 3%; }
         .tabla table, .tabla th, .tabla td { border: 1px solid black; border-collapse: collapse;}
         .p-negro { line-height: .3; }
-            
+
         }
     </style>
 </head>
@@ -88,10 +88,10 @@
                 $contadorAccionates = 0;
                 $accionado = $tutela->accions->where('tipo_accion', 'Accionado')->first();
             @endphp
-            <p>Ref. Acción de tutela de: 
+            <p>Ref. Acción de tutela de:
             @foreach ($accionantes as $key => $accionante)
                 <strong>{{$accionante->nombres_accion}} {{$accionante->apellidos_accion}}, </strong>
-            @endforeach 
+            @endforeach
             contra <strong>Cesar Maya.</strong></p>
             <p>Radicación N° {{$tutela->radicado}}</p>
             <p>Respetado Señor Juez (a): {{$tutela->nombre_juez}}</p>
@@ -190,7 +190,7 @@
         </div>
         <div>
 
-            @if($firma && $firma != '') 
+            @if($firma && $firma != '')
                 <img src="{{ $firma }}" class="firma" alt="firma">
             @else
                 <p style="font-style: italic;">* Espacio para estanpar firma electrónica</p>
@@ -202,7 +202,7 @@
         </div>
     </main>
     <footer>
-        
+
         <div style="footer width: 100%;text-align: center;font-weight: bold;font-size: 0.6em;">
             <p class="p-azul">57-1-7229497</p>
             <p class="p-azul">www.mglasociados.com</p>

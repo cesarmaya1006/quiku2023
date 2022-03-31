@@ -74,6 +74,7 @@ class TutelaController extends Controller
     public function crear_auto_admisorio(Request $request)
     {
         if ($request->ajax()) {
+            $nuevo_auto_admisorio['unidad_negocio_id'] = 1;
             $nuevo_auto_admisorio['empleado_rigistro_id'] = session('id_usuario');
             $nuevo_auto_admisorio['estadostutela_id'] = 1;
             $nuevo_auto_admisorio['radicado'] = $request['radicado'];

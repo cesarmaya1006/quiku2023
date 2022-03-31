@@ -6,7 +6,7 @@
                     <div class="info-box bg-primary">
                         <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text text-center">En GestiÃ³n</span>
+                            <span class="info-box-text text-center">En Gestión</span>
                             <span class="progress-description" style="font-size: 0.8em;">
 
                             </span>
@@ -31,7 +31,7 @@
                 </div>
             @endif
             <div class="col-md-3 col-sm-6 col-12">
-                @if ($tutela->primeraInstancia->count() > 0)
+                @if ($tutela->primeraInstancia)
                     <div class="info-box bg-success">
                         <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                         <div class="info-box-content">
@@ -57,7 +57,7 @@
                 <!-- /.info-box -->
             </div>
             <div class="col-md-3 col-sm-6 col-12">
-                @if ($tutela->primeraInstancia->count() > 0)
+                @if ($tutela->primeraInstancia)
                     @php
                         $primeraInstancia = $tutela->primeraInstancia;
                     @endphp
