@@ -735,7 +735,7 @@
                                                         <td class="text-justify">{{ $respuesta->empleado->nombre1 }}
                                                             {{ $respuesta->empleado->apellido1 }}</td>
                                                         <td class="text-justify">{{ $respuesta->tarea->tarea }}</td>
-                                                        <td>Respuesta tutlea</td>
+                                                        <td>Respuesta  {{ $respuesta->tipo_respuesta == 1 ? 'tutela' : 'sentencia 1° instancia' }}</td>
                                                         <td class="text-justify"><a
                                                                 href="{{ route('descarga_respuesta_tutela', ['id' => $respuesta->id]) }}"
                                                                 target="_blank" rel="noopener noreferrer">

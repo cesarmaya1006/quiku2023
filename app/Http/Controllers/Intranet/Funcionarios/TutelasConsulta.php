@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Intranet\Funcionarios;
 
-use App\Http\Controllers\Controller;
-use App\Models\Tutela\AnexoPrimeraInstancia;
-use App\Models\Tutela\AutoAdmisorio;
+use DateTime;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Models\Tutela\TipoAccion;
 use App\Models\Tutela\Impugnacion;
+use App\Http\Controllers\Controller;
+use App\Models\Tutela\AutoAdmisorio;
+use App\Models\Tutela\AsignacionTarea;
+use Illuminate\Support\Facades\Config;
+use App\Models\Tutela\PrimeraInstancia;
 use App\Models\Tutela\ImpugnacionExterna;
 use App\Models\Tutela\ImpugnacionInterna;
 use App\Models\Tutela\ImpugnacionResuelve;
-use App\Models\Tutela\PrimeraInstancia;
+use App\Models\Tutela\AnexoPrimeraInstancia;
 use App\Models\Tutela\ResuelvePrimeraInstancia;
-use App\Models\Tutela\TipoAccion;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
-use DateTime;
 
 class TutelasConsulta extends Controller
 {
@@ -75,7 +76,11 @@ class TutelasConsulta extends Controller
     {
         $cambioEstado['estadostutela_id'] = '5';
         AutoAdmisorio::findOrFail($id)->update($cambioEstado);
-
+        $tareas = AsignacionTarea::where('auto_admisorio_id', $id)->get();
+        foreach ($tareas as $tarea) {
+            $updateTarea['estado_id'] = 6;
+            AsignacionTarea::findOrFail($tarea->id)->update($updateTarea);
+        }
         if ($request['formaCarga'] == 'detalle') {
             $sentenciapinstancia['id'] = $id;
             $sentenciapinstancia['fecha_sentencia'] = $request['fecha_sentencia'];
