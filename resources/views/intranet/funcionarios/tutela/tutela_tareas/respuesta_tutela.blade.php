@@ -84,9 +84,9 @@
         </div>
         <div>
             @php
-                $accionantes = $tutela->accions->where('tipo_accion', 'Accionante');
+                $accionantes = $tutela->accions->where('tipo_accion_id', '1');
                 $contadorAccionates = 0;
-                $accionado = $tutela->accions->where('tipo_accion', 'Accionado')->first();
+                $accionado = $tutela->accions->where('tipo_accion_id', '2')->first();
             @endphp
             <p>Ref. Acción de tutela de:
             @foreach ($accionantes as $key => $accionante)
@@ -95,7 +95,7 @@
             contra <strong>Cesar Maya.</strong></p>
             <p>Radicación N° {{$tutela->radicado}}</p>
             <p>Respetado Señor Juez (a): {{$tutela->nombre_juez}}</p>
-            <p>{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}, mayor de edad, con domicilio en la ciudad de Bogotá, D.C., identificado con la {{$aprueba->empleado->tipo_id}} N° {{$aprueba->empleado->identificacion}} de Bogotá D. C., en calidad de representante legal de {{$tutela->unidadNegocio->nombres}}, ante Usted acudo para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.
+            <p>{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}, mayor de edad, con domicilio en la ciudad de Bogotá, D.C., identificado con la {{$aprueba->empleado->tipo_id}} N° {{$aprueba->empleado->identificacion}} de Bogotá D. C., en calidad de {{$aprueba->empleado->cargo->cargo}} de {{$tutela->unidadNegocio->nombres}}, ante Usted acudo para dar contestación con la presente, a la demanda instaurada dentro del sub lite, solicitándole desde ya a su Señoría desatienda las súplicas de la demandada, formuladas a través de dicha Acción.
             </p>
         </div>
         <div>
@@ -197,7 +197,7 @@
             @endif
             <p style="font-weight: bold;">{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}</p>
             <p class="p-negro">{{$aprueba->empleado->tipos_docu->abreb_id}} {{$aprueba->empleado->identificacion}}</p>
-            <p class="p-negro">Representante Legal</p>
+            <p class="p-negro">{{$aprueba->empleado->cargo->cargo}}</p>
             <p class="p-negro">MGL y Asociados S.A.S.</p>
         </div>
     </main>

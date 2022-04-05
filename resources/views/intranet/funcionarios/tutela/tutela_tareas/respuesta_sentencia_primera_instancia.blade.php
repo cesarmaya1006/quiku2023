@@ -172,7 +172,7 @@
             @endif
             <p style="font-weight: bold;">{{ $aprueba->empleado->nombre1 . ' ' .$aprueba->empleado->nombre2 . ' ' . $aprueba->empleado->apellido1 . ' ' . $aprueba->empleado->apellido2}}</p>
             <p class="p-negro">{{$aprueba->empleado->tipos_docu->abreb_id}} {{$aprueba->empleado->identificacion}}</p>
-            <p class="p-negro">Representante Legal</p>
+            <p class="p-negro">{{$aprueba->empleado->cargo->cargo}}</p>
             <p class="p-negro">MGL y Asociados S.A.S.</p>
         </div>
     </main>

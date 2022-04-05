@@ -397,7 +397,6 @@
                                         $differenceFormat = '%a';
                                         $diferencia = $diff->format($differenceFormat);
                                     @endphp
-                                    {{ $diferencia }}
                                     @if ($diferencia <= 1)
                                         <td class="text-center bg-success" style="white-space:nowrap;">
                                             {{ date('Y-m-d', strtotime($proyecta->tutela->primeraInstancia->fecha_notificacion . '+ ' . $diferencia . ' days')) }}

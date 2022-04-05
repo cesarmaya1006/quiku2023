@@ -198,7 +198,7 @@ class FuncionarioController extends Controller
     {
         $tutelas = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->get();
         $sin_aceptar = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->where('estado_asignacion', 0)->get();
-        $aceptadas = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->where('estado_asignacion', 1)->where('estadostutela_id', '!=', 4)->where('estadostutela_id', '!=', 9) ->get();
+        $aceptadas = AutoAdmisorio::where('empleado_asignado_id', session('id_usuario'))->where('estado_asignacion', 1)->where('estadostutela_id', '!=', 4)->where('estadostutela_id', '!=', 7)->where('estadostutela_id', '!=', 9) ->get();
         $supervisadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 1)->where('estado_id', '<', 11)->get();
         $proyectadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 2)->where('estado_id', '<', 11)->get();
         $revisiones = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 3)->where('estado_id', '<', 11)->get();
