@@ -30,7 +30,14 @@
                     </div>
                     <div class="card-body">
                         <div class="col-12 rounded border mb-3 p-2">
-                            <div class="row">
+                            @include(
+                                'intranet.funcionarios.tutela.includes.tarjetas'
+                            )
+                            <hr>
+                    @include(
+                        'intranet.funcionarios.tutela.includes.detallestutela'
+                    )
+                            {{--<div class="row">
                                 <div class="col-12 col-md-6">
                                     Número de radicado:
                                     <strong>{{ $tutela->radicado }}</strong>
@@ -75,75 +82,12 @@
                                 <div class="col-12 col-md-6">
                                     Fecha límite: <strong>{{ $tutela->fecha_limite }}</strong>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
+                        {{-- Inicio Bloque Tarjetas --}}
+
+                        {{-- Fin Bloque Tarjetas --}}
                         @if ($tutela->estadostutela_id == 4)
-                            {{-- Inicio Bloque Tarjetas --}}
-                            <div class="col-12 d-flex flex-wrap rounded border justify-content-center my-2 p-2 ">
-                                <a href="" class="menu-radicado btn card-step verificado activo"
-                                    data-content='menu-card-radicado'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="far fa-file-alt"></i>
-                                        </span>
-                                        <h6>Registro Sentencia 1ra Instancia</h6>
-                                    </div>
-                                </a>
-                                <a href="" class="menu-prorroga btn card-step desativado" data-content='menu-card-prorroga'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="far fa-file-alt"></i>
-                                        </span>
-                                        <h6>Recurso de Impugnación</h6>
-                                    </div>
-                                </a>
-                                <a href="" class="menu-aclaracion btn card-step desativado "
-                                    data-content='menu-card-aclaraciones'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="far fa-file-alt"></i>
-                                        </span>
-                                        <h6>Registro Sentencia 2ra Instancia</h6>
-                                    </div>
-                                </a>
-                                <a href="" class="menu-aclaracion btn card-step desativado "
-                                    data-content='menu-card-aclaraciones'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="far fa-file-alt"></i>
-                                        </span>
-                                        <h6>Registro Sentencia de Revisión</h6>
-                                    </div>
-                                </a>
-                                <a href="" class="menu-aclaracion btn card-step desativado "
-                                    data-content='menu-card-aclaraciones'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="far fa-file-alt"></i>
-                                        </span>
-                                        <h6>Registro de Desacato</h6>
-                                    </div>
-                                </a>
-                                <a href="" class="menu-aclaracion btn card-step desativado "
-                                    data-content='menu-card-aclaraciones'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="far fa-file-alt"></i>
-                                        </span>
-                                        <h6>Respuesta Desacato</h6>
-                                    </div>
-                                </a>
-                                <a href="" class="menu-aclaracion btn card-step desativado "
-                                    data-content='menu-card-aclaraciones'>
-                                    <div class="">
-                                        <span style="font-size: 2.5em;">
-                                            <i class="far fa-file-alt"></i>
-                                        </span>
-                                        <h6>Decisión Desacato</h6>
-                                    </div>
-                                </a>
-                            </div>
-                            {{-- Fin Bloque Tarjetas --}}
                             <div class="col-12 rounded border mb-3 p-2">
                                 <div class="row d-flex px-4">
                                     <div class="col-12 col-md-5 form-group mt-2">
@@ -164,7 +108,7 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="col-12 rounded border mb-3 p-2">
+                        {{-- <div class="col-12 rounded border mb-3 p-2">
                             <div class="menu-card">
                                 <div class="col-12 mt-2">
                                     <h5>Detalle Tutela</h5>
@@ -533,9 +477,9 @@
                                 </div>
                                 <hr>
                             @endif
-                        </div>
+                        </div> --}}
                     </div>
-                    @if (sizeOf($tutela->historialasignacion))
+                    {{-- @if (sizeOf($tutela->historialasignacion))
                         <div class="rounded border mx-3 my-0 p-3">
                             <h5 class="m-2">Historial asignación</h5>
                             <div class="row d-flex px-12 p-3">
@@ -749,7 +693,7 @@
                                 </div>
                             @endif
                         </div>
-                    @endif
+                    @endif --}}
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{ route('tutela-gestion') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                     </div>

@@ -292,7 +292,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-sm btn-sombra" id="guardarImpugnacion"
-                        data_url="{{ route('tutelas_impugnacion_guardar', ['id' => $tutela->id]) }}"
+                        data_url="{{ route('tutelas_impugnacion_guardar')}}"
+                        data_id="{{$tutela->id}}"
                         data_archivos="{{ asset('documentos/tutelas/sentencias/') }}">Registrar
                         Impugnación</button>
                 </div>

@@ -470,13 +470,17 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('consulta', [TutelasConsulta::class, 'index'])->name('index_consulta');
         Route::get('cargar_tutelas', [TutelasConsulta::class, 'cargar_tutelas'])->name('cargar_tutelas');
         Route::get('consulta/detalles_tutelas/{id}', [TutelasConsulta::class, 'detalles_tutelas'])->name('detalles_tutelas');
+        //==================================================================================================================
         Route::get('consulta/tutelas/primera-instancia/{id}', [TutelasConsulta::class, 'tutelas_primera_instancia'])->name('tutelas_primera_instancia');
         Route::post('consulta/tutelas/primera-instancia/guardar/{id}', [TutelasConsulta::class, 'tutelas_primera_instancia_guardar'])->name('tutelas_primera_instancia_guardar');
+        //==================================================================================================================
+        Route::get('consulta/tutelas/segunda-instancia/{id}', [TutelasConsulta::class, 'tutelas_segunda_instancia'])->name('tutelas_segunda_instancia');
+        Route::post('consulta/tutelas/segunda-instancia/guardar/{id}', [TutelasConsulta::class, 'tutelas_segunda_instancia_guardar'])->name('tutelas_segunda_instancia_guardar');
         //==================================================================================================================
         Route::get('consulta/tutelas/impugnacion/{id}', [TutelasConsulta::class, 'tutelas_impugnacion'])->name('tutelas_impugnacion');
         Route::get('consulta/tutelas/impugnacion/gestion/{id}', [TutelasConsulta::class, 'tutelas_impugnacion_gestion'])->name('tutelas_impugnacion_gestion');
         Route::get('consulta/tutelas/impugnacion/registro/{id}', [TutelasConsulta::class, 'tutelas_impugnacion_registro'])->name('tutelas_impugnacion_registro');
-        Route::post('consulta/tutelas/impugnacion/guardar/{id}', [TutelasConsulta::class, 'tutelas_impugnacion_guardar'])->name('tutelas_impugnacion_guardar');
+        Route::post('consulta/tutelas/impugnacion/guardar', [TutelasConsulta::class, 'tutelas_impugnacion_guardar'])->name('tutelas_impugnacion_guardar');
 
         //==================================================================================================================
     });

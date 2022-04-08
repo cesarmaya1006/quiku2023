@@ -139,4 +139,10 @@ class AutoAdmisorio extends Model
     {
         return $this->belongsTo(PrimeraInstancia::class, 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function segundaInstancia()
+    {
+        return $this->belongsTo(Sentenciaseginstancia::class, 'id');
+    }
+
 }

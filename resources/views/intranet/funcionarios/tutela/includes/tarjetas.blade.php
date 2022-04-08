@@ -6,7 +6,7 @@
                     <div class="info-box bg-primary">
                         <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text text-center">En Gestión</span>
+                            <span class="info-box-text text-center">En Gestiï¿½n</span>
                             <span class="progress-description" style="font-size: 0.8em;">
 
                             </span>
@@ -109,16 +109,41 @@
                 <!-- /.info-box -->
             </div>
             <div class="col-md-3 col-sm-6 col-12">
-                <div class="info-box" style="border: 1px solid black">
-                    <span class="info-box-icon"><i class="fas fa-medal"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">
-                            Registro Sentencia <br> en segunda instancia
-                        </span>
+                @if ($tutela->segundaInstancia)
+                    <div class="info-box bg-success">
+                        <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">
+                                Registro Sentencia <br> en segunda instancia
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
-                </div>
+                @else
+                    @if ($tutela->primeraInstancia)
+                        <a href="{{ route('tutelas_segunda_instancia', ['id' => $tutela->id]) }}">
+                            <div class="info-box" style="border: 1px solid black">
+                                <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">
+                                        Registro Sentencia <br> en primera instancia
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </a>
+                    @else
+                        <div class="info-box bg-secondary">
+                            <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">
+                                    Registro Sentencia <br> en segunda instancia
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                    @endif
+                @endif
                 <!-- /.info-box -->
             </div>
         </div>

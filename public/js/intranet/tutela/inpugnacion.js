@@ -139,6 +139,8 @@ $(document).ready(function() {
 
     $("#guardarImpugnacion").on('click', function() {
         const url_t = $(this).attr('data_url');
+        const data_id = $(this).attr('data_id');
+        console.log(url_t);
         const data_archivos = $(this).attr('data_archivos');
         var resuelves = [];
 
@@ -189,6 +191,7 @@ $(document).ready(function() {
         var paqueteDeDatos = new FormData();
 
         paqueteDeDatos.append('resuelve', $('#resuelve').prop('value'));
+        paqueteDeDatos.append('data_id', data_id);
         paqueteDeDatos.append('resuelves', resuelves);
         paqueteDeDatos.append('accionantes', accionantes);
         paqueteDeDatos.append('accionados', accionados);
