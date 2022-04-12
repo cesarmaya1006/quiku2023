@@ -232,6 +232,7 @@ class ClienteController extends Controller
             $actualizarPQR['radicado'] = $tipo_pqr->sigla . '-' . date('Y') . '-' . $pqr->id;
             PQR::findOrFail($idPQR)->update($actualizarPQR);
         }
+        $Actualizadopqr = PQR::findOrFail($idPQR);
         if ($pqr->persona_id != null) {
             $email = $pqr->persona->email;
         } else {
@@ -242,7 +243,7 @@ class ClienteController extends Controller
         if ($email) {
             Mail::to($email)->send(new PQR_Radicada($id_pqr));
         }
-        return redirect('/usuario/generar')->with('id', $idPQR)->with('pqr_tipo', $pqr->tipo_pqr_id)->with('radicado', $pqr->radicado)->with('fecha_radicado', $pqr->created_at);
+        return redirect('/usuario/generar')->with('id', $idPQR)->with('pqr_tipo', $Actualizadopqr->tipo_pqr_id)->with('radicado', $Actualizadopqr->radicado)->with('fecha_radicado', $Actualizadopqr->created_at);
     }
 
     public function generarConceptoUOpinion()

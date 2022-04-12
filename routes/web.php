@@ -6,6 +6,7 @@ use App\Http\Controllers\Intranet\Admin\RolController;
 use App\Http\Controllers\Intranet\Admin\MenuController;
 use App\Http\Controllers\Intranet\Email\EmailController;
 use App\Http\Controllers\Extranet\ExtranetPageController;
+use App\Http\Controllers\Intranet\Admin\AnaliticaController;
 use App\Http\Controllers\Intranet\Admin\MenuRolController;
 use App\Http\Controllers\Intranet\Admin\PermisoController;
 use App\Http\Controllers\Intranet\Admin\UsuarioController;
@@ -388,6 +389,12 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('wiku/asociacion/crear/{id}/{wiku}', [WikuController::class, 'crear_asociacion'])->name('wiku_asociacion-crear');
             Route::post('wiku/asociacion-guardar/{id}/{wiku}', [WikuController::class, 'guardar_asociacion'])->name('wiku_asociacion-guardar');
             Route::delete('wiku_asociacion/{id}', [WikuController::class, 'wiku_asociacion_eliminar'])->name('wiku_asociacion-eliminar');
+
+            // Gestion de analitica
+            Route::get('analitica/index', [AnaliticaController::class, 'index'])->name('analitica-index');
+            Route::get('analitica/index/cantidad', [AnaliticaController::class, 'cantidad'])->name('analitica-cantidad');
+            Route::get('analitica/tipoPQR', [AnaliticaController::class, 'tipoPQR'])->name('analitica-tipoPQR');
+            Route::get('analitica/cantidad_cargar', [AnaliticaController::class, 'cantidad_cargar'])->name('analitica-cantidad_cargar');
         });
     });
     //==================================================================================================================
@@ -429,8 +436,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('cambiar-password', [FuncionarioController::class, 'cambiar_password'])->name('funcionario-cambiar-password');
         Route::get('usuarios-listado', [FuncionarioController::class, 'listado_usuarios'])->name('funcionario-listado-usuarios');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        Route::get('listado/gestionar_pqr/{id}', [PQRController::class, 'gestionar'])->name('funcionario-gestionar_pqr');
-        Route::post('listado/gestionarqr', [PQRController::class, 'gestionar_guardar'])->name('funcionario-gestionar_pqr_guardar');
         Route::post('respuesta_recurso_guardar', [PQRController::class, 'respuesta_recurso_guardar'])->name('respuesta_recurso_guardar');
         Route::post('respuesta_recurso_actualizar', [PQRController::class, 'respuesta_recurso_actualizar'])->name('respuesta_recurso_actualizar');
         Route::post('respuesta_recurso_anexos', [PQRController::class, 'respuesta_recurso_anexos_guardar'])->name('respuesta_recurso_anexos_guardar');
