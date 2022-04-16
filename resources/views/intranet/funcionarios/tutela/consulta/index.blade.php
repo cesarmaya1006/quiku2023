@@ -9,7 +9,6 @@
 @endsection
 <!-- ************************************************************* -->
 @section('tituloHoja')
-    Tutelas - Consulta
 @endsection
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')

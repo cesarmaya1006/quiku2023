@@ -1150,68 +1150,68 @@
                                                             @endif
                                                         </div>
                                                         <hr class="mt-3">
-                                                    @break
-                                                @endif
-                                        @endforeach
+                                                         @break
+                                                    @endif
+                                            @endforeach
+                                            </div>
+                                        @endif
                                     </div>
                                 @endif
-                            </div>
-                        @endif
-                        {{-- Fin bloque de respuesta recurso --}}
-                        {{-- Incio historial petición --}}
+                                {{-- Fin bloque de respuesta recurso --}}
+                                {{-- Incio historial petición --}}
 
-                        <h6 class="">Historial peticiones</h6>
-                        <div class="row d-flex px-12 p-3">
-                            <div class="col-12 table-responsive">
-                                <table class="table table-light" style="font-size: 0.8em;">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Fecha</th>
-                                            <th scope="col">Empleado</th>
-                                            <th scope="col">Historial</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($peticion->historialpeticiones as $historial)
-                                            <tr>
-                                                <td>{{ $historial->created_at }}</td>
-                                                <td class="text-justify">{{ $historial->empleado->nombre1 }}
-                                                    {{ $historial->empleado->apellido1 }}</td>
-                                                <td class="text-justify">
-                                                    {{ strip_tags($historial->historial) }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                <h6 class="">Historial peticiones</h6>
+                                <div class="row d-flex px-12 p-3">
+                                    <div class="col-12 table-responsive">
+                                        <table class="table table-light" style="font-size: 0.8em;">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Fecha</th>
+                                                    <th scope="col">Empleado</th>
+                                                    <th scope="col">Historial</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($peticion->historialpeticiones as $historial)
+                                                    <tr>
+                                                        <td>{{ $historial->created_at }}</td>
+                                                        <td class="text-justify">{{ $historial->empleado->nombre1 }}
+                                                            {{ $historial->empleado->apellido1 }}</td>
+                                                        <td class="text-justify">
+                                                            {{ strip_tags($historial->historial) }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr>
+                                @if (session('id_usuario') == $peticion->empleado_id)
+                                    <div class="row d-flex px-12 p-3 mensaje-peticion">
+                                        <div class="container-mensaje-historial form-group col-12">
+                                            <label for="" class="">Agregar Historial</label>
+                                            <textarea class="form-control mensaje-historial-peticion" rows="3" placeholder=""
+                                                required></textarea>
+                                        </div>
+                                        <div class="col-12 col-md-12 form-group d-flex">
+                                            <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialPeticion"
+                                                data_url="{{ route('historial_peticion_guardar') }}"
+                                                data_token="{{ csrf_token() }}">Guardar Historial</button>
+                                        </div>
+                                    </div>
+                                @endif
+                                {{-- Fin historial petición --}}
+                                <input class="id_peticion" type="hidden" value="{{ $peticion->id }}">
                             </div>
+                        @endforeach
+                        <div class="card-footer d-flex justify-content-end">
+                            <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                         </div>
-                        <hr>
-                        @if (session('id_usuario') == $peticion->empleado_id)
-                            <div class="row d-flex px-12 p-3 mensaje-peticion">
-                                <div class="container-mensaje-historial form-group col-12">
-                                    <label for="" class="">Agregar Historial</label>
-                                    <textarea class="form-control mensaje-historial-peticion" rows="3" placeholder=""
-                                        required></textarea>
-                                </div>
-                                <div class="col-12 col-md-12 form-group d-flex">
-                                    <button href="" class="btn btn-primary mx-2 px-4 guardarHistorialPeticion"
-                                        data_url="{{ route('historial_peticion_guardar') }}"
-                                        data_token="{{ csrf_token() }}">Guardar Historial</button>
-                                </div>
-                            </div>
-                        @endif
-                        {{-- Fin historial petición --}}
-                        <input class="id_peticion" type="hidden" value="{{ $peticion->id }}">
+                        <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                     </div>
-                    @endforeach
-                    <div class="card-footer d-flex justify-content-end">
-                        <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
-                    </div>
-                    <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 @endsection

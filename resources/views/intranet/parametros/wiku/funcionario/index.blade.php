@@ -14,13 +14,13 @@
 <!-- ************************************************************* -->
 @section('cuerpo_pagina')
     <div class="container-fluid">
-        <div class="row d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
             <div class="col-12 col-md-8">
                 @include('includes.error-form')
                 @include('includes.mensaje')
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="justify-content-center">
             <div class="card card-primary">
                 <div class="card-header">
                     <h3 class="card-title">WIKU</h3>

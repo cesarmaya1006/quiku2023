@@ -932,181 +932,222 @@
                                     </div>
                                 </div>
                             @endif
-@if ($tutela->estadostutela_id >4)
-@if (sizeOf($tutela->primeraInstancia->impugnacionesinternas))
-                                <div class="card card-outline card-primary collapsed-card mx-1 py-2"
-                                    style="font-size: 1em;">
-                                    <div class="card-header">
-                                        <h3 class="card-title font-weight-bold">Respuestas Sentencia en primera Instancia
-                                        </h3>
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
+                            @if ($tutela->estadostutela_id >4)
+                                @if (sizeOf($tutela->primeraInstancia->impugnacionesinternas))
+                                    <div class="card card-outline card-primary collapsed-card mx-1 py-2"
+                                        style="font-size: 1em;">
+                                        <div class="card-header">
+                                            <h3 class="card-title font-weight-bold">Respuestas Sentencia en primera Instancia
+                                            </h3>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="card-body" style="display: none;">
-                                        @if (sizeOf($tutela->primeraInstancia->impugnacionesinternas))
-                                            <div class="col-12 row mb-2">
-                                                @if (sizeOf($tutela->primeraInstancia->respuestasImpugnacionesiInternas))
-                                                    @foreach ($tutela->primeraInstancia->respuestasImpugnacionesiInternas as $key => $respuesta)
-                                                        <div class="rounded border my-3 p-3">
-                                                            <div class="col-12 col-md-12 mt-2 mb-4">
-                                                                <h5>Respuesta #{{ $key + 1 }}</h5>
-                                                            </div>
-
-                                                            @if ($respuesta->estado_id != 11)
-                                                                <div class="row col-12">
-                                                                    <div class="col-12 col-md-4 form-group">
-                                                                        <label for="">Cargo</label>
-                                                                        <select class="custom-select rounded-0 cargo"
-                                                                            required=""
-                                                                            data_url="{{ route('cargar_cargos') }}"
-                                                                            data_url2="{{ route('cargar_funcionarios') }}">
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-12 col-md-4 form-group">
-                                                                        <label for="">Funcionario</label>
-                                                                        <select class="custom-select rounded-0 funcionario"
-                                                                            required="">
-                                                                            <option value="">--Seleccione--</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div
-                                                                        class="col-12 col-md-4 form-group d-flex align-items-end">
-                                                                        <button href=""
-                                                                            class="btn btn-primary px-4 reasignacion_resuelve_guardar"
-                                                                            data_url="{{ route('asignacion_resuelve_guardar') }}"
-                                                                            data_url2="{{ route('respuesta_resuelve_editar_guardar') }}"
-                                                                            data_token="{{ csrf_token() }}">Asignar
-                                                                            pretensión</button>
-                                                                    </div>
+                                        <div class="card-body" style="display: none;">
+                                            @if (sizeOf($tutela->primeraInstancia->impugnacionesinternas))
+                                                <div class="col-12 row mb-2">
+                                                    @if (sizeOf($tutela->primeraInstancia->respuestasImpugnacionesiInternas))
+                                                        @foreach ($tutela->primeraInstancia->respuestasImpugnacionesiInternas as $key => $respuesta)
+                                                            <div class="rounded border my-3 p-3">
+                                                                <div class="col-12 col-md-12 mt-2 mb-4">
+                                                                    <h5>Respuesta #{{ $key + 1 }}</h5>
                                                                 </div>
-                                                            @endif
-                                                            <div class="col-12 row">
-                                                                @foreach ($respuesta->relacion as $relacion)
-                                                                    @if ($tutela->primeraInstancia->cantidad_resuelves)
-                                                                        <div class="d-flex col-10 col-md-5 col-lg-3">
-                                                                            @if ($respuesta->estado_id != 11)
-                                                                                <div class="mr-3">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarResuelve"
-                                                                                        data_url="{{ route('eliminar_respuesta_resuelve_guardar') }}"
-                                                                                        data_token="{{ csrf_token() }}"><i
-                                                                                            class="fas fa-minus-circle"></i></button>
-                                                                                    <input class="id_relacion_resuelve"
-                                                                                        type="hidden"
-                                                                                        value="{{ $relacion->impugancion->id }}">
-                                                                                </div>
-                                                                            @endif
-                                                                            <div class="my-2">
-                                                                                <strong class="">Resuelve #
-                                                                                    {{ $relacion->impugancion->consecutivo }}</strong>{{ $relacion->impugancion->resuelve }}
-                                                                            </div>
+
+                                                                @if ($respuesta->estado_id != 11)
+                                                                    <div class="row col-12">
+                                                                        <div class="col-12 col-md-4 form-group">
+                                                                            <label for="">Cargo</label>
+                                                                            <select class="custom-select rounded-0 cargo"
+                                                                                required=""
+                                                                                data_url="{{ route('cargar_cargos') }}"
+                                                                                data_url2="{{ route('cargar_funcionarios') }}">
+                                                                            </select>
                                                                         </div>
-                                                                    @else
-                                                                        <div class="row">
-                                                                            <div class="my-2 col-11">
-                                                                                <strong
-                                                                                    class="">#{{ $relacion->impugancion->consecutivo }}
-                                                                                    Resuelve:
-                                                                                </strong>{{ $relacion->impugancion->resuelve }}
-                                                                            </div>
-                                                                            @if ($respuesta->estado_id != 11)
-                                                                                <div class="col-1">
-                                                                                    <button type="button"
-                                                                                        class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarResuelve"
-                                                                                        data_url="{{ route('eliminar_respuesta_resuelve_guardar') }}"
-                                                                                        data_token="{{ csrf_token() }}"><i
-                                                                                            class="fas fa-minus-circle"></i></button>
-                                                                                    <input class="id_relacion_resuelve"
-                                                                                        type="hidden"
-                                                                                        value="{{ $relacion->impugancion->id }}">
-                                                                                </div>
-                                                                            @endif
+                                                                        <div class="col-12 col-md-4 form-group">
+                                                                            <label for="">Funcionario</label>
+                                                                            <select class="custom-select rounded-0 funcionario"
+                                                                                required="">
+                                                                                <option value="">--Seleccione--</option>
+                                                                            </select>
                                                                         </div>
-                                                                    @endif
-                                                                @endforeach
-                                                            </div>
-                                                            <div class="row respuesta-resuelve">
-                                                                <div class="col-12 row mt-4 mb-2 ">
-                                                                    <div class="col-12 col-md-5">
-                                                                        <h6 class="font-weight-bold">Respuesta Resuelve
-                                                                        </h6>
+                                                                        <div
+                                                                            class="col-12 col-md-4 form-group d-flex align-items-end">
+                                                                            <button href=""
+                                                                                class="btn btn-primary px-4 reasignacion_resuelve_guardar"
+                                                                                data_url="{{ route('asignacion_resuelve_guardar') }}"
+                                                                                data_url2="{{ route('respuesta_resuelve_editar_guardar') }}"
+                                                                                data_token="{{ csrf_token() }}">Asignar
+                                                                                pretensión</button>
+                                                                        </div>
                                                                     </div>
-                                                                    <div
-                                                                        class="col-12 col-md-7 row estado-resuelve justify-content-end">
-                                                                        <input class="estado_actual" type="hidden"
-                                                                            value="{{ $respuesta->estado_id }}">
-                                                                        @if ($tutela->estadostutela_id < 6)
-                                                                            <div
-                                                                                class="col-9 row estado-resuelve justify-content-end">
-                                                                                <div class="col-3 d-flex mb-2">
-                                                                                    <h6>Avance:</h6>
+                                                                @endif
+                                                                <div class="col-12 row">
+                                                                    @foreach ($respuesta->relacion as $relacion)
+                                                                        @if ($tutela->primeraInstancia->cantidad_resuelves)
+                                                                            <div class="d-flex col-10 col-md-5 col-lg-3">
+                                                                                @if ($respuesta->estado_id != 11)
+                                                                                    <div class="mr-3">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarResuelve"
+                                                                                            data_url="{{ route('eliminar_respuesta_resuelve_guardar') }}"
+                                                                                            data_token="{{ csrf_token() }}"><i
+                                                                                                class="fas fa-minus-circle"></i></button>
+                                                                                        <input class="id_relacion_resuelve"
+                                                                                            type="hidden"
+                                                                                            value="{{ $relacion->impugancion->id }}">
+                                                                                    </div>
+                                                                                @endif
+                                                                                <div class="my-2">
+                                                                                    <strong class="">Resuelve #
+                                                                                        {{ $relacion->impugancion->consecutivo }}</strong>{{ $relacion->impugancion->resuelve }}
                                                                                 </div>
-                                                                                <select
-                                                                                    class="custom-select rounded-0 estadoResuelve col-4">
-                                                                                    @foreach ($estados as $estado)
-                                                                                        <option
-                                                                                            value="{{ $estado->id }}"
-                                                                                            {{ $respuesta->estadorepuestaimpugnacion->id == $estado->id ? 'selected' : '' }}>
-                                                                                            {{ $estado->estado }} %
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                                <button type=""
-                                                                                    class="btn btn-primary btn-estado-resuelve col-2 mx-2"
-                                                                                    data_url="{{ route('estado_respuesta_resuelve_guardar') }}"
-                                                                                    data_token="{{ csrf_token() }}"><span
-                                                                                        style="font-size: 1em;"><i
-                                                                                            class="far fa-save"></i></span></button>
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="row">
+                                                                                <div class="my-2 col-11">
+                                                                                    <strong
+                                                                                        class="">#{{ $relacion->impugancion->consecutivo }}
+                                                                                        Resuelve:
+                                                                                    </strong>{{ $relacion->impugancion->resuelve }}
+                                                                                </div>
+                                                                                @if ($respuesta->estado_id != 11)
+                                                                                    <div class="col-1">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-danger btn-xs btn-sombra pl-2 pr-2 eliminarResuelve"
+                                                                                            data_url="{{ route('eliminar_respuesta_resuelve_guardar') }}"
+                                                                                            data_token="{{ csrf_token() }}"><i
+                                                                                                class="fas fa-minus-circle"></i></button>
+                                                                                        <input class="id_relacion_resuelve"
+                                                                                            type="hidden"
+                                                                                            value="{{ $relacion->impugancion->id }}">
+                                                                                    </div>
+                                                                                @endif
                                                                             </div>
                                                                         @endif
-                                                                    </div>
-                                                                    <div class="col-12 form-group mt-3">
-                                                                        <div class="respuesta mt-2">
-                                                                            @if ($respuesta->respuesta)
-                                                                                {!! $respuesta->respuesta !!}
+                                                                    @endforeach
+                                                                </div>
+                                                                <div class="row respuesta-resuelve">
+                                                                    <div class="col-12 row mt-4 mb-2 ">
+                                                                        <div class="col-12 col-md-5">
+                                                                            <h6 class="font-weight-bold">Respuesta Resuelve
+                                                                            </h6>
+                                                                        </div>
+                                                                        <div
+                                                                            class="col-12 col-md-7 row estado-resuelve justify-content-end">
+                                                                            <input class="estado_actual" type="hidden"
+                                                                                value="{{ $respuesta->estado_id }}">
+                                                                            @if ($tutela->estadostutela_id < 6)
+                                                                                <div
+                                                                                    class="col-9 row estado-resuelve justify-content-end">
+                                                                                    <div class="col-3 d-flex mb-2">
+                                                                                        <h6>Avance:</h6>
+                                                                                    </div>
+                                                                                    <select
+                                                                                        class="custom-select rounded-0 estadoResuelve col-4">
+                                                                                        @foreach ($estados as $estado)
+                                                                                            <option
+                                                                                                value="{{ $estado->id }}"
+                                                                                                {{ $respuesta->estadorepuestaimpugnacion->id == $estado->id ? 'selected' : '' }}>
+                                                                                                {{ $estado->estado }} %
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    <button type=""
+                                                                                        class="btn btn-primary btn-estado-resuelve col-2 mx-2"
+                                                                                        data_url="{{ route('estado_respuesta_resuelve_guardar') }}"
+                                                                                        data_token="{{ csrf_token() }}"><span
+                                                                                            style="font-size: 1em;"><i
+                                                                                                class="far fa-save"></i></span></button>
+                                                                                </div>
                                                                             @endif
                                                                         </div>
-                                                                        <input class="id_respuesta" type="hidden"
-                                                                            value="{{ $respuesta->id }}">
-                                                                    </div>
-                                                                    @if (isset($respuesta))
-                                                                        @if (sizeOf($respuesta->documentos))
-                                                                            <hr class="my-4">
-                                                                            <div class="row respuestaAnexos">
-                                                                                <div class="col-12">
+                                                                        <div class="col-12 form-group mt-3">
+                                                                            <div class="respuesta mt-2">
+                                                                                @if ($respuesta->respuesta)
+                                                                                    {!! $respuesta->respuesta !!}
+                                                                                @endif
+                                                                            </div>
+                                                                            <input class="id_respuesta" type="hidden"
+                                                                                value="{{ $respuesta->id }}">
+                                                                        </div>
+                                                                        @if (isset($respuesta))
+                                                                            @if (sizeOf($respuesta->documentos))
+                                                                                <hr class="my-4">
+                                                                                <div class="row respuestaAnexos">
                                                                                     <div class="col-12">
-                                                                                        <h6>Anexos respuesta</h6>
+                                                                                        <div class="col-12">
+                                                                                            <h6>Anexos respuesta</h6>
+                                                                                        </div>
+                                                                                        <div class="col-12 table-responsive">
+                                                                                            <table class="table table-light"
+                                                                                                style="font-size: 0.8em;">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th scope="col">Nombre
+                                                                                                        </th>
+                                                                                                        <th scope="col">
+                                                                                                            Descripción</th>
+                                                                                                        <th scope="col">Archivo
+                                                                                                        </th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    @foreach ($respuesta->documentos as $anexo)
+                                                                                                        <tr>
+                                                                                                            <td
+                                                                                                                class="text-justify">
+                                                                                                                {{ $anexo->titulo }}
+                                                                                                            </td>
+                                                                                                            <td
+                                                                                                                class="text-justify">
+                                                                                                                {{ $anexo->descripcion }}
+                                                                                                            </td>
+                                                                                                            <td><a href="{{ asset('documentos/tutelas/sentencias/resuelves/' . $anexo->url) }}"
+                                                                                                                    target="_blank"
+                                                                                                                    rel="noopener noreferrer">Descargar</a>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    @endforeach
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
                                                                                     </div>
+                                                                                </div>
+                                                                            @endif
+                                                                        @endif
+                                                                        @if (isset($respuesta))
+                                                                            @if (sizeOf($respuesta->historial))
+                                                                                <hr class="mt-3">
+                                                                                <h6 class="">Historial de
+                                                                                    respuestas</h6>
+                                                                                <div class="row d-flex px-12 p-3">
                                                                                     <div class="col-12 table-responsive">
                                                                                         <table class="table table-light"
                                                                                             style="font-size: 0.8em;">
                                                                                             <thead>
                                                                                                 <tr>
-                                                                                                    <th scope="col">Nombre
+                                                                                                    <th scope="col">Fecha</th>
+                                                                                                    <th scope="col">Empleado
                                                                                                     </th>
-                                                                                                    <th scope="col">
-                                                                                                        Descripción</th>
-                                                                                                    <th scope="col">Archivo
+                                                                                                    <th scope="col">Historial
                                                                                                     </th>
                                                                                                 </tr>
                                                                                             </thead>
                                                                                             <tbody>
-                                                                                                @foreach ($respuesta->documentos as $anexo)
+                                                                                                @foreach ($respuesta->historial as $historial)
                                                                                                     <tr>
-                                                                                                        <td
-                                                                                                            class="text-justify">
-                                                                                                            {{ $anexo->titulo }}
+                                                                                                        <td>{{ $historial->created_at }}
                                                                                                         </td>
                                                                                                         <td
                                                                                                             class="text-justify">
-                                                                                                            {{ $anexo->descripcion }}
+                                                                                                            {{ $historial->empleado->nombre1 }}
+                                                                                                            {{ $historial->empleado->apellido1 }}
                                                                                                         </td>
-                                                                                                        <td><a href="{{ asset('documentos/tutelas/sentencias/resuelves/' . $anexo->url) }}"
-                                                                                                                target="_blank"
-                                                                                                                rel="noopener noreferrer">Descargar</a>
+                                                                                                        <td
+                                                                                                            class="text-justify">
+                                                                                                            {{ strip_tags($historial->historial) }}
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 @endforeach
@@ -1114,84 +1155,42 @@
                                                                                         </table>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        @endif
-                                                                    @endif
-                                                                    @if (isset($respuesta))
-                                                                        @if (sizeOf($respuesta->historial))
+                                                                            @endif
                                                                             <hr class="mt-3">
-                                                                            <h6 class="">Historial de
-                                                                                respuestas</h6>
-                                                                            <div class="row d-flex px-12 p-3">
-                                                                                <div class="col-12 table-responsive">
-                                                                                    <table class="table table-light"
-                                                                                        style="font-size: 0.8em;">
-                                                                                        <thead>
-                                                                                            <tr>
-                                                                                                <th scope="col">Fecha</th>
-                                                                                                <th scope="col">Empleado
-                                                                                                </th>
-                                                                                                <th scope="col">Historial
-                                                                                                </th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            @foreach ($respuesta->historial as $historial)
-                                                                                                <tr>
-                                                                                                    <td>{{ $historial->created_at }}
-                                                                                                    </td>
-                                                                                                    <td
-                                                                                                        class="text-justify">
-                                                                                                        {{ $historial->empleado->nombre1 }}
-                                                                                                        {{ $historial->empleado->apellido1 }}
-                                                                                                    </td>
-                                                                                                    <td
-                                                                                                        class="text-justify">
-                                                                                                        {{ strip_tags($historial->historial) }}
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            @endforeach
-                                                                                        </tbody>
-                                                                                    </table>
+                                                                            <div
+                                                                                class="row d-flex px-12 p-3 mensaje-respuesta-resuelve">
+                                                                                <input class="id_respuesta_resuelve"
+                                                                                    type="hidden"
+                                                                                    value="{{ $respuesta->id }}">
+                                                                                <div
+                                                                                    class="container-mensaje-historial form-group col-12">
+                                                                                    <label for=""
+                                                                                        class="">Agregar
+                                                                                        Historial de respuesta</label>
+                                                                                    <textarea class="form-control mensaje-historial-respuesta-resuelve" rows="3" placeholder="" required></textarea>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-12 col-md-12 form-group d-flex">
+                                                                                    <button href=""
+                                                                                        class="btn btn-primary px-4 guardarHistorialRespuestaResuelve"
+                                                                                        data_url="{{ route('historial_respuesta_resuelve_guardar') }}"
+                                                                                        data_token="{{ csrf_token() }}">Guardar
+                                                                                        historial</button>
                                                                                 </div>
                                                                             </div>
                                                                         @endif
-                                                                        <hr class="mt-3">
-                                                                        <div
-                                                                            class="row d-flex px-12 p-3 mensaje-respuesta-resuelve">
-                                                                            <input class="id_respuesta_resuelve"
-                                                                                type="hidden"
-                                                                                value="{{ $respuesta->id }}">
-                                                                            <div
-                                                                                class="container-mensaje-historial form-group col-12">
-                                                                                <label for=""
-                                                                                    class="">Agregar
-                                                                                    Historial de respuesta</label>
-                                                                                <textarea class="form-control mensaje-historial-respuesta-resuelve" rows="3" placeholder="" required></textarea>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-12 col-md-12 form-group d-flex">
-                                                                                <button href=""
-                                                                                    class="btn btn-primary px-4 guardarHistorialRespuestaResuelve"
-                                                                                    data_url="{{ route('historial_respuesta_resuelve_guardar') }}"
-                                                                                    data_token="{{ csrf_token() }}">Guardar
-                                                                                    historial</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endif
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                        @endif
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+
                             @endif
-
-@endif
-
 
                             <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 1em;">
                                 <div class="card-header">
