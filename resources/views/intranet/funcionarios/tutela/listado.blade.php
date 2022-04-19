@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
+            <div class="col-12 col-md-12 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Listado tutelas</h3>

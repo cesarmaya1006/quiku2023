@@ -15,7 +15,7 @@
 @section('cuerpo_pagina')
     <div class="container-fluid">
         <div class="row d-flex justify-content-center">
-            <div class="col-12 col-md-10">
+            <div class="col-12 col-md-12">
                 <div class="row d-flex justify-content-center mt-3">
                     <div class="col-11 col-md-6">
                         @include('includes.error-form')
@@ -23,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-11 d-flex align-items-stretch flex-column">
+            <div class="col-12 col-md-12 d-flex align-items-stretch flex-column">
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Listado PQR</h3>
