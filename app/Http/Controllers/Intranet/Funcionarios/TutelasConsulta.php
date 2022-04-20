@@ -255,7 +255,7 @@ class TutelasConsulta extends Controller
             if (intval($request['cantResuelves']) > 0) {
                 $cantResuelves = intval($request['cantResuelves']);
                 for ($i = 1; $i <= $cantResuelves; $i++) {
-                    $newResuelve['sentenciapinstancia_id'] = $nuevasentenciaSegInstancia->id;
+                    $newResuelve['sentenciaseginstancia_id'] = $nuevasentenciaSegInstancia->id;
                     $newResuelve['sentido'] = $request['sentido' . $i];
                     $newResuelve['numeracion'] =  $i;
                     $newResuelve['dias'] = $request['diascant' . $i];

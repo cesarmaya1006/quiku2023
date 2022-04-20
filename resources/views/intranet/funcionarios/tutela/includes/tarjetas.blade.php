@@ -58,39 +58,49 @@
             </div>
             <div class="col-md-3 col-sm-6 col-12">
                 @if ($tutela->primeraInstancia)
-                    @php
-                        $primeraInstancia = $tutela->primeraInstancia;
-                    @endphp
-
-                    @php
-                        $firstDate = new DateTime($primeraInstancia->fecha_notificacion);
-                        $secondDate = new DateTime(date('d-m-Y', strtotime($primeraInstancia->fecha_notificacion . '+ 3 days')));
-                        $intvl = $firstDate->diff($secondDate);
-                    @endphp
-                    @if ($intvl->days > 3)
-                        <div class="info-box bg-danger">
+                    @if ($tutela->segundaInstancia)
+                        <div class="info-box" style="border: 1px solid black">
                             <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+
                             <div class="info-box-content">
                                 <span class="info-box-text">
                                     Recursos de Impugnación
-                                    <br>
-                                    Tiempo cumplido
                                 </span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
                     @else
-                        <a href="{{ route('tutelas_impugnacion', ['id' => $tutela->id]) }}">
-                            <div class="info-box" style="border: 1px solid black">
+                        @php
+                            $primeraInstancia = $tutela->primeraInstancia;
+                            $firstDate = new DateTime($primeraInstancia->fecha_notificacion);
+                            $secondDate = new DateTime(date('d-m-Y', strtotime($primeraInstancia->fecha_notificacion . '+ 3 days')));
+                            $intvl = $firstDate->diff($secondDate);
+                        @endphp
+                        @if ($intvl->days > 3)
+                            <div class="info-box bg-danger">
                                 <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">
                                         Recursos de Impugnación
+                                        <br>
+                                        Tiempo cumplido
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
                             </div>
-                        </a>
+                        @else
+                            <a href="{{ route('tutelas_impugnacion', ['id' => $tutela->id]) }}">
+                                <div class="info-box" style="border: 1px solid black">
+                                    <span class="info-box-icon"><i class="fas fa-medal"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">
+                                            Recursos de Impugnación
+                                        </span>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+                            </a>
+                        @endif
                     @endif
                 @else
                     <div class="info-box" style="border: 1px solid black">
@@ -104,7 +114,6 @@
                         <!-- /.info-box-content -->
                     </div>
                 @endif
-
 
                 <!-- /.info-box -->
             </div>

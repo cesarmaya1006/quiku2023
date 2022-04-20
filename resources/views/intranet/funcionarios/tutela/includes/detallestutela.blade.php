@@ -1053,7 +1053,7 @@
         </div>
     </div>
 @endif
-@if ($tutela->primeraInstancia)
+@if ($tutela->segundaInstancia)
     <div class="row">
         <div class="col-12">
             <div class="card card-outline card-primary collapsed-card">
@@ -1073,37 +1073,37 @@
                     <div class="row px-2">
                         <div class="row">
                             @php
-                                $primeraInstancia = $tutela->segundaInstancia;
+                                $segundaInstancia = $tutela->segundaInstancia;
                             @endphp
                             <div class="col-12 col-md-3 text-center form-group">
                                 <label>Fecha de la sentencia</label>
                                 <br>
-                                <span class="">{{ $primeraInstancia->fecha_sentencia }}</span>
+                                <span class="">{{ $segundaInstancia->fecha_sentencia }}</span>
                             </div>
                             <div class="col-12 col-md-3 text-center form-group">
                                 <label>Fecha de notificación</label>
                                 <br>
-                                <span class="">{{ $primeraInstancia->fecha_notificacion }}</span>
+                                <span class="">{{ $segundaInstancia->fecha_notificacion }}</span>
                             </div>
                             <div class="col-12 col-md-3 text-center form-group">
                                 <label>Sentido de la sentencia</label>
                                 <br>
-                                <span class="">{{ $primeraInstancia->sentencia }}</span>
+                                <span class="">{{ $segundaInstancia->sentencia }}</span>
                             </div>
                             <div class="col-12 col-md-3 text-center form-group">
                                 <label>Documento de sentencia</label>
                                 <br>
                                 <span class=""><a
-                                        href="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
+                                        href="{{ asset('documentos/tutelas/sentencias/' . $segundaInstancia->url_sentencia) }}"
                                         target="_blank" rel="noopener noreferrer">Descargar</a></span>
                             </div>
-                            @if ($primeraInstancia->anexosSegundaInstancia)
+                            @if ($segundaInstancia->anexosSegundaInstancia)
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-12 mt-3 mb-4">
                                             <h6>Archivos Adjuntos</h6>
                                         </div>
-                                        @foreach ($primeraInstancia->anexosSegundaInstancia as $anexo)
+                                        @foreach ($segundaInstancia->anexosSegundaInstancia as $anexo)
                                             <div class="col-12">
                                                 <div class="row">
                                                     <div class="col-4">
@@ -1141,13 +1141,13 @@
                                     </div>
                                 </div>
                             @endif
-                            @if ($primeraInstancia->resuelvesSegundaInstancia)
+                            @if ($segundaInstancia->resuelvesSegundaInstancia)
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-12 mt-3 mb-4">
                                             <h6>Resuleves Primera Instancia</h6>
                                         </div>
-                                        @foreach ($primeraInstancia->resuelvesSegundaInstancia as $resuelve)
+                                        @foreach ($segundaInstancia->resuelvesSegundaInstancia as $resuelve)
                                             @if ($resuelve->resuelve != null)
                                                 <?php $tipo = 'detalle'; ?>
                                             @else
@@ -1168,7 +1168,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach ($primeraInstancia->resuelvesSegundaInstancia as $resuelve)
+                                                                @foreach ($segundaInstancia->resuelvesSegundaInstancia as $resuelve)
                                                                     <tr>
                                                                         <td scope="row">
                                                                             {{ $resuelve->numeracion }}
@@ -1212,7 +1212,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                                                @foreach ($segundaInstancia->resuelvesSegundaInstancia as $resuelve)
                                                                     <tr>
                                                                         <td scope="row">
                                                                             {{ $resuelve->numeracion }}
