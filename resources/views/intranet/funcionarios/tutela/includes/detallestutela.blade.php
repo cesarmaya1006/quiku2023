@@ -76,7 +76,7 @@
                                 {{ $tutela->horas_termino }}</p>
                         </div>
                     @endif
-                    @if ($tutela->url_admisorio||$tutela->url_tutela||$tutela->primeraInstancia->url_tutela)
+                    @if ($tutela->url_admisorio || $tutela->url_tutela || $tutela->primeraInstancia ) 
                         <div class="row">
                             <div class="col-12">
                                 <h6>Archivos</h6>
