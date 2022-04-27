@@ -34,10 +34,10 @@
                                 'intranet.funcionarios.tutela.includes.tarjetas'
                             )
                             <hr>
-                    @include(
+                            {{-- @include(
                         'intranet.funcionarios.tutela.includes.detallestutela'
-                    )
-                            {{--<div class="row">
+                    ) --}}
+                            <div class="row">
                                 <div class="col-12 col-md-6">
                                     Número de radicado:
                                     <strong>{{ $tutela->radicado }}</strong>
@@ -82,7 +82,7 @@
                                 <div class="col-12 col-md-6">
                                     Fecha límite: <strong>{{ $tutela->fecha_limite }}</strong>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                         {{-- Inicio Bloque Tarjetas --}}
 
@@ -108,7 +108,7 @@
                                 </div>
                             </div>
                         @endif
-                        {{-- <div class="col-12 rounded border mb-3 p-2">
+                        <div class="col-12 rounded border mb-3 p-2">
                             <div class="menu-card">
                                 <div class="col-12 mt-2">
                                     <h5>Detalle Tutela</h5>
@@ -382,7 +382,8 @@
                                         @foreach ($tutela->pretensiones->sortBy('consecutivo') as $key => $pretension)
                                             <div class="col-12 row t">
                                                 <div class="col-12 mb-3">
-                                                    <h6 class="pl-4">Pretensión # {{ $pretension->consecutivo }}
+                                                    <h6 class="pl-4">Pretensión #
+                                                        {{ $pretension->consecutivo }}
                                                     </h6>
                                                 </div>
                                                 <div class="col-12">
@@ -477,9 +478,9 @@
                                 </div>
                                 <hr>
                             @endif
-                        </div> --}}
+                        </div>
                     </div>
-                    {{-- @if (sizeOf($tutela->historialasignacion))
+                    @if (sizeOf($tutela->historialasignacion))
                         <div class="rounded border mx-3 my-0 p-3">
                             <h5 class="m-2">Historial asignación</h5>
                             <div class="row d-flex px-12 p-3">
@@ -679,7 +680,9 @@
                                                         <td class="text-justify">{{ $respuesta->empleado->nombre1 }}
                                                             {{ $respuesta->empleado->apellido1 }}</td>
                                                         <td class="text-justify">{{ $respuesta->tarea->tarea }}</td>
-                                                        <td>Respuesta  {{ $respuesta->tipo_respuesta == 1 ? 'tutela' : 'sentencia 1° instancia' }}</td>
+                                                        <td>Respuesta
+                                                            {{ $respuesta->tipo_respuesta == 1 ? 'tutela' : 'sentencia 1° instancia' }}
+                                                        </td>
                                                         <td class="text-justify"><a
                                                                 href="{{ route('descarga_respuesta_tutela', ['id' => $respuesta->id]) }}"
                                                                 target="_blank" rel="noopener noreferrer">
@@ -693,7 +696,7 @@
                                 </div>
                             @endif
                         </div>
-                    @endif --}}
+                    @endif
                     <div class="card-footer d-flex justify-content-end">
                         <a href="{{ route('tutela-gestion') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                     </div>

@@ -901,40 +901,33 @@
                                                                         <hr>
                                                                         <div class="row justify-content-around coleccionrespuesta"
                                                                             id="coleccionrespuesta">
-                                                                            <div class="col-md-6  d-none">
+                                                                            <div class="col-md-6">
+                                                                                {{$tutela->motivos[0]->motivo_tutela}}
                                                                                 <div
                                                                                     class="card card-primary collapsed-card card-mini-sombra">
                                                                                     <div class="card-header">
                                                                                         <div class="user-block">
-                                                                                            <span class="username"><a
-                                                                                                    href="#"
-                                                                                                    id="tituloNoma"></a></span>
-                                                                                            <span
-                                                                                                class="description"></span>
+                                                                                            <span class="username"><a href="#" id="tituloNoma"></a></span>
+                                                                                            <span class="description"></span>
                                                                                         </div>
                                                                                         <div class="card-tools">
                                                                                             <button type="button"
-                                                                                                class="btn btn-tool"
-                                                                                                data-card-widget="collapse">
-                                                                                                <i
-                                                                                                    class="fas fa-minus"></i>
+                                                                                                    class="btn btn-tool"
+                                                                                                    data-card-widget="collapse">
+                                                                                                        <i class="fas fa-minus"></i>
                                                                                             </button>
                                                                                             <button type="button"
-                                                                                                class="btn btn-tool"
-                                                                                                data-card-widget="remove">
-                                                                                                <i
-                                                                                                    class="fas fa-times"></i>
+                                                                                                    class="btn btn-tool"
+                                                                                                    data-card-widget="remove">
+                                                                                                    <i class="fas fa-times"></i>
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="card-body">
                                                                                         <div class="row">
                                                                                             <div class="col-12">
-                                                                                                <p><strong>Texto:</strong>
-                                                                                                </p>
-                                                                                                <p class="textoCopiar">
-                                                                                                    El
-                                                                                                    Texto...</p>
+                                                                                                <p><strong>Texto:</strong></p>
+                                                                                                <p class="textoCopiar">El Texto...</p>
                                                                                             </div>
                                                                                         </div>
                                                                                         <hr>
@@ -942,27 +935,14 @@
                                                                                             <div class="col-12">
                                                                                                 <h6>Criterios Juridicos</h6>
                                                                                             </div>
-                                                                                            <div
-                                                                                                class="col-12 table-responsive">
-                                                                                                <table
-                                                                                                    class="table">
+                                                                                            <div class="col-12 table-responsive">
+                                                                                                <table class="table">
                                                                                                     <thead>
                                                                                                         <tr>
-                                                                                                            <th>Autor(es)
-                                                                                                            </th>
-                                                                                                            <th>Criterios
-                                                                                                                jurídicos
-                                                                                                                de
-                                                                                                                aplicación
-                                                                                                            </th>
-                                                                                                            <th>Criterios
-                                                                                                                jurídicos
-                                                                                                                de no
-                                                                                                                aplicación
-                                                                                                            </th>
-                                                                                                            <th>Notas de la
-                                                                                                                Vigencia
-                                                                                                            </th>
+                                                                                                            <th>Autor(es)</th>
+                                                                                                            <th>Criterios jurídicos de aplicación</th>
+                                                                                                            <th>Criterios jurídicos de no aplicación</th>
+                                                                                                            <th>Notas de la Vigencia</th>
                                                                                                         </tr>
                                                                                                     </thead>
                                                                                                     <tbody>
@@ -2748,7 +2728,7 @@
                                                                                 <div class="modal-header">
                                                                                     <h5 class="modal-title"
                                                                                         id="exampleModalLongTitle">Buscar En
-                                                                                        Wiku</h5>
+                                                                                        Wikus</h5>
                                                                                     <button type="button"
                                                                                         class="close"
                                                                                         data-dismiss="modal"

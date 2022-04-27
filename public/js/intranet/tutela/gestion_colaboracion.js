@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', function() {
     const id_auto = document.querySelector('.id_auto_admisorio').value
     const sentenciapinstancia_id = document.querySelector('.id_sentencia_p_instancia').value
-    
+
     // Funcion para reasignar hecho
     $('.reasignarHecho').on('change', function(e) {
         let padre = e.target.parentElement.parentElement.parentElement
@@ -480,7 +480,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    //  Guardar Historial resuelve 
+    //  Guardar Historial resuelve
     if (document.querySelector('.guardarHistorialRespuestaResuelve')) {
         let HistorialResuelve = document.querySelectorAll('.guardarHistorialRespuestaResuelve')
         HistorialResuelve.forEach(btn => btn.addEventListener('click', guardarHistorialRespuestaResuelve))
@@ -653,7 +653,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     id_respuesta: idrespuesta.data
                 }
                 fetch(url3, {
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                      },
@@ -663,7 +663,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(res => {
                     fetch(url4, {
-                        headers: { 
+                        headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': token
                          },
@@ -703,7 +703,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 estado
             }
             fetch(url, {
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': token
                  },
@@ -713,7 +713,7 @@ window.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(res => {
                 fetch(url2, {
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                      },
@@ -824,7 +824,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     id_respuesta: idrespuesta.data
                 }
                 fetch(url3, {
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                      },
@@ -834,7 +834,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(res => {
                     fetch(url4, {
-                        headers: { 
+                        headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': token
                          },
@@ -946,7 +946,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     id_respuesta: idrespuesta.data
                 }
                 fetch(url3, {
-                    headers: { 
+                    headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': token
                      },
@@ -956,7 +956,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(res => {
                     fetch(url4, {
-                        headers: { 
+                        headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': token
                          },
