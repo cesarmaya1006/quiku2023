@@ -31,14 +31,14 @@
                     <div class="card-body">
                         <div class="rounded border p-2">
                             @if ($tutela->estadostutela_id !== 6)
-                                <h5 class="mb-3">Historial de respuesta </h5>
+                                <h5 class="mb-3">Vista previa de respuesta </h5>
                                 <strong>
                                     <a href="{{ route('respuesta_tutela', ['id' => $tutela->id]) }}" target="_blank" rel="noopener noreferrer">
                                         <i class="fas fa-eye"></i> Vista previa</a>
                                 </strong>
                                 <input class="tipo_respuesta" type="hidden" value="1">
                             @else
-                                <h5 class="mb-3">Historial de respuesta sentencia 1° Instancia </h5>
+                                <h5 class="mb-3">Vista previa de respuesta sentencia 1° Instancia </h5>
                                 <strong class="mx-2">
                                     <a href="{{ route('respuesta_sentencia_primera_instancia', ['id' => $tutela->id]) }}"
                                         target="_blank" rel="noopener noreferrer">

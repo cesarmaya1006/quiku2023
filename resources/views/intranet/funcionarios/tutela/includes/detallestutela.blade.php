@@ -58,9 +58,7 @@
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
-                <!-- /.card-tools -->
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
                 <div class="row px-2">
                     @if ($tutela->dias_termino)
@@ -76,7 +74,7 @@
                                 {{ $tutela->horas_termino }}</p>
                         </div>
                     @endif
-                    @if ($tutela->url_admisorio||$tutela->url_tutela||$tutela->primeraInstancia->url_tutela)
+                    @if ($tutela->url_admisorio || $tutela->url_tutela || $tutela->primeraInstancia ) 
                         <div class="row">
                             <div class="col-12">
                                 <h6>Archivos</h6>
@@ -165,9 +163,7 @@
                     @endif
                 </div>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
 </div>
 <div class="row">
@@ -181,9 +177,7 @@
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
-                <!-- /.card-tools -->
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 mt-2">
@@ -303,9 +297,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
 </div>
 @if (sizeOf($tutela->anexostutela))
@@ -320,9 +312,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
@@ -355,9 +345,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
@@ -372,9 +360,7 @@
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
-                <!-- /.card-tools -->
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
                 <div class="row px-2">
                     @foreach ($tutela->hechos as $key => $hecho)
@@ -392,9 +378,7 @@
                     @endforeach
                 </div>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
 </div>
 <div class="row">
@@ -408,9 +392,7 @@
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
-                <!-- /.card-tools -->
             </div>
-            <!-- /.card-header -->
             <div class="card-body">
                 <div class="row px-2">
                     @foreach ($tutela->pretensiones as $key => $pretension)
@@ -427,9 +409,7 @@
                     @endforeach
                 </div>
             </div>
-            <!-- /.card-body -->
         </div>
-        <!-- /.card -->
     </div>
 </div>
 @if (sizeOf($tutela->argumentos))
@@ -444,9 +424,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row px-2">
                         @foreach ($tutela->argumentos as $key => $argumento)
@@ -463,9 +441,7 @@
                         @endforeach
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
@@ -481,9 +457,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row px-2">
                         <div class="col-12">
@@ -516,9 +490,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
@@ -534,9 +506,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row px-2">
                         @foreach ($tutela->motivos as $key => $motivo)
@@ -565,9 +535,7 @@
                         @endforeach
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
@@ -584,9 +552,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row px-2">
                         <div class="row">
@@ -767,9 +733,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
@@ -784,9 +748,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row px-2">
                         <div class="row">
@@ -828,9 +790,7 @@
                         @endif
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
@@ -855,9 +815,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row px-2">
                         <div class="row">
@@ -881,9 +839,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
@@ -898,9 +854,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row px-2">
                         <div class="row">
@@ -1008,7 +962,7 @@
                             @if (sizeOf($tutela->respuestas))
                                 <hr>
                                 <div class="p-2 mb-4">
-                                    <h5 class="">Historial de respuesta </h5>
+                                    <h5 class="">Vista previa de respuesta </h5>
                                     <div class="col-12 table-responsive">
                                         <table class="table table-light" style="font-size: 0.8em;">
                                             <thead>
@@ -1047,9 +1001,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
@@ -1066,9 +1018,7 @@
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
-                    <!-- /.card-tools -->
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row px-2">
                         <div class="row">
@@ -1249,39 +1199,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
         </div>
     </div>
 @endif
-
-
-{{-- Muestra de bloque
-============================================================================================
-<div class="row">
-    <div class="col-12">
-        <div class="card card-outline card-primary collapsed-card">
-            <div class="card-header">
-                <h5 class="card-title">Titulo</h5>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-                <!-- /.card-tools -->
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-                <div class="row px-2">
-                    <div class="row">
-
-                    </div>
-                </div>
-            </div>
-            <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-    </div>
-</div>
-============================================================================================ --}}
