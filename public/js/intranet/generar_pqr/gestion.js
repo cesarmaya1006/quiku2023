@@ -358,43 +358,43 @@ window.addEventListener('DOMContentLoaded', function() {
             let anexos = padreRespuesta.querySelectorAll('.anexoconsulta')
             if (respuesta != '') {
                 swal("Guardar la respúesta como:", {
-                        buttons: {
-                            definitiva: {
-                                text: "Definitiva",
-                                value: "definitiva",
-                                className: "bg-primary",
-                            },
-                            parcial: {
-                                text: "Parcial",
-                                value: "parcial",
-                                className: "bg-primary",
-                            },
-                            cancel: "Cancelar",
+                    buttons: {
+                        definitiva: {
+                            text: "Definitiva",
+                            value: "definitiva",
+                            className: "bg-primary",
                         },
-                    })
-                    .then((value) => {
-                        switch (value) {
-                            case "definitiva":
-                                let data = {
-                                    respuesta,
-                                    id_peticion,
-                                    estado: 11
-                                }
-                                guardarRespuesta(data)
-                                break;
+                        parcial: {
+                            text: "Parcial",
+                            value: "parcial",
+                            className: "bg-primary",
+                        },
+                        cancel: "Cancelar",
+                    },
+                })
+                .then((value) => {
+                    switch (value) {
+                        case "definitiva":
+                            let data = {
+                                respuesta,
+                                id_peticion,
+                                estado: 11
+                            }
+                            guardarRespuesta(data)
+                            break;
 
 
-                            case "parcial":
-                                let data1 = {
-                                    respuesta,
-                                    id_peticion
-                                }
-                                guardarRespuesta(data1)
-                                break;
+                        case "parcial":
+                            let data1 = {
+                                respuesta,
+                                id_peticion
+                            }
+                            guardarRespuesta(data1)
+                            break;
 
-                            default:
-                        }
-                    });
+                        default:
+                    }
+                });
             }
 
             function guardarRespuesta(data) {

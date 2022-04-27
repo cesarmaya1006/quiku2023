@@ -737,6 +737,80 @@ if(document.querySelector('.btn-ordenar-recurso-guardar')){
 
 }
 
+// Funcion check multiple peticiones
+if (document.querySelectorAll('.check-todos-peticiones')) {
+    let checkTodos = document.querySelectorAll('.check-todos-peticiones');
+    checkTodos.forEach((check) => {
+        check.addEventListener('input', seleccionMultiple);
+    });
+
+    function seleccionMultiple(btn) {
+        let check = btn.target;
+        let contenedorPadre = check.parentElement.parentElement;
+        let selectores = contenedorPadre.querySelectorAll('.select-peticion');
+        if (check.checked) {
+            selectores.forEach((selector) => {
+                if (!selector.disabled) {
+                    selector.checked = true;
+                }
+            });
+        } else {
+            selectores.forEach((selector) => {
+                if (!selector.disabled) {
+                    selector.checked = false;
+                }
+            });
+        }
+    }
+}
+
+// Guardar asignar peticion a funcionario
+if (document.querySelector('.asignacion_peticion_guardar')) {
+    let asignacionPeticion = document.querySelector('.asignacion_peticion_guardar');
+    asignacionPeticion.addEventListener('click', function(e) {
+        e.preventDefault();
+        let padreContenedor = e.target.parentElement.parentElement;
+        let url = e.target.getAttribute('data_url');
+        let token = e.target.getAttribute('data_token');
+        let funcionario = padreContenedor.querySelector('.funcionario').value;
+        let cargo = padreContenedor.querySelector('.cargo').value;
+        let peticiones = document.querySelectorAll('.select-peticion');
+        let peticionesAsignar = [];
+        peticiones.forEach((peticion) => {
+            if (peticion.checked) {
+                peticionesAsignar.push(peticion);
+            }
+        });
+        if (peticionesAsignar.length == 0 || cargo == '' || funcionario == '') {
+            alert('Debe dilegenciar todos los campos del formulario');
+        } else {
+            peticionesAsignar.forEach((peticion) => {
+                guardarAsignacionPeticion(peticion.value);
+            });
+        }
+
+        function guardarAsignacionPeticion(value) {
+            let data = {
+                peticion: value,
+                funcionario,
+                idPqr
+            };
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: { 'X-CSRF-TOKEN': token },
+                data: data,
+                success: function(respuesta) {
+                    location.reload();
+                },
+                error: function(error) {
+                    console.log(error.responseJSON);
+                }
+            });
+        }
+    });
+}
+
 //==========================================================================
     $(document).ready(function() {
         $('.mensaje-resuelve').summernote({

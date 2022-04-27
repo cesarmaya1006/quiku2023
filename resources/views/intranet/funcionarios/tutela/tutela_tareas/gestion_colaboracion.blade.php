@@ -1950,7 +1950,7 @@
                                                                                 class="container-mensaje-historial form-group col-12">
                                                                                 <label for=""
                                                                                     class="">Agregar
-                                                                                    Historial de respuesta</label>
+                                                                                    Vista previa de respuesta</label>
                                                                                 <textarea class="form-control mensaje-historial-respuesta-hecho" rows="3" placeholder="" required></textarea>
                                                                             </div>
                                                                             <div
@@ -3527,7 +3527,7 @@
                                                                                 class="container-mensaje-historial form-group col-12">
                                                                                 <label for=""
                                                                                     class="">Agregar
-                                                                                    Historial de respuesta</label>
+                                                                                    Vista previa de respuesta</label>
                                                                                 <textarea class="form-control mensaje-historial-respuesta-pretension" rows="3" placeholder="" required></textarea>
                                                                             </div>
                                                                             <div
@@ -5108,7 +5108,7 @@
                                                                                 class="container-mensaje-historial form-group col-12">
                                                                                 <label for=""
                                                                                     class="">Agregar
-                                                                                    Historial de respuesta</label>
+                                                                                    Vista previa de respuesta</label>
                                                                                 <textarea class="form-control mensaje-historial-respuesta-resuelve" rows="3" placeholder="" required></textarea>
                                                                             </div>
                                                                             <div

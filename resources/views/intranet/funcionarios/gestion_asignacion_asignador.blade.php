@@ -163,10 +163,10 @@
                                     <hr>
                                     @if($peticion->motivo_sub_id)
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-12 col-lg-6">
                                                 <p class="text-justify"><strong>Categoría Motivo:</strong> {{ $peticion->motivo->motivo->motivo }}</p>
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12 col-lg-6">
                                                 <p class="text-justify"><strong>Sub - Categoría Motivo:</strong> {{ $peticion->motivo->sub_motivo }}</p>
                                             </div>
                                             @if ($peticion->otro)
@@ -475,7 +475,7 @@
                                 </div>
                                 @if(sizeOf($peticion->historialpeticiones))
                                     <hr>
-                                    <h5 class="">Historial peticiones</h5>
+                                    <h5 class="">Historial petición</h5>
                                     <div class="row d-flex px-12 p-3">
                                         <div class="col-12 table-responsive">
                                             <table class="table table-light" style="font-size: 0.8em;">
@@ -598,7 +598,7 @@
                         @endif
                         @if (sizeOf($pqr->anexos))   
                             <div class="rounded border m-3 p-2 mb-4">
-                                <h5 class="">Historial de respuesta </h5>
+                                <h5 class="">VER PROYECTO DE RESPUESTA PQR </h5>
                                 <div class="col-12 table-responsive">
                                     <table class="table table-light" style="font-size: 0.8em;">
                                         <thead>

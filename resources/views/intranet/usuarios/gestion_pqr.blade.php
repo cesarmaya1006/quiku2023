@@ -351,10 +351,10 @@
                                             <hr>
                                             @if($peticion->motivo_sub_id)
                                                 <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-12 xl-6">
                                                         <p class="text-justify"><strong>Categoría Motivo:</strong> {{ $peticion->motivo->motivo->motivo }}</p>
                                                     </div>
-                                                    <div class="col-12">
+                                                    <div class="col-12 xl-6">
                                                         <p class="text-justify"><strong>Sub - Categoría Motivo:</strong> {{ $peticion->motivo->sub_motivo }}</p>
                                                     </div>
                                                     @if ($peticion->otro)

@@ -53,7 +53,7 @@ class PQRController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function gestionar($id)
+    public function gestionar_asignacion_colaboracion($id)
     {
         $pqr = PQR::findOrFail($id);
         $estadoPrioridad = Prioridad::all();
