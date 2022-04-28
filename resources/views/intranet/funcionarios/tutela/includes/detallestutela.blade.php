@@ -962,7 +962,7 @@
                             @if (sizeOf($tutela->respuestas))
                                 <hr>
                                 <div class="p-2 mb-4">
-                                    <h5 class="">Vista previa de respuesta </h5>
+                                    <h5 class="">Respuesta </h5>
                                     <div class="col-12 table-responsive">
                                         <table class="table table-light" style="font-size: 0.8em;">
                                             <thead>

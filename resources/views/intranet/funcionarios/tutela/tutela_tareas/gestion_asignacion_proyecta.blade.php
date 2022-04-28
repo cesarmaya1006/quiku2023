@@ -653,7 +653,7 @@
                                                                                 class="container-mensaje-historial form-group col-12">
                                                                                 <label for=""
                                                                                     class="">Agregar
-                                                                                    Vista previa de respuesta</label>
+                                                                                    Historial de respuesta</label>
                                                                                 <textarea class="form-control mensaje-historial-respuesta-hecho" rows="3" placeholder="" required></textarea>
                                                                             </div>
                                                                             <div
@@ -909,7 +909,7 @@
                                                                                 class="container-mensaje-historial form-group col-12">
                                                                                 <label for=""
                                                                                     class="">Agregar
-                                                                                    Vista previa de respuesta</label>
+                                                                                    Historial de respuesta</label>
                                                                                 <textarea class="form-control mensaje-historial-respuesta-pretension" rows="3" placeholder="" required></textarea>
                                                                             </div>
                                                                             <div
@@ -1166,7 +1166,7 @@
                                                                                     class="container-mensaje-historial form-group col-12">
                                                                                     <label for=""
                                                                                         class="">Agregar
-                                                                                        Vista previa de respuesta</label>
+                                                                                        Historial de respuesta</label>
                                                                                     <textarea class="form-control mensaje-historial-respuesta-resuelve" rows="3" placeholder="" required></textarea>
                                                                                 </div>
                                                                                 <div
@@ -1768,7 +1768,7 @@
                                 @if (($tutela->pretensiones->sum('estado_id') / $tutela->pretensiones->count() / 11) * 100 == 100)
                                     {{-- @if (sizeOf($pqr->anexos))
                                         <div class="rounded border m-3 p-2">
-                                            <h5 class="">Vista previa de respuesta </h5>
+                                            <h5 class="">Historial de respuesta </h5>
                                             <div class="row d-flex px-12 p-3">
                                                 <div class="col-12 table-responsive">
                                                     <table class="table table-light" style="font-size: 0.8em;">
