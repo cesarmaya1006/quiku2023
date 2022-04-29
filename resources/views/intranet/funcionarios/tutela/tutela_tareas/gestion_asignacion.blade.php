@@ -87,7 +87,7 @@
                         {{-- Inicio Bloque Tarjetas --}}
 
                         {{-- Fin Bloque Tarjetas --}}
-                        @if ($tutela->estadostutela_id == 4)
+                        @if ($tutela->estadostutela_id == 50)
                             <div class="col-12 rounded border mb-3 p-2">
                                 <div class="row d-flex px-4">
                                     <div class="col-12 col-md-5 form-group mt-2">

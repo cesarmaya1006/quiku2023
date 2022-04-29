@@ -135,7 +135,7 @@
                                 <span class="info-box-icon"><i class="fas fa-medal"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">
-                                        Registro Sentencia <br> en primera instancia
+                                        Registro Sentencia <br> en segunda instancia
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
