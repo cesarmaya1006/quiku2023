@@ -539,204 +539,6 @@
         </div>
     </div>
 @endif
-@if ($tutela->primeraInstancia)
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-outline card-primary collapsed-card">
-                <div class="card-header">
-                    <h5 class="card-title">Sentencia
-                        en primera instancia</h5>
-
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row px-2">
-                        <div class="row">
-                            @php
-                                $primeraInstancia = $tutela->primeraInstancia;
-                            @endphp
-                            <div class="col-12 col-md-3 text-center form-group">
-                                <label>Fecha de la sentencia</label>
-                                <br>
-                                <span class="">{{ $primeraInstancia->fecha_sentencia }}</span>
-                            </div>
-                            <div class="col-12 col-md-3 text-center form-group">
-                                <label>Fecha de notificación</label>
-                                <br>
-                                <span class="">{{ $primeraInstancia->fecha_notificacion }}</span>
-                            </div>
-                            <div class="col-12 col-md-3 text-center form-group">
-                                <label>Sentido de la sentencia</label>
-                                <br>
-                                <span class="">{{ $primeraInstancia->sentencia }}</span>
-                            </div>
-                            <div class="col-12 col-md-3 text-center form-group">
-                                <label>Documento de sentencia</label>
-                                <br>
-                                <span class=""><a
-                                        href="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
-                                        target="_blank" rel="noopener noreferrer">Descargar</a></span>
-                            </div>
-                            @if ($primeraInstancia->anexosPrimeraInstancia)
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-12 mt-3 mb-4">
-                                            <h6>Archivos Adjuntos</h6>
-                                        </div>
-                                        @foreach ($primeraInstancia->anexosPrimeraInstancia as $anexo)
-                                            <div class="col-12">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <div class="col-12 col-md-3 text-center form-group">
-                                                            <label>Titulo
-                                                                Anexo</label>
-                                                            <br>
-                                                            <span
-                                                                class="">{{ $anexo->titulo_anexo }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <div class="col-12 col-md-3 text-center form-group">
-                                                            <label>Descripción
-                                                                Anexo</label>
-                                                            <br>
-                                                            <span
-                                                                class="">{{ $anexo->descripcion_anexo }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <div class="col-12 col-md-3 text-center form-group">
-                                                            <label>Archivo
-                                                                Anexo</label>
-                                                            <br>
-                                                            <span class=""><a
-                                                                    href="{{ asset('documentos/tutelas/sentencias/' . $anexo->url_anexo) }}"
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer">Descargar</a></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endif
-                            @if ($primeraInstancia->resuelvesPrimeraInstancia)
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-12 mt-3 mb-4">
-                                            <h6>Resuleves Primera Instancia</h6>
-                                        </div>
-                                        @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                            @if ($resuelve->resuelve != null)
-                                                <?php $tipo = 'detalle'; ?>
-                                            @else
-                                                <?php $tipo = 'cantidad'; ?>
-                                            @endif
-                                        @endforeach
-                                        @if ($tipo == 'detalle')
-                                            <div class="col-12 mb-4">
-                                                <div class="row">
-                                                    <div class="col-12 table-responsive">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Numeracion</th>
-                                                                    <th>Resuelve</th>
-                                                                    <th>Tiempo de cumplimiento</th>
-                                                                    <th>Fecha de Cumplimiento</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                                    <tr>
-                                                                        <td scope="row">
-                                                                            {{ $resuelve->numeracion }}
-                                                                        </td>
-                                                                        <td>{{ $resuelve->resuelve }}
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($resuelve->dias != null)
-                                                                                {{ $resuelve->dias . ' dias ' }}
-                                                                            @endif
-                                                                            @if ($resuelve->horas != null)
-                                                                                {{ $resuelve->horas . ' horas ' }}
-                                                                            @endif
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($resuelve->dias != null)
-                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
-                                                                            @endif
-                                                                            @if ($resuelve->horas != null)
-                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
-                                                                            @endif
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="col-12 mb-4">
-                                                <div class="row">
-                                                    <div class="col-12 table-responsive">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Numeracion</th>
-                                                                    <th>Sentido</th>
-                                                                    <th>Tiempo de cumplimiento</th>
-                                                                    <th>Fecha de Cumplimiento</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                                    <tr>
-                                                                        <td scope="row">
-                                                                            {{ $resuelve->numeracion }}
-                                                                        </td>
-                                                                        <td>{{ $resuelve->sentido }}
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($resuelve->dias != null)
-                                                                                {{ $resuelve->dias . ' dias ' }}
-                                                                            @endif
-                                                                            @if ($resuelve->horas != null)
-                                                                                {{ $resuelve->horas . ' horas ' }}
-                                                                            @endif
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($resuelve->dias != null)
-                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
-                                                                            @endif
-                                                                            @if ($resuelve->horas != null)
-                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
-                                                                            @endif
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
 @if (sizeOf($tutela->historialasignacion))
     <div class="row">
         <div class="col-12">
@@ -1005,6 +807,203 @@
         </div>
     </div>
 @endif
+@if ($tutela->primeraInstancia)
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline card-primary collapsed-card">
+                <div class="card-header">
+                    <h5 class="card-title">Sentencia en primera instancia</h5>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row px-2">
+                        <div class="row">
+                            @php
+                                $primeraInstancia = $tutela->primeraInstancia;
+                            @endphp
+                            <div class="col-12 col-md-3 text-center form-group">
+                                <label>Fecha de la sentencia</label>
+                                <br>
+                                <span class="">{{ $primeraInstancia->fecha_sentencia }}</span>
+                            </div>
+                            <div class="col-12 col-md-3 text-center form-group">
+                                <label>Fecha de notificación</label>
+                                <br>
+                                <span class="">{{ $primeraInstancia->fecha_notificacion }}</span>
+                            </div>
+                            <div class="col-12 col-md-3 text-center form-group">
+                                <label>Sentido de la sentencia</label>
+                                <br>
+                                <span class="">{{ $primeraInstancia->sentencia }}</span>
+                            </div>
+                            <div class="col-12 col-md-3 text-center form-group">
+                                <label>Documento de sentencia</label>
+                                <br>
+                                <span class=""><a
+                                        href="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
+                                        target="_blank" rel="noopener noreferrer">Descargar</a></span>
+                            </div>
+                            @if ($primeraInstancia->anexosPrimeraInstancia)
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12 mt-3 mb-4">
+                                            <h6>Archivos Adjuntos</h6>
+                                        </div>
+                                        @foreach ($primeraInstancia->anexosPrimeraInstancia as $anexo)
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <div class="col-12 col-md-3 text-center form-group">
+                                                            <label>Titulo
+                                                                Anexo</label>
+                                                            <br>
+                                                            <span
+                                                                class="">{{ $anexo->titulo_anexo }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="col-12 col-md-3 text-center form-group">
+                                                            <label>Descripción
+                                                                Anexo</label>
+                                                            <br>
+                                                            <span
+                                                                class="">{{ $anexo->descripcion_anexo }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="col-12 col-md-3 text-center form-group">
+                                                            <label>Archivo
+                                                                Anexo</label>
+                                                            <br>
+                                                            <span class=""><a
+                                                                    href="{{ asset('documentos/tutelas/sentencias/' . $anexo->url_anexo) }}"
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer">Descargar</a></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($primeraInstancia->resuelvesPrimeraInstancia)
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-12 mt-3 mb-4">
+                                            <h6>Resuleves Primera Instancia</h6>
+                                        </div>
+                                        @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                            @if ($resuelve->resuelve != null)
+                                                <?php $tipo = 'detalle'; ?>
+                                            @else
+                                                <?php $tipo = 'cantidad'; ?>
+                                            @endif
+                                        @endforeach
+                                        @if ($tipo == 'detalle')
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-12 table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Numeracion</th>
+                                                                    <th>Resuelve</th>
+                                                                    <th>Tiempo de cumplimiento</th>
+                                                                    <th>Fecha de Cumplimiento</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                                                    <tr>
+                                                                        <td scope="row">
+                                                                            {{ $resuelve->numeracion }}
+                                                                        </td>
+                                                                        <td>{{ $resuelve->resuelve }}
+                                                                        </td>
+                                                                        <td>
+                                                                            @if ($resuelve->dias != null)
+                                                                                {{ $resuelve->dias . ' dias ' }}
+                                                                            @endif
+                                                                            @if ($resuelve->horas != null)
+                                                                                {{ $resuelve->horas . ' horas ' }}
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>
+                                                                            @if ($resuelve->dias != null)
+                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
+                                                                            @endif
+                                                                            @if ($resuelve->horas != null)
+                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
+                                                                            @endif
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="col-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-12 table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Numeracion</th>
+                                                                    <th>Sentido</th>
+                                                                    <th>Tiempo de cumplimiento</th>
+                                                                    <th>Fecha de Cumplimiento</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                                                    <tr>
+                                                                        <td scope="row">
+                                                                            {{ $resuelve->numeracion }}
+                                                                        </td>
+                                                                        <td>{{ $resuelve->sentido }}
+                                                                        </td>
+                                                                        <td>
+                                                                            @if ($resuelve->dias != null)
+                                                                                {{ $resuelve->dias . ' dias ' }}
+                                                                            @endif
+                                                                            @if ($resuelve->horas != null)
+                                                                                {{ $resuelve->horas . ' horas ' }}
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>
+                                                                            @if ($resuelve->dias != null)
+                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
+                                                                            @endif
+                                                                            @if ($resuelve->horas != null)
+                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
+                                                                            @endif
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
 @if ($tutela->segundaInstancia)
     <div class="row">
         <div class="col-12">
@@ -1203,201 +1202,4 @@
         </div>
     </div>
 @endif
-@if ($tutela->primeraInstancia)
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-outline card-primary collapsed-card">
-                <div class="card-header">
-                    <h5 class="card-title">Sentencia
-                        en primera instancia</h5>
 
-                    <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row px-2">
-                        <div class="row">
-                            @php
-                                $primeraInstancia = $tutela->primeraInstancia;
-                            @endphp
-                            <div class="col-12 col-md-3 text-center form-group">
-                                <label>Fecha de la sentencia</label>
-                                <br>
-                                <span class="">{{ $primeraInstancia->fecha_sentencia }}</span>
-                            </div>
-                            <div class="col-12 col-md-3 text-center form-group">
-                                <label>Fecha de notificación</label>
-                                <br>
-                                <span class="">{{ $primeraInstancia->fecha_notificacion }}</span>
-                            </div>
-                            <div class="col-12 col-md-3 text-center form-group">
-                                <label>Sentido de la sentencia</label>
-                                <br>
-                                <span class="">{{ $primeraInstancia->sentencia }}</span>
-                            </div>
-                            <div class="col-12 col-md-3 text-center form-group">
-                                <label>Documento de sentencia</label>
-                                <br>
-                                <span class=""><a
-                                        href="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
-                                        target="_blank" rel="noopener noreferrer">Descargar</a></span>
-                            </div>
-                            @if ($primeraInstancia->anexosPrimeraInstancia)
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-12 mt-3 mb-4">
-                                            <h6>Archivos Adjuntos</h6>
-                                        </div>
-                                        @foreach ($primeraInstancia->anexosPrimeraInstancia as $anexo)
-                                            <div class="col-12">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <div class="col-12 col-md-3 text-center form-group">
-                                                            <label>Titulo
-                                                                Anexo</label>
-                                                            <br>
-                                                            <span
-                                                                class="">{{ $anexo->titulo_anexo }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <div class="col-12 col-md-3 text-center form-group">
-                                                            <label>Descripción
-                                                                Anexo</label>
-                                                            <br>
-                                                            <span
-                                                                class="">{{ $anexo->descripcion_anexo }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <div class="col-12 col-md-3 text-center form-group">
-                                                            <label>Archivo
-                                                                Anexo</label>
-                                                            <br>
-                                                            <span class=""><a
-                                                                    href="{{ asset('documentos/tutelas/sentencias/' . $anexo->url_anexo) }}"
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer">Descargar</a></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endif
-                            @if ($primeraInstancia->resuelvesPrimeraInstancia)
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-12 mt-3 mb-4">
-                                            <h6>Resuleves Primera Instancia</h6>
-                                        </div>
-                                        @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                            @if ($resuelve->resuelve != null)
-                                                <?php $tipo = 'detalle'; ?>
-                                            @else
-                                                <?php $tipo = 'cantidad'; ?>
-                                            @endif
-                                        @endforeach
-                                        @if ($tipo == 'detalle')
-                                            <div class="col-12 mb-4">
-                                                <div class="row">
-                                                    <div class="col-12 table-responsive">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Numeracion</th>
-                                                                    <th>Resuelve</th>
-                                                                    <th>Tiempo de cumplimiento</th>
-                                                                    <th>Fecha de Cumplimiento</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                                    <tr>
-                                                                        <td scope="row">
-                                                                            {{ $resuelve->numeracion }}
-                                                                        </td>
-                                                                        <td>{{ $resuelve->resuelve }}
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($resuelve->dias != null)
-                                                                                {{ $resuelve->dias . ' dias ' }}
-                                                                            @endif
-                                                                            @if ($resuelve->horas != null)
-                                                                                {{ $resuelve->horas . ' horas ' }}
-                                                                            @endif
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($resuelve->dias != null)
-                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
-                                                                            @endif
-                                                                            @if ($resuelve->horas != null)
-                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
-                                                                            @endif
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="col-12 mb-4">
-                                                <div class="row">
-                                                    <div class="col-12 table-responsive">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Numeracion</th>
-                                                                    <th>Sentido</th>
-                                                                    <th>Tiempo de cumplimiento</th>
-                                                                    <th>Fecha de Cumplimiento</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                                    <tr>
-                                                                        <td scope="row">
-                                                                            {{ $resuelve->numeracion }}
-                                                                        </td>
-                                                                        <td>{{ $resuelve->sentido }}
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($resuelve->dias != null)
-                                                                                {{ $resuelve->dias . ' dias ' }}
-                                                                            @endif
-                                                                            @if ($resuelve->horas != null)
-                                                                                {{ $resuelve->horas . ' horas ' }}
-                                                                            @endif
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($resuelve->dias != null)
-                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
-                                                                            @endif
-                                                                            @if ($resuelve->horas != null)
-                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
-                                                                            @endif
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-@endif
