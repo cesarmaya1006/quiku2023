@@ -161,7 +161,7 @@
                                 </div>
                             </div>
                         @endif
-                        
+
                         <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
                             <div class="card-header">
                                 <h3 class="card-title font-weight-bold">Peticiones</h3>
@@ -504,8 +504,8 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
                         <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
 
                         @if ($pqr->peticiones)
@@ -588,7 +588,7 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class="row d-flex px-12 p-3"> 
+                                    <div class="row d-flex px-12 p-3">
                                         <input class="id_tarea" id="id_tarea" name="id_tarea" type="hidden" value="1">
                                         <div class="container-mensaje-historial-tarea form-group col-12">
                                             <label for="" class="">Agregar Historial</label>
@@ -602,7 +602,7 @@
                                     </div>
                                 </div>
                             </div>
-                            @if (sizeOf($pqr->anexos))   
+                            @if (sizeOf($pqr->anexos))
                                 <div class="rounded border m-3 p-2 mb-4">
                                     <h5 class="mb-3">VER PROYECTO DE RESPUESTA PQR </h5>
                                     <div class="row d-flex px-12 p-3">
@@ -644,9 +644,9 @@
                             @endif
                         @endif
 
-                    </div> 
+                    </div>
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                        <a href="{{ route('gestion_pqr') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                     </div>
                 </div>
             </div>

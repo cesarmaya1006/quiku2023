@@ -66,7 +66,7 @@
                                     <label for="" class="">Agregar Historial</label>
                                     <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
                                 </div>
-                                <div class="row d-flex px-12 p-3"> 
+                                <div class="row d-flex px-12 p-3">
                                     <div class="col-12 col-md-12 form-group d-flex">
                                         <button href="" class="btn btn-danger mx-2 px-4 btn-pqr-revisa-regresa" data_url="{{ route('historial_tarea_guardar') }}" data_url2="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Regresar a proyecta</button>
                                         <button href="" class="btn btn-primary px-4 btn-pqr-revisa" data_url="{{ route('historial_tarea_guardar') }}" data_url2="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Enviar a aprobación</button>
@@ -110,7 +110,7 @@
                     <input class="id_tarea" id="id_tarea" name="id_tarea" type="hidden" value="3">
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                        <a href="{{ route('gestion_pqr') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                     </div>
                 </div>
             </div>

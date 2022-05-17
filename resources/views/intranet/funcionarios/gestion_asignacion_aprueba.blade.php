@@ -161,7 +161,7 @@
                                         <label for="" class="">Agregar Historial</label>
                                         <textarea class="form-control mensaje-historial-tarea" rows="3" placeholder="" required></textarea>
                                     </div>
-                                    <div class="row d-flex px-12 p-2"> 
+                                    <div class="row d-flex px-12 p-2">
                                         @if($pqr->recurso_reposicion && !sizeOf($pqr->anexos->where('tipo_respuesta', 2)) && $pqr->recurso_apelacion)
                                             <div class="form-check row mb-3">
                                                 <input class="form-check-input concede_recurso_apelacion" type="checkbox" >
@@ -172,7 +172,7 @@
                                             <button href="" class="btn btn-danger px-4 btn-pqr-aprueba-regresa" data_url="{{ route('historial_tarea_guardar') }}" data_url2="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Regresar a revisión</button>
                                             @if ($pqr->persona->email)
                                                 <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-aprueba-radica" data_url="{{ route('pqr_anexo_guardar') }}" data_url2="{{ route('historial_tarea_guardar') }}" data_url3="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Aprobar y radicar</button>
-                                                
+
                                                 @else
                                                 <button href="" class="btn btn-primary mx-2 px-4 btn-pqr-aprueba" data_url="{{ route('pqr_anexo_guardar') }}" data_url2="{{ route('historial_tarea_guardar') }}" data_url3="{{ route('cambiar_estado_tareas_guardar') }}" data_token="{{ csrf_token() }}">Aprobar y enviar a radicar</button>
                                             @endif
@@ -217,7 +217,7 @@
                     <input class="id_tarea" id="id_tarea" name="id_tarea" type="hidden" value="4">
                     <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                        <a href="{{ route('gestion_pqr') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                     </div>
                 </div>
             </div>

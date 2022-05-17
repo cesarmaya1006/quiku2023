@@ -651,7 +651,7 @@
                             </div>
                         </div>
                         <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
-                       
+
                         @if ($pqr->peticiones)
                             <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
                                 <div class="card-header">
@@ -1182,7 +1182,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                
+
                                 <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
                                     <div class="card-header">
                                         <h3 class="card-title font-weight-bold">Peticiones</h3>
@@ -1261,7 +1261,7 @@
 
                     </div>
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                        <a href="{{ route('gestion_pqr') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                     </div>
                 </div>
             </div>

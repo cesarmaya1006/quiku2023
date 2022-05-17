@@ -44,6 +44,7 @@ use App\Mail\AclaracionComplementacion;
 use App\Models\PQR\HistorialAsignacion;
 use App\Models\PQR\AsignacionParticular;
 use App\Http\Controllers\Fechas\FechasController;
+use App\Models\Admin\Usuario;
 use App\Models\PQR\ResuelveRecurso;
 
 class PQRController extends Controller
@@ -53,6 +54,29 @@ class PQRController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     public function gestion_pqr ()
+     {
+        $tipoPQR = tipoPQR::all();
+        $usuario = Usuario::findOrFail(session('id_usuario'));
+        $tareas = AsignacionTarea::where('empleado_id', $usuario->id)->get();
+        if (session('rol_id') == 5) {
+            if ($usuario->empleado->cargo->id == 1) {
+                $pqrs = PQR::all();
+                $pqrs = $pqrs->where("estado_creacion", 1);
+            } else {
+                $pqrs = PQR::where('empleado_id', $usuario->id)->get();
+            }
+        }else{
+            $pqrs = PQR::get();
+        }
+        $peticiones = Peticion::where('empleado_id', session('id_usuario'))->where('estado_id', '<', 11 )->get();
+
+        return view('intranet.funcionarios.pqr.gestion_pqr', compact('pqrs', 'usuario', 'tipoPQR', 'tareas', 'peticiones'));
+
+     }
+
+
     public function gestionar_asignacion_colaboracion($id)
     {
         $pqr = PQR::findOrFail($id);
@@ -159,7 +183,7 @@ class PQRController extends Controller
             $peticion_act = Peticion::findOrfail($request["id_peticion"]);
             $pqr = PQR::findOrfail($peticion_act->pqr_id);
             if($pqr->estadospqr_id <= 5){
-                $pqrEstado['estadospqr_id'] = 5; 
+                $pqrEstado['estadospqr_id'] = 5;
                 PQR::findOrFail($pqr->id)->update($pqrEstado);
             }
             if ($peticion_act->pqr->persona_id != null) {
@@ -195,7 +219,7 @@ class PQRController extends Controller
                 }
             }
             if ($validacionEstadoPQR == 0 && $pqr->estadospqr_id < 6) {
-                $pqrEstado['estadospqr_id'] = 2; 
+                $pqrEstado['estadospqr_id'] = 2;
                 PQR::findOrFail($pqr->id)->update($pqrEstado);
             }
             if ($peticion->pqr->persona_id != null) {
@@ -282,7 +306,7 @@ class PQRController extends Controller
         }
     }
 
-    
+
     public function respuesta_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -697,7 +721,7 @@ class PQRController extends Controller
         if ($request->ajax()) {
                 if($request["idTarea"] == 4){
                     $pqr = PQR::findOrFail($request["idPqr"]);
-                    $tipo_respuesta = $request["tipo_respuesta"]; 
+                    $tipo_respuesta = $request["tipo_respuesta"];
                     // $imagen = public_path('imagenes\sistema\logo_mgl.png');
                     // $firma = public_path('documentos\usuarios\\' . $pqr->empleado->url);
                     $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
@@ -725,7 +749,7 @@ class PQRController extends Controller
                     $email = $pqr->persona->email;
                 }elseif($pqr->empresa_id != null){
                     $email = $pqr->empresa->email;
-                } 
+                }
                 if($request["idTarea"] == 4 && $request["apruebaRadica"] ){
                     if($email){
                         Mail::to($email)->send(new RespuestaPQR($pqr_id));
@@ -745,15 +769,15 @@ class PQRController extends Controller
                                 $respuestaDias = FechasController::festivos($pqr['recurso_dias'], $fechaActual);
                                 $pqrEstado['tiempo_limite'] = $respuestaDias;
                             }else{
-                                $pqrEstado['estadospqr_id'] = 10; 
+                                $pqrEstado['estadospqr_id'] = 10;
                             }
                         }elseif($tipo_respuesta == 3){
-                            $pqrEstado['estadospqr_id'] = 10; 
+                            $pqrEstado['estadospqr_id'] = 10;
                         }else{
-                            $pqrEstado['estadospqr_id'] = 7; 
+                            $pqrEstado['estadospqr_id'] = 7;
                         }
                     }else{
-                        $pqrEstado['estadospqr_id'] = 6; 
+                        $pqrEstado['estadospqr_id'] = 6;
                     }
                     PQR::findOrFail($pqr->id)->update($pqrEstado);
                 }
@@ -814,8 +838,8 @@ class PQRController extends Controller
             $resuelve = Resuelve::findOrFail($request['value']);
             $index = $resuelve['orden'];
             $pqr = $resuelve->pqr_id;
-            $respuesta = $resuelve->delete(); 
-            $resuelves = Resuelve::where('pqr_id', $pqr)->get(); 
+            $respuesta = $resuelve->delete();
+            $resuelves = Resuelve::where('pqr_id', $pqr)->get();
             foreach ($resuelves as $key => $resuel) {
                 if($index < $resuel['orden'] )
                 $orden['orden'] =  $resuel['orden'] - 1;
@@ -858,14 +882,14 @@ class PQRController extends Controller
         $firma  = '';
         return view('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
     }
-    
+
     public function descarga_respuestaPQR($id)
     {
         $pqr = PQR::findOrFail($id);
         $resuelves =Resuelve::where('pqr_id', $id)->orderBy('orden')->get();
         // $imagen = public_path('imagenes\sistema\logo_mgl.png');
         $imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
-        
+
         $firma  = '';
         $pdf = PDF::loadView('intranet.funcionarios.pqr.respuesta_pqr', compact('pqr', 'imagen', 'resuelves', 'firma'));
         return $pdf->download( 'Respuesta-'. $pqr->radicado . '.pdf');
@@ -893,7 +917,7 @@ class PQRController extends Controller
             return Cargo::all();
         }
     }
-    
+
     public function cargar_funcionarios(Request $request)
     {
         if ($request->ajax()) {
@@ -901,7 +925,7 @@ class PQRController extends Controller
             return Empleado::where('cargo_id', $id)->get();
         }
     }
-    
+
     public function historial_resuelve_recurso_guardar(Request $request)
     {
         if ($request->ajax()) {
@@ -925,8 +949,8 @@ class PQRController extends Controller
             $index = $resuelve['orden'];
             $pqr = $resuelve->pqr_id;
             $tipo = $resuelve->tipo_reposicion_id;
-            $respuesta = $resuelve->delete(); 
-            $resuelves = ResuelveRecurso::where('pqr_id', $pqr)->where('tipo_reposicion_id', $tipo)->get(); 
+            $respuesta = $resuelve->delete();
+            $resuelves = ResuelveRecurso::where('pqr_id', $pqr)->where('tipo_reposicion_id', $tipo)->get();
             foreach ($resuelves as $key => $resuel) {
                 if($index < $resuel['orden'] )
                 $orden['orden'] =  $resuel['orden'] - 1;
@@ -973,7 +997,7 @@ class PQRController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function create()

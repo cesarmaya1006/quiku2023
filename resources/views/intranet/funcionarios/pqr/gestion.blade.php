@@ -1222,7 +1222,7 @@
                             </div>
                         @endforeach
                         <div class="card-footer d-flex justify-content-end">
-                            <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                            <a href="{{ route('gestion_pqr') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                         </div>
                         <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                     </div>

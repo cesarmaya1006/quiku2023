@@ -501,7 +501,7 @@
                                 @endif
                             </div>
                         @endforeach
-                    </div> 
+                    </div>
                     @if(!($pqr->tipo_pqr_id == 7 || $pqr->tipo_pqr_id == 9))
                         <div class="rounded border m-3 p-2">
                             <h5 class="">Historial asignación</h5>
@@ -528,7 +528,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="row d-flex px-12 p-3"> 
+                            <div class="row d-flex px-12 p-3">
                                 <div class="container-mensaje-historial form-group col-12">
                                     <label for="" class="">Agregar Historial</label>
                                     <textarea class="form-control" rows="3" placeholder="" name="mensaje-historial"
@@ -543,7 +543,7 @@
                         <input class="id_pqr" id="id_pqr" name="id_pqr" type="hidden" value="{{ $pqr->id }}">
                         <div class="rounded border m-3 p-2">
                             <h5 class="">Gestion primera asignación</h5>
-                            <div class="row d-flex px-12 p-3"> 
+                            <div class="row d-flex px-12 p-3">
                                 <div class="col-12 col-md-5 form-group">
                                     <label for="">Cargo</label>
                                     <select name="cargo" id="cargo" class="custom-select rounded-0" required="" data_url="{{ route('cargar_cargos') }}" data_url2="{{ route('cargar_funcionarios') }}">
@@ -596,7 +596,7 @@
                                 </div>
                             </div>
                         @endif
-                        @if (sizeOf($pqr->anexos))   
+                        @if (sizeOf($pqr->anexos))
                             <div class="rounded border m-3 p-2 mb-4">
                                 <h5 class="">VER PROYECTO DE RESPUESTA PQR </h5>
                                 <div class="col-12 table-responsive">
@@ -636,7 +636,7 @@
                         @endif
                     @endif
                     <div class="card-footer d-flex justify-content-end">
-                        <a href="{{ route('admin-index') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
+                        <a href="{{ route('gestion_pqr') }}" class="btn btn-danger mx-2 px-4">Regresar</a>
                     </div>
                 </div>
             </div>

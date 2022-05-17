@@ -27,7 +27,7 @@ class Tabla_Menu extends Seeder
             ['nombre' =>  'Usuarios', 'menu_id' => '2', 'url' =>  '#', 'orden' => '6', 'icono' =>  'fas fa-user-friends'],
             ['nombre' =>  'Gestionar', 'menu_id' => '0', 'url' =>  '#', 'orden' => '7', 'icono' =>  'fas fa-chalkboard-teacher'],
             ['nombre' =>  'Listado PQR', 'menu_id' => '9', 'url' =>  'usuario/listado', 'orden' => '1', 'icono' =>  'far fa-list-alt'],
-            ['nombre' =>  'Generar PQR', 'menu_id' => '9', 'url' =>  'usuario/generar', 'orden' => '2', 'icono' =>  'fas fa-plus-square'],
+            ['nombre' =>  'Generar PQR', 'menu_id' => '9', 'url' =>  'usuario/generar', 'orden' => '3', 'icono' =>  'fas fa-plus-square'],
             ['nombre' =>  'Otras opciones', 'menu_id' => '0', 'url' =>  '#', 'orden' => '8', 'icono' =>  'fas fa-question-circle'],
             ['nombre' =>  'Consulte nuestas políticas de datos', 'menu_id' => '12', 'url' =>  'usuario/consulta-politicas', 'orden' => '1', 'icono' =>  'fas fa-question-circle'],
             ['nombre' =>  'Ayuda', 'menu_id' => '12', 'url' =>  'usuario/ayuda', 'orden' => '2', 'icono' =>  'fas fa-question-circle'],
@@ -51,6 +51,7 @@ class Tabla_Menu extends Seeder
             ['nombre' =>  'Consulta', 'menu_id' => '28', 'url' =>  'funcionario/consulta', 'orden' => '4', 'icono' =>  'fas fa-search'],
             ['nombre' =>  'PQR', 'menu_id' => '0', 'url' =>  '#', 'orden' => '2', 'icono' =>  'Elija un Icono'],
             ['nombre' =>  'Conf Cuenta Usuario', 'menu_id' => '0', 'url' =>  '#', 'orden' => '5', 'icono' =>  'fas fa-user-cog'],
+            ['nombre' =>  'Gestionar PQR', 'menu_id' => '33', 'url' =>  'funcionario/gestion_pqr', 'orden' => '2', 'icono' =>  'fas fa-grip-horizontal'],
             //----------------------------------------------------------------------------------------------------------------------
 
         ];

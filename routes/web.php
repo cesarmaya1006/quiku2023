@@ -78,7 +78,6 @@ Route::get('/pruebamail', [ExtranetPageController::class, 'pruebamail'])->name('
 Route::group(['middleware' => 'auth'], function () {
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     Route::group(['prefix' => 'admin'], function () {
-
         Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
         Route::post('restablecer-password', [IntranetPageCotroller::class, 'restablecer_password'])->name('admin-restablecer_password');
         Route::get('index/gestionarAsignacion/{id}', [FuncionarioController::class, 'gestionar_asignacion'])->name('funcionario-gestionar-asignacion');
@@ -400,6 +399,9 @@ Route::group(['middleware' => 'auth'], function () {
     });
     //==================================================================================================================
     Route::group(['prefix' => 'funcionario'], function () {
+
+        Route::get('gestion_pqr', [PQRController::class, 'gestion_pqr'])->name('gestion_pqr');
+
 
         Route::get('/cargar_nombre_despachos', [TutelaController::class, 'cargar_nombre_despachos'])->name('cargar_nombre_despachos');
         Route::get('/cargar_ubicacion_despachos', [TutelaController::class, 'cargar_ubicacion_despachos'])->name('cargar_ubicacion_despachos');
