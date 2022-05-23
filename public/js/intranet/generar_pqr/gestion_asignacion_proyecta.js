@@ -291,7 +291,7 @@ if(document.querySelector('.btn-pqr-anexo')){
                 data: data,
                 success: function(respuesta) {
                     // console.log(respuesta)
-                    window.location = "/admin/index"
+                    window.location = "/funcionario/gestion_pqr"
                 },
                 error: function(error) {
                     console.log(error.responseJSON)

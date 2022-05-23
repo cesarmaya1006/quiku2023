@@ -180,6 +180,14 @@ class FuncionarioController extends Controller
         return view('intranet.funcionarios.gestion_asignacion_radica', compact('pqr', 'estadoPrioridad', 'estados'));
     }
 
+    public function gestionar_asignacion_revisa_aprueba($id)
+    {
+        $estados = AsignacionEstado::all();
+        $pqr = PQR::findorFail($id);
+        $estadoPrioridad = Prioridad::all();
+        return view('intranet.funcionarios.gestion_asignacion_revisa_aprueba', compact('pqr', 'estadoPrioridad', 'estados'));
+    }
+
     public function registro()
     {
         $tipos_docu = Tipo_Docu::get();

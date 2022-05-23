@@ -57,6 +57,26 @@ class PQRController extends Controller
 
      public function gestion_pqr ()
      {
+        $pqrs = PQR::where('empleado_id', session('id_usuario'))->get();
+        $sin_aceptar = PQR::where('empleado_id', session('id_usuario'))->where('estado_asignacion', 0)->get();
+        $aceptadas = PQR::where('empleado_id', session('id_usuario'))->where('estado_asignacion', 1)->where('estadospqr_id', '!=', 6)->where('estadospqr_id', '!=', 9)->where('estadospqr_id', '!=', 10) ->get();
+        $supervisadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 1)->where('estado_id', '<', 11)->get();
+        $proyectadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 2)->where('estado_id', '<', 11)->get();
+        $revisiones = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 3)->where('estado_id', '<', 11)->get();
+        $aprobadas = AsignacionTarea::where('empleado_id', session('id_usuario'))->where('tareas_id', 4)->where('estado_id', '<', 11)->get();        
+        $activasAprobar = [];
+        foreach ($aprobadas as $key => $value) {
+            $validacion = AsignacionTarea::where('pqr_id', $value->pqr_id)->where('tareas_id', 2)->where('estado_id', '=', 11)->get();
+            if (sizeOf($validacion)) $activasAprobar[] = $value;
+        }       
+        $radicadas = AsignacionTarea::where('tareas_id', 5)->where('estado_id', '<', 11)->get();
+        $activasRadicar = [];
+        foreach ($radicadas as $key => $value) {
+            $validacion = AsignacionTarea::where('pqr_id', $value->pqr_id)->where('tareas_id', 4)->where('estado_id', '=', 11)->get();
+            if (sizeOf($validacion)) $activasRadicar[] = $value;
+        }
+
+
         $tipoPQR = tipoPQR::all();
         $usuario = Usuario::findOrFail(session('id_usuario'));
         $tareas = AsignacionTarea::where('empleado_id', $usuario->id)->get();
@@ -72,7 +92,7 @@ class PQRController extends Controller
         }
         $peticiones = Peticion::where('empleado_id', session('id_usuario'))->where('estado_id', '<', 11 )->get();
 
-        return view('intranet.funcionarios.pqr.gestion_pqr', compact('pqrs', 'usuario', 'tipoPQR', 'tareas', 'peticiones'));
+        return view('intranet.funcionarios.pqr.gestion_pqr', compact('pqrs', 'usuario', 'tipoPQR', 'tareas', 'peticiones', 'sin_aceptar', 'aceptadas', 'supervisadas', 'proyectadas', 'activasAprobar', 'activasRadicar'  ));
 
      }
 

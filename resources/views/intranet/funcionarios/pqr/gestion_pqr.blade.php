@@ -77,7 +77,7 @@ $sugerencias_num = $pqrs->count();
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-light" style="border: solid 1px blue;">
                     <div class="inner">
-                        <h3>{{ $pqrs->where('estado_asignacion', 0)->count() }}</h3>
+                        <h3>{{ $sin_aceptar->count() }}</h3>
                         <p style="font-size: 0.8em">Sin aceptar</p>
                     </div>
                     <div class="icon">
@@ -88,7 +88,7 @@ $sugerencias_num = $pqrs->count();
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-light" style="border: solid 1px green;">
                     <div class="inner">
-                        <h3>{{ $pqrs->where('estado_asignacion', 1)->where('estadospqr_id', '!=', 6)->where('estadospqr_id', '!=', 7)->where('estadospqr_id', '!=', 9)->where('estadospqr_id', '!=', 10)->count() }}</h3>
+                        <h3>{{ $aceptadas->count() }}</h3>
                         <p style="font-size: 0.8em">Aceptadas</p>
                     </div>
                     <div class="icon">
@@ -99,7 +99,7 @@ $sugerencias_num = $pqrs->count();
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-light" style="border: solid 1px yellow;">
                     <div class="inner">
-                        <h3>{{$tareas->where('tareas_id', 1)->where('estado_id', '<', 11)->count()}}</h3>
+                        <h3>{{ $supervisadas->count() }}</h3>
                         <p style="font-size: 0.8em">En supervisión</p>
                     </div>
                     <div class="icon">
@@ -110,7 +110,7 @@ $sugerencias_num = $pqrs->count();
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-light" style="border: solid 1px red;">
                     <div class="inner">
-                        <h3>{{$tareas->where('tareas_id', 2)->where('estado_id', '<', 11)->count()}}</h3>
+                        <h3>{{ $proyectadas->count() }}</h3>
                         <p style="font-size: 0.8em">Por proyectar</p>
                     </div>
                     <div class="icon">
@@ -130,21 +130,10 @@ $sugerencias_num = $pqrs->count();
                 </div>
             </div>
             <div class="col-lg-3 col-6">
-                <div class="small-box bg-light" style="border:  solid 1px pink">
-                    <div class="inner">
-                        <h3>{{$tareas->where('tareas_id', 3)->where('estado_id', '<', 11)->count()}}</h3>
-                        <p style="font-size: 0.8em">En revisión</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph text-pink"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
                 <div class="small-box bg-light" style="border: solid 1px teal">
                     <div class="inner">
-                        <h3>{{$tareas->where('tareas_id', 4)->where('estado_id', '<', 11)->count()}}</h3>
-                        <p style="font-size: 0.8em">En aprobación</p>
+                        <h3>{{ sizeOf($activasAprobar) }}</h3>
+                        <p style="font-size: 0.8em">En revisión y aprobación</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph text-teal"></i>
@@ -154,7 +143,7 @@ $sugerencias_num = $pqrs->count();
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-light" style="border: solid 1px indigo">
                     <div class="inner">
-                        <h3>{{$tareas->where('tareas_id', 5)->where('estado_id', '<', 11)->count()}}</h3>
+                        <h3>{{ sizeOf($activasRadicar) }}</h3>
                         <p style="font-size: 0.8em">En radicación</p>
                     </div>
                     <div class="icon">
@@ -713,7 +702,7 @@ $sugerencias_num = $pqrs->count();
             </div>
         </div>
         {{-- Tabla Revisa --}}
-        <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
+        {{-- <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
                 <h3 class="card-title font-weight-bold">En revisión</h3>
                 <div class="card-tools">
@@ -761,9 +750,9 @@ $sugerencias_num = $pqrs->count();
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --}}
         {{-- Tabla Aprueba--}}
-        <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
+        {{-- <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
             <div class="card-header">
                 <h3 class="card-title font-weight-bold">En aprobación</h3>
                 <div class="card-tools">
@@ -802,6 +791,56 @@ $sugerencias_num = $pqrs->count();
                                         </td>
                                         <td class="text-center">
                                             <a href="{{ route('funcionario-gestionar-asignacion-aprueba', ['id' => $tarea->pqr->id]) }}"
+                                                class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
+                                                    class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div> --}}
+        {{-- Tabla En revisión y aprobación--}}
+        <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
+            <div class="card-header">
+                <h3 class="card-title font-weight-bold">En revisión y aprobación</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="display: none;">
+                <table class="table table-striped table-hover table-sm display">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th class="text-center" style="white-space:nowrap;">Fecha radica usuario</th>
+                            <th class="text-center" style="white-space:nowrap;">Estado PQR</th>
+                            <th class="text-center" style="white-space:nowrap;">Num Radicado</th>
+                            <th class="text-center" style="white-space:nowrap;">Tipo de Solicitud</th>
+                            <th class="text-center" style="white-space:nowrap;">Cliente</th>
+                            <th class="text-center" style="white-space:nowrap;">Prioridad</th>
+                            <th class="text-center" style="white-space:nowrap;">Ver</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($tareas as $tarea)
+                            @if ($tarea->tareas_id == 4 && $tarea->estado_id != 11 && sizeOf(($tarea->pqr->asignaciontareas->where('tareas_id', $tarea->tareas_id -2 ))->where('estado_id', 11)))
+                                    <tr>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->fecha_radicado }}</td>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $pqr->estado->estado_funcionario }}</td>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->radicado }}</td>
+                                        <td class="text-center" style="white-space:nowrap;">{{ $tarea->pqr->tipoPqr->tipo }}
+                                        </td>
+                                        <td class="text-center" style="white-space:nowrap;">
+                                            {{ $tarea->pqr->persona_id != null ? $tarea->pqr->persona->nombre1 . ' ' . $tarea->pqr->persona->nombre2 . ' ' . $tarea->pqr->persona->apellido1 . ' ' . $tarea->pqr->persona->apellido2 : $tarea->pqr->empresa->nombre1 . ' ' . $tarea->pqr->empresa->nombre2 . ' ' . $tarea->pqr->empresa->apellido1 . ' ' . $tarea->pqr->empresa->apellido2 }}
+                                        </td>
+                                        <td class="text-center" style="white-space:nowrap;">
+                                            {{ $tarea->pqr->prioridad->prioridad }}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('funcionario-gestionar-asignacion-revisa-aprueba', ['id' => $tarea->pqr->id]) }}"
                                                 class="btn-accion-tabla eliminar tooltipsC" title="Gestionar"><i
                                                     class="fa fa-edit text-info btn-editar" aria-hidden="true"></i></a>
                                         </td>
