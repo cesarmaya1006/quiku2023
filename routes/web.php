@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('index/gestionarAsignacionProyecta/{id}', [FuncionarioController::class, 'gestionar_asignacion_proyecta'])->name('funcionario-gestionar-asignacion-proyecta');
         Route::get('index/gestionarAsignacionRevisa/{id}', [FuncionarioController::class, 'gestionar_asignacion_revisa'])->name('funcionario-gestionar-asignacion-revisa');
         Route::get('index/gestionarAsignacionAprueba/{id}', [FuncionarioController::class, 'gestionar_asignacion_aprueba'])->name('funcionario-gestionar-asignacion-aprueba');
+        Route::get('index/gestionarAsignacionRevisaAprueba/{id}', [FuncionarioController::class, 'gestionar_asignacion_revisa_aprueba'])->name('funcionario-gestionar-asignacion-revisa-aprueba');
         Route::get('index/gestionarAsignacionRadica/{id}', [FuncionarioController::class, 'gestionar_asignacion_radica'])->name('funcionario-gestionar-asignacion-radica');
         Route::get('index/gestionarAsignacionColaboracion/{id}', [PQRController::class, 'gestionar_asignacion_colaboracion'])->name('funcionario-gestionar-asignacion-colaboracion');
         Route::get('registro', [FuncionarioController::class, 'registro'])->name('funcionario-registro');

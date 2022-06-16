@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     headers: { 'X-CSRF-TOKEN': token },
                     data: data,
                     success: function(respuesta) {
-                        window.location = "/admin/index"
+                        window.location = "/funcionario/gestion_pqr"
                     },
                     error: function(error) {
                         console.log(error.responseJSON)
@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', function(){
                     headers: { 'X-CSRF-TOKEN': token },
                     data: data,
                     success: function(respuesta) {
-                        window.location = "/admin/index"
+                        window.location = "/funcionario/gestion_pqr"
                     },
                     error: function(error) {
                         console.log(error.responseJSON)

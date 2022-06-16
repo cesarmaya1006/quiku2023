@@ -146,7 +146,7 @@ window.addEventListener('DOMContentLoaded', function(){
                         if(confirmacionAsignacion == 1){
                             location.reload()    
                         }else{
-                            window.location = "/admin/index"
+                            window.location = "/funcionario/gestion_pqr"
                         }
                     },
                     error: function(error) {

@@ -1185,7 +1185,7 @@
 
                                 <div class="card card-outline card-primary collapsed-card mx-1 py-2" style="font-size: 0.8em;">
                                     <div class="card-header">
-                                        <h3 class="card-title font-weight-bold">Peticiones</h3>
+                                        <h3 class="card-title font-weight-bold">Proyectar</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                                 <i class="fas fa-plus"></i>
@@ -1193,8 +1193,7 @@
                                         </div>
                                     </div>
                                     <div class="card-body" style="display: none;">
-                                        <div class="rounded border m-3 p-2">
-                                            <h5 class="mt-2">Proyectar</h5>
+                                        <div class="m-3 p-2">
                                             <div class="col-12 d-flex row pqr-anexo">
                                                 @if (sizeOf($pqr->anexos) == 0)
                                                     <div class="my-2 col-12 d-flex">

@@ -13,36 +13,77 @@ window.addEventListener('DOMContentLoaded', function(){
             let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
             if (mensajeHistorial != '') {
                 let data = {
+                    idTarea: "3",
+                    mensajeHistorial: 'Revisión no aprobada.',
+                    idPqr,
+                    estado: 6
+                }
+                let data2 = {
                     idTarea,
                     mensajeHistorial,
                     idPqr,
                     estado: 6
                 }
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        // console.log(respuesta)
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON)
-                    }
-                });
+                synchronous(data, data2)
+                
+                async function synchronous (data, data2){
+                    await $.ajax({
+                        url: url,
+                        async: false,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error.responseJSON)
+                        }
+                    });
+    
+                    await $.ajax({
+                        url: url2,
+                        async: false,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error.responseJSON)
+                        }
+                    });
+    
+                    await $.ajax({
+                        url: url,
+                        async: false,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data2,
+                        success: function(respuesta) {
+                            // console.log(respuesta)
+                        },
+                        error: function(error) {
+                            console.log(error.responseJSON)
+                        }
+                    });
+    
+                    await $.ajax({
+                        url: url2,
+                        async: false,
+                        type: 'POST',
+                        headers: { 'X-CSRF-TOKEN': token },
+                        data: data2,
+                        success: function(respuesta) {
+                            window.location = "/funcionario/gestion_pqr"
+                        },
+                        error: function(error) {
+                            console.log(error.responseJSON)
+                        }
+                    });
+                }
 
-                $.ajax({
-                    url: url2,
-                    type: 'POST',
-                    headers: { 'X-CSRF-TOKEN': token },
-                    data: data,
-                    success: function(respuesta) {
-                        window.location = "/funcionario/gestion_pqr"
-                    },
-                    error: function(error) {
-                        console.log(error.responseJSON)
-                    }
-                });
             }
         })
     }
@@ -64,6 +105,37 @@ window.addEventListener('DOMContentLoaded', function(){
             }
             let mensajeHistorial = contenedorPadre.querySelector('.mensaje-historial-tarea').value
             if (mensajeHistorial != '' && idPqr != '') {
+                let data1 = {
+                    idTarea: "3",
+                    mensajeHistorial: 'Radicada automaticamente.',
+                    idPqr,
+                    tipo_respuesta,
+                    concedeRecursoApelacion
+                }
+                $.ajax({
+                    url: url2,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data1,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
+                $.ajax({
+                    url: url3,
+                    type: 'POST',
+                    headers: { 'X-CSRF-TOKEN': token },
+                    data: data1,
+                    success: function(respuesta) {
+                        // console.log(respuesta)
+                    },
+                    error: function(error) {
+                        console.log(error.responseJSON)
+                    }
+                });
                 let data = {
                     idTarea,
                     mensajeHistorial,
@@ -275,4 +347,3 @@ window.addEventListener('DOMContentLoaded', function(){
         })
     }
 })
-
