@@ -1,4 +1,4 @@
-@extends("theme.back.plantilla")
+@extends('theme.back.plantilla')
 <!-- ************************************************************* -->
 <!-- Funciones php -->
 @section('funciones_php')
@@ -405,15 +405,25 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <p class="text-justify"><strong>Motivo:</strong>
-                                                            {{ $motivo->motivo_tutela }}</p>
+                                                            {{ $motivo->motivo }}</p>
                                                     </div>
                                                     <div class="col-12">
                                                         <p class="text-justify"><strong>Sub - motivo:</strong>
-                                                            {{ $motivo->sub_motivo_tutela }}</p>
+                                                            @foreach ($motivo->sub_motivostutelas as $sub_motivostutela)
+                                                                @foreach ($tutela->submotivos as $submotivo)
+                                                                    @if ($sub_motivostutela->id == $submotivo->id)
+                                                                        {{ $submotivo->sub_motivo }}
+                                                                    @endif
+                                                                @endforeach
+                                                            @endforeach
+                                                        </p>
                                                     </div>
                                                     <div class="col-12">
                                                         <p class="text-justify"><strong>Tutela sobre:</strong>
-                                                            {{ $motivo->tipo_tutela }}</p>
+                                                            @foreach ($tutela->motivos_tipo as $tipo_tutela)
+                                                                {{ $tipo_tutela->tipo_tutela }}
+                                                            @endforeach
+                                                        </p>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -932,12 +942,13 @@
                                     </div>
                                 </div>
                             @endif
-                            @if ($tutela->estadostutela_id >4)
+                            @if ($tutela->estadostutela_id > 4)
                                 @if (sizeOf($tutela->primeraInstancia->impugnacionesinternas))
                                     <div class="card card-outline card-primary collapsed-card mx-1 py-2"
                                         style="font-size: 1em;">
                                         <div class="card-header">
-                                            <h3 class="card-title font-weight-bold">Respuestas Sentencia en primera Instancia
+                                            <h3 class="card-title font-weight-bold">Respuestas Sentencia en primera
+                                                Instancia
                                             </h3>
                                             <div class="card-tools">
                                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -967,7 +978,8 @@
                                                                         </div>
                                                                         <div class="col-12 col-md-4 form-group">
                                                                             <label for="">Funcionario</label>
-                                                                            <select class="custom-select rounded-0 funcionario"
+                                                                            <select
+                                                                                class="custom-select rounded-0 funcionario"
                                                                                 required="">
                                                                                 <option value="">--Seleccione--</option>
                                                                             </select>
@@ -1000,7 +1012,8 @@
                                                                                     </div>
                                                                                 @endif
                                                                                 <div class="my-2">
-                                                                                    <strong class="">Resuelve #
+                                                                                    <strong class="">Resuelve
+                                                                                        #
                                                                                         {{ $relacion->impugancion->consecutivo }}</strong>{{ $relacion->impugancion->resuelve }}
                                                                                 </div>
                                                                             </div>
@@ -1080,16 +1093,20 @@
                                                                                         <div class="col-12">
                                                                                             <h6>Anexos respuesta</h6>
                                                                                         </div>
-                                                                                        <div class="col-12 table-responsive">
-                                                                                            <table class="table table-light"
+                                                                                        <div
+                                                                                            class="col-12 table-responsive">
+                                                                                            <table
+                                                                                                class="table table-light"
                                                                                                 style="font-size: 0.8em;">
                                                                                                 <thead>
                                                                                                     <tr>
-                                                                                                        <th scope="col">Nombre
+                                                                                                        <th scope="col">
+                                                                                                            Nombre
                                                                                                         </th>
                                                                                                         <th scope="col">
                                                                                                             Descripción</th>
-                                                                                                        <th scope="col">Archivo
+                                                                                                        <th scope="col">
+                                                                                                            Archivo
                                                                                                         </th>
                                                                                                     </tr>
                                                                                                 </thead>
@@ -1128,10 +1145,12 @@
                                                                                             style="font-size: 0.8em;">
                                                                                             <thead>
                                                                                                 <tr>
-                                                                                                    <th scope="col">Fecha</th>
+                                                                                                    <th scope="col">Fecha
+                                                                                                    </th>
                                                                                                     <th scope="col">Empleado
                                                                                                     </th>
-                                                                                                    <th scope="col">Historial
+                                                                                                    <th scope="col">
+                                                                                                        Historial
                                                                                                     </th>
                                                                                                 </tr>
                                                                                             </thead>
@@ -1806,13 +1825,14 @@
                                             <hr>
                                         </div>
                                     @endif - --}}
-                                    @if ($tutela->estadostutela_id <= 3)        
+                                    @if ($tutela->estadostutela_id <= 3)
                                         <div class="card card-outline card-primary collapsed-card mx-1 py-2"
                                             style="font-size: 1em;">
                                             <div class="card-header">
                                                 <h3 class="card-title font-weight-bold">Proyectar</h3>
                                                 <div class="card-tools">
-                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </div>
@@ -1835,10 +1855,12 @@
                                                         </div>
                                                         <div class="row d-flex px-12 p-3">
                                                             <div class="col-12 col-md-12 form-group d-flex">
-                                                                <button href="" class="btn btn-primary mx-2 px-4 btn-tutela"
+                                                                <button href=""
+                                                                    class="btn btn-primary mx-2 px-4 btn-tutela"
                                                                     data_url2="{{ route('historial_tarea_tutela_guardar') }}"
                                                                     data_url3="{{ route('cambiar_estado_tareas_tutela_guardar') }}"
-                                                                    data_token="{{ csrf_token() }}">Enviar a revisión</button>
+                                                                    data_token="{{ csrf_token() }}">Enviar a
+                                                                    revisión</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1850,418 +1872,426 @@
                             @endif
                             @if ($tutela->estadostutela_id > 4)
                                 @if ($tutela->estadostutela_id == 5 || $tutela->estadostutela_id == 6 || $tutela->estadostutela_id == 7)
-                                <div class="card card-outline card-primary collapsed-card mx-1 py-2"
-                                    style="font-size: 1em;">
-                                    <div class="card-header">
-                                        <h3 class="card-title font-weight-bold">Gestión Sentencia en primera Instancia</h3>
-                                        <div class="card-tools">
-                                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="card-body" style="display: none;">
-                                        @php
-                                            $primeraInstancia = $tutela->primeraInstancia;
-                                        @endphp
-                                        <input type="hidden" name="verificada" id="verificada"
-                                            value="{{ $primeraInstancia->verificada }}">
-                                        <div class="row gest1eraparte1">
-                                            <div class="col-12 mt-3 mb-4">
-                                                <div class="row d-flex justify-content-center">
-                                                    <div class="col-12 col-md -6">
-                                                        <iframe class="embed-responsive-item w-100" style="min-height: 400px;"
-                                                            src="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
-                                                            allowfullscreen></iframe>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <div class="row">
-                                                    <div class="col-12 mt-3 mb-4">
-                                                        <h6>Resuleves Primera Instancia</h6>
-                                                    </div>
-                                                    @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                        @if ($resuelve->resuelve != null)
-                                                            <?php $tipo = 'detalle'; ?>
-                                                        @else
-                                                            <?php $tipo = 'cantidad'; ?>
-                                                        @endif
-                                                    @endforeach
-                                                    @if ($tipo == 'detalle')
-                                                        <div class="col-12 mb-4">
-                                                            <div class="row">
-                                                                <div class="col-12 table-responsive">
-                                                                    <table
-                                                                        class="table table-striped table-hover table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Numeracion</th>
-                                                                                <th>Resuelve</th>
-                                                                                <th>Tiempo de cumplimiento</th>
-                                                                                <th>Fecha de Cumplimiento</th>
-                                                                                <th>Sentido</th>
-                                                                                <th></th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                                                <tr>
-                                                                                    <td scope="row">
-                                                                                        {{ $resuelve->numeracion }}
-                                                                                    </td>
-                                                                                    <td>{{ $resuelve->resuelve }}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        @if ($resuelve->dias != null)
-                                                                                            {{ $resuelve->dias . ' dias ' }}
-                                                                                        @endif
-                                                                                        @if ($resuelve->horas != null)
-                                                                                            {{ $resuelve->horas . ' horas ' }}
-                                                                                        @endif
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        @if ($resuelve->dias != null)
-                                                                                            {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
-                                                                                        @endif
-                                                                                        @if ($resuelve->horas != null)
-                                                                                            {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
-                                                                                        @endif
-                                                                                    </td>
-                                                                                    <td style="min-width: 150px;">
-                                                                                        <div class="col-12 form-group">
-                                                                                            <select id="sentido"
-                                                                                                class="form-control form-control-sm sentidoResuelve"
-                                                                                                name="sentido"
-                                                                                                id_resuelve="{{ $resuelve->id }}"
-                                                                                                data_url="{{ route('cambiosentidoresuelve', ['id' => $resuelve->id]) }}">
-                                                                                                @if ($resuelve->sentido == 'Favorable')
-                                                                                                    <option
-                                                                                                        value="Favorable"
-                                                                                                        selected>
-                                                                                                        Favorable
-                                                                                                    </option>
-                                                                                                    <option
-                                                                                                        value="Desfavorable">
-                                                                                                        Desfavorable
-                                                                                                    </option>
-                                                                                                @else
-                                                                                                    <option
-                                                                                                        value="Favorable">
-                                                                                                        Favorable
-                                                                                                    </option>
-                                                                                                    <option
-                                                                                                        value="Desfavorable"
-                                                                                                        selected>
-                                                                                                        Desfavorable
-                                                                                                    </option>
-                                                                                                @endif
-
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        @if ($resuelve->sentido == 'Favorable')
-                                                                                            <div class="form-check">
-                                                                                                <input
-                                                                                                    class="form-check-input crearimpugnacion"
-                                                                                                    type="checkbox" value=""
-                                                                                                    id="gestion"
-                                                                                                    name="gestion"
-                                                                                                    id_resuelve="{{ $resuelve->id }}"
-                                                                                                    data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
-                                                                                                    disabled>
-                                                                                                <label
-                                                                                                    class="form-check-label"
-                                                                                                    for="flexCheckChecked">
-                                                                                                    Impugnar
-                                                                                                </label>
-                                                                                            </div>
-                                                                                        @else
-                                                                                            @if ($resuelve->gestion == '1')
-                                                                                                <div
-                                                                                                    class="form-check">
-                                                                                                    <input
-                                                                                                        class="form-check-input crearimpugnacion"
-                                                                                                        type="checkbox"
-                                                                                                        value=""
-                                                                                                        id="gestion"
-                                                                                                        name="gestion"
-                                                                                                        id_resuelve="{{ $resuelve->id }}"
-                                                                                                        data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="flexCheckChecked">
-                                                                                                        Gestionar
-                                                                                                        Impugnación
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                            @else
-                                                                                                <div
-                                                                                                    class="form-check">
-                                                                                                    <input
-                                                                                                        class="form-check-input crearimpugnacion"
-                                                                                                        type="checkbox"
-                                                                                                        value=""
-                                                                                                        id="gestion"
-                                                                                                        name="gestion"
-                                                                                                        id_resuelve="{{ $resuelve->id }}"
-                                                                                                        data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}">
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="flexCheckChecked">
-                                                                                                        Gestionar
-                                                                                                        Impugnación
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                            @endif
-                                                                                        @endif
-                                                                                    </td>
-                                                                                </tr>
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @else
-                                                        <div class="col-12 mb-4">
-                                                            <div class="row">
-                                                                <div class="col-12 table-responsive">
-                                                                    @csrf
-                                                                    <table
-                                                                        class="table table-striped table-hover table-sm">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Numeracion</th>
-                                                                                <th>Tiempo de cumplimiento</th>
-                                                                                <th>Fecha de Cumplimiento</th>
-                                                                                <th>Sentido</th>
-                                                                                <th></th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
-                                                                                <tr>
-                                                                                    <td scope="row">
-                                                                                        {{ $resuelve->numeracion }}
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        @if ($resuelve->dias != null)
-                                                                                            {{ $resuelve->dias . ' dias ' }}
-                                                                                        @endif
-                                                                                        @if ($resuelve->horas != null)
-                                                                                            {{ $resuelve->horas . ' horas ' }}
-                                                                                        @endif
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        @if ($resuelve->dias != null)
-                                                                                            {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
-                                                                                        @endif
-                                                                                        @if ($resuelve->horas != null)
-                                                                                            {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
-                                                                                        @endif
-                                                                                    </td>
-                                                                                    <td style="min-width: 150px;">
-                                                                                        <div class="col-12 form-group">
-                                                                                            <select id="sentido"
-                                                                                                class="form-control form-control-sm sentidoResuelve"
-                                                                                                name="sentido1"
-                                                                                                id_resuelve="{{ $resuelve->id }}"
-                                                                                                data_url="{{ route('cambiosentidoresuelve', ['id' => $resuelve->id]) }}">
-                                                                                                @if ($resuelve->sentido == 'Favorable')
-                                                                                                    <option
-                                                                                                        value="Favorable"
-                                                                                                        selected>
-                                                                                                        Favorable
-                                                                                                    </option>
-                                                                                                    <option
-                                                                                                        value="Desfavorable">
-                                                                                                        Desfavorable
-                                                                                                    </option>
-                                                                                                @else
-                                                                                                    <option
-                                                                                                        value="Favorable">
-                                                                                                        Favorable
-                                                                                                    </option>
-                                                                                                    <option
-                                                                                                        value="Desfavorable"
-                                                                                                        selected>
-                                                                                                        Desfavorable
-                                                                                                    </option>
-                                                                                                @endif
-
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        @if ($resuelve->sentido == 'Favorable')
-                                                                                            <div class="form-check">
-                                                                                                <input
-                                                                                                    class="form-check-input crearimpugnacion"
-                                                                                                    type="checkbox" value=""
-                                                                                                    id="gestion"
-                                                                                                    name="gestion"
-                                                                                                    id_resuelve="{{ $resuelve->id }}"
-                                                                                                    data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
-                                                                                                    disabled>
-                                                                                                <label
-                                                                                                    class="form-check-label"
-                                                                                                    for="flexCheckChecked">
-                                                                                                    Gestionar
-                                                                                                    Impugnación
-                                                                                                </label>
-                                                                                            </div>
-                                                                                        @else
-                                                                                            @if ($resuelve->gestion == '1')
-                                                                                                <div
-                                                                                                    class="form-check">
-                                                                                                    <input
-                                                                                                        class="form-check-input crearimpugnacion"
-                                                                                                        type="checkbox"
-                                                                                                        value=""
-                                                                                                        id="gestion"
-                                                                                                        name="gestion"
-                                                                                                        id_resuelve="{{ $resuelve->id }}"
-                                                                                                        data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
-                                                                                                        checked>
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="flexCheckChecked">
-                                                                                                        Gestionar
-                                                                                                        Impugnación
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                            @else
-                                                                                                <div
-                                                                                                    class="form-check">
-                                                                                                    <input
-                                                                                                        class="form-check-input crearimpugnacion"
-                                                                                                        type="checkbox"
-                                                                                                        value=""
-                                                                                                        id="gestion"
-                                                                                                        name="gestion"
-                                                                                                        id_resuelve="{{ $resuelve->id }}"
-                                                                                                        data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}">
-                                                                                                    <label
-                                                                                                        class="form-check-label"
-                                                                                                        for="flexCheckChecked">
-                                                                                                        Gestionar
-                                                                                                        Impugnación
-                                                                                                    </label>
-                                                                                                </div>
-                                                                                            @endif
-                                                                                        @endif
-                                                                                    </td>
-                                                                                </tr>
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-4">
-                                                <button class="btn btn-primary btn-sombra btn-xs pl-4 pr-4"
-                                                    id="guardarCambiosSentidos"
-                                                    data_url="{{ route('verificar_sentencia_primera_instancia', ['id' => $primeraInstancia->id]) }}">Verificar</button>
+                                    <div class="card card-outline card-primary collapsed-card mx-1 py-2"
+                                        style="font-size: 1em;">
+                                        <div class="card-header">
+                                            <h3 class="card-title font-weight-bold">Gestión Sentencia en primera Instancia
+                                            </h3>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
                                             </div>
                                         </div>
-                                        <div class="gest1eraparte2 w-100">
-                                            <div class="row gest1eraparte2">
-                                                <div class="col-12 table-responsive d-flex justify-content-center">
-                                                    <table class="table table-striped col-12" style="font-size: 0.8em;">
-                                                        <thead>
-                                                            <tr>
-                                                                <th scope="col">Resuelve #</th>
-                                                                <th scope="col">Funcionario</th>
-                                                                <th scope="col">Porcentaje</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="bodyTablaResuelves">
-                                                            @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
-                                                                <tr>
-                                                                    @if ($impugnacion->empleado)
-                                                                        <td class="text-success font-weight-bold">
-                                                                            {{ $impugnacion->consecutivo }}</td>
-                                                                        <td class="text-success font-weight-bold">
-                                                                            {{ $impugnacion->empleado->nombre1 }}
-                                                                            {{ $impugnacion->empleado->apellido1 }}</td>
-                                                                        <td class="text-success font-weight-bold">
-                                                                            {{ $impugnacion->estado->estado }}%</td>
-                                                                    @else
-                                                                        <td class="text-danger font-weight-bold">
-                                                                            {{ $impugnacion->consecutivo }}</td>
-                                                                        <td class="text-danger font-weight-bold">Sin
-                                                                            asignar
-                                                                        </td>
-                                                                        <td class="text-danger font-weight-bold">
-                                                                            {{ $impugnacion->estado->estado }}%</td>
-                                                                    @endif
-                                                                </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <h5 class="">Reasignación Impugnación</h5>
-                                            <div class="row d-flex px-4 gest1eraparte2">
-                                                <div class="col-12 col-md-12 form-group mt-3">
-                                                    <div class="form-check mb-4">
-                                                        <input type="checkbox"
-                                                            class="form-check-input check-todas-impugnaciones">
-                                                        <label class="form-check-label"><strong>Seleccionar todos las
-                                                                impugnaciones</strong></label>
+                                        <div class="card-body" style="display: none;">
+                                            @php
+                                                $primeraInstancia = $tutela->primeraInstancia;
+                                            @endphp
+                                            <input type="hidden" name="verificada" id="verificada"
+                                                value="{{ $primeraInstancia->verificada }}">
+                                            <div class="row gest1eraparte1">
+                                                <div class="col-12 mt-3 mb-4">
+                                                    <div class="row d-flex justify-content-center">
+                                                        <div class="col-12 col-md -6">
+                                                            <iframe class="embed-responsive-item w-100"
+                                                                style="min-height: 400px;"
+                                                                src="{{ asset('documentos/tutelas/sentencias/' . $primeraInstancia->url_sentencia) }}"
+                                                                allowfullscreen></iframe>
+                                                        </div>
                                                     </div>
-                                                    <div class="cajaChecksAsignar" id="cajaChecksAsignar">
-                                                        @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
-                                                            <div class="form-check form-check-inline checksAsignar">
-                                                                @if ($impugnacion->estado->estado == 0)
-                                                                    <input type="checkbox"
-                                                                        class="form-check-input select-impugnacion"
-                                                                        value="{{ $impugnacion->id }}">
-                                                                    <label
-                                                                        class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
-                                                                @else
-                                                                    <input type="checkbox"
-                                                                        class="form-check-input select-impugnacion"
-                                                                        disabled>
-                                                                    <label
-                                                                        class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
-                                                                @endif
-                                                            </div>
+                                                </div>
+                                                <hr>
+                                                <div class="col-12 d-flex justify-content-center">
+                                                    <div class="row">
+                                                        <div class="col-12 mt-3 mb-4">
+                                                            <h6>Resuleves Primera Instancia</h6>
+                                                        </div>
+                                                        @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                                            @if ($resuelve->resuelve != null)
+                                                                <?php $tipo = 'detalle'; ?>
+                                                            @else
+                                                                <?php $tipo = 'cantidad'; ?>
+                                                            @endif
                                                         @endforeach
+                                                        @if ($tipo == 'detalle')
+                                                            <div class="col-12 mb-4">
+                                                                <div class="row">
+                                                                    <div class="col-12 table-responsive">
+                                                                        <table
+                                                                            class="table table-striped table-hover table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Numeracion</th>
+                                                                                    <th>Resuelve</th>
+                                                                                    <th>Tiempo de cumplimiento</th>
+                                                                                    <th>Fecha de Cumplimiento</th>
+                                                                                    <th>Sentido</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                                                                    <tr>
+                                                                                        <td scope="row">
+                                                                                            {{ $resuelve->numeracion }}
+                                                                                        </td>
+                                                                                        <td>{{ $resuelve->resuelve }}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if ($resuelve->dias != null)
+                                                                                                {{ $resuelve->dias . ' dias ' }}
+                                                                                            @endif
+                                                                                            @if ($resuelve->horas != null)
+                                                                                                {{ $resuelve->horas . ' horas ' }}
+                                                                                            @endif
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if ($resuelve->dias != null)
+                                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
+                                                                                            @endif
+                                                                                            @if ($resuelve->horas != null)
+                                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
+                                                                                            @endif
+                                                                                        </td>
+                                                                                        <td style="min-width: 150px;">
+                                                                                            <div class="col-12 form-group">
+                                                                                                <select id="sentido"
+                                                                                                    class="form-control form-control-sm sentidoResuelve"
+                                                                                                    name="sentido"
+                                                                                                    id_resuelve="{{ $resuelve->id }}"
+                                                                                                    data_url="{{ route('cambiosentidoresuelve', ['id' => $resuelve->id]) }}">
+                                                                                                    @if ($resuelve->sentido == 'Favorable')
+                                                                                                        <option
+                                                                                                            value="Favorable"
+                                                                                                            selected>
+                                                                                                            Favorable
+                                                                                                        </option>
+                                                                                                        <option
+                                                                                                            value="Desfavorable">
+                                                                                                            Desfavorable
+                                                                                                        </option>
+                                                                                                    @else
+                                                                                                        <option
+                                                                                                            value="Favorable">
+                                                                                                            Favorable
+                                                                                                        </option>
+                                                                                                        <option
+                                                                                                            value="Desfavorable"
+                                                                                                            selected>
+                                                                                                            Desfavorable
+                                                                                                        </option>
+                                                                                                    @endif
+
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if ($resuelve->sentido == 'Favorable')
+                                                                                                <div
+                                                                                                    class="form-check">
+                                                                                                    <input
+                                                                                                        class="form-check-input crearimpugnacion"
+                                                                                                        type="checkbox"
+                                                                                                        value=""
+                                                                                                        id="gestion"
+                                                                                                        name="gestion"
+                                                                                                        id_resuelve="{{ $resuelve->id }}"
+                                                                                                        data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
+                                                                                                        disabled>
+                                                                                                    <label
+                                                                                                        class="form-check-label"
+                                                                                                        for="flexCheckChecked">
+                                                                                                        Impugnar
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            @else
+                                                                                                @if ($resuelve->gestion == '1')
+                                                                                                    <div
+                                                                                                        class="form-check">
+                                                                                                        <input
+                                                                                                            class="form-check-input crearimpugnacion"
+                                                                                                            type="checkbox"
+                                                                                                            value=""
+                                                                                                            id="gestion"
+                                                                                                            name="gestion"
+                                                                                                            id_resuelve="{{ $resuelve->id }}"
+                                                                                                            data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
+                                                                                                            checked>
+                                                                                                        <label
+                                                                                                            class="form-check-label"
+                                                                                                            for="flexCheckChecked">
+                                                                                                            Gestionar
+                                                                                                            Impugnación
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                @else
+                                                                                                    <div
+                                                                                                        class="form-check">
+                                                                                                        <input
+                                                                                                            class="form-check-input crearimpugnacion"
+                                                                                                            type="checkbox"
+                                                                                                            value=""
+                                                                                                            id="gestion"
+                                                                                                            name="gestion"
+                                                                                                            id_resuelve="{{ $resuelve->id }}"
+                                                                                                            data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}">
+                                                                                                        <label
+                                                                                                            class="form-check-label"
+                                                                                                            for="flexCheckChecked">
+                                                                                                            Gestionar
+                                                                                                            Impugnación
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                @endif
+                                                                                            @endif
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="col-12 mb-4">
+                                                                <div class="row">
+                                                                    <div class="col-12 table-responsive">
+                                                                        @csrf
+                                                                        <table
+                                                                            class="table table-striped table-hover table-sm">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Numeracion</th>
+                                                                                    <th>Tiempo de cumplimiento</th>
+                                                                                    <th>Fecha de Cumplimiento</th>
+                                                                                    <th>Sentido</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach ($primeraInstancia->resuelvesPrimeraInstancia as $resuelve)
+                                                                                    <tr>
+                                                                                        <td scope="row">
+                                                                                            {{ $resuelve->numeracion }}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if ($resuelve->dias != null)
+                                                                                                {{ $resuelve->dias . ' dias ' }}
+                                                                                            @endif
+                                                                                            @if ($resuelve->horas != null)
+                                                                                                {{ $resuelve->horas . ' horas ' }}
+                                                                                            @endif
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if ($resuelve->dias != null)
+                                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ ' . ($resuelve->dias + 1) . ' days')) }}
+                                                                                            @endif
+                                                                                            @if ($resuelve->horas != null)
+                                                                                                {{ date('Y-m-d', strtotime($resuelve->sentencia->fecha_notificacion . '+ 1 days')) }}
+                                                                                            @endif
+                                                                                        </td>
+                                                                                        <td style="min-width: 150px;">
+                                                                                            <div class="col-12 form-group">
+                                                                                                <select id="sentido"
+                                                                                                    class="form-control form-control-sm sentidoResuelve"
+                                                                                                    name="sentido1"
+                                                                                                    id_resuelve="{{ $resuelve->id }}"
+                                                                                                    data_url="{{ route('cambiosentidoresuelve', ['id' => $resuelve->id]) }}">
+                                                                                                    @if ($resuelve->sentido == 'Favorable')
+                                                                                                        <option
+                                                                                                            value="Favorable"
+                                                                                                            selected>
+                                                                                                            Favorable
+                                                                                                        </option>
+                                                                                                        <option
+                                                                                                            value="Desfavorable">
+                                                                                                            Desfavorable
+                                                                                                        </option>
+                                                                                                    @else
+                                                                                                        <option
+                                                                                                            value="Favorable">
+                                                                                                            Favorable
+                                                                                                        </option>
+                                                                                                        <option
+                                                                                                            value="Desfavorable"
+                                                                                                            selected>
+                                                                                                            Desfavorable
+                                                                                                        </option>
+                                                                                                    @endif
+
+                                                                                                </select>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            @if ($resuelve->sentido == 'Favorable')
+                                                                                                <div
+                                                                                                    class="form-check">
+                                                                                                    <input
+                                                                                                        class="form-check-input crearimpugnacion"
+                                                                                                        type="checkbox"
+                                                                                                        value=""
+                                                                                                        id="gestion"
+                                                                                                        name="gestion"
+                                                                                                        id_resuelve="{{ $resuelve->id }}"
+                                                                                                        data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
+                                                                                                        disabled>
+                                                                                                    <label
+                                                                                                        class="form-check-label"
+                                                                                                        for="flexCheckChecked">
+                                                                                                        Gestionar
+                                                                                                        Impugnación
+                                                                                                    </label>
+                                                                                                </div>
+                                                                                            @else
+                                                                                                @if ($resuelve->gestion == '1')
+                                                                                                    <div
+                                                                                                        class="form-check">
+                                                                                                        <input
+                                                                                                            class="form-check-input crearimpugnacion"
+                                                                                                            type="checkbox"
+                                                                                                            value=""
+                                                                                                            id="gestion"
+                                                                                                            name="gestion"
+                                                                                                            id_resuelve="{{ $resuelve->id }}"
+                                                                                                            data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}"
+                                                                                                            checked>
+                                                                                                        <label
+                                                                                                            class="form-check-label"
+                                                                                                            for="flexCheckChecked">
+                                                                                                            Gestionar
+                                                                                                            Impugnación
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                @else
+                                                                                                    <div
+                                                                                                        class="form-check">
+                                                                                                        <input
+                                                                                                            class="form-check-input crearimpugnacion"
+                                                                                                            type="checkbox"
+                                                                                                            value=""
+                                                                                                            id="gestion"
+                                                                                                            name="gestion"
+                                                                                                            id_resuelve="{{ $resuelve->id }}"
+                                                                                                            data_url="{{ route('crearimpugnacion', ['id' => $resuelve->id]) }}">
+                                                                                                        <label
+                                                                                                            class="form-check-label"
+                                                                                                            for="flexCheckChecked">
+                                                                                                            Gestionar
+                                                                                                            Impugnación
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                @endif
+                                                                                            @endif
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-12 col-md-5 form-group">
-                                                    <label for="">Cargo</label>
-                                                    <select class="custom-select rounded-0 cargo" required=""
-                                                        data_url="{{ route('cargar_cargos') }}"
-                                                        data_url2="{{ route('cargar_funcionarios') }}">
-                                                    </select>
+                                                <div class="col-12 mb-4">
+                                                    <button class="btn btn-primary btn-sombra btn-xs pl-4 pr-4"
+                                                        id="guardarCambiosSentidos"
+                                                        data_url="{{ route('verificar_sentencia_primera_instancia', ['id' => $primeraInstancia->id]) }}">Verificar</button>
                                                 </div>
-                                                <div class="col-12 col-md-5 form-group">
-                                                    <label for="">Funcionario</label>
-                                                    <select class="custom-select rounded-0 funcionario" required="">
-                                                        <option value="">--Seleccione--</option>
-                                                    </select>
+                                            </div>
+                                            <div class="gest1eraparte2 w-100">
+                                                <div class="row gest1eraparte2">
+                                                    <div class="col-12 table-responsive d-flex justify-content-center">
+                                                        <table class="table table-striped col-12"
+                                                            style="font-size: 0.8em;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Resuelve #</th>
+                                                                    <th scope="col">Funcionario</th>
+                                                                    <th scope="col">Porcentaje</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="bodyTablaResuelves">
+                                                                @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
+                                                                    <tr>
+                                                                        @if ($impugnacion->empleado)
+                                                                            <td class="text-success font-weight-bold">
+                                                                                {{ $impugnacion->consecutivo }}</td>
+                                                                            <td class="text-success font-weight-bold">
+                                                                                {{ $impugnacion->empleado->nombre1 }}
+                                                                                {{ $impugnacion->empleado->apellido1 }}
+                                                                            </td>
+                                                                            <td class="text-success font-weight-bold">
+                                                                                {{ $impugnacion->estado->estado }}%</td>
+                                                                        @else
+                                                                            <td class="text-danger font-weight-bold">
+                                                                                {{ $impugnacion->consecutivo }}</td>
+                                                                            <td class="text-danger font-weight-bold">Sin
+                                                                                asignar
+                                                                            </td>
+                                                                            <td class="text-danger font-weight-bold">
+                                                                                {{ $impugnacion->estado->estado }}%</td>
+                                                                        @endif
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
-                                                <div class="col-12 col-md-4 form-group d-flex align-items-end">
-                                                    <button href=""
-                                                        class="btn btn-primary mx-2 px-4 asignacion_impugnacion_guardar"
-                                                        data_url="{{ route('asignacion_impugnacion_guardar') }}"
-                                                        data_token="{{ csrf_token() }}">Asignar Impugnación
-                                                        (es)</button>
+                                                <hr>
+                                                <h5 class="">Reasignación Impugnación</h5>
+                                                <div class="row d-flex px-4 gest1eraparte2">
+                                                    <div class="col-12 col-md-12 form-group mt-3">
+                                                        <div class="form-check mb-4">
+                                                            <input type="checkbox"
+                                                                class="form-check-input check-todas-impugnaciones">
+                                                            <label class="form-check-label"><strong>Seleccionar todos las
+                                                                    impugnaciones</strong></label>
+                                                        </div>
+                                                        <div class="cajaChecksAsignar" id="cajaChecksAsignar">
+                                                            @foreach ($tutela->primeraInstancia->impugnacionesinternas->sortBy('consecutivo') as $key => $impugnacion)
+                                                                <div class="form-check form-check-inline checksAsignar">
+                                                                    @if ($impugnacion->estado->estado == 0)
+                                                                        <input type="checkbox"
+                                                                            class="form-check-input select-impugnacion"
+                                                                            value="{{ $impugnacion->id }}">
+                                                                        <label
+                                                                            class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
+                                                                    @else
+                                                                        <input type="checkbox"
+                                                                            class="form-check-input select-impugnacion"
+                                                                            disabled>
+                                                                        <label
+                                                                            class="form-check-label"><strong>#{{ $impugnacion->consecutivo }}</strong></label>
+                                                                    @endif
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-5 form-group">
+                                                        <label for="">Cargo</label>
+                                                        <select class="custom-select rounded-0 cargo" required=""
+                                                            data_url="{{ route('cargar_cargos') }}"
+                                                            data_url2="{{ route('cargar_funcionarios') }}">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-12 col-md-5 form-group">
+                                                        <label for="">Funcionario</label>
+                                                        <select class="custom-select rounded-0 funcionario" required="">
+                                                            <option value="">--Seleccione--</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-12 col-md-4 form-group d-flex align-items-end">
+                                                        <button href=""
+                                                            class="btn btn-primary mx-2 px-4 asignacion_impugnacion_guardar"
+                                                            data_url="{{ route('asignacion_impugnacion_guardar') }}"
+                                                            data_token="{{ csrf_token() }}">Asignar Impugnación
+                                                            (es)</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 @endif
                                 @if ($tutela->primeraInstancia->impugnacionesinternas->count() > 0)
                                     @if (($tutela->primeraInstancia->impugnacionesinternas->sum('estado_id') / $tutela->primeraInstancia->impugnacionesinternas->count() / 11) * 100 == 100)
@@ -2270,7 +2300,8 @@
                                             <div class="card-header">
                                                 <h3 class="card-title font-weight-bold">Proyectar</h3>
                                                 <div class="card-tools">
-                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </div>
@@ -2293,7 +2324,8 @@
                                                         </div>
                                                         <div class="row d-flex px-12 p-3">
                                                             <div class="col-12 col-md-12 form-group d-flex">
-                                                                <button href="" class="btn btn-primary mx-2 px-4 btn-tutela"
+                                                                <button href=""
+                                                                    class="btn btn-primary mx-2 px-4 btn-tutela"
                                                                     data_url2="{{ route('historial_tarea_tutela_guardar') }}"
                                                                     data_url3="{{ route('cambiar_estado_tareas_tutela_guardar') }}"
                                                                     data_token="{{ csrf_token() }}">Enviar a

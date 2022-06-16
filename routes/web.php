@@ -24,6 +24,7 @@ use App\Http\Controllers\Intranet\Empresas\WikuController;
 use App\Http\Controllers\Intranet\Funcionarios\FuncionarioController;
 use App\Http\Controllers\Intranet\Funcionarios\AreasInfluenciaController;
 use App\Http\Controllers\Intranet\Funcionarios\AsignacionParticularController;
+use App\Http\Controllers\Intranet\Funcionarios\AsociacionTutelaWiku;
 use App\Http\Controllers\Intranet\Funcionarios\TutelaController;
 use App\Http\Controllers\Intranet\Funcionarios\TutelasConsulta;
 use App\Models\Tutela\TutelaRespuesta;
@@ -247,6 +248,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('areas_influencia-index', [AreasInfluenciaController::class, 'index'])->name('admin-funcionario-areas_influencia-index');
             Route::post('areas_influencia', [AreasInfluenciaController::class, 'guardar'])->name('admin-funcionario-areas_influencia-guardar');
             // ------------------------------------------------------------------------------------
+            // Rutas Asociacion wiku tutelas submotivos
+            Route::get('asociacion-wiku-tutelas-index', [AsociacionTutelaWiku::class, 'index'])->name('admin-funcionario-asociacion_wiku_tutelas-index');
+            Route::get('asociacion-wiku-tutelas-cargar_sub_motivo', [AsociacionTutelaWiku::class, 'cargar_sub_motivo'])->name('admin-funcionario-asociacion_wiku_tutelas-cargar_sub_motivo');
+            Route::get('asociacion-wiku-tutelas-asociar', [AsociacionTutelaWiku::class, 'asociar'])->name('admin-funcionario-asociacion_wiku_tutelas-asociar');
+            Route::delete('asociacion-wiku-tutelas/{wiku_argumento_id}/{submotivotutela_id}', [AsociacionTutelaWiku::class, 'eliminar'])->name('admin-funcionario-asociacion_wiku_tutelas-eliminar');
+            Route::get('asociacion-wiku-tutelas-asociar_agumento/{wiku_argumento_id}', [AsociacionTutelaWiku::class, 'asociar_agumento'])->name('admin-funcionario-asociacion_wiku_tutelas-asociar_agumento');
+            // ------------------------------------------------------------------------------------
             // Rutas Asignacion particular
             Route::get('asignacion_particular-index', [AsignacionParticularController::class, 'index'])->name('admin-funcionario-asignacion_particular-index');
             Route::get('asignacion_particular-crear', [AsignacionParticularController::class, 'crear'])->name('admin-funcionario-asignacion_particular-crear');
@@ -420,6 +428,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Route::get('index', [IntranetPageCotroller::class, 'index'])->name('admin-index');
         //Wiku
         Route::get('wiku-index', [WikuController::class, 'indexWiku'])->name('wiku_funcionario-index');
+        Route::get('wiku-busqueda_inicial', [WikuController::class, 'WikuBusquedaInicial'])->name('wiku_busqueda_inicial');
         Route::get('wiku-busqueda_basica', [WikuController::class, 'WikuBusquedaBasica'])->name('wiku_busqueda_basica');
         Route::get('wiku-busqueda_avanzadaa', [WikuController::class, 'WikuBusquedaAvanzada'])->name('wiku_busqueda_avanzada');
 

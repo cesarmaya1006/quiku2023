@@ -17,8 +17,10 @@ class CrearTablaTutelaMotivo extends Migration
             $table->bigIncrements('id')->autoIncrement();
             $table->unsignedBigInteger('auto_admisorio_id');
             $table->foreign('auto_admisorio_id', 'fk_auto_admisorio_tutela')->references('id')->on('auto_admisorio')->onDelete('restrict')->onUpdate('restrict');
-            $table->string('motivo_tutela', 255)->nullable();
-            $table->string('sub_motivo_tutela', 255)->nullable();
+            $table->unsignedBigInteger('motivotutela_id');
+            $table->foreign('motivotutela_id', 'fk_motivotutela')->references('id')->on('motivotutelas')->onDelete('restrict')->onUpdate('restrict');
+            $table->unsignedBigInteger('submotivotutela_id');
+            $table->foreign('submotivotutela_id', 'fk_submotivotutelas')->references('id')->on('submotivotutelas')->onDelete('restrict')->onUpdate('restrict');
             $table->string('tipo_tutela', 255)->nullable();
             $table->timestamps();
             $table->charset = 'utf8';

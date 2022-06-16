@@ -1,4 +1,4 @@
-@extends("theme.back.plantilla")
+@extends('theme.back.plantilla')
 <!-- ************************************************************* -->
 <!-- Funciones php -->
 @section('funciones_php')
@@ -30,9 +30,7 @@
                     </div>
                     <div class="card-body">
                         <div class="col-12 rounded border mb-3 p-2">
-                            @include(
-                                'intranet.funcionarios.tutela.includes.tarjetas'
-                            )
+                            @include('intranet.funcionarios.tutela.includes.tarjetas')
                             <hr>
                             {{-- @include(
                         'intranet.funcionarios.tutela.includes.detallestutela'
@@ -463,15 +461,25 @@
                                             </div>
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Motivo:</strong>
-                                                    {{ $motivo->motivo_tutela }}</p>
+                                                    {{ $motivo->motivo }}</p>
                                             </div>
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Sub - motivo:</strong>
-                                                    {{ $motivo->sub_motivo_tutela }}</p>
+                                                    @foreach ($motivo->sub_motivostutelas as $sub_motivostutela)
+                                                        @foreach ($tutela->submotivos as $submotivo)
+                                                            @if ($sub_motivostutela->id == $submotivo->id)
+                                                                {{ $submotivo->sub_motivo }}
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach
+                                                </p>
                                             </div>
                                             <div class="col-12">
                                                 <p class="text-justify"><strong>Tutela sobre:</strong>
-                                                    {{ $motivo->tipo_tutela }}</p>
+                                                    @foreach ($tutela->motivos_tipo as $tipo_tutela)
+                                                        {{ $tipo_tutela->tipo_tutela }}
+                                                    @endforeach
+                                                </p>
                                             </div>
                                         </div>
                                     @endforeach

@@ -2387,3 +2387,222 @@ window.addEventListener('DOMContentLoaded', function() {
 
     }
 })
+
+window.onload = function () {
+    const id_tutela = $('#id_tutela').val();
+    const url_t = $('#id_tutela').attr('data_url');
+
+
+    $html_ = '';
+    if (id_tutela != '') {
+        var data = {
+            "id_tutela": id_tutela,
+        };
+        $.ajax({
+            url: url_t,
+            type: 'GET',
+            data: data,
+            success: function(respuesta) {
+                console.log(respuesta);
+                $html_ = '';
+                $.each(respuesta.argumentos, function(index, argumento) {
+                    $html_ += '<div class="col -12 col-md-10">';
+                    $html_ += '<div class="resultado-busqueda card card-success bg-legal1 collapsed-card card-mini-sombra">';
+                    $html_ += '<div class="card-header">';
+                    $html_ += '<div class="user-block">';
+                    $html_ += '<span class="username"><a href="#">Argumento</a></span>';
+                    $html_ += '<span class="description text-white" >' + argumento.tema_especifico.tema_.area['area'] + '->' + argumento.tema_especifico.tema_['tema'] + '->' + argumento.tema_especifico['tema'] + '</span>';
+                    $html_ += '</div>';
+                    $html_ += '<div class="card-tools">';
+                    $html_ += '<button type="button" class="btn btn-tool" data-card-widget="collapse">';
+                    $html_ += '<i class="fas fa-plus"></i>';
+                    $html_ += '</button>';
+                    $html_ += '<button type="button" class="btn btn-tool" data-card-widget="remove">';
+                    $html_ += '<i class="fas fa-times"></i>';
+                    $html_ += '</button>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '<div class="card-body">';
+                    $html_ += '<div class="row">';
+                    $html_ += '<div class="col-12">';
+                    $html_ += '<p><strong>Texto:</strong></p>';
+                    $html_ += '<div class="textoCopiar">' + argumento['texto'] + '</div>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '<div class="row">';
+                    if (argumento.criterios.length > 0) {
+                        $html_ += '<hr>';
+                        $html_ += '<div class="row">';
+                        $html_ += '<div class="col-12"><h6>Criterios Juridicos</h6></div>';
+                        $html_ += '<div class="col-12 table-responsive" style="font-size:0.8em;">';
+                        $html_ += '<table class="table">';
+                        $html_ += '<thead>';
+                        $html_ += '<tr>';
+                        $html_ += '<th style="white-space:nowrap">Autor(es)</th>';
+                        $html_ += '<th style="white-space:nowrap">Criterios jurídicos de aplicación</th>';
+                        $html_ += '<th style="white-space:nowrap">Criterios jurídicos de no aplicación</th>';
+                        $html_ += '<th style="white-space:nowrap">Notas de la Vigencia</th>';
+                        $html_ += '</tr>';
+                        $html_ += '</thead>';
+                        $html_ += '<tbody>';
+                        $.each(argumento.criterios, function(index, criterio) {
+                            $html_ += '<tr>';
+                            $html_ += '<td style="white-space:nowrap">' + criterio['autores'] + '</td>';
+                            if (criterio['criterio_si'] != null) {
+                                $html_ += '<td>' + criterio['criterio_si'] + '</td>';
+                            } else {
+                                $html_ += '<td class="text-center">---</td>';
+                            }
+                            if (criterio['criterio_no'] != null) {
+                                $html_ += '<td>' + criterio['criterio_no'] + '</td>';
+                            } else {
+                                $html_ += '<td class="text-center">---</td>';
+                            }
+                            if (criterio['notas'] != null) {
+                                $html_ += '<td>' + criterio['notas'] + '</td>';
+                            } else {
+                                $html_ += '<td class="text-center">---</td>';
+                            }
+                            $html_ += '</tr>';
+                        })
+                        $html_ += '</tbody>';
+                        $html_ += '</table>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                    } else {
+                        $html_ += '<div class="col-12 text-center"><p><strong>Sin criterios jurídicos</strong></p></div>';
+                    }
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '<div class="card-footer ">';
+                    $html_ += '<div class="row">';
+                    $html_ += '<div class="col-12">';
+                    $html_ += '<button class="btn btn-info btn-xs pl-4 pr-4 agregarTexto">Agregar</button>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+
+                });
+                $.each(respuesta.normas, function(index, norma) {
+                    $html_ += '<div class="col -12 col-md-10">';
+                    $html_ += '<div class="card card-info collapsed-card card-mini-sombra">';
+                    $html_ += '<div class="card-header">';
+                    $html_ += '<div class="user-block">';
+                    $html_ += '<span class="username"><a href="#">Norma</a></span>';
+                    $html_ += '<span class="description text-white" >' + norma.tema_especifico.tema_.area['area'] + '->' + norma.tema_especifico.tema_['tema'] + '->' + norma.tema_especifico['tema'] + '->' + norma['articulo'] + '</span>';
+                    $html_ += '</div>';
+                    $html_ += '<div class="card-tools">';
+                    $html_ += '<button type="button" class="btn btn-tool" data-card-widget="collapse">';
+                    $html_ += '<i class="fas fa-plus"></i>';
+                    $html_ += '</button>';
+                    $html_ += '<button type="button" class="btn btn-tool" data-card-widget="remove">';
+                    $html_ += '<i class="fas fa-times"></i>';
+                    $html_ += '</button>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '<div class="card-body">';
+                    $html_ += '<div class="row">';
+                    $html_ += '<div class="col-12">';
+                    $html_ += '<p><strong>Texto:</strong> ' + norma['texto'] + '</p>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '<div class="row">';
+                    if (norma.criterios.length > 0) {
+                        $html_ += '<hr>';
+                        $html_ += '<div class="row">';
+                        $html_ += '<div class="col-12"><h6>Criterios Juridicos</h6></div>';
+                        $html_ += '<div class="col-12 table-responsive" style="font-size:0.8em;">';
+                        $html_ += '<table class="table">';
+                        $html_ += '<thead>';
+                        $html_ += '<tr>';
+                        $html_ += '<th style="white-space:nowrap">Autor(es)</th>';
+                        $html_ += '<th style="white-space:nowrap">Criterios jurídicos de aplicación</th>';
+                        $html_ += '<th style="white-space:nowrap">Criterios jurídicos de no aplicación</th>';
+                        $html_ += '<th style="white-space:nowrap">Notas de la Vigencia</th>';
+                        $html_ += '</tr>';
+                        $html_ += '</thead>';
+                        $html_ += '<tbody>';
+                        $.each(norma.criterios, function(index, criterio) {
+                            $html_ += '<tr>';
+                            $html_ += '<td style="white-space:nowrap">' + criterio['autores'] + '</td>';
+                            if (criterio['criterio_si'] != null) {
+                                $html_ += '<td>' + criterio['criterio_si'] + '</td>';
+                            } else {
+                                $html_ += '<td class="text-center">---</td>';
+                            }
+                            if (criterio['criterio_no'] != null) {
+                                $html_ += '<td>' + criterio['criterio_no'] + '</td>';
+                            } else {
+                                $html_ += '<td class="text-center">---</td>';
+                            }
+                            if (criterio['notas'] != null) {
+                                $html_ += '<td>' + criterio['notas'] + '</td>';
+                            } else {
+                                $html_ += '<td class="text-center">---</td>';
+                            }
+                            $html_ += '</tr>';
+                        })
+                        $html_ += '</tbody>';
+                        $html_ += '</table>';
+                        $html_ += '</div>';
+                        $html_ += '</div>';
+                    } else {
+                        $html_ += '<div class="col-12 text-center"><p><strong>Sin criterios jurídicos</strong></p></div>';
+                    }
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '<div class="card-footer ">';
+                    $html_ += '<div class="row">';
+                    $html_ += '<div class="col-12">';
+                    $html_ += '<button class="btn btn-info btn-xs pl-4 pr-4 agregarTexto">Agregar</button>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+                    $html_ += '</div>';
+
+                });
+                $('.coleccionrespuesta').html($html_);
+                asignarBusqueda()
+            },
+            error: function() {
+
+            }
+        });
+    } else {
+        $('.coleccionrespuesta').html($html_);
+    }
+    function asignarBusqueda() {
+        let btnAgregarRespuestas = document.querySelectorAll('.agregarTexto')
+        btnAgregarRespuestas.forEach(btn => {
+            btn.addEventListener('click', agregarTexto)
+        })
+    }
+
+    function agregarTexto(btn) {
+        let btnRespuesta = btn.target
+        let bloqueRespuesta = btnRespuesta.parentElement.parentElement.parentElement.parentElement
+        let numPeticion = bloqueRespuesta.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-value')
+        let respuestaBusqueda = bloqueRespuesta.querySelector('.textoCopiar')
+        let respuestaCopia = respuestaBusqueda.cloneNode(true)
+        let respuestaPeticion = bloqueRespuesta.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+        let bloqueEditable = respuestaPeticion.querySelector('.note-editable')
+        let parrafosAnteriores = bloqueEditable.querySelectorAll('p')
+        if (parrafosAnteriores.length == 1) {
+            if (parrafosAnteriores[0].querySelector('br')) {
+                parrafosAnteriores[0].remove()
+            }
+        }
+
+        bloqueEditable.appendChild(respuestaCopia)
+        const enter = new KeyboardEvent('keydown', {
+            bubbles: true, cancelable: true, keyCode: 32
+        });
+        bloqueEditable.dispatchEvent(enter);
+        let btnCerrar = document.querySelector(`.buscar-${numPeticion} .modal-header button`)
+        btnCerrar.click()
+
+    }
+  }

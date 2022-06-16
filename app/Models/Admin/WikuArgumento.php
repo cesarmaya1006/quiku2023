@@ -3,6 +3,7 @@
 namespace App\Models\Admin;
 
 use App\Models\PQR\tipoPQR;
+use App\Models\Tutela\Submotivotutela;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -47,4 +48,10 @@ class WikuArgumento extends Model
     {
         return $this->belongsToMany(tipoPQR::class, 'wikuargasociaciones', 'tipo_p_q_r_id', 'id');
     }
+    //----------------------------------------------------------------------------------
+    public function asociacion_submotivotutelas()
+    {
+        return $this->belongsToMany(Submotivotutela::class, 'asociacionwikuargumentotutelas','wiku_argumento_id', 'submotivotutela_id');
+    }
+    //----------------------------------------------------------------------------------
 }

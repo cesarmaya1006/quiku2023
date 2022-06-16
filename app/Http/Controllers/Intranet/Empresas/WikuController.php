@@ -30,6 +30,8 @@ use App\Models\Admin\WikuTemaEspecifico;
 use App\Models\PQR\tipoPQR;
 use App\Models\Productos\Categoria;
 use App\Models\Servicios\Servicio;
+use App\Models\Tutela\AutoAdmisorio;
+use App\Models\Tutela\Submotivotutela;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -735,6 +737,74 @@ class WikuController extends Controller
         }
     }
     //-----------
+    public function WikuBusquedaInicial(Request $request){
+        if ($request->ajax()) {
+            $tutela = AutoAdmisorio::findorFail($_GET['id_tutela']);
+            //-----------------------------------------------------
+        //-----------------------------------------------------
+        $auto_admisorio_id = $tutela->id;
+        $submotivos = Submotivotutela::whereHas('tutelas', function ($q) use ($auto_admisorio_id) {
+            $q->where('auto_admisorio_id',  $auto_admisorio_id);
+        })->get();
+
+        //-----------------------------------------------------
+        $normasArray = [];
+        foreach ($submotivos as $submotivo) {
+            $submotivotutela_id = $submotivo->id;
+            //= = = = = = =
+            $normas_temp = WikuNorma::whereHas('asociacion_submotivotutelas', function ($p) use ($submotivotutela_id) {
+                $p->where('submotivotutela_id',  $submotivotutela_id);
+            })->get();
+            foreach ($normas_temp as $key => $norma_temp) {
+                $normasArray[] = $norma_temp->id;
+            }
+        }
+        //-----------------------------------------------------
+        $jurisprudenciasArray = [];
+        foreach ($submotivos as $submotivo) {
+            $submotivotutela_id = $submotivo->id;
+            //= = = = = = =
+            $jurisprudencias_temp = WikuJurisprudencia::whereHas('asociacion_submotivotutelas', function ($p) use ($submotivotutela_id) {
+                $p->where('submotivotutela_id',  $submotivotutela_id);
+            })->get();
+            foreach ($jurisprudencias_temp as $key => $jurisprudencia_temp) {
+                $jurisprudenciasArray[] = $jurisprudencia_temp->id;
+            }
+        }
+        //-----------------------------------------------------
+        $argumentosArray = [];
+        foreach ($submotivos as $submotivo) {
+            $submotivotutela_id = $submotivo->id;
+            //= = = = = = =
+            $argumentos_temp = WikuArgumento::whereHas('asociacion_submotivotutelas', function ($p) use ($submotivotutela_id) {
+                $p->where('submotivotutela_id',  $submotivotutela_id);
+            })->get();
+            foreach ($argumentos_temp as $key => $argumento_temp) {
+                $argumentosArray[] = $argumento_temp->id;
+            }
+        }
+        //-----------------------------------------------------
+        $doctrinasArray = [];
+        foreach ($submotivos as $submotivo) {
+            $submotivotutela_id = $submotivo->id;
+            //= = = = = = =
+            $doctrinas_temp = WikuDoctrina::whereHas('asociacion_submotivotutelas', function ($p) use ($submotivotutela_id) {
+                $p->where('submotivotutela_id',  $submotivotutela_id);
+            })->get();
+            foreach ($doctrinas_temp as $key => $doctrina_temp) {
+                $doctrinasArray[] = $doctrina_temp->id;
+            }
+        }
+        $wikuNormas = WikuNorma::whereIn('id', $normasArray)->get();
+        $wikuJurisprudencias = WikuJurisprudencia::whereIn('id', $jurisprudenciasArray)->get();
+        $wikuArgumentos = WikuArgumento::with('palabras', 'criterios', 'temaEspecifico', 'temaEspecifico.tema_', 'temaEspecifico.tema_.area')->whereIn('id', $argumentosArray)->get();
+        $wikuDoctrinas = WikuDoctrina::whereIn('id', $doctrinasArray)->get();
+
+            return response()->json(['normas' => $wikuNormas, 'argumentos' => $wikuArgumentos, 'jurisprudencias' => $wikuJurisprudencias, 'doctrinas' => $wikuDoctrinas]);
+        } else {
+            abort(404);
+        }
+    }
 
     public function WikuBusquedaBasica(Request $request)
     {

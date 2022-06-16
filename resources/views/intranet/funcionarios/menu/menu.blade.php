@@ -46,6 +46,12 @@
                                             href="{{ route('admin-funcionario-asignacion_particular-index') }}">Asignación
                                             Particular</a>
                                     </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item"
+                                            href="{{ route('admin-funcionario-asociacion_wiku_tutelas-index') }}">Asociación Wiku Tutelas</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item">

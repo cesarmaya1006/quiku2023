@@ -3,6 +3,7 @@
 namespace App\Models\Admin;
 
 use App\Models\PQR\tipoPQR;
+use App\Models\Tutela\Submotivotutela;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -71,6 +72,12 @@ class WikuJurisprudencia extends Model
     public function tipopqr()
     {
         return $this->belongsToMany(tipoPQR::class, 'wikujurisasociaciones', 'tipo_p_q_r_id', 'id');
+    }
+    //----------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------
+    public function asociacion_submotivotutelas()
+    {
+        return $this->belongsToMany(Submotivotutela::class, 'asociacionwikujurisprudenciatutelas','wikujurisprudencia_id', 'submotivotutela_id');
     }
     //----------------------------------------------------------------------------------
 }

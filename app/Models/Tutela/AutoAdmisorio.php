@@ -75,9 +75,19 @@ class AutoAdmisorio extends Model
         return $this->hasMany(PruebasTutela::class, 'auto_admisorio_id', 'id');
     }
     //----------------------------------------------------------------------------------
+    public function motivos_tipo()
+    {
+        return $this->hasMany(MotivosTutela::class, 'auto_admisorio_id','id');
+    }
+    //----------------------------------------------------------------------------------
     public function motivos()
     {
-        return $this->hasMany(MotivosTutela::class, 'auto_admisorio_id', 'id');
+        return $this->belongsToMany(Motivotutela::class, 'tutela_motivo');
+    }
+    //----------------------------------------------------------------------------------
+    public function submotivos()
+    {
+        return $this->belongsToMany(Submotivotutela::class, 'tutela_motivo');
     }
     //----------------------------------------------------------------------------------
     public function empleadoregistro()

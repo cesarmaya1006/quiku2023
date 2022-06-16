@@ -17,6 +17,11 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\Productos\Categoria;
 use App\Models\Tutela\HechosTutela;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\WikuArgumento;
+use App\Models\Admin\WikuDoctrina;
+use App\Models\Admin\WikuJurisprudencia;
+use App\Models\Admin\WikuNorma;
+use App\Models\PQR\SubMotivo;
 use App\Models\Tutela\AutoAdmisorio;
 use App\Models\Tutela\MotivosTutela;
 use App\Models\Tutela\PruebasTutela;
@@ -46,6 +51,8 @@ use App\Models\Tutela\HistorialRespuestaHecho;
 use App\Models\Tutela\ResuelvePrimeraInstancia;
 use App\Models\Tutela\HistorialRespuestaPretension;
 use App\Models\Tutela\HistorialRespuestaImpugnacion;
+use App\Models\Tutela\Motivotutela;
+use App\Models\Tutela\Submotivotutela;
 
 class TutelaController extends Controller
 {
@@ -63,12 +70,79 @@ class TutelaController extends Controller
         $servicios = Servicio::get();
         $tutela = AutoAdmisorio::findorFail($id);
         $estados = AsignacionEstados::all();
-        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_colaboracion', compact('tutela', 'estados', 'areas', 'fuentes', 'tipos_pqr', 'servicios', 'categorias'));
+
+        //-----------------------------------------------------
+        //-----------------------------------------------------
+        $auto_admisorio_id = $tutela->id;
+        $submotivos = Submotivotutela::whereHas('tutelas', function ($q) use ($auto_admisorio_id) {
+            $q->where('auto_admisorio_id',  $auto_admisorio_id);
+        })->get();
+
+        //-----------------------------------------------------
+        $normasArray = [];
+        foreach ($submotivos as $submotivo) {
+            $submotivotutela_id = $submotivo->id;
+            //= = = = = = =
+            $normas_temp = WikuNorma::whereHas('asociacion_submotivotutelas', function ($p) use ($submotivotutela_id) {
+                $p->where('submotivotutela_id',  $submotivotutela_id);
+            })->get();
+            foreach ($normas_temp as $key => $norma_temp) {
+                $normasArray[] = $norma_temp->id;
+            }
+        }
+        //-----------------------------------------------------
+        $jurisprudenciasArray = [];
+        foreach ($submotivos as $submotivo) {
+            $submotivotutela_id = $submotivo->id;
+            //= = = = = = =
+            $jurisprudencias_temp = WikuJurisprudencia::whereHas('asociacion_submotivotutelas', function ($p) use ($submotivotutela_id) {
+                $p->where('submotivotutela_id',  $submotivotutela_id);
+            })->get();
+            foreach ($jurisprudencias_temp as $key => $jurisprudencia_temp) {
+                $jurisprudenciasArray[] = $jurisprudencia_temp->id;
+            }
+        }
+        //-----------------------------------------------------
+        $argumentosArray = [];
+        foreach ($submotivos as $submotivo) {
+            $submotivotutela_id = $submotivo->id;
+            //= = = = = = =
+            $argumentos_temp = WikuArgumento::whereHas('asociacion_submotivotutelas', function ($p) use ($submotivotutela_id) {
+                $p->where('submotivotutela_id',  $submotivotutela_id);
+            })->get();
+            foreach ($argumentos_temp as $key => $argumento_temp) {
+                $argumentosArray[] = $argumento_temp->id;
+            }
+        }
+        //-----------------------------------------------------
+        $doctrinasArray = [];
+        foreach ($submotivos as $submotivo) {
+            $submotivotutela_id = $submotivo->id;
+            //= = = = = = =
+            $doctrinas_temp = WikuDoctrina::whereHas('asociacion_submotivotutelas', function ($p) use ($submotivotutela_id) {
+                $p->where('submotivotutela_id',  $submotivotutela_id);
+            })->get();
+            foreach ($doctrinas_temp as $key => $doctrina_temp) {
+                $doctrinasArray[] = $doctrina_temp->id;
+            }
+        }
+        $normas = WikuNorma::whereIn('id', $normasArray)->get();
+        $jurisprudencias = WikuJurisprudencia::whereIn('id', $jurisprudenciasArray)->get();
+        $argumentos = WikuArgumento::whereIn('id', $argumentosArray)->get();
+        $doctrinas = WikuDoctrina::whereIn('id', $doctrinasArray)->get();
+        /*foreach ($argumentos as $argumento) {
+            dd($argumento->temaEspecifico->tema_->area->area);
+
+        }*/
+
+        //-----------------------------------------------------
+        return view('intranet.funcionarios.tutela.tutela_tareas.gestion_colaboracion', compact('tutela', 'estados', 'areas', 'fuentes', 'tipos_pqr', 'servicios', 'categorias', 'normas', 'jurisprudencias', 'argumentos', 'doctrinas'));
     }
 
     public function auto_admisorio_complemento($id)
     {
-        return view('intranet.funcionarios.tutela.registro_complemento', compact('id'));
+        $motivos = Motivotutela::all();
+        return view('intranet.funcionarios.tutela.registro_complemento', compact('id', 'motivos'));
     }
 
     public function crear_auto_admisorio(Request $request)
@@ -210,8 +284,8 @@ class TutelaController extends Controller
     {
         if ($request->ajax()) {
             $nuevo_motivo['auto_admisorio_id'] = $request['id'];
-            $nuevo_motivo['motivo_tutela'] = $request['motivo_tutela'];
-            $nuevo_motivo['sub_motivo_tutela'] = $request['sub_motivo_tutela'];
+            $nuevo_motivo['motivotutelas_id'] = $request['motivo_tutela'];
+            $nuevo_motivo['submotivotutelas_id'] = $request['sub_motivo_tutela'];
             $nuevo_motivo['tipo_tutela'] = $request['tipo_tutela'];
             $repuesta = MotivosTutela::create($nuevo_motivo);
             return response()->json(['mensaje' => 'ok', 'data' => $repuesta]);
@@ -1055,11 +1129,11 @@ class TutelaController extends Controller
                 $firma = public_path('documentos\usuarios\\' . $tutela->empleadoasignado->url);
                 //$imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
                 //$firma = asset('documentos/usuarios/' . $tutela->empleado->url); //url_servidor
-                if($tipo_respuesta == 1 ){
+                if ($tipo_respuesta == 1) {
                     $valor = "si";
                     $resuelves = ResuelveTutela::where('auto_admisorio_id', $request["idAuto"])->orderBy('orden')->get();
                     $rPdf['respuesta'] = view('intranet.funcionarios.tutela.tutela_tareas.respuesta_tutela', compact('tutela', 'imagen', 'resuelves', 'firma'));
-                }else{
+                } else {
                     $valor = "no";
                     $rPdf['respuesta'] = view('intranet.funcionarios.tutela.tutela_tareas.respuesta_sentencia_primera_instancia', compact('tutela', 'imagen', 'firma'));
                 }
@@ -1082,9 +1156,9 @@ class TutelaController extends Controller
             // }
             // }
             if (($request["idTarea"] == 4 && $request["apruebaRadica"]) || $request["idTarea"] == 5) {
-                if($tipo_respuesta == 1 ){
+                if ($tipo_respuesta == 1) {
                     $tutelaEstado['estadostutela_id'] = 4;
-                }else{
+                } else {
                     $tutelaEstado['estadostutela_id'] = 7;
                 }
                 AutoAdmisorio::findOrFail($tutela->id)->update($tutelaEstado);
@@ -1205,12 +1279,12 @@ class TutelaController extends Controller
             $resuelvepi = ResuelvePrimeraInstancia::findOrFail($id);
 
             $tutela = AutoAdmisorio::findOrfail($resuelvepi->sentencia->id)
-                                    ->with('primeraInstancia')
-                                    ->with('primeraInstancia.impugnacionesinternas')
-                                    ->with('primeraInstancia.impugnacionesinternas.empleado')
-                                    ->with('primeraInstancia.impugnacionesinternas.estado')
-                                    ->get();
-            return response()->json(['mensaje' => 'ok','tutela'=>$tutela]);
+                ->with('primeraInstancia')
+                ->with('primeraInstancia.impugnacionesinternas')
+                ->with('primeraInstancia.impugnacionesinternas.empleado')
+                ->with('primeraInstancia.impugnacionesinternas.estado')
+                ->get();
+            return response()->json(['mensaje' => 'ok', 'tutela' => $tutela]);
         } else {
             abort(404);
         }
@@ -1234,25 +1308,26 @@ class TutelaController extends Controller
             ResuelvePrimeraInstancia::findOrFail($id)->update($sentidoResuelve);
 
             $tutela = AutoAdmisorio::findOrfail($resuelvePI->sentencia->id)
-                                    ->with('primeraInstancia')
-                                    ->with('primeraInstancia.impugnacionesinternas')
-                                    ->with('primeraInstancia.impugnacionesinternas.empleado')
-                                    ->with('primeraInstancia.impugnacionesinternas.estado')
-                                    ->get();
-            return response()->json(['mensaje' => 'ok', 'data' => $data,'tutela'=>$tutela]);
+                ->with('primeraInstancia')
+                ->with('primeraInstancia.impugnacionesinternas')
+                ->with('primeraInstancia.impugnacionesinternas.empleado')
+                ->with('primeraInstancia.impugnacionesinternas.estado')
+                ->get();
+            return response()->json(['mensaje' => 'ok', 'data' => $data, 'tutela' => $tutela]);
         } else {
             abort(404);
         }
     }
 
-    public function verificar_sentencia_primera_instancia(Request $request, $id){
+    public function verificar_sentencia_primera_instancia(Request $request, $id)
+    {
         if ($request->ajax()) {
             $sentenciaPrimeraInstancia = PrimeraInstancia::findOrFail($id);
-            $updateSentencia1eraInst ['verificada']=1;
-            if ($sentenciaPrimeraInstancia->impugnacionesinternas->count()>0) {
-                $updateTutela['estadostutela_id']=6;
+            $updateSentencia1eraInst['verificada'] = 1;
+            if ($sentenciaPrimeraInstancia->impugnacionesinternas->count() > 0) {
+                $updateTutela['estadostutela_id'] = 6;
             } else {
-                $updateTutela['estadostutela_id']=5;
+                $updateTutela['estadostutela_id'] = 5;
             }
             $sentenciaPrimeraInstancia->update($updateSentencia1eraInst);
             $tutela = AutoAdmisorio::findOrFail($id);

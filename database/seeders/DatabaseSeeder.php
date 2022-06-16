@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'estadostutela', 'tareas_tutela', 'asignacion_estados_tutela',
             'auto_admisorio', 'tutela_motivo', 'accionante_accionado', 'hechos_tutela', 'pretensiones_tutela',
             'argumentos_tutela', 'historial_primera_asignacion_tutela', 'asignancion_tareas_tutela', 'sentenciapinstancia',
-            'resuelvesentencia', 'tipo_accion', 'tipo_persona', 'unidad_negocio'
+            'resuelvesentencia', 'tipo_accion', 'tipo_persona', 'unidad_negocio','motivotutelas','submotivotutelas'
 
         ]);
         // --------------------------------------------------------------------------------------------------
@@ -86,6 +86,8 @@ class DatabaseSeeder extends Seeder
         $this->call(Tabla_WikuPalabras::class);
         $this->call(Tabla_WikuArgumentos::class);
         $this->call(Tabla_WikuPalabrasArgumentos::class);
+        $this->call(Tabla_Motivotutelas::class);
+        $this->call(Tabla_Submotivotutelas::class);
 
     }
 
