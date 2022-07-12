@@ -891,7 +891,9 @@
                                                 <div class="col-12 form-group mt-3">
                                                     @if ($peticion->estadopeticion->estado == 100 || sizeOf($peticion->recursos))
                                                         <div class="respuesta mt-2">
-                                                            {!! $peticion->respuesta->respuesta !!}
+                                                            @if($peticion->respuesta)
+                                                                {!! $peticion->respuesta->respuesta !!}
+                                                            @endif
                                                         </div>
                                                     @else
                                                         <textarea type="text"
