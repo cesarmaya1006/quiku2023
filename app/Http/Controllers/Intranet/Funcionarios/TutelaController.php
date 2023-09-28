@@ -1125,9 +1125,9 @@ class TutelaController extends Controller
             if ($request["idTarea"] == 4) {
                 $tutela = AutoAdmisorio::findOrFail($request["idAuto"]);
                 $tipo_respuesta = $request["tipo_respuesta"];
-                $imagen = public_path('imagenes\sistema\logo_mgl.png');
+                $imagen = public_path('imagenes\sistema\logobc.png');
                 $firma = public_path('documentos\usuarios\\' . $tutela->empleadoasignado->url);
-                //$imagen = asset('imagenes/sistema/logo_mgl.png'); //url_servidor
+                //$imagen = asset('imagenes/sistema/logobc.png'); //url_servidor
                 //$firma = asset('documentos/usuarios/' . $tutela->empleado->url); //url_servidor
                 if ($tipo_respuesta == 1) {
                     $valor = "si";
